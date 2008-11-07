@@ -18,21 +18,17 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
  */
 public class StudentInquiriesCourseResultBean implements Serializable {
 
-    private DomainReference<ExecutionDegree> executionDegree;
-
     private DomainReference<StudentInquiriesCourseResult> studentInquiriesCourseResult;
 
     private List<DomainReference<StudentInquiriesTeachingResult>> studentInquiriesTeachingResults = new ArrayList<DomainReference<StudentInquiriesTeachingResult>>();
 
-    public StudentInquiriesCourseResultBean(final ExecutionDegree executionDegree,
-	    final StudentInquiriesCourseResult studentInquiriesCourseResult) {
+    public StudentInquiriesCourseResultBean(final StudentInquiriesCourseResult studentInquiriesCourseResult) {
 	super();
-	this.executionDegree = new DomainReference<ExecutionDegree>(executionDegree);
 	this.studentInquiriesCourseResult = new DomainReference<StudentInquiriesCourseResult>(studentInquiriesCourseResult);
     }
 
     public ExecutionDegree getExecutionDegree() {
-	return executionDegree.getObject();
+	return getStudentInquiriesCourseResult().getExecutionDegree();
     }
 
     public StudentInquiriesCourseResult getStudentInquiriesCourseResult() {

@@ -3,12 +3,20 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -45,9 +53,27 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
+	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(executionCourse,
+		professorship));
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 
 	return actionMapping.findForward("inquiryPrePage");
+    }
+
+    private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(ExecutionCourse executionCourse,
+	    Professorship professorship) {
+	Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap = new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+	    courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(null,
+		    studentInquiriesCourseResult));
+	}
+
+	for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : professorship.getStudentInquiriesTeachingResults()) {
+	    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+		    studentInquiriesTeachingResult);
+	}
+
+	return courseResultsMap.values();
     }
 
     public ActionForward showInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -95,7 +121,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
-	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
+	final ExecutionCourse executionCourse = teachingInquiry.getProfessorship().getExecutionCourse();
+	request.setAttribute("executionCourse", executionCourse);
 
 	if (!teachingInquiry.getSecondPageFourthBlock().validate()
 		|| !teachingInquiry.getSecondPageFourthBlockThirdPart().validate()
@@ -108,6 +135,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    RenderUtils.invalidateViewState();
 	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
 	    return actionMapping.findForward("showInquiry2ndPage");
+	}
+
+	for (final StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+
 	}
 
 	if (false) {// check unsatisfactory results
