@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -107,10 +108,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 		throw new DomainException("DegreeFinalizationCertificateRequest.registration.not.submited.to.conclusion.process");
 	    }
 
-	    if (getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
-		throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
-	    }
-
 	    if (!getFreeProcessed()) {
 		if (hasCycleCurriculumGroup()) {
 		    assertPayedEvents(getCycleCurriculumGroup().getIEnrolmentsLastExecutionYear());
@@ -171,6 +168,41 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     final public void setRequestedCycle(final CycleType requestedCycle) {
 	throw new DomainException("DegreeFinalizationCertificateRequest.cannot.modify.requestedCycle");
+    }
+
+    @Override
+    public void setMobilityProgram(MobilityProgram mobilityProgram) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setTechnicalEngineer(Boolean technicalEngineer) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setInternshipAbolished(Boolean internshipAbolished) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setInternshipApproved(Boolean internshipApproved) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setExceptionalConclusionDate(YearMonthDay exceptionalConclusionDate) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setStudyPlan(Boolean studyPlan) {
+	throw new DomainException("error.DegreeFinalizationCertificateRequest.cannot.modify");
     }
 
     /* TODO refactor, always set requested cycle type in document creation */

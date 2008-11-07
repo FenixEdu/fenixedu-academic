@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
@@ -100,6 +101,16 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     final public void setNumberOfUnits(final Integer numberOfUnits) {
 	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify.numberOfUnits");
+    }
+
+    @Override
+    public void setMobilityProgram(MobilityProgram mobilityProgram) {
+	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
+    }
+
+    @Override
+    public void setIgnoreExternalEntries(Boolean ignoreExternalEntries) {
+	throw new DomainException("error.ApprovementCertificateRequest.cannot.modify");
     }
 
     @Override
