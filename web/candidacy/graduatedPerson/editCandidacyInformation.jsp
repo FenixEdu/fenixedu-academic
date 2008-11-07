@@ -62,7 +62,9 @@
 	<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
 		<em><bean:message key="label.candidacy.precedentDegree.externalPrecedentDegreeType" bundle="APPLICATION_RESOURCES"/></em> (<html:link action="/externalUnits.do?method=prepareSearch" target="_blank"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link>)
 	</logic:equal>
-
+	
+	<br/>
+	<br/>
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
