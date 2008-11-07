@@ -54,6 +54,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private MobilityProgram mobilityProgram;
 
+    private boolean ignoreExternalEntries = false;
+
     private boolean toUseAll = false;
 
     private List<DomainReference<Enrolment>> enrolments;
@@ -241,8 +243,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     final public boolean getHasMobilityProgramDependency() {
-	return getRegistration().getCurriculum().hasAnyExternalApprovedEnrolment()
-		&& (chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE || chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE);
+	return chosenDocumentRequestType == DocumentRequestType.APPROVEMENT_CERTIFICATE
+		|| chosenDocumentRequestType == DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE;
     }
 
     final public MobilityProgram getMobilityProgram() {
@@ -251,6 +253,14 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     final public void setMobilityProgram(final MobilityProgram mobilityProgram) {
 	this.mobilityProgram = mobilityProgram;
+    }
+
+    public boolean isIgnoreExternalEntries() {
+	return ignoreExternalEntries;
+    }
+
+    public void setIgnoreExternalEntries(final boolean ignoreExternalEntries) {
+	this.ignoreExternalEntries = ignoreExternalEntries;
     }
 
     public boolean isToUseAll() {

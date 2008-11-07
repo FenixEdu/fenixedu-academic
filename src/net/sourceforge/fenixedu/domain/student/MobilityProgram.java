@@ -6,13 +6,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-/**
- * TODO: remove this, enrich RegistrationAgreement instead This enum shouldn't
- * have been created.
- * 
- */
-
-@Deprecated
 public enum MobilityProgram {
 
     SOCRATES,

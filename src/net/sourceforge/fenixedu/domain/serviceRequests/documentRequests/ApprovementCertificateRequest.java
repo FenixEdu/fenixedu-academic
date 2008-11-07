@@ -31,12 +31,13 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	checkParameters(bean);
 	super.setMobilityProgram(bean.getMobilityProgram());
+	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
     }
 
     @Override
     final protected void checkParameters(final DocumentRequestCreateBean bean) {
-	if (bean.getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
-	    throw new DomainException("ApprovementCertificateRequest.mobility.program.cannot.be.null");
+	if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
+	    throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
 	}
     }
 
@@ -52,10 +53,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	    if (getRegistration().isConcluded()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-	    }
-
-	    if (getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
-		throw new DomainException("ApprovementCertificateRequest.mobility.program.cannot.be.null");
 	    }
 
 	    // FIXME For now, the following conditions are only valid for 5year
@@ -120,12 +117,12 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
 		if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
 		    curriculum = cycle.getCurriculum(getFilteringDate());
-		    filterEntries(result, curriculum);
+		    filterEntries(result, this, curriculum);
 		}
 	    }
 	} else {
 	    curriculum = getRegistration().getCurriculum(getFilteringDate());
-	    filterEntries(result, curriculum);
+	    filterEntries(result, this, curriculum);
 	}
 
 	return result;
@@ -135,7 +132,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return hasConcluded() ? getRequestConclusionDate() : new DateTime();
     }
 
-    static final public void filterEntries(final Collection<ICurriculumEntry> result, final ICurriculum curriculum) {
+    static final public void filterEntries(final Collection<ICurriculumEntry> result,
+	    final ApprovementCertificateRequest request, final ICurriculum curriculum) {
 	for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
@@ -145,7 +143,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 		}
 	    } else if (entry instanceof ExternalEnrolment) {
 		final ExternalEnrolment externalEnrolment = (ExternalEnrolment) entry;
-		if (externalEnrolment.hasExecutionPeriod() && !externalEnrolment.isResultOfMobility()) {
+		if (request.getIgnoreExternalEntries()) {
 		    continue;
 		}
 	    }
@@ -177,7 +175,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
 	for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
-	    filterEntries(result, group.getCurriculumInAdvance(getFilteringDate()));
+	    filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
 	}
     }
 
@@ -187,28 +185,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	reportApprovedCurriculumLines(result, getRegistration().getPropaedeuticCurriculumLines());
 
 	return result;
-    }
-
-    final public boolean hasAnyExternalEntriesToReport() {
-	for (final ICurriculumEntry entry : getEntriesToReport()) {
-	    if (entry instanceof ExternalEnrolment) {
-		return true;
-	    }
-	}
-
-	for (final ICurriculumEntry entry : getExtraCurricularEntriesToReport()) {
-	    if (entry instanceof ExternalEnrolment) {
-		return true;
-	    }
-	}
-
-	for (final ICurriculumEntry entry : getPropaedeuticEntriesToReport()) {
-	    if (entry instanceof ExternalEnrolment) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     @Override

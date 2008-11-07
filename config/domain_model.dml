@@ -3122,7 +3122,7 @@ class DomainObject {
 		Double perc_P5_8;
 		Double perc_P5_9;
 	}
-
+	
 
 	class inquiries.InquiryResponsePeriod extends DomainObject {
 		DateTime begin;
@@ -4103,6 +4103,7 @@ class DomainObject {
 	
 					class serviceRequests.documentRequests.ApprovementCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 						MobilityProgram mobilityProgram;
+						Boolean ignoreExternalEntries;
 						Integer numberOfUnits;
 					}
 	
@@ -4115,6 +4116,7 @@ class DomainObject {
 						Boolean studyPlan;
 						YearMonthDay exceptionalConclusionDate;
 						MobilityProgram mobilityProgram;
+						Boolean ignoreExternalEntries;
 						CycleType requestedCycle;
 					}
 	
@@ -14037,7 +14039,6 @@ relation PartialRegimeInstallmentExecutionSemester {
 		multiplicity *;
 	}
 }
-
 relation RootDomainObjectUnitCostCenterCode {
 	RootDomainObject playsRole rootDomainObject;
 	organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
@@ -14056,6 +14057,7 @@ relation UnitUnitBasedSender {
 		multiplicity *;
 	}
 }
+
 relation RootDomainObjectProfilingLogs {
 	RootDomainObject playsRole rootDomainObject;
 	log.profiling.ProfileReport playsRole profilingLogs {

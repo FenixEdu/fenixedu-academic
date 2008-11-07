@@ -43,7 +43,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    reportCycles(result, entries, academicUnitIdentifiers);
 	} else {
 	    final ICurriculum curriculum = registration.getCurriculum(request.getFilteringDate());
-	    ApprovementCertificateRequest.filterEntries(entries, curriculum);
+	    ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
 	    reportEntries(result, entries, academicUnitIdentifiers);
 	}
 
@@ -66,9 +66,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	result.append(generateEndLine());
 
 	if (!academicUnitIdentifiers.isEmpty()) {
-	    result.append(LINE_BREAK).append(
-		    getAcademicUnitInfo(academicUnitIdentifiers, ((ApprovementCertificateRequest) getDocumentRequest())
-			    .getMobilityProgram()));
+	    result.append(LINE_BREAK).append(getAcademicUnitInfo(academicUnitIdentifiers, request.getMobilityProgram()));
 	}
 
 	return result.toString();
@@ -111,7 +109,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 		final ApprovementCertificateRequest request = ((ApprovementCertificateRequest) getDocumentRequest());
 		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
-		ApprovementCertificateRequest.filterEntries(entries, curriculum);
+		ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
 		reportEntries(result, entries, academicUnitIdentifiers);
 
 		entries.clear();

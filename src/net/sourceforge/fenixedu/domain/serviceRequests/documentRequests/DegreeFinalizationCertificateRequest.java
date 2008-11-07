@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 import org.joda.time.YearMonthDay;
 
@@ -33,6 +32,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setAverage(bean.getAverage());
 	super.setDetailed(bean.getDetailed());
 	super.setMobilityProgram(bean.getMobilityProgram());
+	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
 	super.setTechnicalEngineer(bean.getTechnicalEngineer());
 	super.setInternshipAbolished(bean.getInternshipAbolished());
 	super.setInternshipApproved(bean.getInternshipApproved());
@@ -51,8 +51,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	    throw new DomainException("DegreeFinalizationCertificateRequest.detailed.cannot.be.null");
 	}
 
-	if (bean.getMobilityProgram() == null && hasAnyExternalEntriesToReport()) {
-	    throw new DomainException("DegreeFinalizationCertificateRequest.mobility.program.cannot.be.null");
+	if (bean.getMobilityProgram() != null && bean.isIgnoreExternalEntries()) {
+	    throw new DomainException("ApprovementCertificateRequest.cannot.ignore.external.entries.within.a.mobility.program");
 	}
 
 	if ((bean.getInternshipAbolished() || bean.getInternshipApproved() || bean.getStudyPlan())
@@ -257,16 +257,6 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	}
 
 	return result;
-    }
-
-    final public boolean hasAnyExternalEntriesToReport() {
-	for (final ICurriculumEntry entry : getEntriesToReport()) {
-	    if (entry instanceof ExternalEnrolment) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     @Override

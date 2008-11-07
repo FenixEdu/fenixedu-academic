@@ -337,10 +337,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	    final StringBuilder unit = new StringBuilder();
 
 	    unit.append(academicUnitId.getValue());
-	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.program"));
-	    unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
-	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("in.feminine"));
+	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.one"));
 	    unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
+	    if (mobilityProgram != null) {
+		unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.two"));
+		unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
+	    }
 
 	    result.append(StringUtils.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
 	    result.append(LINE_BREAK);
