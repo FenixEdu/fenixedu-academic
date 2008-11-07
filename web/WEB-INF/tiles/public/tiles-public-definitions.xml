@@ -226,4 +226,32 @@
     <definition name="showThesisDetails" page="/layout/secondaryIstLayout.jsp">
         <put name="body" value="/publico/showDirectThesisDetails.jsp"/>
     </definition>
+
+<!-- 
+	<definition name="definition.public.internship" page="/layout/istLayout.jsp">
+		<put name="title" value="Candidaturas a Estágios | IST" />
+		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+		<put name="css-headers" value="/publico/alumni/alumniCSSHeader.jsp" />
+		<put name="hideLanguage" value="true" />
+	</definition>
+    -->
+    <definition name="definition.public.internship" page="/layout/secondaryIstLayout_form.jsp">
+    </definition>
+    
+    <definition name="internship.candidacy" extends="definition.public.internship">
+       <put name="body" value="/publico/internship/candidacy.jsp"/>
+    </definition>
+
+    <definition name="internship.candidacy.rules" extends="definition.public.internship">
+       <put name="body" value="/publico/internship/candidacyRules.jsp"/>
+    </definition>
+
+    <definition name="internship.candidacy.final" extends="definition.public.internship">
+       <put name="body" value="/publico/internship/candidacyFinal.jsp"/>
+    </definition>
 </tiles-definitions>

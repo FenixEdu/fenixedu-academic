@@ -1282,7 +1282,7 @@
             <forward name="startRequestLoginProcess" path="start-request-login-process"/>
             <forward name="requestLoginFinished" path="request-login-finish-process"/>
       </action>
-
+      
 	<!--===== Content Actions ======-->
 		
 		<action path="/viewGenericContent" 
@@ -1408,8 +1408,10 @@
    	<message-resources parameter="resources.SpaceResources" key="SPACE_RESOURCES" null="false"/>
    	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
    	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
-   	  	
-    
+   	<message-resources parameter="resources.DomainResources" key="DOMAIN_RESOURCES" null="false"/>
+    <message-resources parameter="resources.InternshipResources" key="INTERNSHIP_RESOURCES" null="false"/>
+    <message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
+
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
@@ -1433,4 +1435,14 @@
 	    <set-property property="schemaFactory" 
 	                  value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
 	</plug-in>	
+	   <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+        <set-property property="definitions-config"
+            value="/WEB-INF/tiles/public/tiles-public-definitions.xml,/WEB-INF/tiles/public/tiles-public-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname"
+            value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.public.paddingLayout" />
+    </plug-in>
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
 </struts-config>

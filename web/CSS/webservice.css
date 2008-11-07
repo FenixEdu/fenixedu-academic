@@ -49,6 +49,12 @@ a:hover {
  	width: 650px;
  	margin: 0 auto;
  	}
+ 	
+#container_800px {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+    }
 
 #wrapper {
 	float: left;
@@ -77,4 +83,33 @@ a:hover {
 	}
 	
 	
+table.form {
+border-collapse: collapse;
+width: 100%;
+margin: 1em 0;
+}
+table.form th {
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+font-weight: normal;
+padding-right: 1em !important;
+text-align: left;
+}
+table.form td {
+border-top: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+}
+table.form th, table.form td {
+padding: 0.5em 0;
+}
+table.form td p {
+margin: 0;
+padding: 0;
+}
 
+table {
+font-size: 1.1em;
+}
+ul {
+font-size: 1.1em;
+}

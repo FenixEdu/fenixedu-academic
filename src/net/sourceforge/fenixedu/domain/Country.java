@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.Collator;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Locale;
@@ -21,7 +22,7 @@ public class Country extends Country_Base {
 
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
 	public int compare(Country leftCountry, Country rightCountry) {
-	    int comparationResult = leftCountry.getName().compareTo(rightCountry.getName());
+	    int comparationResult = Collator.getInstance().compare(leftCountry.getName(), rightCountry.getName());
 	    return (comparationResult == 0) ? leftCountry.getIdInternal().compareTo(rightCountry.getIdInternal())
 		    : comparationResult;
 	}

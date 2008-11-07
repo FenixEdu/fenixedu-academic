@@ -42,3 +42,5 @@ function executeWithTempFile() {
 }
 
 execute "alterTableAcademicServiceRequestAddIgnoreExternalEntries" alterTableAcademicServiceRequestAddIgnoreExternalEntries.sql
+execute "Internship Candidacy Public Link" intercepted.sql
+execute "Internship Candidacy Table" internshipCandidacy.sql

@@ -214,6 +214,7 @@ enum 	  net.sourceforge.fenixedu.domain.GrantOwnerType															 as GrantOw
 enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType										 as ProfessionalSituationConditionType;
 enum	  net.sourceforge.fenixedu.domain.student.RegistrationRegimeType											 as RegistrationRegimeType;
 enum	  net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType								 as InquiryResponsePeriodType;
+enum      net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel                                          as LanguageKnowledgeLevel;
 
 /*
 *
@@ -5575,6 +5576,43 @@ class residence.ResidencePriceTable extends DomainObject {
 
 class residence.ResidenceMonth extends DomainObject {
 	Month month;
+}
+
+class internship.InternshipCandidacy extends DomainObject {
+    Integer candidacyCode;
+
+    String studentNumber;
+    Integer studentYear;
+    String degree;
+    String name;
+    Gender gender;
+
+    String street;
+    String area;
+    String areaCode;
+
+    String email;
+    String telephone;
+    String mobilePhone;
+
+    LocalDate birthday;
+    String parishOfBirth;
+    String documentIdNumber;
+    String emissionLocationOfDocumentId;
+    LocalDate emissionDateOfDocumentId;
+    LocalDate expirationDateOfDocumentId;
+
+    String passportIdNumber;
+    String emissionLocationOfPassport;
+    LocalDate emissionDateOfPassport;
+    LocalDate expirationDateOfPassport;
+
+    LanguageKnowledgeLevel english;
+    LanguageKnowledgeLevel french;
+    LanguageKnowledgeLevel spanish;
+    LanguageKnowledgeLevel german;
+
+    Boolean previousCandidacy;
 }
 
 /*
@@ -14065,3 +14103,44 @@ relation RootDomainObjectProfilingLogs {
 	}
 }
 
+relation RootDomainObjectInternshipCandidacy {
+    RootDomainObject playsRole rootDomainObject;
+    internship.InternshipCandidacy playsRole internshipCandidacy {
+        multiplicity *;
+    }
+}
+
+relation InternshipCandidateCountryOfBirth {
+    internship.InternshipCandidacy playsRole internshipCandidacy {
+        multiplicity *;
+    }
+    Country playsRole countryOfBirth;
+}
+
+relation InternshipCandidateFirstDestination {
+    internship.InternshipCandidacy playsRole firstInternshipDestination {
+        multiplicity *;
+    }
+    Country playsRole firstDestination;
+}
+
+relation InternshipCandidateSecondDestination {
+    internship.InternshipCandidacy playsRole secondInternshipDestination {
+        multiplicity *;
+    }
+    Country playsRole secondDestination;
+}
+
+relation InternshipCandidateThirdDestination {
+    internship.InternshipCandidacy playsRole thirdInternshipDestination {
+        multiplicity *;
+    }
+    Country playsRole thirdDestination;
+}
+
+relation InternshipCandidateAcademicInstitution {
+    internship.InternshipCandidacy playsRole internshipCandidacy {
+        multiplicity *;
+    }
+    organizationalStructure.AcademicalInstitutionUnit playsRole university;
+}
