@@ -35,7 +35,7 @@ a:link, a:visited {
 ******************************************/
 
 #container {
-	margin: 100px auto 0 auto;
+	margin: 80px auto 0 auto;
 	background: #fff;
 	width:500px;
 	border: 1px solid #113344;
@@ -60,9 +60,13 @@ a:link, a:visited {
 #txt {
 line-height: 1.5em;
 }
+#txt ul {
+line-height: 1.5em;
+}
 #txt p {
 	font: 11px/1.5em Verdana, Arial, Helvetica, sans-serif;
 	padding: 0 20px 0 20px;
+	margin: 1em 0;
 	}
 	
 #alert p{
