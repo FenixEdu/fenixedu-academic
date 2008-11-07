@@ -151,10 +151,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
 	if (hasActiveRegistration(degreeCurricularPlan)) {
 	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
-	    if (registration.getStartDate().isBefore(getCandidacyDate())) {
-		throw new DomainException("error.IndividualCandidacy.person.with.registration.previous.candidacy",
-			degreeCurricularPlan.getPresentationName());
-	    }
 	    setRegistration(registration);
 	    return registration;
 	}
