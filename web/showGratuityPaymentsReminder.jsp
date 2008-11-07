@@ -30,13 +30,13 @@
 				<table>
 					<tr>
 						<td>
-							<fr:form action="/home.do">
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
+							<fr:form action="/student/payments.do?method=showEvents&contentContextPath_PATH=/estudante/estudante">
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.view.payments"/></html:submit>
 							</fr:form>
 						</td>
 						<td>
-							<fr:form action="/student/payments.do?method=showEvents&contentContextPath_PATH=/estudante/estudante">
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.view.payments"/></html:submit>
+							<fr:form action="/home.do">
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
 							</fr:form>
 						</td>
 					</tr>

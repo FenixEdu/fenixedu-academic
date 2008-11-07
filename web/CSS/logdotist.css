@@ -57,9 +57,11 @@ a:link, a:visited {
  	margin: 0;
  	padding: 0 0 0 10px;
 	}
-	
+#txt {
+line-height: 1.5em;
+}
 #txt p {
-	font: 11px/15px Verdana, Arial, Helvetica, sans-serif;
+	font: 11px/1.5em Verdana, Arial, Helvetica, sans-serif;
 	padding: 0 20px 0 20px;
 	}
 	
