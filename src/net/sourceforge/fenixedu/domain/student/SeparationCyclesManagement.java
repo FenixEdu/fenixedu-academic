@@ -195,7 +195,7 @@ public class SeparationCyclesManagement {
     private Registration createRegistration(final Student student, final StudentCurricularPlan sourceStudentCurricularPlan) {
 
 	final CycleCurriculumGroup oldSecondCycle = sourceStudentCurricularPlan.getSecondCycle();
-	Registration registration = student.getRegistrationFor(oldSecondCycle.getDegreeCurricularPlanOfDegreeModule());
+	Registration registration = student.getActiveRegistrationFor(oldSecondCycle.getDegreeCurricularPlanOfDegreeModule());
 
 	if (registration != null) {
 	    return registration;

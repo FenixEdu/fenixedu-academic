@@ -1793,7 +1793,7 @@ public class Registration extends Registration_Base {
 		Registration sourceRegistration = person.getStudent().readRegistrationByDegree(sourceDegree);
 		if (sourceRegistration == null) {
 		    final Collection<Registration> registrations = student.getRegistrationsByDegreeType(DegreeType.DEGREE);
-		    registrations.remove(student.getRegistrationFor(degreeCurricularPlan));
+		    registrations.removeAll(student.getRegistrationsFor(degreeCurricularPlan));
 		    sourceRegistration = registrations.size() == 1 ? registrations.iterator().next() : null;
 		}
 
@@ -3101,7 +3101,9 @@ public class Registration extends Registration_Base {
 	    return null;
 	}
 	final DegreeCurricularPlanEquivalencePlan equivalencePlan = getLastDegreeCurricularPlan().getEquivalencePlan();
-	return getStudent().getRegistrationFor(equivalencePlan.getSourceDegreeCurricularPlan());
+	final List<Registration> registrations = getStudent()
+		.getRegistrationsFor(equivalencePlan.getSourceDegreeCurricularPlan());
+	return registrations.isEmpty() ? null : registrations.iterator().next();
     }
 
     public List<Registration> getTargetTransitionRegistrations() {

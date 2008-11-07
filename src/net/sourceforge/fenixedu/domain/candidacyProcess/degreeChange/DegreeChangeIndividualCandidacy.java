@@ -163,7 +163,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	}
 
 	if (hasRegistration(degreeCurricularPlan)) {
-	    final Registration registration = getStudent().getRegistrationFor(degreeCurricularPlan);
+	    final Registration registration = getMostRecentRegistration(degreeCurricularPlan);
 	    setRegistration(registration);
 
 	    if (!registration.isActive()) {
@@ -181,6 +181,10 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
 	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+    }
+
+    private Registration getMostRecentRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getStudent().getMostRecentRegistration(degreeCurricularPlan);
     }
 
     @Override

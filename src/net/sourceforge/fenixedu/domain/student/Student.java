@@ -887,45 +887,48 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public Registration getRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
-	for (Registration registration : super.getRegistrations()) {
-	    Set<DegreeCurricularPlan> degreeCurricularPlans = registration.getDegreeCurricularPlans();
-	    for (DegreeCurricularPlan degreeCurricularPlanToTest : degreeCurricularPlans) {
+    public List<Registration> getRegistrationsFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : super.getRegistrations()) {
+	    for (final DegreeCurricularPlan degreeCurricularPlanToTest : registration.getDegreeCurricularPlans()) {
 		if (degreeCurricularPlanToTest.equals(degreeCurricularPlan)) {
-		    return registration;
+		    result.add(registration);
+		    break;
 		}
 	    }
 	}
-	return null;
+	return result;
     }
 
     public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
-	return getRegistrationFor(degreeCurricularPlan) != null;
+	return !getRegistrationsFor(degreeCurricularPlan).isEmpty();
     }
 
-    public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
-	return getActiveRegistrationFor(degreeCurricularPlan) != null;
-    }
+    public Registration getMostRecentRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	final List<Registration> registrations = getRegistrationsFor(degreeCurricularPlan);
+	Collections.sort(registrations, Registration.COMPARATOR_BY_START_DATE);
 
-    public boolean hasActiveRegistrationFor(final Degree degree) {
-	return getActiveRegistrationFor(degree) != null;
-    }
-
-    public boolean hasActiveRegistrations() {
-	return getActiveRegistrations().size() > 0;
-    }
-
-    public Registration getRegistrationFor(Degree degree) {
-	for (Registration registration : super.getRegistrations()) {
-	    if (registration.getDegree() == degree) {
-		return registration;
+	Registration result = null;
+	for (final Registration registration : registrations) {
+	    if (result == null || registration.getStartDate().isAfter(result.getStartDate())) {
+		result = registration;
 	    }
 	}
-	return null;
+	return result;
+    }
+
+    public List<Registration> getRegistrationsFor(final Degree degree) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : super.getRegistrations()) {
+	    if (registration.getDegree() == degree) {
+		result.add(registration);
+	    }
+	}
+	return result;
     }
 
     public boolean hasRegistrationFor(final Degree degree) {
-	return getRegistrationFor(degree) != null;
+	return !getRegistrationsFor(degree).isEmpty();
     }
 
     public Registration getActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -938,6 +941,10 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getActiveRegistrationFor(degreeCurricularPlan) != null;
+    }
+
     public Registration getActiveRegistrationFor(final Degree degree) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getLastDegree() == degree) {
@@ -946,6 +953,14 @@ public class Student extends Student_Base {
 	}
 
 	return null;
+    }
+
+    public boolean hasActiveRegistrationFor(final Degree degree) {
+	return getActiveRegistrationFor(degree) != null;
+    }
+
+    public boolean hasActiveRegistrations() {
+	return getActiveRegistrations().size() > 0;
     }
 
     public Registration getTransitionRegistrationFor(DegreeCurricularPlan degreeCurricularPlan) {

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -52,11 +55,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
 	if (degree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
-	}
-
-	if (personHasDegree(person, degree)) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", degree.getNameFor(
-		    process.getCandidacyExecutionInterval()).getContent());
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -142,6 +140,41 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     @Override
     protected ExecutionYear getCandidacyExecutionInterval() {
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
+
+    @Override
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+	    final Ingression ingression) {
+
+	if (hasRegistration()) {
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
+		    .getPresentationName());
+	}
+
+	if (hasRegistration(degreeCurricularPlan)) {
+	    final Registration registration = getRegistration(degreeCurricularPlan);
+	    setRegistration(registration);
+	    return registration;
+	}
+
+	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
+
+    private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getStudent().hasRegistrationFor(degreeCurricularPlan);
+    }
+
+    private Registration getRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	final List<Registration> registrations = getStudent().getRegistrationsFor(degreeCurricularPlan);
+	Collections.sort(registrations, Registration.COMPARATOR_BY_START_DATE);
+
+	Registration result = null;
+	for (final Registration registration : registrations) {
+	    if (result == null || registration.hasAnyActiveState(getCandidacyExecutionInterval())) {
+		result = registration;
+	    }
+	}
+	return result;
     }
 
     @Override

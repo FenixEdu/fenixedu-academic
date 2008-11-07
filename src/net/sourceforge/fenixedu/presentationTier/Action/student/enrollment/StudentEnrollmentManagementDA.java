@@ -121,7 +121,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
 		} else if (secondCycle.isExternal()) {
 		    final Student student = studentCurricularPlan.getRegistration().getStudent();
-		    final Registration newRegistration = student.getRegistrationFor(secondCycle
+		    final Registration newRegistration = student.getActiveRegistrationFor(secondCycle
 			    .getDegreeCurricularPlanOfDegreeModule());
 
 		    if (newRegistration != null) {
