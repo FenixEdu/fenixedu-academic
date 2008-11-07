@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_Base {
@@ -53,6 +54,14 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     @Override
     public Account getToAccount() {
 	return getAdministrativeOffice().getUnit().getInternalAccount();
+    }
+
+    public Student getCandidacyStudent() {
+	return getIndividualCandidacy().getStudent();
+    }
+
+    public boolean hasCandidacyStudent() {
+	return getIndividualCandidacy().hasStudent();
     }
 
 }
