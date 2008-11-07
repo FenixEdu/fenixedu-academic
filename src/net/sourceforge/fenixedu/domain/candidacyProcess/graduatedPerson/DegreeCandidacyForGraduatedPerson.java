@@ -50,11 +50,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
 	}
 
-	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.existing.degree", selectedDegree.getNameFor(
-		    getCandidacyExecutionInterval()).getContent());
-	}
-
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
 	}
@@ -84,8 +79,12 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
-	if (selectedDegree == null || personHasDegree(getPerson(), selectedDegree)) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degrees");
+	if (selectedDegree == null) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+	}
+	
+	if (hasRegistration() && getRegistration().getDegree() != selectedDegree) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.degree");
 	}
 
 	if (precedentDegreeInformation == null) {

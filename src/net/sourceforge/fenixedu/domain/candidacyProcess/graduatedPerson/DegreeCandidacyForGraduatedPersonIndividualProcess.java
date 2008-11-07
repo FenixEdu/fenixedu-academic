@@ -175,10 +175,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-
-	    if (!process.isInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
