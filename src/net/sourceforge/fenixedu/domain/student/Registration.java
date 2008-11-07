@@ -2034,8 +2034,12 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
 
-    final public boolean isTransited() {
+    public boolean isTransited() {
 	return getActiveStateType() == RegistrationStateType.TRANSITED;
+    }
+
+    public boolean isCanceled() {
+	return getActiveStateType() == RegistrationStateType.CANCELED;
     }
 
     final public boolean isTransited(final DateTime when) {
