@@ -6,9 +6,9 @@
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Portrait"
-		 pageWidth="595"
+		 pageWidth="580"
 		 pageHeight="842"
-		 columnWidth="595"
+		 columnWidth="580"
 		 columnSpacing="0"
 		 leftMargin="0"
 		 rightMargin="0"
@@ -44,12 +44,12 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="23"  isSplitAllowed="true" >
+			<band height="20"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
-						y="4"
-						width="556"
+						x="0"
+						y="2"
+						width="575"
 						height="15"
 						key="textField-1"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
