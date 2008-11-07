@@ -176,8 +176,12 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return getPerson().hasStudent() && getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 
-    protected Student getStudent() {
+    public Student getStudent() {
 	return getPerson().hasStudent() ? getPerson().getStudent() : null;
+    }
+
+    public boolean hasStudent() {
+	return getStudent() != null;
     }
 
     protected ExecutionInterval getCandidacyExecutionInterval() {
