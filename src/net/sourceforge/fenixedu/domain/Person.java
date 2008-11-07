@@ -1510,9 +1510,9 @@ public class Person extends Person_Base {
 	    int finalIndex = Math.min(personsList.size(), startIndex + numberOfElementsInSpan);
 	    final List<Person> result = new ArrayList<Person>(finalIndex - startIndex);
 	    final Iterator<Person> iter = personsList.iterator();
-	    for (int i = 0; i < finalIndex && iter.hasNext(); i++) {
+	    for (int i = 0; i <= finalIndex && iter.hasNext(); i++) {
 		final Person person = iter.next();
-		if (i > startIndex) {
+		if (i >= startIndex) {
 		    result.add(person);
 		}
 	    }
