@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -71,8 +72,28 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy().getPrecedentDegreeInformation();
-	return information.isExternal() && !belongsToInstitutionGroup(information.getInstitution()) ? getAmountForExternalStudent()
-		: getAmountForInstitutionStudent();
+
+	if (information.isInternal() || hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
+		|| belongsToInstitutionGroup(information.getInstitution())) {
+	    return getAmountForInstitutionStudent();
+	} else {
+	    return getAmountForExternalStudent();
+	}
+    }
+
+    private boolean hasAnyValidRegistration(final DegreeChangeIndividualCandidacyEvent event) {
+	if (!event.hasCandidacyStudent()) {
+	    return false;
+	}
+
+	final List<Registration> registrations = event.getCandidacyStudent().getRegistrationsFor(event.getCandidacyDegree());
+	for (final Registration registration : event.getCandidacyStudent().getRegistrations()) {
+	    if (!registrations.contains(registration) && !registration.isCanceled()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     private boolean belongsToInstitutionGroup(final Unit unit) {
