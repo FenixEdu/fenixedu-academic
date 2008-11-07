@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -57,4 +58,14 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
 	return Collections.singleton(EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE);
     }
+
+    @Override
+    public DegreeTransferIndividualCandidacy getIndividualCandidacy() {
+	return (DegreeTransferIndividualCandidacy) super.getIndividualCandidacy();
+    }
+
+    public Degree getCandidacyDegree() {
+	return getIndividualCandidacy().getSelectedDegree();
+    }
+    
 }
