@@ -9,4 +9,18 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public boolean isUnsatisfactory() {
+	return getUnsatisfactoryResultsCUEvaluation() || getUnsatisfactoryResultsCUOrganization();
+    }
+
+    @Override
+    public Boolean getUnsatisfactoryResultsCUEvaluation() {
+	return super.getUnsatisfactoryResultsCUEvaluation() != null && super.getUnsatisfactoryResultsCUEvaluation();
+    }
+
+    @Override
+    public Boolean getUnsatisfactoryResultsCUOrganization() {
+	return super.getUnsatisfactoryResultsCUOrganization() != null && super.getUnsatisfactoryResultsCUOrganization();
+    }
+
 }

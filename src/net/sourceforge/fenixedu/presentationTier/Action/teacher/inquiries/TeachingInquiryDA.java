@@ -4,7 +4,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,9 +71,13 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		    studentInquiriesCourseResult));
 	}
 
-	for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : professorship.getStudentInquiriesTeachingResults()) {
-	    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
-		    studentInquiriesTeachingResult);
+	for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse()
+		.getProfessorships() : Collections.singletonList(professorship)) {
+	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+		    .getStudentInquiriesTeachingResults()) {
+		courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+			studentInquiriesTeachingResult);
+	    }
 	}
 
 	return courseResultsMap.values();
@@ -143,17 +149,29 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("showInquiry2ndPage");
 	}
 
-	// populateStudentInquiriesCourseResults()
-	for (final StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
-
+	Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults = populateStudentInquiriesCourseResults(teachingInquiry
+		.getProfessorship());
+	if (checkIfAnyUnsatisfactoryResult(inquiriesCourseResults)) {
+	    return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
 	}
 
-	if (false) {// check unsatisfactory results
-	    return prepareConfirm(actionMapping, actionForm, request, response);
-	}
+	return prepareConfirm(actionMapping, actionForm, request, response);
+    }
 
-	RenderUtils.invalidateViewState();
-	return actionMapping.findForward("showInquiry3rdPage");
+    private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
+	for (final StudentInquiriesCourseResultBean inquiriesCourseResultBean : inquiriesCourseResults) {
+	    if (inquiriesCourseResultBean.getStudentInquiriesCourseResult().isUnsatisfactory()) {
+		return true;
+	    }
+
+	    for (final StudentInquiriesTeachingResult studentInquiriesTeachingResult : inquiriesCourseResultBean
+		    .getStudentInquiriesTeachingResults()) {
+		if (studentInquiriesTeachingResult.isUnsatisfactory()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     public ActionForward submitInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -182,12 +200,21 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
 	    return showInquiries1stPage(actionMapping, actionForm, request, response);
 	} else {
-	    if (false) {// check unsatisfactory results
-		return showInquiries2ndPage(actionMapping, actionForm, request, response);
+	    Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults = populateStudentInquiriesCourseResults(teachingInquiry
+		    .getProfessorship());
+	    if (checkIfAnyUnsatisfactoryResult(inquiriesCourseResults)) {
+		return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
 	    } else {
-		return showInquiries3rdPage(actionMapping, actionForm, request, response);
+		return showInquiries2ndPage(actionMapping, actionForm, request, response);
 	    }
 	}
+    }
+
+    private ActionForward forwardTo3rdPage(ActionMapping actionMapping, HttpServletRequest request,
+	    Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
+	request.setAttribute("studentInquiriesCourseResults", inquiriesCourseResults);
+	RenderUtils.invalidateViewState();
+	return actionMapping.findForward("showInquiry3rdPage");
     }
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

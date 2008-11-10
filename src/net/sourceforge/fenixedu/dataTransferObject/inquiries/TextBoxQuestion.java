@@ -53,6 +53,7 @@ public class TextBoxQuestion extends InquiriesQuestion {
 
     public TextBoxQuestion setInteger(boolean integer) {
 	this.integer = integer;
+	setValue("0");
 	return this;
     }
 

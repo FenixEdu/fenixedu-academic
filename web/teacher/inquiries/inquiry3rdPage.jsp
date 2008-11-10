@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <html:xhtml />
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
@@ -17,6 +18,46 @@
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
+
+<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></h4>
+
+<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean">
+	<bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>: <c:out value="${courseResult.studentInquiriesCourseResult.executionDegree.presentationName}" /><br/>
+	<table>
+		<tr>		
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsCUOrganization" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsCUEvaluation" bundle="INQUIRIES_RESOURCES"/></th>
+		</tr>
+		<tr>		
+			<td><bean:message key="<%= "label." + courseResult.getStudentInquiriesCourseResult().getUnsatisfactoryResultsCUOrganization().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + courseResult.getStudentInquiriesCourseResult().getUnsatisfactoryResultsCUEvaluation().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>			
+		</tr>		
+	</table>
+	<br/>
+	<table>
+		<tr>		
+			<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAssiduity" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPresencialLearning" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPedagogicalCapacity" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsStudentInteraction" bundle="INQUIRIES_RESOURCES"/></th>
+			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></th>
+		</tr>
+		<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
+			<tr>		
+				<td><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
+				<td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
+				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsAssiduity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsPresencialLearning().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsPedagogicalCapacity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsStudentInteraction().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsAuditable().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			</tr>		
+		</logic:iterate>
+	</table>
+	<br/>	
+</logic:iterate>
 
 <div class="forminline dinline">
 	<div class="relative">
