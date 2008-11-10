@@ -1747,6 +1747,10 @@ public class Registration extends Registration_Base {
 	return getStudent().getPerson();
     }
 
+    final public String getName() {
+	return getPerson().getName();
+    }
+
     final public String getEmail() {
 	return getPerson().getEmail();
     }
@@ -1804,6 +1808,18 @@ public class Registration extends Registration_Base {
 		}
 	    }
 	}
+    }
+
+    final public ExecutionYear getIngressionYear() {
+	return inspectIngressionYear(this);
+    }
+
+    private ExecutionYear inspectIngressionYear(final Registration registration) {
+	if (!registration.hasSourceRegistration()) {
+	    return registration.getStartExecutionYear();
+	}
+
+	return inspectIngressionYear(registration.getSourceRegistration());
     }
 
     final public String getContigent() {
@@ -2233,8 +2249,7 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear getConclusionYear() {
-	final YearMonthDay conclusionDate = isBolonha() ? getConclusionDate(getLastConcludedCycleType()) : getConclusionDate();
-	return ExecutionYear.readByDateTime(conclusionDate.toDateTimeAtMidnight());
+	return isRegistrationConclusionProcessed() ? getLastStudentCurricularPlan().getLastApprovementExecutionYear() : null;
     }
 
     @Override
@@ -2373,9 +2388,21 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Collection<CycleCurriculumGroup> getConclusionProcessedCycles(final ExecutionYear executionYear) {
+	final Collection<CycleCurriculumGroup> result = new HashSet<CycleCurriculumGroup>();
+
+	for (final CycleCurriculumGroup group : getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
+	    if (group.isConclusionProcessed()) {
+		result.add(group);
+	    }
+	}
+
+	return result;
+    }
+
     final public Collection<CycleType> getConcludedCycles(final ExecutionYear executionYear) {
 	if (!getDegreeType().hasAnyCycleTypes()) {
-	    return Collections.EMPTY_SET;
+	    return Collections.emptySet();
 	}
 
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
