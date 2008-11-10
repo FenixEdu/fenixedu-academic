@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
@@ -32,44 +33,45 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private String getApprovementsInfo() {
 	final ApprovementCertificateRequest request = (ApprovementCertificateRequest) getDocumentRequest();
 
-	final StringBuilder result = new StringBuilder();
+	final StringBuilder res = new StringBuilder();
 
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
 		ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
 	final Registration registration = getRegistration();
-	final Map<Unit, String> academicUnitIdentifiers = new HashMap<Unit, String>();
+	final Map<Unit, String> ids = new HashMap<Unit, String>();
 	if (registration.isBolonha()) {
-	    reportCycles(result, entries, academicUnitIdentifiers);
+	    reportCycles(res, entries, ids);
 	} else {
 	    final ICurriculum curriculum = registration.getCurriculum(request.getFilteringDate());
 	    ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
-	    reportEntries(result, entries, academicUnitIdentifiers);
+	    reportEntries(res, entries, ids);
 	}
 
 	entries.clear();
 	entries.addAll(request.getExtraCurricularEntriesToReport());
 	if (!entries.isEmpty()) {
-	    reportRemainingEntries(result, entries, academicUnitIdentifiers, "Extra-Curriculares");
+	    reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan().getExtraCurriculumGroup());
 	}
 
 	entries.clear();
 	entries.addAll(request.getPropaedeuticEntriesToReport());
 	if (!entries.isEmpty()) {
-	    reportRemainingEntries(result, entries, academicUnitIdentifiers, "Propedêuticas");
+	    reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan()
+		    .getPropaedeuticCurriculumGroup());
 	}
 
 	if (getDocumentRequest().isToShowCredits()) {
-	    result.append(getRemainingCreditsInfo(request.getRegistration().getCurriculum()));
+	    res.append(getRemainingCreditsInfo(request.getRegistration().getCurriculum()));
 	}
 
-	result.append(generateEndLine());
+	res.append(generateEndLine());
 
-	if (!academicUnitIdentifiers.isEmpty()) {
-	    result.append(LINE_BREAK).append(getAcademicUnitInfo(academicUnitIdentifiers, request.getMobilityProgram()));
+	if (!ids.isEmpty()) {
+	    res.append(LINE_BREAK).append(getAcademicUnitInfo(ids, request.getMobilityProgram()));
 	}
 
-	return result.toString();
+	return res.toString();
     }
 
     final private void reportEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
@@ -118,8 +120,9 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
-	    final Map<Unit, String> academicUnitIdentifiers, final String title) {
-	result.append(generateEndLine()).append(LINE_BREAK).append(title).append(":").append(LINE_BREAK);
+	    final Map<Unit, String> academicUnitIdentifiers, final NoCourseGroupCurriculumGroup group) {
+	result.append(generateEndLine()).append(LINE_BREAK).append(getMLSTextContent(group.getName())).append(":").append(
+		LINE_BREAK);
 
 	for (final ICurriculumEntry entry : entries) {
 	    reportEntry(result, entry, academicUnitIdentifiers, entry.getExecutionYear());
