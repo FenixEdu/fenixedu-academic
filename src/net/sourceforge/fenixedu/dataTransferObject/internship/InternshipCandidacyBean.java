@@ -53,10 +53,10 @@ public class InternshipCandidacyBean implements Serializable {
     private DomainReference<Country> secondDestination;
     private DomainReference<Country> thirdDestination;
 
-    private LanguageKnowledgeLevel english;
-    private LanguageKnowledgeLevel french;
-    private LanguageKnowledgeLevel spanish;
-    private LanguageKnowledgeLevel german;
+    private LanguageKnowledgeLevel english = LanguageKnowledgeLevel.NONE;
+    private LanguageKnowledgeLevel french = LanguageKnowledgeLevel.NONE;
+    private LanguageKnowledgeLevel spanish = LanguageKnowledgeLevel.NONE;
+    private LanguageKnowledgeLevel german = LanguageKnowledgeLevel.NONE;
 
     private Boolean previousCandidacy;
 

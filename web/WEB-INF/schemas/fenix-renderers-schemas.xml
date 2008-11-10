@@ -53,6 +53,7 @@
 	<!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
     <!ENTITY support SYSTEM "support-schemas.xml">
     <!ENTITY alumni SYSTEM "alumni-schemas.xml">
+    <!ENTITY internationalRelationsOffice SYSTEM "internationalRelationsOffice-schemas.xml">
 ]>
 
 <schemas>
@@ -721,4 +722,5 @@
     &residenceManagement;
     &support;
     &alumni;
+    &internationalRelationsOffice;
 </schemas>

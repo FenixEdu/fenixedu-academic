@@ -21,7 +21,7 @@ th { width: 150px; }
     </strong></p>
     <fr:edit id="studentinfo" name="candidacy" schema="internship.candidacy.studentinfo">
         <fr:layout name="tabular">
-            <fr:property name="classes" value="form"/>
+            <fr:property name="classes" value="form brdnone"/>
             <fr:property name="columnClasses" value=",,tdclear tderror1 nowrap aright"/>
         </fr:layout>
     </fr:edit>
@@ -106,7 +106,7 @@ th { width: 150px; }
     <input type="hidden" name="method" />
     <p>
         <html:submit onclick="this.form.method.value='submitCandidacy';">
-            <bean:message bundle="COMMON_RESOURCES" key="button.continue" />
+            <bean:message bundle="COMMON_RESOURCES" key="button.next" />
         </html:submit>
     </p>
 </fr:form>
