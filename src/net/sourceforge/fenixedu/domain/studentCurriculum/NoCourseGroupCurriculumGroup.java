@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -65,10 +64,12 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public MultiLanguageString getName() {
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
-		new Locale("pt", "PT")).getString(getNoCourseGroupCurriculumGroupType().toString()));
-	return multiLanguageString;
+	final MultiLanguageString result = new MultiLanguageString();
+
+	result.setContent(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.pt.name())));
+	result.setContent(Language.en, getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
+
+	return result;
     }
 
     @Override
