@@ -46,8 +46,8 @@ public class AssiduousnessRecordMonthIndex extends AssiduousnessRecordMonthIndex
 
     public static Set<AssiduousnessRecord> getAssiduousnessRecordBetweenDates(DateTime beginDate, DateTime endDate) {
 	final Set<AssiduousnessRecord> assiduousnessRecords = new HashSet<AssiduousnessRecord>();
-	for (LocalDate dateTime = beginDate.toLocalDate(); !(dateTime.getYear() == endDate.getYear() && dateTime.getMonthOfYear() == endDate
-		.getMonthOfYear() + 1); dateTime = dateTime.plusMonths(1)) {
+	for (LocalDate dateTime = beginDate.toLocalDate(); dateTime.isBefore(endDate.toLocalDate()); dateTime = dateTime
+		.plusMonths(1)) {
 	    for (final AssiduousnessRecordMonthIndex assiduousnessRecordMonthIndex : getAssiduousnessRecordMonthIndexsSet(dateTime)) {
 		if (assiduousnessRecordMonthIndex.intersects(beginDate, endDate)) {
 		    assiduousnessRecords.addAll(assiduousnessRecordMonthIndex.getAssiduousnessRecordsSet());
