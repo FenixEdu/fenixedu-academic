@@ -2,7 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <html:xhtml />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -62,11 +64,11 @@ border-top: 4px solid #ddd;
 	</tr>
 	<tr>
 		<th>Avaliados (%):</th>
-		<td><c:out value="${inquiryResult.evaluatedRatio * 100} %" /></td>
+		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.evaluatedRatio}" /></td>
 	</tr>
 	<tr>
 		<th>Aprovados (%):</th>
-		<td><c:out value="${inquiryResult.approvedRatio * 100} %" /></td>
+		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.approvedRatio}" /></td>
 	</tr>
 	<tr>
 		<th>Média notas:</th>
@@ -90,22 +92,22 @@ border-top: 4px solid #ddd;
 		<tr>
 			<th>Respostas validas quadro inicial:</th>
 			<td><c:out value="${inquiryResult.validInitialFormAnswersNumber}" /></td>
-			<td><c:out value="${inquiryResult.validInitialFormAnswersRatio * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.validInitialFormAnswersRatio}" /></td>
 		</tr>
 		<tr>
 			<th>Respostas validas inquérito à UC:</th>
 			<td><c:out value="${inquiryResult.validInquiryAnswersNumber}" /></td>
-			<td><c:out value="${inquiryResult.validInquiryAnswersRatio * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.validInquiryAnswersRatio}" /></td>
 		</tr>
 		<tr>
 			<th>Não respostas à UC:</th>
 			<td><c:out value="${inquiryResult.noInquiryAnswersNumber}" /></td>
-			<td><c:out value="${inquiryResult.noInquiryAnswersRatio * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.noInquiryAnswersRatio}" /></td>
 		</tr>
 		<tr>
 			<th>Respostas invalidas inquérito à UC:</th>
 			<td><c:out value="${inquiryResult.invalidInquiryAnswersNumber}" /></td>
-			<td><c:out value="${inquiryResult.invalidInquiryAnswersRatio * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.invalidInquiryAnswersRatio}" /></td>
 		</tr>
 	</table>
 									
@@ -204,13 +206,13 @@ TEXTO 2
 		<tr>
 			<th>Gama de valores da classificação dos alunos:</th>
 			<td><c:out value="${inquiryResult.number_P1_1}" /></td>
-			<td><c:out value="${inquiryResult.perc_10_12 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_13_14 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_15_16 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_17_18 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_19_20 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_flunked * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_nonEvaluated * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_10_12}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_13_14}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_15_16}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_17_18}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_19_20}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_flunked}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_nonEvaluated}" /></td>
 		</tr>
 	</table>
 	
@@ -227,37 +229,37 @@ TEXTO 2
 		<tr>
 			<th>Trabalhos/projectos complexos:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_a}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_a * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_a}" /></td>
 		</tr>
 		<tr>
 			<th>Trabalhos/projectos extensos:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_b}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_b * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_b}" /></td>
 		</tr>
 		<tr>
 			<th>Trabalhos/projectos em número elevado:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_c}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_c * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_c}" /></td>
 		</tr>
 		<tr>
 			<th>Falta de preparação anterior exigindo mais trabalho/estudo:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_d}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_d * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_d}" /></td>
 		</tr>
 		<tr>
 			<th>Extensão do programa face ao nº de aulas previstas:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_e}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_e * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_e}" /></td>
 		</tr>
 		<tr>
 			<th>Pouco acompanhamento das aulas ao longo do semestre:</th>
 			<td><c:out value="${inquiryResult.number_P_1_2_f}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_f * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_f}" /></td>
 		</tr>
 		<tr>
 			<th>Outras razões:</th>
 			<td><c:out value="${inquiryResult.number_P1_2_g}" /></td>
-			<td><c:out value="${inquiryResult.perc__P1_2_g * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc__P1_2_g}" /></td>
 		</tr>
 	</table>
 	
@@ -282,15 +284,15 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P1_3}" /></td>
 			<td><c:out value="${inquiryResult.average_P1_3}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P1_3}" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_3_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_3_9}" /></td>
 		</tr>
 	</table>
 	
@@ -310,9 +312,9 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P1_4}" /></td>
 			<td><c:out value="${inquiryResult.average_P1_4}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P1_4}" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_4_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_4_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P1_4_3 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_4_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_4_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P1_4_3}" /></td>
 		</tr>
 	</table>
 	
@@ -335,40 +337,40 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P2_1}" /></td>
 			<td><c:out value="${inquiryResult.average_P2_1}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P2_1}" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_1_0 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_1_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_1_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_1_3 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_1_0}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_1_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_1_3}" /></td>
 		</tr>
 		<tr>
 			<th>Aplicação do conhecimento sobre o tema da UC:</th>
 			<td><c:out value="${inquiryResult.number_P2_2}" /></td>
 			<td><c:out value="${inquiryResult.average_P2_2}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P2_2}" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_2_0 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_2_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_2_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_2_3 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_2_0}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_2_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_2_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_2_3}" /></td>
 		</tr>
 		<tr>
 			<th>Sentido crítico e espírito reflexivo:</th>
 			<td><c:out value="${inquiryResult.number_P2_3}" /></td>
 			<td><c:out value="${inquiryResult.average_P2_3}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P2_3}" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_3_0 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_3_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_3_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_3_3 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_3_0}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_3_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_3_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_3_3}" /></td>
 		</tr>
 		<tr>
 			<th>Capacidade de cooperação e comunicação:</th>
 			<td><c:out value="${inquiryResult.number_P2_4}" /></td>
 			<td><c:out value="${inquiryResult.average_P2_4}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P2_4}" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_4_0 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_4_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_4_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P2_4_3 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_4_0}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_4_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_4_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P2_4_3}" /></td>
 		</tr>
 	</table>
 	
@@ -396,60 +398,60 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P3_1}" /></td>
 			<td><c:out value="${inquiryResult.average_P3_1}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P3_1}" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_1_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_1_9}" /></td>
 		</tr>
 		<tr>
 			<th>A UC encontra-se bem estruturada:</th>
 			<td><c:out value="${inquiryResult.number_P3_2}" /></td>
 			<td><c:out value="${inquiryResult.average_P3_2}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P3_2}" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_2_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_2_9}" /></td>
 		</tr>
 		<tr>
 			<th>A bibliografia foi importante:</th>
 			<td><c:out value="${inquiryResult.number_P3_3}" /></td>
 			<td><c:out value="${inquiryResult.average_P3_3}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P3_3}" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_3_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_3_9}" /></td>
 		</tr>
 		<tr>
 			<th>Os materiais de apoio foram bons:</th>
 			<td><c:out value="${inquiryResult.number_P3_4}" /></td>
 			<td><c:out value="${inquiryResult.average_P3_4}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P3_4}" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P3_4_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P3_4_9}" /></td>
 		</tr>
 	</table>
 	
@@ -477,15 +479,15 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P4}" /></td>
 			<td><c:out value="${inquiryResult.average_P4}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P4}" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P4_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P4_9}" /></td>
 		</tr>
 	</table>
 	
@@ -513,15 +515,15 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.number_P5}" /></td>
 			<td><c:out value="${inquiryResult.average_P5}" /></td>
 			<td><c:out value="${inquiryResult.standardDeviation_P5}" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_1 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_2 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_3 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_4 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_5 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_6 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_7 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_8 * 100} %" /></td>
-			<td><c:out value="${inquiryResult.perc_P5_9 * 100} %" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P5_9}" /></td>
 		</tr>
 	</table>
 </logic:equal>
