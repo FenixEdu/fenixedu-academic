@@ -97,7 +97,7 @@
 	<slot name="unit" key="unitName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>
-		<property name="format" value="${presentationName}"/>
+		<property name="format" value="${name}"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchInternalUnits"/>
 		<property name="serviceArgs" value="slot=name,size=20"/>
