@@ -2392,7 +2392,7 @@ public class Registration extends Registration_Base {
 	final Collection<CycleCurriculumGroup> result = new HashSet<CycleCurriculumGroup>();
 
 	for (final CycleCurriculumGroup group : getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
-	    if (group.isConclusionProcessed()) {
+	    if (group.isConclusionProcessed() && group.getConclusionYear() == executionYear) {
 		result.add(group);
 	    }
 	}
