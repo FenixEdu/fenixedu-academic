@@ -5,479 +5,487 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<bean:write name="inquiryResult" />
-
-<%--
 
 <h2>Resultados do Inquérito</h2>
 
 <div class="infoop2" style="font-size: 1.4em; padding: 0.5em 1em; margin: 1em 0;">
-	<p style="margin: 0.75em 0;">2º semestre de 2007/2008</span></p>
-	<p style="margin: 0.75em 0;">Ciências de Engenharia - Engenharia Informática e de Computadores - Alameda</span></p>
-	<p style="margin: 0.75em 0;">Mecânica e Ondas</p>
+	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionCourse.executionPeriod.name"/> <bean:write name="inquiryResult" property="executionCourse.executionYear.name"/></span></p>
+	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/></span></p>
+	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionCourse.nome"/></p>
 </div>
 
 
 <table class="tstyle1 thlight thleft td50px thbgnone">
 	<tr>
 		<th>Nº de inscritos:</th>
-		<td>57</td>
+		<td><c:out value="${inquiryResult.numberOfEnrolled}" /></td>
 	</tr>
 	<tr>
 		<th>Avaliados (%):</th>
-		<td>98%</td>
+		<td><c:out value="${inquiryResult.evaluatedRatio * 100} %" /></td>
 	</tr>
 	<tr>
 		<th>Aprovados (%):</th>
-		<td>95%</td>
+		<td><c:out value="${inquiryResult.approvedRatio * 100} %" /></td>
 	</tr>
 	<tr>
 		<th>Média notas:</th>
-		<td>15</td>
+		<td><c:out value="${inquiryResult.gradeAverage}" /></td>
 	</tr>
 	<tr>
 		<th>Sujeita a inquérito:</th>
-		<td>Sim</td>
+		<td><c:out value="${inquiryResult.availableToInquiry}" /></td>
 	</tr>
 </table>
 
-
-<h3 class="mtop15 mbottom0"><strong>Estatística de preenchimento e representatividade</strong></h3>
-
-<table class="tstyle1 thlight thleft td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">%</th>
-	</tr>
-	<tr>
-		<th>Respostas validas quadro inicial:</th>
-		<td>57</td>
-		<td>88%</td>
-	</tr>
-	<tr>
-		<th>Respostas validas inquérito à UC:</th>
-		<td>52</td>
-		<td>91%</td>
-	</tr>
-	<tr>
-		<th>Não respostas à UC:</th>
-		<td>3</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>Respostas invalidas inquérito à UC:</th>
-		<td>0</td>
-		<td>0%</td>
-	</tr>
-</table>
-								
-
-<table class="tstyle1 thlight thleft tdcenter">
-	<tr>
-		<th></th>
-		<th class="acenter">Responsáveis pela gestão académica</th>
-		<th class="acenter">Comunidade académica IST</th>
-	</tr>
-	<tr>
-		<th>Representatividade para divulgação:</th>
-		<td>Sim</td>
-		<td>Não</td>
-	</tr>
-</table>
-
-
-<table class="tstyle1 thlight thleft tdcenter">
-	<tr>
-		<th></th>
-		<th class="acenter">Organização da UC</th>
-		<th class="acenter">Avaliação da UC</th>
-		<th class="acenter">Passível de Auditoria</th>
-	</tr>
-	<tr>
-		<th>Resultados a melhorar:</th>
-		<td>Sim</td>
-		<td>Sim</td>
-		<td>Sim</td>
-	</tr>
-</table>
-
-
-<h3 class="mtop15 mbottom0"><strong>Acompanhamento e carga de trabalho da UC ao longo do semestre</strong></h3>
-
-<table class="tstyle1 thlight thleft td50px">
-	<tr>
-		<th>Carga Horária da UC:</th>
-		<td>-</td>
-	</tr>
-	<tr>
-		<th>Nº ECTS da UC:</th>
-		<td>-</td>
-	</tr>
-</table>
-
-<h3 class="mtop15 mbottom0"><strong>Auto-avaliação dos alunos</strong></h3>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-	</tr>
-	<tr>
-		<th>Nº médio de horas de trabalho autónomo por semana com a UC:</th>
-		<td>48</td>
-		<td>6.6</td>
-		<td>2.4</td>
-	</tr>
-	<tr>
-		<th>Nº de dias de estudo da UC na época de exames:</th>
-		<td>48</td>
-		<td>2.2</td>
-		<td>2.9</td>
-	</tr>
-	<tr>
-		<th>Nº médio ECTS estimado:</th>
-		<td colspan="3">48</td>
-	</tr>
-</table>
+<logic:equal name="inquiryResult" property="availableToInquiry" value="true">
+	<h3 class="mtop15 mbottom0"><strong>Estatística de preenchimento e representatividade</strong></h3>
+	
+	<table class="tstyle1 thlight thleft td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">%</th>
+		</tr>
+		<tr>
+			<th>Respostas validas quadro inicial:</th>
+			<td><c:out value="${inquiryResult.validInitialFormAnswersNumber}" /></td>
+			<td><c:out value="${inquiryResult.validInitialFormAnswersRatio * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Respostas validas inquérito à UC:</th>
+			<td><c:out value="${inquiryResult.validInquiryAnswersNumber}" /></td>
+			<td><c:out value="${inquiryResult.validInquiryAnswersRatio * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Não respostas à UC:</th>
+			<td><c:out value="${inquiryResult.noInquiryAnswersNumber}" /></td>
+			<td><c:out value="${inquiryResult.noInquiryAnswersRatio * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Respostas invalidas inquérito à UC:</th>
+			<td><c:out value="${inquiryResult.invalidInquiryAnswersNumber}" /></td>
+			<td><c:out value="${inquiryResult.invalidInquiryAnswersRatio * 100} %" /></td>
+		</tr>
+	</table>
+									
+	
+	<table class="tstyle1 thlight thleft tdcenter">
+		<tr>
+			<th></th>
+			<th class="acenter">Responsáveis pela gestão académica</th>
+			<th class="acenter">Comunidade académica IST</th>
+		</tr>
+		<tr>
+			<th>Representatividade para divulgação:</th>
+			<td><c:out value="${inquiryResult.internalDisclosure}" /></td>
+			<td><c:out value="${inquiryResult.publicDisclosure}" /></td>
+		</tr>
+	</table>
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter">
+		<tr>
+			<th></th>
+			<th class="acenter">Organização da UC</th>
+			<th class="acenter">Avaliação da UC</th>
+			<th class="acenter">Passível de Auditoria</th>
+		</tr>
+		<tr>
+			<th>Resultados a melhorar:</th>
+			<td><c:out value="${inquiryResult.unsatisfactoryResultsCUOrganization}" /></td>
+			<td><c:out value="${inquiryResult.unsatisfactoryResultsCUEvaluation}" /></td>
+			<td><c:out value="${inquiryResult.auditCU}" /></td>
+		</tr>
+	</table>
+</logic:equal>
+<logic:notEqual name="inquiryResult" property="availableToInquiry" value="true">
+TEXTO 2
+</logic:notEqual>
 
 
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">[10; 12]</th>
-		<th class="acenter">[13; 14]</th>
-		<th class="acenter">[15; 16]</th>
-		<th class="acenter">[17; 18]</th>
-		<th class="acenter">[19; 20]</th>
-		<th class="acenter">Reprovado</th>
-		<th class="acenter">Não avaliado</th>
-	</tr>
-	<tr>
-		<th>Gama de valores da classificação dos alunos:</th>
-		<td>47</td>
-		<td>17%</td>
-		<td>19%</td>
-		<td>43%</td>
-		<td>17%</td>
-		<td>2%</td>
-		<td>2%</td>
-		<td>0%</td>
-	</tr>
-</table>
+<logic:equal name="inquiryResult" property="internalDisclosure" value="true">
+	
+	<h3 class="mtop15 mbottom0"><strong>Acompanhamento e carga de trabalho da UC ao longo do semestre</strong></h3>
+	
+	<table class="tstyle1 thlight thleft td50px">
+		<tr>
+			<th>Carga Horária da UC:</th>
+			<td><c:out value="${inquiryResult.scheduleLoad}" /></td>
+		</tr>
+		<tr>
+			<th>Nº ECTS da UC:</th>
+			<td><c:out value="${inquiryResult.ects}" /></td>
+		</tr>
+	</table>
+	
+	<h3 class="mtop15 mbottom0"><strong>Auto-avaliação dos alunos</strong></h3>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+		</tr>
+		<tr>
+			<th>Nº médio de horas de trabalho autónomo por semana com a UC:</th>
+			<td><c:out value="${inquiryResult.number_perc_NHTA}" /></td>
+			<td><c:out value="${inquiryResult.average_perc_weeklyHours}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_perc_NHTA}" /></td>
+		</tr>
+		<tr>
+			<th>Nº de dias de estudo da UC na época de exames:</th>
+			<td><c:out value="${inquiryResult.number_NDE}" /></td>
+			<td><c:out value="${inquiryResult.average_NDE}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_NDE}" /></td>
+		</tr>
+		<tr>
+			<th>Nº médio ECTS estimado:</th>
+			<td><c:out value="${inquiryResult.estimatedEctsNumber}" /></td>
+			<td><c:out value="${inquiryResult.estimatedEctsAverage}" /></td>
+			<td><c:out value="${inquiryResult.estimatedEctsStandardDeviation}" /></td>
+		</tr>
+	</table>
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">[10; 12]</th>
+			<th class="acenter">[13; 14]</th>
+			<th class="acenter">[15; 16]</th>
+			<th class="acenter">[17; 18]</th>
+			<th class="acenter">[19; 20]</th>
+			<th class="acenter">Reprovado</th>
+			<th class="acenter">Não avaliado</th>
+		</tr>
+		<tr>
+			<th>Gama de valores da classificação dos alunos:</th>
+			<td><c:out value="${inquiryResult.number_P1_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_10_12 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_13_14 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_15_16 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_17_18 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_19_20 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_flunked * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_nonEvaluated * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	
+	<p class="mtop15 mbottom0"><strong>Carga de trabalho elevada devido a</strong></p>
+	
+	<table class="tstyle1 thlight thleft td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">%</th>
+		</tr>
+		<tr>
+			<th>Trabalhos/projectos complexos:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_a}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_a * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Trabalhos/projectos extensos:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_b}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_b * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Trabalhos/projectos em número elevado:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_c}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_c * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Falta de preparação anterior exigindo mais trabalho/estudo:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_d}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_d * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Extensão do programa face ao nº de aulas previstas:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_e}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_e * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Pouco acompanhamento das aulas ao longo do semestre:</th>
+			<td><c:out value="${inquiryResult.number_P_1_2_f}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_f * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Outras razões:</th>
+			<td><c:out value="${inquiryResult.number_P1_2_g}" /></td>
+			<td><c:out value="${inquiryResult.perc__P1_2_g * 100} %" /></td>
+		</tr>
+	</table>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+			<th>Conhecimentos anteriores suficientes para o acompanhamento da UC:</th>
+			<td><c:out value="${inquiryResult.number_P1_3}" /></td>
+			<td><c:out value="${inquiryResult.average_P1_3}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P1_3}" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_3_9 * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Passiva<br/>1</th>
+			<th class="acenter">Activa quando solicitada<br/>2</th>
+			<th class="acenter">Activa por iniciativa própria<br/>3</th>
+		</tr>
+		<tr>
+			<th>Participação dos alunos na UC:</th>
+			<td><c:out value="${inquiryResult.number_P1_4}" /></td>
+			<td><c:out value="${inquiryResult.average_P1_4}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P1_4}" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_4_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_4_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P1_4_3 * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>A UC contribuiu para a aquisição e/ou desenvolvimento das seguintes competências</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Não sabe / Não responde / Não aplicável</th>
+			<th class="acenter">Não contribuiu<br/>1</th>
+			<th class="acenter">Contribuiu<br/>2</th>
+			<th class="acenter">Contribuiu muito<br/>3</th>
+		</tr>
+		<tr>
+			<th>Conhecimento e compreensão do tema da UC:</th>
+			<td><c:out value="${inquiryResult.number_P2_1}" /></td>
+			<td><c:out value="${inquiryResult.average_P2_1}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P2_1}" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_1_0 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_1_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_1_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_1_3 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Aplicação do conhecimento sobre o tema da UC:</th>
+			<td><c:out value="${inquiryResult.number_P2_2}" /></td>
+			<td><c:out value="${inquiryResult.average_P2_2}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P2_2}" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_2_0 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_2_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_2_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_2_3 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Sentido crítico e espírito reflexivo:</th>
+			<td><c:out value="${inquiryResult.number_P2_3}" /></td>
+			<td><c:out value="${inquiryResult.average_P2_3}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P2_3}" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_3_0 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_3_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_3_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_3_3 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Capacidade de cooperação e comunicação:</th>
+			<td><c:out value="${inquiryResult.number_P2_4}" /></td>
+			<td><c:out value="${inquiryResult.average_P2_4}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P2_4}" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_4_0 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_4_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_4_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P2_4_3 * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>Organização da UC</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+			<th>O programa previsto foi leccionado:</th>
+			<td><c:out value="${inquiryResult.number_P3_1}" /></td>
+			<td><c:out value="${inquiryResult.average_P3_1}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P3_1}" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_1_9 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>A UC encontra-se bem estruturada:</th>
+			<td><c:out value="${inquiryResult.number_P3_2}" /></td>
+			<td><c:out value="${inquiryResult.average_P3_2}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P3_2}" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_2_9 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>A bibliografia foi importante:</th>
+			<td><c:out value="${inquiryResult.number_P3_3}" /></td>
+			<td><c:out value="${inquiryResult.average_P3_3}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P3_3}" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_3_9 * 100} %" /></td>
+		</tr>
+		<tr>
+			<th>Os materiais de apoio foram bons:</th>
+			<td><c:out value="${inquiryResult.number_P3_4}" /></td>
+			<td><c:out value="${inquiryResult.average_P3_4}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P3_4}" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P3_4_9 * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>Método de avaliação da UC</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+			<th>Os métodos de avaliação foram justos e apropriados:</th>
+			<td><c:out value="${inquiryResult.number_P4}" /></td>
+			<td><c:out value="${inquiryResult.average_P4}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P4}" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P4_9 * 100} %" /></td>
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>Avaliação global da UC</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+			<th>Avaliação do funcionamento da UC:</th>
+			<td><c:out value="${inquiryResult.number_P5}" /></td>
+			<td><c:out value="${inquiryResult.average_P5}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P5}" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_2 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_3 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_4 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_5 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_6 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_7 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_8 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.perc_P5_9 * 100} %" /></td>
+		</tr>
+	</table>
+</logic:equal>
 
-
-
-<p class="mtop15 mbottom0"><strong>Carga de trabalho elevada devido a</strong></p>
-
-<table class="tstyle1 thlight thleft td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">%</th>
-	</tr>
-	<tr>
-		<th>Trabalhos/projectos complexos:</th>
-		<td>19</td>
-		<td>39%</td>
-	</tr>
-	<tr>
-		<th>Trabalhos/projectos extensos:</th>
-		<td>28</td>
-		<td>57%</td>
-	</tr>
-	<tr>
-		<th>Trabalhos/projectos em número elevado:</th>
-		<td>11</td>
-		<td>22%</td>
-	</tr>
-	<tr>
-		<th>Falta de preparação anterior exigindo mais trabalho/estudo:</th>
-		<td>8</td>
-		<td>16%</td>
-	</tr>
-	<tr>
-		<th>Extensão do programa face ao nº de aulas previstas:</th>
-		<td>1</td>
-		<td>2%</td>
-	</tr>
-	<tr>
-		<th>Pouco acompanhamento das aulas ao longo do semestre:</th>
-		<td>3</td>
-		<td>6%</td>
-	</tr>
-	<tr>
-		<th>Outras razões:</th>
-		<td>3</td>
-		<td>6%</td>
-	</tr>
-</table>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-		<th>Conhecimentos anteriores suficientes para o acompanhamento da UC:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Passiva<br/>1</th>
-		<th class="acenter">Activa quando solicitada<br/>2</th>
-		<th class="acenter">Activa por iniciativa própria<br/>3</th>
-	</tr>
-	<tr>
-		<th>Participação dos alunos na UC:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>A UC contribuiu para a aquisição e/ou desenvolvimento das seguintes competências</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Não sabe / Não responde / Não aplicável</th>
-		<th class="acenter">Não contribuiu<br/>1</th>
-		<th class="acenter">Contribuiu<br/>2</th>
-		<th class="acenter">Contribuiu muito<br/>3</th>
-	</tr>
-	<tr>
-		<th>Conhecimento e compreensão do tema da UC:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>Aplicação do conhecimento sobre o tema da UC:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>Sentido crítico e espírito reflexivo:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>Capacidade de cooperação e comunicação:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>Organização da UC</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-		<th>O programa previsto foi leccionado:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>A UC encontra-se bem estruturada:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>A bibliografia foi importante:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-	<tr>
-		<th>Os materiais de apoio foram bons:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>Método de avaliação da UC</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-		<th>Os métodos de avaliação foram justos e apropriados:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>Avaliação global da UC</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-		<th>Avaliação do funcionamento da UC:</th>
-		<td>49</td>
-		<td>2.1</td>
-		<td>0.7</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-		<td>5%</td>
-	</tr>
-</table>
-
---%>
+<logic:notEqual name="inquiryResult" property="internalDisclosure" value="true">
+TEXTO 3
+</logic:notEqual>

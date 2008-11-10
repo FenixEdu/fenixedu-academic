@@ -22,5 +22,10 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
     public Boolean getUnsatisfactoryResultsCUOrganization() {
 	return super.getUnsatisfactoryResultsCUOrganization() != null && super.getUnsatisfactoryResultsCUOrganization();
     }
+    
+    @Override
+    public Boolean getAuditCU() {
+	return super.getAuditCU() != null && super.getAuditCU();
+    }
 
 }
