@@ -197,6 +197,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return super.getConclusionDate() != null;
     }
 
+    final public ExecutionYear getConclusionYear() {
+	return isConclusionProcessed() ? getLastApprovementExecutionYear() : null;
+    }
+
     public boolean isConclusionProcessed() {
 	return hasFinalAverage();
     }
