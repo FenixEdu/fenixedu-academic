@@ -23,37 +23,30 @@
 				<div class="infoop2 mtop1">
 					<bean:write name="executionPeriod" property="teachingInquiryResponsePeriod.introduction" filter="false"/>
 				</div>
-			</div>
-			<br />
+				
+				<p style="margin-top: 1.75em;"><strong><bean:message key="label.teachingInquiries.coursesToAnswer" bundle="INQUIRIES_RESOURCES"/>:</strong></p>
 
-			<div align="center">
-				<table>
-					<tr>
-						<td>
-							<c:forEach items="${executionCourses}" var="executionCourse">
-								<html:link page="/teacher/teachingInquiry.do?method=showInquiriesPrePage&contentContextPath_PATH=/docencia/docencia" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-									<bean:write name="executionCourse" property="nome"/> -
-									<bean:write name="executionCourse" property="executionPeriod.semester" />
-									<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
-									<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
-								</html:link><br/>
-							</c:forEach><br/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
-								<html:hidden property="method" value="respondLater"/>
-								<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
-									<bean:message key="button.inquiries.respond.later" />
-								</html:submit>
-							</form>
-						</td>
-					</tr>
-				</table>
+				<c:forEach items="${executionCourses}" var="executionCourse">
+					<p style="padding-left: 2em; margin: 0.75em 0;">
+						<html:link page="/teacher/teachingInquiry.do?method=showInquiriesPrePage&contentContextPath_PATH=/docencia/docencia" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<bean:write name="executionCourse" property="nome"/> -
+							<bean:write name="executionCourse" property="executionPeriod.semester" />
+							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
+							<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
+						</html:link>
+					</p>
+				</c:forEach>
+				
+				<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
+					<html:hidden property="method" value="respondLater"/>
+					<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
+					<p style="margin-top: 2.5em; text-align: center;">
+						<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
+							<bean:message key="button.inquiries.respond.later" />
+						</html:submit>
+					</p>
+				</form>
 			</div>
-
 		</div>
 	</body>
 </html:html>

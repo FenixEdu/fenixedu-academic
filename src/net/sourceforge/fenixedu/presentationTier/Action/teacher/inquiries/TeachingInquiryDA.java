@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +43,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showInquiry2ndPage", path = "teaching-inquiries.showInquiry2ndPage"),
 	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
 	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission"),
-	@Forward(name = "showCourseInquiryResult", path = "teaching-inquiries.showCourseInquiryResult"),
-	@Forward(name = "showTeachingInquiryResult", path = "teaching-inquiries.showTeachingInquiryResult") })
+	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
+	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false) })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -76,9 +75,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		.getProfessorships() : Collections.singletonList(professorship)) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
 		    .getStudentInquiriesTeachingResults()) {
-	    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
-		    studentInquiriesTeachingResult);
-	}
+		courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+			studentInquiriesTeachingResult);
+	    }
 	}
 
 	return courseResultsMap.values();
@@ -157,13 +156,13 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	}
 
 	return prepareConfirm(actionMapping, actionForm, request, response);
-	}
+    }
 
     private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
 	for (final StudentInquiriesCourseResultBean inquiriesCourseResultBean : inquiriesCourseResults) {
 	    if (inquiriesCourseResultBean.getStudentInquiriesCourseResult().isUnsatisfactory()) {
 		return true;
-	}
+	    }
 
 	    for (final StudentInquiriesTeachingResult studentInquiriesTeachingResult : inquiriesCourseResultBean
 		    .getStudentInquiriesTeachingResults()) {
@@ -243,7 +242,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString())));
-	return actionMapping.findForward("showCourseInquiryResult"); 
+	return actionMapping.findForward("showCourseInquiryResult");
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,

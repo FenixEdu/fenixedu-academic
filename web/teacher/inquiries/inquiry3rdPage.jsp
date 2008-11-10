@@ -19,11 +19,13 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></h4>
+<h3><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></h3>
 
 <logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean">
-	<bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>: <c:out value="${courseResult.studentInquiriesCourseResult.executionDegree.presentationName}" /><br/>
-	<table>
+
+	<h4 class="separator2 mtop15 mbottom05" style="font-weight: normal;"><bean:message key="label.degree.name" bundle="INQUIRIES_RESOURCES"/>: <c:out value="${courseResult.studentInquiriesCourseResult.executionDegree.presentationName}" /></h4>
+
+	<table class="tstyle1 thlight tdcenter">
 		<tr>		
 			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsCUOrganization" bundle="INQUIRIES_RESOURCES"/></th>
 			<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsCUEvaluation" bundle="INQUIRIES_RESOURCES"/></th>
@@ -33,8 +35,8 @@
 			<td><bean:message key="<%= "label." + courseResult.getStudentInquiriesCourseResult().getUnsatisfactoryResultsCUEvaluation().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>			
 		</tr>		
 	</table>
-	<br/>
-	<table>
+	
+	<table class="tstyle1 thlight tdcenter">
 		<tr>		
 			<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
 			<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
@@ -46,7 +48,7 @@
 		</tr>
 		<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
 			<tr>		
-				<td><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
+				<td class="aleft"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
 				<td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
 				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsAssiduity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 				<td><bean:message key="<%= "label." + teachingResult.getUnsatisfactoryResultsPresencialLearning().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
@@ -56,7 +58,7 @@
 			</tr>		
 		</logic:iterate>
 	</table>
-	<br/>	
+	
 </logic:iterate>
 
 <div class="forminline dinline">

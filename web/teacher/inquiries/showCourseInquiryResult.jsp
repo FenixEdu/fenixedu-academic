@@ -5,6 +5,46 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+<head>
+	<title>.IST</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/color.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/print.css" media="print" />
+	
+</head>
+
+<body class="survey">
+
+<style>
+body.survey {
+background: #fff;
+margin: 2em;
+font-size: 70%;
+}
+.acenter { text-align: center !important; }
+th:first-child {
+width: 250px;
+}
+body.survey table {
+}
+body.survey table th {
+vertical-align: bottom;
+}
+body.survey table td {
+text-align: center;
+}
+table.td50px td {
+width: 60px;
+}
+body.survey table {
+border-top: 4px solid #ddd;
+}
+
+</style>
 
 <h2>Resultados do Inquérito</h2>
 
@@ -489,3 +529,7 @@ TEXTO 2
 <logic:notEqual name="inquiryResult" property="internalDisclosure" value="true">
 TEXTO 3
 </logic:notEqual>
+
+
+</body>
+</html>

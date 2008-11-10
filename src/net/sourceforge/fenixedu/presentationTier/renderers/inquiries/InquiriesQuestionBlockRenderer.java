@@ -113,6 +113,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setColspan(scaleHeadersCount);
 		    cell.setBody(formComponent);
+		    cell.setClasses("aleft");
 
 		} else if (inquiriesQuestion instanceof RadioGroupQuestion) {
 

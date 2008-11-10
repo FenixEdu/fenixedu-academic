@@ -23,7 +23,7 @@
 	<div class="relative">
 		<fr:form action="/teachingInquiry.do?method=showInquiries2ndPage">
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="firstPageFirstBlock" />
+			<fr:edit name="teachingInquiry" property="firstPageFirstBlock" />	
 			
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
