@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
@@ -75,9 +76,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		.getProfessorships() : Collections.singletonList(professorship)) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
 		    .getStudentInquiriesTeachingResults()) {
-		courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
-			studentInquiriesTeachingResult);
-	    }
+	    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+		    studentInquiriesTeachingResult);
+	}
 	}
 
 	return courseResultsMap.values();
@@ -156,13 +157,13 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	}
 
 	return prepareConfirm(actionMapping, actionForm, request, response);
-    }
+	}
 
     private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
 	for (final StudentInquiriesCourseResultBean inquiriesCourseResultBean : inquiriesCourseResults) {
 	    if (inquiriesCourseResultBean.getStudentInquiriesCourseResult().isUnsatisfactory()) {
 		return true;
-	    }
+	}
 
 	    for (final StudentInquiriesTeachingResult studentInquiriesTeachingResult : inquiriesCourseResultBean
 		    .getStudentInquiriesTeachingResults()) {
@@ -241,16 +242,14 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", getFromRequest(request, "resultId"));
+	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString())));
 	return actionMapping.findForward("showCourseInquiryResult"); 
     }
 
-    public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", getFromRequest(request, "resultId"));
-	return actionMapping.findForward("showTeachingInquiryResult"); 
+    public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString())));
+	return actionMapping.findForward("showTeachingInquiryResult");
     }
 
-
-    
 }
