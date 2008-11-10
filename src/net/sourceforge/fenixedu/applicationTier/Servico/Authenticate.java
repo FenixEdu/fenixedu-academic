@@ -216,6 +216,13 @@ public class Authenticate extends FenixService implements Serializable {
 	return new UserView(person, allowedRoles, expirationDate);
     }
 
+    public static class NonExistingUserException extends ExcepcaoAutenticacao {
+
+	public NonExistingUserException(final String message) {
+	    super(message);
+	}
+    }
+
     public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao,
 	    ExcepcaoPersistencia {
 	final String username = receipt.getUserName();
@@ -223,7 +230,7 @@ public class Authenticate extends FenixService implements Serializable {
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null) {
 	    System.out.println("Attempted login of non-existent user: " + username);
-	    throw new ExcepcaoAutenticacao("error.Exception");
+	    throw new NonExistingUserException("error.Exception");
 	}
 
 	setLoginHostNameAndDateTime(remoteHost, person);
