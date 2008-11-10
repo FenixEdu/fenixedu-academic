@@ -54,7 +54,7 @@ border-top: 4px solid #ddd;
 	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionCourse.nome"/></p>
 </div>
 
-
+<bean:define id="result" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult" />
 <table class="tstyle1 thlight thleft td50px thbgnone">
 	<tr>
 		<th>Nº de inscritos:</th>
@@ -74,7 +74,7 @@ border-top: 4px solid #ddd;
 	</tr>
 	<tr>
 		<th>Sujeita a inquérito:</th>
-		<td><c:out value="${inquiryResult.availableToInquiry}" /></td>
+		<td><bean:message key="<%= "label." + result.getAvailableToInquiry().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
 
@@ -118,8 +118,8 @@ border-top: 4px solid #ddd;
 		</tr>
 		<tr>
 			<th>Representatividade para divulgação:</th>
-			<td><c:out value="${inquiryResult.internalDisclosure}" /></td>
-			<td><c:out value="${inquiryResult.publicDisclosure}" /></td>
+			<td><bean:message key="<%= "label." + result.getInternalDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getPublicDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 		</tr>
 	</table>
 	
@@ -133,9 +133,9 @@ border-top: 4px solid #ddd;
 		</tr>
 		<tr>
 			<th>Resultados a melhorar:</th>
-			<td><c:out value="${inquiryResult.unsatisfactoryResultsCUOrganization}" /></td>
-			<td><c:out value="${inquiryResult.unsatisfactoryResultsCUEvaluation}" /></td>
-			<td><c:out value="${inquiryResult.auditCU}" /></td>
+			<td><bean:message key="<%= "label." + result.getUnsatisfactoryResultsCUOrganization().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getUnsatisfactoryResultsCUEvaluation().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getAuditCU().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 		</tr>
 	</table>
 </logic:equal>
@@ -203,7 +203,7 @@ TEXTO 2
 		</tr>
 		<tr>
 			<th>Gama de valores da classificação dos alunos:</th>
-			<td><c:out value="${inquiryResult.number_P1_1 * 100} %" /></td>
+			<td><c:out value="${inquiryResult.number_P1_1}" /></td>
 			<td><c:out value="${inquiryResult.perc_10_12 * 100} %" /></td>
 			<td><c:out value="${inquiryResult.perc_13_14 * 100} %" /></td>
 			<td><c:out value="${inquiryResult.perc_15_16 * 100} %" /></td>
