@@ -40,7 +40,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showInquiry1stPage", path = "teaching-inquiries.showInquiry1stPage"),
 	@Forward(name = "showInquiry2ndPage", path = "teaching-inquiries.showInquiry2ndPage"),
 	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
-	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission") })
+	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission"),
+	@Forward(name = "showCourseInquiryResult", path = "teaching-inquiries.showCourseInquiryResult"),
+	@Forward(name = "showTeachingInquiryResult", path = "teaching-inquiries.showTeachingInquiryResult") })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -210,4 +212,18 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	return AccessControl.getPerson().getTeacher().getProfessorshipByExecutionCourse(executionCourse);
     }
 
+    public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("inquiryResult", getFromRequest(request, "resultId"));
+	return actionMapping.findForward("showCourseInquiryResult"); 
+    }
+
+    public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("inquiryResult", getFromRequest(request, "resultId"));
+	return actionMapping.findForward("showTeachingInquiryResult"); 
+    }
+
+
+    
 }

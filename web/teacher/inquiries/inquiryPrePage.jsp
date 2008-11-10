@@ -16,6 +16,25 @@
 	</logic:notEmpty>
 </logic:present>
 
-<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-	<bean:message key="link.inquiries.answerNow" bundle="INQUIRIES_RESOURCES"/>
-</html:link>
+<logic:present name="studentInquiriesCourseResults">
+	<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
+		<html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
+			<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.presentationName" />
+		</html:link>
+		<br/>
+		<logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
+			<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
+				<html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
+					<bean:write name="teachingResult" property="professorship.teacher.person.name" />
+					&nbsp;(<bean:write name="teachingResult" property="shiftType.name" />)<br/>
+				</html:link>			
+			</logic:iterate>
+		</logic:notEmpty>
+	</logic:iterate>
+</logic:present>
+
+<p>
+	<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+		<bean:message key="link.inquiries.answerNow" bundle="INQUIRIES_RESOURCES"/>
+	</html:link>
+</p>
