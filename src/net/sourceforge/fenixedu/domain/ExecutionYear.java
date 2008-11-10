@@ -129,6 +129,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 		object.getAcademicInterval().getStartDateTimeWithoutChronology());
     }
 
+    public int getDistanceInCivilYears(final ExecutionYear executionYear) {
+	if (executionYear == null || executionYear == this) {
+	    return 0;
+	}
+
+	return Math.abs(getBeginDateYearMonthDay().getYear() - executionYear.getBeginDateYearMonthDay().getYear());
+    }
+
     public boolean isAfter(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) > 0;
     }
