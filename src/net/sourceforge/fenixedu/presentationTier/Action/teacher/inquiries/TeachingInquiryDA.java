@@ -53,17 +53,16 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
-	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(executionCourse,
-		professorship));
+	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 
 	return actionMapping.findForward("inquiryPrePage");
     }
 
-    private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(ExecutionCourse executionCourse,
-	    Professorship professorship) {
+    private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final Professorship professorship) {
 	Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap = new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
-	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse()
+		.getStudentInquiriesCourseResults()) {
 	    courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
 		    studentInquiriesCourseResult));
 	}
@@ -82,6 +81,11 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	if (teachingInquiry == null) {
 	    Professorship professorship = getProfessorship(readAndSaveExecutionCourse(request));
+
+	    if (AccessControl.getPerson().getTeacher() != professorship.getTeacher()) {
+		return null;
+	    }
+
 	    teachingInquiry = new TeachingInquiryDTO(professorship);
 	}
 
@@ -137,6 +141,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("showInquiry2ndPage");
 	}
 
+	// populateStudentInquiriesCourseResults()
 	for (final StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
 
 	}
