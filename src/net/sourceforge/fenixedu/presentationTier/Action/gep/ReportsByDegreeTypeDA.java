@@ -44,15 +44,16 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -217,7 +218,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("sigla curso " + suffix);
     }
 
-    private void setDegreeColumns(final Row row, final Degree degree) {
+    private void setDegreeCells(final Row row, final Degree degree) {
 	row.setCell(degree.getDegreeType().getLocalizedName());
 	row.setCell(degree.getNameI18N().getContent());
 	row.setCell(degree.getSigla());
@@ -323,7 +324,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 					final Teacher teacher = professorship.getTeacher();
 					final Row row = spreadsheet.addRow();
-					setDegreeColumns(row, degree);
+					setDegreeCells(row, degree);
 					row.setCell(curricularCourse.getName());
 					row.setCell(teacher.getTeacherNumber().toString());
 					double credits = 0;
@@ -700,7 +701,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				row.setCell(registration.getNumber().toString());
 				row.setCell(executionSemester.getExecutionYear().getYear());
 				row.setCell(executionSemester.getSemester().toString());
-				setDegreeColumns(row, degree);
+				setDegreeCells(row, degree);
 				final StringBuilder stringBuilder = new StringBuilder();
 				for (final StudentStatuteBean studentStatuteBean : registration.getStudent().getStatutes(
 					executionSemester)) {
@@ -794,11 +795,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	final Row row = spreadsheet.addRow();
 	row.setCell(student.getNumber().toString());
-	setDegreeColumns(row, registration.getDegree());
+	setDegreeCells(row, registration.getDegree());
 	row.setCell(executionSemester.getSemester().toString());
 	row.setCell(executionSemester.getExecutionYear().getYear());
 	row.setCell(curricularCourse.getName());
-	setDegreeColumns(row, degree);
+	setDegreeCells(row, degree);
 	row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
 	row.setCell(enrolment.getEnrollmentState().getDescription());
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
@@ -862,7 +863,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 			if (registration.isRegistered(executionYear)) {
 			    final Row row = spreadsheet.addRow();
 			    row.setCell(registration.getNumber());
-			    setDegreeColumns(row, degree);
+			    setDegreeCells(row, degree);
 
 			    reportIngression(row, registration);
 
@@ -911,7 +912,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				&& registrationState.getExecutionYear() == executionYear) {
 			    final Row row = spreadsheet.addRow();
 			    row.setCell(registration.getNumber());
-			    setDegreeColumns(row, degree);
+			    setDegreeCells(row, degree);
 			}
 		    }
 		}
@@ -923,8 +924,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
+	if (degreeType.isBolonhaType()) {
+	    spreadsheet.setHeader("ciclo");
+	}
 	spreadsheet.setHeader("ano de ingresso");
-	spreadsheet.setHeader("ano léctivo conclusão");
+	spreadsheet.setHeader("ano lectivo conclusão");
 	spreadsheet.setHeader("data conclusão");
 	spreadsheet.setHeader("número de anos para conclusão");
 	spreadsheet.setHeader("média final");
@@ -935,59 +939,56 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("email");
 	spreadsheet.setHeader("sexo");
 
-	final CycleType cycleType = degreeType.getLastOrderedCycleType();
-
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType() == degreeType) {
 		if (isActive(degree, executionYear)) {
-		    for (final Registration registration : degree.getRegistrationsSet()) {
-			final RegistrationState registrationState = registration.getLastRegistrationState(executionYear);
-			if (registrationState != null && registrationState.getStateType() == RegistrationStateType.CONCLUDED
-				&& registration.isRegistrationConclusionProcessed()
-				&& !registration.getStudentCurricularPlansSet().isEmpty()
-				&& (!degreeType.isBolonhaType() || registration.hasConcludedCycle(cycleType))) {
-			    final ExecutionYear conclusionExecutionYear;
-			    final YearMonthDay conclusionDate;
+		    for (final Registration reg : degree.getRegistrationsSet()) {
+			if (!reg.getStudentCurricularPlansSet().isEmpty()) {
 			    if (degreeType.isBolonhaType()) {
-				conclusionExecutionYear = registration.getConclusionYear();
-				conclusionDate = registration.getConclusionDate(cycleType);
-			    } else {
-				conclusionDate = registration.getConclusionDate();
-				conclusionExecutionYear = conclusionDate == null ? null : ExecutionYear
-					.getExecutionYearByDate(conclusionDate);
-			    }
-			    if (conclusionExecutionYear == null || conclusionExecutionYear == executionYear) {
-				final Person person = registration.getPerson();
-
-				final Row row = spreadsheet.addRow();
-				row.setCell(registration.getNumber());
-				row.setCell(person.getName());
-				setDegreeColumns(row, degree);
-				row.setCell(registration.getStartExecutionYear().getYear());
-				if (conclusionExecutionYear != null) {
-				    row.setCell(conclusionExecutionYear.getYear());
-				} else {
-				    row.setCell("");
+				for (final CycleCurriculumGroup group : reg.getConclusionProcessedCycles(executionYear)) {
+				    reportGraduate(spreadsheet, reg, group);
 				}
-				if (conclusionDate != null) {
-				    row.setCell(conclusionDate.toString("yyyy-MM-dd"));
-				} else {
-				    row.setCell("");
-				}
-				row.setCell(Integer.valueOf(registration.getSortedEnrolmentsExecutionYears().size()));
-				row.setCell(registration.getFinalAverage());
-				row.setCell(person.getAddress());
-				row.setCell(person.getPostalCode());
-				row.setCell(person.getPhone());
-				row.setCell(person.getMobile());
-				row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
-				row.setCell(person.getGender().toLocalizedString());
+			    } else if (reg.isRegistrationConclusionProcessed()) {
+				reportGraduate(spreadsheet, reg, (CycleCurriculumGroup) null);
 			    }
 			}
 		    }
 		}
 	    }
 	}
+
+    }
+
+    private void reportGraduate(final Spreadsheet sheet, final Registration registration, final CycleCurriculumGroup group) {
+	final Row row = sheet.addRow();
+
+	final ExecutionYear ingressionYear = registration.getIngressionYear();
+	final ExecutionYear conclusion = group == null ? registration.getConclusionYear() : group.getConclusionYear();
+	final YearMonthDay conclusionDate = group == null ? registration.getConclusionDate() : group.getConclusionDate();
+
+	row.setCell(registration.getNumber());
+	row.setCell(registration.getName());
+	setDegreeCells(row, registration.getDegree());
+	if (group != null) {
+	    row.setCell(group.getCycleType().getDescription());
+	}
+	row.setCell(ingressionYear.getYear());
+	row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
+	row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
+	row.setCell(conclusion == null ? StringUtils.EMPTY : String.valueOf(ingressionYear.getDistanceInCivilYears(conclusion)));
+	row.setCell(group == null ? registration.getFinalAverage() : group.getFinalAverage());
+
+	setPersonCells(registration, row);
+    }
+
+    private void setPersonCells(final Registration registration, final Row row) {
+	final Person person = registration.getPerson();
+	row.setCell(person.getAddress());
+	row.setCell(person.getPostalCode());
+	row.setCell(person.getPhone());
+	row.setCell(person.getMobile());
+	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
+	row.setCell(person.getGender().toLocalizedString());
     }
 
     private void reportTeachersByShift(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
