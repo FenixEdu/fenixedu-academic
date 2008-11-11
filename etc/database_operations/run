@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Teaching Inquiries Table" alterTeachingInquiries.sql

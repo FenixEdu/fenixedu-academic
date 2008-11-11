@@ -2775,11 +2775,9 @@ class DomainObject {
 		Integer evaluationMethodSuitableForCUTeachingTypeAndObjective;
 		Integer disturbingEventsInClasses;
 		String disturbingEventsInClassesDescription;
-		Integer theoricalClassesAttendsOscillation;
-		Integer problemsClassesAttendsOscillation;
-		Integer labsClassesAttendsOscillation;
-		Integer seminarClassesAttendsOscillation;
-		Integer projectClassesAttendsOscillation;
+		Integer semesterStartAverageStudentNumber;
+		Integer semesterMiddleAverageStudentNumber;
+		Integer semesterEndAverageStudentNumber;
 		String activeAndInteressedStudentsRatio;
 		Integer studentsPerformance;
 		Integer classesAndOtherActivitiesFrequency;
@@ -2795,6 +2793,7 @@ class DomainObject {
 		Integer numberOfStudyVisitsOrOtherActivitiesReports;
 		Integer numberOfWorksOrProjects;
 		String teachingLanguage;
+		String otherTeachingLanguage;
 		Integer workLoadClassification;
 		String workLoadClassificationReasons;
 		Integer positionOfCUInStudentCurricularPlan;

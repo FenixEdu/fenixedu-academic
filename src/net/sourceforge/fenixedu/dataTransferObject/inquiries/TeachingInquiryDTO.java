@@ -121,21 +121,14 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageSecondBlockFirstPart.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.disturbingEventsInClassesDescription", false).setRequired(false));
 
-	this.firstPageSecondBlockSecondPart = new InquiriesBlock(StringUtils.EMPTY, true,
-		"header.teachingInquiries.notAppliable", "header.teachingInquiries.totallyDisagree",
-		"header.teachingInquiries.two", "header.teachingInquiries.disagree", "header.teachingInquiries.four",
-		"header.teachingInquiries.neitherAgreeOrDisagree", "header.teachingInquiries.six",
-		"header.teachingInquiries.agree", "header.teachingInquiries.eight", "header.teachingInquiries.totallyAgree");
-	this.firstPageSecondBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.theoricalClassesAttendsOscillation", 0, 9, false));
-	this.firstPageSecondBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.problemsClassesAttendsOscillation", 0, 9, false));
-	this.firstPageSecondBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.labsClassesAttendsOscillation", 0, 9, false));
-	this.firstPageSecondBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.seminarClassesAttendsOscillation", 0, 9, false));
-	this.firstPageSecondBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.projectClassesAttendsOscillation", 0, 9, false));
+	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.semesterAverageStudentNumber", true,
+		StringUtils.EMPTY);
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterStartAverageStudentNumber", false).setInteger(true));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterMiddleAverageStudentNumber", false).setInteger(true));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterEndAverageStudentNumber", false).setInteger(true));
 
 	this.firstPageSecondBlockThirdPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.lessFivePercent", "header.teachingInquiries.twentyFivePercent",
@@ -147,8 +140,8 @@ public class TeachingInquiryDTO implements Serializable {
 		StringUtils.EMPTY));
 
 	this.firstPageSecondBlockFourthPart = new InquiriesBlock("title.teachingInquiries.rateFromNonSatisfatoryToExcellent",
-		true, "header.teachingInquiries.one", "header.teachingInquiries.two",
-		"header.teachingInquiries.three", "header.teachingInquiries.four");
+		true, "header.teachingInquiries.one", "header.teachingInquiries.two", "header.teachingInquiries.three",
+		"header.teachingInquiries.four");
 	this.firstPageSecondBlockFourthPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.studentsPerformance", 1,
 		4, false));
 
@@ -166,7 +159,7 @@ public class TeachingInquiryDTO implements Serializable {
 		.setRequired(false));
 
 	this.secondPageFourthBlock = new InquiriesBlock("title.teachingInquiries.cuEvaluationMethod.writtenProofs", true,
-		"header.teachingInquiries.number");
+		StringUtils.EMPTY);
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfExams", false).setInteger(
 		true).setToolTip("tooltip.teachingInquiries.numberOfExams"));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfTests", false).setInteger(
@@ -177,8 +170,7 @@ public class TeachingInquiryDTO implements Serializable {
 		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfElectronicQuizzes"));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.numberOfStudyVisitsOrOtherActivitiesReports", false).setInteger(true).setHeader(
-		new QuestionHeader("title.teachingInquiries.cuEvaluationMethod.worksOrProjects",
-			"header.teachingInquiries.number")));
+		new QuestionHeader("title.teachingInquiries.cuEvaluationMethod.worksOrProjects", StringUtils.EMPTY)));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfWorksOrProjects", false)
 		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfWorksOrProjects"));
 
@@ -188,6 +180,8 @@ public class TeachingInquiryDTO implements Serializable {
 	this.secondPageFourthBlockThirdPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.teachingLanguage", false)
 		.addChoice("PT", StringUtils.EMPTY).addChoice("EN", StringUtils.EMPTY).addChoice("BOTH", StringUtils.EMPTY)
 		.addChoice("OTHER", StringUtils.EMPTY));
+	this.secondPageFourthBlockThirdPart.addQuestion(new TextBoxQuestion("label.teachingInquiries.otherTeachingLanguage",
+		false).setRequired(false));
 
 	this.secondPageFifthBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.belowExpected", "header.teachingInquiries.expected",

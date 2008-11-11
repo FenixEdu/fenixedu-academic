@@ -212,6 +212,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     private ActionForward forwardTo3rdPage(ActionMapping actionMapping, HttpServletRequest request,
 	    Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
+	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
+	request.setAttribute("teachingInquiry", teachingInquiry);
+	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 	request.setAttribute("studentInquiriesCourseResults", inquiriesCourseResults);
 	RenderUtils.invalidateViewState();
 	return actionMapping.findForward("showInquiry3rdPage");
@@ -241,13 +244,25 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString())));
+	final StudentInquiriesCourseResult courseResult = RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
+		Integer.valueOf(getFromRequest(request, "resultId").toString()));
+	if (!AccessControl.getPerson().getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())) {
+	    return null;
+	}
+	request.setAttribute("inquiryResult", courseResult);
 	return actionMapping.findForward("showCourseInquiryResult");
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString())));
+	final StudentInquiriesTeachingResult teachingResult = RootDomainObject.getInstance()
+		.readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString()));
+	if (teachingResult.getProfessorship().getTeacher() != AccessControl.getPerson().getTeacher()
+		&& AccessControl.getPerson().getTeacher()
+			.isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null) {
+	    return null;
+	}
+	request.setAttribute("inquiryResult", teachingResult);
 	return actionMapping.findForward("showTeachingInquiryResult");
     }
 

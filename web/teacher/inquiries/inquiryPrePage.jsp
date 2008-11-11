@@ -26,8 +26,10 @@
 	<p class="separator2 mtop2"><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></p>
 	<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
 		<p class="mtop2">
+			<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
 			<html:link page="<%= "/teachingInquiry.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
-				<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.presentationName" />
+				<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
+				<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
 			</html:link>
 		</p>
 

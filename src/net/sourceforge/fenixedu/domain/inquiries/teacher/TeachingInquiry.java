@@ -46,15 +46,11 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	teachingInquiry.setDisturbingEventsInClasses(answersMap.get("disturbingEventsInClasses").getValueAsInteger());
 	teachingInquiry
 		.setDisturbingEventsInClassesDescription(answersMap.get("disturbingEventsInClassesDescription").getValue());
-	teachingInquiry.setTheoricalClassesAttendsOscillation(answersMap.get("theoricalClassesAttendsOscillation")
+	teachingInquiry.setSemesterStartAverageStudentNumber(answersMap.get("semesterStartAverageStudentNumber")
 		.getValueAsInteger());
-	teachingInquiry.setProblemsClassesAttendsOscillation(answersMap.get("problemsClassesAttendsOscillation")
+	teachingInquiry.setSemesterMiddleAverageStudentNumber(answersMap.get("semesterMiddleAverageStudentNumber")
 		.getValueAsInteger());
-	teachingInquiry.setLabsClassesAttendsOscillation(answersMap.get("labsClassesAttendsOscillation").getValueAsInteger());
-	teachingInquiry.setSeminarClassesAttendsOscillation(answersMap.get("seminarClassesAttendsOscillation")
-		.getValueAsInteger());
-	teachingInquiry.setProjectClassesAttendsOscillation(answersMap.get("projectClassesAttendsOscillation")
-		.getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumber(answersMap.get("semesterEndAverageStudentNumber").getValueAsInteger());
 	teachingInquiry.setActiveAndInteressedStudentsRatio(answersMap.get("activeAndInteressedStudentsRatio").getValue());
 	teachingInquiry.setStudentsPerformance(answersMap.get("studentsPerformance").getValueAsInteger());
 	teachingInquiry.setClassesAndOtherActivitiesFrequency(answersMap.get("classesAndOtherActivitiesFrequency")
@@ -73,6 +69,7 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 		"numberOfStudyVisitsOrOtherActivitiesReports").getValueAsInteger());
 	teachingInquiry.setNumberOfWorksOrProjects(answersMap.get("numberOfWorksOrProjects").getValueAsInteger());
 	teachingInquiry.setTeachingLanguage(answersMap.get("teachingLanguage").getValue());
+	teachingInquiry.setOtherTeachingLanguage(answersMap.get("otherTeachingLanguage").getValue());
 	teachingInquiry.setWorkLoadClassification(answersMap.get("workLoadClassification").getValueAsInteger());
 	teachingInquiry.setWorkLoadClassificationReasons(answersMap.get("workLoadClassificationReasons").getValue());
 	teachingInquiry.setPositionOfCUInStudentCurricularPlan(answersMap.get("positionOfCUInStudentCurricularPlan")

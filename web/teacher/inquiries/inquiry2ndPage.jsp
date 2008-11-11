@@ -23,6 +23,7 @@
 		<fr:form action="/teachingInquiry.do?method=showInquiries3rdPage">
 
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.cuEvaluationMethod" bundle="INQUIRIES_RESOURCES"/></h4>
+			<bean:message key="subtitle.teachingInquiries.cuEvaluationMethod" bundle="INQUIRIES_RESOURCES"/>
 			<fr:edit name="teachingInquiry" property="secondPageFourthBlock" />
 			<fr:edit name="teachingInquiry" property="secondPageFourthBlockThirdPart" />
 
