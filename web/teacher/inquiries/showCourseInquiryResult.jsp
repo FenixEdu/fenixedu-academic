@@ -51,9 +51,9 @@ border-top: 4px solid #ddd;
 <h2>Resultados do Inquérito</h2>
 
 <div class="infoop2" style="font-size: 1.4em; padding: 0.5em 1em; margin: 1em 0;">
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionCourse.executionPeriod.name"/> <bean:write name="inquiryResult" property="executionCourse.executionYear.name"/></span></p>
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/></span></p>
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionCourse.nome"/></p>
+	<p style="margin: 0.75em 0;">Semestre: <bean:write name="inquiryResult" property="executionCourse.executionPeriod.name"/> <bean:write name="inquiryResult" property="executionCourse.executionYear.name"/></span></p>
+	<p style="margin: 0.75em 0;">Curso: <bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/></span></p>
+	<p style="margin: 0.75em 0;">Disciplina: <bean:write name="inquiryResult" property="executionCourse.nome"/></p>
 </div>
 
 <bean:define id="result" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult" />
@@ -63,19 +63,19 @@ border-top: 4px solid #ddd;
 		<td><c:out value="${inquiryResult.numberOfEnrolled}" /></td>
 	</tr>
 	<tr>
-		<th>Avaliados (%):</th>
+		<th>Avaliados <a href="#" class="help">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a>:</th>
 		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.evaluatedRatio}" /></td>
 	</tr>
 	<tr>
-		<th>Aprovados (%):</th>
+		<th>Aprovados <a href="#" class="help">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a>:</th>
 		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.approvedRatio}" /></td>
 	</tr>
 	<tr>
-		<th>Média notas:</th>
+		<th>Média notas <a href="#" class="help">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a>:</th>
 		<td><c:out value="${inquiryResult.gradeAverage}" /></td>
 	</tr>
 	<tr>
-		<th>Sujeita a inquérito:</th>
+		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's.</span></a>:</th>
 		<td><bean:message key="<%= "label." + result.getAvailableToInquiry().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
@@ -90,12 +90,12 @@ border-top: 4px solid #ddd;
 			<th class="acenter">%</th>
 		</tr>
 		<tr>
-			<th>Respostas validas quadro inicial:</th>
+			<th>Respostas válidas quadro inicial:</th>
 			<td><c:out value="${inquiryResult.validInitialFormAnswersNumber}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.validInitialFormAnswersRatio}" /></td>
 		</tr>
 		<tr>
-			<th>Respostas validas inquérito à UC:</th>
+			<th>Respostas válidas inquérito à UC <a href="#" class="help">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a>:</th>
 			<td><c:out value="${inquiryResult.validInquiryAnswersNumber}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.validInquiryAnswersRatio}" /></td>
 		</tr>
@@ -105,7 +105,7 @@ border-top: 4px solid #ddd;
 			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.noInquiryAnswersRatio}" /></td>
 		</tr>
 		<tr>
-			<th>Respostas invalidas inquérito à UC:</th>
+			<th>Respostas inválidas inquérito à UC:</th>
 			<td><c:out value="${inquiryResult.invalidInquiryAnswersNumber}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.invalidInquiryAnswersRatio}" /></td>
 		</tr>
@@ -115,8 +115,8 @@ border-top: 4px solid #ddd;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr>
 			<th></th>
-			<th class="acenter">Responsáveis pela gestão académica</th>
-			<th class="acenter">Comunidade académica IST</th>
+			<th class="acenter">Responsáveis pela gestão académica <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 10% do nº inscritos.</span></a></th>
+			<th class="acenter">Comunidade académica IST <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 50% do nº inscritos.</span></a></th>
 		</tr>
 		<tr>
 			<th>Representatividade para divulgação:</th>
@@ -129,9 +129,9 @@ border-top: 4px solid #ddd;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr>
 			<th></th>
-			<th class="acenter">Organização da UC</th>
-			<th class="acenter">Avaliação da UC</th>
-			<th class="acenter">Passível de Auditoria</th>
+			<th class="acenter">Organização da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
+			<th class="acenter">Avaliação da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
+			<th class="acenter">Passível de Auditoria <a href="#" class="help">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
 		</tr>
 		<tr>
 			<th>Resultados a melhorar:</th>
@@ -183,7 +183,7 @@ TEXTO 2
 			<td><c:out value="${inquiryResult.standardDeviation_NDE}" /></td>
 		</tr>
 		<tr>
-			<th>Nº médio ECTS estimado:</th>
+			<th>Nº médio ECTS estimado <a href="#" class="help">[?] <span>ECTS ESTIMADO = ((Nº de horas de trabalho autónomo por semana com a UC + Carga Horária da UC)* 14+ Nº de dias de estudo da UC na época de exames * 8)/28.</span></a>:</th>
 			<td><c:out value="${inquiryResult.estimatedEctsNumber}" /></td>
 			<td><c:out value="${inquiryResult.estimatedEctsAverage}" /></td>
 			<td><c:out value="${inquiryResult.estimatedEctsStandardDeviation}" /></td>
