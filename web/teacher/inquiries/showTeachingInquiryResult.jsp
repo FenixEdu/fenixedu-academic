@@ -138,289 +138,296 @@ a { color: #105c93; }
 </table>
 
 
-<p class="mtop15 mbottom0"><strong>Proveito da aprendizagem presencial</strong></p>
+<logic:equal name="inquiryResult" property="internalDegreeDisclosure" value="true">
 
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
+	<p class="mtop15 mbottom0"><strong>Proveito da aprendizagem presencial</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+	
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Nunca<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">De vez em quando<br/>3</th>
+	
+			<th class="acenter">4</th>
+			<th class="acenter">Regularmente<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Sempre<br/>7</th>
+		</tr>
+		<tr>
+			<th>Assiduidade dos alunos a estas aulas:</th>
+			<td><c:out value="${inquiryResult.number_P6_1}" /></td>
+			<td><c:out value="${inquiryResult.average_P6_1}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P6_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_7}" /></td>
+		</tr>
+	
+	</table>
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th colspan="2"></th>
+			<th class="acenter">Horário</th>
+			<th class="acenter">Docente</th>
+			<th class="acenter">Conteúdos</th>
+	
+			<th class="acenter">Repetente</th>
+			<th class="acenter">Outro</th>
+		</tr>
+		<tr>
+			<th rowspan="2" class="vamiddle">Assiduidade dos alunos a estas aulas:</th>
+			<td style="background: #f8f8f8;">N</td>
+			<td><c:out value="${inquiryResult.p6_1_1_a}" /></td>
+			<td><c:out value="${inquiryResult.p6_1_1_b}" /></td>
+			<td><c:out value="${inquiryResult.p6_1_1_c}" /></td>
+			<td><c:out value="${inquiryResult.p6_1_1_d}" /></td>
+			<td><c:out value="${inquiryResult.p6_1_1_e}" /></td>
+		</tr>
+		<tr>
+			<td style="background: #f8f8f8;">%</td>
+	
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_a}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_b}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_c}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_d}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_e}" /></td>
+		</tr>
+	
+	</table>
+	
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+	
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+	
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+	
+			<th>O docente cumpriu regularmente o horário das aulas e outras actividades programadas:</th>
+			<td><c:out value="${inquiryResult.number_P6_2}" /></td>
+			<td><c:out value="${inquiryResult.average_P6_2}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P6_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_9}" /></td>
+		</tr>
+		<tr>
+			<th>O ritmo das aulas foi adequado:</th>
+			<td><c:out value="${inquiryResult.number_P6_3}" /></td>
+			<td><c:out value="${inquiryResult.average_P6_3}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P6_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_9}" /></td>
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>Capacidade pedagógica</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+	
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+	
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+		</tr>
+		<tr>
+			<th>O docente mostrou-se empenhado:</th>
+	
+			<td><c:out value="${inquiryResult.number_P7_1}" /></td>
+			<td><c:out value="${inquiryResult.average_P7_1}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P7_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_9}" /></td>
+	
+		</tr>
+		<tr>
+			<th>O docente expôs os conteúdos de forma atractiva:</th>
+			<td><c:out value="${inquiryResult.number_P7_2}" /></td>
+			<td><c:out value="${inquiryResult.average_P7_2}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P7_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_9}" /></td>
+		</tr>
+		<tr>
+			<th>O docente demonstrou segurança na exposição:</th>
+			<td><c:out value="${inquiryResult.number_P7_3}" /></td>
+			<td><c:out value="${inquiryResult.average_P7_3}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P7_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_9}" /></td>
+		</tr>
+		<tr>
+			<th>O docente expôs os conteúdos com clareza:</th>
+	
+			<td><c:out value="${inquiryResult.number_P7_4}" /></td>
+			<td><c:out value="${inquiryResult.average_P7_4}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P7_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_9}" /></td>
+	
+		</tr>
+	</table>
+	
+	
+	<p class="mtop15 mbottom0"><strong>Interacção com os alunos</strong></p>
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+	
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">Discordo totalmente<br/>1</th>
+			<th class="acenter">2</th>
+			<th class="acenter">Discordo<br/>3</th>
+			<th class="acenter">4</th>
+	
+			<th class="acenter">Não concordo nem discordo<br/>5</th>
+			<th class="acenter">6</th>
+			<th class="acenter">Concordo<br/>7</th>
+			<th class="acenter">8</th>
+			<th class="acenter">Concordo totalmente<br/>9</th>
+	
+		</tr>
+		<tr>
+			<th>O docente estimulou a participação e discussão:</th>
+			<td><c:out value="${inquiryResult.number_P8_1}" /></td>
+			<td><c:out value="${inquiryResult.average_P8_1}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P8_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_9}" /></td>
+		</tr>
+		<tr>
+			<th>O docente mostrou abertura para o esclarecimento de dúvidas, dentro e fora das aulas:</th>
+			<td><c:out value="${inquiryResult.number_P8_2}" /></td>
+			<td><c:out value="${inquiryResult.average_P8_2}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P8_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_3}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_4}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_5}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_6}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_7}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_8}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_9}" /></td>
+		</tr>
+	</table>
+	
+	
+	<table class="tstyle1 thlight thleft tdcenter td50px">
+		<tr>
+			<th></th>
+			<th class="acenter">N</th>
+			<th class="acenter">Média</th>
+			<th class="acenter">Desvio padrão</th>
+			<th class="acenter">A melhorar<br/>1</th>
+	
+			<th class="acenter">Bom<br/>2</th>
+			<th class="acenter">Muito bom<br/>3</th>
+		</tr>
+		<tr>
+			<th>Avaliação global do desempenho do docente:</th>
+			<td><c:out value="${inquiryResult.number_P9}" /></td>
+			<td><c:out value="${inquiryResult.average_P9}" /></td>
+			<td><c:out value="${inquiryResult.standardDeviation_P9}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_2}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_3}" /></td>
+		</tr>
+	
+	</table>
 
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Nunca<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">De vez em quando<br/>3</th>
-
-		<th class="acenter">4</th>
-		<th class="acenter">Regularmente<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Sempre<br/>7</th>
-	</tr>
-	<tr>
-		<th>Assiduidade dos alunos a estas aulas:</th>
-		<td><c:out value="${inquiryResult.number_P6_1}" /></td>
-		<td><c:out value="${inquiryResult.average_P6_1}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P6_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_7}" /></td>
-	</tr>
-
-</table>
-
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th colspan="2"></th>
-		<th class="acenter">Horário</th>
-		<th class="acenter">Docente</th>
-		<th class="acenter">Conteúdos</th>
-
-		<th class="acenter">Repetente</th>
-		<th class="acenter">Outro</th>
-	</tr>
-	<tr>
-		<th rowspan="2" class="vamiddle">Assiduidade dos alunos a estas aulas:</th>
-		<td style="background: #f8f8f8;">N</td>
-		<td><c:out value="${inquiryResult.p6_1_1_a}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_b}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_c}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_d}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_e}" /></td>
-	</tr>
-	<tr>
-		<td style="background: #f8f8f8;">%</td>
-
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_a}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_b}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_c}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_d}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_1_e}" /></td>
-	</tr>
-
-</table>
-
-
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-
-		<th>O docente cumpriu regularmente o horário das aulas e outras actividades programadas:</th>
-		<td><c:out value="${inquiryResult.number_P6_2}" /></td>
-		<td><c:out value="${inquiryResult.average_P6_2}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P6_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_2_9}" /></td>
-	</tr>
-	<tr>
-		<th>O ritmo das aulas foi adequado:</th>
-		<td><c:out value="${inquiryResult.number_P6_3}" /></td>
-		<td><c:out value="${inquiryResult.average_P6_3}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P6_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P6_3_9}" /></td>
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>Capacidade pedagógica</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-	</tr>
-	<tr>
-		<th>O docente mostrou-se empenhado:</th>
-
-		<td><c:out value="${inquiryResult.number_P7_1}" /></td>
-		<td><c:out value="${inquiryResult.average_P7_1}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P7_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_1_9}" /></td>
-
-	</tr>
-	<tr>
-		<th>O docente expôs os conteúdos de forma atractiva:</th>
-		<td><c:out value="${inquiryResult.number_P7_2}" /></td>
-		<td><c:out value="${inquiryResult.average_P7_2}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P7_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_2_9}" /></td>
-	</tr>
-	<tr>
-		<th>O docente demonstrou segurança na exposição:</th>
-		<td><c:out value="${inquiryResult.number_P7_3}" /></td>
-		<td><c:out value="${inquiryResult.average_P7_3}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P7_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_3_9}" /></td>
-	</tr>
-	<tr>
-		<th>O docente expôs os conteúdos com clareza:</th>
-
-		<td><c:out value="${inquiryResult.number_P7_4}" /></td>
-		<td><c:out value="${inquiryResult.average_P7_4}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P7_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P7_4_9}" /></td>
-
-	</tr>
-</table>
-
-
-<p class="mtop15 mbottom0"><strong>Interacção com os alunos</strong></p>
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">Discordo totalmente<br/>1</th>
-		<th class="acenter">2</th>
-		<th class="acenter">Discordo<br/>3</th>
-		<th class="acenter">4</th>
-
-		<th class="acenter">Não concordo nem discordo<br/>5</th>
-		<th class="acenter">6</th>
-		<th class="acenter">Concordo<br/>7</th>
-		<th class="acenter">8</th>
-		<th class="acenter">Concordo totalmente<br/>9</th>
-
-	</tr>
-	<tr>
-		<th>O docente estimulou a participação e discussão:</th>
-		<td><c:out value="${inquiryResult.number_P8_1}" /></td>
-		<td><c:out value="${inquiryResult.average_P8_1}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P8_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_1_9}" /></td>
-	</tr>
-	<tr>
-		<th>O docente mostrou abertura para o esclarecimento de dúvidas, dentro e fora das aulas:</th>
-		<td><c:out value="${inquiryResult.number_P8_2}" /></td>
-		<td><c:out value="${inquiryResult.average_P8_2}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P8_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_3}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_4}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_5}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_6}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_7}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_8}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P8_2_9}" /></td>
-	</tr>
-</table>
-
-
-<table class="tstyle1 thlight thleft tdcenter td50px">
-	<tr>
-		<th></th>
-		<th class="acenter">N</th>
-		<th class="acenter">Média</th>
-		<th class="acenter">Desvio padrão</th>
-		<th class="acenter">A melhorar<br/>1</th>
-
-		<th class="acenter">Bom<br/>2</th>
-		<th class="acenter">Muito bom<br/>3</th>
-	</tr>
-	<tr>
-		<th>Avaliação global do desempenho do docente:</th>
-		<td><c:out value="${inquiryResult.number_P9}" /></td>
-		<td><c:out value="${inquiryResult.average_P9}" /></td>
-		<td><c:out value="${inquiryResult.standardDeviation_P9}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_1}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_2}" /></td>
-		<td><fmt:formatNumber type="percent" maxFractionDigits="1" value="${inquiryResult.perc_P9_3}" /></td>
-	</tr>
-
-</table>
+</logic:equal>
+<logic:notEqual name="inquiryResult" property="internalDegreeDisclosure" value="true">
+<!-- TEXTO 5 -->
+</logic:notEqual>
 
 
 

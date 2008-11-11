@@ -142,7 +142,7 @@ border-top: 4px solid #ddd;
 	</table>
 </logic:equal>
 <logic:notEqual name="inquiryResult" property="availableToInquiry" value="true">
-TEXTO 2
+<!-- TEXTO 2 -->
 </logic:notEqual>
 
 
@@ -529,7 +529,7 @@ TEXTO 2
 </logic:equal>
 
 <logic:notEqual name="inquiryResult" property="internalDisclosure" value="true">
-TEXTO 3
+<!--  TEXTO 3 -->
 </logic:notEqual>
 
 
