@@ -86,17 +86,17 @@ a { color: #105c93; }
 <h2>Resultados do Inquérito</h2>
 
 <div class="infoop2" style="font-size: 1.3em; padding: 0.5em 1em; margin: 1em 0;">
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="professorship.executionCourse.executionPeriod.name"/> <bean:write name="inquiryResult" property="professorship.executionCourse.executionYear.name"/></span></p>
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/></span></p>
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="professorship.executionCourse.nome"/></p>
-	<p style="margin: 0.75em 0;"><bean:write name="inquiryResult" property="professorship.teacher.person.name"/></p>
-	<p style="margin: 0.75em 0;"><bean:message name="inquiryResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></p>
+	<p style="margin: 0.75em 0;">Semestre: <bean:write name="inquiryResult" property="professorship.executionCourse.executionPeriod.name"/> <bean:write name="inquiryResult" property="professorship.executionCourse.executionYear.name"/></span></p>
+	<p style="margin: 0.75em 0;">Curso: <bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/></span></p>
+	<p style="margin: 0.75em 0;">Disciplina: <bean:write name="inquiryResult" property="professorship.executionCourse.nome"/></p>
+	<p style="margin: 0.75em 0;">Docente: <bean:write name="inquiryResult" property="professorship.teacher.person.name"/></p>
+	<p style="margin: 0.75em 0;">Tipo de aula: <bean:message name="inquiryResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></p>
 </div>
 
 
 <table class="tstyle1 thlight thleft td50px thbgnone">
 	<tr>
-		<th>Respostas validas ao par Docente / tipo de aula:</th>
+		<th>Respostas válidas ao par Docente / tipo de aula:</th>
 
 		<td><c:out value="${inquiryResult.numberOfAnswers}" /></td>
 	</tr>
