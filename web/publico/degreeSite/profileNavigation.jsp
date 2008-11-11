@@ -7,6 +7,7 @@
 <bean:define id="institutionUrlEmployees" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/funcionario.shtml</bean:define>
 <bean:define id="institutionUrlCandidates" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/candidato.shtml</bean:define>
 <bean:define id="institutionUrlInternational" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/perfil/international.shtml</bean:define>
+<bean:define id="institutionUrlAlumni" type="java.lang.String">http://alumni.ist.utl.pt/</bean:define>
 <ul>
 	<li><a href="<%= institutionUrl %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.home"/></a></li>
   	<li><a href="<%= institutionUrlStudents %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.student"/></a></li>
@@ -14,4 +15,5 @@
 	<li><a href="<%= institutionUrlEmployees %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.staff"/></a></li>
 	<li><a href="<%= institutionUrlCandidates %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.candidade"/></a></li>	
   	<li><a href="<%= institutionUrlInternational %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.international"/></a></li>
+  	<li><a href="<%= institutionUrlAlumni %>"><bean:message bundle="GLOBAL_RESOURCES" key="link.alumni"/></a></li>
 </ul>
