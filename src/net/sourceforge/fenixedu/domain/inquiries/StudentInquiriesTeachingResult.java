@@ -39,4 +39,9 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     public Boolean getUnsatisfactoryResultsStudentInteraction() {
 	return super.getUnsatisfactoryResultsStudentInteraction() != null && super.getUnsatisfactoryResultsStudentInteraction();
     }
+
+    @Override
+    public Boolean getInternalDegreeDisclosure() {
+	return super.getInternalDegreeDisclosure() != null && super.getInternalDegreeDisclosure();
+    }
 }

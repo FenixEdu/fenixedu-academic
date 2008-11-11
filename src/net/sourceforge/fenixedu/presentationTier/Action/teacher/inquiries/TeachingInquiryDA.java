@@ -75,8 +75,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		.getProfessorships() : Collections.singletonList(professorship)) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
 		    .getStudentInquiriesTeachingResults()) {
-		courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
-			studentInquiriesTeachingResult);
+		if (studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
+		    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+			    studentInquiriesTeachingResult);
+		}
 	    }
 	}
 
