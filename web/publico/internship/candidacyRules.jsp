@@ -5,6 +5,17 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
 
+<script type="text/javascript">
+    
+    window.onload = function() {
+        var frm = document.getElementById("form0");
+        frm.onsubmit = function() {
+            frm.method.value='confirmCandidacyRules';
+            document.getElementById("submitBtn").disabled = true;
+        }
+    }
+    </script>
+
 <html:xhtml />
 
 <h2><bean:message key="label.internship.candidacy.title" bundle="INTERNSHIP_RESOURCES" /></h2>
@@ -38,13 +49,13 @@
 <p>Faça "Submeter" para concluir o processo de candidatura:</p>
 
 <logic:present name="candidacy">
-	<fr:form action="/internship.do">
+	<fr:form id="form0" action="/internship.do">
 		<input type="hidden" name="method" />
 		<fr:edit id="confirm" name="candidacy" visible="false" />
 		<html:submit onclick="this.form.method.value='backToCandidacy';">
 			<bean:message bundle="COMMON_RESOURCES" key="button.back" />
 		</html:submit>
-		<html:submit onclick="this.form.method.value='confirmCandidacyRules'; this.disabled=true;">
+		<html:submit styleId="submitBtn">
 			<bean:message bundle="COMMON_RESOURCES" key="button.submit" />
 		</html:submit>
 	</fr:form>
