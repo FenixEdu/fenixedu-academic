@@ -97,6 +97,11 @@
 			<html:link page="/viewExecutionCourseProjects.do?method=prepareViewExecutionCourseProjects" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.groupsManagement"/>
 			</html:link>
+		</li>
+		<li>
+			<html:link page="/manageExecutionCourse.do?method=manageShifts" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.shifts"/>
+			</html:link>
 		</li>	
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.curricularInfo"/></li>
 		<li>

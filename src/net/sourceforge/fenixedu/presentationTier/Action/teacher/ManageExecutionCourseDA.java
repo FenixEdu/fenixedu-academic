@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
@@ -29,9 +34,11 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -799,5 +806,94 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    return null;
 	}
     }
+    
+    public ActionForward manageShifts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    		HttpServletResponse response) throws InvalidSessionActionException {
+    	
+    	String executionCourseID =  request.getParameter("executionCourseID");
+    	
+    	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(Integer.valueOf(executionCourseID));
+    	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+    	SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
+    	
+    	request.setAttribute("shifts", shifts);
+    	request.setAttribute("executionCourseID", executionCourseID);
+    	
+    	return mapping.findForward("manageShifts");
+    }
+    
+    public ActionForward editShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    		HttpServletResponse response) {
+    	
+    	String shiftID = request.getParameter("shiftID");
+    	String executionCourseID =  request.getParameter("executionCourseID");
+    	String registrationID = request.getParameter("registrationID");
+    	
+    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
+    	Shift shift = infoShift.getShift();
+    	ExecutionCourse executionCourse = shift.getRootDomainObject().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+		
+    	if(registrationID != null) {
+    		Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
+    		shift.removeAttendFromShift(registration, executionCourse, shift);
+    		request.setAttribute("registration", registration);
+    	}
+    	
+    	List<Registration> registrations = shift.getStudents();
 
+    	request.setAttribute("registrations", registrations);
+		request.setAttribute("shift", shift);
+		request.setAttribute("executionCourseID", executionCourseID);
+    	
+    	return mapping.findForward("editShift");
+    }
+    
+    public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    		HttpServletResponse response) {
+    	
+    	String shiftID = request.getParameter("shiftID");
+    	String registrationID = request.getParameter("registrationID");
+    	String executionCourseID =  request.getParameter("executionCourseID");
+    	String removeAll = request.getParameter("removeAll");
+    	
+    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
+    	Shift shift = infoShift.getShift();
+    	
+    	if(removeAll != null) {
+    		request.setAttribute("removeAll", removeAll);
+    	}
+    	else {
+    		Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
+    		request.setAttribute("registration", registration);
+    	}
+    	
+		request.setAttribute("shift", shift);
+		request.setAttribute("executionCourseID", executionCourseID);
+		
+    	return mapping.findForward("removeAttendsFromShift");
+    }
+    
+    public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    		HttpServletResponse response) {
+    	
+    	String executionCourseID =  request.getParameter("executionCourseID");
+    	String shiftID = request.getParameter("shiftID");
+    	
+    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
+    	Shift shift = infoShift.getShift();
+    	List<Registration> registrations = shift.getStudents();
+    	ExecutionCourse executionCourse = shift.getRootDomainObject().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+    	
+    	for(Registration registration : registrations) {
+    		shift.removeAttendFromShift(registration, executionCourse, shift);
+    	}
+
+    	registrations = shift.getStudents();
+    	
+    	request.setAttribute("shift", shift);
+    	request.setAttribute("executionCourseID", executionCourseID);
+    	request.setAttribute("registrations", registrations);
+    	
+    	return mapping.findForward("editShift");
+    }
 }

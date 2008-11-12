@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,10 +17,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.util.Email;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class Shift extends Shift_Base {
 
@@ -413,5 +417,19 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
-
+    
+    @Service
+    public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse, Shift shift) {
+    	
+    	registration.removeShifts(this);
+    	
+    	String fromName = executionCourse.getNome();
+		String fromAddress = executionCourse.getSite().getMail();
+		String[] replyTos = {};
+		Collection<String> toAddresses = new ArrayList<String>();
+		toAddresses.add(registration.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+		
+		Email email = new Email(fromName, fromAddress, replyTos, toAddresses, Collections.EMPTY_LIST,
+				Collections.EMPTY_LIST, RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", shift.getNome()));
+    }
 }

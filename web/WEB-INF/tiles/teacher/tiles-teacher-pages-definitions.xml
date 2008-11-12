@@ -465,6 +465,18 @@
 		<put name="body" value="/teacher/executionCourse/lessonPlannings.jsp" />
 	</definition>
 	
+	<definition name="manage-shifts" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/manageShifts.jsp" />
+	</definition>
+	
+	<definition name="edit-shift" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/editShift.jsp" />
+	</definition>
+	
+	<definition name="remove-attends-from-shift" extends="execution-course-administration">
+		<put name="body" value="/teacher/executionCourse/removeAttendsFromShift.jsp" />
+	</definition>
+	
 	<definition name="manage-execution-course-lessonPlanning-create" extends="execution-course-administration">
 		<put name="body" value="/teacher/executionCourse/createLessonPlanning.jsp" />
 	</definition>	

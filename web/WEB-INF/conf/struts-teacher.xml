@@ -771,6 +771,9 @@
 			<forward name="importLessonPlannings" path="manage-execution-course-lessonPlannings-import"/>
 			<forward name="create-lessonPlanning" path="manage-execution-course-lessonPlanning-create"/>
             <forward name="sectionsManagement" path="/manageExecutionCourseSite.do?method=sections"/>
+            <forward name="manageShifts" path="manage-shifts"/>
+            <forward name="editShift" path="edit-shift"/>
+            <forward name="removeAttendsFromShift" path="remove-attends-from-shift"/>
         </action>
         <action path="/manageExecutionCourseSite"
                 parameter="method"
