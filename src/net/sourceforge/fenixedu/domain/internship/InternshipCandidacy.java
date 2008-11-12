@@ -6,6 +6,9 @@ import java.util.Random;
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
@@ -18,6 +21,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCandidacyCode(code);
+	setCandidacyDate(new DateTime(System.currentTimeMillis()));
     }
 
     @Service

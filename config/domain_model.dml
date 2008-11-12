@@ -5579,6 +5579,7 @@ class residence.ResidenceMonth extends DomainObject {
 
 class internship.InternshipCandidacy extends DomainObject {
     Integer candidacyCode;
+    DateTime candidacyDate;
 
     String studentNumber;
     Integer studentYear;
