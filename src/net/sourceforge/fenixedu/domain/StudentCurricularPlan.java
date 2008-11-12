@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -1898,14 +1899,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    created.add(enrolment.createEnrolmentEvaluationForImprovement(employee, executionSemester));
 	}
 
-	final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = getNotPayedImprovementOfApprovedEnrolmentEvent();
-	if (improvementOfApprovedEnrolmentEvent == null) {
-	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
-	} else {
-	    for (final EnrolmentEvaluation enrolmentEvaluation : created) {
-		improvementOfApprovedEnrolmentEvent.addImprovementEnrolmentEvaluations(enrolmentEvaluation);
+	if (isToPayImprovementOfApprovedEnrolments()) {
+	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = getNotPayedImprovementOfApprovedEnrolmentEvent();
+	    if (improvementOfApprovedEnrolmentEvent == null) {
+		new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
+	    } else {
+		for (final EnrolmentEvaluation enrolmentEvaluation : created) {
+		    improvementOfApprovedEnrolmentEvent.addImprovementEnrolmentEvaluations(enrolmentEvaluation);
+		}
 	    }
 	}
+    }
+
+    private boolean isToPayImprovementOfApprovedEnrolments() {
+	final RegistrationAgreement registrationAgreement = getRegistration().getRegistrationAgreement();
+	return registrationAgreement != RegistrationAgreement.MA && registrationAgreement != RegistrationAgreement.AFA;
     }
 
     final public List<Enrolment> getEnroledImprovements() {
