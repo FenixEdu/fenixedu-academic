@@ -16,11 +16,13 @@
 	</logic:notEmpty>
 </logic:present>
 
-<h4 class="mtop2">
-	<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-		<bean:message key="link.teachingInquiries.fillInquiry" bundle="INQUIRIES_RESOURCES"/>
-	</html:link>
-</h4>
+<c:if test="${hasTeachingInquiriesToAnswer}">
+	<h4 class="mtop2">
+		<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+			<bean:message key="link.teachingInquiries.fillInquiry" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>
+	</h4>
+</c:if>
 
 <logic:present name="studentInquiriesCourseResults">
 	<p class="separator2 mtop2"><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></p>

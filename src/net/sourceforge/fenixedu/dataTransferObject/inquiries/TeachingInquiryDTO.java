@@ -99,13 +99,14 @@ public class TeachingInquiryDTO implements Serializable {
 		"header.teachingInquiries.neitherAgreeOrDisagree", "header.teachingInquiries.six",
 		"header.teachingInquiries.agree", "header.teachingInquiries.eight", "header.teachingInquiries.totallyAgree");
 	this.firstPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.loadAndClassTypeContributionToFullfilmentOfCUProgram", 1, 9, false));
+		"label.teachingInquiries.loadAndClassTypeContributionToFullfilmentOfCUProgram", 1, 9, false)
+		.setShowRequiredMark(false));
 	this.firstPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.teacherNumberSuitableForCUOperation", 1, 9, false));
+		"label.teachingInquiries.teacherNumberSuitableForCUOperation", 1, 9, false).setShowRequiredMark(false));
 	this.firstPageFirstBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.establishedScheduleSuitable", 1, 9,
-		false));
+		false).setShowRequiredMark(false));
 	this.firstPageFirstBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.establishedScheduleNotSuitableReason",
-		false).setRequired(false));
+		false).setRequired(false).setShowRequiredMark(false));
 
 	this.firstPageSecondBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.totallyDisagree", "header.teachingInquiries.two", "header.teachingInquiries.disagree",
@@ -113,22 +114,70 @@ public class TeachingInquiryDTO implements Serializable {
 		"header.teachingInquiries.six", "header.teachingInquiries.agree", "header.teachingInquiries.eight",
 		"header.teachingInquiries.totallyAgree");
 	this.firstPageSecondBlockFirstPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.studentsReadyForFollowingCU", 1, 9, false));
+		"label.teachingInquiries.studentsReadyForFollowingCU", 1, 9, false).setShowRequiredMark(false));
 	this.firstPageSecondBlockFirstPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.evaluationMethodSuitableForCUTeachingTypeAndObjective", 1, 9, false));
+		"label.teachingInquiries.evaluationMethodSuitableForCUTeachingTypeAndObjective", 1, 9, false)
+		.setShowRequiredMark(false));
 	this.firstPageSecondBlockFirstPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.disturbingEventsInClasses", 1, 9, false));
+		"label.teachingInquiries.disturbingEventsInClasses", 1, 9, false).setShowRequiredMark(false));
 	this.firstPageSecondBlockFirstPart.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.disturbingEventsInClassesDescription", false).setRequired(false));
 
-	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.semesterAverageStudentNumber", true,
-		StringUtils.EMPTY);
+	this.firstPageSecondBlockSecondPart = new InquiriesBlock(
+		"title.teachingInquiries.semesterAverageStudentNumberInTheorical", true, StringUtils.EMPTY);
 	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.semesterStartAverageStudentNumber", false).setInteger(true));
+		"label.teachingInquiries.semesterStartAverageStudentNumberInTheorical", false).setInteger(true)
+		.setShowRequiredMark(false));
 	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.semesterMiddleAverageStudentNumber", false).setInteger(true));
+		"label.teachingInquiries.semesterMiddleAverageStudentNumberInTheorical", false).setInteger(true)
+		.setShowRequiredMark(false));
 	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.semesterEndAverageStudentNumber", false).setInteger(true));
+		"label.teachingInquiries.semesterEndAverageStudentNumberInTheorical", false).setInteger(true)
+		.setShowRequiredMark(false));
+
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterStartAverageStudentNumberInProblems", false).setInteger(true)
+		.setShowRequiredMark(false).setHeader(
+			new QuestionHeader("title.teachingInquiries.semesterAverageStudentNumberInProblems", StringUtils.EMPTY)));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterMiddleAverageStudentNumberInProblems", false).setInteger(true)
+		.setShowRequiredMark(false));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterEndAverageStudentNumberInProblems", false).setInteger(true).setShowRequiredMark(
+		false));
+
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterStartAverageStudentNumberInLabs", false).setInteger(true).setShowRequiredMark(
+		false).setHeader(
+		new QuestionHeader("title.teachingInquiries.semesterAverageStudentNumberInLabs", StringUtils.EMPTY)));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterMiddleAverageStudentNumberInLabs", false).setInteger(true).setShowRequiredMark(
+		false));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterEndAverageStudentNumberInLabs", false).setInteger(true).setShowRequiredMark(
+		false));
+
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterStartAverageStudentNumberInSeminary", false).setInteger(true)
+		.setShowRequiredMark(false).setHeader(
+			new QuestionHeader("title.teachingInquiries.semesterAverageStudentNumberInSeminary", StringUtils.EMPTY)));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterMiddleAverageStudentNumberInSeminary", false).setInteger(true)
+		.setShowRequiredMark(false));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterEndAverageStudentNumberInSeminary", false).setInteger(true).setShowRequiredMark(
+		false));
+
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterStartAverageStudentNumberInProject", false).setInteger(true)
+		.setShowRequiredMark(false).setHeader(
+			new QuestionHeader("title.teachingInquiries.semesterAverageStudentNumberInProject", StringUtils.EMPTY)));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterMiddleAverageStudentNumberInProject", false).setInteger(true)
+		.setShowRequiredMark(false));
+	this.firstPageSecondBlockSecondPart.addQuestion(new TextBoxQuestion(
+		"label.teachingInquiries.semesterEndAverageStudentNumberInProject", false).setInteger(true).setShowRequiredMark(
+		false));
 
 	this.firstPageSecondBlockThirdPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.lessFivePercent", "header.teachingInquiries.twentyFivePercent",
@@ -137,59 +186,59 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageSecondBlockThirdPart.addQuestion(new RadioGroupQuestion(
 		"label.teachingInquiries.activeAndInteressedStudentsRatio", false).addChoice("5", StringUtils.EMPTY).addChoice(
 		"25", StringUtils.EMPTY).addChoice("50", StringUtils.EMPTY).addChoice("75", StringUtils.EMPTY).addChoice("95",
-		StringUtils.EMPTY));
+		StringUtils.EMPTY).setShowRequiredMark(false));
 
 	this.firstPageSecondBlockFourthPart = new InquiriesBlock("title.teachingInquiries.rateFromNonSatisfatoryToExcellent",
 		true, "header.teachingInquiries.one", "header.teachingInquiries.two", "header.teachingInquiries.three",
 		"header.teachingInquiries.four");
 	this.firstPageSecondBlockFourthPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.studentsPerformance", 1,
-		4, false));
+		4, false).setShowRequiredMark(false));
 
 	this.firstPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.nonSatisfatory",
 		"header.teachingInquiries.two", "header.teachingInquiries.three", "header.teachingInquiries.excellent");
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.classesAndOtherActivitiesFrequency",
-		1, 4, false));
+		1, 4, false).setShowRequiredMark(false));
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.classesAndOtherActivitiesPonctuality", 1, 4, false));
+		"label.teachingInquiries.classesAndOtherActivitiesPonctuality", 1, 4, false).setShowRequiredMark(false));
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.globalQualityOfTeachingInCU", 1, 4,
-		false));
+		false).setShowRequiredMark(false));
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.pedagogicalActivitiesDeveloped", 1,
-		4, false));
+		4, false).setShowRequiredMark(false));
 	this.firstPageThirdBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.relativePedagogicalInitiatives", true)
-		.setRequired(false));
+		.setRequired(false).setShowRequiredMark(false));
 
 	this.secondPageFourthBlock = new InquiriesBlock("title.teachingInquiries.cuEvaluationMethod.writtenProofs", true,
 		StringUtils.EMPTY);
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfExams", false).setInteger(
-		true).setToolTip("tooltip.teachingInquiries.numberOfExams"));
+		true).setToolTip("tooltip.teachingInquiries.numberOfExams").setShowRequiredMark(false));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfTests", false).setInteger(
-		true).setToolTip("tooltip.teachingInquiries.numberOfTests"));
+		true).setToolTip("tooltip.teachingInquiries.numberOfTests").setShowRequiredMark(false));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfQuizzesAndMiniTests", false)
-		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfQuizzesAndMiniTests"));
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfQuizzesAndMiniTests").setShowRequiredMark(false));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfElectronicQuizzes", false)
-		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfElectronicQuizzes"));
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfElectronicQuizzes").setShowRequiredMark(false));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.numberOfStudyVisitsOrOtherActivitiesReports", false).setInteger(true).setHeader(
 		new QuestionHeader("title.teachingInquiries.cuEvaluationMethod.worksOrProjects", StringUtils.EMPTY)));
 	this.secondPageFourthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.numberOfWorksOrProjects", false)
-		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfWorksOrProjects"));
+		.setInteger(true).setToolTip("tooltip.teachingInquiries.numberOfWorksOrProjects").setShowRequiredMark(false));
 
 	this.secondPageFourthBlockThirdPart = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.language.pt",
 		"header.teachingInquiries.language.en", "header.teachingInquiries.language.both",
 		"header.teachingInquiries.language.others");
 	this.secondPageFourthBlockThirdPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.teachingLanguage", false)
 		.addChoice("PT", StringUtils.EMPTY).addChoice("EN", StringUtils.EMPTY).addChoice("BOTH", StringUtils.EMPTY)
-		.addChoice("OTHER", StringUtils.EMPTY));
+		.addChoice("OTHER", StringUtils.EMPTY).setShowRequiredMark(false));
 	this.secondPageFourthBlockThirdPart.addQuestion(new TextBoxQuestion("label.teachingInquiries.otherTeachingLanguage",
-		false).setRequired(false));
+		false).setRequired(false).setShowRequiredMark(false));
 
 	this.secondPageFifthBlockFirstPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.belowExpected", "header.teachingInquiries.expected",
 		"header.teachingInquiries.aboveExpected");
 	this.secondPageFifthBlockFirstPart.addQuestion(new RadioGroupQuestion("label.teachingInquiries.workLoadClassification",
-		1, 3, false));
+		1, 3, false).setShowRequiredMark(false));
 	this.secondPageFifthBlockFirstPart.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.workLoadClassificationReasons", false).setRequired(false));
+		"label.teachingInquiries.workLoadClassificationReasons", false).setRequired(false).setShowRequiredMark(false));
 
 	this.secondPageFifthBlockSecondPart = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.teachingInquiries.totallyDisagree", "header.teachingInquiries.two", "header.teachingInquiries.disagree",
@@ -197,38 +246,38 @@ public class TeachingInquiryDTO implements Serializable {
 		"header.teachingInquiries.six", "header.teachingInquiries.agree", "header.teachingInquiries.eight",
 		"header.teachingInquiries.totallyAgree");
 	this.secondPageFifthBlockSecondPart.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.positionOfCUInStudentCurricularPlan", 1, 9, false));
+		"label.teachingInquiries.positionOfCUInStudentCurricularPlan", 1, 9, false).setShowRequiredMark(false));
 
 	this.secondPageSixthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.notAppliable",
 		"header.teachingInquiries.withDifficulty", "header.teachingInquiries.withEase",
 		"header.teachingInquiries.withQuiteEase");
 	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionAndKnowledgeOfCU", 0,
-		3, false));
+		3, false).setShowRequiredMark(false));
 	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.comprehensionApplicationOfCU", 0,
-		3, false));
+		3, false).setShowRequiredMark(false));
 	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.criticalSenseAndReflexiveSpirit",
-		0, 3, false));
+		0, 3, false).setShowRequiredMark(false));
 	this.secondPageSixthBlock.addQuestion(new RadioGroupQuestion(
-		"label.teachingInquiries.cooperationAndCommunicationCapacity", 0, 3, false));
+		"label.teachingInquiries.cooperationAndCommunicationCapacity", 0, 3, false).setShowRequiredMark(false));
 
 	this.secondPageSeventhBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.teachingInquiries.veryBad",
 		"header.teachingInquiries.two", "header.teachingInquiries.bad", "header.teachingInquiries.four",
 		"header.teachingInquiries.neitherGoodOrBad", "header.teachingInquiries.six", "header.teachingInquiries.good",
 		"header.teachingInquiries.eight", "header.teachingInquiries.veryGood");
 	this.secondPageSeventhBlock.addQuestion(new RadioGroupQuestion("label.teachingInquiries.globalClassificationOfThisCU", 1,
-		9, false));
+		9, false).setShowRequiredMark(false));
 
 	this.secondPageEighthBlock = new InquiriesBlock(true);
 	this.secondPageEighthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.strongPointsOfCUTeachingProcess",
-		true));
-	this.secondPageEighthBlock
-		.addQuestion(new TextBoxQuestion("label.teachingInquiries.weakPointsOfCUTeachingProcess", true));
+		true).setShowRequiredMark(false));
+	this.secondPageEighthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.weakPointsOfCUTeachingProcess", true)
+		.setShowRequiredMark(false));
 	this.secondPageEighthBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.finalCommentsAndImproovements", true)
-		.setRequired(false));
+		.setRequired(false).setShowRequiredMark(false));
 
 	this.thirdPageNinthBlock = new InquiriesBlock(true);
 	this.thirdPageNinthBlock.addQuestion(new TextBoxQuestion(
-		"label.teachingInquiries.negativeResultsResolutionAndImproovementPlanOfAction", true));
+		"label.teachingInquiries.negativeResultsResolutionAndImproovementPlanOfAction", true).setShowRequiredMark(false));
 
     }
 

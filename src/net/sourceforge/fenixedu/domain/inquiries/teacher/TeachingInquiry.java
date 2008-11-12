@@ -46,11 +46,42 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	teachingInquiry.setDisturbingEventsInClasses(answersMap.get("disturbingEventsInClasses").getValueAsInteger());
 	teachingInquiry
 		.setDisturbingEventsInClassesDescription(answersMap.get("disturbingEventsInClassesDescription").getValue());
-	teachingInquiry.setSemesterStartAverageStudentNumber(answersMap.get("semesterStartAverageStudentNumber")
+
+	teachingInquiry.setSemesterStartAverageStudentNumberInTheorical(answersMap.get(
+		"semesterStartAverageStudentNumberInTheorical").getValueAsInteger());
+	teachingInquiry.setSemesterMiddleAverageStudentNumberInTheorical(answersMap.get(
+		"semesterMiddleAverageStudentNumberInTheorical").getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumberInTheorical(answersMap
+		.get("semesterEndAverageStudentNumberInTheorical").getValueAsInteger());
+
+	teachingInquiry.setSemesterStartAverageStudentNumberInProblems(answersMap.get(
+		"semesterStartAverageStudentNumberInProblems").getValueAsInteger());
+	teachingInquiry.setSemesterMiddleAverageStudentNumberInProblems(answersMap.get(
+		"semesterMiddleAverageStudentNumberInProblems").getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumberInProblems(answersMap.get("semesterEndAverageStudentNumberInProblems")
 		.getValueAsInteger());
-	teachingInquiry.setSemesterMiddleAverageStudentNumber(answersMap.get("semesterMiddleAverageStudentNumber")
+
+	teachingInquiry.setSemesterStartAverageStudentNumberInLabs(answersMap.get("semesterStartAverageStudentNumberInLabs")
 		.getValueAsInteger());
-	teachingInquiry.setSemesterEndAverageStudentNumber(answersMap.get("semesterEndAverageStudentNumber").getValueAsInteger());
+	teachingInquiry.setSemesterMiddleAverageStudentNumberInLabs(answersMap.get("semesterMiddleAverageStudentNumberInLabs")
+		.getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumberInLabs(answersMap.get("semesterEndAverageStudentNumberInLabs")
+		.getValueAsInteger());
+
+	teachingInquiry.setSemesterStartAverageStudentNumberInSeminary(answersMap.get(
+		"semesterStartAverageStudentNumberInSeminary").getValueAsInteger());
+	teachingInquiry.setSemesterMiddleAverageStudentNumberInSeminary(answersMap.get(
+		"semesterMiddleAverageStudentNumberInSeminary").getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumberInSeminary(answersMap.get("semesterEndAverageStudentNumberInSeminary")
+		.getValueAsInteger());
+
+	teachingInquiry.setSemesterStartAverageStudentNumberInProject(answersMap
+		.get("semesterStartAverageStudentNumberInProject").getValueAsInteger());
+	teachingInquiry.setSemesterMiddleAverageStudentNumberInProject(answersMap.get(
+		"semesterMiddleAverageStudentNumberInProject").getValueAsInteger());
+	teachingInquiry.setSemesterEndAverageStudentNumberInProject(answersMap.get("semesterEndAverageStudentNumberInProject")
+		.getValueAsInteger());
+
 	teachingInquiry.setActiveAndInteressedStudentsRatio(answersMap.get("activeAndInteressedStudentsRatio").getValue());
 	teachingInquiry.setStudentsPerformance(answersMap.get("studentsPerformance").getValueAsInteger());
 	teachingInquiry.setClassesAndOtherActivitiesFrequency(answersMap.get("classesAndOtherActivitiesFrequency")

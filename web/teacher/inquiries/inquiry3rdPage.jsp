@@ -5,6 +5,14 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <html:xhtml />
 
+<style>
+.thtoptd300 { vertical-align: top; width: 300px;}
+.biggerTextarea textarea {
+width: 400px;
+height: 300px;
+}
+</style>
+
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -65,12 +73,14 @@
 	<div class="relative">
 		<fr:form action="/teachingInquiry.do?method=submitInquiries3rdPage">
 
-			<fr:edit name="teachingInquiry" property="thirdPageNinthBlock" />
+			<fr:edit name="teachingInquiry" property="thirdPageNinthBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtoptd300,biggerTextarea,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>				
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		
-			<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
-						
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
 		

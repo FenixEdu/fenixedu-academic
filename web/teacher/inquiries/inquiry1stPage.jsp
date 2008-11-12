@@ -19,6 +19,14 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
+<style>
+.thtop { vertical-align: top; }
+.biggerTextarea textarea {
+width: 300px;
+height: 100px;
+}
+</style>
+
 <div class="forminline dinline">
 	<div class="relative">
 		<fr:form action="/teachingInquiry.do?method=showInquiries2ndPage">
@@ -28,18 +36,21 @@
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
 			
+			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.semesterAverageStudentNumber" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockSecondPart" />
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockThirdPart" />
 			
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFourthPart" />
 
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="firstPageThirdBlock" />
+			<fr:edit name="teachingInquiry" property="firstPageThirdBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>			
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		
-			<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
-						
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
 		

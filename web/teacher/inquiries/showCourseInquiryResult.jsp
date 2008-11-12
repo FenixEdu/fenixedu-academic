@@ -106,7 +106,7 @@ border: none;
 }
 </style>
 
-<p class="mtop0" style="float: right;"><em>5 Novembro 2008</em></p>
+<p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a 5 Novembro 2008</em></p>
 
 <h2>QUC - Garantia da Qualidade das UC - Resultados dos inquéritos aos alunos</h2>
 
@@ -139,10 +139,11 @@ border: none;
 		<td><c:out value="${inquiryResult.gradeAverageForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's.</span></a></th>
+		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
 		<td><bean:message key="<%= "label." + result.getAvailableToInquiry().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
+<em>(informação do sistema)</em>
 
 <logic:equal name="inquiryResult" property="availableToInquiry" value="true">
 	<h3 class="mtop15 mbottom0"><strong>Estatística de preenchimento e representatividade</strong></h3>
@@ -154,7 +155,7 @@ border: none;
 			<th class="aright">%</th>
 		</tr>
 		<tr>
-			<th>Respostas válidas quadro inicial</th>
+			<th>Respostas válidas quadro inicial (carga de trabalho)</th>
 			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.validInitialFormAnswersNumber}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.validInitialFormAnswersRatio}" /></td>
 		</tr>
@@ -224,6 +225,7 @@ border: none;
 			<td><c:out value="${inquiryResult.ectsForPresentation}" /></td>
 		</tr>
 	</table>
+	<em>(informação do sistema)</em>
 	
 	<h3 class="mtop15 mbottom0"><strong>Auto-avaliação dos alunos</strong></h3>
 	
@@ -282,7 +284,7 @@ border: none;
 	
 	
 	
-	<p class="mtop15 mbottom0"><strong>Carga de trabalho elevada devido a</strong></p>
+	<p class="mtop15 mbottom0"><strong>Para os alunos com uma carga de trabalho elevada, esta deveu-se a:</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
@@ -347,7 +349,7 @@ border: none;
 			<th>Conhecimentos anteriores suficientes para o acompanhamento da UC</th>
 			<td><c:out value="${inquiryResult.number_P1_3}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_3}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_3ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P1_3ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_3ForPresentation}" /></td>
@@ -375,7 +377,7 @@ border: none;
 			<th>Participação dos alunos na UC</th>
 			<td><c:out value="${inquiryResult.number_P1_4}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_4ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P1_4ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_3ForPresentation}" /></td>
@@ -420,7 +422,7 @@ border: none;
 			<th>Sentido crítico e espírito reflexivo</th>
 			<td><c:out value="${inquiryResult.number_P2_3}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_3ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_3ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_3ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_0ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_2ForPresentation}" /></td>
@@ -430,7 +432,7 @@ border: none;
 			<th>Capacidade de cooperação e comunicação</th>
 			<td><c:out value="${inquiryResult.number_P2_4}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_4ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_4ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_0ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_2ForPresentation}" /></td>
@@ -461,7 +463,7 @@ border: none;
 			<th>O programa previsto foi leccionado</th>
 			<td><c:out value="${inquiryResult.number_P3_1}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_1ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_1ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_3ForPresentation}" /></td>
@@ -476,7 +478,7 @@ border: none;
 			<th>A UC encontra-se bem estruturada</th>
 			<td><c:out value="${inquiryResult.number_P3_2}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_2ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_2ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_3ForPresentation}" /></td>
@@ -491,7 +493,7 @@ border: none;
 			<th>A bibliografia foi importante</th>
 			<td><c:out value="${inquiryResult.number_P3_3}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_3ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_3ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_3ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_3ForPresentation}" /></td>
@@ -506,7 +508,7 @@ border: none;
 			<th>Os materiais de apoio foram bons</th>
 			<td><c:out value="${inquiryResult.number_P3_4}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_4ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_4ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_3ForPresentation}" /></td>
@@ -542,7 +544,7 @@ border: none;
 			<th>Os métodos de avaliação foram justos e apropriados</th>
 			<td><c:out value="${inquiryResult.number_P4}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P4ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P4ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_3ForPresentation}" /></td>
@@ -578,7 +580,7 @@ border: none;
 			<th>Avaliação do funcionamento da UC</th>
 			<td><c:out value="${inquiryResult.number_P5}" /></td>
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P5ForPresentation}" /></td>
-			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P5ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P5ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_1ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_2ForPresentation}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_3ForPresentation}" /></td>

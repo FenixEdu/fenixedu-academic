@@ -186,7 +186,8 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 	}
 
 	private String getQuestionRequiredIndication(final InquiriesQuestion inquiriesQuestion) {
-	    return inquiriesQuestion.getRequired() ? "<span class=\"required\"> *</span>" : StringUtils.EMPTY;
+	    return inquiriesQuestion.getRequired() && inquiriesQuestion.getShowRequiredMark() ? "<span class=\"required\"> *</span>"
+		    : StringUtils.EMPTY;
 	}
 
 	private String getResource(String label) {

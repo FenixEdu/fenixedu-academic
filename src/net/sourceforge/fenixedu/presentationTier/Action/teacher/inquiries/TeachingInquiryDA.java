@@ -53,10 +53,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
 	Professorship professorship = getProfessorship(executionCourse);
 
-	if (!professorship.hasTeachingInquiriesToAnswer()) {
-	    return actionMapping.findForward("inquiriesClosed");
-	}
-
+	request.setAttribute("hasTeachingInquiriesToAnswer", professorship.hasTeachingInquiriesToAnswer());
 	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 
@@ -109,10 +106,6 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 
-	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
-	    return prepareConfirm(actionMapping, actionForm, request, response);
-	}
-
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
 	RenderUtils.invalidateViewState();
@@ -124,8 +117,12 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		|| !teachingInquiry.getFirstPageSecondBlockFourthPart().validate()
 		|| !teachingInquiry.getFirstPageThirdBlock().validate()) {
 
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    addActionMessage(request, "error.inquiries.fillAllFields");
 	    return actionMapping.findForward("showInquiry1stPage");
+	}
+
+	if (!teachingInquiry.getProfessorship().isResponsibleFor()) {
+	    return actionMapping.findForward("confirmSubmission");
 	}
 
 	return actionMapping.findForward("showInquiry2ndPage");
@@ -147,7 +144,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		|| !teachingInquiry.getSecondPageEighthBlock().validate()) {
 
 	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    addActionMessage(request, "error.inquiries.fillAllFields");
 	    return actionMapping.findForward("showInquiry2ndPage");
 	}
 
@@ -157,7 +154,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
 	}
 
-	return prepareConfirm(actionMapping, actionForm, request, response);
+	return actionMapping.findForward("confirmSubmission");
     }
 
     private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
@@ -179,20 +176,15 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward submitInquiries3rdPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
-	if (!teachingInquiry.getThirdPageNinthBlock().validate()) {
-	    request.setAttribute("teachingInquiry", teachingInquiry);
-	    request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-	    return actionMapping.findForward("showInquiry3rdPage");
-	}
-	return prepareConfirm(actionMapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareConfirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	final TeachingInquiryDTO teachingInquiry = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	request.setAttribute("teachingInquiry", teachingInquiry);
 	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
+	if (!teachingInquiry.getThirdPageNinthBlock().validate()) {
+	    request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(teachingInquiry
+		    .getProfessorship()));
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, "error.inquiries.fillAllFields");
+	    return actionMapping.findForward("showInquiry3rdPage");
+	}
 	return actionMapping.findForward("confirmSubmission");
     }
 
@@ -227,7 +219,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
 	TeachingInquiry.makeNew(teachingInquiryDTO);
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
-	return showInquiriesPrePage(actionMapping, actionForm, request, response);
+	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getTeacher()
+		.getExecutionCoursesWithTeachingInquiriesToAnswer());
+	return actionMapping.findForward("inquiriesClosed");
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {

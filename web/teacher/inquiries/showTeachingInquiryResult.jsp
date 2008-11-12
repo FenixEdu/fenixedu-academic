@@ -108,7 +108,7 @@ border: none;
 
 <bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult"></bean:define>
 
-<p class="mtop0" style="float: right;"><em>5 Novembro 2008</em></p>
+<p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a 5 Novembro 2008</em></p>
 
 <h2>QUC - Garantia da Qualidade das UC - Resultados dos inquéritos aos alunos</h2>
 
@@ -150,11 +150,11 @@ border: none;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Assiduidade dos alunos <a href="#" class="help">[?] <span>Passível de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
+		<th class="aright">Assiduidade dos alunos <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
 		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo.</span></a></th>
 		<th class="aright">Capacidade pedagógica <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
 		<th class="aright">Interacção com os alunos <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 questões do grupo.</span></a></th>
-		<th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
+		<th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Passível de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
 	</tr>
 	<tr>
 		<th>Resultados a melhorar</th>
@@ -215,11 +215,11 @@ border: none;
 	<tr>
 		<th rowspan="2" class="vamiddle">A fraca assiduidade às aulas deveu-se a:</th>
 		<td style="background: #f8f8f8;">N</td>
-		<td><c:out value="${inquiryResult.p6_1_1_aForPresentation}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_bForPresentation}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_cForPresentation}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_dForPresentation}" /></td>
-		<td><c:out value="${inquiryResult.p6_1_1_eForPresentation}" /></td>
+		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_aForPresentation}" /></td>
+		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_bForPresentation}" /></td>
+		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_cForPresentation}" /></td>
+		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_dForPresentation}" /></td>
+		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_eForPresentation}" /></td>
 	</tr>
 	<tr>
 		<td style="background: #f8f8f8;">%</td>

@@ -1287,12 +1287,13 @@ public class Teacher extends Teacher_Base {
 	InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.TEACHING);
 	if (responsePeriod != null) {
 	    for (final Professorship professorship : getProfessorships(responsePeriod.getExecutionPeriod())) {
-		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()) {
+		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()
+			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()) {
 		    result.add(professorship.getExecutionCourse());
 		}
 	    }
 	}
 	return result;
     }
-
+    
 }

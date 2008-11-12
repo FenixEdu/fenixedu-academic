@@ -4,6 +4,14 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<style>
+.thtop { vertical-align: top; }
+.biggerTextarea textarea {
+width: 300px;
+height: 100px;
+}
+</style>
+
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -38,12 +46,14 @@
 			<fr:edit name="teachingInquiry" property="secondPageSeventhBlock" />
 
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.cuTeachingProcess" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="secondPageEighthBlock" />
+			<fr:edit name="teachingInquiry" property="secondPageEighthBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>				
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		
-			<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
-						
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
 		

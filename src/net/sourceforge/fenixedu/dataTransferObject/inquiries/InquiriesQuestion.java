@@ -25,6 +25,8 @@ public abstract class InquiriesQuestion implements Serializable {
 
     private Boolean required;
 
+    private Boolean showRequiredMark = true;
+
     public InquiriesQuestion(final String label) {
 	super();
 	this.label = label;
@@ -95,6 +97,15 @@ public abstract class InquiriesQuestion implements Serializable {
 
     public InquiriesQuestion setRequired(Boolean required) {
 	this.required = required;
+	return this;
+    }
+
+    public Boolean getShowRequiredMark() {
+	return showRequiredMark != null && showRequiredMark;
+    }
+
+    public InquiriesQuestion setShowRequiredMark(Boolean showRequiredMark) {
+	this.showRequiredMark = showRequiredMark;
 	return this;
     }
 

@@ -33,6 +33,9 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     private Double getValueForPresentation(Double value) {
 	//TODO: ugly hack, refactor
+	if(value == null){
+	    return new Double(0);
+	}
 	BigDecimal round = new BigDecimal(value);
 	round.setScale(2, RoundingMode.HALF_EVEN);
 	return round.doubleValue();
