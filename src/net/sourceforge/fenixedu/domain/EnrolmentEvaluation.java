@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -112,6 +113,24 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	setExamDate(examDate);
 
 	generateCheckSum();
+    }
+
+    @Override
+    public void setExamDateYearMonthDay(YearMonthDay evaluationDateYearMonthDay) {
+	if (evaluationDateYearMonthDay != null) {
+	    final Enrolment enrolment = getEnrolment();
+	    final Thesis thesis = enrolment.getThesis();
+	    if (thesis != null) {
+		DateTime newDateTime = evaluationDateYearMonthDay.toDateTimeAtMidnight();
+		final DateTime dateTime = thesis.getDiscussed();
+		if (dateTime != null) {
+		    newDateTime = newDateTime.withHourOfDay(dateTime.getHourOfDay());
+		    newDateTime = newDateTime.withMinuteOfHour(dateTime.getMinuteOfHour());
+		}
+		thesis.setDiscussed(newDateTime);
+	    }
+	}
+        super.setExamDateYearMonthDay(evaluationDateYearMonthDay);
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationState enrolmentEvaluationState,

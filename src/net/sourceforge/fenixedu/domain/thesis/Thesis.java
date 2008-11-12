@@ -238,7 +238,7 @@ public class Thesis extends Thesis_Base {
     }
 
     @Override
-    @Checked("ThesisPredicates.student")
+    @Checked("ThesisPredicates.studentOrAcademicAdministrativeOffice")
     public void setDiscussed(DateTime discussed) {
 	if (discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
 	    throw new DomainException("thesis.invalid.discussed.date.time");
