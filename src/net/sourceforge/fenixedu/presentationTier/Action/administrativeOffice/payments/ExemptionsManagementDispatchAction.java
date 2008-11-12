@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ExemptionsManagement;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
@@ -38,10 +40,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"),
 	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
 	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
-	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/gratuity/create.jsp"),
+	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp"),
 	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
 	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp"),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
 	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp")
 
 })
@@ -320,6 +323,47 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    return prepareCreateSecondCycleIndividualCandidacyExemptionInvalid(mapping, form, request, response);
+	}
+
+	return showExemptions(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request
+		.setAttribute("createAdministrativeOfficeFeeAndInsuranceExemptionBean",
+			new AdministrativeOfficeFeeAndInsuranceExemptionBean(
+				(AdministrativeOfficeFeeAndInsuranceEvent) getEvent(request)));
+
+	return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceExemption");
+    }
+
+    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsuranceExemptionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("createAdministrativeOfficeFeeAndInsuranceExemptionBean",
+		getRenderedObject("createAdministrativeOfficeFeeAndInsuranceExemptionBean"));
+
+	return mapping.findForward("createAdministrativeOfficeFeeAndInsuranceExemption");
+    }
+
+    public ActionForward createAdministrativeOfficeFeeAndInsuranceExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	try {
+	    ExemptionsManagement
+		    .createAdministrativeOfficeFeeAndInsuranceExemption(
+			    getLoggedPerson(request).getEmployee(),
+			    (AdministrativeOfficeFeeAndInsuranceExemptionBean) getRenderedObject("createAdministrativeOfficeFeeAndInsuranceExemptionBean"));
+
+	} catch (DomainExceptionWithLabelFormatter ex) {
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    return prepareCreateAdministrativeOfficeFeeAndInsuranceExemptionInvalid(mapping, form, request, response);
+
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    return prepareCreateAdministrativeOfficeFeeAndInsuranceExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);

@@ -488,3 +488,20 @@
 </schema>
 
 
+<schema name="AdministrativeOfficeFeeAndInsuranceExemptionBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean" bundle="APPLICATION_RESOURCES">   
+    <slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"
+    	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.AdministrativeOfficeFeeAndInsuranceExemptionJustificationProvider" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+        
+    <slot name="dispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.dispatchDate"/>    
+    
+    <slot name="reason" layout="longText" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean.reason"/>
+
+</schema>
+
+<schema name="AdministrativeOfficeFeeAndInsuranceExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption" bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.description" />
+	<slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.reason" />
+</schema>

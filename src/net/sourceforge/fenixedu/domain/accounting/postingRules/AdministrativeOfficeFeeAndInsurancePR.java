@@ -42,11 +42,11 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final AnnualEvent annualEvent = (AnnualEvent) event;
 	return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate())
-		.calculateTotalAmountToPay(event, when).add(
+		.calculateTotalAmountToPay(event, when, applyDiscount).add(
 			getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate())
 				.calculateTotalAmountToPay(event, when));
     }
-
+    
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 

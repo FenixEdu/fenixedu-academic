@@ -42,7 +42,14 @@ public class PastAdministrativeOfficeFeeAndInsurancePR extends PastAdministrativ
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return ((PastAdministrativeOfficeFeeAndInsuranceEvent) event).getPastAdministrativeOfficeFeeAndInsuranceAmount();
+	final PastAdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (PastAdministrativeOfficeFeeAndInsuranceEvent) event;
+
+	if (applyDiscount && administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
+	    return Money.ZERO;
+	}
+
+	return administrativeOfficeFeeAndInsuranceEvent.getPastAdministrativeOfficeFeeAndInsuranceAmount();
+
     }
 
     @Override

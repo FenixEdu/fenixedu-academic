@@ -215,6 +215,7 @@ enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType						
 enum	  net.sourceforge.fenixedu.domain.student.RegistrationRegimeType											 as RegistrationRegimeType;
 enum	  net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType								 as InquiryResponsePeriodType;
 enum      net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel                                          as LanguageKnowledgeLevel;
+enum	  net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType	 as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 
 /*
 *
@@ -1495,6 +1496,9 @@ class DomainObject {
 
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemption extends accounting.Exemption {
 		}
+		
+		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
+		}
 
 	class accounting.Installment extends DomainObject {
 		Money amount;
@@ -1820,6 +1824,14 @@ class DomainObject {
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemptionJustification extends accounting.events.ExemptionJustification {
 			CandidacyExemptionJustificationType candidacyExemptionJustificationType;
 		}
+		
+		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification extends accounting.events.ExemptionJustification {
+			AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
+		}
+			class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch extends accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification {
+				YearMonthDay dispatchDate;
+			}
+			
 
 	class administrativeOffice.AdministrativeOffice extends DomainObject {
 		AdministrativeOfficeType administrativeOfficeType;

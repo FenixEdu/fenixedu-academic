@@ -243,8 +243,6 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Override
     protected void internalRecalculateState(DateTime whenRegistered) {
-	// We can safely change event state and date because the are no
-	// penalties
 	if (canCloseEvent(whenRegistered)) {
 	    closeNonProcessedCodes();
 	    closeEvent();

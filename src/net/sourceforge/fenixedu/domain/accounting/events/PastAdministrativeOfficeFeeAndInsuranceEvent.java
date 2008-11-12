@@ -49,7 +49,7 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
 
     @Override
     public boolean isExemptionAppliable() {
-	return false;
+	return true;
     }
 
     @Override

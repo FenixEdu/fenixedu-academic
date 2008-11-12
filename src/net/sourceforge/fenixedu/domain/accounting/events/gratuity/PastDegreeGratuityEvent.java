@@ -59,7 +59,7 @@ public class PastDegreeGratuityEvent extends PastDegreeGratuityEvent_Base {
 
     @Override
     public boolean isExemptionAppliable() {
-	return false;
+	return true;
     }
 
     @Override

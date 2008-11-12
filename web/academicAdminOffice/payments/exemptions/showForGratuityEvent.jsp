@@ -35,11 +35,12 @@
 
 	<bean:define id="personId" name="person" property="idInternal" />
 	<bean:define id="gratuityEventId" name="event" property="idInternal" />
+	
 	<p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions"/></strong></p>
 	<logic:notEmpty name="event" property="gratuityExemption">
 		<bean:define id="gratuityExemption" name="event" property="gratuityExemption" />
-		<bean:define id="gratuityExemptionClassName" name="gratuityExemption" property="class.simpleName" />
-		<fr:view name="gratuityExemption" schema="<%= gratuityExemptionClassName + ".view"%>">
+		<bean:define id="gratuityExemptionClassName" name="gratuityExemption" property="class.simpleName"></bean:define>
+		<fr:view name="gratuityExemption" schema="<%=gratuityExemptionClassName + ".view"%>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4" />
 			</fr:layout>

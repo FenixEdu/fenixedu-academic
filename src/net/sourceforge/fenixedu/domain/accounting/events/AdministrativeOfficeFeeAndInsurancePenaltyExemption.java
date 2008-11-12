@@ -18,7 +18,7 @@ public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends Adminis
 		if (exemption != null && event != null) {
 		    if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
 			final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = ((AdministrativeOfficeFeeAndInsuranceEvent) event);
-			if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
+			if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsurancePenaltyExemption()) {
 			    throw new DomainException(
 				    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.event.already.has.exemption.for.fee.and.insurance");
 			}

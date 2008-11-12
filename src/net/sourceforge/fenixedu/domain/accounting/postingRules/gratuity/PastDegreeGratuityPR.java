@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,13 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
+	final Money amountToPay = ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
+	final PastDegreeGratuityEvent pastDegreeGratuityEvent = (PastDegreeGratuityEvent) event;
+	final BigDecimal discountPercentage = applyDiscount ? pastDegreeGratuityEvent.calculateDiscountPercentage(amountToPay)
+		: BigDecimal.ZERO;
+
+	return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
+
     }
 
     @Override

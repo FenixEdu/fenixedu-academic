@@ -34,6 +34,31 @@
 
 	<bean:define id="personId" name="person" property="idInternal" />
 	<bean:define id="eventId" name="event" property="idInternal" />
+	
+	<p class="mtop2 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentExemptions"/></strong></p>
+	<logic:notEmpty name="event" property="administrativeOfficeFeeAndInsuranceExemption">
+		<bean:define id="administrativeOfficeFeeAndInsuranceExemption" name="event" property="administrativeOfficeFeeAndInsuranceExemption" />
+		<fr:view name="administrativeOfficeFeeAndInsuranceExemption" schema="AdministrativeOfficeFeeAndInsuranceExemption.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+			</fr:layout>
+		</fr:view>
+		<bean:define id="exemptionId" name="administrativeOfficeFeeAndInsuranceExemption" property="idInternal" />
+		<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + exemptionId %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
+		</html:link>
+	</logic:notEmpty>
+	<logic:empty name="event" property="administrativeOfficeFeeAndInsuranceExemption">
+		<p>
+			<em>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentExemptions.noPaymentExemptions" />
+			</em>
+		</p>
+		<html:link action="<%="/exemptionsManagement.do?method=prepareCreateAdministrativeOfficeFeeAndInsuranceExemption&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
+		</html:link>
+	</logic:empty>
+	
 	<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.penaltyExemptions"/></strong></p>
 	<logic:notEmpty name="event" property="administrativeOfficeFeeAndInsurancePenaltyExemption">
 		<bean:define id="penaltyExemption" name="event" property="administrativeOfficeFeeAndInsurancePenaltyExemption" />

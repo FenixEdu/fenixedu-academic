@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -32,12 +38,33 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 	}
 
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-	if (administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null) {
-	    return when.toYearMonthDay().isAfter(administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate());
+
+	final YearMonthDay paymentEndDate = administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
+		.getPaymentEndDate()
+		: getWhenToApplyFixedAmountPenalty();
+
+	final Money amountPayedUntilEndDate = calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent,
+		paymentEndDate);
+
+	if (!when.toYearMonthDay().isAfter(paymentEndDate)) {
+	    return false;
 	}
 
-	return super.hasPenalty(event, when);
+	return amountPayedUntilEndDate.lessThan(getFixedAmount());
 
+    }
+
+    private Money calculateAmountPayedUntilEndDate(AdministrativeOfficeFeeAndInsuranceEvent event, YearMonthDay paymentEndDate) {
+	Money result = Money.ZERO;
+
+	for (final AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
+	    if (transaction.getToAccountEntry().getEntryType() == getEntryType()
+		    && !transaction.getWhenRegistered().toYearMonthDay().isAfter(paymentEndDate)) {
+		result = result.add(transaction.getAmountWithAdjustment());
+	    }
+	}
+
+	return result;
     }
 
     @Override
@@ -47,6 +74,34 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
 	return new AdministrativeOfficeFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
 		penaltyAmount, whenToApplyFixedAmountPenalty);
+    }
+
+    @Override
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+
+	if (!applyDiscount) {
+	    return super.calculateTotalAmountToPay(event, when, applyDiscount);
+	}
+
+	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO : super
+		.calculateTotalAmountToPay(event, when, applyDiscount);
+
+    }
+
+    @Override
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
+	final List<EntryDTO> result = new ArrayList<EntryDTO>(super.calculateEntries(event, when));
+	final Iterator<EntryDTO> iterator = result.iterator();
+	while (iterator.hasNext()) {
+	    final EntryDTO entryDTO = iterator.next();
+
+	    if (!entryDTO.getAmountToPay().isPositive()) {
+		iterator.remove();
+	    }
+	}
+
+	return result;
     }
 
 }

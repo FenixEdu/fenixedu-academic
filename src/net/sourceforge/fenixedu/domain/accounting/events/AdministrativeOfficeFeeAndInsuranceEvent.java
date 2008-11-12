@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
@@ -94,10 +95,15 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	return getAdministrativeOffice().getUnit().getInternalAccount();
     }
 
+    public boolean isInsuranceAmountIncludedInDebt() {
+	return !getPerson().hasInsuranceEventFor(getExecutionYear());
+    }
+
     public boolean hasToPayInsurance() {
-	if (getPerson().hasInsuranceEventFor(getExecutionYear())) {
+	if (!isInsuranceAmountIncludedInDebt()) {
 	    return false;
 	}
+
 	return getInsurancePayedAmount().lessThan(getInsuranceAmount());
     }
 
@@ -243,7 +249,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	return true;
     }
 
-    public boolean hasAdministrativeOfficeFeeAndInsuranceExemption() {
+    public boolean hasAdministrativeOfficeFeeAndInsurancePenaltyExemption() {
 	return getAdministrativeOfficeFeeAndInsurancePenaltyExemption() != null;
     }
 
@@ -251,6 +257,20 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	for (final Exemption exemption : getExemptionsSet()) {
 	    if (exemption instanceof AdministrativeOfficeFeeAndInsurancePenaltyExemption) {
 		return (AdministrativeOfficeFeeAndInsurancePenaltyExemption) exemption;
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasAdministrativeOfficeFeeAndInsuranceExemption() {
+	return getAdministrativeOfficeFeeAndInsuranceExemption() != null;
+    }
+
+    public AdministrativeOfficeFeeAndInsuranceExemption getAdministrativeOfficeFeeAndInsuranceExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof AdministrativeOfficeFeeAndInsuranceExemption) {
+		return (AdministrativeOfficeFeeAndInsuranceExemption) exemption;
 	    }
 	}
 
@@ -336,6 +356,38 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	result.add(EntryType.INSURANCE_FEE);
 
 	return result;
+    }
+
+    @Override
+    public boolean isOpen() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isClosed() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isInState(final EventState eventState) {
+	if (eventState == EventState.OPEN) {
+	    return isOpen();
+	} else if (eventState == EventState.CLOSED) {
+	    return isClosed();
+	} else if (eventState == EventState.CANCELLED) {
+	    return isCancelled();
+	} else {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent.unexpected.state.to.test");
+	}
     }
 
 }

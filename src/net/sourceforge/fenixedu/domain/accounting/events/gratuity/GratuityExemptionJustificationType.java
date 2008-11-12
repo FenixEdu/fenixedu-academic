@@ -50,8 +50,8 @@ public enum GratuityExemptionJustificationType {
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
 	case BOLONHA_DEGREE:
 	case DEGREE:
-	    return Arrays
-		    .asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER });
+	    return Arrays.asList(new GratuityExemptionJustificationType[] { SON_OF_DECORATED_MILITARY, SOCIAL_SHARE_GRANT_OWNER,
+		    DIRECTIVE_COUNCIL_AUTHORIZATION });
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, INSTITUTION_GRANT_OWNER,
 		    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
