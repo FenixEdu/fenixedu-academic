@@ -72,6 +72,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return new InterruptedState(registration, person, dateTime);
 	case SCHOOLPARTCONCLUDED:
 	    return new SchoolPartConcludedState(registration, person, dateTime);
+	case STUDYPLANCONCLUDED:
+	    return new StudyPlanConcludedState(registration, person, dateTime);
 	case INTERNAL_ABANDON:
 	    return new InternalAbandonState(registration, person, dateTime);
 	case EXTERNAL_ABANDON:

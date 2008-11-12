@@ -38,6 +38,7 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
 	states.add(RegistrationStateType.CONCLUDED.name());
+	states.add(RegistrationStateType.STUDYPLANCONCLUDED.name());
 	states.add(RegistrationStateType.CANCELED.name());
 	states.add(RegistrationStateType.INTERNAL_ABANDON.name());
 	states.add(RegistrationStateType.EXTERNAL_ABANDON.name());

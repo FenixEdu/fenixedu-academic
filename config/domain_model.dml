@@ -1496,7 +1496,7 @@ class DomainObject {
 
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemption extends accounting.Exemption {
 		}
-		
+
 		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
 		}
 
@@ -1824,7 +1824,7 @@ class DomainObject {
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemptionJustification extends accounting.events.ExemptionJustification {
 			CandidacyExemptionJustificationType candidacyExemptionJustificationType;
 		}
-		
+
 		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification extends accounting.events.ExemptionJustification {
 			AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType;
 		}
@@ -4360,6 +4360,9 @@ class DomainObject {
 		}
 
 		class student.registrationStates.SchoolPartConcludedState extends student.registrationStates.RegistrationState {
+		}
+
+		class student.registrationStates.StudyPlanConcludedState extends student.registrationStates.RegistrationState {
 		}
 
 		class student.registrationStates.TransitionalState extends student.registrationStates.RegistrationState {
