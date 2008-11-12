@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
@@ -755,7 +756,7 @@ public class Teacher extends Teacher_Base {
 	    return null;
 	}
 
-	Integer numberOfDaysInPeriod = null, maxDays = 0;
+	Integer numberOfDaysInPeriod = null, maxDays = 0, maxExemptionDays = 0;
 	TeacherServiceExemption teacherServiceExemption = null;
 	Interval lessonsInterval = new Interval(lessonsPeriod.getStartYearMonthDay().toDateMidnight(), lessonsPeriod
 		.getEndYearMonthDay().toDateMidnight());
@@ -768,8 +769,11 @@ public class Teacher extends Teacher_Base {
 	    Interval overlapInterval = lessonsInterval.overlap(serviceExemptionsInterval);
 	    if (overlapInterval != null) {
 		numberOfDaysInPeriod = overlapInterval.toPeriod(PeriodType.days()).getDays();
-		if (numberOfDaysInPeriod >= maxDays) {
+		if (numberOfDaysInPeriod > maxDays
+			|| (numberOfDaysInPeriod == maxDays && maxExemptionDays < Days.daysIn(serviceExemptionsInterval)
+				.getDays())) {
 		    maxDays = numberOfDaysInPeriod;
+		    maxExemptionDays = Days.daysIn(serviceExemptionsInterval).getDays();
 		    teacherServiceExemption = serviceExemption;
 		}
 	    }
@@ -1290,5 +1294,5 @@ public class Teacher extends Teacher_Base {
 	}
 	return result;
     }
-    
+
 }
