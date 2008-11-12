@@ -8822,14 +8822,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains/>
-    </service>   
-    <service>
-        <name>SearchInternalUnits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains/>
-    </service>   
+    </service>
     <service>
         <name>SearchAllActiveInternalUnits</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveInternalUnits</implementationClass>
