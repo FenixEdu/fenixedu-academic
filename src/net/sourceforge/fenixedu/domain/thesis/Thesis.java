@@ -233,7 +233,8 @@ public class Thesis extends Thesis_Base {
 	    final StringBuilder result = new StringBuilder();
 	    result.append(dissertation.getTitle());
 	    result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
-	    return new MultiLanguageString(dissertation.getLanguage(), result.toString());
+	    final Language language = dissertation.getLanguage();
+	    return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language, result.toString());
 	}
     }
 
