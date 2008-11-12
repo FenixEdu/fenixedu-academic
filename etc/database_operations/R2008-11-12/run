@@ -41,3 +41,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Teaching Inquiries Table" alterTeachingInquiries.sql
+execute "Internship Candidacy Date" internshipCandidacyDate.sql
+execute "Changing table ExemptionJustification"  AlterTableExemptionJustification.sql
