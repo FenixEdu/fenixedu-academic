@@ -113,3 +113,8 @@ font-size: 1.1em;
 ul {
 font-size: 1.1em;
 }
+
+
+table.brdnone tr td br {
+display: none !important;
+}
