@@ -506,11 +506,20 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean hasAnyCurriculumLines() {
+	return hasRoot() ? hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class))
+		: hasAnyEnrolments();
+    }
+
+    final public boolean hasAnyCurriculumLines(final ExecutionYear executionYear) {
 	if (hasRoot()) {
+	    final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	    andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
+	    andPredicate.add(new CurriculumModulePredicateByExecutionYear(executionYear));
+
 	    return hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class));
 	}
 
-	return super.hasAnyEnrolments();
+	return hasEnrolments(executionYear);
     }
 
     @Override
