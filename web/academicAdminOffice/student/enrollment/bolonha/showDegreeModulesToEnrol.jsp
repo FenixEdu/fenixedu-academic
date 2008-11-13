@@ -26,9 +26,9 @@
 	<bean:define id="student" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.registration.student" />
 	
 
-	<logic:equal name="student" property="anyTuitionInDebt" value="true">
+	<logic:equal name="student" property="anyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt" value="true">
 		<div class="error0" style="padding: 0.5em;">
-			<p><strong><bean:message  key="label.student.gratuity.events.in.debt.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
+			<p><strong><bean:message  key="label.student.events.in.debt.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
 		</div>
 	</logic:equal>
 

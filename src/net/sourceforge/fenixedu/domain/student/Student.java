@@ -27,9 +27,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -877,9 +879,27 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public boolean isAnyTuitionInDebt() {
+    private boolean isAnyTuitionInDebt() {
 	for (final Registration registration : super.getRegistrations()) {
 	    if (!registration.getPayedTuition()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt() {
+	return isAnyTuitionInDebt() || isAnyAdministrativeOfficeFeeAndInsuranceInDebt();
+    }
+
+    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebt() {
+	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+	for (final Event event : getPerson().getEvents()) {
+	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent
+		    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() != currentExecutionYear
+		    && event.isOpen()) {
 		return true;
 	    }
 	}

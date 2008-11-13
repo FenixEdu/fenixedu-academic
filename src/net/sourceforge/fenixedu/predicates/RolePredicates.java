@@ -49,6 +49,13 @@ public class RolePredicates {
 	};
     };
 
+    public static final AccessControlPredicate<Object> DIRECTIVE_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
+	public boolean evaluate(Object object) {
+	    return hasRole(RoleType.DIRECTIVE_COUNCIL);
+
+	};
+    };
+
     private static boolean hasRole(final RoleType roleType) {
 	return AccessControl.getPerson().hasRole(roleType);
     }

@@ -505,3 +505,30 @@
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.description" />
 	<slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption.reason" />
 </schema>
+
+
+<schema name="GratuityReport.view" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReport" bundle="APPLICATION_RESOURCES">
+	<slot name="totalGratuityAmount"  />
+</schema>
+
+<schema name="GratuityReportEntry.view" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReport$GratuityReportEntry" bundle="APPLICATION_RESOURCES">
+	<slot name="date" />
+	<slot name="gratuityAmount"  />
+</schema>
+
+<schema name="GratuityReportParametersBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.GratuityReportsDA$GratuityReportParametersBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${name}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="degreeTypes" layout="option-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.report.DegreeTypeForGratuityReportProvider" />
+		<property name="eachSchema" value="degree.type"/>
+		<property name="classes" value="nobullet noindent"/>
+	</slot>
+	<slot name="startDate"  />
+	<slot name="endDate"  />
+	<slot name="detailed" />
+</schema>
+

@@ -210,8 +210,8 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 	    return false;
 	}
 
-	if (studentCurricularPlan.getRegistration().getStudent().isAnyTuitionInDebt()) {
-	    addActionMessage(request, "error.message.tuitionNotPayed");
+	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    addActionMessage(request, "error.message.debts.from.past.years.not.payed");
 	    return false;
 	}
 

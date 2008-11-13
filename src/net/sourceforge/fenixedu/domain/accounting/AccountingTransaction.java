@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -330,7 +331,10 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     }
 
     public boolean isInsidePeriod(final YearMonthDay startDate, final YearMonthDay endDate) {
-	return !getWhenRegistered().toYearMonthDay().isBefore(startDate)
-		&& !getWhenRegistered().toYearMonthDay().isAfter(endDate);
+	return isInsidePeriod(startDate.toLocalDate(), endDate.toLocalDate());
+    }
+
+    public boolean isInsidePeriod(final LocalDate startDate, final LocalDate endDate) {
+	return !getWhenRegistered().toLocalDate().isBefore(startDate) && !getWhenRegistered().toLocalDate().isAfter(endDate);
     }
 }

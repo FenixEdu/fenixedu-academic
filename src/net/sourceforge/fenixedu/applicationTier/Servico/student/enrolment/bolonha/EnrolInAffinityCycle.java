@@ -134,8 +134,8 @@ public class EnrolInAffinityCycle extends FenixService {
 	    }
 	}
 
-	if (studentCurricularPlan.getRegistration().getStudent().isAnyTuitionInDebt()) {
-	    throw new FenixServiceException("error.message.tuitionNotPayed");
+	if (studentCurricularPlan.getRegistration().getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    throw new FenixServiceException("error.message.debts.from.past.years.not.payed");
 	}
     }
 

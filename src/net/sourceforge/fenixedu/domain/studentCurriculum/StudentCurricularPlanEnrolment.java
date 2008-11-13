@@ -64,8 +64,8 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void assertEnrolmentPreConditions() {
 
-	if (!isResponsiblePersonManager() && getStudent().isAnyTuitionInDebt()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.gratuity.debts.for.previous.execution.years");
+	if (!isResponsiblePersonManager() && getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
 	}
 
 	if (isResponsiblePersonStudent()) {
