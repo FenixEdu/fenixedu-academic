@@ -2046,6 +2046,10 @@ public class Registration extends Registration_Base {
 	return getActiveStateType() == RegistrationStateType.MOBILITY;
     }
 
+    public boolean isSchoolPartConcluded() {
+	return getActiveStateType() == RegistrationStateType.SCHOOLPARTCONCLUDED;
+    }
+
     public boolean isConcluded() {
 	return getActiveStateType() == RegistrationStateType.CONCLUDED;
     }
@@ -2466,7 +2470,14 @@ public class Registration extends Registration_Base {
 	super.setConclusionDate(calculateConclusionDate());
 	super.setConclusionProcessResponsible(AccessControl.getPerson());
 
-	RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+	    if (!isSchoolPartConcluded()) {
+		RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.SCHOOLPARTCONCLUDED);
+	    }
+	} else {
+	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+	}
     }
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
