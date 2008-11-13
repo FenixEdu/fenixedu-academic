@@ -832,6 +832,16 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasAnyCurriculumLines(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyCurriculumLines(executionYear)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     final public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
 	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
     }
