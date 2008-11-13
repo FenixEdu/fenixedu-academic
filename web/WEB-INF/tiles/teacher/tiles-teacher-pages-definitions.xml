@@ -863,6 +863,16 @@
 		<put name="body" value="/teacher/inquiries/inquiriesClosed.jsp" />
 	</definition>
 				
+	<definition name="teaching-inquiries.inquiryAnswered" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="body" value="/teacher/inquiries/inquiryAnswered.jsp" />
+	</definition>
+	
+	<definition name="teaching-inquiries.inquiryUnavailable" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="body" value="/teacher/inquiries/inquiryUnavailable.jsp" />
+	</definition>	
+				
 	<definition name="teaching-inquiries.showInquiry1stPage" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/inquiry1stPage.jsp" />

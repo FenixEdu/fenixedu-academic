@@ -10,7 +10,7 @@
 
 <logic:present name="executionSemester" property="teachingInquiryResponsePeriod">
 	<logic:notEmpty name="executionSemester" property="teachingInquiryResponsePeriod.introduction">	
-		<div>
+		<div style="border: 1px solid #ddd; padding: 5px 15px; background: #fafafa;">
 			<bean:write name="executionSemester" property="teachingInquiryResponsePeriod.introduction" filter="false"/>
 		</div>
 	</logic:notEmpty>

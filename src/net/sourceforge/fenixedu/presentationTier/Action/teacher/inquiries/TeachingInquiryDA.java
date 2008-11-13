@@ -39,6 +39,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/teachingInquiry", module = "teacher")
 @Forwards( { @Forward(name = "inquiryPrePage", path = "teaching-inquiries.inquiryPrePage"),
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
+	@Forward(name = "inquiryAnswered", path = "teaching-inquiries.inquiryAnswered"),
+	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
 	@Forward(name = "showInquiry1stPage", path = "teaching-inquiries.showInquiry1stPage"),
 	@Forward(name = "showInquiry2ndPage", path = "teaching-inquiries.showInquiry2ndPage"),
 	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
@@ -52,6 +54,14 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
 	Professorship professorship = getProfessorship(executionCourse);
+
+	if (executionCourse.getExecutionPeriod().getTeachingInquiryResponsePeriod() == null) {
+	    return actionMapping.findForward("inquiriesClosed");
+	}
+
+	if (!executionCourse.getAvailableForInquiries()) {
+	    return actionMapping.findForward("inquiryUnavailable");
+	}
 
 	request.setAttribute("hasTeachingInquiriesToAnswer", professorship.hasTeachingInquiriesToAnswer());
 	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
@@ -221,7 +231,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
 	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getTeacher()
 		.getExecutionCoursesWithTeachingInquiriesToAnswer());
-	return actionMapping.findForward("inquiriesClosed");
+	return actionMapping.findForward("inquiryAnswered");
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {

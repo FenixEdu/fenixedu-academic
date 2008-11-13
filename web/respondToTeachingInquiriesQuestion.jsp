@@ -24,7 +24,7 @@
 					<bean:write name="executionPeriod" property="teachingInquiryResponsePeriod.introduction" filter="false"/>
 				</div>
 				
-				<p style="margin-top: 1.75em;"><strong><bean:message key="label.teachingInquiries.coursesToAnswer" bundle="INQUIRIES_RESOURCES"/>:</strong></p>
+				<p style="margin-top: 1.75em;"><strong class="pub-mark"><bean:message key="label.teachingInquiries.coursesToAnswer" bundle="INQUIRIES_RESOURCES"/>:</strong></p>
 
 				<c:forEach items="${executionCourses}" var="executionCourse">
 					<p style="padding-left: 2em; margin: 0.75em 0;">

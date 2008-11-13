@@ -2469,4 +2469,7 @@ margin: 0.25em 0;
 display: block;
 }
 
-
+.pub-mark {
+background: #faf5ca;
+color: #000;
+}
