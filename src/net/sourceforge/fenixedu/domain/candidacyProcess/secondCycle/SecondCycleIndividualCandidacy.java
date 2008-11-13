@@ -161,7 +161,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
-	return getStudent().hasRegistrationFor(degreeCurricularPlan);
+	return hasStudent() && getStudent().hasRegistrationFor(degreeCurricularPlan);
     }
 
     private Registration getRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
