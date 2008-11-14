@@ -1360,7 +1360,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-	return this.getCompetenceCourse().getObjectives(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getObjectives(period);
     }
 
     public String getObjectives() {
@@ -1371,7 +1372,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-	return this.getCompetenceCourse().getObjectivesEn(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getObjectivesEn(period);
     }
 
     public String getObjectivesEn() {
@@ -1382,7 +1384,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgram(ExecutionSemester period) {
-	return this.getCompetenceCourse().getProgram(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getProgram(period);
     }
 
     public String getProgram() {
@@ -1393,7 +1396,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getProgramEn(ExecutionSemester period) {
-	return this.getCompetenceCourse().getProgramEn(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getProgramEn(period);
     }
 
     public String getProgramEn() {
@@ -1404,7 +1408,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getEvaluationMethod(ExecutionSemester period) {
-	return this.getCompetenceCourse().getEvaluationMethod(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getEvaluationMethod(period);
     }
 
     public String getEvaluationMethod() {
@@ -1415,7 +1420,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getEvaluationMethodEn(ExecutionSemester period) {
-	return this.getCompetenceCourse().getEvaluationMethodEn(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getEvaluationMethodEn(period);
     }
 
     public String getEvaluationMethodEn() {
@@ -1426,11 +1432,13 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
-	return this.getCompetenceCourse().getRegime(period);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getRegime(period);
     }
 
     public RegimeType getRegime(final ExecutionYear executionYear) {
-	return this.getCompetenceCourse().getRegime(executionYear);
+	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getRegime(executionYear);
     }
 
     public RegimeType getRegime() {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -506,7 +507,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(curricular.getDegree().getSigla());
 	row.setCell(curricular.getName(executionSemester));
 	row.setCell(curricular.getNameEn(executionSemester));
-	row.setCell(curricular.getCompetenceCourse().getAcronym(executionSemester));
+	final CompetenceCourse competenceCourse = curricular.getCompetenceCourse();
+	if (competenceCourse != null) {	    
+	    row.setCell(competenceCourse.getAcronym(executionSemester));
+	} else {
+	    row.setCell("");
+	}
 
 	row.setCell(context.getCurricularYear());
 	setSemesterAndDuration(row, context);
@@ -558,7 +564,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private BibliographicReferences getBibliographicReferences(final CurricularCourse curricularCourse,
 	    final ExecutionSemester executionSemester) {
-	return curricularCourse.getCompetenceCourse().getBibliographicReferences(executionSemester);
+	final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
+	return competenceCourse == null ? null : competenceCourse.getBibliographicReferences(executionSemester);
     }
 
     private String getBibliographicReferences(final List<BibliographicReference> references) {
