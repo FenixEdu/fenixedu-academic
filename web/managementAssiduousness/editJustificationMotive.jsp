@@ -9,7 +9,13 @@
 <logic:present name="justificationMotive">
 	<h2><bean:message key="link.editJustification" /></h2>
 	<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
-
+	
+	<div class="infoop2 mbottom15">
+		 <p><bean:message key="message.actualWorkTime"/></p>
+		 <p><bean:message key="message.inExercise"/></p>
+		 <p><bean:message key="message.accumulate"/></p>
+		 <p><bean:message key="message.giafCodes"/></p>
+	</div>
 	<p>
 	<span class="error0">
 		<html:messages id="message" message="true">

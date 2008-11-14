@@ -21,19 +21,19 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    DayType dayType, JustificationGroup justificationGroup, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
 	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, null, null, Boolean.FALSE,
-		Boolean.FALSE, Boolean.TRUE, lastModifiedDate, modifiedBy);
+		Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, lastModifiedDate, modifiedBy);
     }
 
     public JustificationMotive(String acronym, String description, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	init(acronym, description, false, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE,
-		lastModifiedDate, modifiedBy);
+	init(acronym, description, false, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
+		Boolean.TRUE, lastModifiedDate, modifiedBy);
     }//
 
     private void init(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean inExercise,
-	    DateTime lastModifiedDate, Employee modifiedBy) {
+	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate,
+	    Boolean inExercise, DateTime lastModifiedDate, Employee modifiedBy) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAcronym(acronym);
 	setDescription(description);
@@ -48,19 +48,22 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setDiscountA17Vacations(discountA17Vacations);
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
-	setAccumulate(Boolean.FALSE);
+	setAccumulate(accumulate);
 	setInExercise(inExercise);
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean inExercise,
-	    Employee modifiedBy) {
+	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate,
+	    Boolean inExercise, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
+	if (justificationType != JustificationType.TIME) {
+	    accumulate = Boolean.FALSE;
+	}
 	init(acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus,
-		giafCodeContractedStatus, discountBonus, discountA17Vacations, inExercise, new DateTime(), modifiedBy);
+		giafCodeContractedStatus, discountBonus, discountA17Vacations, accumulate, inExercise, new DateTime(), modifiedBy);
     }
 
     // construtor used for regularizations
@@ -69,7 +72,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
 	init(acronym, description, false, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
-		new DateTime(), modifiedBy);
+		Boolean.FALSE, new DateTime(), modifiedBy);
     }// 
 
     private boolean alreadyExistsJustificationMotiveAcronym(String acronym) {
@@ -115,7 +118,7 @@ public class JustificationMotive extends JustificationMotive_Base {
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
 	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Boolean active,
 	    Integer giafCodeOtherStatus, Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations,
-	    Boolean inExercise, Employee modifiedBy) {
+	    Boolean accumulate, Boolean inExercise, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -133,6 +136,10 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setLastModifiedDate(new DateTime());
 	setModifiedBy(modifiedBy);
 	setInExercise(inExercise);
+	if (justificationType != JustificationType.TIME) {
+	    accumulate = Boolean.FALSE;
+	}
+	setAccumulate(accumulate);
     }
 
     public boolean getIsUsed() {
