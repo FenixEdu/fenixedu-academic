@@ -50,7 +50,7 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	} catch (DomainExceptionWithLabelFormatter e) {
 	    addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
+	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
 
 	final Registration registration = ((RegistrationStateBean) getRenderedObject()).getRegistration();
