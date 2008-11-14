@@ -48,7 +48,8 @@ public class InternshipDA extends FenixDispatchAction {
 	    request.setAttribute("candidacyNumber", candidacyNumber);
 	    return mapping.findForward("final");
 	} catch (DuplicateInternshipCandidacy e) {
-	    addActionMessage(request, "error.internship.candidacy.duplicateStudentNumber", e.getNumber(), e.getUniversity());
+	    addActionMessage(request, "error.internationalrelations.internship.candidacy.duplicateStudentNumber", e.getNumber(),
+		    e.getUniversity());
 	    return mapping.findForward("rules");
 	}
     }

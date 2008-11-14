@@ -42,3 +42,4 @@ function executeWithTempFile() {
 }
 
 execute "Teaching Inquiries Table" alterTeachingInquiries.sql
+execute "GRI Portal changes" intercepted.sql

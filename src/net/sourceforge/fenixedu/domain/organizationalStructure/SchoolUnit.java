@@ -116,4 +116,13 @@ public class SchoolUnit extends SchoolUnit_Base {
 	return super.addParentUnit(parentUnit, accountabilityType);
     }
 
+    @Override
+    public String getFullPresentationName() {
+	StringBuilder output = new StringBuilder();
+	output.append(getName().trim());
+	output.append(" da ");
+	List<Unit> parents = getParentUnitsPath();
+	output.append(parents.get(parents.size() - 1).getName());
+	return output.toString();
+    }
 }

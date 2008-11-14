@@ -18,10 +18,10 @@
 
 <html:xhtml />
 
-<h2><bean:message key="label.internship.candidacy.title" bundle="INTERNSHIP_RESOURCES" /></h2>
+<h2><bean:message key="label.internationalrelations.internship.candidacy.title" bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 
 
-<html:messages id="message" property="<%= ActionMessages.GLOBAL_MESSAGE %>" message="true" bundle="INTERNSHIP_RESOURCES">
+<html:messages id="message" property="<%= ActionMessages.GLOBAL_MESSAGE %>" message="true" bundle="INTERNATIONAL_RELATIONS_OFFICE">
     <p>
         <span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
     </p>

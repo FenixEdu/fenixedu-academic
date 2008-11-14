@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.dataTransferObject.internship;
 
 import java.io.Serializable;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
 import net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 
 import org.joda.time.LocalDate;
@@ -13,13 +17,14 @@ import org.joda.time.LocalDate;
 /**
  * @author Pedro Santos (pmrsa)
  */
-public class InternshipCandidacyBean implements Serializable {
+public class InternshipCandidacyBean implements Serializable, Comparable<InternshipCandidacyBean> {
     private static final long serialVersionUID = -4963748520642734496L;
 
     public enum StudentYear {
 	FIRST, SECOND;
     }
 
+    private DomainReference<InternshipCandidacy> candidacy;
     private DomainReference<AcademicalInstitutionUnit> university;
     private String studentNumber;
     private StudentYear studentYear;
@@ -62,6 +67,60 @@ public class InternshipCandidacyBean implements Serializable {
 
     public InternshipCandidacyBean() {
 	setCountryOfBirth(Country.readByTwoLetterCode("PT"));
+    }
+
+    public InternshipCandidacyBean(InternshipCandidacy candidacy) {
+	setCandidacy(candidacy);
+	setStudentNumber(candidacy.getStudentNumber());
+	setUniversity(candidacy.getUniversity());
+	if (candidacy.getStudentYear() == 1) {
+	    setStudentYear(StudentYear.FIRST);
+	} else {
+	    setStudentYear(StudentYear.SECOND);
+	}
+	setDegree(candidacy.getDegree());
+	setName(candidacy.getName());
+	setGender(candidacy.getGender());
+	setBirthday(candidacy.getBirthday());
+	setParishOfBirth(candidacy.getParishOfBirth());
+	setCountryOfBirth(candidacy.getCountryOfBirth());
+
+	setDocumentIdNumber(candidacy.getDocumentIdNumber());
+	setEmissionLocationOfDocumentId(candidacy.getEmissionLocationOfDocumentId());
+	setEmissionDateOfDocumentId(candidacy.getEmissionDateOfDocumentId());
+	setExpirationDateOfDocumentId(candidacy.getExpirationDateOfDocumentId());
+
+	setPassportIdNumber(candidacy.getPassportIdNumber());
+	setEmissionLocationOfPassport(candidacy.getEmissionLocationOfPassport());
+	setEmissionDateOfPassport(candidacy.getEmissionDateOfPassport());
+	setExpirationDateOfPassport(candidacy.getExpirationDateOfPassport());
+
+	setStreet(candidacy.getStreet());
+	setAreaCode(candidacy.getAreaCode());
+	setArea(candidacy.getArea());
+
+	setTelephone(candidacy.getTelephone());
+	setMobilePhone(candidacy.getMobilePhone());
+	setEmail(candidacy.getEmail());
+
+	setFirstDestination(candidacy.getFirstDestination());
+	setSecondDestination(candidacy.getSecondDestination());
+	setThirdDestination(candidacy.getThirdDestination());
+
+	setEnglish(candidacy.getEnglish());
+	setFrench(candidacy.getFrench());
+	setSpanish(candidacy.getSpanish());
+	setGerman(candidacy.getGerman());
+
+	setPreviousCandidacy(candidacy.getPreviousCandidacy());
+    }
+
+    public InternshipCandidacy getCandidacy() {
+	return (this.candidacy != null) ? this.candidacy.getObject() : null;
+    }
+
+    public void setCandidacy(InternshipCandidacy candidacy) {
+	this.candidacy = (candidacy != null) ? new DomainReference<InternshipCandidacy>(candidacy) : null;
     }
 
     public Country getCountryOfBirth() {
@@ -310,5 +369,34 @@ public class InternshipCandidacyBean implements Serializable {
 
     public void setUniversity(AcademicalInstitutionUnit university) {
 	this.university = (university != null) ? new DomainReference<AcademicalInstitutionUnit>(university) : null;
+    }
+
+    public String getUniversityName() {
+	return computeUniversityName(getUniversity());
+    }
+
+    private String computeUniversityName(AcademicalInstitutionUnit unit) {
+	if (unit instanceof SchoolUnit) {
+	    SchoolUnit school = (SchoolUnit) unit;
+	    StringBuilder output = new StringBuilder();
+	    output.append(school.getName().trim());
+	    output.append(" da ");
+	    List<Unit> parents = school.getParentUnitsPath();
+	    output.append(parents.get(parents.size() - 1).getName());
+	    return output.toString();
+	} else {
+	    return unit.getName();
+	}
+    }
+
+    @Override
+    public int compareTo(InternshipCandidacyBean other) {
+	int order = getCandidacy().getCandidacyDate().compareTo(other.getCandidacy().getCandidacyDate());
+	if (order != 0)
+	    return order;
+	order = getStudentNumber().compareTo(other.getStudentNumber());
+	if (order != 0)
+	    return order;
+	return getName().compareTo(other.getName());
     }
 }

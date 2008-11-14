@@ -1,12 +1,12 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ page language="java"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <html:xhtml/>
 
-<em><bean:message key="label.interRelaOffice" bundle="INTERNATIONAL_RELATION_OFFICE"/></em>
 <h2><bean:message key="label.visualizeRegistration" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-
 
 <ul class="mtop2 list5">
 	<li>

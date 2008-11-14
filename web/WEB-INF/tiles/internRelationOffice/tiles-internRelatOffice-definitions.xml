@@ -3,13 +3,6 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="internRelationOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="Gabinete de Relações Internacionais" />
-	  <put name="serviceName" value="" />
-	  <put name="navLocal" value="/internationalRelatOffice/localNavigationBar.jsp" />
-	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
-	  <put name="body-context" value="/commons/blank.jsp"/>
-      <put name="body" value="/commons/blank.jsp" />
-      <put name="footer" value="/copyright.jsp" />
+	<definition name="internRelationOffice.masterPage" extends="df.layout.two-column.contents">
 	</definition>
 </tiles-definitions>

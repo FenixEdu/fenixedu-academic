@@ -36,6 +36,22 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	}
 
 	InternshipCandidacy candidacy = new InternshipCandidacy(code);
+	beanToModel(bean, candidacy);
+
+	new Email("Sistema Fénix", "suporte@ist.utl.pt", null, Collections.singleton(candidacy.getEmail()), null, null,
+		"Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()
+			+ ", a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº "
+			+ candidacy.getCandidacyCode() + ", que deverá utilizar em contactos futuros.");
+
+	return candidacy.getCandidacyCode();
+    }
+
+    @Service
+    public void edit(InternshipCandidacyBean bean) throws DuplicateInternshipCandidacy {
+	beanToModel(bean, this);
+    }
+
+    private static void beanToModel(InternshipCandidacyBean bean, InternshipCandidacy candidacy) {
 	candidacy.setStudentNumber(bean.getStudentNumber());
 	candidacy.setUniversity(bean.getUniversity());
 	candidacy.setStudentYear(bean.getStudentYear().ordinal() + 1);
@@ -74,12 +90,5 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	candidacy.setGerman(bean.getGerman());
 
 	candidacy.setPreviousCandidacy(bean.getPreviousCandidacy());
-
-	new Email("Sistema Fénix", "suporte@ist.utl.pt", null, Collections.singleton(candidacy.getEmail()), null, null,
-		"Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()
-			+ ", a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº "
-			+ candidacy.getCandidacyCode() + ", que deverá utilizar em contactos futuros.");
-
-	return candidacy.getCandidacyCode();
     }
 }

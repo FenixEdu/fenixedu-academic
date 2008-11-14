@@ -95,4 +95,6 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
 	}
 	return Boolean.FALSE;
     }
+
+    public abstract String getFullPresentationName();
 }

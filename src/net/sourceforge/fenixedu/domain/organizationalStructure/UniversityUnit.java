@@ -126,4 +126,8 @@ public class UniversityUnit extends UniversityUnit_Base {
 	return super.addParentUnit(parentUnit, accountabilityType);
     }
 
+    @Override
+    public String getFullPresentationName() {
+	return getName();
+    }
 }

@@ -1,17 +1,17 @@
+<%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.Registration"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.curriculum.AverageType"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum"%>
-<html:xhtml />
+
+<html:xhtml/>
 
 <logic:present role="INTERNATIONAL_RELATION_OFFICE">
 
-	<em><bean:message key="label.interRelaOffice" bundle="INTERNATIONAL_RELATION_OFFICE"/></em>
 	<h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
 	<bean:define id="registrationCurriculumBean" name="registrationCurriculumBean" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean"/>

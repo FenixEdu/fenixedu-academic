@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/layout.css"  media="screen"  />
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/general.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/color.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/calendar.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
@@ -21,6 +22,7 @@
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/hideButtons.js"></script>
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/check.js"></script>
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/checkall.js"></script>
+
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />

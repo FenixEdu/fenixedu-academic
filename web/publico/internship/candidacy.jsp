@@ -6,7 +6,7 @@
 
 <html:xhtml />
 
-<h2><bean:message key="label.internship.candidacy.title" bundle="INTERNSHIP_RESOURCES" /></h2>
+<h2><bean:message key="label.internationalrelations.internship.candidacy.title" bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 
 <logic:present name="candidacy">
 
@@ -17,7 +17,7 @@ th { width: 150px; }
 <fr:form action="/internship.do?method=submitCandidacy">
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.studentinfo" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.studentinfo" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="studentinfo" name="candidacy" schema="internship.candidacy.studentinfo">
         <fr:layout name="tabular">
@@ -27,7 +27,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.personalinfo" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.personalinfo" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="personalinfo" name="candidacy" schema="internship.candidacy.personalinfo">
         <fr:layout name="tabular">
@@ -37,7 +37,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.iddocument" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.iddocument" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="documents.bi" name="candidacy" schema="internship.candidacy.personaldocuments.bi">
         <fr:layout name="tabular">
@@ -47,7 +47,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.passport" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.passport" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="documents.passport" name="candidacy" schema="internship.candidacy.personaldocuments.passport">
         <fr:layout name="tabular">
@@ -57,7 +57,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.address" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.address" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="address" name="candidacy" schema="internship.candidacy.address">
         <fr:layout name="tabular">
@@ -67,7 +67,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.contacts" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.contacts" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="contacts" name="candidacy" schema="internship.candidacy.contacts">
         <fr:layout name="tabular">
@@ -77,7 +77,7 @@ th { width: 150px; }
 	</fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.destinations" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.destinations" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="destination" name="candidacy" schema="internship.candidacy.destination">
         <fr:layout name="tabular">
@@ -87,7 +87,7 @@ th { width: 150px; }
     </fr:edit>
 
     <p class="mtop2 mbottom025"><strong>
-        <bean:message key="label.internship.candidacy.section.languages" bundle="INTERNSHIP_RESOURCES" />
+        <bean:message key="label.internationalrelations.internship.candidacy.section.languages" bundle="INTERNATIONAL_RELATIONS_OFFICE" />
     </strong></p>
     <fr:edit id="languages" name="candidacy" schema="internship.candidacy.languages">
         <fr:layout name="tabular">

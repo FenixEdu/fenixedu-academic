@@ -8,7 +8,7 @@
 
 <logic:present name="candidacy">
 
-<h2><bean:message key="label.internship.candidacy.title" bundle="INTERNSHIP_RESOURCES" /></h2>
+<h2><bean:message key="label.internationalrelations.internship.candidacy.title" bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 
 	<p><strong>Processo concluído com sucesso.</strong></p>
 
