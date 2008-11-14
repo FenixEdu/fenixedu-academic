@@ -17,6 +17,7 @@ public class EmailBean implements Serializable {
     private Set<DomainReference<Recipient>> recipients;
     private String tos, ccs, bccs;
     private String subject, message;
+    private Set<DomainReference<ReplyTo>> replyTos;
 
     public EmailBean() {
     }
@@ -46,6 +47,27 @@ public class EmailBean implements Serializable {
 	    this.recipients = new HashSet<DomainReference<Recipient>>();
 	    for (final Recipient recipient : recipients) {
 		this.recipients.add(new DomainReference<Recipient>(recipient));
+	    }
+	}
+    }
+
+    public List<ReplyTo> getReplyTos() {
+	final List<ReplyTo> result = new ArrayList<ReplyTo>();
+	if (replyTos != null) {
+	    for (final DomainReference<ReplyTo> replyTo : replyTos) {
+		result.add(replyTo.getObject());
+	    }
+	}
+	return result;
+    }
+
+    public void setReplyTos(List<ReplyTo> replyTos) {
+	if (replyTos == null) {
+	    this.replyTos = null;
+	} else {
+	    this.replyTos = new HashSet<DomainReference<ReplyTo>>();
+	    for (final ReplyTo replyTo : replyTos) {
+		this.replyTos.add(new DomainReference<ReplyTo>(replyTo));
 	    }
 	}
     }
@@ -106,7 +128,7 @@ public class EmailBean implements Serializable {
 	}
 	message.append("\n");
 
-	return new Message(getSender(), getRecipients(), getSubject(), message.toString(), getBccs());
+	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), getBccs());
     }
 
 }

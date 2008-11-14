@@ -5067,6 +5067,10 @@ class DomainObject {
 		Group members;
 	}
 
+	class util.email.ReplyTo extends DomainObject {
+		String replyToAddress;
+	}
+
 	class util.email.Sender extends DomainObject {
 		String fromName;
 		String fromAddress;
@@ -14018,6 +14022,29 @@ relation UtilEmailMessageUtilEmailRecipient {
 		multiplicity *;
 	}
 	util.email.Recipient playsRole recipients {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectUtilEmailReplyTo {
+	RootDomainObject playsRole rootDomainObject;
+	util.email.ReplyTo playsRole replyTos {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailSenderUtilEmailReplyTo {
+	util.email.Sender playsRole sender;
+	util.email.ReplyTo playsRole replyTos {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailReplyToUtilEmailMessage {
+	util.email.ReplyTo playsRole replyTos {
+		multiplicity *;
+	}
+	util.email.Message playsRole messages {
 		multiplicity *;
 	}
 }

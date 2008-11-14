@@ -21,13 +21,18 @@ public class Message extends Message_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Message(final Sender sender, final Collection<Recipient> recipients, final String subject, final String body,
+    public Message(final Sender sender, final Collection<ReplyTo> replyTos, final Collection<Recipient> recipients, final String subject, final String body,
 	    final String bccs) {
 	super();
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	setRootDomainObject(rootDomainObject);
 	setRootDomainObjectFromPendingRelation(rootDomainObject);
 	setSender(sender);
+	if (replyTos != null) {
+	    for (final ReplyTo replyTo : replyTos) {
+		addReplyTos(replyTo);
+	    }
+	}
 	if (recipients != null) {
 	    for (final Recipient recipient : recipients) {
 		addRecipients(recipient);
@@ -51,6 +56,9 @@ public class Message extends Message_Base {
     public void delete() {
 	for (final Recipient recipient : getRecipientsSet()) {
 	    removeRecipients(recipient);
+	}
+	for (final ReplyTo replyTo : getReplyTosSet()) {
+	    replyTo.safeDelete();
 	}
 	removeSender();
 	removePerson();
@@ -90,6 +98,15 @@ public class Message extends Message_Base {
 	    recipient.addDestinationEmailAddresses(emailAddresses);
 	}
 	return emailAddresses;
+    }
+
+    protected String[] getReplyToAddresses() {
+	final String[] replyToAddresses = new String[getReplyTosCount()];
+	int i = 0;
+	for (final ReplyTo replyTo : getReplyTosSet()) {
+	    replyToAddresses[i++] = replyTo.getReplyToAddress();
+	}
+	return replyToAddresses;
     }
 
     public void dispatch() {
