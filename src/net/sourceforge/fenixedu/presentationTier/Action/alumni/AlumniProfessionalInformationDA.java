@@ -92,6 +92,13 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
 
+    public ActionForward updateProfessionalInformationError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	request.setAttribute("jobUpdateBean", getObjectFromViewState("jobUpdateBean"));
+	return mapping.findForward("editProfessionalInformation");
+    }
+    
     public ActionForward deleteProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

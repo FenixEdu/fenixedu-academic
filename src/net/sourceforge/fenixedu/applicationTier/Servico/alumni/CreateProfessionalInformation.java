@@ -12,7 +12,7 @@ public class CreateProfessionalInformation extends FenixService {
 
 	return new Job(bean.getAlumni().getStudent().getPerson(), bean.getEmployerName(), bean.getCity(), bean.getCountry(), bean
 		.getChildBusinessArea(), bean.getPosition(), bean.getBeginDateAsLocalDate(), bean.getEndDateAsLocalDate(), bean
-		.getContractType());
+		.getApplicationType(), bean.getContractType(), bean.getSalaryType());
     }
 
 }

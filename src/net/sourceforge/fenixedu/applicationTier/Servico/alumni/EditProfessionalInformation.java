@@ -18,6 +18,8 @@ public class EditProfessionalInformation extends FenixService {
 	job.setPosition(jobBean.getPosition());
 	job.setBeginDate(jobBean.getBeginDateAsLocalDate());
 	job.setEndDate(jobBean.getEndDateAsLocalDate());
+	job.setApplicationType(jobBean.getApplicationType());
 	job.setContractType(jobBean.getContractType());
+	job.setSalaryType(jobBean.getSalaryType());
     }
 }

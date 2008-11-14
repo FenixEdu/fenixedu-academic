@@ -216,6 +216,8 @@ enum	  net.sourceforge.fenixedu.domain.student.RegistrationRegimeType											
 enum	  net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType								 as InquiryResponsePeriodType;
 enum      net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel                                          as LanguageKnowledgeLevel;
 enum	  net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType	 as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
+enum 	  net.sourceforge.fenixedu.domain.JobApplicationType														 as JobApplicationType;
+enum 	  net.sourceforge.fenixedu.domain.SalaryType														 		 as SalaryType;
 
 /*
 *
@@ -2836,15 +2838,15 @@ class DomainObject {
 	class inquiries.StudentInquiriesTeachingResult extends DomainObject {
 		ShiftType shiftType;
 		Integer numberOfAnswers;
-		Boolean internalDisclosure;
-		Boolean publicDisclosure;
-		Boolean internalDegreeDisclosure;
-		Boolean publicDegreeDisclosure;
 		Boolean unsatisfactoryResultsAssiduity;
 		Boolean unsatisfactoryResultsPresencialLearning;
 		Boolean unsatisfactoryResultsPedagogicalCapacity;
 		Boolean unsatisfactoryResultsStudentInteraction;
 		Boolean unsatisfactoryResultsAuditable;
+		Boolean internalDisclosure;
+		Boolean publicDisclosure;
+		Boolean internalDegreeDisclosure;
+		Boolean publicDegreeDisclosure;
 		Integer number_P6_1;
 		Double average_P6_1;
 		Double standardDeviation_P6_1;
@@ -3312,7 +3314,9 @@ class DomainObject {
 		LocalDate beginDate;
 		LocalDate endDate;
 		String position;
+		JobApplicationType applicationType;
 		ContractType contractType;
+		SalaryType salaryType;
 	}
 
 	class log.EnrolmentLog extends DomainObject {

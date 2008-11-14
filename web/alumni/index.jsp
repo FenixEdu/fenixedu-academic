@@ -32,12 +32,6 @@ ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_
 </style>
 
 
-<!--
-<p>Bem-vindo à comunidade Alumni do IST. Todos temos de regressar à Escola, por isto ou por aquilo. Esta forma de regressar será, com certeza e mais uma vez, bem sucedida.</p>
-<p>Este serviço está no início. O IST espera a contribuição dos Alumni quer pela sua utilização intensiva, quer pelos comentários, críticas e sugestões que são encorajados a fazer.</p>
-<p>O desenvolvimento do serviço depende, em grande medida, desses dois factores.</p>
--->
-
 <p>
 	Bem-vindo à comunidade Alumni do IST. Todos temos de regressar à Escola, por isto ou por aquilo. Esta forma de regressar será, com certeza e mais uma vez, bem sucedida.
 	Este serviço está no início. O IST espera a contribuição dos Alumni quer pela sua utilização intensiva, quer pelos comentários, críticas e sugestões que são encorajados a fazer.
@@ -45,9 +39,23 @@ ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_
 </p>
 
 
+<h3>Notícias</h3>
+
+<div class="infoop2">
+	<p class="indent1 mtop025 mbottom05">
+		Está a decorrer o
+			<strong> 
+			<html:link page="/alumniInquiries.do?method=showMainPage">
+				<bean:message key="inquiries.alumni.title" bundle="ALUMNI_RESOURCES" />.<br/>
+			</html:link>
+			</strong>
+		 Participe activamente na melhoria contínua do IST. O seu contributo é fundamental.
+	</p>
+</div>
+
+
+
 <h3>Vantagens</h3>
-
-
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
 	<p class="indent1 mtop025 mbottom05">Além das opções visíveis nos menus, lembramos que o leque de vantagens já disponíveis inclui:</p>
 	<ul class="material">

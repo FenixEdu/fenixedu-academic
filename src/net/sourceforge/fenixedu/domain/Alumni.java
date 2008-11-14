@@ -291,8 +291,4 @@ public class Alumni extends Alumni_Base {
     public String getName() {
 	return getStudent().getPerson().getName();
     }
-
-    public boolean getAlumniConditions() {
-	return isRegistered() || hasFinishedPublicRegistry();
-    }
 }

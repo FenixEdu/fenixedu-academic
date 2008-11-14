@@ -46,7 +46,7 @@
 		<fr:view name="searchAlumniBean" property="alumni" schema="alumni.registration.search.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 mtop05" />
-				<fr:property name="columnClasses" value=",,acenter" />
+				<fr:property name="columnClasses" value=",,acenter,acenter" />
 				<fr:property name="sortParameter" value="sort" />
 				<fr:property name="sortUrl" value="<%= "/searchAlumni.do?method=showAlumniList" + bean.getSearchElementsAsParameters() %>" />
 			</fr:layout>

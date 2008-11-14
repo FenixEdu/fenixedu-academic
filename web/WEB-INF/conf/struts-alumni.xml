@@ -115,6 +115,13 @@
 			<forward name="editProfessionalInformation" path="alumni.editProfessionalInformation"/>
 		</action>
 
+		<action path="/alumniInquiries"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniInquiriesDA"
+				scope="request">
+			<forward name="showMainPage" path="alumni.inquiries.showMainPage"/>
+		</action>
+
 		<!-- FROM STUDENT ROLE -->
 		
 		<!-- ADMINISTRATIVE OFFICE SERVICES -->

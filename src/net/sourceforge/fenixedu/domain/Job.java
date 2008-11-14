@@ -17,10 +17,15 @@ public class Job extends Job_Base {
     
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, ContractType contractType) {
+	this(person, employerName, city, country, businessArea, position, beginDate, endDate, null, contractType, null);
+    }
+    
+    public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
+	    LocalDate beginDate, LocalDate endDate, JobApplicationType applicationType, ContractType contractType, SalaryType salaryType) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 
-	checkParameters(person, employerName, city, country, businessArea, position, beginDate, endDate, contractType);
+	checkParameters(person, employerName, city, country, businessArea, position, beginDate, endDate);
 
 	setPerson(person);
 	setEmployerName(employerName);
@@ -30,11 +35,13 @@ public class Job extends Job_Base {
 	setPosition(position);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
+	setApplicationType(applicationType);
 	setContractType(contractType);
+	setSalaryType(salaryType);
     }
 
     private void checkParameters(Person person, String employerName, String city, Country country, BusinessArea businessArea,
-	    String position, LocalDate beginDate, LocalDate endDate, ContractType contractType) {
+	    String position, LocalDate beginDate, LocalDate endDate) {
 
 	if (person == null) {
 	    throw new DomainException("job.creation.person.null");

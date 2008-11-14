@@ -932,8 +932,8 @@ public class Student extends Student_Base {
 	for (final Registration registration : registrations) {
 	    if (result == null || registration.getStartDate().isAfter(result.getStartDate())) {
 		result = registration;
-	    }
-	}
+    }
+    }
 	return result;
     }
 
@@ -1448,5 +1448,9 @@ public class Student extends Student_Base {
 	    executionYears.addAll(registration.getEnrolmentsExecutionYears());
 	}
 	return executionYears;
+    }
+    
+    public boolean getActiveAlumni() {
+	return hasAlumni() && getAlumni().isRegistered();
     }
 }

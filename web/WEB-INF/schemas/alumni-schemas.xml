@@ -78,9 +78,7 @@
 		</slot> 
 		<slot name="degreeName" key="list.column.degree" />
 		<slot name="startExecutionYear.year" key="list.column.year" />
-<!--
-		<slot name="student.alumni.alumniConditions" layout="boolean" key="list.column.registered" />
--->
+		<slot name="student.activeAlumni" layout="boolean" key="list.column.registered" />
 	</schema>
 
 	<schema name="alumni.professional.information.job" type="net.sourceforge.fenixedu.domain.Job" bundle="ALUMNI_RESOURCES">
@@ -104,10 +102,7 @@
 		</slot>
 		<slot name="endDate" key="label.endDate" layout="null-as-label">
         	<property name="label" value="-"/>
-		</slot>		
-		<slot name="contractType" key="label.contract.type" layout="null-as-label">
-        	<property name="label" value="-"/>
-		</slot>		
+		</slot>
 	</schema>
 
 	<schema name="alumni.public.access.jobContact" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean" bundle="ALUMNI_RESOURCES">
@@ -127,16 +122,27 @@
 			<property name="sortBy" value="code"/>
 		</slot>
 		<slot name="position" key="label.job.position" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<slot name="beginDate" key="label.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker" >
+		<slot name="beginDate" key="label.beginDate" layout="picker" >
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			<property name="size" value="12"/>
 			<property name="maxLength" value="10"/>
 		</slot>
 		<slot name="endDate" key="label.endDate" layout="picker" >
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			<property name="size" value="12"/>
 			<property name="maxLength" value="10"/>
 		</slot>
+		<slot name="applicationType" key="label.application.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.JobApplicationType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
 		<slot name="contractType" key="label.contract.type" layout="menu-select">
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.ContractType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
+		<slot name="salaryType" key="label.salary.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.SalaryType" />
 			<property name="eachLayout" value="this-does-not-exist" />
 		</slot>
 	</schema>
@@ -172,16 +178,27 @@
 			<property name="sortBy" value="code"/>
 		</slot>
 		<slot name="position" key="label.job.position" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<slot name="beginDate" key="label.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker">
+		<slot name="beginDate" key="label.beginDate" layout="picker">
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			<property name="size" value="12"/>
 			<property name="maxLength" value="10"/>
 		</slot>
 		<slot name="endDate" key="label.endDate" layout="picker" >
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 			<property name="size" value="12"/>
 			<property name="maxLength" value="10"/>
 		</slot>
+		<slot name="applicationType" key="label.application.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.JobApplicationType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
 		<slot name="contractType" key="label.contract.type" layout="menu-select">
 			<property name="choiceType" value="net.sourceforge.fenixedu.domain.ContractType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
+		<slot name="salaryType" key="label.salary.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.SalaryType" />
 			<property name="eachLayout" value="this-does-not-exist" />
 		</slot>
 	</schema>

@@ -126,7 +126,7 @@ public class DateInputRendererWithPicker extends DateInputRenderer {
 	dateStringFormatted = dateStringFormatted.replace("1999", "%Y");
 	dateStringFormatted = dateStringFormatted.replace("99", "%y");
 	dateStringFormatted = dateStringFormatted.replace("12", "%m");
-	dateStringFormatted = dateStringFormatted.replace("24", "%e");
+	dateStringFormatted = dateStringFormatted.replace("24", "%d");
 
 	return dateStringFormatted;
     }

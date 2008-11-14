@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.ContractType;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Job;
+import net.sourceforge.fenixedu.domain.JobApplicationType;
+import net.sourceforge.fenixedu.domain.SalaryType;
 
 import org.joda.time.LocalDate;
 
@@ -26,7 +28,9 @@ public class AlumniJobBean implements Serializable {
     private Date endDate;
     private Integer jobId;
     private String schema;
+    private JobApplicationType applicationType;
     private ContractType contractType;
+    private SalaryType salaryType;
 
     private AlumniJobBean(Alumni alumni, String schema) {
 	setAlumni(alumni);
@@ -47,7 +51,9 @@ public class AlumniJobBean implements Serializable {
 	setPosition(job.getPosition());
 	setBeginDateAsDate(job.getBeginDate());
 	setEndDateAsDate(job.getEndDate());
+	setApplicationType(job.getApplicationType());
 	setContractType(job.getContractType());
+	setSalaryType(job.getSalaryType());
 	setJobId(job.getIdInternal());
     }
 
@@ -181,6 +187,22 @@ public class AlumniJobBean implements Serializable {
 
     public void setContractType(ContractType contractType) {
 	this.contractType = contractType;
+    }
+
+    public JobApplicationType getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(JobApplicationType applicationType) {
+        this.applicationType = applicationType;
+    }
+
+    public SalaryType getSalaryType() {
+        return salaryType;
+    }
+
+    public void setSalaryType(SalaryType salaryType) {
+        this.salaryType = salaryType;
     }
 
 }

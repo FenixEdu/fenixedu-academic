@@ -63,6 +63,12 @@
 	</definition>
 	<!-- FORMATION -->
 
+	<!-- INQUIRIES -->
+	<definition name="alumni.inquiries.showMainPage" extends="alumni.masterPage">
+		<put name="body" value="/alumni/inquiries/inquiryMain.jsp" />
+	</definition>
+	<!-- INQUIRIES -->
+
 	<!-- FROM STUDENT ROLE -->
 	<definition name="alumni.administrativeOfficeServices.documentRequests.administrativeOfficeServicesIndex" extends="alumni.masterPage">
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/administrativeOfficeServicesIntro.jsp" />

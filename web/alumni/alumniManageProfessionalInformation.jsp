@@ -12,7 +12,7 @@
 </h2>
 
 <html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
-	<p class="mbottom05 mtop15"><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
+	<p class="mbottom05 mtop15"><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
 <logic:present name="jobCreateBean">
@@ -21,6 +21,9 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle5 thlight thmiddle thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			<%--
+			<fr:property name="requiredMarkShown" value="true" />
+			--%>
 		</fr:layout>
 		<fr:destination name="updateBusinessAreaPostback" path="/professionalInformation.do?method=createBusinessAreaPostback"/>
 		<fr:destination name="success" path="/professionalInformation.do?method=createProfessionalInformation"/>
@@ -35,9 +38,17 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle5 thlight thmiddle thright"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			<%--
+			<fr:property name="requiredMarkShown" value="true" />
+			--%>
 		</fr:layout>
 		<fr:destination name="updateBusinessAreaPostback" path="/professionalInformation.do?method=updateBusinessAreaPostback"/>
 		<fr:destination name="success" path="/professionalInformation.do?method=updateProfessionalInformation"/>
+		<fr:destination name="invalid" path="/professionalInformation.do?method=updateProfessionalInformationError"/>
 		<fr:destination name="cancel" path="/professionalInformation.do?method=viewProfessionalInformation"/>
 	</fr:edit>	
 </logic:present>
+
+<p class="mbottom0">
+	<em>Nota: <bean:message key="date.note" bundle="ALUMNI_RESOURCES" /></em>
+</p>
