@@ -41,5 +41,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create Email ReplyToes." updates.sql
-execute "alterTableJob.sql" alterTableJob.sql
