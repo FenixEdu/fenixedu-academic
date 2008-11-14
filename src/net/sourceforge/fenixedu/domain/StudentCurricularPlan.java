@@ -516,7 +516,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
 	    andPredicate.add(new CurriculumModulePredicateByExecutionYear(executionYear));
 
-	    return hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class));
+	    return hasAnyCurriculumModules(andPredicate);
 	}
 
 	return hasEnrolments(executionYear);
