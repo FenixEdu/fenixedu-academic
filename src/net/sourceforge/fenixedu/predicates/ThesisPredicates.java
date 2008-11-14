@@ -38,12 +38,13 @@ public class ThesisPredicates {
 
     };
 
-    public static final AccessControlPredicate<Thesis> studentOrAcademicAdministrativeOffice = new AccessControlPredicate<Thesis>() {
+    public static final AccessControlPredicate<Thesis> studentOrAcademicAdministrativeOfficeOrScientificCouncil = new AccessControlPredicate<Thesis>() {
 
 	public boolean evaluate(Thesis thesis) {
 	    Person person = AccessControl.getPerson();
 	    return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
-		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		    || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
 	}
 
     };
