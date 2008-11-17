@@ -8,27 +8,26 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-
-import org.joda.time.YearMonthDay;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class RegistrationStateBean implements Serializable {
-
-    YearMonthDay stateDate;
+public class RegistrationStateBean extends StateBean implements Serializable {
 
     DomainReference<Registration> registration;
 
     String remarks;
 
-    RegistrationStateType stateType;
-
     public RegistrationStateBean(Registration registration) {
 	super();
 	this.registration = new DomainReference<Registration>(registration);
-	this.stateDate = null;
+	setStateDate(null);
+    }
+
+    public RegistrationStateBean(final RegistrationStateType type) {
+	super(type.name());
     }
 
     public Registration getRegistration() {
@@ -39,12 +38,8 @@ public class RegistrationStateBean implements Serializable {
 	return remarks;
     }
 
-    public YearMonthDay getStateDate() {
-	return stateDate;
-    }
-
     public RegistrationStateType getStateType() {
-	return stateType;
+	return getNextState() == null ? null : RegistrationStateType.valueOf(getNextState());
     }
 
     public void setRegistration(DomainReference<Registration> registration) {
@@ -55,12 +50,8 @@ public class RegistrationStateBean implements Serializable {
 	this.remarks = remarks;
     }
 
-    public void setStateDate(YearMonthDay stateDate) {
-	this.stateDate = stateDate;
-    }
-
-    public void setStateType(RegistrationStateType stateType) {
-	this.stateType = stateType;
+    public void setStateType(final RegistrationStateType stateType) {
+	setNextState(stateType == null ? null : stateType.name());
     }
 
 }

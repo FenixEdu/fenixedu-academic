@@ -8,16 +8,15 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class SelectDFACandidacyBean implements Serializable {
+public class SelectDFACandidacyBean extends StateBean implements Serializable {
 
     private DomainReference<DFACandidacy> candidacy;
-
-    private CandidacySituationType selectionSituation;
 
     private String remarks;
 
@@ -28,14 +27,13 @@ public class SelectDFACandidacyBean implements Serializable {
 	if (candidacy != null) {
 	    this.candidacy = new DomainReference<DFACandidacy>(candidacy);
 	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.SUBSTITUTE)) {
-		this.selectionSituation = CandidacySituationType.SUBSTITUTE;
+		setSelectionSituation(CandidacySituationType.SUBSTITUTE);
 	    }
 	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.ADMITTED)) {
-		this.selectionSituation = CandidacySituationType.ADMITTED;
-
+		setSelectionSituation(CandidacySituationType.ADMITTED);
 	    }
 	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType().equals(CandidacySituationType.NOT_ADMITTED)) {
-		this.selectionSituation = CandidacySituationType.NOT_ADMITTED;
+		setSelectionSituation(CandidacySituationType.NOT_ADMITTED);
 
 	    }
 	    this.remarks = candidacy.getActiveCandidacySituation().getRemarks();
@@ -67,11 +65,11 @@ public class SelectDFACandidacyBean implements Serializable {
     }
 
     public CandidacySituationType getSelectionSituation() {
-	return selectionSituation;
+	return getNextState() == null ? null : CandidacySituationType.valueOf(getNextState());
     }
 
-    public void setSelectionSituation(CandidacySituationType selectionSituation) {
-	this.selectionSituation = selectionSituation;
+    public void setSelectionSituation(final CandidacySituationType selectionSituation) {
+	setNextState(selectionSituation == null ? null : selectionSituation.name());
     }
 
 }
