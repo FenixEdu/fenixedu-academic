@@ -35,7 +35,7 @@ public class Job extends Job_Base {
 	setPosition(position);
 	setBeginDate(beginDate);
 	setEndDate(endDate);
-	setApplicationType(applicationType);
+	setJobApplicationType(applicationType);
 	setContractType(contractType);
 	setSalaryType(salaryType);
     }

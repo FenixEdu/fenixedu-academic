@@ -51,7 +51,7 @@ public class AlumniJobBean implements Serializable {
 	setPosition(job.getPosition());
 	setBeginDateAsDate(job.getBeginDate());
 	setEndDateAsDate(job.getEndDate());
-	setApplicationType(job.getApplicationType());
+	setApplicationType(job.getJobApplicationType());
 	setContractType(job.getContractType());
 	setSalaryType(job.getSalaryType());
 	setJobId(job.getIdInternal());
