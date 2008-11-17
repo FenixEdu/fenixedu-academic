@@ -823,14 +823,7 @@
         </action>
         <!-- End: StudentDataByExecutionYear -->
         
-        <action path="/accountingEventsManagement"
-            type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.AccountingEventsManagementDA"
-            parameter="method">
-            <forward name="chooseEventType" path="accountingEventsManagement.chooseEventType" />
-            <forward name="createGratuityEvent" path="accountingEventsManagement.createGratuityEvent" />
-            <forward name="createAdministrativeOfficeFeeAndInsuranceEvent" path="accountingEventsManagement.createAdministrativeOfficeFeeAndInsuranceEvent" />
-            <forward name="createEnrolmentOutOfPeriodEvent" path="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" />
-        </action>
+
         
     </action-mappings>
 

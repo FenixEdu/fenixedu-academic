@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AccountingEventsCreator;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.EnrolmentOutOfPeriodEventCreateBean;
@@ -21,7 +22,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/accountingEventsManagement", module = "academicAdminOffice")
+@Forwards( {
+
+	@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"),
+	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
+	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
+	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp")
+
+})
 public class AccountingEventsManagementDA extends FenixDispatchAction {
 
     private static List<EventType> supportedEventTypes = Arrays.asList(EventType.GRATUITY,
@@ -60,6 +74,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	    return prepareCreateAdministrativeOfficeFeeAndInsuranceEvent(mapping, request);
 	case ENROLMENT_OUT_OF_PERIOD:
 	    return prepareCreateEnrolmentOutOfPeriod(mapping, request);
+	case INSURANCE:
+	    return prepareCreateInsuranceEvent(mapping, request);
 	default:
 	    throw new RuntimeException("Unknown event type");
 	}
@@ -87,8 +103,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
 
-	    executeService("CreateGratuityEvent", new Object[] { accountingEventCreateBean.getStudentCurricularPlan(),
-		    accountingEventCreateBean.getExecutionYear() });
+	    AccountingEventsCreator.createGratuityEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+		    accountingEventCreateBean.getExecutionYear());
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
@@ -124,8 +140,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
 
-	    executeService("CreateAdministrativeOfficeFeeAndInsuranceEvent", new Object[] {
-		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear() });
+	    AccountingEventsCreator.createAdministrativeOfficeFeeAndInsuranceEvent(accountingEventCreateBean
+		    .getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
@@ -173,9 +189,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
 	try {
 
-	    executeService("CreateEnrolmentOutOfPeriodEvent", new Object[] {
-		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionPeriod(),
-		    accountingEventCreateBean.getNumberOfDelayDays() });
+	    AccountingEventsCreator.createEnrolmentOutOfPeriodEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+		    accountingEventCreateBean.getExecutionPeriod(), accountingEventCreateBean.getNumberOfDelayDays());
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 
@@ -195,6 +210,43 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {
 	return rootDomainObject.readStudentCurricularPlanByOID(getIntegerFromRequest(request, "scpID"));
+    }
+
+    private ActionForward prepareCreateInsuranceEvent(ActionMapping mapping, HttpServletRequest request) {
+	request.setAttribute("accountingEventCreateBean", new AccountingEventCreateBean(getStudentCurricularPlan(request)));
+	return mapping.findForward("createInsuranceEvent");
+    }
+
+    public ActionForward prepareCreateInsuranceEventInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("accountingEventCreateBean", getAccountingEventCreateBean());
+	return mapping.findForward("createInsuranceEvent");
+    }
+
+    public ActionForward createInsuranceEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
+	try {
+
+	    AccountingEventsCreator.createInsuranceEvent(accountingEventCreateBean.getStudentCurricularPlan(),
+		    accountingEventCreateBean.getExecutionYear());
+
+	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
+
+	    request.setAttribute("scpID", accountingEventCreateBean.getStudentCurricularPlan().getIdInternal());
+	    return prepare(mapping, form, request, response);
+
+	} catch (DomainExceptionWithInvocationResult e) {
+	    addActionMessages("error", request, e.getInvocationResult().getMessages());
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	}
+
+	request.setAttribute("accountingEventCreateBean", accountingEventCreateBean);
+
+	return mapping.findForward("createInsuranceEvent");
+
     }
 
 }

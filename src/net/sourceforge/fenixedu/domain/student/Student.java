@@ -1215,6 +1215,15 @@ public class Student extends Student_Base {
 		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
+    public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
+	final AccountingEventsManager manager = new AccountingEventsManager();
+	final InvocationResult result = manager.createInsuranceEvent(studentCurricularPlan, executionYear);
+
+	if (!result.isSuccess()) {
+	    throw new DomainExceptionWithInvocationResult(result);
+	}
+    }
+
     public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
 	Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
 	for (Registration registration : getRegistrationsSet()) {

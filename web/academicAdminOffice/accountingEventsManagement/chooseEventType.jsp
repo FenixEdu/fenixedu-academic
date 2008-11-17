@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@page import="net.sourceforge.fenixedu.domain.accounting.EventType"%>
-<html:xhtml />
+
+<%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType"%><html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -54,11 +55,23 @@
 				<bean:message  key="label.accountingEvents.management.createEvents.createGratuityEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</li>
-		<li>
-			<html:link action="<%="/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" +  EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE.name()%>">
-				<bean:message  key="label.accountingEvents.management.createEvents.createAdministrativeOfficeFeeAndInsuranceEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
+		
+		<logic:equal name="studentCurricularPlan" property="administrativeOffice.administrativeOfficeType.name" value="<%=AdministrativeOfficeType.DEGREE.name() %>">
+			<li>
+				<html:link action="<%="/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" +  EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE.name()%>">
+					<bean:message  key="label.accountingEvents.management.createEvents.createAdministrativeOfficeFeeAndInsuranceEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</li>
+		</logic:equal>
+		
+		<logic:equal name="studentCurricularPlan" property="administrativeOffice.administrativeOfficeType.name" value="<%=AdministrativeOfficeType.MASTER_DEGREE.name() %>">
+			<li>
+				<html:link action="<%="/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" +  EventType.INSURANCE.name()%>">
+					<bean:message  key="label.accountingEvents.management.createEvents.createInsuranceEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</html:link>
+			</li>
+		</logic:equal>
+		
 		<li>
 			<html:link action="<%="/accountingEventsManagement.do?method=chooseEventType&amp;scpID=" + scpID.toString() + "&amp;eventType=" +  EventType.ENROLMENT_OUT_OF_PERIOD.name()%>">
 				<bean:message  key="label.accountingEvents.management.createEvents.createEnrolmentOutOfPeriodEvent" bundle="ACADEMIC_OFFICE_RESOURCES"/>

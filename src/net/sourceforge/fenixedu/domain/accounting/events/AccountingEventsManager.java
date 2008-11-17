@@ -6,8 +6,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -17,8 +19,16 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class AccountingEventsManager {
 
-    private final List<DegreeType> acceptedDegreeTypes = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
-	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+    private final List<DegreeType> acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent = Arrays
+	    .asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
+		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+
+    private final List<DegreeType> acceptedDegreeTypesForGratuityEvent = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
+
+    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays
+	    .asList(new DegreeType[] { DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
@@ -57,14 +67,100 @@ public class AccountingEventsManager {
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear, final boolean checkConditions) {
 
+	if (studentCurricularPlan.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+	    return createDfaGratuityEvent(studentCurricularPlan, executionYear, checkConditions);
+	}
+
+	return createGratuityEventWithPaymentPlan(studentCurricularPlan, executionYear, checkConditions);
+
+    }
+
+    private InvocationResult createDfaGratuityEvent(StudentCurricularPlan studentCurricularPlan, ExecutionYear executionYear,
+	    boolean checkConditions) {
+
 	final InvocationResult result = checkConditions ? verifyConditionsToCreateGratuityEvent(executionYear,
 		studentCurricularPlan) : InvocationResult.createSuccess();
 
 	if (result.isSuccess()) {
+
+	    if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, DfaGratuityEvent.class)) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
+			studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+				.getRegistration().getDegree().getPresentationName(), executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+
+	    }
+
+	    new DfaGratuityEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
+		    studentCurricularPlan, executionYear);
+	}
+
+	return result;
+
+    }
+
+    private InvocationResult createGratuityEventWithPaymentPlan(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear, final boolean checkConditions) {
+
+	final InvocationResult result = checkConditions ? verifyConditionsToCreateGratuityEvent(executionYear,
+		studentCurricularPlan) : InvocationResult.createSuccess();
+
+	if (result.isSuccess()) {
+
+	    if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, GratuityEventWithPaymentPlan.class)) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
+			studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+				.getRegistration().getDegree().getPresentationName(), executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+
+	    }
+
 	    new GratuityEventWithPaymentPlan(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan.getPerson(),
 		    studentCurricularPlan, executionYear);
 	}
+
 	return result;
+    }
+
+    private InvocationResult verifyConditionsToCreateGratuityEvent(final ExecutionYear executionYear,
+	    final StudentCurricularPlan studentCurricularPlan) {
+
+	final InvocationResult result = new InvocationResult().setSuccess(false);
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
+		registration)
+		&& studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
+
+	    if (!acceptedDegreeTypesForGratuityEvent.contains(studentCurricularPlan.getDegreeType())) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.cannot.create.gratuity.event.for.degree.type",
+			studentCurricularPlan.getDegree().getPresentationName());
+		return result;
+	    }
+
+	    result.setSuccess(true);
+
+	} else {
+	    result
+		    .addMessage(
+			    LabelFormatter.APPLICATION_RESOURCES,
+			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.gratuity.event",
+			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+				    .getDegree().getPresentationName());
+
+	}
+
+	return result;
+
     }
 
     public InvocationResult createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
@@ -74,12 +170,31 @@ public class AccountingEventsManager {
 
     public InvocationResult createAdministrativeOfficeFeeAndInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear, final boolean checkConditions) {
+
 	final InvocationResult result = checkConditions ? verifyConditionsToCreateAdministrativeOfficeFeeAndInsuranceEvent(
 		studentCurricularPlan, executionYear) : InvocationResult.createSuccess();
+
 	if (result.isSuccess()) {
+
+	    final Student student = studentCurricularPlan.getRegistration().getStudent();
+
+	    if (student.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
+		result
+			.addMessage(
+				LabelFormatter.APPLICATION_RESOURCES,
+				"error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
+				student.getNumber().toString(), executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+
+	    }
+
 	    new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
 		    .getPerson(), executionYear);
 	}
+
 	return result;
     }
 
@@ -105,7 +220,7 @@ public class AccountingEventsManager {
 
 	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
 		registration)) {
-	    if (!acceptedDegreeTypes.contains(studentCurricularPlan.getDegreeType())) {
+	    if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
 		result
 			.addMessage(
 				LabelFormatter.APPLICATION_RESOURCES,
@@ -113,17 +228,6 @@ public class AccountingEventsManager {
 				studentCurricularPlan.getDegree().getPresentationName());
 
 		return result;
-	    }
-
-	    if (student.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-		result
-			.addMessage(
-				LabelFormatter.APPLICATION_RESOURCES,
-				"error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
-				student.getNumber().toString(), executionYear.getYear());
-
-		return result;
-
 	    }
 
 	    result.setSuccess(true);
@@ -135,48 +239,6 @@ public class AccountingEventsManager {
 			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.administrativeoffice.fee.and.insurance.event",
 			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
 				    .getDegree().getPresentationName());
-	}
-
-	return result;
-
-    }
-
-    private InvocationResult verifyConditionsToCreateGratuityEvent(final ExecutionYear executionYear,
-	    final StudentCurricularPlan studentCurricularPlan) {
-
-	final InvocationResult result = new InvocationResult().setSuccess(false);
-	final Registration registration = studentCurricularPlan.getRegistration();
-
-	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
-		registration)
-		&& studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
-
-	    if (!acceptedDegreeTypes.contains(studentCurricularPlan.getDegreeType())) {
-		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
-			"error.accounting.events.AccountingEventsManager.cannot.create.gratuity.event.for.degree.type",
-			studentCurricularPlan.getDegree().getPresentationName());
-		return result;
-	    }
-
-	    if (studentCurricularPlan.getRegistration().hasGratuityEvent(executionYear, GratuityEventWithPaymentPlan.class)) {
-		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
-			"error.accounting.events.AccountingEventsManager.student.already.has.gratuity.event.for.execution.year",
-			studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-				.getRegistration().getDegree().getPresentationName(), executionYear.getYear());
-		return result;
-
-	    }
-
-	    result.setSuccess(true);
-
-	} else {
-	    result
-		    .addMessage(
-			    LabelFormatter.APPLICATION_RESOURCES,
-			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.gratuity.event",
-			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-				    .getDegree().getPresentationName());
-
 	}
 
 	return result;
@@ -196,6 +258,69 @@ public class AccountingEventsManager {
     private boolean isSecondCycleInternalCandidacyAndStartedOn(Registration registration, ExecutionYear executionYear) {
 	return registration.isSecondCycleInternalCandidacyIngression()
 		&& executionYear.containsDate(registration.getStartDate().toDateTimeAtMidnight());
+    }
+
+    public InvocationResult createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+	return createInsuranceEvent(studentCurricularPlan, executionYear, true);
+    }
+
+    public InvocationResult createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear, final boolean checkConditions) {
+	final InvocationResult result = checkConditions ? verifyConditionsToCreateInsuranceEvent(studentCurricularPlan,
+		executionYear) : InvocationResult.createSuccess();
+
+	if (result.isSuccess()) {
+
+	    final Student student = studentCurricularPlan.getRegistration().getStudent();
+
+	    if (student.getPerson().hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", student
+				.getNumber().toString(), executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+
+	    }
+
+	    new InsuranceEvent(studentCurricularPlan.getPerson(), executionYear);
+	}
+
+	return result;
+    }
+
+    private InvocationResult verifyConditionsToCreateInsuranceEvent(final StudentCurricularPlan studentCurricularPlan,
+	    final ExecutionYear executionYear) {
+
+	final InvocationResult result = new InvocationResult().setSuccess(false);
+	final Registration registration = studentCurricularPlan.getRegistration();
+	final Student student = registration.getStudent();
+
+	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
+		registration)) {
+	    if (!acceptedDegreeTypesForInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.cannot.create.insurance.event.for.degree.type",
+			studentCurricularPlan.getDegree().getPresentationName());
+
+		return result;
+	    }
+
+	    result.setSuccess(true);
+
+	} else {
+	    result
+		    .addMessage(
+			    LabelFormatter.APPLICATION_RESOURCES,
+			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.insurance.event",
+			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+				    .getDegree().getPresentationName());
+	}
+
+	return result;
+
     }
 
 }

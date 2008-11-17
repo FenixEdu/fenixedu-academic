@@ -9703,42 +9703,6 @@
         </filterChains>
     </service>
     
-    
-      
-      
-    
-      
-      
-      
-          
-    
-    
-    
-    <service>
-        <name>CreateAdministrativeOfficeFeeAndInsuranceEvent</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateAdministrativeOfficeFeeAndInsuranceEvent</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
-        </filterChains>
-    </service>
-    <service>
-        <name>CreateGratuityEvent</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateGratuityEvent</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
-        </filterChains>
-    </service>
-    <service>
-        <name>CreateEnrolmentOutOfPeriodEvent</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateEnrolmentOutOfPeriodEvent</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
-        </filterChains>
-    </service>
-
     <service>
         <name>TeacherEditWrittenTestRooms</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherEditWrittenTestRooms</implementationClass>
