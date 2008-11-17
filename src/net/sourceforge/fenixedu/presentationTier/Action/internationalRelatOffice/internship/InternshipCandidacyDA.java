@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffic
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
@@ -15,9 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice.
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.internship.DuplicateInternshipCandidacy;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -121,7 +117,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    Row row = sheet.addRow();
 	    row.setCell(bean.getCandidacy().getCandidacyCode());
 	    if (search.getUniversity() == null) {
-		row.setCell(getUniversityName(bean.getUniversity()));
+		row.setCell(bean.getUniversity().getFullPresentationName());
 	    }
 	    row.setCell(bean.getStudentNumber());
 	    row.setCell(bean.getStudentYear().ordinal() + 1);
@@ -191,19 +187,5 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	if (search.getCutEnd() != null && !candidacy.getCandidacyDate().isBefore(search.getCutEnd().plusDays(1).toDateMidnight()))
 	    return false;
 	return true;
-    }
-
-    private String getUniversityName(AcademicalInstitutionUnit unit) {
-	if (unit instanceof SchoolUnit) {
-	    SchoolUnit school = (SchoolUnit) unit;
-	    StringBuilder output = new StringBuilder();
-	    output.append(school.getName().trim());
-	    output.append(" da ");
-	    List<Unit> parents = school.getParentUnitsPath();
-	    output.append(parents.get(parents.size() - 1).getName());
-	    return output.toString();
-	} else {
-	    return unit.getName();
-	}
     }
 }

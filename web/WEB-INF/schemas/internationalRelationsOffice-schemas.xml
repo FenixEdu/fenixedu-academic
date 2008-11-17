@@ -2,7 +2,7 @@
 	bundle="DOMAIN_RESOURCES">
     <slot name="candidacy.candidacyCode" key="label.internship.InternshipCandidacy.code" />
     <slot name="candidacy.candidacyDate" key="label.internship.InternshipCandidacy.date" />
-	<slot name="universityName" key="label.internship.InternshipCandidacy.student.university" />
+	<slot name="university.fullPresentationName" key="label.internship.InternshipCandidacy.student.university" />
 	<slot name="studentNumber" key="label.internship.InternshipCandidacy.student.number" />
 	<slot name="studentYear" key="label.internship.InternshipCandidacy.student.year" />
     <slot name="name" key="label.Party.name" />

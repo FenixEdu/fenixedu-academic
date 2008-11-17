@@ -1,15 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.internship;
 
 import java.io.Serializable;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
 import net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 
 import org.joda.time.LocalDate;
@@ -369,24 +366,6 @@ public class InternshipCandidacyBean implements Serializable, Comparable<Interns
 
     public void setUniversity(AcademicalInstitutionUnit university) {
 	this.university = (university != null) ? new DomainReference<AcademicalInstitutionUnit>(university) : null;
-    }
-
-    public String getUniversityName() {
-	return computeUniversityName(getUniversity());
-    }
-
-    private String computeUniversityName(AcademicalInstitutionUnit unit) {
-	if (unit instanceof SchoolUnit) {
-	    SchoolUnit school = (SchoolUnit) unit;
-	    StringBuilder output = new StringBuilder();
-	    output.append(school.getName().trim());
-	    output.append(" da ");
-	    List<Unit> parents = school.getParentUnitsPath();
-	    output.append(parents.get(parents.size() - 1).getName());
-	    return output.toString();
-	} else {
-	    return unit.getName();
-	}
     }
 
     @Override
