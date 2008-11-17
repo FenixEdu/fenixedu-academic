@@ -157,6 +157,7 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward prepareToDoTest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	Integer testCode = null;
+	request.setAttribute("date", getDate());
 	try {
 	    testCode = new Integer(request.getParameter("testCode"));
 	} catch (NumberFormatException e) {
@@ -231,7 +232,6 @@ public class StudentTestsAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("studentTestForm", form);
-	request.setAttribute("date", getDate());
 	return mapping.findForward("doTest");
     }
 
