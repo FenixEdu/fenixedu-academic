@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.RegisterCandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.StateMachine;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
+import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 
 import org.joda.time.YearMonthDay;
 
@@ -19,8 +20,8 @@ public class RegisterCandidate extends FenixService {
 
     public void run(RegisterCandidacyBean candidacyBean) {
 
-	StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), CandidacySituationType.REGISTERED
-		.toString());
+	StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), new StateBean(
+		CandidacySituationType.REGISTERED.name()));
 
 	final Registration registration = candidacyBean.getCandidacy().getRegistration();
 	registration.setStartDate(candidacyBean.getStartDate() != null ? candidacyBean.getStartDate() : new YearMonthDay());

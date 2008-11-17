@@ -3,17 +3,20 @@ package net.sourceforge.fenixedu.domain.util.workflow;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StateMachine {
-    public static void execute(IState state) {
+
+    public static IState execute(IState state) {
 	state.checkConditionsToForward();
-	state.nextState();
+	return state.nextState();
     }
 
-    public static void execute(IState state, String nextState) {
+    public static IState execute(final IState state, final StateBean bean) {
+	final String nextState = bean.getNextState();
 	if (state.getValidNextStates().contains(nextState)) {
-	    state.checkConditionsToForward(nextState);
-	    state.nextState(nextState);
+	    state.checkConditionsToForward(bean);
+	    return state.nextState(bean);
 	} else {
-	    throw new DomainException("invalid next state");
+	    throw new DomainException("error.invalid.next.state");
 	}
     }
+
 }

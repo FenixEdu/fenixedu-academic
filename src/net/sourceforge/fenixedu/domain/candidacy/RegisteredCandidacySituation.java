@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
@@ -91,7 +92,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
     }
 
     @Override
-    public IState nextState(String nextState) {
+    public IState nextState(final StateBean bean) {
 	return null;
     }
 

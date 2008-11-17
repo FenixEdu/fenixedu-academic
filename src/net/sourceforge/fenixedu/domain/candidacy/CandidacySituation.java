@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.IStateWithOperations;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 
 import org.joda.time.DateTime;
 
@@ -120,8 +121,8 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	return this.getCandidacy().nextState();
     }
 
-    public IState nextState(String nextState) {
-	return (IState) this.getCandidacy().nextState(nextState);
+    public IState nextState(final StateBean bean) {
+	return (IState) this.getCandidacy().nextState(bean.getNextState());
     }
 
     public Set<String> getValidNextStates() {
@@ -132,8 +133,8 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
 	this.getCandidacy().checkConditionsToForward();
     }
 
-    public void checkConditionsToForward(String nextState) {
-	this.getCandidacy().checkConditionsToForward(nextState);
+    public void checkConditionsToForward(final StateBean bean) {
+	this.getCandidacy().checkConditionsToForward(bean.getNextState());
     }
 
     public abstract CandidacySituationType getCandidacySituationType();

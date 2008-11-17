@@ -8,7 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.candidacy.SubstituteCandidacySituation;
-import net.sourceforge.fenixedu.domain.util.StateMachine;
+import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,8 +40,7 @@ public class SelectCandidacies extends FenixService {
     private void createNewCandidacySituations(List<SelectDFACandidacyBean> candidacies) {
 	if (candidacies != null && !candidacies.isEmpty()) {
 	    for (SelectDFACandidacyBean candidacyBean : candidacies) {
-		StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), candidacyBean
-			.getSelectionSituation().name());
+		StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), candidacyBean);
 		candidacyBean.getCandidacy().getActiveCandidacySituation().setRemarks(candidacyBean.getRemarks());
 	    }
 	}
