@@ -6,6 +6,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Recipient extends Recipient_Base {
@@ -43,9 +45,26 @@ public class Recipient extends Recipient_Base {
 
     public void addDestinationEmailAddresses(final Set<String> emailAddresses) {
 	for (final Person person : getMembers().getElements()) {
-	    final String emailAddress = person.getEmail();
-	    if (emailAddress != null && !emailAddress.isEmpty()) {
-		emailAddresses.add(emailAddress);
+	    EmailAddress emailAddress = null;
+	    for (final PartyContact partyContact : person.getPartyContactsSet()) {
+		if (partyContact.isEmailAddress()) {
+		    final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
+		    final String value = otherEmailAddress.getValue();
+		    if (value != null && !value.isEmpty()) {
+			if (otherEmailAddress.isInstitutionalType()) {
+			    emailAddress = otherEmailAddress;
+			    break;
+			} else if (emailAddress == null || otherEmailAddress.isDefault()) {
+			    emailAddress = otherEmailAddress;
+			}
+		    }
+		}
+	    }
+	    if (emailAddress != null) {
+		final String value = emailAddress.getValue();
+		if (value != null && !value.isEmpty()) {
+		    emailAddresses.add(value);
+		}
 	    }
 	}
     }
