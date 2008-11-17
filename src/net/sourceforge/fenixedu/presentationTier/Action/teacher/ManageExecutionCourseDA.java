@@ -806,94 +806,89 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    return null;
 	}
     }
-    
+
     public ActionForward manageShifts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-    		HttpServletResponse response) throws InvalidSessionActionException {
-    	
-    	String executionCourseID =  request.getParameter("executionCourseID");
-    	
-    	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(Integer.valueOf(executionCourseID));
-    	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
-    	SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
-    	
-    	request.setAttribute("shifts", shifts);
-    	request.setAttribute("executionCourseID", executionCourseID);
-    	
-    	return mapping.findForward("manageShifts");
+	    HttpServletResponse response) throws InvalidSessionActionException {
+
+	String executionCourseID = request.getParameter("executionCourseID");
+
+	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(Integer.valueOf(executionCourseID));
+	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+	SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
+
+	request.setAttribute("shifts", shifts);
+	request.setAttribute("executionCourseID", executionCourseID);
+
+	return mapping.findForward("manageShifts");
     }
-    
+
     public ActionForward editShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-    		HttpServletResponse response) {
-    	
-    	String shiftID = request.getParameter("shiftID");
-    	String executionCourseID =  request.getParameter("executionCourseID");
-    	String registrationID = request.getParameter("registrationID");
-    	
-    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
-    	Shift shift = infoShift.getShift();
-    	ExecutionCourse executionCourse = shift.getRootDomainObject().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
-		
-    	if(registrationID != null) {
-    		Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
-    		shift.removeAttendFromShift(registration, executionCourse);
-    		request.setAttribute("registration", registration);
-    	}
-    	
-    	List<Registration> registrations = shift.getStudents();
+	    HttpServletResponse response) {
 
-    	request.setAttribute("registrations", registrations);
-		request.setAttribute("shift", shift);
-		request.setAttribute("executionCourseID", executionCourseID);
-    	
-    	return mapping.findForward("editShift");
+	String shiftID = request.getParameter("shiftID");
+	String executionCourseID = request.getParameter("executionCourseID");
+	String registrationID = request.getParameter("registrationID");
+
+	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
+	Shift shift = infoShift.getShift();
+	ExecutionCourse executionCourse = shift.getRootDomainObject()
+		.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+
+	if (registrationID != null) {
+	    Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
+	    shift.removeAttendFromShift(registration, executionCourse);
+	    request.setAttribute("registration", registration);
+	}
+
+	List<Registration> registrations = shift.getStudents();
+
+	request.setAttribute("registrations", registrations);
+	request.setAttribute("shift", shift);
+	request.setAttribute("executionCourseID", executionCourseID);
+
+	return mapping.findForward("editShift");
     }
-    
+
     public ActionForward removeAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-    		HttpServletResponse response) {
-    	
-    	String shiftID = request.getParameter("shiftID");
-    	String registrationID = request.getParameter("registrationID");
-    	String executionCourseID =  request.getParameter("executionCourseID");
-    	String removeAll = request.getParameter("removeAll");
-    	
-    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
-    	Shift shift = infoShift.getShift();
-    	
-    	if(removeAll != null) {
-    		request.setAttribute("removeAll", removeAll);
-    	}
-    	else {
-    		Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
-    		request.setAttribute("registration", registration);
-    	}
-    	
-		request.setAttribute("shift", shift);
-		request.setAttribute("executionCourseID", executionCourseID);
-		
-    	return mapping.findForward("removeAttendsFromShift");
-    }
-    
-    public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-    		HttpServletResponse response) {
-    	
-    	String executionCourseID =  request.getParameter("executionCourseID");
-    	String shiftID = request.getParameter("shiftID");
-    	
-    	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
-    	Shift shift = infoShift.getShift();
-    	List<Registration> registrations = shift.getStudents();
-    	ExecutionCourse executionCourse = shift.getRootDomainObject().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
-    	
-    	for(Registration registration : registrations) {
-    		shift.removeAttendFromShift(registration, executionCourse);
-    	}
+	    HttpServletResponse response) {
 
-    	registrations = shift.getStudents();
-    	
-    	request.setAttribute("shift", shift);
-    	request.setAttribute("executionCourseID", executionCourseID);
-    	request.setAttribute("registrations", registrations);
-    	
-    	return mapping.findForward("editShift");
+	String shiftID = request.getParameter("shiftID");
+	String registrationID = request.getParameter("registrationID");
+	String executionCourseID = request.getParameter("executionCourseID");
+	String removeAll = request.getParameter("removeAll");
+
+	Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
+
+	if (removeAll != null) {
+	    request.setAttribute("removeAll", removeAll);
+	} else {
+	    Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
+	    request.setAttribute("registration", registration);
+	}
+
+	request.setAttribute("shift", shift);
+	request.setAttribute("executionCourseID", executionCourseID);
+
+	return mapping.findForward("removeAttendsFromShift");
+    }
+
+    public ActionForward removeAllAttendsFromShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	String executionCourseID = request.getParameter("executionCourseID");
+	String shiftID = request.getParameter("shiftID");
+
+	Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+
+	for (Registration registration : shift.getStudents()) {
+	    shift.removeAttendFromShift(registration, executionCourse);
+	}
+
+	request.setAttribute("shift", shift);
+	request.setAttribute("executionCourseID", executionCourseID);
+	request.setAttribute("registrations", shift.getStudents());
+
+	return mapping.findForward("editShift");
     }
 }
