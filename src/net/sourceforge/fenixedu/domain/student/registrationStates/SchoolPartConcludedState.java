@@ -5,7 +5,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 import org.joda.time.DateTime;
 
@@ -26,15 +25,7 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
 	return RegistrationStateType.SCHOOLPARTCONCLUDED;
     }
 
-    public void checkConditionsToForward() {
-	checkConditionsToForward(RegistrationStateType.CONCLUDED.toString());
-    }
-
-    public void checkConditionsToForward(String nextState) {
-	// TODO Auto-generated method stub
-
-    }
-
+    @Override
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
 	states.add(RegistrationStateType.CONCLUDED.name());
@@ -46,8 +37,9 @@ public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
 	return states;
     }
 
-    public IState nextState() {
-	return nextState(RegistrationStateType.CONCLUDED.toString());
+    @Override
+    protected RegistrationStateType defaultNextStateType() {
+	return RegistrationStateType.CONCLUDED;
     }
 
 }

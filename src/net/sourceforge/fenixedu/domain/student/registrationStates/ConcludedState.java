@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 
 import org.joda.time.DateTime;
 
@@ -53,24 +51,13 @@ public class ConcludedState extends ConcludedState_Base {
 	super.delete();
     }
 
-    public void checkConditionsToForward() {
-	throw new DomainException("error.impossible.to.forward.from.concluded");
-    }
-
-    public void checkConditionsToForward(String nextState) {
-	throw new DomainException("error.impossible.to.forward.from.concluded");
-    }
-
-    public Set<String> getValidNextStates() {
-	return new HashSet<String>();
-    }
-
-    public IState nextState() {
+    @Override
+    public void checkConditionsToForward(final StateBean bean) {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
 
     @Override
-    public IState nextState(String nextState) {
+    public IState nextState(final StateBean bean) {
 	throw new DomainException("error.impossible.to.forward.from.concluded");
     }
 

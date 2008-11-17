@@ -4,9 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 import org.joda.time.DateTime;
 
@@ -22,15 +20,7 @@ public class FlunkedState extends FlunkedState_Base {
 	init(registration, person, dateTime);
     }
 
-    public void checkConditionsToForward() {
-	throw new DomainException("error.no.default.nextState.defined");
-    }
-
-    public void checkConditionsToForward(String nextState) {
-	// TODO Auto-generated method stub
-
-    }
-
+    @Override
     public Set<String> getValidNextStates() {
 	Set<String> states = new HashSet<String>();
 	states.add(RegistrationStateType.CANCELED.name());
@@ -39,10 +29,6 @@ public class FlunkedState extends FlunkedState_Base {
 	states.add(RegistrationStateType.EXTERNAL_ABANDON.name());
 	states.add(RegistrationStateType.MOBILITY.name());
 	return states;
-    }
-
-    public IState nextState() {
-	throw new DomainException("error.no.default.nextState.defined");
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
@@ -17,8 +18,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.domain.util.StateMachine;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
+import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
+import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -108,8 +110,39 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	init(registration, null, null);
     }
 
-    public IState nextState(String nextState) {
-	return createState(getRegistration(), AccessControl.getPerson(), null, RegistrationStateType.valueOf(nextState));
+    final public IState nextState() {
+	return nextState(new StateBean(defaultNextStateType().toString()));
+    }
+
+    protected RegistrationStateType defaultNextStateType() {
+	throw new DomainException("error.no.default.nextState.defined");
+    }
+
+    public IState nextState(final StateBean bean) {
+	return createState(getRegistration(), AccessControl.getPerson(), bean.getStateDateTime(), RegistrationStateType
+		.valueOf(bean.getNextState()));
+    }
+
+    @Override
+    final public void checkConditionsToForward() {
+	checkConditionsToForward(new RegistrationStateBean(defaultNextStateType()));
+    }
+
+    @Override
+    public void checkConditionsToForward(final StateBean bean) {
+	checkCurriculumLinesForStateDate(bean);
+    }
+
+    private void checkCurriculumLinesForStateDate(final StateBean bean) {
+	final ExecutionYear year = ExecutionYear.readByDateTime(bean.getStateDateTime());
+	if (RegistrationStateType.valueOf(bean.getNextState()).isInactive() && getRegistration().hasAnyCurriculumLines(year)) {
+	    throw new DomainException("RegisteredState.error.registration.has.enrolments.for.execution.year", year.getName());
+	}
+    }
+
+    @Override
+    public Set<String> getValidNextStates() {
+	return Collections.emptySet();
     }
 
     public abstract RegistrationStateType getStateType();
@@ -202,22 +235,17 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	}
 
 	public Object execute() {
-
-	    final DateTime stateDateTime = new YearMonthDay().equals(getStateDate()) ? getStateDate().toDateTimeAtCurrentTime()
-		    : getStateDate().toDateTimeAtMidnight();
-
 	    RegistrationState createdState = null;
 
-	    final RegistrationState previousState = getRegistration().getStateInDate(stateDateTime);
+	    final RegistrationState previousState = getRegistration().getStateInDate(getStateDateTime());
 	    if (previousState == null) {
-		createdState = RegistrationState.createState(getRegistration(), null, stateDateTime, getStateType());
+		createdState = createState(getRegistration(), null, getStateDateTime(), getStateType());
 	    } else {
-		createdState = (RegistrationState) StateMachine.execute(previousState, getStateType().name());
-		createdState.setStateDate(stateDateTime);
+		createdState = (RegistrationState) StateMachine.execute(previousState, this);
 	    }
 	    createdState.setRemarks(getRemarks());
 
-	    RegistrationState nextState = createdState.getNext();
+	    final RegistrationState nextState = createdState.getNext();
 	    if (nextState != null && !createdState.getValidNextStates().contains(nextState.getStateType().name())) {
 		throw new DomainException("error.cannot.add.registrationState.incoherentState");
 	    }

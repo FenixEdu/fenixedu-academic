@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.workflow.IState;
 
 import org.joda.time.DateTime;
 
@@ -22,20 +20,9 @@ public class CanceledState extends CanceledState_Base {
 	init(registration, person, dateTime);
     }
 
-    public void checkConditionsToForward() {
-    }
-
-    public void checkConditionsToForward(String nextState) {
-    }
-
+    @Override
     public Set<String> getValidNextStates() {
-	Set<String> states = new HashSet<String>();
-	states.add(RegistrationStateType.REGISTERED.name());
-	return states;
-    }
-
-    public IState nextState() {
-	throw new DomainException("error.no.default.nextState.defined");
+	return Collections.singleton(RegistrationStateType.REGISTERED.name());
     }
 
     @Override
