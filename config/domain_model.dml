@@ -3314,7 +3314,7 @@ class DomainObject {
 		LocalDate beginDate;
 		LocalDate endDate;
 		String position;
-		JobApplicationType applicationType;
+		JobApplicationType jobApplicationType;
 		ContractType contractType;
 		SalaryType salaryType;
 	}
