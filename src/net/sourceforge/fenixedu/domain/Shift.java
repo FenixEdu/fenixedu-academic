@@ -417,19 +417,20 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
-    
+
     @Service
-    public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse, Shift shift) {
-    	
-    	registration.removeShifts(this);
-    	
-    	String fromName = executionCourse.getNome();
-		String fromAddress = executionCourse.getSite().getMail();
-		String[] replyTos = {};
-		Collection<String> toAddresses = new ArrayList<String>();
-		toAddresses.add(registration.getPerson().getInstitutionalOrDefaultEmailAddressValue());
-		
-		Email email = new Email(fromName, fromAddress, replyTos, toAddresses, Collections.EMPTY_LIST,
-				Collections.EMPTY_LIST, RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", shift.getNome()));
+    public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse) {
+
+	registration.removeShifts(this);
+
+	String fromName = executionCourse.getNome();
+	String fromAddress = executionCourse.getSite().getMail();
+	String[] replyTos = {};
+	Collection<String> toAddresses = new ArrayList<String>();
+	toAddresses.add(registration.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+
+	Email email = new Email(fromName, fromAddress, replyTos, toAddresses, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+		RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils
+			.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome()));
     }
 }

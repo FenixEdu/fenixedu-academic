@@ -835,7 +835,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		
     	if(registrationID != null) {
     		Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
-    		shift.removeAttendFromShift(registration, executionCourse, shift);
+    		shift.removeAttendFromShift(registration, executionCourse);
     		request.setAttribute("registration", registration);
     	}
     	
@@ -885,7 +885,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     	ExecutionCourse executionCourse = shift.getRootDomainObject().readExecutionCourseByOID(Integer.valueOf(executionCourseID));
     	
     	for(Registration registration : registrations) {
-    		shift.removeAttendFromShift(registration, executionCourse, shift);
+    		shift.removeAttendFromShift(registration, executionCourse);
     	}
 
     	registrations = shift.getStudents();
