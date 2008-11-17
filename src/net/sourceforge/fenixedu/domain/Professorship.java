@@ -70,16 +70,18 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    removeTeacher();
 	    removeRootDomainObject();
 	    deleteDomainObject();
-	} else {
-	    throw new DomainException("error.remove.professorship");
 	}
     }
 
     public boolean canBeDeleted() {
-	if (hasAnyAssociatedSummaries() || hasAnyAssociatedShiftProfessorship() || hasAnySupportLessons()
-		|| hasAnyDegreeTeachingServices() || hasAnyTeacherMasterDegreeServices()) {
-	    return false;
-	}
+	if (hasAnyAssociatedSummaries()) throw new DomainException("error.remove.professorship");
+	if (hasAnyAssociatedShiftProfessorship()) throw new DomainException("error.remove.professorship");
+	if (hasAnySupportLessons()) throw new DomainException("error.remove.professorship");
+	if (hasAnyDegreeTeachingServices()) throw new DomainException("error.remove.professorship");
+	if (hasAnyTeacherMasterDegreeServices()) throw new DomainException("error.remove.professorship");
+	if (hasTeachingInquiry()) throw new DomainException("error.remove.professorship");
+	if (hasAnyStudentInquiriesTeachingResults()) throw new DomainException("error.remove.professorship");
+	if (hasAnyAssociatedShiftProfessorship()) throw new DomainException("error.remove.professorship");
 	return true;
     }
 
