@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -20,6 +21,7 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
+    @SuppressWarnings("unchecked")
     final static Comparator<MasterDegreeProofVersion> LAST_MODIFICATION_COMPARATOR = new BeanComparator("lastModification");
 
     public MasterDegreeProofVersion() {
@@ -29,7 +31,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
     public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis, Employee responsibleEmployee, Date lastModification,
 	    Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
-	    State currentState, List juries, List externalJuries) {
+	    State currentState, List<Teacher> juries, List<ExternalContract> externalJuries) {
 	this();
 	this.setMasterDegreeThesis(masterDegreeThesis);
 	this.setResponsibleEmployee(responsibleEmployee);
@@ -58,6 +60,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 		if (thesis != null) {
 		    final MasterDegreeProofVersion masterDegreeProofVersion = thesis.getActiveMasterDegreeProofVersion();
 		    if (masterDegreeProofVersion != null && masterDegreeProofVersion.isConcluded()
+			    && masterDegreeProofVersion.getProofDateYearMonthDay() != null
 			    && masterDegreeProofVersion.getProofDateYearMonthDay().getYear() == year) {
 			result.add(masterDegreeProofVersion);
 		    }
