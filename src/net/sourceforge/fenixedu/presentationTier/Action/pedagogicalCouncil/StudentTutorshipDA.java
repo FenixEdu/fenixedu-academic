@@ -24,9 +24,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/studentTutorship", module = "pedagogicalCouncil")
 @Forwards( { @Forward(name = "searchStudentTutorship", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
 	@Forward(name = "showStudentPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
-	@Forward(name = "showStudentCurriculum", path = "/pedagogicalCouncil/tutorship/showStudentCurriculum.jsp") })
+	@Forward(name = "showStudentCurriculum", path = "/pedagogicalCouncil/tutorship/showStudentCurriculum.jsp"),
+	@Forward(name = "chooseRegistration", path = "/pedagogicalCouncil/tutorship/chooseRegistration.jsp") })
 public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
+    @SuppressWarnings("unused")
     public ActionForward prepareStudentSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -34,6 +36,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("searchStudentTutorship");
     }
 
+    @SuppressWarnings("unused")
     public ActionForward showStudentPerformanceGrid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -68,6 +71,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("showStudentPerformanceGrid");
     }
 
+    @SuppressWarnings("unused")
     public ActionForward prepareStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -75,33 +79,45 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("showStudentCurriculum");
     }
 
+    @SuppressWarnings("unused")
     public ActionForward showStudentRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorateBean tutorateBean = new TutorateBean();
+	final TutorateBean tutorateBean = new TutorateBean();
 	tutorateBean.setPersonNumber(getIntegerFromRequest(request, "studentNumber"));
 	request.setAttribute("tutorateBean", tutorateBean);
-	return studentCurriculum(mapping, actionForm, request, response, getIntegerFromRequest(request, "studentNumber"));
+	return showOrChoose(mapping, request);
     }
 
+    @SuppressWarnings("unused")
     public ActionForward showStudentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TutorateBean bean = (TutorateBean) getObjectFromViewState("tutorateBean");
-	return studentCurriculum(mapping, actionForm, request, response, bean.getPersonNumber());
+	return showOrChoose(mapping, request);
     }
 
-    private ActionForward studentCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, Integer studentNumber) throws Exception {
+    private ActionForward showOrChoose(final ActionMapping mapping, final HttpServletRequest request) {
+	Registration registration = null;
 
-	Student student = Student.readStudentByNumber(studentNumber);
-	if (student != null) {
-	    final List<Registration> registrations = student.getRegistrations();
-	    if (!registrations.isEmpty()) {
-		request.setAttribute("registration", registrations.iterator().next());
-	    }
+	final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
+	final TutorateBean bean = (TutorateBean) getObjectFromViewState("tutorateBean");
+
+	if (registrationOID != null) {
+	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
 	} else {
-	    studentErrorMessage(request, studentNumber);
+	    final Student student = Student.readStudentByNumber(bean.getPersonNumber());
+	    if (student.getRegistrations().size() == 1) {
+		registration = student.getRegistrations().get(0);
+	    } else {
+		request.setAttribute("student", student);
+		return mapping.findForward("chooseRegistration");
+	    }
+	}
+
+	if (registration == null) {
+	    studentErrorMessage(request, bean.getPersonNumber());
+	} else {
+	    request.setAttribute("registration", registration);
 	}
 
 	return mapping.findForward("showStudentCurriculum");
