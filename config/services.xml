@@ -9179,27 +9179,21 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ResearcherAuthorization"/>
-        </filterChains>
+        <filterChains/>
     </service>
     <service>
         <name>DeleteUnitFile</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ResearcherAuthorization"/>
-        </filterChains>
+        <filterChains/>
     </service>    
     <service>
         <name>EditUnitFile</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
-        <filterChains>
-            <chain name="ResearcherAuthorization"/>
-        </filterChains>
+        <filterChains/>
     </service>      
     <service>
         <name>DeleteEquivalencePlanEntry</name>

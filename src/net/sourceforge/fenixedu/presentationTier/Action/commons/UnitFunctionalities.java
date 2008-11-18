@@ -130,6 +130,10 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	UnitFileUploadBean bean = (UnitFileUploadBean) viewState.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
 
+	if (!bean.getUnit().isCurrentUserAllowedToUploadFiles()) {
+	    return manageFiles(mapping, form, request, response);
+	}
+	
 	InputStream formFileInputStream = null;
 	File file = null;
 	try {
@@ -149,7 +153,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	UnitFile file = getUnitFile(request);
-	if (file != null) {
+	if (file != null && file.getUnit().isCurrentUserAllowedToUploadFiles()) {
 	    executeService("DeleteUnitFile", new Object[] { file });
 	}
 	return manageFiles(mapping, form, request, response);
