@@ -34,7 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/internship/internshipCandidacy", module = "internationalRelatOffice")
 @Forwards( { @Forward(name = "candidates", path = "/internationalRelatOffice/internship/candidacy/listCandidates.jsp"),
 	@Forward(name = "view", path = "/internationalRelatOffice/internship/candidacy/viewCandidate.jsp"),
-	@Forward(name = "edit", path = "/internationalRelatOffice/internship/candidacy/editCandidate.jsp") })
+	@Forward(name = "edit", path = "/internationalRelatOffice/internship/candidacy/editCandidate.jsp"),
+	@Forward(name = "delete", path = "/internationalRelatOffice/internship/candidacy/deleteCandidate.jsp") })
 public class InternshipCandidacyDA extends FenixDispatchAction {
     private static final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources/EnumerationResources",
 	    new Locale("pt"));
@@ -61,7 +62,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
 	if (search.getCutEnd().isBefore(search.getCutStart())) {
-	    addActionMessage(request, "error.internationalrelations.internship.candidacy.search.startafterend");
+	    addErrorMessage(request, "start", "error.internationalrelations.internship.candidacy.search.startafterend");
 	    return prepareCandidates(mapping, actionForm, request, response);
 	}
 	request.setAttribute("search", search);
@@ -89,10 +90,25 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	try {
 	    bean.getCandidacy().edit(bean);
 	} catch (DuplicateInternshipCandidacy e) {
-	    addActionMessage(request, "error.internationalrelations.internship.candidacy.duplicateStudentNumber", e.getNumber(),
-		    e.getUniversity());
+	    addErrorMessage(request, "studentNumber", "error.internationalrelations.internship.candidacy.duplicateStudentNumber",
+		    e.getNumber(), e.getUniversity());
 	    return mapping.findForward("edit");
 	}
+	return prepareCandidates(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareCandidacyDelete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	long oid = Long.parseLong(request.getParameter("candidacy.OID"));
+	request.setAttribute("candidacy", new InternshipCandidacyBean((InternshipCandidacy) InternshipCandidacy.fromOID(oid)));
+	return mapping.findForward("delete");
+    }
+
+    public ActionForward candidateDelete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	InternshipCandidacyBean bean = (InternshipCandidacyBean) getRenderedObject();
+	bean.getCandidacy().delete();
+	addActionMessage(request, "success.internationalrelations.internship.candidacy.delete");
 	return prepareCandidates(mapping, actionForm, request, response);
     }
 
@@ -100,11 +116,11 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException {
 	CandidateSearchBean search = (CandidateSearchBean) getRenderedObject("search");
 	if (search.getCutEnd().isBefore(search.getCutStart())) {
-	    addActionMessage(request, "error.internationalrelations.internship.candidacy.search.startafterend");
+	    addErrorMessage(request, "start", "error.internationalrelations.internship.candidacy.search.startafterend");
 	    return prepareCandidates(mapping, actionForm, request, response);
 	}
 	if (search.getCutEnd().plusDays(1).toDateMidnight().isAfterNow()) {
-	    addActionMessage(request, "error.internationalrelations.internship.candidacy.export.todaywontwork");
+	    addErrorMessage(request, "end", "error.internationalrelations.internship.candidacy.export.todaywontwork");
 	    return prepareCandidates(mapping, actionForm, request, response);
 	}
 	Spreadsheet sheet = new Spreadsheet(search.getName());

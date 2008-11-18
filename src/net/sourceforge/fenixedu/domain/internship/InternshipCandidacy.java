@@ -91,4 +91,15 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 
 	candidacy.setPreviousCandidacy(bean.getPreviousCandidacy());
     }
+
+    @Service
+    public void delete() {
+	removeCountryOfBirth();
+	removeFirstDestination();
+	removeSecondDestination();
+	removeThirdDestination();
+	removeUniversity();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }

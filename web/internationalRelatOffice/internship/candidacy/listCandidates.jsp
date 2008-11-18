@@ -9,11 +9,7 @@
 <h2><bean:message key="label.internationalrelations.internship.candidacy.title"
 	bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 
-<html:messages id="message" property="<%= ActionMessages.GLOBAL_MESSAGE %>" message="true" bundle="INTERNATIONAL_RELATIONS_OFFICE">
-    <p>
-        <span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
-    </p>
-</html:messages>
+<span class="error0"><html:errors bundle="INTERNATIONAL_RELATIONS_OFFICE"/></span>    
 
 <logic:present name="search">
 	<fr:form action="/internship/internshipCandidacy.do">
@@ -28,10 +24,14 @@
 			<bean:message bundle="COMMON_RESOURCES" key="button.search" />
 		</html:submit>
         <html:submit onclick="this.form.method.value='exportToCandidatesToXls';">
-            <bean:message bundle="COMMON_RESOURCES" key="link.export" />
+            <bean:message bundle="COMMON_RESOURCES" key="link.export.xls" />
         </html:submit></p>
 	</fr:form>
 </logic:present>
+
+<html:messages id="message" message="true" bundle="INTERNATIONAL_RELATIONS_OFFICE">
+	<p><span class="warning0"><bean:write name="message" /></span></p>
+</html:messages>
 
 <logic:notEmpty name="candidates">
     <bean:size id="count" name="candidates"/>
@@ -42,6 +42,7 @@
 	<fr:view name="candidates" schema="internship.candidates.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight" />
+            <fr:property name="columnClasses" value=",,,,,,,nowrap" />
 			<fr:property name="rowClasses" value="" />
             <fr:property name="link(view)"
                 value="/internship/internshipCandidacy.do?method=candidateView" />
@@ -57,6 +58,13 @@
             <fr:property name="bundle(edit)" value="COMMON_RESOURCES" />
             <fr:property name="param(edit)" value="candidacy.OID" />
             <fr:property name="order(edit)" value="2" />
+            <fr:property name="link(delete)"
+                value="/internship/internshipCandidacy.do?method=prepareCandidacyDelete" />
+            <fr:property name="key(delete)"
+                value="link.remove" />
+            <fr:property name="bundle(delete)" value="COMMON_RESOURCES" />
+            <fr:property name="param(delete)" value="candidacy.OID" />
+            <fr:property name="order(delete)" value="2" />
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
