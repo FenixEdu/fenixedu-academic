@@ -21,14 +21,14 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
     public ActionForward initFormationManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("alumniFormationBean", new AlumniFormationBean(getAlumni(request)));
+	request.setAttribute("alumniFormationBean", new AlumniFormationBean(getAlumniFromLoggedPerson(request)));
 	return mapping.findForward("viewAlumniQualifications");
     }
 
     public ActionForward innerFormationManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("educationFormationList", getAlumni(request).getFormations());
+	request.setAttribute("educationFormationList", getAlumniFromLoggedPerson(request).getFormations());
 	return mapping.findForward("viewAlumniQualifications");
     }
 
@@ -77,11 +77,10 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 		executeService("EditFormation", new Object[] { formationInfo });
 	    } else {
 		executeService("CreateFormation",
-			new Object[] { getLoggedPerson(request).getStudent().getAlumni(), formationInfo });
+			new Object[] { getAlumniFromLoggedPerson(request), formationInfo });
 	    }
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
-	    // addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("alumniFormation", getObjectFromViewState("alumniFormation"));
 	    request.setAttribute("alumniFormationDegree", getObjectFromViewState("alumniFormationDegree"));
 	    request.setAttribute("alumniFormationInstitution", getObjectFromViewState("alumniFormationInstitution"));
@@ -92,14 +91,6 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
 	return innerFormationManagement(mapping, actionForm, request, response);
     }
-
-    // public ActionForward viewFormation(ActionMapping mapping, ActionForm
-    // actionForm, HttpServletRequest request,
-    // HttpServletResponse response) throws Exception {
-    //
-    // request.setAttribute("formationView", "true");
-    // return getFormation(mapping, request);
-    // }
 
     public ActionForward prepareFormationEdit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -125,7 +116,6 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 		executeService("DeleteQualification", new Object[] { getIntegerFromRequest(request, "formationId") });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey(), e.getArgs());
-		// addActionMessage("error", request, e.getMessage());
 	    }
 	}
 

@@ -21,14 +21,14 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     public ActionForward innerProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("alumniJobs", getLoggedPerson(request).getStudent().getAlumni().getJobs());
+	request.setAttribute("alumniJobs", getAlumniFromLoggedPerson(request).getJobs());
 	return mapping.findForward("innerProfessionalInformation");
     }
 
     public ActionForward prepareProfessionalInformationCreation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	request.setAttribute("jobCreateBean", new AlumniJobBean(getAlumni(request)));
+	request.setAttribute("jobCreateBean", new AlumniJobBean(getAlumniFromLoggedPerson(request)));
 	return mapping.findForward("createProfessionalInformation");
     }
 
@@ -76,7 +76,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     public ActionForward prepareUpdateProfessionalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	request.setAttribute("jobUpdateBean", new AlumniJobBean(getAlumni(request), getJob(request)));
+	request.setAttribute("jobUpdateBean", new AlumniJobBean(getAlumniFromLoggedPerson(request), getJob(request)));
 	return mapping.findForward("editProfessionalInformation");
     }
 

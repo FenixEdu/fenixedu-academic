@@ -12,7 +12,7 @@ public abstract class AlumniEntityManagementDA extends FenixDispatchAction {
 	super();
     }
 
-    protected Alumni getAlumni(HttpServletRequest request) throws Exception {
+    protected Alumni getAlumniFromLoggedPerson(HttpServletRequest request) throws Exception {
 	Student alumniStudent = getLoggedPerson(request).getStudent();
 	if (alumniStudent.hasAlumni()) {
 	    return alumniStudent.getAlumni();
