@@ -22,19 +22,15 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = getUserView(request);
-	ArrayList candidateStudyPlan = null;
-
 	// transport candidate ID
 	request.setAttribute("candidateID", request.getParameter("candidateID"));
 
+	IUserView userView = getUserView(request);
 	InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, request.getSession(false));
-
 	if (infoMasterDegreeCandidate != null) {
-	    candidateStudyPlan = getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate.getIdInternal(), userView);
-
 	    request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
-	    request.setAttribute("candidateStudyPlan", candidateStudyPlan);
+	    request.setAttribute("candidateStudyPlan", getCandidateStudyPlanByCandidateID(infoMasterDegreeCandidate
+		    .getIdInternal(), userView));
 	}
 
 	return mapping.findForward("Sucess");
@@ -53,10 +49,10 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
 
 	    if (candidates.size() == 1) {
 		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
-		return (InfoMasterDegreeCandidate) candidates.get(0);
+	    } else {
+		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
 	    }
 
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
 	    return (InfoMasterDegreeCandidate) candidates.get(0);
 	}
 	return null;
@@ -66,7 +62,8 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
 	Object[] args = { candidateID };
 
 	try {
-	    return (ArrayList) ServiceManagerServiceFactory.executeService("ReadCandidateEnrolmentsByCandidateID", args);
+	    return (ArrayList) ServiceManagerServiceFactory
+		    .executeService(userView, "ReadCandidateEnrolmentsByCandidateID", args);
 	} catch (Exception e) {
 	    return null;
 	}
