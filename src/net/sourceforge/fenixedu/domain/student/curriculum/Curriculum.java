@@ -20,11 +20,13 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private CurriculumModule curriculumModule;
 
+    private boolean bolonhaDegree;
+
     private ExecutionYear executionYear;
 
-    private Set<ICurriculumEntry> enrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
+    private Set<ICurriculumEntry> averageEnrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
 
-    private Set<ICurriculumEntry> dismissalRelatedEntries = new HashSet<ICurriculumEntry>();
+    private Set<ICurriculumEntry> averageDismissalRelatedEntries = new HashSet<ICurriculumEntry>();
 
     private Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
 
@@ -56,62 +58,83 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear) {
 	this.curriculumModule = curriculumModule;
+	this.bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
 	this.executionYear = executionYear;
     }
 
     public Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear,
-	    final Collection<ICurriculumEntry> entries, final Collection<ICurriculumEntry> dismissalRelatedEntries,
+	    final Collection<ICurriculumEntry> averageEnrolmentRelatedEntries,
+	    final Collection<ICurriculumEntry> averageDismissalRelatedEntries,
 	    final Collection<ICurriculumEntry> curricularYearEntries) {
 	this(curriculumModule, executionYear);
 
-	addEntries(this.enrolmentRelatedEntries, entries);
-	addEntries(this.dismissalRelatedEntries, dismissalRelatedEntries);
-	addEntries(this.curricularYearEntries, curricularYearEntries);
+	addAverageEntries(this.averageEnrolmentRelatedEntries, averageEnrolmentRelatedEntries);
+	addAverageEntries(this.averageDismissalRelatedEntries, averageDismissalRelatedEntries);
+	addCurricularYearEntries(this.curricularYearEntries, curricularYearEntries);
     }
 
     public void add(final Curriculum curriculum) {
-	addEntries(this.enrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries());
-	addEntries(this.dismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
-	addEntries(this.curricularYearEntries, curriculum.getCurricularYearEntries());
+	addAverageEntries(averageEnrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries());
+	addAverageEntries(averageDismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
+	addCurricularYearEntries(curricularYearEntries, curriculum.getCurricularYearEntries());
 
 	forceCalculus = true;
     }
 
-    private void addEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
-	final boolean bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
-
+    private void addAverageEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
 	for (final ICurriculumEntry newEntry : newEntries) {
-	    if (bolonhaDegree || shouldAdd(newEntry)) {
-		entries.add(newEntry);
+	    if (!isAlreadyAverageEntry(newEntry)) {
+		add(entries, newEntry);
 	    }
 	}
     }
 
-    /**
-     * Just for pre-Bbolonha verification
-     */
-    final private boolean shouldAdd(final ICurriculumEntry newEntry) {
+    private boolean isAlreadyAverageEntry(final ICurriculumEntry newEntry) {
+	return averageEnrolmentRelatedEntries.contains(newEntry) || averageDismissalRelatedEntries.contains(newEntry);
+    }
+
+    private void addCurricularYearEntries(final Set<ICurriculumEntry> entries, final Collection<ICurriculumEntry> newEntries) {
+	for (final ICurriculumEntry newEntry : newEntries) {
+	    add(entries, newEntry);
+	}
+    }
+
+    private void add(final Set<ICurriculumEntry> entries, final ICurriculumEntry newEntry) {
+	if (bolonhaDegree || !isAlreadyCurricularYearEntry(newEntry)) {
+	    entries.add(newEntry);
+	}
+    }
+
+    private boolean isAlreadyCurricularYearEntry(final ICurriculumEntry newEntry) {
 	if (newEntry instanceof IEnrolment) {
-	    final IEnrolment newIEnrolment = (IEnrolment) newEntry;
-
-	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal && ((Dismissal) entry).hasSourceIEnrolments(newIEnrolment)) {
-		    return false;
-		} else if (entry == newIEnrolment) {
-		    return false;
-		}
-	    }
+	    return isCurricularYearEntryAsEnrolmentOrAsSourceEnrolment((IEnrolment) newEntry);
 	} else if (newEntry instanceof Dismissal) {
-	    final Dismissal newDismissal = (Dismissal) newEntry;
+	    return isCurricularYearEntryAsSimilarDismissal((Dismissal) newEntry);
+	}
 
-	    for (final ICurriculumEntry entry : curricularYearEntries) {
-		if (entry instanceof Dismissal && !newDismissal.isCreditsDismissal() && newDismissal.isSimilar((Dismissal) entry)) {
-		    return false;
-		}
+	return false;
+    }
+
+    private boolean isCurricularYearEntryAsEnrolmentOrAsSourceEnrolment(final IEnrolment newIEnrolment) {
+	for (final ICurriculumEntry entry : curricularYearEntries) {
+	    if (entry instanceof Dismissal && ((Dismissal) entry).hasSourceIEnrolments(newIEnrolment)) {
+		return true;
+	    } else if (entry == newIEnrolment) {
+		return true;
 	    }
 	}
 
-	return true;
+	return false;
+    }
+
+    private boolean isCurricularYearEntryAsSimilarDismissal(final Dismissal newDismissal) {
+	for (final ICurriculumEntry entry : curricularYearEntries) {
+	    if (entry instanceof Dismissal && !newDismissal.isCreditsDismissal() && newDismissal.isSimilar((Dismissal) entry)) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     public CurriculumModule getCurriculumModule() {
@@ -131,20 +154,20 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public boolean isEmpty() {
-	return curriculumModule == null || (getCurriculumEntries().isEmpty() && this.curricularYearEntries.isEmpty());
+	return curriculumModule == null || (getCurriculumEntries().isEmpty() && curricularYearEntries.isEmpty());
     }
 
     public Collection<ICurriculumEntry> getCurriculumEntries() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-	result.addAll(enrolmentRelatedEntries);
-	result.addAll(dismissalRelatedEntries);
+	result.addAll(averageEnrolmentRelatedEntries);
+	result.addAll(averageDismissalRelatedEntries);
 
 	return result;
     }
 
     public boolean hasAnyExternalApprovedEnrolment() {
-	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
+	for (final ICurriculumEntry entry : averageDismissalRelatedEntries) {
 	    if (entry instanceof ExternalEnrolment) {
 		return true;
 	    }
@@ -154,11 +177,11 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public Set<ICurriculumEntry> getEnrolmentRelatedEntries() {
-	return enrolmentRelatedEntries;
+	return averageEnrolmentRelatedEntries;
     }
 
     public Set<ICurriculumEntry> getDismissalRelatedEntries() {
-	return dismissalRelatedEntries;
+	return averageDismissalRelatedEntries;
     }
 
     public Set<ICurriculumEntry> getCurricularYearEntries() {
@@ -221,7 +244,7 @@ public class Curriculum implements Serializable, ICurriculum {
     public BigDecimal getRemainingCredits() {
 	BigDecimal result = BigDecimal.ZERO;
 
-	for (final ICurriculumEntry entry : this.curricularYearEntries) {
+	for (final ICurriculumEntry entry : curricularYearEntries) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
 		if (dismissal.getCredits().isCredits() || dismissal.getCredits().isEquivalence()
@@ -237,8 +260,8 @@ public class Curriculum implements Serializable, ICurriculum {
     private void doCalculus() {
 	sumPiCi = BigDecimal.ZERO;
 	sumPi = BigDecimal.ZERO;
-	countAverage(enrolmentRelatedEntries);
-	countAverage(dismissalRelatedEntries);
+	countAverage(averageEnrolmentRelatedEntries);
+	countAverage(averageDismissalRelatedEntries);
 	average = calculateAverage();
 
 	sumEctsCredits = BigDecimal.ZERO;
@@ -305,7 +328,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.append("\n[CURRICULUM]");
 	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
 		+ curriculumModule.getName().getContent());
-	result.append("\n[SUM ENTRIES] " + (enrolmentRelatedEntries.size() + dismissalRelatedEntries.size()));
+	result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
 	result.append("\n[SUM Pi] " + getSumPi().toString());
 	result.append("\n[AVERAGE] " + getAverage());
@@ -313,7 +336,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
 
 	result.append("\n[ENTRIES]");
-	for (final ICurriculumEntry entry : enrolmentRelatedEntries) {
+	for (final ICurriculumEntry entry : averageEnrolmentRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
 		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
 		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
@@ -321,7 +344,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	}
 
 	result.append("\n[DISMISSAL RELATED ENTRIES]");
-	for (final ICurriculumEntry entry : dismissalRelatedEntries) {
+	for (final ICurriculumEntry entry : averageDismissalRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
 		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
 		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
