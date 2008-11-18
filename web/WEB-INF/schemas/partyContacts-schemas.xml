@@ -49,12 +49,12 @@
 		<property name="size" value="15" />
 		<property name="maxLength" value="15" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-			<property name="regexp" value="[0-9]*" />
-			<property name="message" value="error.phone.invalidFormat" />
-			<property name="key" value="true" />
-		</validator>
-	</slot>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?" />
+            <property name="message" value="error.phone.invalidFormat" />
+            <property name="key" value="true" />
+        </validator>
+   	</slot>
 </schema>
 
 <schema name="contacts.MobilePhone.manage"
@@ -64,12 +64,12 @@
 		<property name="size" value="15" />
 		<property name="maxLength" value="15" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-			<property name="regexp" value="[0-9]*" />
-			<property name="message" value="error.phone.invalidFormat" />
-			<property name="key" value="true" />
-		</validator>
-	</slot>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?" />
+            <property name="message" value="error.phone.invalidFormat" />
+            <property name="key" value="true" />
+        </validator>
+   	</slot>
 </schema>
 
 <schema name="contacts.EmailAddress.manage"

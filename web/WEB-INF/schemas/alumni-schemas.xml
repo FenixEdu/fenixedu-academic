@@ -212,8 +212,12 @@
 	</schema>
 
 	<schema name="alumni.public.access.personalContact" type="net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean" bundle="ALUMNI_RESOURCES">
-		<slot name="phone" key="label.phone" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" >
-			<property size="20" />
+		<slot name="phone" key="label.phone">
+	        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+	            <property name="regexp" value="(\d{4,15})?" />
+	            <property name="message" value="error.phone.invalidFormat" />
+	            <property name="key" value="true" />
+	        </validator>
 		</slot>
 	</schema>
 

@@ -357,13 +357,23 @@
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
 	<slot name="phone" key="label.card.person.phone">
-		<property name="size" value="15"/>
+    	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
-	</slot>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
 	<slot name="mobile" key="label.card.person.mobile">
-		<property name="size" value="15"/>
+    	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
-	</slot>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+    </slot>
 	<slot name="email" key="label.card.person.email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 		<property name="size" value="60"/>
 	</slot>	
