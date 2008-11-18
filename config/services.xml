@@ -4238,7 +4238,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tutor.CreatePerformanceGridTable</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="TeacherAuthorization" />
+            <chain name="PedagogicalCouncilOrTeacherAuthorization" />
         </filterChains>
     </service>
     <service>

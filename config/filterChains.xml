@@ -947,6 +947,13 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
    	<filterChain>
+        <name>PedagogicalCouncilOrTeacherAuthorization</name>
+        <expression>PedagogicalCouncilAuthorization || TeacherAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+   	<filterChain>
         <name>AssiduousnessManagementAuthorization</name>
         <expression>ManagementAssiduousnessAuthorization &amp;&amp; AssiduousnessManagementGroup</expression>
         <description/>
