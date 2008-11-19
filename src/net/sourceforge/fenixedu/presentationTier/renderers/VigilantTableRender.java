@@ -599,20 +599,21 @@ public class VigilantTableRender extends OutputRenderer {
 	    MetaObject metavigilant = getVigilantForRow(rowIndex);
 
 	    if (!isInformationColumn(columnIndex, metavigilant)) {
-		int index = getConvokeIndex(metavigilant, columnIndex);
-		MetaObject convoke = getConvokeMetaObjectToPutInTable(metavigilant, index);
+	    	
+	    	int index = getConvokeIndex(metavigilant, columnIndex);
+	    	MetaObject convoke = getConvokeMetaObjectToPutInTable(metavigilant, index);
 
-		if (convoke != null) {
-		    Vigilancy v = (Vigilancy) convoke.getObject();
+	    	if (convoke != null) {
+	    		Vigilancy v = (Vigilancy) convoke.getObject();
 
-		    if (v.getStatus() == AttendingStatus.NOT_ATTENDED) {
-			cell.setClasses(getWarningClass());
-		    }
+	    		if (v.getStatus() == AttendingStatus.NOT_ATTENDED && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
+	    			cell.setClasses(getWarningClass());
+	    		}
 
-		    if (!v.getWrittenEvaluation().getVigilantsReport()) {
-			cell.setClasses(getWarningClass());
-		    }
-		}
+	    		if (!v.getWrittenEvaluation().getVigilantsReport() && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
+	    			cell.setClasses(getWarningClass());
+	    		}
+	    	}
 	    }
 	}
 
