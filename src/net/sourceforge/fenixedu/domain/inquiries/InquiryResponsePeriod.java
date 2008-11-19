@@ -64,5 +64,13 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
     static public boolean hasOpenPeriod(final InquiryResponsePeriodType type) {
 	return readOpenPeriod(type) != null;
     }
-    
+
+    public static InquiryResponsePeriod readLastPeriod(final InquiryResponsePeriodType type) {
+	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	while (executionSemester.getInquiryResponsePeriod(type) == null) {
+	    executionSemester = executionSemester.getPreviousExecutionPeriod();
+	}
+	return executionSemester.getInquiryResponsePeriod(type);
+    }
+
 }

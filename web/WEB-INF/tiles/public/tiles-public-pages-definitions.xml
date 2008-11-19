@@ -289,6 +289,9 @@
 	<definition name="execution-course-student-groups-by-shift" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/studentGroupsByShift.jsp"/>
 	</definition>
+	<definition name="execution-course-student-inquiries-result" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesResult.jsp"/>
+	</definition>	
     <definition name="definition.public.executionCourse.site" extends="definition.public.executionCourse">
         <put name="page-context" value="/publico/executionCourse/siteContext.jsp"/>
     </definition>

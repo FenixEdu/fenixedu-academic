@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,20 +14,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
@@ -273,6 +280,49 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("execution-course-first-page");
+    }
+
+    public ActionForward studentInquiriesResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(request));
+	return mapping.findForward("execution-course-student-inquiries-result");
+    }
+
+    public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
+		getIntegerFromRequest(request, "resultId")));
+	return actionMapping.findForward("execution-course-show-course-inquiries-result");
+    }
+
+    public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesTeachingResultByOID(
+		getIntegerFromRequest(request, "resultId")));
+	return actionMapping.findForward("execution-course-show-teaching-inquiries-result");
+    }
+
+    private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final HttpServletRequest request) {
+	Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap = new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : getExecutionCourse(request)
+		.getStudentInquiriesCourseResults()) {
+	    if (studentInquiriesCourseResult.getPublicDisclosure() != null && studentInquiriesCourseResult.getPublicDisclosure()) {
+		courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
+			studentInquiriesCourseResult));
+	    }
+	}
+
+	for (Professorship otherTeacherProfessorship : getExecutionCourse(request).getProfessorships()) {
+	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+		    .getStudentInquiriesTeachingResults()) {
+		if (studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
+			&& studentInquiriesTeachingResult.getPublicDegreeDisclosure()) {
+		    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+			    studentInquiriesTeachingResult);
+		}
+	    }
+	}
+	return courseResultsMap.values();
     }
 
 }
