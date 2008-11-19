@@ -118,4 +118,10 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 		"negativeResultsResolutionAndImproovementPlanOfAction").getValue());
     }
 
+    public void delete() {
+	removeProfessorship();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+
+    }
 }
