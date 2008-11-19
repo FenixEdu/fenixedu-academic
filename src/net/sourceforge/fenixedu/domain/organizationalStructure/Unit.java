@@ -891,7 +891,7 @@ public class Unit extends Unit_Base {
 	final Collection<UnitName> unitNames = UnitName.find(unitNameString, Integer.MAX_VALUE);
 	for (final UnitName unitName : unitNames) {
 	    final Unit unit = unitName.getUnit();
-	    if (unitNameString.equalsIgnoreCase(unit.getName())) {
+	    if (StringNormalizer.normalize(unitNameString).equalsIgnoreCase(StringNormalizer.normalize(unit.getName()))) {
 		return unit;
 	    }
 	}
