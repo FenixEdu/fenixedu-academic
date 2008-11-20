@@ -21,23 +21,28 @@
 
 <style>
 .thtop { vertical-align: top; }
-.biggerTextarea textarea {
-width: 300px;
-height: 100px;
-}
+.biggerTextarea textarea { width: 400px; height: 100px; }
+.biggerInputText input[type="text"] { width: 400px !important; }
+.smallerInputText input[type="text"] { width: 50px !important; }
 </style>
 
 <div class="forminline dinline">
 	<div class="relative">
 		<fr:form action="/teachingInquiry.do?method=showInquiries2ndPage">
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="firstPageFirstBlock" />	
+			<div class="biggerInputText">
+				<fr:edit name="teachingInquiry" property="firstPageFirstBlock" />	
+			</div>
 			
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
+			<div class="biggerInputText">
+				<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
+			</div>
 			
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.semesterAverageStudentNumber" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="teachingInquiry" property="firstPageSecondBlockSecondPart" />
+			<div class="smallerInputText">
+				<fr:edit name="teachingInquiry" property="firstPageSecondBlockSecondPart" />
+			</div>
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockThirdPart" />
 			
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFourthPart" />
@@ -51,9 +56,12 @@ height: 100px;
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		
+			<br/>
+			
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
 		
+
 		<fr:form action="/teachingInquiry.do?method=showInquiriesPrePage">
 			<bean:define id="executionCourseID" ><bean:write name="teachingInquiry" property="professorship.executionCourse.idInternal" /></bean:define>
 			<html:hidden property="executionCourseID" value="<%= executionCourseID %>"/>

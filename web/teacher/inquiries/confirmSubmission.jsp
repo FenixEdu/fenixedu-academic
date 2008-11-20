@@ -15,7 +15,7 @@
 	</tr>
 </table>
 
-<p class="mtop2"><bean:message key="message.teachingInquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
+<p class="mtop1"><span class="warning0"><bean:message key="message.teachingInquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/>:</span></p>
 
 <p class="mbottom0">
 	<div class="forminline dinline">
