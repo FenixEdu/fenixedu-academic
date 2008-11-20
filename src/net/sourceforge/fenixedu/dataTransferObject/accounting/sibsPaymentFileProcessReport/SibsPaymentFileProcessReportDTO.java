@@ -205,6 +205,6 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public void addResidenceAmount(Money money) {
-	this.residenceAmount.add(money);
+	this.residenceAmount = this.residenceAmount.add(money);
     }
 }
