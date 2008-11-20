@@ -479,6 +479,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public void setRegistration(final Registration registration) {
+	if (registration.hasDegree()) {
+	    if (!registration.getDegree().hasDegreeCurricularPlans(getDegreeCurricularPlan())) {
+		throw new DomainException("error.StudentCurricularPlan.setting.registration.with.different.degree");
+	    }
+	} else {
+	    registration.setDegree(getDegree());
+	}
+
 	super.setStudent(registration);
     }
 
