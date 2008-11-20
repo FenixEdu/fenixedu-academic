@@ -89,4 +89,8 @@ public enum RegistrationAgreement {
 	return null;
     }
 
+    public String getQualifiedName() {
+	return getClass().getSimpleName() + "." + name();
+    }
+
 }
