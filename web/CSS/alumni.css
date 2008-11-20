@@ -28,7 +28,7 @@ fieldset label {
 margin-top: 0.5em !important;
 }
 
-#reg_form fieldset {
+.reg_form fieldset {
 background: #f6f6f6;
 width: 80%;
 border: 1px solid #e2e2e2;
@@ -37,24 +37,24 @@ padding: 0em 2em 1.5em 2em;
 	margin-bottom: 1em;
 	padding-top: 1.0em;
 }
-#reg_form fieldset p { color: #666; margin-top: 0; margin-bottom: 1em; }
-#reg_form legend {
+.reg_form fieldset p { color: #666; margin-top: 0; margin-bottom: 1em; }
+.reg_form legend {
 font-size: 1.2em;
 font-weight: bold;
 	padding: 0 0.5em;
 	position:absolute; top: -0.5em; left: 0.5em;
 color: #000;
 }
-#reg_form label { font-weight: normal; display: block; padding: 6px 0 3px;}
-/*#reg_form input { display: block; }*/
-#reg_form p.comment { font-size: 1em; color: #999; padding-top: 1em; }
-#reg_form input#button { margin-top: 1em; }
-#reg_form span.red { color: #bb1309 !important; }
-#reg_form span.comment { font-size: 1em; color: #999; font-weight: normal; }
+.reg_form label { font-weight: normal; display: block; padding: 6px 0 3px;}
+/*.reg_form input { display: block; }*/
+.reg_form p.comment { font-size: 1em; color: #999; padding-top: 1em; }
+.reg_form input#button { margin-top: 1em; }
+.reg_form span.red { color: #bb1309 !important; }
+.reg_form span.comment { font-size: 1em; color: #999; font-weight: normal; }
 span.red { color: #c30 !important; }
 
- * html #reg_form fieldset { padding-top: 1.75em; } /* ie6 only*/
- *:first-child+html #reg_form fieldset { padding-top: 1.75em; } /* ie7 only */
+ * html .reg_form fieldset { padding-top: 1.75em; } /* ie6 only*/
+ *:first-child+html .reg_form fieldset { padding-top: 1.75em; } /* ie7 only */
  
 /* novo */
 span.comment { font-size: 0.85em !important; color: #999; }

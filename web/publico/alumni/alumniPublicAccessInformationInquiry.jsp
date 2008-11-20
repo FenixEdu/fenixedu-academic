@@ -26,11 +26,12 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-
-<fr:form id="reg_form" action="/alumni.do?method=updateAlumniInformation">
+<div class="reg_form">
+<fr:form action="/alumni.do?method=updateAlumniInformation&isEmployed=true">
 
 	<fr:edit id="publicAccessBean" name="publicAccessBean" visible="false" />
 
+<div id="hackAddress" class="block mtop1">
 	<fieldset style="margin-bottom: 1em;">
 
 		<legend><bean:message key="label.contact" bundle="ALUMNI_RESOURCES" /></legend>
@@ -63,35 +64,6 @@
 			</fr:layout>
 		</fr:edit>
 		<span class="error0"><fr:message for="address-validated" /></span>
-	
-<%--
-		<!-- AREA CODE -->
-		<label for="" class="">
-			<bean:message key="label.areaCode" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
-		</label>
-		<fr:edit id="areaCode-validated" name="publicAccessBean" slot="addressBean.areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
-			<fr:layout>
-				<fr:property name="size" value="20"/>
-				<fr:property name="style" value="display: inline;"/>
-			</fr:layout>
-		</fr:edit>
-		<span class="error0"><fr:message for="areaCode-validated" /></span>
-	
-	
-		<!-- AREA OF AREA CODE -->
-		<label for="" class="">
-			<bean:message key="label.areaOfAreaCode" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
-		</label>
-		<fr:edit id="areaOfAreaCode-validated" name="publicAccessBean" slot="addressBean.areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
-			<fr:layout>
-				<fr:property name="size" value="20"/>
-				<fr:property name="style" value="display: inline;"/>
-			</fr:layout>
-		</fr:edit>
-		<span class="error0"><fr:message for="areaOfAreaCode-validated" /></span>
---%>
 	
 		<!-- AREA CODE -->
 		<label for="" class="">
@@ -133,9 +105,29 @@
 		<span class="error0"><fr:message for="country-validated" /></span>
 
 	</fieldset>
+</div>
 	
 	<div class="ie67margin20px"></div>
-	
+
+	<div id="questions1" class="block mtop1"> 
+		<p>
+			<bean:message key="label.isEmployed.question" bundle="ALUMNI_RESOURCES" />
+			<logic:present name="professionalInformationPostback">
+				<input id="yes1" type="radio" name="a" checked="checked" onclick="document.getElementById('isEmployed').style.display='block';document.getElementById('hiddenButton').style.display='none';document.getElementById('hackAddress').style.display='block';document.getElementById('yes2').checked='checked'"/> Sim
+			</logic:present>
+			<logic:notPresent name="professionalInformationPostback">
+				<input id="yes1" type="radio" name="a" onclick="document.getElementById('isEmployed').style.display='block';document.getElementById('hiddenButton').style.display='none';document.getElementById('hackAddress').style.display='block';document.getElementById('yes2').checked='checked'"/> Sim
+			</logic:notPresent>
+			<input id="no1" type="radio" name="a" onclick="document.getElementById('hiddenButton').style.display='block';document.getElementById('isEmployed').style.display='none';document.getElementById('hackAddress').style.display='none';document.getElementById('questions1').style.display='none';document.getElementById('no2').checked='checked'"/> Não
+		</p>
+	</div>
+
+<logic:present name="professionalInformationPostback">
+	<div id="isEmployed" class="block mtop1">
+</logic:present>
+<logic:notPresent name="professionalInformationPostback">
+	<div id="isEmployed" class="switchInline mtop1">
+</logic:notPresent>
 	<fieldset style="margin-bottom: 1em;"> 
 		
 		<legend><bean:message key="label.current.job" bundle="ALUMNI_RESOURCES" /></legend>
@@ -258,11 +250,119 @@
 	
 	<p class="mtop15">
 		<html:submit>
-				<bean:message key="label.continue" bundle="ALUMNI_RESOURCES" />
+			<bean:message key="label.continue" bundle="ALUMNI_RESOURCES" />
 		</html:submit>
 	</p>
+</div>
 
 </fr:form>
+</div>
+
+<div id="hiddenButton" class="switchInline mtop1">
+	
+<div class="reg_form">
+<fr:form action="/alumni.do?method=updateAlumniInformation&isEmployed=false">
+		
+	<fr:edit id="publicAccessBean" name="publicAccessBean" visible="false" />
+
+	
+	<fieldset style="margin-bottom: 1em;">
+
+		<legend><bean:message key="label.contact" bundle="ALUMNI_RESOURCES" /></legend>
+
+		<!-- PHONE -->
+		<label for="" class="">
+			<bean:message key="label.phone" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="phone-validated2" name="publicAccessBean" slot="phone" >
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			<fr:layout>
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+				<fr:property name="size" value="20"/>
+				<fr:property name="style" value="display: inline;"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="phone-validated" /></span>
+	
+	
+		<!-- ADDRESS -->
+		<label for="" class="">
+			<bean:message key="label.address" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="address-validated2" name="publicAccessBean" slot="addressBean.address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			<fr:layout>
+				<fr:property name="size" value="50"/>
+				<fr:property name="style" value="display: inline;"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="address-validated" /></span>
+	
+		<!-- AREA CODE -->
+		<label for="" class="">
+			<bean:message key="label.areaCode" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="areaCode-validated2" name="publicAccessBean" slot="addressBean.areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			<fr:layout>
+				<fr:property name="size" value="8"/>
+				<fr:property name="style" value="display: inline;"/>
+			</fr:layout>
+		</fr:edit>
+		&nbsp;
+		<span class="error0"><fr:message for="areaCode-validated" /></span>
+		<fr:edit id="areaOfAreaCode-validated2" name="publicAccessBean" slot="addressBean.areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			<fr:layout>
+				<fr:property name="size" value="20"/>
+				<fr:property name="style" value="display: inline;"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="areaOfAreaCode-validated" /></span>
+	
+	
+		<!-- COUNTRY -->
+		<label for="" class="">
+			<bean:message key="label.country" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="country-validated2" name="publicAccessBean" slot="addressBean.country" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			<fr:layout name="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+				<fr:property name="format" value="${name}"/>
+				<fr:property name="sortBy" value="name"/>
+				<fr:property name="size" value="20"/>
+				<fr:property name="style" value="display: inline;"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="country-validated" /></span>
+
+	</fieldset>
+
+
+	<div class="ie67margin20px"></div>
+
+	<p>
+		<bean:message key="label.isEmployed.question" bundle="ALUMNI_RESOURCES" />
+		<input id="yes2" type="radio" name="a" onclick="document.getElementById('isEmployed').style.display='block';document.getElementById('hiddenButton').style.display='none';document.getElementById('hackAddress').style.display='block';document.getElementById('questions1').style.display='block';document.getElementById('yes1').checked='checked'"/> Sim
+		<input id="no2" type="radio" name="a" onclick="document.getElementById('hiddenButton').style.display='block';document.getElementById('isEmployed').style.display='none';document.getElementById('hackAddress').style.display='none';document.getElementById('no1').checked='checked'"/> Não
+	</p>
+
+			
+		<p class="dinline">
+		<html:submit>
+			<bean:message key="label.continue" bundle="ALUMNI_RESOURCES" />
+		</html:submit>
+		</p>
+</fr:form>
+</div>
+
+</div>
 
 <!-- END CONTENTS -->
 </div>
+
+<script type="text/javascript">
+	function hugo() { alert("FDP"); }
+</script>

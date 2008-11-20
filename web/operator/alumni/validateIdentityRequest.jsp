@@ -130,17 +130,20 @@
 		<p>
 			<bean:message key="identity.validation.info.message" bundle="MANAGER_RESOURCES"/>
 		</p>
-	
-		<fr:form id="reg_form" action="/alumni.do">
-			<fr:edit id="requestBody" name="requestBody" visible="false" />
-			<input type="hidden" name="method" value="" />
-			<html:submit bundle="MANAGER_RESOURCES" altKey="label.authorize" onclick="this.form.method.value='confirmIdentity';">
-				<bean:message key="label.authorize" bundle="MANAGER_RESOURCES" />
-			</html:submit>
-			<html:submit bundle="MANAGER_RESOURCES" altKey="label.invalidate" onclick="this.form.method.value='refuseIdentity';">
-				<bean:message key="label.invalidate" bundle="MANAGER_RESOURCES" />
-			</html:submit>
-		</fr:form>
+
+		<div class="reg_form">	
+			<fr:form action="/alumni.do">
+				<fr:edit id="requestBody" name="requestBody" visible="false" />
+				<input type="hidden" name="method" value="" />
+				<html:submit bundle="MANAGER_RESOURCES" altKey="label.authorize" onclick="this.form.method.value='confirmIdentity';">
+					<bean:message key="label.authorize" bundle="MANAGER_RESOURCES" />
+				</html:submit>
+				<html:submit bundle="MANAGER_RESOURCES" altKey="label.invalidate" onclick="this.form.method.value='refuseIdentity';">
+					<bean:message key="label.invalidate" bundle="MANAGER_RESOURCES" />
+				</html:submit>
+			</fr:form>
+		</div>
+		
 	</logic:present>
 </logic:present>
 

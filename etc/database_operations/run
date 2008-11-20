@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableAlumni.sql" alterTableAlumni.sql
+

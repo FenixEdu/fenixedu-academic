@@ -231,6 +231,7 @@ class DomainObject {
 	class Alumni extends DomainObject {
 		Boolean registered;
 		UUID urlRequestToken;
+		Boolean isEmployed;
 	}
 
 	class AlumniIdentityCheckRequest extends DomainObject {

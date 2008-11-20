@@ -21,8 +21,15 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
     public ActionForward innerProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("alumniJobs", getAlumniFromLoggedPerson(request).getJobs());
+	request.setAttribute("alumni", getAlumniFromLoggedPerson(request));
 	return mapping.findForward("innerProfessionalInformation");
+    }
+
+    public ActionForward updateIsEmployedPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	RenderUtils.invalidateViewState("alumniEmployment");
+	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareProfessionalInformationCreation(ActionMapping mapping, ActionForm actionForm,
@@ -92,13 +99,13 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
 
-    public ActionForward updateProfessionalInformationError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward updateProfessionalInformationError(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	request.setAttribute("jobUpdateBean", getObjectFromViewState("jobUpdateBean"));
 	return mapping.findForward("editProfessionalInformation");
     }
-    
+
     public ActionForward deleteProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -108,4 +115,5 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
+
 }

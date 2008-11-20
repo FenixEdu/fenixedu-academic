@@ -1,3 +1,9 @@
+	<schema name="alumni.isEmployed" type="net.sourceforge.fenixedu.domain.Alumni" bundle="ALUMNI_RESOURCES">
+		<slot name="isEmployed" layout="radio-postback" key="label.isEmployed.question" bundle="ALUMNI_RESOURCES">
+			<property name="destination" value="updateIsEmployedPostback"/>
+		</slot>
+	</schema>
+
 	<schema name="alumni.search.bean" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
 		<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="40"/>

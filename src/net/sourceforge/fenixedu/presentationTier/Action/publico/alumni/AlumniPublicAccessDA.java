@@ -206,6 +206,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	RenderUtils.invalidateViewState("parentBusinessArea-validated");
 	RenderUtils.invalidateViewState("childBusinessArea-validated");
+	request.setAttribute("professionalInformationPostback", "true");
 	request.setAttribute("publicAccessBean", getObjectFromViewState("publicAccessBean"));
 	return mapping.findForward("alumniPublicAccessInformationInquiry");
     }
@@ -214,22 +215,26 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	    HttpServletResponse response) throws Exception {
 
 	final AlumniPublicAccessBean alumniBean = (AlumniPublicAccessBean) getObjectFromViewState("publicAccessBean");
-	if (alumniBean.getJobBean().getChildBusinessArea() == null) {
-	    RenderUtils.invalidateViewState("parentBusinessArea-validated");
-	    alumniBean.getJobBean().setParentBusinessArea(null);
-	    request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
-	    request.setAttribute("publicAccessBean", alumniBean);
-	    return mapping.findForward("alumniPublicAccessInformationInquiry");
-	}
+	if (Boolean.valueOf(getFromRequest(request, "isEmployed").toString())) {
 
-	if (StringUtils.isEmpty(alumniBean.getJobBean().getPosition())) {
-	    request.setAttribute("position-validated", RESOURCES.getString("label.mandatory.field"));
-	    request.setAttribute("publicAccessBean", alumniBean);
-	    return mapping.findForward("alumniPublicAccessInformationInquiry");
+	    if (alumniBean.getJobBean().getChildBusinessArea() == null) {
+		RenderUtils.invalidateViewState("parentBusinessArea-validated");
+		alumniBean.getJobBean().setParentBusinessArea(null);
+		request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
+		request.setAttribute("publicAccessBean", alumniBean);
+		return mapping.findForward("alumniPublicAccessInformationInquiry");
+	    }
+	    
+	    if (StringUtils.isEmpty(alumniBean.getJobBean().getPosition())) {
+		request.setAttribute("position-validated", RESOURCES.getString("label.mandatory.field"));
+		request.setAttribute("publicAccessBean", alumniBean);
+		return mapping.findForward("alumniPublicAccessInformationInquiry");
+	    }
 	}
 
 	try {
-	    executeService("RegisterAlumniData", new Object[] { alumniBean });
+	    executeService("RegisterAlumniData", new Object[] { alumniBean,
+		    Boolean.valueOf(getFromRequest(request, "isEmployed").toString()) });
 	} catch (FenixServiceException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    return updateAlumniInformationError(mapping, actionForm, request, response);

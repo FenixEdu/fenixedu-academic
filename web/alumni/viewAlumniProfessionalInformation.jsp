@@ -14,11 +14,25 @@
 	<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<logic:empty name="alumniJobs">
+<logic:empty name="alumni" property="jobs">
 	<p>
 		<em><bean:message key="alumni.no.professional.information" bundle="ALUMNI_RESOURCES" />.</em>
 	</p>
 </logic:empty>
+
+<div class="infoop7 dinlineinside">
+	<fr:form id="alumniEmployment" action="/professionalInformation.do?method=updateIsEmployedPostback">
+		<fr:edit id="employed" name="alumni" schema="alumni.isEmployed">
+			<fr:layout name="flow" >
+				<fr:property name="classes" value="inobullet asd2"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+				<fr:property name="labelTerminator" value=""/>
+			</fr:layout>
+			<fr:destination name="updateIsEmployedPostback" path="/professionalInformation.do?method=updateIsEmployedPostback"/>
+		</fr:edit>	
+	</fr:form>
+</div>
+
 
 <ul class="mtop15">
 	<li>
@@ -29,8 +43,8 @@
 </ul>
 
 
-<logic:notEmpty name="alumniJobs">
-	<logic:iterate id="eachJob" indexId="jobIndex" name="alumniJobs">
+<logic:notEmpty name="alumni" property="jobs">
+	<logic:iterate id="eachJob" indexId="jobIndex" name="alumni" property="jobs">
 		<bean:define id="jobID" name="eachJob" property="idInternal" />
 		<fr:view name="eachJob" layout="tabular" schema="alumni.professional.information.job">
 			<fr:layout>
@@ -64,3 +78,4 @@
 		
 	</logic:iterate>
 </logic:notEmpty>
+

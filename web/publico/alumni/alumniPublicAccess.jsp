@@ -47,7 +47,9 @@
 </html:messages>
 
 
-	<fr:form id="reg_form" action="/alumni.do?method=validateFenixAcessData">
+<div class="reg_form">	
+
+	<fr:form action="/alumni.do?method=validateFenixAcessData">
 
 		<fieldset style="display: block;">
 			<legend><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></legend>
@@ -147,6 +149,7 @@
 		</fieldset>
 	
 	</fr:form>
+</div>
 </div>
 
 <h2>Sobre o Projecto Alumni</h2>

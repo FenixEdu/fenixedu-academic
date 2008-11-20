@@ -61,7 +61,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	}
     }
 
-    public void run(final AlumniPublicAccessBean alumniBean) throws FenixServiceException {
+    public void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
 	Person person = alumniBean.getAlumni().getStudent().getPerson();
 	if (person == null) {
 	    throw new FenixServiceException("alumni.partyContact.creation.person.null");
@@ -70,7 +70,10 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	try {
 	    processAlumniPhone(alumniBean, person);
 	    processAlumniAddress(alumniBean, person);
-	    processAlumniJob(alumniBean);
+	    if (isEmployed) {
+		processAlumniJob(alumniBean);
+	    }
+	    alumniBean.getAlumni().setIsEmployed(isEmployed);
 	} catch (DomainException e) {
 	    throw new FenixServiceException(e.getMessage());
 	}
@@ -116,7 +119,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	    }
 	}
     }
-
+    
     private void processAlumniJob(final AlumniPublicAccessBean alumniBean) {
 
 	if (alumniBean.getCurrentJob() == null) {

@@ -52,112 +52,112 @@ display: inline !important;
 </style>
 
 
+		<div class="reg_form">	
 <div class="forminline">
 	<div class="inputinline">
-
-		<fr:form id="reg_form" action="/alumni.do?method=createFormation">
-		
-			<fieldset style="margin-bottom: 1em; display: inline;">
-		
-				<legend><bean:message key="label.formation" bundle="ALUMNI_RESOURCES" /></legend>
-				
-				<bean:define id="typeSchema" name="formationBean" property="alumniFormation.typeSchema" type="java.lang.String" />
-				<bean:define id="institutionSchema" name="formationBean" property="alumniFormation.institutionSchema" type="java.lang.String" />
+			<fr:form action="/alumni.do?method=createFormation">
 			
+				<fieldset style="margin-bottom: 1em; display: inline;">
+			
+					<legend><bean:message key="label.formation" bundle="ALUMNI_RESOURCES" /></legend>
+					
+					<bean:define id="typeSchema" name="formationBean" property="alumniFormation.typeSchema" type="java.lang.String" />
+					<bean:define id="institutionSchema" name="formationBean" property="alumniFormation.institutionSchema" type="java.lang.String" />
+				
+					<fr:edit id="formationBean" name="formationBean" visible="false" />
+			
+					<fr:edit id="alumniFormationDegree" name="formationBean" property="alumniFormation" schema="<%= typeSchema + ".public" %>" >
+						<fr:layout name="tabular-break">
+							<fr:property name="classes" value="thleft thlight"/>
+							<fr:property name="columnClasses" value=",tderror1"/>
+							<fr:property name="labelTerminator" value=""/>
+						</fr:layout>
+						<fr:destination name="updateFormationTypePostback" path="/alumni.do?method=updateAlumniFormationTypePostback"/>
+						<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
+					</fr:edit>
+				
+						<table class="thleft thlight mvert05">
+							<tr>
+								<th><bean:message key="label.formation.education.area.public" bundle="ALUMNI_RESOURCES"/></th>
+							</tr>
+							<tr>
+								<td>
+									<select name="formationEducationArea">
+										<logic:iterate id="alumniEducationArea" name="formationBean" property="alumniFormation.allAreas">
+											
+											<bean:define id="areaIdInternal" name="alumniEducationArea" property="educationArea.idInternal" />
+											<bean:define id="areaCode" name="alumniEducationArea" property="codeIndentationValue" type="java.lang.String" />
+											<bean:define id="areaDescription" name="alumniEducationArea" property="educationArea.description" type="java.lang.String" />
+	
+											<logic:notEmpty name="alumniEducationArea" property="educationArea.childAreas">
+												<optgroup label="<%= areaCode + " " + areaDescription %>" >
+												</optgroup>
+											</logic:notEmpty>
+											
+											<logic:empty name="alumniEducationArea" property="educationArea.childAreas">
+												<logic:equal name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
+													<option value="<%= areaIdInternal %>" selected="selected">
+														<%= areaCode  + " " + areaDescription %>
+													</option>
+												</logic:equal>
+												<logic:notEqual name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
+													<option value="<%= areaIdInternal %>">
+														<%= areaCode + " " + areaDescription %>
+													</option>
+												</logic:notEqual>
+											</logic:empty>
+	
+										</logic:iterate>
+									</select>
+								</td>
+							</tr>
+						</table>
+	
+			
+					<fr:edit id="alumniFormationInstitution" name="formationBean" property="alumniFormation" schema="<%= institutionSchema + ".public" %>" >
+						<fr:layout name="tabular-break">
+							<fr:property name="classes" value="thleft thlight"/>
+							<fr:property name="columnClasses" value=",tderror1"/>
+							<fr:property name="labelTerminator" value=""/>
+						</fr:layout>
+						<fr:destination name="updateInstitutionTypePostback" path="/alumni.do?method=updateAlumniFormationInfoPostback" />
+						<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
+					</fr:edit>
+	
+					<fr:edit id="alumniFormationInfo" name="formationBean" property="alumniFormation" schema="alumni.formation.info.public">
+						<fr:layout name="tabular-break">
+							<fr:property name="classes" value="thleft thlight"/>
+							<fr:property name="columnClasses" value=",tderror1"/>
+							<fr:property name="labelTerminator" value=""/>
+						</fr:layout>
+						<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
+						<fr:destination name="invalid" path="/alumni.do?method=createFormationError" />
+					</fr:edit>
+	
+					
+				</fieldset>	
+			
+				<div>&nbsp;</div>
+			
+				<p class="dinline">
+					<html:submit>
+						<bean:message key="label.create.add.formation" bundle="ALUMNI_RESOURCES" />
+					</html:submit>
+				</p>
+			
+			</fr:form>
+			
+			<fr:form id="alumniFormationForm" action="/alumni.do?method=createFormationNext">
 				<fr:edit id="formationBean" name="formationBean" visible="false" />
-		
-				<fr:edit id="alumniFormationDegree" name="formationBean" property="alumniFormation" schema="<%= typeSchema + ".public" %>" >
-					<fr:layout name="tabular-break">
-						<fr:property name="classes" value="thleft thlight"/>
-						<fr:property name="columnClasses" value=",tderror1"/>
-						<fr:property name="labelTerminator" value=""/>
-					</fr:layout>
-					<fr:destination name="updateFormationTypePostback" path="/alumni.do?method=updateAlumniFormationTypePostback"/>
-					<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
-				</fr:edit>
-			
-					<table class="thleft thlight mvert05">
-						<tr>
-							<th><bean:message key="label.formation.education.area.public" bundle="ALUMNI_RESOURCES"/></th>
-						</tr>
-						<tr>
-							<td>
-								<select name="formationEducationArea">
-									<logic:iterate id="alumniEducationArea" name="formationBean" property="alumniFormation.allAreas">
-										
-										<bean:define id="areaIdInternal" name="alumniEducationArea" property="educationArea.idInternal" />
-										<bean:define id="areaCode" name="alumniEducationArea" property="codeIndentationValue" type="java.lang.String" />
-										<bean:define id="areaDescription" name="alumniEducationArea" property="educationArea.description" type="java.lang.String" />
-
-										<logic:notEmpty name="alumniEducationArea" property="educationArea.childAreas">
-											<optgroup label="<%= areaCode + " " + areaDescription %>" >
-											</optgroup>
-										</logic:notEmpty>
-										
-										<logic:empty name="alumniEducationArea" property="educationArea.childAreas">
-											<logic:equal name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
-												<option value="<%= areaIdInternal %>" selected="selected">
-													<%= areaCode  + " " + areaDescription %>
-												</option>
-											</logic:equal>
-											<logic:notEqual name="formationEducationArea" value="<%= areaIdInternal.toString() %>">
-												<option value="<%= areaIdInternal %>">
-													<%= areaCode + " " + areaDescription %>
-												</option>
-											</logic:notEqual>
-										</logic:empty>
-
-									</logic:iterate>
-								</select>
-							</td>
-						</tr>
-					</table>
-
-		
-				<fr:edit id="alumniFormationInstitution" name="formationBean" property="alumniFormation" schema="<%= institutionSchema + ".public" %>" >
-					<fr:layout name="tabular-break">
-						<fr:property name="classes" value="thleft thlight"/>
-						<fr:property name="columnClasses" value=",tderror1"/>
-						<fr:property name="labelTerminator" value=""/>
-					</fr:layout>
-					<fr:destination name="updateInstitutionTypePostback" path="/alumni.do?method=updateAlumniFormationInfoPostback" />
-					<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
-				</fr:edit>
-
-				<fr:edit id="alumniFormationInfo" name="formationBean" property="alumniFormation" schema="alumni.formation.info.public">
-					<fr:layout name="tabular-break">
-						<fr:property name="classes" value="thleft thlight"/>
-						<fr:property name="columnClasses" value=",tderror1"/>
-						<fr:property name="labelTerminator" value=""/>
-					</fr:layout>
-					<fr:destination name="cancel" path="/alumni.do?method=createFormationError" />
-					<fr:destination name="invalid" path="/alumni.do?method=createFormationError" />
-				</fr:edit>
-
-				
-			</fieldset>	
-		
-			<div>&nbsp;</div>
-		
-			<p class="dinline">
+				<p class="dinline">
 				<html:submit>
-					<bean:message key="label.create.add.formation" bundle="ALUMNI_RESOURCES" />
+					<bean:message key="label.continue" bundle="ALUMNI_RESOURCES" />
 				</html:submit>
-			</p>
-		
-		</fr:form>
-		
-		<fr:form id="alumniFormationForm" action="/alumni.do?method=createFormationNext">
-			<fr:edit id="formationBean" name="formationBean" visible="false" />
-			<p class="dinline">
-			<html:submit>
-				<bean:message key="label.continue" bundle="ALUMNI_RESOURCES" />
-			</html:submit>
-			</p>
-		</fr:form>
-
-	</div> <!-- inputinline -->
-</div> <!-- forminline -->
+				</p>
+			</fr:form>
+		</div> <!-- inputinline -->
+	</div> <!-- forminline -->
+</div> <!-- reg_form -->
 
 
 <logic:present name="formationBean" property="alumni.formations">
