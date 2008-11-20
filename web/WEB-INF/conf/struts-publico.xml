@@ -246,6 +246,7 @@
 
 		<!-- page not found -->
 	   <action path="/notFound" forward="df.notFound"/> 
+	    <action path="/notAuthorized" forward="df.notAuthorized"/>
 	    <!-- page fronting actions -->
 
 	    <action path="/changeLocaleTo"

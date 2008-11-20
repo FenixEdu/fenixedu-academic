@@ -177,6 +177,10 @@
 		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
 		<put name="body" value="/publico/notFound.jsp"/>
 	</definition>
+	<definition name="df.notAuthorized" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/mainNavigation.jsp" />
+		<put name="body" value="/publico/notAuthorized.jsp"/>
+	</definition>
 	<definition name="df.page.showDegreeCurricularPlanSites" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlanExecutionCourseSites.jsp"/>

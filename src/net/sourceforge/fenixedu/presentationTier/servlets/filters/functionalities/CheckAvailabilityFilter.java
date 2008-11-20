@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 public class CheckAvailabilityFilter implements Filter {
 
     private static final String errorPage = "/publico/notFound.do";
-
+    private static final String unathorizedPage = "/publico/notAuthorized.do";
     /**
      * Initializes the filter. There are two init parameters that are used by
      * this filter.
@@ -81,7 +81,7 @@ public class CheckAvailabilityFilter implements Filter {
 	    if (functionalityContext.getLastContentInPath(Site.class) == null
 		    || !((content instanceof Section) || (content instanceof Item))) {
 
-		showUnavailablePage(content, httpServletRequest, httpServletResponse);
+		showUnathorizedPage(content, httpServletRequest, httpServletResponse);
 		return;
 	    }
 	}
@@ -105,10 +105,14 @@ public class CheckAvailabilityFilter implements Filter {
      */
     public static void showUnavailablePage(final Content content, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException, ServletException {
-	final String errorPageToDispatch = errorPage;
-	dispatch(request, response, errorPageToDispatch);
+	dispatch(request, response, errorPage);
     }
 
+    public static void showUnathorizedPage(final Content content, final HttpServletRequest request,
+	    final HttpServletResponse response) throws IOException, ServletException {
+	dispatch(request, response, unathorizedPage);
+    }
+    
     protected static void dispatch(final HttpServletRequest request, final HttpServletResponse response, final String path)
 	    throws IOException, ServletException {
 	final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
