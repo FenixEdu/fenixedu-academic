@@ -366,8 +366,10 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	    public boolean evaluate(Object arg0) {
 		Announcement announcement = (Announcement) arg0;
 		DateTime announcementDate = announcement.getReferedSubjectBegin();
+		DateTime endDate = announcement.getReferedSubjectEnd();
 		return announcement.isActive() && announcement.getVisible() && announcementDate != null
-			&& announcementDate.toYearMonthDay().isBefore(date);
+			&& announcementDate.toYearMonthDay().isBefore(date)
+			&& (endDate == null || endDate.toYearMonthDay().isBefore(date));
 	    }
 	});
     }
