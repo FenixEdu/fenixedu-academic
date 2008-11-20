@@ -7,10 +7,9 @@
 
 <style>
 .thtoptd300 { vertical-align: top; width: 300px;}
-.biggerTextarea textarea {
-width: 400px;
-height: 300px;
-}
+.biggerTextarea textarea { width: 550px; height: 200px; }
+.tablenoborder table tr td { border: none; }
+.tablenoborder table { margin: 0; }
 </style>
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
@@ -73,16 +72,26 @@ height: 300px;
 	<div class="relative">
 		<fr:form action="/teachingInquiry.do?method=submitInquiries3rdPage">
 
-			<fr:edit name="teachingInquiry" property="thirdPageNinthBlock" >
-				<fr:layout name="tabular-editable" >
-					<fr:property name="columnClasses" value="thtoptd300,biggerTextarea,,,,,,"/>
-				</fr:layout>		
-			</fr:edit>				
+			<p class="mtop15">
+				<strong>
+					<bean:message key="label.teachingInquiries.negativeResultsResolutionAndImproovementPlanOfAction" bundle="INQUIRIES_RESOURCES"/>
+				</strong>
+			</p>
+			
+			<div class="tablenoborder">
+				<fr:edit name="teachingInquiry" property="thirdPageNinthBlock" >
+					<fr:layout name="tabular-editable" >
+						<fr:property name="columnClasses" value="thtoptd300 dnone,biggerTextarea,,,,,,"/>
+					</fr:layout>		
+				</fr:edit>
+			</div>
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		
 			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>
+		
+		<br/>
 		
 		<fr:form action="/teachingInquiry.do?method=showInquiries2ndPage">
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>

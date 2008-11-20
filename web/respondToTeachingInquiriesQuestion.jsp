@@ -20,23 +20,29 @@
 			</div>
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
-				<div class="infoop2 mtop1">
+				<div class="mtop1">
 					<bean:write name="executionPeriod" property="teachingInquiryResponsePeriod.introduction" filter="false"/>
 				</div>
 				
-				<p style="margin-top: 1.75em;"><strong class="pub-mark"><bean:message key="label.teachingInquiries.coursesToAnswer" bundle="INQUIRIES_RESOURCES"/>:</strong></p>
 
-				<c:forEach items="${executionCourses}" var="executionCourse">
-					<p style="margin: 0 0 0.5em 0;">
-						<bean:write name="executionCourse" property="executionPeriod.semester" />
-						<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
-						<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
-						<html:link page="/teacher/teachingInquiry.do?method=showInquiriesPrePage&contentContextPath_PATH=/docencia/docencia" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-							<bean:write name="executionCourse" property="nome"/>
-							»
-						</html:link>
-					</p>
-				</c:forEach>
+				<div class="infoop2">
+					<p style="margin: 0.5em 0 0.75em 0;"><strong><bean:message key="label.teachingInquiries.coursesToAnswer" bundle="INQUIRIES_RESOURCES"/>:</strong></p>
+	
+					<c:forEach items="${executionCourses}" var="executionCourse">
+						<p style="margin: 0 0 0.5em 0;">
+							<bean:write name="executionCourse" property="executionPeriod.semester" />
+							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
+							<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
+							<html:link page="/teacher/teachingInquiry.do?method=showInquiriesPrePage&contentContextPath_PATH=/docencia/docencia" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+								<strong>
+									<bean:write name="executionCourse" property="nome"/>
+									»
+								</strong>
+							</html:link>
+						</p>
+					</c:forEach>
+				</div>
+
 				
 				<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
 					<html:hidden property="method" value="respondLater"/>

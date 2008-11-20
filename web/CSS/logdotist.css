@@ -135,3 +135,12 @@ font-size: 1.2em;
 padding: 0 0 0 20px;
 margin: 1em 0;
 }
+
+.infoop2 {
+background-color: #faf5de; /*faf5de,f2e5a6 or f5fade,e5f2a6 */
+vertical-align: middle;
+padding: 0.5em 0;
+border-bottom: 1px solid #f2e5a6;
+}
+
+.infoop2 p { margin: 0.25em 0; }
