@@ -52,7 +52,7 @@ public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.fil
 	final FilterFunctionalityContext filterFunctionalityContext = getContextAttibute(httpServletRequest);
 	if (filterFunctionalityContext != null) {
 	    final Container container = filterFunctionalityContext.getSelectedTopLevelContainer();
-	    if (container != null && container.getAvailabilityPolicy() == null) {
+	    if (container != null && container.isPublic()) {
 		return false;
 	    }
 	}
