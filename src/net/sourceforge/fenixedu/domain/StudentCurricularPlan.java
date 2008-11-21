@@ -222,8 +222,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	checkParameters(registration, degreeCurricularPlan, startDate);
 
-	setRegistration(registration);
 	setDegreeCurricularPlan(degreeCurricularPlan);
+	setRegistration(registration);
 	setStartDateYearMonthDay(startDate);
     }
 
