@@ -121,7 +121,21 @@
 
 
 <schema name="degreeAdministrativeOffice.markSheet.view" extends="markSheet.view" type="net.sourceforge.fenixedu.domain.MarkSheet" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="creationDateDateTime" key="label.creationDate">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
+	</slot>
+	<slot name="submittedByTeacher"/>
+	<slot name="confirmationDateDateTime" key="label.confirmationDate">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
+	</slot>
 	<slot name="archiveInformation" key="label.markSheet.archive"/>
+	<slot name="reason" key="label.markSheet.reason"/>
+	<slot name="creationEmployee" layout="null-as-label" key="label.employee" >
+		<property name="label" value=" - "/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="presentEmployee" />
+	</slot>
+	<slot name="printed"/>
 </schema>
 
 <schema name="markSheet.editArchiveInformation" type="net.sourceforge.fenixedu.domain.MarkSheet" bundle="ACADEMIC_OFFICE_RESOURCES">
