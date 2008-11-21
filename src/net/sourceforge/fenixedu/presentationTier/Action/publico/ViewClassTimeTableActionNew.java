@@ -102,8 +102,10 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 	} catch (FenixServiceException e1) {
 	    throw new FenixActionException(e1);
 	}
+
 	request.setAttribute("siteView", siteView);
 	request.setAttribute("className", className);
+	request.setAttribute("schoolClass", schoolClass);
 	return mapping.findForward("Sucess");
 
     }

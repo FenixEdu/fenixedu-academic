@@ -3,6 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType"%>
@@ -29,7 +30,7 @@
     <html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  %>"> <bean:write name="infoDegreeCurricularPlan" property="name" /> </html:link> 
     &nbsp;&gt;&nbsp; 
     <html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&amp;nextPage=classSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" +  pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>"> <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.classes" /> </html:link> 
-    &nbsp;&gt;&nbsp;<bean:write name="className" />
+    &nbsp;&gt;&nbsp;<fr:view name="schoolClass" property="nome"/>
 </div>
 
 

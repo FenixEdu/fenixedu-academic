@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
 
@@ -68,8 +69,10 @@ public class TimeTableRenderer {
 	}
 	strBuffer.append(">");
 
-	final String className = (String) pageContext.getRequest().getAttribute("className");
-	if (className != null) {
+	final SchoolClass schoolClass = (SchoolClass) pageContext.getRequest().getAttribute("schoolClass");
+	
+	if (schoolClass != null) {
+	    final String className = schoolClass.getNome();
 	    strBuffer.append("<caption>");
 	    final String captionPrefix = getMessageResource(pageContext, "public.degree.information.title.class.timetable",
 		    locale);
