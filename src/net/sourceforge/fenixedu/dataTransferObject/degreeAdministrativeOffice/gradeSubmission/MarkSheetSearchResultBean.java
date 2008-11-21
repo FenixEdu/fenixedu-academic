@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.MarkSheet;
@@ -26,21 +25,7 @@ public class MarkSheetSearchResultBean {
     }
 
     public Collection<MarkSheet> getMarkSheetsSortedByEvaluationDate() {
-	Collections.sort(getMarkSheets(), new Comparator<MarkSheet>() {
-	    public int compare(MarkSheet o1, MarkSheet o2) {
-		if (o1.getEvaluationDateDateTime() == null && o2.getEvaluationDateDateTime() == null) {
-		    return 0;
-		}
-		if (o1.getEvaluationDateDateTime() == null) {
-		    return -1;
-		}
-		if (o2.getEvaluationDateDateTime() == null) {
-		    return 1;
-		}
-
-		return o1.getEvaluationDateDateTime().compareTo(o2.getEvaluationDateDateTime());
-	    }
-	});
+	Collections.sort(getMarkSheets(), MarkSheet.COMPARATOR_BY_EVALUATION_DATE_AND_CREATION_DATE_AND_ID);
 	return getMarkSheets();
     }
 
