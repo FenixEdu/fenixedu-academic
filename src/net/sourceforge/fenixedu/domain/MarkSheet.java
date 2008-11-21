@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
 
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -27,6 +29,59 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MarkSheet extends MarkSheet_Base {
+
+    static final private Comparator<MarkSheet> COMPARATOR_BY_EVALUATION_DATE = new Comparator<MarkSheet>() {
+	public int compare(MarkSheet o1, MarkSheet o2) {
+	    if (o1.getEvaluationDateDateTime() == null && o2.getEvaluationDateDateTime() == null) {
+		return 0;
+	    }
+	    if (o1.getEvaluationDateDateTime() == null) {
+		return -1;
+	    }
+	    if (o2.getEvaluationDateDateTime() == null) {
+		return 1;
+	    }
+
+	    return o1.getEvaluationDateDateTime().compareTo(o2.getEvaluationDateDateTime());
+	}
+    };
+
+    static final private Comparator<MarkSheet> COMPARATOR_BY_CREATION_DATE = new Comparator<MarkSheet>() {
+	public int compare(MarkSheet o1, MarkSheet o2) {
+	    if (o1.getCreationDateDateTime() == null && o2.getCreationDateDateTime() == null) {
+		return 0;
+	    }
+	    if (o1.getCreationDateDateTime() == null) {
+		return -1;
+	    }
+	    if (o2.getCreationDateDateTime() == null) {
+		return 1;
+	    }
+
+	    return o1.getCreationDateDateTime().compareTo(o2.getCreationDateDateTime());
+	}
+    };
+
+    static final public Comparator<MarkSheet> COMPARATOR_BY_EVALUATION_DATE_AND_ID = new Comparator<MarkSheet>() {
+	final public int compare(MarkSheet o1, MarkSheet o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
+	    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
+
+    static final public Comparator<MarkSheet> COMPARATOR_BY_EVALUATION_DATE_AND_CREATION_DATE_AND_ID = new Comparator<MarkSheet>() {
+	final public int compare(MarkSheet o1, MarkSheet o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_EVALUATION_DATE);
+	    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_CREATION_DATE);
+	    comparatorChain.addComparator(MarkSheet.COMPARATOR_BY_ID);
+
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
 
     protected MarkSheet() {
 	super();
