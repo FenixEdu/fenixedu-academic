@@ -38,7 +38,7 @@ public class ExecutionDegreesWithDissertationByExecutionYearProvider implements 
 	final ExecutionYear executionYear = hasExecutionYear.getExecutionYear();
 	if (executionYear != null) {
 	    for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-		if (hasDissertation(executionDegree)) {
+		if (!executionDegree.getDegreeCurricularPlan().isEmpty() && hasDissertation(executionDegree)) {
 		    executionDegrees.add(executionDegree);
 		}
 	    }
