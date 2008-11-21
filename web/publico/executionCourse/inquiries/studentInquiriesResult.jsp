@@ -32,7 +32,7 @@
 	</logic:iterate>
 	
 	<logic:empty name="studentInquiriesCourseResults">
-		Msg (UC's sem representatividade) 
+		<bean:message key="message.teachingInquiries.noResults.reasons" bundle="INQUIRIES_RESOURCES"/>
 	</logic:empty>
 	
 </logic:present>

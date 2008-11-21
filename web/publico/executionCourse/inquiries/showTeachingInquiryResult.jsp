@@ -127,7 +127,7 @@ border: none;
 
 <table class="tstyle1 thlight thleft td50px thbgnone">
 	<tr class="top">
-		<th>Respostas válidas ao par Docente / tipo de aula</th>
+		<th>Respostas ao par Docente / tipo de aula</th>
 
 		<td><c:out value="${inquiryResult.numberOfAnswers}" /></td>
 	</tr>
@@ -136,8 +136,8 @@ border: none;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Responsáveis pela gestão académica <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade académica IST <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Responsáveis pela gestão académica <a href="#" class="help">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade académica IST <a href="#" class="help">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
 		<th>Representatividade para divulgação</th>
