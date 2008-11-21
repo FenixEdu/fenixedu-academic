@@ -1711,7 +1711,7 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 10;
+    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 20; // 10;
 
     private void checkIfReachedAttendsLimit() {
 	final IUserView userView = AccessControl.getUserView();
