@@ -76,7 +76,8 @@
         <action path="/naoExistente" forward="/error.jsp" />
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
         <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"/>
-        
+        <action path="/userDoesNotExistOrIsInactive" forward="/userDoesNotExistOrIsInactive.jsp"/>
+
 	    <action path="/changeLocaleTo"
 	    		name="changeLocaleForm"
 	    		validate="false"
@@ -118,7 +119,7 @@
         <action path="/redirect"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
             <forward name="show-redirect-page" path="/redirect.jsp"/>
-        </action>
+        </action>        
        <action path="/loginExpired"
 				type="net.sourceforge.fenixedu.presentationTier.Action.AuthenticationExpiredAction" 
             	name="authenticationExpiredForm"
