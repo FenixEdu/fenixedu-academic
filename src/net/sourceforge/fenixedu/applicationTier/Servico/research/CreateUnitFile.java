@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -20,7 +21,8 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateUnitFile extends FenixService {
 
-    public void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
+    @Service
+    public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
 	    Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
 	InputStream is = null;
@@ -39,7 +41,7 @@ public class CreateUnitFile extends FenixService {
 		!isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
     }
 
-    private VirtualPath getVirtualPath(Unit unit) {
+    private static VirtualPath getVirtualPath(Unit unit) {
 
 	final VirtualPath filePath = new VirtualPath();
 
@@ -49,7 +51,7 @@ public class CreateUnitFile extends FenixService {
 	return filePath;
     }
 
-    private boolean isPublic(Group permittedGroup) {
+    private static boolean isPublic(Group permittedGroup) {
 	if (permittedGroup == null) {
 	    return true;
 	}

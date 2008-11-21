@@ -8,13 +8,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkProposalSubmisionPeriod extends FenixService {
 
-    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
+    @Service
+    public static InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
 
 	InfoScheduleing infoScheduleing = null;
 

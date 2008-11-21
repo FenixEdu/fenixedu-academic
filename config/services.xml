@@ -1871,13 +1871,6 @@
     </service>
 
     <service>
-        <name>CreateUnitFile</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>CreateUnitSite</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite</implementationClass>
         <isTransactional>true</isTransactional>
@@ -3066,13 +3059,6 @@
     </service>
 
     <service>
-        <name>DeleteUnitFile</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>DeleteUnitSiteBanner</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.DeleteUnitSiteBanner</implementationClass>
         <isTransactional>true</isTransactional>
@@ -4034,13 +4020,6 @@
     <service>
         <name>EditUnitAnnouncementBoard</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements.EditUnitAnnouncementBoard</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>EditUnitFile</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
@@ -6140,26 +6119,12 @@
     </service>
 
     <service>
-        <name>ReadFinalDegreeWorkProposalHeadersByTeacher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ReadCoursesInformationAuthorization"/>
         </filterChains>
-    </service>
-
-    <service>
-        <name>ReadFinalDegreeWorkProposalSubmisionPeriod</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
     </service>
 
     <service>
@@ -8295,13 +8260,6 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
-    </service>
-
-    <service>
-        <name>TeacherAttributeFinalDegreeWork</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
     </service>
 
     <service>

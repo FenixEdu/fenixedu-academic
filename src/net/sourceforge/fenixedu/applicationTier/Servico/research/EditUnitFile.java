@@ -7,10 +7,12 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditUnitFile extends FenixService {
 
-    public void run(UnitFile file, String name, String description, String tags, IGroup group) {
+    @Service
+    public static void run(UnitFile file, String name, String description, String tags, IGroup group) {
 	file.setDisplayName(name);
 	file.setDescription(description);
 	file.setPermittedGroup(!isPublic((Group) group) ? new GroupUnion(group, new PersonGroup(file.getUploader()))
@@ -18,7 +20,7 @@ public class EditUnitFile extends FenixService {
 	file.setUnitFileTags(tags);
     }
 
-    private boolean isPublic(Group permittedGroup) {
+    private static boolean isPublic(Group permittedGroup) {
 	if (permittedGroup == null) {
 	    return true;
 	}

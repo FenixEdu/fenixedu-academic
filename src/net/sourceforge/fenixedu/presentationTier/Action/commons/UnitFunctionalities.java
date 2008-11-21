@@ -9,6 +9,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.CreateUnitFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.DeleteUnitFile;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.EditUnitFile;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
@@ -133,14 +136,14 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	if (!bean.getUnit().isCurrentUserAllowedToUploadFiles()) {
 	    return manageFiles(mapping, form, request, response);
 	}
-	
+
 	InputStream formFileInputStream = null;
 	File file = null;
 	try {
 	    formFileInputStream = bean.getUploadFile();
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
-	    executeService("CreateUnitFile", new Object[] { file, bean.getFileName(), bean.getName(), bean.getDescription(),
-		    bean.getTags(), bean.getPermittedGroup(), getUnit(request), getLoggedPerson(request) });
+	    CreateUnitFile.run(file, bean.getFileName(), bean.getName(), bean.getDescription(), bean.getTags(), bean
+		    .getPermittedGroup(), getUnit(request), getLoggedPerson(request));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	} finally {
@@ -154,7 +157,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 
 	UnitFile file = getUnitFile(request);
 	if (file != null && file.getUnit().isCurrentUserAllowedToUploadFiles()) {
-	    executeService("DeleteUnitFile", new Object[] { file });
+	    DeleteUnitFile.run(file);
 	}
 	return manageFiles(mapping, form, request, response);
     }
@@ -223,8 +226,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
 	IViewState viewState = RenderUtils.getViewState("editFile");
 	if (viewState != null) {
 	    UnitFileBean bean = (UnitFileBean) viewState.getMetaObject().getObject();
-	    executeService("EditUnitFile", new Object[] { bean.getFile(), bean.getName(), bean.getDescription(), bean.getTags(),
-		    bean.getGroup() });
+	    EditUnitFile.run(bean.getFile(), bean.getName(), bean.getDescription(), bean.getTags(), bean.getGroup());
 	}
 	return manageFiles(mapping, form, request, response);
     }

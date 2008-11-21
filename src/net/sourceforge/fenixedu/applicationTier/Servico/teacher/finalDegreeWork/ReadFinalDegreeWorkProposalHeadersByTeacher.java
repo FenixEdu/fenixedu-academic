@@ -13,13 +13,15 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkProposalHeadersByTeacher extends FenixService {
 
-    public List run(final Person person) throws FenixServiceException {
+    @Service
+    public static List run(final Person person) throws FenixServiceException {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 	for (final Proposal proposal : person.findFinalDegreeWorkProposals()) {
 	    final Scheduleing scheduleing = proposal.getScheduleing();

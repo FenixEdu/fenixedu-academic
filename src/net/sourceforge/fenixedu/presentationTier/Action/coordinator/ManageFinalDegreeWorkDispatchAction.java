@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AttributeFinalDegreeWork;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteFinalDegreeWorkProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposal;
 import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteGroupProposalAttribution;
@@ -103,7 +104,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	final Integer degreeCurricularPlanOID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
 
-	final List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ReadExecutionDegreesByDegreeCurricularPlan
+	final List<InfoExecutionDegree> infoExecutionDegrees = ReadExecutionDegreesByDegreeCurricularPlan
 		.run(degreeCurricularPlanOID);
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
@@ -194,11 +195,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		executionDegreeOID);
 	request.setAttribute("executionDegree", executionDegree);
 
-	Object args[] = { executionDegreeOID };
 	List finalDegreeWorkProposalHeaders = null;
 	try {
 	    finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
-		    "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", args);
+		    "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", new Object[] { executionDegreeOID });
 
 	    if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
 		Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
@@ -219,8 +219,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	}
 
 	try {
-	    InfoScheduleing infoScheduleing = (InfoScheduleing) ServiceUtils.executeService(
-		    "ReadFinalDegreeWorkProposalSubmisionPeriod", args);
+	    InfoScheduleing infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(executionDegreeOID);
 
 	    if (infoScheduleing != null) {
 		SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");

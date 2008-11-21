@@ -16,12 +16,15 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsername;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -230,9 +233,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	Collections.sort(executionDegreeList, name);
 	request.setAttribute("executionDegreeList", executionDegreeList);
 
-	final Object args[] = { userView.getPerson() };
-	final List<FinalDegreeWorkProposalHeader> finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
-		"ReadFinalDegreeWorkProposalHeadersByTeacher", args);
+	final List<FinalDegreeWorkProposalHeader> finalDegreeWorkProposalHeaders = ReadFinalDegreeWorkProposalHeadersByTeacher
+		.run(userView.getPerson());
 
 	final BeanComparator title = new BeanComparator("title");
 	Collections.sort(finalDegreeWorkProposalHeaders, title);
@@ -274,8 +276,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	InfoScheduleing infoScheduleing = null;
 	try {
-	    Object[] args = { Integer.valueOf(degreeId) };
-	    infoScheduleing = (InfoScheduleing) ServiceUtils.executeService("ReadFinalDegreeWorkProposalSubmisionPeriod", args);
+
+	    infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(Integer.valueOf(degreeId));
 	    if (infoScheduleing == null
 		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
 		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
@@ -597,8 +599,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 
 	if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
-	    Object args[] = { Integer.valueOf(selectedGroupProposalOID) };
-	    ServiceUtils.executeService("TeacherAttributeFinalDegreeWork", args);
+
+	    TeacherAttributeFinalDegreeWork.run(Integer.valueOf(selectedGroupProposalOID));
 	}
 
 	return mapping.findForward("sucess");

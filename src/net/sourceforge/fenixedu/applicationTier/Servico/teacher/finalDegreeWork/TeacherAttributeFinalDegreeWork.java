@@ -9,13 +9,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
 public class TeacherAttributeFinalDegreeWork extends FenixService {
 
-    public Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
+    @Service
+    public static Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
 	final GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
 	if (groupProposal != null) {
@@ -45,7 +47,7 @@ public class TeacherAttributeFinalDegreeWork extends FenixService {
 	return Boolean.TRUE;
     }
 
-    public class GroupAlreadyAttributed extends FenixServiceException {
+    public static class GroupAlreadyAttributed extends FenixServiceException {
 
 	public GroupAlreadyAttributed() {
 	    super();
