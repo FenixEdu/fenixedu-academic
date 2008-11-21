@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.util.workflow;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public class StateBean {
+public class StateBean implements Serializable {
 
     private String nextState;
 
