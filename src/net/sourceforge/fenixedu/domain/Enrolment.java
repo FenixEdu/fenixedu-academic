@@ -1361,7 +1361,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     /**
      * 
      * After create new Enrolment, must delete OptionalEnrolment (to delete
-     * OptionalEnrolment remove: ProgramCertificateRequests, CourseLoadRequests,
+     * OptionalEnrolment disconnect at least: ProgramCertificateRequests, CourseLoadRequests,
      * ExamDateCertificateRequests)
      * 
      * @param optionalEnrolment
