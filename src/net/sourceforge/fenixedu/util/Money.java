@@ -145,4 +145,8 @@ public class Money implements Comparable<Money>, Serializable {
 	return new Money(this.amount.divide(CONVERSION_RATE_ESCUDOS_TO_EURO, 2, RoundingMode.HALF_UP));
     }
 
+    static public Money min(final Money value1, final Money value2) {
+	return value1.lessThan(value2) ? value1 : value2;
+    }
+
 }
