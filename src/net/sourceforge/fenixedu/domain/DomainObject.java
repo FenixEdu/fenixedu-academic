@@ -8,6 +8,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -82,5 +83,17 @@ public abstract class DomainObject extends DomainObject_Base {
      */
     public MetaDomainObject getMeta() {
 	return MetaDomainObject.getMeta(getClass());
+    }
+    
+    protected void check(final Object obj, final String message, final String ...args) {
+	if (obj == null) {
+	    throw new DomainException(message, args);
+	}
+    }
+    
+    protected void check(final String obj, final String message, final String ...args) {
+	if (obj == null || obj.isEmpty()) {
+	    throw new DomainException(message, args);
+	}
     }
 }
