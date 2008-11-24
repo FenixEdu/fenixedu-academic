@@ -185,7 +185,8 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	Unit unit = assiduousness.getLastMailingUnitInDate(beginDate, endDate);
 	employeeWorkSheet.setUnit(unit);
 	if (unit != null) {
-	    System.out.println("Unit: " + unit.getIdInternal() + " " + unit.getName() + " " + unit.getCostCenterCode());
+	    // System.out.println("Unit: " + unit.getIdInternal() + " " +
+	    // unit.getName() + " " + unit.getCostCenterCode());
 	    employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));
 	} else {
 	    employeeWorkSheet.setUnitCode("");
