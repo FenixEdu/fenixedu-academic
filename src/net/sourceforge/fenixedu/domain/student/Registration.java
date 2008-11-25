@@ -3313,6 +3313,7 @@ public class Registration extends Registration_Base {
 	super.setFinalAverage(null);
 	super.setConclusionDate(null);
 	super.setConclusionProcessResponsible(null);
+	super.setConclusionProcessNotes(null);
     }
 
     public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
