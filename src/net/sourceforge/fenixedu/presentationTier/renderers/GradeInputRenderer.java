@@ -121,10 +121,6 @@ public class GradeInputRenderer extends InputRenderer {
 	}
 
 	@Override
-	public void setChainValidator(MetaSlot slot) {
-	}
-
-	@Override
 	public void addValidator(HtmlValidator htmlValidator) {
 	}
 
