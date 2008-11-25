@@ -42,11 +42,6 @@ public class ConcludedState extends ConcludedState_Base {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	}
 
-	if (!getRegistration().isBolonha()) {
-	    getRegistration().removeConcludedInformation();
-	} else {
-	    getRegistration().getLastStudentCurricularPlan().getLastOrderedCycleCurriculumGroup().removeConcludedInformation();
-	}
 	super.delete();
     }
 
