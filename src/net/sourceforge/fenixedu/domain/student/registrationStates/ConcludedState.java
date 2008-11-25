@@ -43,8 +43,7 @@ public class ConcludedState extends ConcludedState_Base {
 	}
 
 	if (!getRegistration().isBolonha()) {
-	    getRegistration().setFinalAverage(null);
-	    getRegistration().setConclusionDate(null);
+	    getRegistration().removeConcludedInformation();
 	} else {
 	    getRegistration().getLastStudentCurricularPlan().getLastOrderedCycleCurriculumGroup().removeConcludedInformation();
 	}
