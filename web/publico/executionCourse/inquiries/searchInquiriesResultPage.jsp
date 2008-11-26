@@ -78,7 +78,7 @@ font-size: 11px;
 
 <c:if test="${not empty executionCourse}">
 	<br/>
-	<bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" /></bean:define>
+	<bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/resultados-quc</bean:define>
 	<p id="button_results"><span>
 		<!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina de Resultados">Ir para p&aacute;gina de Resultados</a>	
 	</span></p>
