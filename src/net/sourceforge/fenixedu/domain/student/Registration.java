@@ -1107,6 +1107,10 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public ExecutionYear getLastApprovementExecutionYear() {
+	return getLastStudentCurricularPlan().getLastApprovementExecutionYear();
+    }
+
     final public Collection<ExecutionSemester> getEnrolmentsExecutionPeriods() {
 	final Collection<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 
