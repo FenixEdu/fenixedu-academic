@@ -64,6 +64,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	    return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getFinalAverage() : getRegistration().getFinalAverage();
 	}
 
+	return calculateFinalAverage();
+    }
+
+    public Integer calculateFinalAverage() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration()
 		.calculateFinalAverage();
     }
@@ -78,8 +82,21 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 		    .getConclusionDate();
 	}
 
+	return calculateConclusionDate();
+    }
+
+    public YearMonthDay calculateConclusionDate() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration()
 		.calculateConclusionDate();
+    }
+
+    public ExecutionYear getIngressionYear() {
+	return getRegistration().getIngressionYear();
+    }
+
+    public ExecutionYear getConclusionYear() {
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getLastApprovementExecutionYear() : getRegistration()
+		.getLastApprovementExecutionYear();
     }
 
     public boolean hasDissertationThesis() {
