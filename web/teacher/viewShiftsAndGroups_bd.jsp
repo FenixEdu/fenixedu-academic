@@ -27,7 +27,7 @@
 	<logic:present name="noShifts">
 
 		<h2><bean:message key="label.groupPropertiesManagement"/></h2>
-
+		
 		<div class="infoop2">
 			<bean:message key="label.teacher.emptyShiftsAndGroups.description" />
 		</div>
@@ -160,7 +160,7 @@
 		</logic:greaterThan>
 		
 		<p class="mtop15"><b><bean:message key="label.groupPropertiesManagement"/></b></p>
-		
+
 		<p class="mbottom05">		
 			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.editGroupProperties"/>

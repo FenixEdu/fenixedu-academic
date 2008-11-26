@@ -42,8 +42,16 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 	final Project project = getProject(request);
 	final List<ProjectSubmission> projectSubmissions = new ArrayList<ProjectSubmission>(project
 		.getLastProjectSubmissionForEachStudentGroup());
+
+	final List<ProjectSubmission> deletedGroupsProjectSubmissions = new ArrayList<ProjectSubmission>(project
+		.getLastProjectSubmissionForEachDeletedStudentGroup());
+
 	Collections.sort(projectSubmissions, ProjectSubmission.COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE);
+	Collections.sort(deletedGroupsProjectSubmissions,
+		ProjectSubmission.COMPARATOR_BY_GROUP_NUMBER_AND_MOST_RECENT_SUBMISSION_DATE);
+
 	setRequestParameters(request, project, projectSubmissions, null);
+	request.setAttribute("deletedStudentGroupProjectSubmissions", deletedGroupsProjectSubmissions);
 
 	return mapping.findForward("viewLastProjectSubmissionForEachGroup");
 

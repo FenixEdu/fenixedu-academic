@@ -7,7 +7,7 @@
 <%@ page import="java.util.Map" %>
 
 <logic:present name="infoSiteStudentGroup">
-
+z
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
 	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>
@@ -23,7 +23,7 @@
 		<html:link page="<%="/viewShiftsAndGroups.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
    		<bean:message key="link.backToShiftsAndGroups"/></html:link> - <bean:message key="link.backToShiftsAndGroups.description"/>
 		</p>
-		
+
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 
 	<div class="infoop2">
@@ -132,14 +132,14 @@
 </p>
 
 
-<table class="tstyle4" width="70%" cellpadding="0" border="0">
+<table class="tstyle4">
 	<tbody>   
 	<tr>
-		<th width="15%"><bean:message key="label.numberWord" />
+		<th><bean:message key="label.numberWord" />
 		</th>
-		<th width="60%"><bean:message key="label.nameWord" />
+		<th><bean:message key="label.nameWord" />
 		</th>
-		<th width="25%"><bean:message key="label.emailWord" />
+		<th><bean:message key="label.emailWord" />
 		</th>
 	</tr>
 	
@@ -186,8 +186,6 @@
 	</logic:iterate>
 	</tbody>
 </table>
-
-<br/>
 
 </logic:notEmpty>
 

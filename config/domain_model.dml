@@ -1178,6 +1178,7 @@ class DomainObject {
 	
 	class StudentGroup extends DomainObject {
 		Integer groupNumber;
+		Boolean valid;
 	}
 
 	class Summary extends DomainObject {
@@ -5612,7 +5613,6 @@ class residence.ResidencePriceTable extends DomainObject {
 class residence.ResidenceMonth extends DomainObject {
 	Month month;
 }
-
 class internship.InternshipCandidacy extends DomainObject {
     Integer candidacyCode;
     DateTime candidacyDate;

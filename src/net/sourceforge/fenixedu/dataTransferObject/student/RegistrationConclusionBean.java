@@ -95,8 +95,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public ExecutionYear getConclusionYear() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getLastApprovementExecutionYear() : getRegistration()
-		.getLastApprovementExecutionYear();
+	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getLastApprovementExecutionYear() : getRegistration().getLastApprovementExecutionYear();
     }
 
     public boolean hasDissertationThesis() {

@@ -119,7 +119,7 @@ public class Project extends Project_Base {
     }
 
     public boolean canAddNewSubmissionWithoutExceedLimit(StudentGroup studentGroup) {
-	return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep();
+	return (countProjectSubmissionsForStudentGroup(studentGroup) + 1) <= getMaxSubmissionsToKeep() && !(studentGroup.wasDeleted());
     }
 
     public int countProjectSubmissionsForStudentGroup(StudentGroup studentGroup) {
@@ -185,6 +185,34 @@ public class Project extends Project_Base {
 
 	for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
 	    final StudentGroup studentGroup = projectSubmission.getStudentGroup();
+	    
+	    if (studentGroup.wasDeleted())
+	    	{
+			continue;
+	    	}
+	    final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
+
+	    if (lastProjectSubmission == null) {
+		lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
+	    } else if (projectSubmission.getSubmissionDateTime().compareTo(lastProjectSubmission.getSubmissionDateTime()) > 0) {
+		lastProjectSubmissionByStudentGroup.put(studentGroup, projectSubmission);
+	    }
+	}
+
+	return lastProjectSubmissionByStudentGroup.values();
+    }
+    
+    public Collection<ProjectSubmission> getLastProjectSubmissionForEachDeletedStudentGroup() {
+	final Map<StudentGroup, ProjectSubmission> lastProjectSubmissionByStudentGroup = new HashMap<StudentGroup, ProjectSubmission>();
+
+	for (final ProjectSubmission projectSubmission : getProjectSubmissions()) {
+	    final StudentGroup studentGroup = projectSubmission.getStudentGroup();
+	    
+	    if (!studentGroup.wasDeleted())
+	    	{
+			continue;
+	    	}
+
 	    final ProjectSubmission lastProjectSubmission = lastProjectSubmissionByStudentGroup.get(studentGroup);
 
 	    if (lastProjectSubmission == null) {

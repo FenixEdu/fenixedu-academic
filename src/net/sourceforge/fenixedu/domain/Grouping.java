@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -369,4 +371,60 @@ public class Grouping extends Grouping_Base {
 	studentGroups.addAll(getStudentGroupsSet());
 	return studentGroups;
     }
+    
+    public boolean isPersonTeacher(Person person) {
+	for (ExecutionCourse ec : getExecutionCourses()) {
+	    for (Professorship professorship : ec.getProfessorships()) {
+		if (professorship.getTeacher().getPerson() == person) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+    
+    @Override
+    public List<StudentGroup> getStudentGroups() {
+	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
+	for(StudentGroup sg : super.getStudentGroups()){
+	    if (!sg.wasDeleted()){
+		result.add(sg);
+	    }
+	}
+	return result;
+    }
+    
+    public List<StudentGroup> getDeletedStudentGroups() {
+	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
+	for(StudentGroup sg : super.getStudentGroups()){
+	    if (!sg.getValid()){
+		result.add(sg);
+	    }
+	}
+	return result;
+    }
+
+    @Override
+    public int getStudentGroupsCount() {
+	return this.getStudentGroups().size();
+    }
+
+    @Override
+    public Iterator<StudentGroup> getStudentGroupsIterator() {
+	// TODO Auto-generated method stub
+	return this.getStudentGroups().iterator();
+    }
+
+    @Override
+    public Set<StudentGroup> getStudentGroupsSet() {
+	// TODO Auto-generated method stub
+	return new TreeSet<StudentGroup>(this.getStudentGroups());
+    }
+
+    @Override
+    public boolean hasStudentGroups(StudentGroup studentGroups) {
+	// TODO Auto-generated method stub
+	return this.getStudentGroups().contains(studentGroups);
+    }
+    
 }

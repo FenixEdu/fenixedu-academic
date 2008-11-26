@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -24,8 +25,8 @@ public class StudentGroup extends StudentGroup_Base {
 
     private static class StudentGroupAttendListener extends RelationAdapter<StudentGroup, Attends> {
 	@Override
-	public void beforeRemove(StudentGroup studentGroup, Attends attends) {
-	    if (!studentGroup.getProjectSubmissions().isEmpty()) {
+	public void beforeRemove(StudentGroup studentGroup, Attends attends) { 
+	    if (!studentGroup.getProjectSubmissions().isEmpty() && !studentGroup.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
 		throw new DomainException("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
 	    }
 
@@ -33,9 +34,14 @@ public class StudentGroup extends StudentGroup_Base {
 	}
 
     }
-
+    
+    public boolean wasDeleted(){
+	return !this.getValid();
+    }
+    
     public StudentGroup() {
 	super();
+	super.setValid(true);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -53,7 +59,10 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void delete() {
-	if (!hasAnyAttends() && !hasAnyProjectSubmissions()) {
+	// teacher type of deletion after project submission
+	if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())){
+	    this.setValid(false);
+	}else if( !hasAnyProjectSubmissions() && !hasAnyAttends()){ 
 	    removeShift();
 	    removeGrouping();
 	    removeRootDomainObject();

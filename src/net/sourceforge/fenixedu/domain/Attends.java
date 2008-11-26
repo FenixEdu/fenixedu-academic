@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -100,6 +101,40 @@ public class Attends extends Attends_Base {
 	    removeRootDomainObject();
 	    deleteDomainObject();
 	}
+    }
+
+    @Override
+    public List<StudentGroup> getStudentGroups() {
+	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
+	for(StudentGroup sg : super.getStudentGroups()){
+	    if (sg.getValid()){
+		result.add(sg);
+	    }
+	}
+	return result;
+    }
+
+    @Override
+    public int getStudentGroupsCount() {
+	return this.getStudentGroups().size();
+    }
+
+    @Override
+    public Iterator<StudentGroup> getStudentGroupsIterator() {
+	// TODO Auto-generated method stub
+	return this.getStudentGroups().iterator();
+    }
+
+    @Override
+    public Set<StudentGroup> getStudentGroupsSet() {
+	// TODO Auto-generated method stub
+	return new TreeSet<StudentGroup>(this.getStudentGroups());
+    }
+
+    @Override
+    public boolean hasStudentGroups(StudentGroup studentGroups) {
+	// TODO Auto-generated method stub
+	return this.getStudentGroups().contains(studentGroups);
     }
 
     private boolean canDelete() {

@@ -1172,6 +1172,7 @@
             name="studentGroupForm" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
+            <forward name="viewDeletedStudentGroupInformation" path="view-deleted-student-group"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>

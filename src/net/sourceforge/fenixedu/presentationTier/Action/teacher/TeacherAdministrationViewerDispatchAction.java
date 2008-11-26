@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -957,6 +958,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    throw new FenixActionException(e);
 	}
 	return mapping.findForward("viewStudentGroupInformation");
+    }
+
+    public ActionForward viewDeletedStudentGroupInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	int groupId = Integer.valueOf(request.getParameter("studentGroupId"));
+	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(groupId);
+	request.setAttribute("studentGroup", studentGroup);
+	request.setAttribute("executionCourseID", request.getParameter("executionCourseID"));
+	request.setAttribute("projectID", request.getParameter("projectID"));
+	return mapping.findForward("viewDeletedStudentGroupInformation");
     }
 
     public List getShiftTypeLabelValues() {

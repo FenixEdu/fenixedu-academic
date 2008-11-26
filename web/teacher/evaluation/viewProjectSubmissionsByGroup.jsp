@@ -17,13 +17,12 @@
 <bean:define id="studentGroupID" value="<%= request.getParameter("studentGroupID")%>"/>
 <bean:define id="projectID" value="<%= request.getParameter("projectID")%>"/>
 
-<ul>
-	<li>
-		<html:link page="<%= "/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&executionCourseID=" + executionCourseID + "&projectID=" + projectID%>">
-			<bean:message key="label.return"/>
-		</html:link>
-	</li>
-</ul>
+<p>
+	<html:link page="<%= "/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&executionCourseID=" + executionCourseID + "&projectID=" + projectID%>">
+		<bean:message key="label.return"/>
+	</html:link>
+</p>
+
 
 <fr:view name="project" schema="evaluation.project.view-with-name-description-and-grouping">
 	<fr:layout name="tabular">

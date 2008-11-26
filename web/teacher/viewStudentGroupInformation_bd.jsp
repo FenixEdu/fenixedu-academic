@@ -313,6 +313,18 @@
 	    <html:link page="<%="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.unEnrollStudentGroupShift"/></html:link>&nbsp|&nbsp
 		</logic:equal>
+
+		<logic:lessEqual name="ShiftType" value="2">
+		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
+		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    	<bean:message key="link.deleteGroup"/></html:link>
+		</logic:lessEqual>
+		
+		<logic:greaterEqual name="ShiftType" value="3">
+		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    	<bean:message key="link.deleteGroup"/></html:link>
+		</logic:greaterEqual> 
 	</p>
   
  	

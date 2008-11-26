@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -72,7 +73,8 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
-
+    
+    
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {
 
@@ -99,6 +101,40 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
+    @Override
+    public List<StudentGroup> getAssociatedStudentGroups() {
+	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
+	for(StudentGroup sg : super.getAssociatedStudentGroups()){
+	    if (sg.getValid()){
+		result.add(sg);
+	    }
+	}
+	return result;
+    }
+
+    @Override
+    public int getAssociatedStudentGroupsCount() {
+	return this.getAssociatedStudentGroups().size();
+    }
+
+    @Override
+    public Iterator<StudentGroup> getAssociatedStudentGroupsIterator() {
+	// TODO Auto-generated method stub
+	return this.getAssociatedStudentGroups().iterator();
+    }
+
+    @Override
+    public Set<StudentGroup> getAssociatedStudentGroupsSet() {
+	// TODO Auto-generated method stub
+	return new TreeSet<StudentGroup>(this.getAssociatedStudentGroups());
+    }
+
+    @Override
+    public boolean hasAssociatedStudentGroups(StudentGroup associatedStudentGroups) {
+	// TODO Auto-generated method stub
+	return this.getAssociatedStudentGroups().contains(associatedStudentGroups);
+    }
+
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {

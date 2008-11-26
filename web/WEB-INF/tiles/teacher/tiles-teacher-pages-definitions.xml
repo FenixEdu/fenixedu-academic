@@ -639,6 +639,10 @@
 		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
 	</definition>
 	
+	<definition name="view-deleted-student-group" extends="df.teacher.evaluation-management">
+		<put name="body" value="/student/viewDeletedStudentGroupInformation_bd.jsp" />		
+	</definition>
+	
 	<definition name="view-project-submissions-by-group" extends="df.teacher.evaluation-management">
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
 	</definition>

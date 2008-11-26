@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add Valid Field to Student Group" addValidToStudentGroup.sql

@@ -587,8 +587,7 @@
 	</schema>
 	
 	<schema name="projectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
-	    <slot name="studentGroup.groupNumber"/>
-   	    <slot name="attends.aluno.number" />
+	    <slot name="studentGroup.groupNumber" />
    	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
    	    <slot name="submissionDateTime" />
    	    <slot name="projectSubmissionFile.filename" layout="link">
@@ -598,7 +597,26 @@
    	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
 	</schema>
 
-
+	<schema name="deletedProjectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
+	    <slot name="studentGroup.groupNumber" layout="link">
+   	    	<property name="useParent" value="true"/>
+   	    	<property name="moduleRelative" value="true"/>
+   	    	<property name="contextRelative" value="true"/>
+   	    	<property name="destination" value="groupNumberLink" />	
+   	    </slot>
+   	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>
+   	    <slot name="submissionDateTime" />
+   	    <slot name="projectSubmissionFile.filename" layout="link">
+   	    	<property name="useParent" value="true"/>
+   	    	<property name="linkFormat" value="${projectSubmissionFile.downloadUrl}"/>
+   	    </slot>
+   	    <slot name="projectSubmissionFile.size" layout="fileSize"/>
+	</schema>
+	
+	<schema name="studentGroupRendering" type="net.sourceforge.fenixedu.domain.StudentGroup" bundle="APPLICATION_RESOURCES">
+		<slot name="groupNumber" />
+	</schema>
+	
 	<schema name="projectSubmission.viewObservation" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" />
    	    <slot name="attends.aluno.number" />
