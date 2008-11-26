@@ -12,6 +12,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MultiLanguageStringValidator extends HtmlValidator {
 
+    public MultiLanguageStringValidator() {
+	super();
+    }
+
     public MultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
     }
