@@ -335,8 +335,12 @@ public class Curriculum implements Serializable, ICurriculum {
 	final StringBuilder result = new StringBuilder();
 
 	result.append("\n[CURRICULUM]");
-	result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
-		+ curriculumModule.getName().getContent());
+	if (curriculumModule == null) {
+	    result.append("\n[NO CURRICULUM_MODULE]");
+	} else {
+	    result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
+		    + curriculumModule.getName().getContent());
+	}
 	result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
 	result.append("\n[SUM Pi] " + getSumPi().toString());
