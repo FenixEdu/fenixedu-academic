@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
 <filterDefinitions>
     <filter>
         <name>AcademicAdministrativeOfficeAuthorization</name>
@@ -65,13 +63,6 @@
     </filter>
 
     <filter>
-        <name>CandidateAuthentication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.CandidateAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>CareerTeacherAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.teacher.CareerTeacherAuthorizationFilter</implementationClass>
         <description></description>
@@ -118,13 +109,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateRectificationMarkSheetAuthorizationFilter</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
-    </filter>
-
-    <filter>
-        <name>CreditsManagerAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsManagerAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
     </filter>
 
     <filter>
@@ -394,13 +378,6 @@
     </filter>
 
     <filter>
-        <name>LibraryAuthorizationFilter</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.library.LibraryAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>ManageUnitPersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ManageUnitPersistentGroup</implementationClass>
         <description></description>
@@ -445,13 +422,6 @@
     <filter>
         <name>OperatorAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>ParkingManagerAuthorizationFilter</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ParkingManagerAuthorizationFilter</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>
@@ -597,22 +567,8 @@
     </filter>
 
     <filter>
-        <name>ResearcherAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.research.ResearcherFilter</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-    </filter>
-
-    <filter>
         <name>ResourceAllocationManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>ResourceManagerAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResourceManagerAuthorizationFilter</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>
@@ -641,13 +597,6 @@
     <filter>
         <name>ScientificCouncilOrStudentThesisAuthorizationFilter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>SeminaryCoordinator</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries.SeminaryCoordinatorFilter</implementationClass>
         <description></description>
         <isTransactional>false</isTransactional>
     </filter>
