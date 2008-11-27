@@ -229,7 +229,7 @@
 						width="595"
 						height="25"
 						key="subreport-1"
-						isPrintWhenDetailOverflows="true"/>
+						isPrintRepeatedValues="false"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{bolonhaList})]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
@@ -241,7 +241,7 @@
 						height="25"
 						key="subreport-2"
 						positionType="Float"
-						isPrintWhenDetailOverflows="true"/>
+						isPrintRepeatedValues="false"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
