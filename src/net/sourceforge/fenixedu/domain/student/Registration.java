@@ -2314,7 +2314,19 @@ public class Registration extends Registration_Base {
     }
 
     public YearMonthDay calculateConclusionDate() {
-	return getLastStudentCurricularPlan().getLastApprovementDate();
+	if (isBolonha()) {
+	    return getLastStudentCurricularPlan().getLastApprovementDate();
+	} else {
+	    YearMonthDay result = null;
+	    for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
+		final YearMonthDay date = plan.getLastApprovementDate();
+		if (date != null && (result == null || result.isBefore(date))) {
+		    result = date;
+		}
+	    }
+
+	    return result;
+	}
     }
 
     public YearMonthDay calculateConclusionDate(final CycleType cycleType) {
