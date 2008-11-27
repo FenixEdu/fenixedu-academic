@@ -657,7 +657,11 @@ public class Registration extends Registration_Base {
     }
 
     final public AverageType getAverageType() {
-	return getLastStudentCurricularPlan().getAverageType();
+	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+	    return getLastStudentCurricularPlan().getAverageType();
+	} else {
+	    return AverageType.WEIGHTED;
+	}
     }
 
     final public BigDecimal calculateAverage() {
