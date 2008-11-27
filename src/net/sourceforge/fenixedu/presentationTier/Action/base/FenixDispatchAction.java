@@ -43,6 +43,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -386,5 +387,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final ActionMessages messages = getErrors(request);
 	messages.add(property, new ActionMessage(key, args));
 	saveErrors(request, messages);
+    }
+
+    protected <T extends DomainObject> T getDomainObjectByOID(final HttpServletRequest request, final String name) {
+	final String parameter = request.getParameter(name);
+	final Long oid = parameter != null ? Long.valueOf(parameter) : (Long) request.getAttribute(name);
+	return oid == null ? null : (T) Transaction.getObjectForOID(oid.longValue());
     }
 }
