@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,7 +21,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EditUnit extends FenixService {
 
-    public void run(Integer unitID, MultiLanguageString unitName, String unitCostCenter, String acronym, YearMonthDay begin,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer unitID, MultiLanguageString unitName, String unitCostCenter, String acronym, YearMonthDay begin,
 	    YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID, String webAddress,
 	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException,
 	    DomainException, FenixFilterException {
@@ -38,7 +44,7 @@ public class EditUnit extends FenixService {
 		administrativeOffice, canBeResponsibleOfSpaces, campus);
     }
 
-    private Integer getCostCenterCode(String unitCostCenter) {
+    private static Integer getCostCenterCode(String unitCostCenter) {
 	Integer costCenterCode = null;
 	if (unitCostCenter != null && !unitCostCenter.equals("")) {
 	    costCenterCode = (Integer.valueOf(unitCostCenter));

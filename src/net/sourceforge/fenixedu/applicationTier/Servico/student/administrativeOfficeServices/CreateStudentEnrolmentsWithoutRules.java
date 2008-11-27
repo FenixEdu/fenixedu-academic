@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class CreateStudentEnrolmentsWithoutRules extends FenixService {
 
-    public void run(StudentEnrolmentBean enrolmentBean) throws FenixServiceException {
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(StudentEnrolmentBean enrolmentBean) throws FenixServiceException {
 	Set<CurriculumModule> initialCurriculumModules = enrolmentBean.getInitialCurriculumModules();
 	for (DegreeModuleToEnrol degreeModuleToEnrol : enrolmentBean.getDegreeModulesToEnrol()) {
 	    if (initialCurriculumModules.contains(degreeModuleToEnrol.getCurriculumGroup())

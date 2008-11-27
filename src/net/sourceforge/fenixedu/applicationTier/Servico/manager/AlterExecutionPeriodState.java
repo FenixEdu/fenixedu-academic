@@ -5,10 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AlterExecutionPeriodState extends FenixService {
 
-    public void run(final String year, final Integer semester, final PeriodState periodState) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final String year, final Integer semester, final PeriodState periodState) throws FenixServiceException {
 
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
 	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
@@ -41,7 +45,7 @@ public class AlterExecutionPeriodState extends FenixService {
 	}
     }
 
-    public class InvalidExecutionPeriod extends FenixServiceException {
+    public static class InvalidExecutionPeriod extends FenixServiceException {
 	InvalidExecutionPeriod() {
 	    super();
 	}

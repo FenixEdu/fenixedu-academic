@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -24,7 +25,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class CreateStudent extends FenixService {
 
-    public Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
 	    PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,
 	    OriginInformationBean originInformationBean) {
 
@@ -35,7 +38,7 @@ public class CreateStudent extends FenixService {
 	StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(),
 		person);
 	studentCandidacy.fillOriginInformation(originInformationBean, personBean);
-	new RegisteredCandidacySituation((Candidacy) studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
+	new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
 		executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(), ingressionInformationBean
 			.getEntryPhase());
 
@@ -62,7 +65,7 @@ public class CreateStudent extends FenixService {
 	return registration;
     }
 
-    private Person getPerson(PersonBean personBean) {
+    private static Person getPerson(PersonBean personBean) {
 	Person person = null;
 	if (personBean.getPerson() != null) {
 	    person = personBean.getPerson();

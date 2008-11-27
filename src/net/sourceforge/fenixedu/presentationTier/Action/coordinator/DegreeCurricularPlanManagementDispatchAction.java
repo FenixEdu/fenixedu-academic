@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurrentCurriculumByCurricularCourseCode;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadCurrentCurriculumByCurricularCourseCode;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -90,10 +98,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
 
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-	Object[] args = { degreeCurricularPlanID };
+
 	try {
-	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService(
-		    "ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID", args);
+	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenDegree", "error.coordinator.noExecutionDegree");
@@ -251,9 +258,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 	// get curricular course information
 	InfoCurriculum infoCurriculum = null;
-	Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
+
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService("ReadCurrentCurriculumByCurricularCourseCode", args);
+	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode, infoCurricularCourseCode);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");
@@ -322,10 +329,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	getAndSetStringToRequest("infoCurricularCourseName", request);
 
 	InfoCurriculum infoCurriculum = null;
-	Object[] args = { null, infoCurricularCourseCode, executionYear };
+
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(
-		    "ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName", args);
+	    infoCurriculum = (InfoCurriculum) ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName.run(null, infoCurricularCourseCode, executionYear);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noCurricularCourse")) {
@@ -402,9 +408,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 	// get curricular course information
 	InfoCurriculum infoCurriculum = null;
-	Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
+
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService("ReadCurrentCurriculumByCurricularCourseCode", args);
+	    infoCurriculum = (InfoCurriculum) ReadCurrentCurriculumByCurricularCourseCode.run(infoExecutionDegreeCode, infoCurricularCourseCode);
 
 	} catch (NonExistingServiceException e) {
 	    addErrorMessage(request, "chosenCurricularCourse", "error.coordinator.chosenCurricularCourse");

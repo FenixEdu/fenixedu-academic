@@ -14,10 +14,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends FenixService {
 
-    public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
 	final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
 	if (campus == null) {
 	    throw new NonExistingServiceException("message.nonExistingCampus", null);
@@ -40,7 +44,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends FenixService {
 	setPeriods(executionDegree, infoExecutionDegree);
     }
 
-    private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegreeEditor infoExecutionDegree) {
+    private static void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegreeEditor infoExecutionDegree) {
 	InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
 	setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
 
@@ -54,7 +58,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends FenixService {
 	setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
     }
 
-    private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod, int periodToAssociateExecutionDegree) {
+    private static void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod,
+	    int periodToAssociateExecutionDegree) {
 	List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
 	infoPeriodList.add(infoPeriod);

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -89,7 +91,7 @@ public class CreateCooperationDispatchAction extends FenixDispatchAction {
 
 	Person person = getLoggedPerson(request);
 	try {
-	    executeService("CreateResearchActivityParticipation", new Object[] { cooperationBean, person });
+	    CreateResearchActivityParticipation.run(cooperationBean, person);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return prepareCreateCooperationParticipation(mapping, form, request, response);

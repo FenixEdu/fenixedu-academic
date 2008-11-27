@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -9,7 +13,9 @@ import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 
 public class ChangeResearchInterestOrder extends FenixService {
 
-    public void run(Party party, List<ResearchInterest> researchInterests) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(Party party, List<ResearchInterest> researchInterests) {
 	if (party.getResearchInterests().size() != researchInterests.size()) {
 	    throw new DomainException("research.interests.size.mismatch");
 	}

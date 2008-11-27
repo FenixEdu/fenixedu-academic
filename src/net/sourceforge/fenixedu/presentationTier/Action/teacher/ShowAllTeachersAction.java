@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.ReadAllTeachersNumberAndName;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +33,7 @@ public class ShowAllTeachersAction extends FenixDispatchAction {
 	    throws Exception {
 	IUserView userView = UserView.getUser();
 
-	Object[] args = {};
-	List teachersList = (List) ServiceUtils.executeService("ReadAllTeachersNumberAndName", args);
+	List teachersList = (List) ReadAllTeachersNumberAndName.run();
 	request.setAttribute("teachersList", teachersList);
 
 	return mapping.findForward("show-teachers");

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +43,9 @@ public class ProcessSibsPaymentFile extends FenixService {
      * @throws FenixServiceException
      * @throws ExcepcaoPersistencia
      */
-    public void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(String filename, List fileEntries, IUserView userView) throws FenixServiceException {
 
 	throw new UnsupportedOperationException("TO REMOVE");
 	//
@@ -61,7 +67,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 	// buildTransactionsAndStoreFile(sibsPaymentFile, userView);
     }
 
-    private void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView) {
+    private static void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile, IUserView userView) {
 
 	List<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
@@ -200,7 +206,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 
     }
 
-    private void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries) {
+    private static void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries) {
 	for (int i = 0; i < totalPaymentEntries; i++) {
 
 	    SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -224,7 +230,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 	}
     }
 
-    private TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
+    private static TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
 	// in future if codes change too much, the binding table should be
 	// loaded from a config file
 	TransactionType transactionType = null;
@@ -252,7 +258,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 	return transactionType;
     }
 
-    private void markDuplicateGratuityAndInsurancePayments(SibsPaymentFileEntry sibsPaymentFileEntry,
+    private static void markDuplicateGratuityAndInsurancePayments(SibsPaymentFileEntry sibsPaymentFileEntry,
 	    List sibsPaymentFileEntries, int totalPaymentEntries, int currentIndex) {
 
 	// first check if the gratuity or insurance payment is repeated inside
@@ -293,7 +299,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 	}
     }
 
-    private Specialization determineSpecialization(SibsPaymentFileEntry sibsPaymentFileEntry) {
+    private static Specialization determineSpecialization(SibsPaymentFileEntry sibsPaymentFileEntry) {
 	// if sibs payment codes change to much in future this logic should be
 	// moved to a config file
 	SibsPaymentType sibsPaymentType = sibsPaymentFileEntry.getPaymentType();

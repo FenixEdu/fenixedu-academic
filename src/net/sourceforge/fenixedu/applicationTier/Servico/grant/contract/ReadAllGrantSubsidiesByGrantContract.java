@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsi
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Barbosa
@@ -21,7 +23,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
  */
 public class ReadAllGrantSubsidiesByGrantContract extends FenixService {
 
-    public List run(Integer idContract) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer idContract) throws FenixServiceException {
 	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
 	List<GrantSubsidy> subsidies = grantContract.getAssociatedGrantSubsidies();
 

@@ -5,10 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.Degree;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertDegreeCurricularPlan extends FenixService {
 
-    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
 
 	if (infoDcp.getInfoDegree().getIdInternal() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
 		|| infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {

@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DeleteShifts extends FenixService {
 
-    public void run(final List<Integer> shiftOIDs) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(final List<Integer> shiftOIDs) throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
 	for (final Integer shiftID : shiftOIDs) {

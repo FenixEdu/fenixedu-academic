@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,9 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 
 public class ReadReimbursementGuidesByGuide extends FenixService {
 
-    public List run(Integer guideId) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer guideId) {
 	List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
 
 	Guide guide = rootDomainObject.readGuideByOID(guideId);

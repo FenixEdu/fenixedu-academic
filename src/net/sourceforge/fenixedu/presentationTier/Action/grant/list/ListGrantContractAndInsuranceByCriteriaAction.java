@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantTypes;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.list.ListGrantContractAndInsuranceByCriteria;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerComplete;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteriaListGrantContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -125,9 +126,8 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
 	IUserView userView = UserView.getUser();
 
 	// Read the grant contracts
-	Object[] args = { infoSpanByCriteriaListGrantOwner };
 
-	Object[] result = (Object[]) ServiceUtils.executeService("ListGrantContractAndInsuranceByCriteria", args);
+	Object[] result = new ListGrantContractAndInsuranceByCriteria().run(infoSpanByCriteriaListGrantOwner);
 
 	List listGrantContracts = (List) result[0];
 
@@ -267,8 +267,8 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
 
     private List createGrantTypeList(IUserView userView) throws FenixServiceException, FenixFilterException {
 	// Read grant types for the contract
-	Object[] args = {};
-	List grantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
+
+	List grantTypeList = ReadAllGrantTypes.run();
 	// Adding a select country line to the list (presentation reasons)
 	InfoGrantType grantType = new InfoGrantType();
 	grantType.setIdInternal(null);

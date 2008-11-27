@@ -9,10 +9,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AssociateExecutionCourseToCurricularCourse extends FenixService {
 
-    public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
 	    throws FenixServiceException {
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);

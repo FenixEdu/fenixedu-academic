@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditDegreeCurricularPlan;
+
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,10 +194,9 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 	newInfoDegreeCP.setGradeScale(gradeScale);
 	newInfoDegreeCP.setInfoDegree(infoDegree);
 
-	Object args[] = { newInfoDegreeCP };
 
 	try {
-	    ServiceUtils.executeService("EditDegreeCurricularPlanInOldDegreeStructure", args);
+	    EditDegreeCurricularPlan.run(newInfoDegreeCP);
 
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("message.manager.existing.degree.curricular.plan", e);

@@ -19,11 +19,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetBranchListByCandidateID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidateRegistrationInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateForRegistration;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.RegisterCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -72,8 +75,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 	List result = null;
 
 	try {
-	    Object args[] = { executionDegree };
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadCandidateForRegistration", args);
+
+	    result = ReadCandidateForRegistration.run(executionDegree);
 	} catch (NonExistingServiceException e) {
 	    request.getSession(false).removeAttribute(SessionConstants.DEGREE_LIST);
 	    ActionErrors errors = new ActionErrors();
@@ -110,8 +113,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 	candidateRegistration.set("studentNumber", null);
 	List branchList = null;
 	try {
-	    Object args[] = { candidateID };
-	    branchList = (List) ServiceManagerServiceFactory.executeService("GetBranchListByCandidateID", args);
+
+	    branchList = GetBranchListByCandidateID.run(candidateID);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -156,9 +159,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
 	    InfoCandidateRegistration infoCandidateRegistration = null;
 	    try {
-		Object args[] = { candidateID, branchID, studentNumber, userView };
-		infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(
-			"RegisterCandidate", args);
+
+		infoCandidateRegistration = RegisterCandidate.run(candidateID, branchID, studentNumber, userView);
 	    } catch (InvalidStudentNumberServiceException e) {
 		throw new InvalidStudentNumberActionException(e);
 	    } catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
@@ -169,8 +171,8 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
 		List branchList = null;
 		try {
-		    Object args[] = { candidateID };
-		    branchList = (List) ServiceManagerServiceFactory.executeService("GetBranchListByCandidateID", args);
+
+		    branchList = GetBranchListByCandidateID.run(candidateID);
 		} catch (FenixServiceException ex) {
 		    throw new FenixActionException(ex);
 		}
@@ -209,13 +211,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 	Integer candidateID = (Integer) candidateRegistration.get("candidateID");
 
 	InfoCandidateRegistration infoCandidateRegistration = null;
-	try {
-	    Object args[] = { candidateID };
-	    infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(
-		    "GetCandidateRegistrationInformation", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoCandidateRegistration = GetCandidateRegistrationInformation.run(candidateID);
 
 	request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
 	request.setAttribute("infoExecutionDegree", infoCandidateRegistration.getInfoMasterDegreeCandidate()

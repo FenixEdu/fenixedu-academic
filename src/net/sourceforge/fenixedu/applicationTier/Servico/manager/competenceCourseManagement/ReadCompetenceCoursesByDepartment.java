@@ -13,9 +13,14 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadCompetenceCoursesByDepartment extends FenixService {
 
-    public List<InfoCompetenceCourse> run(Integer departmentID) throws Exception {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<InfoCompetenceCourse> run(Integer departmentID) throws NotExistingServiceException {
 
 	final List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
 	if (departmentID != null) {

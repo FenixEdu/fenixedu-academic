@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInterminatedCurricularCourseScopes;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,8 +71,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 	List curricularCourseScopes = new ArrayList();
 	try {
-	    curricularCourseScopes = (List) ServiceUtils.executeService("ReadInterminatedCurricularCourseScopes",
-		    new Object[] { curricularCourseId });
+	    curricularCourseScopes = (List) ReadInterminatedCurricularCourseScopes.run(curricularCourseId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

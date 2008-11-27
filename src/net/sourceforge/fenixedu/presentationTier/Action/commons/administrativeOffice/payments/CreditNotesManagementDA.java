@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -89,8 +93,8 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 		.getMetaObject().getObject();
 
 	try {
-	    executeService("CreateCreditNote", new Object[] { getUserView(request).getPerson().getEmployee(),
-		    createCreditNoteBean });
+	    CreateCreditNote.run(getUserView(request).getPerson().getEmployee(),
+		    createCreditNoteBean);
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -116,8 +120,8 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 	final CreditNoteState creditNoteState = CreditNoteState.valueOf(((CreditNotesActionForm) form).getCreditNoteState());
 
 	try {
-	    executeService("ChangeCreditNoteState", new Object[] { getUserView(request).getPerson().getEmployee(), creditNote,
-		    creditNoteState });
+	    ChangeCreditNoteState.run(getUserView(request).getPerson().getEmployee(), creditNote,
+		    creditNoteState);
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));

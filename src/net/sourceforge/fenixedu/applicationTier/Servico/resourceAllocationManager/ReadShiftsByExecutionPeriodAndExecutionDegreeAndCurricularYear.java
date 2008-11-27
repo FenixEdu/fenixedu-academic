@@ -6,6 +6,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
@@ -27,7 +31,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear extends FenixService {
 
-    public List<InfoShift> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List<InfoShift> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
 	    InfoCurricularYear infoCurricularYear) {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod

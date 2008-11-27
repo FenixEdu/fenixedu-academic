@@ -5,6 +5,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPaymentEntity;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -81,8 +83,8 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
 	    infoGrantCostCenter.setInfoResponsibleTeacher(infoTeacher);
 
 	    // Edit-Create the payment entity
-	    Object[] argCostCenter = { infoGrantCostCenter };
-	    ServiceUtils.executeService("EditGrantPaymentEntity", argCostCenter);
+
+	    EditGrantPaymentEntity.run(infoGrantCostCenter);
 
 	    return mapping.findForward("manage-grant-costcenter");
 	} catch (ExistingServiceException e) {

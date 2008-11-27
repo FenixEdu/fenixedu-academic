@@ -36,13 +36,17 @@ import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportClosedMonth extends FenixService {
 
     private final static String durationZeroString = "00:00";
 
-    public String run(ClosedMonth closedMonth, LocalDate beginDate, LocalDate endDate) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static String run(ClosedMonth closedMonth, LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate);
 	StringBuilder result = new StringBuilder();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
@@ -54,7 +58,7 @@ public class ExportClosedMonth extends FenixService {
 	return result.toString();
     }
 
-    private String getMonthAssiduousnessBalance(AssiduousnessClosedMonth assiduousnessClosedMonth,
+    private static String getMonthAssiduousnessBalance(AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    List<AssiduousnessRecord> assiduousnessRecords, ClosedMonth closedMonth) {
 	LocalDate beginDate = assiduousnessClosedMonth.getBeginDate();
 	LocalDate endDate = assiduousnessClosedMonth.getEndDate();
@@ -219,7 +223,7 @@ public class ExportClosedMonth extends FenixService {
 	return result.toString();
     }
 
-    private List<Leave> getListFromCollection(Collection<List<Leave>> list) {
+    private static List<Leave> getListFromCollection(Collection<List<Leave>> list) {
 	List<Leave> result = new ArrayList<Leave>();
 	for (List<Leave> leaveList : list) {
 	    result.addAll(leaveList);
@@ -227,7 +231,7 @@ public class ExportClosedMonth extends FenixService {
 	return result;
     }
 
-    private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
@@ -240,7 +244,7 @@ public class ExportClosedMonth extends FenixService {
 	return end;
     }
 
-    private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
@@ -249,8 +253,9 @@ public class ExportClosedMonth extends FenixService {
 	return init;
     }
 
-    private WorkDaySheet getWorkDaySheet(Assiduousness assiduousness, List<AssiduousnessRecord> clockings, LocalDate thisDay,
-	    final boolean isDayHoliday, final WorkSchedule workSchedule, WorkDaySheet workDaySheet, List<Leave> list) {
+    private static WorkDaySheet getWorkDaySheet(Assiduousness assiduousness, List<AssiduousnessRecord> clockings,
+	    LocalDate thisDay, final boolean isDayHoliday, final WorkSchedule workSchedule, WorkDaySheet workDaySheet,
+	    List<Leave> list) {
 	if (workDaySheet == null) {
 	    if (clockings == null) {
 		clockings = new ArrayList<AssiduousnessRecord>();
@@ -261,7 +266,7 @@ public class ExportClosedMonth extends FenixService {
 	return workDaySheet;
     }
 
-    private HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
+    private static HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
 	    HashMap<LocalDate, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
 	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = new HashMap<LocalDate, List<AssiduousnessRecord>>();
 	if (assiduousnessRecords != null) {
@@ -291,8 +296,8 @@ public class ExportClosedMonth extends FenixService {
 	return clockingsMap;
     }
 
-    private HashMap<LocalDate, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate,
-	    LocalDate endDate) {
+    private static HashMap<LocalDate, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords,
+	    LocalDate beginDate, LocalDate endDate) {
 	HashMap<LocalDate, List<Leave>> leavesMap = new HashMap<LocalDate, List<Leave>>();
 	if (assiduousnessRecords != null) {
 	    for (AssiduousnessRecord record : assiduousnessRecords) {
@@ -319,7 +324,8 @@ public class ExportClosedMonth extends FenixService {
 	return leavesMap;
     }
 
-    private HashMap<JustificationMotive, List<Leave>> getDayLeaves(HashMap<LocalDate, List<Leave>> leavesMap, LocalDate thisDay) {
+    private static HashMap<JustificationMotive, List<Leave>> getDayLeaves(HashMap<LocalDate, List<Leave>> leavesMap,
+	    LocalDate thisDay) {
 	HashMap<JustificationMotive, List<Leave>> leavesMapList = new HashMap<JustificationMotive, List<Leave>>();
 
 	if (leavesMap != null && leavesMap.get(thisDay) != null) {
@@ -336,7 +342,7 @@ public class ExportClosedMonth extends FenixService {
 	return leavesMapList;
     }
 
-    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
+    public static HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
@@ -369,7 +375,7 @@ public class ExportClosedMonth extends FenixService {
 	return assiduousnessLeaves;
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
+    private static StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
 	    String duration1, String duration2, String scheduleAcronym) {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(getTokens(employeeNumber.toString(), 8)).append(";");
@@ -385,21 +391,21 @@ public class ExportClosedMonth extends FenixService {
 	return stringBuilder;
     }
 
-    private String getTokens(String value, int size) {
+    private static String getTokens(String value, int size) {
 	if (value.length() > size) {
 	    return value.substring(0, size);
 	}
 	return StringUtils.rightPad(value, size);
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
+    private static StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
 	    Duration duration1, Duration duration2, String scheduleAcronym) {
 	return getLine(employeeNumber, acronym, beginDate, endDate, getDurationString(duration1), getDurationString(duration2),
 		scheduleAcronym);
 
     }
 
-    public String getDurationString(Duration duration) {
+    public static String getDurationString(Duration duration) {
 	if (duration == null)
 	    return durationZeroString;
 	PeriodFormatter fmt = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2).appendHours()

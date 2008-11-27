@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -16,7 +18,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class RetrieveOrCreateStudentInquiriesRegistries extends FenixService {
 
-    public Collection<InquiriesRegistry> run(Student student, ExecutionSemester executionSemester) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Collection<InquiriesRegistry> run(Student student, ExecutionSemester executionSemester) {
 	return student.getOrCreateInquiriesRegistriesForPeriod(executionSemester);
     }
 

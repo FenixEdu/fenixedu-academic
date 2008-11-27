@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.EditInsuranceValueByExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadInsuranceValueByExecutionYearID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -79,8 +80,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
 	InfoInsuranceValue infoInsuranceValue = null;
 	try {
-	    infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
-		    new Object[] { executionYearId });
+	    infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(executionYearId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -148,12 +148,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 	    return readInsuranceValue(mapping, form, request, response);
 	}
 
-	Object argsInsuranceValue[] = { executionYearId, insuranceValue, endDate };
-	try {
-	    ServiceUtils.executeService("EditInsuranceValueByExecutionYearID", argsInsuranceValue);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	EditInsuranceValueByExecutionYearID.run(executionYearId, insuranceValue, endDate);
 
 	return mapping.findForward("defineSuccess");
 

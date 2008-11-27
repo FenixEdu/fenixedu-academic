@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.SetEnrolmentState;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.EditPosGradStudentCurricularPlanStateAndCredits;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlanById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -36,20 +38,13 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 	Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
 	IUserView userView = getUserView(request);
 
-	Object args[] = { studentCurricularPlanId };
-
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadPosGradStudentCurricularPlanById", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanId);
 
 	List branchList = null;
 
 	try {
-	    branchList = (List) ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+	    branchList = ReadBranchesByDegreeCurricularPlan.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
 		    .getIdInternal());
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -110,10 +105,9 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 	    extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
 	}
 
-	final Object args[] = { userView, scpOID, currentState, credits, startDate, extraCurricularOIDs, observations, branchOID,
-		specialization };
 	try {
-	    ServiceManagerServiceFactory.executeService("EditPosGradStudentCurricularPlanStateAndCredits", args);
+	    EditPosGradStudentCurricularPlanStateAndCredits.run(userView, scpOID, currentState, credits, startDate,
+		    extraCurricularOIDs, observations, branchOID, specialization);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -126,7 +120,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
 	Enrolment enrolment = (Enrolment) rootDomainObject
 		.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
-	executeService("SetEnrolmentState", new Object[] { enrolment, EnrollmentState.ENROLLED });
+	SetEnrolmentState.run(enrolment, EnrollmentState.ENROLLED);
 
 	request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
 

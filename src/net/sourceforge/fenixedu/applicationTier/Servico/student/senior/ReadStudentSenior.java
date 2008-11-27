@@ -1,12 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.senior;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Senior;
 
 public class ReadStudentSenior extends FenixService {
 
-    public Senior run(final Registration registration) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Senior run(final Registration registration) {
 	if (registration.hasSenior()) {
 	    return registration.getSenior();
 	} else if (registration.isQualifiedForSeniority()) {

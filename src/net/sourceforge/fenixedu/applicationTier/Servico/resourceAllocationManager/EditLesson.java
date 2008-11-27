@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -16,7 +20,9 @@ import org.joda.time.YearMonthDay;
 
 public class EditLesson extends FenixService {
 
-    public void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoLesson aulaAntiga, DiaSemana weekDay, Calendar begin, Calendar end, FrequencyType frequency,
 	    InfoRoomOccupationEditor infoRoomOccupation, InfoShift infoShift, YearMonthDay newBeginDate, YearMonthDay newEndDate,
 	    Boolean createLessonInstances) throws FenixServiceException {
 

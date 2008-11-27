@@ -14,11 +14,15 @@ import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportJustifications extends FenixService {
 
-    public StyledExcelSpreadsheet run(AssiduousnessExportChoices assiduousnessExportChoices) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static StyledExcelSpreadsheet run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(bundle.getString("link.justifications"), false);

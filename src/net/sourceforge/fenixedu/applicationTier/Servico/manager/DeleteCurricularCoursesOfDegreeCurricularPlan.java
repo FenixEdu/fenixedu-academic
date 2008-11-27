@@ -17,13 +17,18 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author lmac1 modified by Fernanda Quiterio
  */
 public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService {
 
     // delete a set of curricularCourses
-    public List run(List curricularCoursesIds) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List curricularCoursesIds) throws FenixServiceException {
 
 	Iterator iter = curricularCoursesIds.iterator();
 	List undeletedCurricularCourses = new ArrayList();
@@ -75,7 +80,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService 
 	return undeletedCurricularCourses;
     }
 
-    private Boolean canAllCurricularCourseScopesBeDeleted(List<CurricularCourseScope> scopes) {
+    private static Boolean canAllCurricularCourseScopesBeDeleted(List<CurricularCourseScope> scopes) {
 	List nonDeletableScopes = (List) CollectionUtils.select(scopes, new Predicate() {
 	    public boolean evaluate(Object o) {
 		CurricularCourseScope ccs = (CurricularCourseScope) o;

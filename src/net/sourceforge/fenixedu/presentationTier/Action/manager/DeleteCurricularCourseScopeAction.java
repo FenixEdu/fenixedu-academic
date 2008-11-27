@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseScope;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,10 +35,10 @@ public class DeleteCurricularCourseScopeAction extends FenixAction {
 	IUserView userView = UserView.getUser();
 
 	Integer scopeId = new Integer(request.getParameter("curricularCourseScopeId"));
-	Object args[] = { scopeId };
+
 
 	try {
-	    ServiceUtils.executeService("DeleteCurricularCourseScope", args);
+	    DeleteCurricularCourseScope.run(scopeId);
 	} catch (CantDeleteServiceException e) {
 	    throw new CantDeleteActionException("message.cant.delete.curricular.course.scope");
 	} catch (FenixServiceException fenixServiceException) {

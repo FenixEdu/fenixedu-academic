@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -47,8 +49,8 @@ public class RecoverInactivePersonDA extends FenixDispatchAction {
 	    final Person person = (Person) rootDomainObject.readPartyByOID(personID);
 	    final Set<Role> roles = new HashSet<Role>();
 	    roles.add(Role.getRoleByRoleType(RoleType.PERSON));
-	    final Object[] args = { person, roles };
-	    executeService("SetPersonRoles", args);
+
+	    SetPersonRoles.run(person, roles);
 	}
 	return prepare(mapping, form, request, response);
     }

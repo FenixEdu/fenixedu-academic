@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.MergeExternalUnits;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -79,7 +81,7 @@ public class ExternalUnitsMergeDA extends FenixDispatchAction {
 	}
 
 	try {
-	    executeService("MergeExternalUnits", new Object[] { fromUnit, destinationUnit, Boolean.TRUE });
+	    MergeExternalUnits.run(fromUnit, destinationUnit, Boolean.TRUE);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	    return returnToConfirmationPage(mapping, request, fromUnit, destinationUnit);

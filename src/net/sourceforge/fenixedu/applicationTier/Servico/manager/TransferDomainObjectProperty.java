@@ -7,9 +7,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.beanutils.PropertyUtils;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -17,7 +21,9 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class TransferDomainObjectProperty extends FenixService {
 
-    public void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws Throwable {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(DomainObject srcObject, DomainObject dstObject, String slotName) throws FenixServiceException {
 	try {
 	    Object srcProperty = PropertyUtils.getSimpleProperty(srcObject, slotName);
 
@@ -35,9 +41,13 @@ public class TransferDomainObjectProperty extends FenixService {
 	    }
 	} catch (InvocationTargetException e) {
 	    if (e.getTargetException() != null) {
-		throw e.getTargetException();
+		throw new FenixServiceException(e.getTargetException());
 	    }
-	    throw e;
+	    throw new FenixServiceException(e);
+	} catch (IllegalAccessException e) {
+	    throw new FenixServiceException(e);
+	} catch (NoSuchMethodException e) {
+	    throw new FenixServiceException(e);
 	}
 
     }

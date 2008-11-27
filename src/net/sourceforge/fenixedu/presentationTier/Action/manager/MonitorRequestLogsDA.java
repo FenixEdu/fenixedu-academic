@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ConfirmManagerIdentity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -50,7 +54,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward listFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ServiceUtils.executeService("ConfirmManagerIdentity", null);
+	ConfirmManagerIdentity.run();
 
 	DynaActionForm actionForm = (DynaActionForm) form;
 	String logDirName = (String) actionForm.get("logDirName");
@@ -79,7 +83,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward analyseFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ServiceUtils.executeService("ConfirmManagerIdentity", null);
+	ConfirmManagerIdentity.run();
 
 	DynaActionForm actionForm = (DynaActionForm) form;
 	String logDirName = (String) actionForm.get("logDirName");

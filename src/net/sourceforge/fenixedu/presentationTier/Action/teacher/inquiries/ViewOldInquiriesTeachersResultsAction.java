@@ -4,6 +4,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiryTeachersResById;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.course.inquiries.ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByTeacherNumber;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -47,8 +55,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	List executionPeriodList = ReadExecutionPeriods.run();
 
-	Object[] args = { it.getTeacherNumber() };
-	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByTeacherNumber", args);
+	List teachersRes = (List) ReadOldInquiriesTeachersResByTeacherNumber.run(it.getTeacherNumber());
 
 	Iterator periodIter = executionPeriodList.iterator();
 	while (periodIter.hasNext()) {
@@ -125,18 +132,15 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	request.setAttribute("infoTeacher", request.getSession().getAttribute("info_teacher"));
 
 	if ((executionPeriodId != null) && (degreeId != null) && (courseCode != null)) {
-	    Object args[] = { executionPeriodId, degreeId, courseCode };
-	    InfoOldInquiriesCoursesRes ioicr = (InfoOldInquiriesCoursesRes) ServiceUtils.executeService(
-		    "ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode", args);
+
+	    InfoOldInquiriesCoursesRes ioicr = (InfoOldInquiriesCoursesRes) ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode.run(executionPeriodId, degreeId, courseCode);
 
 	    request.setAttribute("oldInquiriesCoursesRes", ioicr);
 	}
 
 	if (oldInquiryTeacherId != null) {
 
-	    Object args[] = { oldInquiryTeacherId };
-	    InfoOldInquiriesTeachersRes ioitr = (InfoOldInquiriesTeachersRes) ServiceUtils.executeService(
-		    "ReadOldInquiryTeachersResById", args);
+	    InfoOldInquiriesTeachersRes ioitr = (InfoOldInquiriesTeachersRes) ReadOldInquiryTeachersResById.run(oldInquiryTeacherId);
 
 	    List ioitrList = new ArrayList();
 	    ioitrList.add(ioitr);
@@ -146,12 +150,9 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	} else if ((executionPeriodId != null) && (degreeId != null) && (curricularYear != null) && (courseCode != null)) {
 
 	    InfoTeacher it = (InfoTeacher) request.getSession().getAttribute(SessionConstants.INFO_TEACHER);
-	    Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode, it.getTeacherNumber() };
 
-	    List oldInquiryTeachersResList = (List) ServiceUtils
-		    .executeService(
-			    "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber",
-			    args);
+
+	    List oldInquiryTeachersResList = (List) ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber.run(executionPeriodId, degreeId, curricularYear, courseCode, it.getTeacherNumber());
 
 	    request.setAttribute("oldInquiryTeachersResList", oldInquiryTeachersResList);
 	}

@@ -15,10 +15,14 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllContractsByGrantOwner extends FenixService {
 
-    public List run(Integer grantOwnerId) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer grantOwnerId) throws FenixServiceException {
 
 	final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
 	if (grantOwner == null) {

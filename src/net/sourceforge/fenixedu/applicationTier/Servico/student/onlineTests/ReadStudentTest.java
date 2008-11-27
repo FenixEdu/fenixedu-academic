@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,13 +26,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class ReadStudentTest extends FenixService {
 
-    public List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<StudentTestQuestion> run(Registration registration, Integer distributedTestId, Boolean log, String path)
 	    throws FenixServiceException {
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	return run(registration, distributedTest, log, path);
     }
 
-    public List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log, String path)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<StudentTestQuestion> run(Registration registration, DistributedTest distributedTest, Boolean log, String path)
 	    throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new InvalidArgumentsServiceException();
@@ -53,7 +61,7 @@ public class ReadStudentTest extends FenixService {
 	return studentTestQuestionList;
     }
 
-    private Set<StudentTestQuestion> findStudentTestQuestions(Registration registration, DistributedTest distributedTest)
+    private static Set<StudentTestQuestion> findStudentTestQuestions(Registration registration, DistributedTest distributedTest)
 	    throws InvalidArgumentsServiceException {
 	final Set<StudentTestQuestion> studentTestQuestions = StudentTestQuestion.findStudentTestQuestions(registration,
 		distributedTest);

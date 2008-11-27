@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.gaugingTests.physics;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.physics.readGaugingTestsResults;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,9 +32,8 @@ public class ViewGaugingTestsResults extends FenixAction {
 
 	IUserView userView = getUserView(request);
 
-	Object[] args = { userView };
 	try {
-	    InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService("readGaugingTestsResults", args);
+	    InfoGaugingTestResult result = (InfoGaugingTestResult) readGaugingTestsResults.run(userView);
 	    request.setAttribute("gaugingTestResult", result);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

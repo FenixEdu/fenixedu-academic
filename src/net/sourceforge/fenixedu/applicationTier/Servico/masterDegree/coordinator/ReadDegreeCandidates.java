@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,18 +21,22 @@ import net.sourceforge.fenixedu.util.State;
 
 public class ReadDegreeCandidates extends FenixService {
 
-    public List run(InfoExecutionDegree infoExecutionDegree) {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static List run(InfoExecutionDegree infoExecutionDegree) {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 	return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
-    public List run(Integer degreeCurricularPlanId) {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static List run(Integer degreeCurricularPlanId) {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
     }
 
-    private List createInfoMasterDegreeCandidates(final Set<MasterDegreeCandidate> masterDegreeCandidates) {
+    private static List createInfoMasterDegreeCandidates(final Set<MasterDegreeCandidate> masterDegreeCandidates) {
 	final State activeCandidateSituationState = new State(State.ACTIVE);
 	final List<InfoMasterDegreeCandidate> result = new ArrayList<InfoMasterDegreeCandidate>();
 

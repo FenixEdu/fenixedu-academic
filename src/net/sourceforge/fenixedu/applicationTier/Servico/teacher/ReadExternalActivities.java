@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -24,7 +28,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadExternalActivities extends FenixService {
 
-    public SiteView run(String user) {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static SiteView run(String user) {
 	Teacher teacher = Teacher.readTeacherByUsername(user);
 	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 

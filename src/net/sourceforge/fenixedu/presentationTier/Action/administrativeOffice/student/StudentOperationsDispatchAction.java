@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateStudent;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -289,12 +289,12 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     public ActionForward createStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	Object[] args = { getRenderedObject("person"), getRenderedObject("executionDegree"),
-		getRenderedObject("precedentDegreeInformation"), getRenderedObject("chooseIngression"),
-		getRenderedObject("originInformation") };
-
 	try {
-	    Registration registration = (Registration) ServiceUtils.executeService("CreateStudent", args);
+	    Registration registration = CreateStudent.run((PersonBean) getRenderedObject("person"),
+		    (ExecutionDegreeBean) getRenderedObject("executionDegree"),
+		    (PrecedentDegreeInformationBean) getRenderedObject("precedentDegreeInformation"),
+		    (IngressionInformationBean) getRenderedObject("chooseIngression"),
+		    (OriginInformationBean) getRenderedObject("originInformation"));
 	    request.setAttribute("registration", registration);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

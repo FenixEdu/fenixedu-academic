@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -9,7 +13,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class RemoveShifts extends FenixService {
 
-    public Boolean run(final InfoClass infoClass, final List shiftOIDs) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Boolean run(final InfoClass infoClass, final List shiftOIDs) {
 	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 	final List<Shift> shifts = schoolClass.getAssociatedShifts();
 

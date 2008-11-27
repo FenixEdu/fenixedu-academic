@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedExtraWorkMonth;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedExtraWorkMonth;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportToGIAFAndSaveFile;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedExtraWorkMonth;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedMonth;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -153,8 +163,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    }
 	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	    final String result = (String) ServiceUtils.executeService("ExportClosedMonth", new Object[] { closedMonth,
-		    beginDate, endDate });
+	    final String result = (String) ExportClosedMonth.run(closedMonth,
+		    beginDate, endDate);
 	    response.setContentType("text/plain");
 	    response.addHeader("Content-Disposition", "attachment; filename=Telep.dat");
 	    byte[] data = result.getBytes();
@@ -444,9 +454,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
+	    result = (String) ExportClosedExtraWorkMonth.run(closedMonth,
 		    closedMonthDocumentType == ClosedMonthDocumentType.WORK_ABSENCES,
-		    closedMonthDocumentType == ClosedMonthDocumentType.MOVEMENTS });
+		    closedMonthDocumentType == ClosedMonthDocumentType.MOVEMENTS);
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
@@ -459,8 +469,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	String fileName = new StringBuilder().append(bundleEnumeration.getString(closedMonthDocumentType.name())).append("-")
 		.append(month).append("-").append(yearMonth.getYear()).append(".txt").toString();
 
-	ActionMessage error = (ActionMessage) ServiceUtils.executeService("ExportToGIAFAndSaveFile", new Object[] { closedMonth,
-		fileName, closedMonthDocumentType, result });
+	ActionMessage error = (ActionMessage) ExportToGIAFAndSaveFile.run(closedMonth,
+		fileName, closedMonthDocumentType, result);
 	if (error != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", error);
@@ -487,7 +497,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth, true, true });
+	    result = (String) ExportClosedExtraWorkMonth.run(closedMonth, true, true);
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
@@ -525,8 +535,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils
-		    .executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth, false, true });
+	    result = (String) ExportClosedExtraWorkMonth.run(closedMonth, false, true);
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));

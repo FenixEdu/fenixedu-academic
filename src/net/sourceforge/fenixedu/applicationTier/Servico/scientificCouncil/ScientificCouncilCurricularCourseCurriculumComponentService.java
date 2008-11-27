@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Factory.ScientificCouncilCurricularCourseCurriculumComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,7 +23,9 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
  */
 public class ScientificCouncilCurricularCourseCurriculumComponentService extends FenixService {
 
-    public SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
 	    throws FenixServiceException {
 
 	ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder = ScientificCouncilCurricularCourseCurriculumComponentBuilder

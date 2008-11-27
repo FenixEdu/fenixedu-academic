@@ -3,6 +3,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantInsurance;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantInsuranceByGrantContract;
+
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,10 +61,9 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 
 	try {
 	    // Read the insurance
-	    Object[] args = { idContract };
+
 	    InfoGrantContract infoGrantContract = null;
-	    InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ServiceUtils.executeService(
-		    "ReadGrantInsuranceByGrantContract", args);
+	    InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ReadGrantInsuranceByGrantContract.run(idContract);
 
 	    if (infoGrantInsurance == null) { // Is a new Insurance
 		// Read the contract
@@ -114,9 +119,8 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		} else {
 		    throw new Error("unkown type: " + infoGrantInsurance.getInfoGrantPaymentEntity());
 		}
-		Object[] args = { infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname };
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils.executeService(
-			"ReadPaymentEntityByNumberAndClass", args);
+
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantInsuranceForm, "project")) {
@@ -132,8 +136,8 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		infoGrantInsurance.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 	    }
 	    // Save the insurance
-	    Object[] args = { infoGrantInsurance };
-	    ServiceUtils.executeService("EditGrantInsurance", args);
+
+	    EditGrantInsurance.run(infoGrantInsurance);
 	    request.setAttribute("idInternal", editGrantInsuranceForm.get("idGrantOwner"));
 
 	} catch (FenixServiceException e) {

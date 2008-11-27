@@ -12,6 +12,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadDegreeCandidates;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,8 +59,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
 	    final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
 	    try {
-		infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService("ReadDegreeCandidates",
-			new Object[] { degreeCurricularPlanOID });
+		infoMasterDegreeCandidates = (List) ReadDegreeCandidates.run(degreeCurricularPlanOID);
 	    } catch (Exception e) {
 		throw new FenixActionException(e);
 	    }

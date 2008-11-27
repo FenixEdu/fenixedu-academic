@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -97,8 +99,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		return prepare(mapping, form, request, response);
 	    }
 
-	    Object args[] = { startDate, endDate, startTime, endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE };
-	    List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
+	    List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ReadAvailableRoomsForExam.run(startDate, endDate, startTime, endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE);
 	    Collections.sort(emptyRoomsList);
 
 	    if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {

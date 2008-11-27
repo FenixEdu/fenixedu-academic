@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,7 +47,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
      * payed values 3. in third, a double with the total of list's remaning
      * values
      */
-    public Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
 	    String gratuitySituationTypeName) throws FenixServiceException {
 
 	// at least one of the arguments it's obligator
@@ -176,7 +182,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 	return result;
     }
 
-    private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation
+    private static void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation
 	// .
 	// getRemainingValue
 	// (

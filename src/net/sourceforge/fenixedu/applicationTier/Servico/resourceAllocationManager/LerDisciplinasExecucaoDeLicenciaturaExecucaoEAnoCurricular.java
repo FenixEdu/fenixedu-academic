@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Serviço LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
  * 
@@ -22,7 +26,9 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends FenixService {
 
-    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYearID) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYearID) {
 
 	List listInfoDE = new ArrayList();
 

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,7 +17,9 @@ import org.joda.time.DateTimeFieldType;
 
 public class CreateRoomsPunctualScheduling extends FenixService {
 
-    public void run(RoomsPunctualSchedulingBean bean) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(RoomsPunctualSchedulingBean bean) throws FenixServiceException {
 
 	List<AllocatableSpace> selectedRooms = bean.getRooms();
 	if (!selectedRooms.isEmpty()) {

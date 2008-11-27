@@ -4,6 +4,10 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPart;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -110,9 +114,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		    paymentEntityClass = GrantCostCenter.class.getName();
 		}
 
-		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass };
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils.executeService(
-			"ReadPaymentEntityByNumberAndClass", args);
+		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantPartForm, "project")) {
@@ -138,8 +140,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		infoGrantPart.setInfoResponsibleTeacher(infoGrantPaymentEntity.getInfoResponsibleTeacher());
 	    }
 
-	    Object[] args = { infoGrantPart };
-	    ServiceUtils.executeService("EditGrantPart", args);
+	    EditGrantPart.run(infoGrantPart);
 
 	    request.setAttribute("idSubsidy", editGrantPartForm.get("grantSubsidyId"));
 

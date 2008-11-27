@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDocumentRequest extends FenixService {
 
-    public void run(final DocumentRequestEditBean documentRequestEditBean) throws FenixServiceException {
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final DocumentRequestEditBean documentRequestEditBean) throws FenixServiceException {
 	final DocumentRequest documentRequest = documentRequestEditBean.getDocumentRequest();
 	final DocumentRequestBean requestBean = getDocumentRequestBean(documentRequestEditBean);
 
@@ -22,7 +26,7 @@ public class EditDocumentRequest extends FenixService {
 	}
     }
 
-    private DocumentRequestBean getDocumentRequestBean(final DocumentRequestEditBean documentRequestEditBean) {
+    private static DocumentRequestBean getDocumentRequestBean(final DocumentRequestEditBean documentRequestEditBean) {
 	return new DocumentRequestBean(documentRequestEditBean.getAcademicServiceRequestSituationType(), documentRequestEditBean
 		.getEmployee(), documentRequestEditBean.getJustification(), documentRequestEditBean.getNumberOfPages());
     }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,9 +80,8 @@ public class DefineCommentAction extends
 	String executionCourseCode = request.getParameter("executionCourseCode");
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
 	try {
-	    ServiceUtils.executeService("DefineExamComment", argsDefineComment);
+	    DefineExamComment.run(executionCourseCode, infoExecutionPeriod.getIdInternal(), comment);
 	} catch (FenixServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));

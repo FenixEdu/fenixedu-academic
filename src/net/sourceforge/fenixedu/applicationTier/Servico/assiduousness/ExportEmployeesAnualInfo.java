@@ -29,9 +29,14 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ExportEmployeesAnualInfo extends FenixService {
 
-    public List<EmployeeAnualInfo> run(YearMonth yearMonth, AssiduousnessStatus assiduousnessStatus) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static List<EmployeeAnualInfo> run(YearMonth yearMonth, AssiduousnessStatus assiduousnessStatus) {
 
 	ClosedMonth closedMonth;
 	List<Assiduousness> employeesAssiduousness = getEmployeesAssiduousnessByStatus(assiduousnessStatus, yearMonth);
@@ -58,8 +63,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return employeeAnualInfoList;
     }
 
-    private void fillIn(ClosedMonth closedMonth, EmployeeAnualInfo employeeAnualInfo, AssiduousnessStatus assiduousnessStatus,
-	    LocalDate beginDate, LocalDate endDate) {
+    private static void fillIn(ClosedMonth closedMonth, EmployeeAnualInfo employeeAnualInfo,
+	    AssiduousnessStatus assiduousnessStatus, LocalDate beginDate, LocalDate endDate) {
 	List<Leave> leaves = employeeAnualInfo.getEmployee().getAssiduousness().getLeaves(beginDate, endDate);
 	EmployeeMonthInfo employeeMonthInfo = employeeAnualInfo.getCurrentMonthInfo();
 	// categoria - não temos
@@ -130,7 +135,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	}
     }
 
-    private Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+    private static Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
 	    List<JustificationMotive> justificationMotives) {
 	int total = 0;
 	for (JustificationMotive justificationMotive : justificationMotives) {
@@ -142,7 +147,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return total == 0 ? null : Integer.valueOf(total);
     }
 
-    private Integer getJustificationDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate, String... justifications) {
+    private static Integer getJustificationDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+	    String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
 	    Integer days = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
@@ -153,7 +159,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return total == 0 ? null : Integer.valueOf(total);
     }
 
-    private Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+    private static Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
 	    String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
@@ -165,7 +171,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return total == 0 ? null : Integer.valueOf(total);
     }
 
-    private void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
+    private static void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    LocalDate beginDate, LocalDate endDate) {
 	double clinicTreatmentPercentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "T.AMB", beginDate, endDate);
 	double medicExams = getClinicTreatmentPercentage(assiduousnessClosedMonth, "IDMED", beginDate, endDate);
@@ -175,15 +181,15 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	}
     }
 
-    private void setChildClinicTreatment(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    LocalDate beginDate, LocalDate endDate) {
+    private static void setChildClinicTreatment(EmployeeMonthInfo employeeMonthInfo,
+	    AssiduousnessClosedMonth assiduousnessClosedMonth, LocalDate beginDate, LocalDate endDate) {
 	double percentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "TAMBFM", beginDate, endDate);
 	if (percentage != 0.0) {
 	    employeeMonthInfo.setChildClinicMedicalTreatment(NumberUtils.formatDoubleWithoutRound(percentage, 1));
 	}
     }
 
-    private void setRelativeClinicTreatment(EmployeeMonthInfo employeeMonthInfo,
+    private static void setRelativeClinicTreatment(EmployeeMonthInfo employeeMonthInfo,
 	    AssiduousnessClosedMonth assiduousnessClosedMonth, LocalDate beginDate, LocalDate endDate) {
 	double percentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "TAMBF", beginDate, endDate);
 	if (percentage != 0.0) {
@@ -191,8 +197,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	}
     }
 
-    private double getClinicTreatmentPercentage(AssiduousnessClosedMonth assiduousnessClosedMonth, String justificationAcronym,
-	    LocalDate beginDate, LocalDate endDate) {
+    private static double getClinicTreatmentPercentage(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    String justificationAcronym, LocalDate beginDate, LocalDate endDate) {
 	Duration duration = Duration.ZERO;
 	for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
 	    if (closedMonthJustification.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
@@ -208,7 +214,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return percentage;
     }
 
-    private void setVacationsInWorkDays(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate,
+    private static void setVacationsInWorkDays(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate,
 	    LocalDate endDate) {
 	Interval dateInterval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight());
 	double counter = 0;
@@ -229,12 +235,12 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	employeeMonthInfo.setVacationsInWorkDays(counter != 0 ? counter : null);
     }
 
-    private void setAcquiredDismissal(Assiduousness assiduousness) {
+    private static void setAcquiredDismissal(Assiduousness assiduousness) {
 	// TODO not supported yet
 
     }
 
-    private void setAcquiredVacations(EmployeeMonthInfo employeeMonthInfo, LocalDate beginDate) {
+    private static void setAcquiredVacations(EmployeeMonthInfo employeeMonthInfo, LocalDate beginDate) {
 	int counter = 0;
 	for (ExtraWorkRequest extraWorkRequest : employeeMonthInfo.getEmployeeAnualInfo().getEmployee().getAssiduousness()
 		.getExtraWorkRequests(beginDate)) {
@@ -243,7 +249,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	employeeMonthInfo.setAcquiredExtraWorkVacations(counter != 0 ? counter : null);
     }
 
-    private void setMedicalLeaves(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate, LocalDate endDate) {
+    private static void setMedicalLeaves(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate,
+	    LocalDate endDate) {
 	int sonMedicalLeave = 0;
 	int relativeMedicalLeave = 0;
 	int deficiencyLeave = 0;
@@ -303,8 +310,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 
     }
 
-    private void setUnjustifiedMiss(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    AssiduousnessClosedMonth previousAssiduousnessClosedMonth) {
+    private static void setUnjustifiedMiss(EmployeeMonthInfo employeeMonthInfo,
+	    AssiduousnessClosedMonth assiduousnessClosedMonth, AssiduousnessClosedMonth previousAssiduousnessClosedMonth) {
 	BigDecimal unjustified = BigDecimal
 		.valueOf(assiduousnessClosedMonth.getAccumulatedUnjustified() != null ? assiduousnessClosedMonth
 			.getAccumulatedUnjustified() : 0.0);
@@ -321,7 +328,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	employeeMonthInfo.setUnjustifiedMiss(unjustified.doubleValue() != 0.0 ? unjustified.doubleValue() : null);
     }
 
-    private void setArticle66(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
+    private static void setArticle66(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    AssiduousnessClosedMonth previousAssiduousnessClosedMonth) {
 	BigDecimal a66 = BigDecimal.valueOf(assiduousnessClosedMonth.getAccumulatedArticle66() != null ? assiduousnessClosedMonth
 		.getAccumulatedArticle66() : 0.0);
@@ -335,7 +342,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	employeeMonthInfo.setArticle66(a66.doubleValue() != 0.0 ? a66.doubleValue() : null);
     }
 
-    private AssiduousnessClosedMonth getAssiduousnessClosedMonth(ClosedMonth closedMonth, Assiduousness assiduousness) {
+    private static AssiduousnessClosedMonth getAssiduousnessClosedMonth(ClosedMonth closedMonth, Assiduousness assiduousness) {
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().equals(assiduousness)) {
 		return assiduousnessClosedMonth;
@@ -344,7 +351,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return null;
     }
 
-    private Double countLeaveNumberOfHalfDays(List<Leave> leaves, String justificationAcronym) {
+    private static Double countLeaveNumberOfHalfDays(List<Leave> leaves, String justificationAcronym) {
 	double counter = 0;
 	for (Leave leave : leaves) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
@@ -354,7 +361,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return counter;
     }
 
-    private Integer countLeaveNumberOfDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate, LocalDate endDate) {
+    private static Integer countLeaveNumberOfDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
+	    LocalDate endDate) {
 	int counter = 0;
 	for (Leave leave : leaves) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
@@ -364,7 +372,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return counter != 0 ? counter : null;
     }
 
-    private int countLeaveNumberOfDays(int counter, Leave leave, LocalDate beginDate, LocalDate endDate) {
+    private static int countLeaveNumberOfDays(int counter, Leave leave, LocalDate beginDate, LocalDate endDate) {
 	DateTime beginDateInPeriod = leave.getDate().isBefore(beginDate.toDateTimeAtMidnight()) ? beginDate
 		.toDateTimeAtMidnight() : leave.getDate();
 	DateTime endDateInPeriod = leave.getEndDate().isAfter(endDate.toDateTimeAtMidnight()) ? endDate.toDateTimeAtMidnight()
@@ -372,7 +380,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return Days.daysBetween(beginDateInPeriod, endDateInPeriod.plusDays(1)).getDays();
     }
 
-    private Integer countLeaveNumberOfWorkDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
+    private static Integer countLeaveNumberOfWorkDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
 	    LocalDate endDate) {
 	int countWorkDays = 0;
 	Interval dateInterval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight());
@@ -384,7 +392,8 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return countWorkDays != 0 ? countWorkDays : null;
     }
 
-    private List<Assiduousness> getEmployeesAssiduousnessByStatus(AssiduousnessStatus assiduousnessStatus, YearMonth yearMonth) {
+    private static List<Assiduousness> getEmployeesAssiduousnessByStatus(AssiduousnessStatus assiduousnessStatus,
+	    YearMonth yearMonth) {
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 01);
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getNumberOfMonth(), beginDate.dayOfMonth()
 		.getMaximumValue());
@@ -398,7 +407,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return employeesAssiduousness;
     }
 
-    private boolean isAnyStatusHistoryActiveAndHasStatus(AssiduousnessStatus assiduousnessStatus,
+    private static boolean isAnyStatusHistoryActiveAndHasStatus(AssiduousnessStatus assiduousnessStatus,
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistories, LocalDate beginDate, LocalDate endDate) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
 	    if (isActiveAndHasStatus(assiduousnessStatusHistory, assiduousnessStatus, beginDate, endDate)) {
@@ -408,7 +417,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return false;
     }
 
-    private boolean isActiveAndHasStatus(AssiduousnessStatusHistory assiduousnessStatusHistory,
+    private static boolean isActiveAndHasStatus(AssiduousnessStatusHistory assiduousnessStatusHistory,
 	    AssiduousnessStatus assiduousnessStatus, LocalDate beginDate, LocalDate endDate) {
 	if (assiduousnessStatusHistory.getEndDate() != null) {
 	    Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),

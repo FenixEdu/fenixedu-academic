@@ -4,6 +4,10 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPaymentEntity;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,10 +96,9 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 	    // Check if grant cost center exists
 	    InfoGrantCostCenter infoGrantCostCenter = null;
 	    if (infoGrantProject.getInfoGrantCostCenter() != null) {
-		Object[] argsCostCenter = { infoGrantProject.getInfoGrantCostCenter().getNumber(),
-			GrantCostCenter.class.getName() };
-		infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService("ReadPaymentEntityByNumberAndClass",
-			argsCostCenter);
+
+		infoGrantCostCenter = (InfoGrantCostCenter) ReadPaymentEntityByNumberAndClass.run(infoGrantProject.getInfoGrantCostCenter().getNumber(),
+			GrantCostCenter.class.getName());
 	    }
 
 	    if (infoGrantCostCenter == null) {
@@ -106,8 +109,8 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 	    infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
 
 	    // Edit-Create the project
-	    Object[] args = { infoGrantProject };
-	    ServiceUtils.executeService("EditGrantPaymentEntity", args);
+
+	    EditGrantPaymentEntity.run(infoGrantProject);
 
 	    return mapping.findForward("manage-grant-project");
 	} catch (ExistingServiceException e) {

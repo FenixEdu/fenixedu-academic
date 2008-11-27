@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -96,8 +98,8 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	final CurricularCourse curricularCourse = getOptionalCurricularCourse(request);
 
 	try {
-	    ServiceUtils.executeService("CreateExtraEnrolment", new Object[] { studentCurricularPlan, executionPeriod,
-		    curricularCourse, groupType });
+	    CreateExtraEnrolment.run(studentCurricularPlan, executionPeriod,
+		    curricularCourse, groupType);
 
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());

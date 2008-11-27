@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupStudentEnrolment;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,10 +49,9 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 	String shiftCodeString = request.getParameter("shiftCode");
 	request.setAttribute("shiftCode", shiftCodeString);
 
-	Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(1) };
 
 	try {
-	    ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
+	    VerifyStudentGroupAtributes.run(null, null, studentGroupCode, userView.getUtilizador(), new Integer(1));
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -85,10 +90,9 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 	}
 
-	Object[] args2 = { studentGroupCode };
 	ISiteComponent viewStudentGroup = null;
 	try {
-	    viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args2);
+	    viewStudentGroup = (InfoSiteStudentGroup) ReadStudentGroupInformation.run(studentGroupCode);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors3 = new ActionErrors();
@@ -119,11 +123,10 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 	Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-	Object[] args1 = { studentGroupCode, userView.getUtilizador() };
 
 	try {
 
-	    ServiceUtils.executeService("GroupStudentEnrolment", args1);
+	    GroupStudentEnrolment.run(studentGroupCode, userView.getUtilizador());
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors = new ActionErrors();

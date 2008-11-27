@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.EditGuideInformation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChangeGuideSituation;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -134,11 +138,10 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-	Object args[] = { guideNumber, guideYear, guideVersion, calendar.getTime(), remarks, situationOfGuide, paymentType,
-		userView };
 
 	try {
-	    ServiceManagerServiceFactory.executeService("ChangeGuideSituation", args);
+	    ChangeGuideSituation.run(guideNumber, guideYear, guideVersion, calendar.getTime(), remarks, situationOfGuide, paymentType,
+		userView);
 	} catch (NonValidChangeServiceException e) {
 	    throw new NonValidChangeActionException(e);
 	} catch (ExistingServiceException e) {
@@ -281,8 +284,8 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
 	InfoGuide result = null;
 	try {
-	    Object args[] = { infoGuide, quantityList, contributorNumber, othersRemarks, othersQuantity, othersPrice };
-	    result = (InfoGuide) ServiceManagerServiceFactory.executeService("EditGuideInformation", args);
+
+	    result = (InfoGuide) EditGuideInformation.run(infoGuide, quantityList, contributorNumber, othersRemarks, othersQuantity, othersPrice);
 	} catch (InvalidChangeServiceException e) {
 	    throw new InvalidChangeActionException(e);
 	} catch (NoChangeMadeServiceException e) {

@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +31,9 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
  */
 public class GiveUpQuestion extends FenixService {
 
-    public void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
 	    String path) throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new FenixServiceException();
@@ -93,7 +99,7 @@ public class GiveUpQuestion extends FenixService {
 	return;
     }
 
-    private Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion, StudentTestQuestion nextStudentTestQuestion,
+    private static Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion, StudentTestQuestion nextStudentTestQuestion,
 	    String path) throws FenixServiceException {
 	ParseSubQuestion parse = new ParseSubQuestion();
 	try {
@@ -119,7 +125,7 @@ public class GiveUpQuestion extends FenixService {
 	return nextStudentTestQuestion.getSubQuestionByItem().getMaxValue() * diff;
     }
 
-    protected String getNextItem(List<ResponseProcessing> responseProcessingList) {
+    protected static String getNextItem(List<ResponseProcessing> responseProcessingList) {
 	String nextItem = null;
 	for (ResponseProcessing responseProcessing : responseProcessingList) {
 	    if (!responseProcessing.isFenixCorrectResponse()) {

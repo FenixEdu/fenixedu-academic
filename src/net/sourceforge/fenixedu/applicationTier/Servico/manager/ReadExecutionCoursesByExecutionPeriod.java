@@ -10,10 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByExecutionPeriod extends FenixService {
 
-    public List run(Integer executionPeriodId) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer executionPeriodId) throws FenixServiceException {
 	List allExecutionCoursesFromExecutionPeriod = null;
 	List<InfoExecutionCourse> allExecutionCourses = null;
 

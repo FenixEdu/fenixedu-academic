@@ -11,11 +11,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurri
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateEditCompetenceCourse extends FenixService {
 
-    public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs)
-	    throws Exception {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs)
+	    throws NonExistingServiceException, InvalidArgumentsServiceException {
 	List<Department> departments = new ArrayList<Department>();
 	for (Integer departmentID : departmentIDs) {
 	    Department department = rootDomainObject.readDepartmentByOID(departmentID);

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteVehicleAllocation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateVehicleAllocation;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -63,7 +67,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	VehicleAllocationBean bean = (VehicleAllocationBean) getRenderedObject();
 
 	try {
-	    executeService("CreateVehicleAllocation", new Object[] { bean });
+	    CreateVehicleAllocation.run(bean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("allocationBean", bean);
@@ -87,7 +91,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	VehicleAllocation allocation = getAllocationFromParameter(request);
 
 	try {
-	    executeService("DeleteVehicleAllocation", new Object[] { allocation });
+	    DeleteVehicleAllocation.run(allocation);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

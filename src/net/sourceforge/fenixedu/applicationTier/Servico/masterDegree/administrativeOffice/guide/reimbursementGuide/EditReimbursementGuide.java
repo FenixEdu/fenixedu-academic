@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +52,9 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class EditReimbursementGuide extends FenixService {
 
-    public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks, IUserView userView)
 	    throws FenixServiceException {
 	ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
 	if (reimbursementGuide == null) {
@@ -156,7 +162,7 @@ public class EditReimbursementGuide extends FenixService {
      *         state is annuled it cannot be changed Also the state doesnt need
      *         to change
      */
-    private boolean validateReimbursementGuideSituation(ReimbursementGuideSituation activeSituation, String situation) {
+    private static boolean validateReimbursementGuideSituation(ReimbursementGuideSituation activeSituation, String situation) {
 
 	ReimbursementGuideState newState = ReimbursementGuideState.valueOf(situation);
 	ReimbursementGuideState currentState = activeSituation.getReimbursementGuideState();
@@ -196,7 +202,7 @@ public class EditReimbursementGuide extends FenixService {
      *         equal than their guide entry
      * @throws ExcepcaoPersistencia
      */
-    private boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry)
+    private static boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry)
 	    throws FenixServiceException {
 	GuideEntry guideEntry = reimbursementGuideEntry.getGuideEntry();
 	Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
@@ -228,7 +234,7 @@ public class EditReimbursementGuide extends FenixService {
 
     }
 
-    private boolean isGreaterThan(Double guideEntryValue, Double sum) {
+    private static boolean isGreaterThan(Double guideEntryValue, Double sum) {
 	if (sum.doubleValue() > guideEntryValue.doubleValue()) {
 	    return false;
 	}

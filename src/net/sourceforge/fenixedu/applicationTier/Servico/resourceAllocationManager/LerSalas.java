@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +13,9 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 public class LerSalas extends FenixService {
 
-    public Object run() {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Object run() {
 	final List<InfoRoom> infoSalas = new ArrayList<InfoRoom>();
 	for (final AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {
 	    infoSalas.add(InfoRoom.newInfoFromDomain(room));

@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantTypes;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +30,8 @@ public class ManageGrantTypeAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantTypeForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	Object[] args = {};
 	IUserView userView = UserView.getUser();
-	List infoGrantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
+	List infoGrantTypeList = (List) ReadAllGrantTypes.run();
 
 	if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
 	    request.setAttribute("infoGrantTypeList", infoGrantTypeList);

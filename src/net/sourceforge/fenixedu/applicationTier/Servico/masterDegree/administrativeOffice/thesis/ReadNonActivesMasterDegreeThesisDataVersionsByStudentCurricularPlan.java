@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
  */
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends FenixService {
 
-    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
 
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
 		.getIdInternal());

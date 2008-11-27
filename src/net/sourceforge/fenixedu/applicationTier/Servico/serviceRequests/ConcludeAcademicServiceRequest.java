@@ -9,9 +9,14 @@ import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ConcludeAcademicServiceRequest extends FenixService {
 
-    public void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent,
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final AcademicServiceRequest academicServiceRequest, final Boolean sendEmailToStudent,
 	    final YearMonthDay situationDate, final String justification) {
 	if (!academicServiceRequest.isConcluded()) {
 	    if (situationDate == null) {
@@ -26,7 +31,7 @@ public class ConcludeAcademicServiceRequest extends FenixService {
 	}
     }
 
-    private void sendEmail(final AcademicServiceRequest academicServiceRequest) {
+    private static void sendEmail(final AcademicServiceRequest academicServiceRequest) {
 
 	final ResourceBundle globalBundle = ResourceBundle.getBundle("resources.GlobalResources");
 	final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");

@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +33,9 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
  */
 public class ReadGroupingShifts extends FenixService {
 
-    public InfoSiteShifts run(Integer groupingCode, Integer studentGroupCode) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoSiteShifts run(Integer groupingCode, Integer studentGroupCode) throws FenixServiceException {
 
 	InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
 	List infoShifts = new ArrayList();

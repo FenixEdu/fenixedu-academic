@@ -22,12 +22,17 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Fernanda Quitério 17/Nov/2003
  */
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends FenixService {
 
-    public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode, String stringExecutionYear)
 	    throws FenixServiceException {
 	InfoCurriculum infoCurriculum = null;
 
@@ -85,7 +90,8 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
 	return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes, List allExecutionCourses) {
+    private static InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes,
+	    List allExecutionCourses) {
 
 	InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
 

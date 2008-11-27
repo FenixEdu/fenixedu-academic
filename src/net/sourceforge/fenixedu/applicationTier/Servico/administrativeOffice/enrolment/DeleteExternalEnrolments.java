@@ -4,11 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExternalEnrolments extends FenixService {
 
-    public void run(final Registration registration, String[] externalEnrolmentIDs) throws FenixServiceException {
-
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final Registration registration, String[] externalEnrolmentIDs) throws FenixServiceException {
 	for (final String externalEnrolmentID : externalEnrolmentIDs) {
 	    final ExternalEnrolment externalEnrolment = getExternalEnrolmentByID(registration, Integer
 		    .valueOf(externalEnrolmentID));
@@ -17,10 +20,9 @@ public class DeleteExternalEnrolments extends FenixService {
 	    }
 	    externalEnrolment.delete();
 	}
-
     }
 
-    private ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final Integer externalEnrolmentID) {
+    private static ExternalEnrolment getExternalEnrolmentByID(final Registration registration, final Integer externalEnrolmentID) {
 	for (final ExternalEnrolment externalEnrolment : registration.getExternalEnrolmentsSet()) {
 	    if (externalEnrolment.getIdInternal().equals(externalEnrolmentID)) {
 		return externalEnrolment;

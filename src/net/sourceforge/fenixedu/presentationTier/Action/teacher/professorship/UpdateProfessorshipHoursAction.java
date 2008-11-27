@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.UpdateProfessorshipsHours;
+
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +42,10 @@ public class UpdateProfessorshipHoursAction extends Action {
 	HashMap hours = (HashMap) professorshipsHours.get("hours");
 	Integer teacherId = (Integer) professorshipsHours.get("teacherId");
 	Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
-	Object args[] = { teacherId, executionYearId, hours };
+
 
 	IUserView userView = UserView.getUser();
-	ServiceUtils.executeService("UpdateProfessorshipsHours", args);
+	UpdateProfessorshipsHours.run(teacherId, executionYearId, hours);
 
 	return mapping.findForward("successfull-update");
     }

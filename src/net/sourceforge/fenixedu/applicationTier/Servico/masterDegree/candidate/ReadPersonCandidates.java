@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +16,9 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class ReadPersonCandidates extends FenixService {
 
-    public List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_CANDIDATE_PREDICATE")
+    @Service
+    public static List<InfoMasterDegreeCandidate> run(final String username) throws FenixServiceException {
 	final Person person = Person.readPersonByUsername(username);
 	if (person == null) {
 	    throw new FenixServiceException("error.noPerson");

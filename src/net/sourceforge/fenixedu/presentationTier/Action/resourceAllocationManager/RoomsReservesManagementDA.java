@@ -1,5 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -90,7 +104,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 
 	try {
-	    executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });
+	    DeleteGenericEvent.run(genericEventFromParameter);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}
@@ -121,7 +135,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
 	try {
-	    executeService("EditRoomsPunctualScheduling", new Object[] { bean });
+	    EditRoomsPunctualScheduling.run(bean);
 
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
@@ -160,7 +174,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
 	try {
-	    executeService("CreateRoomsPunctualScheduling", new Object[] { bean });
+	    CreateRoomsPunctualScheduling.run(bean);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	    request.setAttribute("roomsPunctualSchedulingBean", bean);
@@ -181,7 +195,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
-	    executeService("OpenPunctualRoomsOccupationRequest", new Object[] { roomsReserveRequest, getLoggedPerson(request) });
+	    OpenPunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
@@ -193,7 +207,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
-	    executeService("OpenPunctualRoomsOccupationRequest", new Object[] { roomsReserveRequest, getLoggedPerson(request) });
+	    OpenPunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
@@ -206,7 +220,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
-	    executeService("ClosePunctualRoomsOccupationRequest", new Object[] { roomsReserveRequest, getLoggedPerson(request) });
+	    ClosePunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
@@ -218,7 +232,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
-	    executeService("ClosePunctualRoomsOccupationRequest", new Object[] { roomsReserveRequest, getLoggedPerson(request) });
+	    ClosePunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}

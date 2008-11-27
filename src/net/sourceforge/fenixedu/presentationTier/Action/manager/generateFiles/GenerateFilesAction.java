@@ -23,8 +23,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsuranceNotDefinedServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.GenerateOutgoingSibsPaymentFileByExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.GeneratePaymentLettersFileByExecutionYearID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -103,21 +104,16 @@ public class GenerateFilesAction extends FenixDispatchAction {
 	}
 
 	Date paymentEndDate = dateFormat.parse(((DynaActionForm) actionForm).getString("paymentEndDate"));
-	Object[] args = { infoExecutionYear.getIdInternal(), paymentEndDate };
-	String serviceName = null;
-
-	// Create respective file
-	if (fileType.equals("sibs")) {
-	    serviceName = "GenerateOutgoingSibsPaymentFileByExecutionYearID";
-
-	} else if (fileType.equals("letters")) {
-	    serviceName = "GeneratePaymentLettersFileByExecutionYearID";
-	}
-
 	byte[] generatedFile = null;
 	try {
-	    generatedFile = (byte[]) ServiceManagerServiceFactory.executeService(serviceName, args);
-
+	    // Create respective file
+	    if (fileType.equals("sibs")) {
+		generatedFile = GenerateOutgoingSibsPaymentFileByExecutionYearID.run(infoExecutionYear.getIdInternal(),
+			paymentEndDate);
+	    } else if (fileType.equals("letters")) {
+		generatedFile = GeneratePaymentLettersFileByExecutionYearID
+			.run(infoExecutionYear.getIdInternal(), paymentEndDate);
+	    }
 	} catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
 	    addErrorMessage(request, "noList", "error.generateFiles.invalidBind", exception.getMessage());
 	    return mapping.getInputForward();

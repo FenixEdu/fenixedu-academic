@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadExternalActivities;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,8 +38,7 @@ public class ReadExternalActivitiesAction extends FenixAction {
 
 	IUserView userView = getUserView(request);
 
-	Object[] args = { userView.getUtilizador() };
-	SiteView siteView = (SiteView) ServiceUtils.executeService("ReadExternalActivities", args);
+	SiteView siteView = (SiteView) ReadExternalActivities.run(userView.getUtilizador());
 
 	request.setAttribute("siteView", siteView);
 

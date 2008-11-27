@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -11,7 +15,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class AddSchoolClassesToShift extends FenixService {
 
-    public void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
 
 	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 	if (shift == null)

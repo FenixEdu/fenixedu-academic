@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntr
  */
 public class ReadNonProcessedSibsEntries extends FenixService {
 
-    public List run() throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run() throws FenixServiceException {
 	final List<InfoSibsPaymentFileEntry> result = new ArrayList<InfoSibsPaymentFileEntry>();
 	for (final SibsPaymentFileEntry sibsPaymentFileEntry : SibsPaymentFileEntry.readNonProcessed()) {
 	    result.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));

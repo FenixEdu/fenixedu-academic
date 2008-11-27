@@ -14,14 +14,12 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.operator.GeneratePasswordsForCandidacies;
 import net.sourceforge.fenixedu.dataTransferObject.person.PasswordBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -66,22 +64,13 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 
     public ActionForward generatePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	final List<PasswordBean> passwordBeans = GeneratePasswordsForCandidacies.run(Arrays
+		.asList((Integer[]) ((DynaActionForm) form).get("candidacyIdsToProcess")));
 
-	final Object args[] = { Arrays.asList((Integer[]) ((DynaActionForm) form).get("candidacyIdsToProcess")) };
-	try {
+	Collections.sort(passwordBeans, new BeanComparator("person.username"));
+	request.setAttribute("passwordBeans", passwordBeans);
 
-	    final List<PasswordBean> passwordBeans = (List<PasswordBean>) ServiceManagerServiceFactory.executeService(
-		    "GeneratePasswordsForCandidacies", args);
-
-	    Collections.sort(passwordBeans, new BeanComparator("person.username"));
-	    request.setAttribute("passwordBeans", passwordBeans);
-
-	    return mapping.findForward("success");
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException();
-	}
-
+	return mapping.findForward("success");
     }
 
 }

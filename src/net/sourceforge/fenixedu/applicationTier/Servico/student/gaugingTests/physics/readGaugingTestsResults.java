@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.physics;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -11,7 +15,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class readGaugingTestsResults extends FenixService {
 
-    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
 
 	Person person = Person.readPersonByUsername(userView.getUtilizador());
 

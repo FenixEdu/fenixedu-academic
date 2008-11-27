@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.project;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteResearchProject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
 	final IUserView userView = getUserView(request);
 	final Integer oid = Integer.parseInt(request.getParameter("projectId"));
 
-	ServiceUtils.executeService("DeleteResearchProject", new Object[] { oid });
+	DeleteResearchProject.run(oid);
 
 	return listProjects(mapping, form, request, response);
     }

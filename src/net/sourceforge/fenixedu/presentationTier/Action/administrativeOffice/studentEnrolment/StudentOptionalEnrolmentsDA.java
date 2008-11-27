@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateOptionalEnrolment;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,10 +70,10 @@ public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 	final Context context = rootDomainObject.readContextByOID(contextID);
 
 	try {
-	    ServiceUtils.executeService("CreateOptionalEnrolment", new Object[] { studentCurricularPlan, executionSemester,
+	    CreateOptionalEnrolment.run(studentCurricularPlan, executionSemester,
 		    (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(curriculumGroupID),
 		    rootDomainObject.readContextByOID(contextID),
-		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), EnrollmentCondition.VALIDATED });
+		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), EnrollmentCondition.VALIDATED);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    StudentOptionalEnrolmentBean optionalEnrolmentBean = new StudentOptionalEnrolmentBean(studentCurricularPlan,

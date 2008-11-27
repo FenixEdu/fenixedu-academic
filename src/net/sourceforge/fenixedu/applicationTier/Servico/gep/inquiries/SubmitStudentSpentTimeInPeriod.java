@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -19,7 +21,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class SubmitStudentSpentTimeInPeriod extends FenixService {
 
-    public void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(Student student, List<CurricularCourseInquiriesRegistryDTO> courses, Integer weeklySpentHours,
 	    ExecutionSemester executionSemester) {
 
 	if (!checkTotalPercentageDistribution(courses)) {
@@ -46,7 +50,7 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 
     }
 
-    private boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
+    private static boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	Integer totalPercentage = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
 	    totalPercentage += curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage();
@@ -55,7 +59,7 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 	return totalPercentage == 100;
     }
 
-    private boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
+    private static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	double totalDays = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
 	    totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();

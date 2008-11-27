@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.Price;
  */
 public class ReadCertificateList extends FenixService {
 
-    public List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException {
 	final List<InfoPrice> result = new ArrayList<InfoPrice>();
 	for (final Price price : Price.readByGraduationTypeAndDocumentTypes(graduationType, documentTypes)) {
 	    result.add(InfoPrice.newInfoFromDoaim(price));

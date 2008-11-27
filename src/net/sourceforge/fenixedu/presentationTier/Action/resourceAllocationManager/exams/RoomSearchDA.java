@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -98,18 +97,10 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
 	DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-	Object args[] = { YearMonthDay.fromCalendarFields(searchDate), YearMonthDay.fromCalendarFields(searchDate),
-		HourMinuteSecond.fromCalendarFields(searchStartTime), HourMinuteSecond.fromCalendarFields(searchEndTime),
-		dayOfWeek, null, null, Boolean.FALSE };
-
 	List<InfoRoom> availableInfoRoom = null;
-	try {
-	    availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
-
-	} catch (ExistingServiceException ex) {
-
-	    // throw new ExistingActionException("", ex);
-	}
+	availableInfoRoom = ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(searchDate), YearMonthDay
+		.fromCalendarFields(searchDate), HourMinuteSecond.fromCalendarFields(searchStartTime), HourMinuteSecond
+		.fromCalendarFields(searchEndTime), dayOfWeek, null, null, Boolean.FALSE);
 	String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/" + roomSearchForm.get("year");
 	String startTime = roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
 	String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
@@ -134,7 +125,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	    if (normal != null || exam != null) {
 		Iterator<InfoRoom> iter = availableInfoRoom.iterator();
 		while (iter.hasNext()) {
-		    InfoRoom elem = (InfoRoom) iter.next();
+		    InfoRoom elem = iter.next();
 		    if (!((normal != null && elem.getCapacidadeNormal().intValue() < normal.intValue()) || (exam != null && elem
 			    .getCapacidadeExame().intValue() < exam.intValue()))) {
 			newAvailableInfoRoom.add(elem);
@@ -150,7 +141,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	    Iterator<InfoRoom> iter = newAvailableInfoRoom.iterator();
 	    int i = 0;
 	    while (iter.hasNext()) {
-		InfoRoom elem = (InfoRoom) iter.next();
+		InfoRoom elem = iter.next();
 		availableRoomId[i] = elem.getIdInternal().toString();
 	    }
 	    request.setAttribute(SessionConstants.AVAILABLE_ROOMS_ID, availableRoomId);
@@ -171,7 +162,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
 	for (int i = 0; i < availableRoomsId.length; i++) {
 
-	    InfoRoom infoRoom = (InfoRoom) ReadRoomByOID.run(new Integer(availableRoomsId[i]));
+	    InfoRoom infoRoom = ReadRoomByOID.run(new Integer(availableRoomsId[i]));
 	    availableRooms.add(infoRoom);
 	}
 	if ((sortParameter != null) && (sortParameter.length() != 0)) {

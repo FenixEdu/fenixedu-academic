@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.owner;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +34,8 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
 	DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
 	grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
-	Object[] args = { null, null, null, grantOwnerNumber, null, null };
 	IUserView userView = UserView.getUser();
-	infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", args);
+	infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, null, null);
 
 	if (infoGrantOwnerList.isEmpty()) {
 	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull", grantOwnerNumber);

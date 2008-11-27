@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +31,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends FenixService {
 
-    public Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(Integer degreeCurricularPlanID, String executionYearName) throws FenixServiceException {
 	if (degreeCurricularPlanID == null || executionYearName == null) {
 	    throw new FenixServiceException("error.impossible.noGratuityValues");
 	}

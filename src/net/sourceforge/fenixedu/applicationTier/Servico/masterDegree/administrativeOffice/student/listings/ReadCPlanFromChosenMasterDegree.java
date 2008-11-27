@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
  */
 public class ReadCPlanFromChosenMasterDegree extends FenixService {
 
-    public List run(Integer idInternal) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer idInternal) throws FenixServiceException {
 	Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
 	List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();

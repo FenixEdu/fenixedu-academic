@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProof;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -272,11 +274,11 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
 	    Integer scpID, List<Integer> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
 	    ScholarshipNotFinishedActionException, ExistingActionException, FenixFilterException {
-	Object args2[] = { userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber, juriesNumbers,
-		externalJuriesIDs };
+
 
 	try {
-	    ServiceUtils.executeService("ChangeMasterDegreeProof", args2);
+	    ChangeMasterDegreeProof.run(userView, scpID, proofDate, thesisDeliveryDate, finalResult, attachedCopiesNumber, juriesNumbers,
+		externalJuriesIDs);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (ScholarshipNotFinishedServiceException e) {

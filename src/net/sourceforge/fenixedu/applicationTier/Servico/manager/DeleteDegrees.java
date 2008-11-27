@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -16,7 +18,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class DeleteDegrees extends FenixService {
 
     // delete a set of degrees
-    public List run(List degreesInternalIds) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List degreesInternalIds) throws FenixServiceException {
 	Iterator iter = degreesInternalIds.iterator();
 
 	List<String> undeletedDegreesNames = new ArrayList<String>();

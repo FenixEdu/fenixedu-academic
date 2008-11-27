@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -60,9 +62,9 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 
 	final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
 	final PersonSpaceOccupation personSpaceOccupation = getPersonSpaceOccupationFromParameter(request);
-	Object[] args = { personSpaceOccupation };
+
 	try {
-	    executeService("DeletePersonSpaceOccupation", args);
+	    DeletePersonSpaceOccupation.run(personSpaceOccupation);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

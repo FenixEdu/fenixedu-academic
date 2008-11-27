@@ -3,6 +3,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseScopeAtCurricularCourse;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScope;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -51,11 +57,9 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
-	Object args[] = { curricularCourseScopeId };
 
 	try {
-	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService("ReadCurricularCourseScope",
-		    args);
+	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ReadCurricularCourseScope.run(curricularCourseScopeId);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
 		    .findForward("readCurricularCourse"));
@@ -71,10 +75,10 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 	dynaForm.set("anotation", oldInfoCurricularCourseScope.getAnotation());
 
 	// obtain branches to show in jsp
-	Object[] args1 = { degreeCurricularPlanId };
+
 	List result = null;
 	try {
-	    result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan", args1);
+	    result = (List) ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 	} catch (FenixServiceException e) {
@@ -149,9 +153,8 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 	    newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
 	}
 
-	Object args[] = { newInfoCurricularCourseScope };
 	try {
-	    ServiceUtils.executeService("InsertCurricularCourseScopeAtCurricularCourse", args);
+	    InsertCurricularCourseScopeAtCurricularCourse.run(newInfoCurricularCourseScope);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e.getMessage(), e);
 	} catch (FenixServiceException fenixServiceException) {

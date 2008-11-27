@@ -9,9 +9,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadAllGrantTypes extends FenixService {
 
-    public List run() {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run() {
 	List<GrantType> grantTypes = rootDomainObject.getGrantTypes();
 	return (List) CollectionUtils.collect(grantTypes, new Transformer() {
 	    public Object transform(Object input) {

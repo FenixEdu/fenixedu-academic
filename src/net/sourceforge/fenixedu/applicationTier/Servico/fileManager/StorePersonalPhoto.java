@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -15,7 +17,9 @@ import net.sourceforge.fenixedu.util.ContentType;
  * 
  */
 public class StorePersonalPhoto extends FenixService {
-    public void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
+    @Checked("RolePredicates.OPERATOR_PREDICATE")
+    @Service
+    public static void run(byte[] contents, byte[] compressed, ContentType contentType, String personUsername)
 	    throws ExcepcaoInexistente {
 	Person person = Person.readPersonByUsername(personUsername);
 
@@ -26,13 +30,16 @@ public class StorePersonalPhoto extends FenixService {
 	storePersonalPhoto(contents, compressed, contentType, person);
     }
 
-    public void run(byte[] contents, byte[] compressed, ContentType contentType, Integer personID) throws ExcepcaoPersistencia {
+    @Checked("RolePredicates.OPERATOR_PREDICATE")
+    @Service
+    public static void run(byte[] contents, byte[] compressed, ContentType contentType, Integer personID)
+	    throws ExcepcaoPersistencia {
 	Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
 	storePersonalPhoto(contents, compressed, contentType, person);
     }
 
-    private void storePersonalPhoto(byte[] contents, byte[] compressed, ContentType contentType, Person person) {
+    private static void storePersonalPhoto(byte[] contents, byte[] compressed, ContentType contentType, Person person) {
 	person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed),
 		PhotoType.INSTITUTIONAL));
     }

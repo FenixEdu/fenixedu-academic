@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ChangeApplicationInfo;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -128,9 +130,8 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 	}
 
 	try {
-	    final Object args[] = { masterDegreeCandidate, infoPerson, userView, isNewPerson };
-	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "ChangeApplicationInfo", args);
+
+	    masterDegreeCandidate = (InfoMasterDegreeCandidate) ChangeApplicationInfo.run(masterDegreeCandidate, infoPerson, userView, isNewPerson);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

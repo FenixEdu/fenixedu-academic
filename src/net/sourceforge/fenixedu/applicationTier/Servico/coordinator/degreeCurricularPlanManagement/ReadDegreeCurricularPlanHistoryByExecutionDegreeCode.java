@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quit�rio 10/Nov/2003
@@ -16,7 +18,9 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
  */
 public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends FenixService {
 
-    public InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException {
 
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
@@ -43,7 +47,8 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends FenixS
 	return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ExecutionDegree executionDegree, List allCurricularCourses) {
+    private static InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ExecutionDegree executionDegree,
+	    List allCurricularCourses) {
 	return InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
     }
 

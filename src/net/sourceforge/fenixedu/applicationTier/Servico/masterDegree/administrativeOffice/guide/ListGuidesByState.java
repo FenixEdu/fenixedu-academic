@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.GuideState;
  */
 public class ListGuidesByState extends FenixService {
 
-    public List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer guideYear, GuideState situationOfGuide) throws Exception {
 	List guides = Guide.readByYearAndState(guideYear, situationOfGuide);
 
 	Iterator iterator = guides.iterator();

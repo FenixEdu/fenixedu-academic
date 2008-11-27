@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -17,7 +19,9 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
  */
 public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 
-    public boolean run(Integer groupOID, Integer proposalOID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer groupOID, Integer proposalOID) throws FenixServiceException {
 
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);
@@ -47,7 +51,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 
     }
 
-    public class MaximumNumberOfProposalCandidaciesPerGroupUndefinedException extends FenixServiceException {
+    public static class MaximumNumberOfProposalCandidaciesPerGroupUndefinedException extends FenixServiceException {
 
 	public MaximumNumberOfProposalCandidaciesPerGroupUndefinedException() {
 	    super();
@@ -70,7 +74,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 	}
     }
 
-    public class MaximumNumberOfProposalCandidaciesPerGroupReachedException extends FenixServiceException {
+    public static class MaximumNumberOfProposalCandidaciesPerGroupReachedException extends FenixServiceException {
 
 	public MaximumNumberOfProposalCandidaciesPerGroupReachedException() {
 	    super();
@@ -93,7 +97,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 	}
     }
 
-    public class MinimumNumberOfStudentsUndefinedException extends FenixServiceException {
+    public static class MinimumNumberOfStudentsUndefinedException extends FenixServiceException {
 
 	public MinimumNumberOfStudentsUndefinedException() {
 	    super();
@@ -116,7 +120,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 	}
     }
 
-    public class MinimumNumberOfStudentsNotReachedException extends FenixServiceException {
+    public static class MinimumNumberOfStudentsNotReachedException extends FenixServiceException {
 
 	public MinimumNumberOfStudentsNotReachedException() {
 	    super();

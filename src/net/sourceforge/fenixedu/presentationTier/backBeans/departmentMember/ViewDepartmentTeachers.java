@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.function.ReadPersonFunctionsByPersonIDAndExecutionYearID;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -314,9 +316,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
 	    Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
 
-	    List<PersonFunction> result = new ArrayList<PersonFunction>((List<PersonFunction>) ServiceUtils.executeService(
-		    "ReadPersonFunctionsByPersonIDAndExecutionYearID", new Object[] { teacher.getPerson().getIdInternal(),
-			    executionYearID }));
+	    List<PersonFunction> result = new ArrayList<PersonFunction>((List<PersonFunction>) ReadPersonFunctionsByPersonIDAndExecutionYearID.run(teacher.getPerson().getIdInternal(),
+			    executionYearID));
 
 	    ComparatorChain comparatorChain = new ComparatorChain();
 	    BeanComparator beginDateComparator = new BeanComparator("beginDate");

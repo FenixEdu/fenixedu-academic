@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChooseGuideByPersonID;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -166,11 +168,10 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 
 	Integer personID = Integer.valueOf(request.getParameter("personID"));
 
-	Object args[] = { personID };
 
 	List result = null;
 	try {
-	    result = (List) ServiceManagerServiceFactory.executeService("ChooseGuideByPersonID", args);
+	    result = (List) ChooseGuideByPersonID.run(personID);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("A Person", e);
 	}

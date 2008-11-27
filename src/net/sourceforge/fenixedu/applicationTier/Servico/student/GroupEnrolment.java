@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -30,7 +34,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class GroupEnrolment extends FenixService {
 
-    public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames, String studentUsername)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames, String studentUsername)
 	    throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 	if (grouping == null) {
@@ -90,7 +96,7 @@ public class GroupEnrolment extends FenixService {
 	return true;
     }
 
-    private void checkStudentUsernamesAlreadyEnroledInStudentGroup(final IGroupEnrolmentStrategy strategy,
+    private static void checkStudentUsernamesAlreadyEnroledInStudentGroup(final IGroupEnrolmentStrategy strategy,
 	    final List<String> studentUsernames, final Grouping grouping) throws FenixServiceException {
 
 	for (final String studentUsername : studentUsernames) {

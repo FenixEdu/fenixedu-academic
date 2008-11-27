@@ -7,16 +7,22 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateDelegateCandidacyPeriod extends FenixService {
 
-    public void run(ElectionPeriodBean bean) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(ElectionPeriodBean bean) throws FenixServiceException {
 	final Integer degreeOID = bean.getDegree().getIdInternal();
 
-	this.run(bean, degreeOID.toString());
+	run(bean, degreeOID.toString());
     }
 
-    public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
 

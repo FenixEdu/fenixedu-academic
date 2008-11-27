@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurriculum;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurriculum;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,10 +50,9 @@ public class EditCurriculumDA extends FenixDispatchAction {
 
 	InfoCurriculum infoCurriculum = null;
 
-	Object args[] = { curricularCourseId };
 
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService("ReadCurriculum", args);
+	    infoCurriculum = (InfoCurriculum) ReadCurriculum.run(curricularCourseId);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
@@ -118,10 +121,9 @@ public class EditCurriculumDA extends FenixDispatchAction {
 	Integer executionYearId = (Integer) editForm.get("executionYearId");
 	infoCurriculum.setExecutionYearId(executionYearId);
 
-	Object args[] = { infoCurriculum, request.getParameter("language"), userView.getUtilizador() };
 
 	try {
-	    ServiceUtils.executeService("EditCurriculumByManager", args);
+	    EditCurriculum.run(infoCurriculum, request.getParameter("language"), userView.getUtilizador());
 
 	} catch (NonExistingServiceException nonExistingServiceException) {
 	    nonExistingServiceException.printStackTrace();

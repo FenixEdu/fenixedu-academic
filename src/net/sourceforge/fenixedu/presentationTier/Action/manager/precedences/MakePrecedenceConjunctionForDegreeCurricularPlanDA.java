@@ -9,7 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.MergePrecedencesForDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -41,10 +42,8 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
 	    degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanId");
 	}
 
-	Object args[] = { degreeCurricularPlanID };
-
 	try {
-	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args);
+	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
 	    request.setAttribute("precedences", result);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -66,10 +65,8 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
 	Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
 	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
 
-	Object args[] = { degreeCurricularPlanID };
-
 	try {
-	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args);
+	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
 	    request.setAttribute("precedences", result);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -94,12 +91,9 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
 	Integer firstPrecedenceID = (Integer) mergePrecedencesForm.get("firstPrecedence");
 	Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
 
-	Object args1[] = { firstPrecedenceID, secondPrecedenceID };
-	Object args2[] = { degreeCurricularPlanID };
-
 	try {
-	    ServiceManagerServiceFactory.executeService("MergePrecedencesForDegreeCurricularPlan", args1);
-	    Map result = (Map) ServiceManagerServiceFactory.executeService("ReadPrecedencesFromDegreeCurricularPlan", args2);
+	    MergePrecedencesForDegreeCurricularPlan.run(firstPrecedenceID, secondPrecedenceID);
+	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
 	    request.setAttribute("precedences", result);
 	} catch (InvalidArgumentsServiceException e) {
 	    errors.add(e.getMessage(), new ActionError(e.getMessage()));

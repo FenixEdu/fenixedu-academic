@@ -8,7 +8,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurma;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -105,20 +103,23 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 	    }
 	    InfoClass newClassView = null;
-	    Object[] argsEditarTurma = { oldClassView, newClassView };
-	    try {
 
-		newClassView = (InfoClass) ServiceUtils.executeService("EditarTurma", argsEditarTurma);
-	    } catch (ExistingServiceException ex) {
-		throw new ExistingActionException("A SchoolClass", ex);
-	    } catch (NotAuthorizedException e) {
-		throw e;
-	    } catch (FenixServiceException e) {
-		addErrorMessage(request, "existingClass", "errors.existClass", className);
-		return mapping.getInputForward();
-	    }
+	    // try {
 
-	    request.setAttribute(SessionConstants.CLASS_VIEW, newClassView);
+	    // newClassView = (InfoClass) EditarTurma.run(oldClassView,
+	    // newClassView);
+	    throw new RuntimeException("Obsolete service invocation was invoked!");
+	    // } catch (ExistingServiceException ex) {
+	    // throw new ExistingActionException("A SchoolClass", ex);
+	    // } catch (NotAuthorizedException e) {
+	    // throw e;
+	    // } catch (FenixServiceException e) {
+	    // addErrorMessage(request, "existingClass", "errors.existClass",
+	    // className);
+	    // return mapping.getInputForward();
+	    // }
+	    //
+	    // request.setAttribute(SessionConstants.CLASS_VIEW, newClassView);
 
 	} else {
 	    /** starting editing */
@@ -148,8 +149,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-	Object argsApagarTurma[] = { infoClass };
-	ServiceUtils.executeService("ApagarTurma", argsApagarTurma);
+	ApagarTurma.run(infoClass);
 
 	request.removeAttribute(SessionConstants.CLASS_VIEW);
 
@@ -168,8 +168,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-	Object argsLerTurma[] = { className, infoExecutionDegree, infoExecutionPeriod };
-	InfoClass classView = (InfoClass) ServiceUtils.executeService("LerTurma", argsLerTurma);
+	InfoClass classView = LerTurma.run(className, infoExecutionDegree, infoExecutionPeriod);
 	return classView;
     }
 
@@ -188,7 +187,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 	    }
 	}
 
-	List lessonList = (ArrayList) LerAulasDeTurma.run(infoClass);
+	List lessonList = LerAulasDeTurma.run(infoClass);
 
 	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 

@@ -10,6 +10,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ReadPersonCandidates;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +38,10 @@ public class ReadPersonCandidatesAction extends FenixAction {
 
 	IUserView userView = UserView.getUser();
 
-	Object args[] = { userView.getUtilizador() };
 
 	List<InfoMasterDegreeCandidate> candidates = null;
 	try {
-	    candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService("ReadPersonCandidates",
-		    args);
+	    candidates = (List<InfoMasterDegreeCandidate>) ReadPersonCandidates.run(userView.getUtilizador());
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

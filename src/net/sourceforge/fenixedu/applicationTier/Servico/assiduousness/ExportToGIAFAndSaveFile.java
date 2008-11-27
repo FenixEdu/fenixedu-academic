@@ -13,9 +13,14 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 
 import org.apache.struts.action.ActionMessage;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ExportToGIAFAndSaveFile extends FenixService {
 
-    public ActionMessage run(ClosedMonth closedMonth, String fileName, ClosedMonthDocumentType closedMonthDocumentType,
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static ActionMessage run(ClosedMonth closedMonth, String fileName, ClosedMonthDocumentType closedMonthDocumentType,
 	    String file) throws FileNotFoundException {
 
 	ByteArrayInputStream inputStream = new ByteArrayInputStream(file.getBytes());

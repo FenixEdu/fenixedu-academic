@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -85,8 +87,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 		.parse("dd/MM/yyyy HH:mm", inquiryResponseEndString + ":00")
 		: null;
 
-	final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
-	ServiceUtils.executeService("DefineInquiryResponsePeriod", args);
+	DefineInquiryResponsePeriod.run(executionPeriodID, inquiryResponseBegin, inquiryResponseEnd);
 
 	final ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));

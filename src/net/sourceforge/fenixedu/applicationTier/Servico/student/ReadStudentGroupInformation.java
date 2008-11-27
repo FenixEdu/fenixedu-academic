@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -28,7 +32,9 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ReadStudentGroupInformation extends FenixService {
 
-    public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
 
 	InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
 	StudentGroup studentGroup = null;

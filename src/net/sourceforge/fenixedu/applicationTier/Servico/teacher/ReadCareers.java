@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +23,9 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadCareers extends FenixService {
 
-    public SiteView run(CareerType careerType, String user) {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static SiteView run(CareerType careerType, String user) {
 	final Teacher teacher = Teacher.readTeacherByUsername(user);
 
 	final InfoSiteCareers bodyComponent = new InfoSiteCareers();
@@ -33,7 +39,7 @@ public class ReadCareers extends FenixService {
 	return siteView;
     }
 
-    private List getInfoCareers(Teacher teacher, CareerType careerType) {
+    private static List getInfoCareers(Teacher teacher, CareerType careerType) {
 
 	final List<InfoCareer> oldestCareers = new ArrayList();
 	final List<InfoCareer> newestCareers = new ArrayList();

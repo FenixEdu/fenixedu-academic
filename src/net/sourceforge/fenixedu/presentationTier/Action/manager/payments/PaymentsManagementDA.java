@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulReceipt;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelEvent;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,8 +142,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final CancelEventBean cancelEventBean = getCancelEventBean();
 
 	try {
-	    executeService("CancelEvent", new Object[] { cancelEventBean.getEvent(), cancelEventBean.getEmployee(),
-		    cancelEventBean.getJustification() });
+	    CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getEmployee(),
+		    cancelEventBean.getJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -157,7 +167,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward openEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeService("OpenEvent", new Object[] { getEvent(request) });
+	    OpenEvent.run(getEvent(request));
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
@@ -212,9 +222,9 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean = (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
 
 	try {
-	    executeService("TransferPaymentsToOtherEventAndCancel", new Object[] { transferPaymentsBean.getEmployee(),
+	    TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getEmployee(),
 		    transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
-		    transferPaymentsBean.getCancelJustification() });
+		    transferPaymentsBean.getCancelJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -257,8 +267,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final AnnulAccountingTransactionBean annulAccountingTransactionBean = (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
 	try {
 
-	    executeService("AnnulAccountingTransaction", new Object[] { getLoggedPerson(request).getEmployee(),
-		    annulAccountingTransactionBean });
+	    AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(),
+		    annulAccountingTransactionBean);
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -308,7 +318,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeService("AnnulReceipt", new Object[] { getLoggedPerson(request).getEmployee(), getReceipt(request) });
+	    AnnulReceipt.run(getLoggedPerson(request).getEmployee(), getReceipt(request));
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {

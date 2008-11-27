@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.EditReimbursementGuide;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuide;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -50,9 +54,8 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
 	InfoReimbursementGuide infoReimbursementGuide = null;
 
-	Object args[] = { reimbursementGuideId };
 	try {
-	    infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService("ViewReimbursementGuide", args);
+	    infoReimbursementGuide = (InfoReimbursementGuide) ViewReimbursementGuide.run(reimbursementGuideId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 	}
@@ -92,8 +95,8 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 	}
 
 	try {
-	    Object args[] = { reimbursementGuideID, situation, officialDate, remarks, userView };
-	    ServiceUtils.executeService("EditReimbursementGuide", args);
+
+	    EditReimbursementGuide.run(reimbursementGuideID, situation, officialDate, remarks, userView);
 
 	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 

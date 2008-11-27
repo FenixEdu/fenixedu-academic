@@ -1,5 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurnosDeDisciplinaExecucao;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveClasses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurno;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -139,9 +153,8 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	infoShiftNew.setTipos(shiftTypes);
 
-	Object argsCriarTurno[] = { infoShiftOld, infoShiftNew };
 	try {
-	    ServiceUtils.executeService("EditarTurno", argsCriarTurno);
+	    EditarTurno.run(infoShiftOld, infoShiftNew);
 
 	} catch (DomainException ex) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -166,8 +179,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	Object argsRemove[] = { infoShift, infoClass };
-	ServiceUtils.executeService("RemoverTurno", argsRemove);
+	RemoverTurno.run(infoShift, infoClass);
 
 	ContextUtils.setShiftContext(request);
 	request.removeAttribute(SessionConstants.CLASS_VIEW);
@@ -195,8 +207,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	Object args[] = { infoShift, classOIDs };
-	ServiceUtils.executeService("RemoveClasses", args);
+	RemoveClasses.run(infoShift, classOIDs);
 
 	return mapping.findForward("EditShift");
 
@@ -221,10 +232,9 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    lessonOIDs.add(Integer.valueOf(selectedLessons[i]));
 	}
 
-	final Object args[] = { lessonOIDs };
 
 	try {
-	    ServiceUtils.executeService("DeleteLessons", args);
+	    DeleteLessons.run(lessonOIDs);
 
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
@@ -245,8 +255,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	ShiftKey shiftKey = new ShiftKey(infoShift.getNome(), infoShift.getInfoDisciplinaExecucao());
 
-	Object args[] = { shiftKey };
-	List<InfoStudent> students = (List<InfoStudent>) ServiceUtils.executeService("LerAlunosDeTurno", args);
+	List<InfoStudent> students = (List<InfoStudent>) LerAlunosDeTurno.run(shiftKey);
 
 	Collections.sort(students, new BeanComparator("number"));
 
@@ -256,8 +265,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-	Object args2[] = { infoExecutionCourse };
-	List<InfoShift> shifts = (List<InfoShift>) ServiceUtils.executeService("LerTurnosDeDisciplinaExecucao", args2);
+	List<InfoShift> shifts = (List<InfoShift>) LerTurnosDeDisciplinaExecucao.run(infoExecutionCourse);
 
 	if (shifts != null && !shifts.isEmpty()) {
 	    request.setAttribute(SessionConstants.SHIFTS, shifts);
@@ -288,8 +296,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    }
 	}
 
-	Object args[] = { userView, oldShiftId, newShiftId, registrations };
-	ServiceUtils.executeService("ChangeStudentsShift", args);
+	ChangeStudentsShift.run(userView, oldShiftId, newShiftId, registrations);
 
 	return mapping.findForward("Continue");
     }

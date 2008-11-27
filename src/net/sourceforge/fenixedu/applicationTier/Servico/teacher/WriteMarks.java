@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 
 public class WriteMarks extends FenixService {
 
-    public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
 	    throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
@@ -68,7 +74,7 @@ public class WriteMarks extends FenixService {
 	}
     }
 
-    private Attends findStudentAttends(final ExecutionCourse executionCourse, final Integer studentNumber) {
+    private static Attends findStudentAttends(final ExecutionCourse executionCourse, final Integer studentNumber) {
 	for (final Attends attends : executionCourse.getAttends()) {
 	    if (attends.getRegistration().getNumber().equals(studentNumber)) {
 		return attends;
@@ -77,7 +83,7 @@ public class WriteMarks extends FenixService {
 	return null;
     }
 
-    private Mark findExistingMark(final List<Mark> marks, Evaluation evaluation) {
+    private static Mark findExistingMark(final List<Mark> marks, Evaluation evaluation) {
 	for (final Mark mark : marks) {
 	    final Evaluation markEvaluation = mark.getEvaluation();
 	    if (markEvaluation.equals(evaluation)) {

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.DeleteStudentDataByExecutionYear;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.CreateStudentDataByExecutionYear;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +62,7 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
 
 	final StudentDataByExecutionYearBean studentDataByExecutionYearBean = (StudentDataByExecutionYearBean) getRenderedObject();
 	try {
-	    executeService("CreateStudentDataByExecutionYear", new Object[] { studentDataByExecutionYearBean });
+	    CreateStudentDataByExecutionYear.run(studentDataByExecutionYearBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getKey());
 	    request.setAttribute("createBean", studentDataByExecutionYearBean);
@@ -70,7 +74,7 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeService("DeleteStudentDataByExecutionYear", new Object[] { getStudentDataByExecutionYear(request) });
+	    DeleteStudentDataByExecutionYear.run(getStudentDataByExecutionYear(request));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

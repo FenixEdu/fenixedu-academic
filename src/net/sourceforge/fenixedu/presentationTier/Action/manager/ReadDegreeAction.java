@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegree;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class ReadDegreeAction extends FenixAction {
 	InfoDegree degree = null;
 
 	try {
-	    degree = (InfoDegree) ServiceUtils.executeService("ReadDegree", new Object[] { degreeId });
+	    degree = (InfoDegree) ReadDegree.run(degreeId);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.nonExistingDegree", "", e);

@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.candidacy;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.SelectCandidacies;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -145,8 +147,7 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	    }
 	}
 
-	Object args[] = { admittedCandidacies, substituteCandidacies, notAdmittedCandidacies };
-	executeService("SelectCandidacies", args);
+	SelectCandidacies.run(admittedCandidacies, substituteCandidacies, notAdmittedCandidacies);
 
 	request.setAttribute("admittedCandidacies", admittedCandidacies);
 	request.setAttribute("substituteCandidacies", substituteCandidacies);

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.Inse
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInstitutions;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -39,13 +40,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException, NonExistingActionException {
 
-	List institutions = null;
-	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
-
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-	}
+	List institutions = ReadInstitutions.run();
 
 	if (request.getAttribute("insertInstitution") != null) {
 	    request.setAttribute("insertInstitution", "true");
@@ -70,14 +65,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 	    return mapping.getInputForward();
 	}
 
-	List institutions = null;
-	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
-
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-	}
-
+	List institutions = ReadInstitutions.run();
 	request.setAttribute("institutions", institutions);
 
 	return mapping.findForward("insertProfessorShip");
@@ -111,13 +99,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 	if (request.getAttribute("insertInstitution") != null) {
 	    request.setAttribute("insertInstitution", "true");
 	}
-	List institutions = null;
-	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
-
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-	}
+	List institutions = ReadInstitutions.run();
 
 	request.setAttribute("institutions", institutions);
 	return mapping.findForward("insertProfessorShip");
@@ -135,12 +117,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 	request.setAttribute("nonAffiliatedTeachers", nonAffiliatedTeachers);
 
 	List institutions = null;
-	try {
-	    institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
-
-	} catch (NonExistingServiceException ex) {
-	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));
-	}
+	institutions = ReadInstitutions.run();
 
 	request.setAttribute("institutions", institutions);
 

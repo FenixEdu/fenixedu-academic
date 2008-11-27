@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Barbosa
@@ -18,7 +20,9 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class ReadGrantOwnerByPerson extends FenixService {
 
-    public InfoGrantOwner run(Integer personId) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static InfoGrantOwner run(Integer personId) throws FenixServiceException {
 
 	InfoGrantOwner infoGrantOwner = null;
 	Person person = (Person) rootDomainObject.readPartyByOID(personId);

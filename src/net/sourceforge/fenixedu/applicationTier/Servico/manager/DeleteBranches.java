@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -19,7 +21,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class DeleteBranches extends FenixService {
 
     // delete a set of branches
-    public List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
 	Iterator iter = internalIds.iterator();
 
 	List undeletedCodes = new ArrayList();

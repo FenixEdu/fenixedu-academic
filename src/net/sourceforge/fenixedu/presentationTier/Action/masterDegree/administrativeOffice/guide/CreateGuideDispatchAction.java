@@ -21,6 +21,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoActiveStude
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ChangePersonPassword;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.CreateCandidateSituation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuide;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.PrepareCreateGuide;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate.ReadCertificateList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
@@ -30,7 +34,6 @@ import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -126,10 +129,10 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
 	types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 	// types.add(DocumentType.GRATUITY_TYPE);
-	Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
+
 	List studentGuideList = null;
 	try {
-	    studentGuideList = (List) ServiceManagerServiceFactory.executeService("ReadCertificateList", argsAux);
+	    studentGuideList = ReadCertificateList.run(GraduationType.MASTER_DEGREE, types);
 
 	} catch (NonExistingServiceException e) {
 	    e.printStackTrace();
@@ -147,9 +150,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 	InfoGuide infoGuide = null;
 	try {
-	    Object args[] = { graduationType, infoExecutionDegree, number, requesterType, contributorParty };
 
-	    infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("PrepareCreateGuide", args);
+	    infoGuide = PrepareCreateGuide.run(graduationType, infoExecutionDegree, number, requesterType, contributorParty);
 	} catch (ExistingServiceException e) {
 	    e.printStackTrace();
 	    throw new ExistingActionException("O Contribuinte", e);
@@ -253,8 +255,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	InfoGuide newInfoGuide = null;
 
 	try {
-	    Object args[] = { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType };
-	    newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("CreateGuide", args);
+
+	    newInfoGuide = CreateGuide.run(infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType);
 	} catch (InvalidSituationServiceException e) {
 	    Object object = new Object();
 	    object = "Anulada";
@@ -281,13 +283,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 		// The Candidate will now have a new Situation
 
-		try {
-		    Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
-			    newInfoGuide.getInfoPerson().getIdInternal(), new SituationName(SituationName.PENDENTE_STRING) };
-		    ServiceManagerServiceFactory.executeService("CreateCandidateSituation", args);
-		} catch (FenixServiceException e) {
-		    throw new FenixActionException();
-		}
+		CreateCandidateSituation.run(newInfoGuide.getInfoExecutionDegree().getIdInternal(), newInfoGuide.getInfoPerson()
+			.getIdInternal(), new SituationName(SituationName.PENDENTE_STRING));
 
 		if ((newInfoGuide.getInfoPerson().getPassword() == null)
 			|| (newInfoGuide.getInfoPerson().getPassword().length() == 0)) {

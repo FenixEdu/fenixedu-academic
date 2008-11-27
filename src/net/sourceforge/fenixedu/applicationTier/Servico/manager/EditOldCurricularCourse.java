@@ -3,10 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditOldCurricularCourse extends FenixService {
 
-    public void run(final Integer curricularCourseId, final String name, final String nameEn, final String code,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer curricularCourseId, final String name, final String nameEn, final String code,
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,
 	    final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
 	    final Double credits, final Double ectsCredits, final Double theoreticalHours, final Double labHours,

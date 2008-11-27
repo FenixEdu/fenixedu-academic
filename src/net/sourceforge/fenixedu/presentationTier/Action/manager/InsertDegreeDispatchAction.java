@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertDegree;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,10 +56,9 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 	    gradeScale = GradeScale.valueOf(gradeTypeString);
 	}
 
-	Object args[] = { code, name, nameEn, degreeType, gradeScale };
 
 	try {
-	    ServiceUtils.executeService("InsertDegree", args);
+	    InsertDegree.run(code, name, nameEn, degreeType, gradeScale);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException("message.already.existing.degree", mapping.findForward("readDegrees"));

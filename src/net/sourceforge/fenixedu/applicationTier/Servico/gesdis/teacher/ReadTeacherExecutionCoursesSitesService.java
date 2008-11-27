@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Mota
@@ -25,7 +27,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadTeacherExecutionCoursesSitesService extends FenixService {
 
-    public List run(InfoTeacher infoTeacher) throws FenixServiceException {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run(InfoTeacher infoTeacher) throws FenixServiceException {
 
 	final List<InfoSite> infoSites = new ArrayList<InfoSite>();
 

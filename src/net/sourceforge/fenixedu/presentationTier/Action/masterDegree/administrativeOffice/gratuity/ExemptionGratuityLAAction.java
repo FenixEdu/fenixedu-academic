@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,8 +40,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 	final IUserView userView = getUserView(request);
 	InfoGratuitySituation infoGratuitySituation = fillInfoGratuityValues(userView, request, (DynaActionForm) actionForm);
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-		    "EditGratuitySituationById", new Object[] { infoGratuitySituation });
+	    infoGratuitySituation = (InfoGratuitySituation) EditGratuitySituationById.run(infoGratuitySituation);
 
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();
@@ -132,10 +135,8 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 	infoGratuitySituation.setExemptionPercentage(Integer.valueOf(0));
 	infoGratuitySituation.setExemptionValue(Double.valueOf(0));
 
-	Object[] args = { infoGratuitySituation };
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-		    "EditGratuitySituationById", args);
+	    infoGratuitySituation = (InfoGratuitySituation) EditGratuitySituationById.run(infoGratuitySituation);
 
 	} catch (FenixServiceException exception) {
 	    exception.printStackTrace();

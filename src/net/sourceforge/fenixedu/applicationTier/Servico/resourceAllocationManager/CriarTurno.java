@@ -4,6 +4,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Servi�o CriarTurno
  * 
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class CriarTurno extends FenixService {
 
-    public InfoShift run(InfoShiftEditor infoTurno) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static InfoShift run(InfoShiftEditor infoTurno) {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoTurno.getInfoDisciplinaExecucao()
 		.getIdInternal());
 	final Shift newShift = new Shift(executionCourse, infoTurno.getTipos(), infoTurno.getLotacao());

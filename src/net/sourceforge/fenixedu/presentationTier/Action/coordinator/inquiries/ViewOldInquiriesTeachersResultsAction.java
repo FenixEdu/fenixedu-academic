@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.ReadOldInquiriesTeachersResByDegreeId;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -53,8 +59,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	List executionPeriodList = (List) ReadExecutionPeriods.run();
 
-	Object[] args = { degreeId };
-	List teachersRes = (List) ServiceUtils.executeService("ReadOldInquiriesTeachersResByDegreeId", args);
+	List teachersRes = (List) ReadOldInquiriesTeachersResByDegreeId.run(degreeId);
 
 	Iterator periodIter = executionPeriodList.iterator();
 	while (periodIter.hasNext()) {
@@ -139,22 +144,16 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	if ((teacherNumber != null) && (executionPeriodId != null) && (degreeId != null) && (curricularYear != null)
 		&& (courseCode != null)) {
 
-	    Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode, teacherNumber };
 
-	    List oldInquiriesTeachersResList = (List) ServiceUtils
-		    .executeService(
-			    "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber",
-			    args);
+	    List oldInquiriesTeachersResList = (List) ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber.run(executionPeriodId, degreeId, curricularYear, courseCode, teacherNumber);
 
 	    request.setAttribute("oldInquiriesTeachersResListOfLists",
 		    joinSimilarOldInquiriesByTeacher(oldInquiriesTeachersResList));
 
 	} else if ((executionPeriodId != null) && (degreeId != null) && (curricularYear != null) && (courseCode != null)) {
 
-	    Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode };
 
-	    List oldInquiriesTeachersResList = (List) ServiceUtils.executeService(
-		    "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode", args);
+	    List oldInquiriesTeachersResList = (List) ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode.run(executionPeriodId, degreeId, curricularYear, courseCode);
 
 	    request.setAttribute("oldInquiriesTeachersResListOfLists",
 		    joinSimilarOldInquiriesByTeacher(oldInquiriesTeachersResList));

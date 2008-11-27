@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteHoliday;
+
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +37,8 @@ public class ManageHolidaysDA extends FenixDispatchAction {
 	if (holidayIDString != null && StringUtils.isNumeric(holidayIDString)) {
 	    final Integer holidayID = Integer.valueOf(holidayIDString);
 	    final Holiday holiday = rootDomainObject.readHolidayByOID(holidayID);
-	    final Object[] args = { holiday };
-	    executeService("DeleteHoliday", args);
+
+	    DeleteHoliday.run(holiday);
 	}
 	return prepare(mapping, form, request, response);
     }

@@ -11,8 +11,9 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
@@ -21,7 +22,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +31,9 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
+
+    private static final String SC_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans";
+
     private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
 
     private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
@@ -202,9 +206,22 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    return "";
 	}
 
-	Object[] args = { this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType),
-		this.getEctsCredits(), null, this.prevailingScientificArea };
-	return changeDegree("CreateDegree", args, "degree.created", "error.creatingDegree");
+	try {
+	    CreateDegree.run(this.name, this.nameEn, this.acronym, DegreeType.valueOf(this.bolonhaDegreeType), this
+		    .getEctsCredits(), null, this.prevailingScientificArea);
+	} catch (IllegalDataAccessException e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+	    return "curricularPlansManagement";
+	} catch (DomainException e) {
+	    this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+	    return "";
+	} catch (Exception e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.creatingDegree"));
+	    return "curricularPlansManagement";
+	}
+
+	this.addInfoMessage(scouncilBundle.getString("degree.created"));
+	return "curricularPlansManagement";
     }
 
     public String editDegree() {
@@ -223,35 +240,40 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    return "";
 	}
 
-	Object[] args = { this.getDegreeId(), name, nameEn, this.acronym, DegreeType.valueOf(getBolonhaDegreeType()),
-		this.getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear() };
-	return changeDegree("EditDegree", args, "degree.edited", "error.editingDegree");
-    }
-
-    private String changeDegree(String serviceName, Object[] args, String successfulMsg, String errorMsg) {
 	try {
-	    ServiceUtils.executeService(serviceName, args);
-	} catch (FenixFilterException e) {
+	    EditDegree.run(this.getDegreeId(), name, nameEn, this.acronym, DegreeType.valueOf(getBolonhaDegreeType()), this
+		    .getEctsCredits(), null, this.prevailingScientificArea, getSelectedExecutionYear());
+	} catch (IllegalDataAccessException e) {
 	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
 	    return "curricularPlansManagement";
-	} catch (FenixServiceException e) {
-	    this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
-	    return "";
 	} catch (DomainException e) {
 	    this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
 	    return "";
 	} catch (Exception e) {
-	    this.addErrorMessage(scouncilBundle.getString(errorMsg));
+	    this.addErrorMessage(scouncilBundle.getString("error.editingDegree"));
 	    return "curricularPlansManagement";
 	}
 
-	this.addInfoMessage(scouncilBundle.getString(successfulMsg));
+	this.addInfoMessage(scouncilBundle.getString("degree.edited"));
 	return "curricularPlansManagement";
     }
 
     public String deleteDegree() {
-	Object[] args = { this.getDegreeId() };
-	return changeDegree("DeleteDegree", args, "degree.deleted", "error.deletingDegree");
+	try {
+	    DeleteDegree.run(this.getDegreeId());
+	} catch (IllegalDataAccessException e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+	    return "curricularPlansManagement";
+	} catch (DomainException e) {
+	    this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+	    return "";
+	} catch (Exception e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.deletingDegree"));
+	    return "curricularPlansManagement";
+	}
+
+	this.addInfoMessage(scouncilBundle.getString("degree.deleted"));
+	return "curricularPlansManagement";
     }
 
     public void setSelectedExecutionYearId(Integer executionYearId) {

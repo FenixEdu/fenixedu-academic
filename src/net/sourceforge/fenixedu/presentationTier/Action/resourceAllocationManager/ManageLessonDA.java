@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateLesson;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessonInstance;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -87,7 +97,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		.getParameter("lessonDate"));
 
 	try {
-	    executeService("DeleteLessonInstance", new Object[] { bean.getLesson(), bean.getDate() });
+	    DeleteLessonInstance.run(bean.getLesson(), bean.getDate());
 
 	} catch (DomainException domainException) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -238,10 +248,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		    return mapping.getInputForward();
 		}
 
-		Object args[] = { lessonNewBeginDate, lessonEndDate, HourMinuteSecond.fromCalendarFields(inicio),
-			HourMinuteSecond.fromCalendarFields(fim), weekDay, null, frequency, Boolean.TRUE };
 
-		emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
+		emptyRoomsList = (List<InfoRoom>) ReadAvailableRoomsForExam.run(lessonNewBeginDate, lessonEndDate, HourMinuteSecond.fromCalendarFields(inicio),
+			HourMinuteSecond.fromCalendarFields(fim), weekDay, null, frequency, Boolean.TRUE);
 
 	    } else if (action != null && action.equals("edit")) {
 		actionErrors.add("error.Lesson.already.finished", new ActionError("error.Lesson.already.finished"));
@@ -359,10 +368,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 		try {
 
-		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation,
-			    infoShift, newBeginDate, newEndDate, createLessonInstances };
 
-		    ServiceUtils.executeService("EditLesson", argsEditLesson);
+		    EditLesson.run(infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation,
+			    infoShift, newBeginDate, newEndDate, createLessonInstances);
 
 		} catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException
@@ -372,9 +380,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	    } else {
 		try {
-		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift,
-			    newBeginDate, newEndDate };
-		    ServiceUtils.executeService("CreateLesson", argsCreateLesson);
+
+		    CreateLesson.run(weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift,
+			    newBeginDate, newEndDate);
 
 		} catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException
@@ -396,10 +404,9 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	List<Integer> lessons = new ArrayList<Integer>();
 	lessons.add(Integer.valueOf(request.getParameter(SessionConstants.LESSON_OID)));
 
-	final Object argsApagarAula[] = { lessons };
 
 	try {
-	    ServiceUtils.executeService("DeleteLessons", argsApagarAula);
+	    DeleteLessons.run(lessons);
 
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegreesManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,7 +17,9 @@ import org.joda.time.YearMonthDay;
 
 public class EditExecutionDegree extends FenixService {
 
-    public void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean temporaryExamMap,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean temporaryExamMap,
 	    Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,
 	    Date periodExamsFirstSemesterEnd, Date periodLessonsSecondSemesterBegin, Date periodLessonsSecondSemesterEnd,
 	    Date periodExamsSecondSemesterBegin, Date periodExamsSecondSemesterEnd, Date periodExamsSpecialSeasonBegin,
@@ -59,7 +65,7 @@ public class EditExecutionDegree extends FenixService {
 		gradeSubmissionNormalSeason2, gradeSubmissionSpecialSeason);
     }
 
-    private OccupationPeriod getOccupationPeriod(final Date startDate, final Date endDate) {
+    private static OccupationPeriod getOccupationPeriod(final Date startDate, final Date endDate) {
 
 	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(YearMonthDay.fromDateFields(startDate),
 		YearMonthDay.fromDateFields(endDate));

@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideFromTransactions;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -68,9 +74,9 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 
 	// Read Transactions
 	List infoTransactions = null;
-	Object argsTransactions[] = { gratuitySituationId };
+
 	try {
-	    infoTransactions = (List) ServiceUtils.executeService("ReadAllTransactionsByGratuitySituationID", argsTransactions);
+	    infoTransactions = (List) ReadAllTransactionsByGratuitySituationID.run(gratuitySituationId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -125,9 +131,8 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	infoGuide.setVersion(new Integer(1));
 	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
-	Object argsGuide[] = { infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide) };
 	try {
-	    infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuideFromTransactions", argsGuide);
+	    infoGuide = (InfoGuide) CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide));
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -174,10 +179,9 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
 	    throws FenixActionException, FenixFilterException {
 	InfoGratuitySituation infoGratuitySituation = null;
-	Object argsGratuitySituation[] = { gratuitySituationId };
+
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService("ReadGratuitySituationById",
-		    argsGratuitySituation);
+	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(gratuitySituationId);
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);

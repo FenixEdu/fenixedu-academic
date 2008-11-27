@@ -4,6 +4,22 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.correction;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllContractsByGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,8 +79,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	IUserView userView = UserView.getUser();
 	// Read the grant owner
-	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", argsGrantOwner);
+
+	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -72,8 +88,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 
 	// Read the contracts
-	Object[] argsContracts = { infoGrantOwner.getIdInternal() };
-	List infoGrantContractList = (List) ServiceUtils.executeService("ReadAllContractsByGrantOwner", argsContracts);
+
+	List infoGrantContractList = (List) ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
 	    // Find the contract
@@ -115,15 +131,15 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	IUserView userView = UserView.getUser();
 	// Read the grant owner
-	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", argsGrantOwner);
+
+	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
 	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 	// Read the contracts
-	Object[] argsContracts = { infoGrantOwner.getIdInternal() };
-	List infoGrantContractList = (List) ServiceUtils.executeService("ReadAllContractsByGrantOwner", argsContracts);
+
+	List infoGrantContractList = (List) ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
 	    // Find the contract
@@ -169,8 +185,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	IUserView userView = UserView.getUser();
 	// Read the original grant owner
-	Object[] argsOriginalGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", argsOriginalGrantOwner);
+
+	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -178,8 +194,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	InfoGrantOwner originalGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 
 	// Read the new grant owner
-	Object[] argsNewGrantOwner = { null, null, null, newGrantOwnerNumber, new Boolean(false), null };
-	infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", argsNewGrantOwner);
+
+	infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, newGrantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -187,13 +203,12 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	InfoGrantOwner newGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 
 	// Read the contracts of the original grant owner
-	Object[] argsOriginalContracts = { originalGrantOwner.getIdInternal() };
-	List originalGrantContractList = (List) ServiceUtils
-		.executeService("ReadAllContractsByGrantOwner", argsOriginalContracts);
+
+	List originalGrantContractList = (List) ReadAllContractsByGrantOwner.run(originalGrantOwner.getIdInternal());
 
 	// Read the contracts of the original grant owner
-	Object[] argsNewContracts = { newGrantOwner.getIdInternal() };
-	List newGrantContractList = (List) ServiceUtils.executeService("ReadAllContractsByGrantOwner", argsNewContracts);
+
+	List newGrantContractList = (List) ReadAllContractsByGrantOwner.run(newGrantOwner.getIdInternal());
 
 	// Find the contract to move
 	InfoGrantContract infoGrantContractToMove = null;

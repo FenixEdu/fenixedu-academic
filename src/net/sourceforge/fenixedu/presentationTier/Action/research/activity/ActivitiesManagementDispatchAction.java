@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.RemoveResearchActivityParticipation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
@@ -130,7 +131,7 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	} else if (request.getParameter("confirm") != null) {
 	    try {
 		for (Participation participation : objectWithParticipations.getParticipationsFor(getLoggedPerson(request))) {
-		    executeService("RemoveResearchActivityParticipation", new Object[] { participation });
+		    RemoveResearchActivityParticipation.run(participation);
 		}
 	    } catch (Exception e) {
 		addActionMessage(request, e.getMessage());

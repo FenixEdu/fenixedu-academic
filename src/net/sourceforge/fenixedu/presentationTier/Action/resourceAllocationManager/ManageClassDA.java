@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableShiftsForClass;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurma;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByClass;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,9 +58,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	classForm.set("className", schoolClass.getEditablePartOfName());
 
 	// Get list of shifts and place them in request
-	Object args[] = { infoClass };
 
-	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService("ReadShiftsByClass", args);
+
+	List<InfoShift> infoShifts = (List<InfoShift>) ReadShiftsByClass.run(infoClass);
 
 	if (infoShifts != null && !infoShifts.isEmpty()) {
 	    Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
@@ -71,12 +81,11 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-	Object argsCriarTurma[] = { infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
-		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod() };
 
 	InfoClass infoClassNew = null;
 	try {
-	    infoClassNew = (InfoClass) ServiceUtils.executeService("EditarTurma", argsCriarTurma);
+	    infoClassNew = (InfoClass) EditarTurma.run(infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
+		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod());
 
 	} catch (DomainException e) {
 	    throw new ExistingActionException("A SchoolClass", e);
@@ -99,8 +108,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	InfoShift infoShift = ReadShiftByOID.run(shiftOID);
 
-	Object argsRemove[] = { infoShift, infoClass };
-	ServiceUtils.executeService("RemoverTurno", argsRemove);
+	RemoverTurno.run(infoShift, infoClass);
 
 	return prepare(mapping, form, request, response);
     }
@@ -111,9 +119,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
 	// Get list of available shifts and place them in request
-	Object args[] = { infoClass };
 
-	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService("ReadAvailableShiftsForClass", args);
+
+	List<InfoShift> infoShifts = (List<InfoShift>) ReadAvailableShiftsForClass.run(infoClass);
 
 	/* Sort the list of shifts */
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
@@ -165,8 +173,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-	Object args[] = { infoClass, shiftOIDs };
-	ServiceUtils.executeService("RemoveShifts", args);
+	RemoveShifts.run(infoClass, shiftOIDs);
 
 	return mapping.findForward("EditClass");
 

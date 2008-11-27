@@ -13,9 +13,14 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateCandidacy extends FenixService {
 
-    public Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Candidacy run(ExecutionDegree executionDegree, DegreeType degreeType, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType, String contributorNumber,
 	    YearMonthDay startDate) {
 

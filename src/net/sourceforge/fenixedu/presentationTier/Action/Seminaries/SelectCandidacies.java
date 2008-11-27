@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ChangeCandidacyApprovanceStatus;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -107,15 +107,11 @@ public class SelectCandidacies extends FenixDispatchAction {
 	if (selectedStudents == null || previousSelected == null || previousUnselected == null) {
 	    throw new FenixActionException();
 	}
-	try {
-	    List changedStatusCandidaciesIds = new LinkedList();
-	    changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(selectedStudents, previousUnselected));
-	    changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(selectedStudents, previousSelected));
-	    Object[] argsReadCandidacies = { changedStatusCandidaciesIds };
-	    ServiceManagerServiceFactory.executeService("Seminaries.ChangeCandidacyApprovanceStatus", argsReadCandidacies);
-	} catch (FenixServiceException ex) {
-	    throw new FenixActionException(ex);
-	}
+	List changedStatusCandidaciesIds = new LinkedList();
+	changedStatusCandidaciesIds.addAll(this.getNewSelectedStudents(selectedStudents, previousUnselected));
+	changedStatusCandidaciesIds.addAll(this.getNewUnselectedStudents(selectedStudents, previousSelected));
+
+	ChangeCandidacyApprovanceStatus.run(changedStatusCandidaciesIds);
 
 	// modified by Fernanda Quitério
 	// destiny = mapping.findForward("prepareForm");

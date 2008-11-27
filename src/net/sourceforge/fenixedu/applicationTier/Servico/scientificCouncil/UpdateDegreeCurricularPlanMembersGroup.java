@@ -12,10 +12,14 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
 
-    public void run(DegreeCurricularPlan degreeCurricularPlan, Integer[] add, Integer[] remove) {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(DegreeCurricularPlan degreeCurricularPlan, Integer[] add, Integer[] remove) {
 	List<Person> toAdd = materializePersons(add);
 	List<Person> toRemove = materializePersons(remove);
 	List<Person> finalList = new ArrayList<Person>();
@@ -48,7 +52,7 @@ public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
 	degreeCurricularPlan.setCurricularPlanMembersGroup(new FixedSetGroup(finalList));
     }
 
-    private List<Person> materializePersons(Integer[] personsIDs) {
+    private static List<Person> materializePersons(Integer[] personsIDs) {
 	if (personsIDs != null) {
 	    List<Person> result = new ArrayList<Person>();
 
@@ -62,13 +66,13 @@ public class UpdateDegreeCurricularPlanMembersGroup extends FenixService {
 	}
     }
 
-    private void addBolonhaRole(Person person, Role bolonhaRole) {
+    private static void addBolonhaRole(Person person, Role bolonhaRole) {
 	if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
 	    person.addPersonRoles(bolonhaRole);
 	}
     }
 
-    private boolean belongsToOtherGroupsWithSameRole(DegreeCurricularPlan dcpWhoAsks, Person person) {
+    private static boolean belongsToOtherGroupsWithSameRole(DegreeCurricularPlan dcpWhoAsks, Person person) {
 	for (Degree bolonhaDegree : Degree.readBolonhaDegrees()) {
 	    for (DegreeCurricularPlan dcp : bolonhaDegree.getDegreeCurricularPlans()) {
 		if (dcp != dcpWhoAsks) {

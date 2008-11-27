@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.SearchPartyCarPlate;
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.UpdateParkingParty;
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
@@ -186,7 +188,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
 
 	String note = request.getParameter("note");
-	Object args[] = { parkingRequest, null, null, null, note, null, null, null };
 
 	String parkingRequestState = request.getParameter("parkingRequestState");
 	if (parkingRequestState == null) {
@@ -278,28 +279,22 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		request.setAttribute("idInternal", parkingRequestID);
 		return showRequest(mapping, actionForm, request, response);
 	    }
-	    args[1] = ParkingRequestState.ACCEPTED;
-	    args[2] = cardNumber;
-	    ParkingGroup parkingGroup = rootDomainObject.readParkingGroupByOID(group);
-	    args[3] = parkingGroup;
-	    args[5] = parkingPartyBean.getCardStartDate();
-	    args[6] = parkingPartyBean.getCardEndDate();
-	    args[7] = new Integer(getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(), parkingGroup));
+	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber, rootDomainObject
+		    .readParkingGroupByOID(group), note, parkingPartyBean.getCardStartDate(), parkingPartyBean.getCardEndDate(),
+		    new Integer(getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(), rootDomainObject
+			    .readParkingGroupByOID(group))));
 	} else if (request.getParameter("reject") != null) {
-	    args[1] = ParkingRequestState.REJECTED;
+	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
 	} else {
-	    args[1] = ParkingRequestState.PENDING;
+	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
 	}
-
-	executeService("UpdateParkingParty", args);
-
 	return showParkingRequests(mapping, actionForm, request, response);
     }
 
     public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	String parkingPartyID = (String) request.getParameter("parkingPartyID");
+	String parkingPartyID = request.getParameter("parkingPartyID");
 
 	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(parkingPartyID));
 	Integer parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID"))
@@ -421,9 +416,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	if (searchPartyBean != null) {
 	    searchPartyBean.setParty(null);
-	    Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber(),
-		    searchPartyBean.getParkingCardNumber() };
-	    List<Party> partyList = (List<Party>) executeService("SearchPartyCarPlate", args);
+
+	    List<Party> partyList = SearchPartyCarPlate.run(searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber(),
+		    searchPartyBean.getParkingCardNumber());
 	    request.setAttribute("searchPartyBean", searchPartyBean);
 	    request.setAttribute("partyList", partyList);
 
@@ -589,11 +584,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		spreadsheet.addDateTimeCell(parkingRequest.getCreationDate());
 		if (!parkingRequest.getParkingParty().getDegreesInformation().isEmpty()) {
 		    Iterator<String> iterator = parkingRequest.getParkingParty().getDegreesInformation().iterator();
-		    String degreeInfo = (String) iterator.next();
+		    String degreeInfo = iterator.next();
 		    spreadsheet.addCell(degreeInfo);
 		    while (iterator.hasNext()) {
 			spreadsheet.newRow();
-			degreeInfo = (String) iterator.next();
+			degreeInfo = iterator.next();
 			spreadsheet.addCell(degreeInfo, 5);
 		    }
 		    int lastRow = firstRow + parkingRequest.getParkingParty().getDegreesInformation().size() - 1;

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.EventProjectAssociationFullCreationBean;
@@ -26,7 +30,9 @@ public class CreateEventProjectAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    public ProjectEventAssociation run(EventProjectAssociationSimpleCreationBean bean, Integer eventId)
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static ProjectEventAssociation run(EventProjectAssociationSimpleCreationBean bean, Integer eventId)
 	    throws FenixServiceException {
 	ProjectEventAssociation association = null;
 	final EventEdition event = (EventEdition) rootDomainObject.readEventEditionByOID(eventId);
@@ -56,7 +62,9 @@ public class CreateEventProjectAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    public ProjectEventAssociation run(EventProjectAssociationFullCreationBean bean, Integer eventId)
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static ProjectEventAssociation run(EventProjectAssociationFullCreationBean bean, Integer eventId)
 	    throws FenixServiceException {
 	final ProjectEventAssociation association;
 

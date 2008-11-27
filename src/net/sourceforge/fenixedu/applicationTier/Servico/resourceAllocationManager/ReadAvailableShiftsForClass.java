@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
@@ -23,7 +27,9 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadAvailableShiftsForClass extends FenixService {
 
-    public Object run(InfoClass infoClass) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Object run(InfoClass infoClass) {
 
 	List infoShifts = null;
 

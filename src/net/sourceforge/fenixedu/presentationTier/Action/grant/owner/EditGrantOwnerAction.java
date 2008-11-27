@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.owner;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.EditGrantOwner;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -167,8 +169,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	    }
 
 	    // Edit Grant Owner
-	    Object[] args = { infoGrantOwner };
-	    grantOwnerId = (Integer) ServiceUtils.executeService("EditGrantOwner", args);
+
+	    grantOwnerId = (Integer) EditGrantOwner.run(infoGrantOwner);
 
 	} catch (DomainException e) {
 	    return setError(request, mapping, "errors.grant.owner.personexists", null, null);

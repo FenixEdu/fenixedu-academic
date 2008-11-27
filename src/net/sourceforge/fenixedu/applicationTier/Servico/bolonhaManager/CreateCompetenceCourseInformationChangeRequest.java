@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseInformationRequestBean;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCompetenceCourseInformationChangeRequest extends FenixService {
 
-    public void run(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean, Person requestor) {
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    public static void run(CompetenceCourseInformationRequestBean bean, CompetenceCourseLoadBean loadBean, Person requestor) {
 
 	CompetenceCourse course = bean.getCompetenceCourse();
 	ExecutionSemester period = bean.getExecutionPeriod();

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +23,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
  */
 public class ReadGratuitySituationListByStudentCurricularPlan extends FenixService {
 
-    public List run(Integer studentCurricularPlanID) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer studentCurricularPlanID) throws FenixServiceException {
 	List infoGratuitySituations = new ArrayList();
 	List gratuitySituations = null;
 	GratuitySituation gratuitySituation = null;

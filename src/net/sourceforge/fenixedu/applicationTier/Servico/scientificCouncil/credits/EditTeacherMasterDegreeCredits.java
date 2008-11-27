@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 public class EditTeacherMasterDegreeCredits extends FenixService {
 
-    public void run(Map<String, String> hoursMap, Map<String, String> creditsMap) throws NumberFormatException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Map<String, String> hoursMap, Map<String, String> creditsMap) throws NumberFormatException {
 	Set<String> professorshipIDs = new HashSet<String>(hoursMap.keySet());
 	professorshipIDs.addAll(creditsMap.keySet());
 

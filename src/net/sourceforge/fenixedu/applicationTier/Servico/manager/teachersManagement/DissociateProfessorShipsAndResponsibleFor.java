@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 
-    public Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
 	    throws FenixServiceException {
 
 	if (teacherNumber == null) {

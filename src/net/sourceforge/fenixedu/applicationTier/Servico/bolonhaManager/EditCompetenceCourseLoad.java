@@ -12,11 +12,15 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCompetenceCourseLoad extends FenixService {
 
-    public void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods, List<CourseLoad> courseLoads)
-	    throws FenixServiceException {
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
+	    List<CourseLoad> courseLoads) throws FenixServiceException {
 	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 	if (competenceCourse == null) {
 	    throw new FenixServiceException("error.noCompetenceCourse");

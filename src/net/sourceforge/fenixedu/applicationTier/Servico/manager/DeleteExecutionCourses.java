@@ -9,6 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author jdnf, mrsp and Luis Cruz
@@ -16,7 +18,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class DeleteExecutionCourses extends FenixService {
 
-    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException {
 	final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
 	for (final Integer executionCourseID : executionCourseIDs) {

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.CreateWeeklyWorkLoad;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -217,8 +219,8 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     public void create(final HttpServletRequest request, final Integer attendsID, final Integer contact,
 	    final Integer autonomousStudy, final Integer other) throws FenixFilterException, FenixServiceException {
-	final Object[] args = { attendsID, contact, autonomousStudy, other };
-	executeService("CreateWeeklyWorkLoad", args);
+
+	CreateWeeklyWorkLoad.run(attendsID, contact, autonomousStudy, other);
     }
 
     private WeeklyWorkLoadBean getWeeklyWorkLoadBean(final HttpServletRequest request) {

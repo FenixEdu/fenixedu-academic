@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.EditExecutionCourseInfo;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -213,11 +219,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    executionCourseForm.set("executionCoursesNotLinked", new Boolean(executionCoursesNotLinked));
 	}
 
-	Object args[] = { Integer.valueOf(executionCourseId) };
 	InfoExecutionCourse infoExecutionCourse;
 	try {
-	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		    "ReadInfoExecutionCourseByOID", args);
+	    infoExecutionCourse = (InfoExecutionCourse) ReadInfoExecutionCourseByOID.run(Integer.valueOf(executionCourseId));
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -261,10 +265,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	final InfoExecutionCourseEditor infoExecutionCourseEditor = fillInfoExecutionCourseFromForm(actionForm, request);
 	InfoExecutionCourse infoExecutionCourse = null;
-	Object args[] = { infoExecutionCourseEditor };
+
 	try {
-	    infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		    "EditExecutionCourseByManager", args);
+	    infoExecutionCourse = (InfoExecutionCourse) EditExecutionCourseInfo.run(infoExecutionCourseEditor);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -304,9 +307,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	internalIds.add(new Integer(executionCourseId));
 
 	List errorCodes = new ArrayList();
-	Object args[] = { internalIds };
+
 	try {
-	    errorCodes = (List) ServiceUtils.executeService("DeleteExecutionCourses", args);
+	    errorCodes = (List) DeleteExecutionCourses.run(internalIds);
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

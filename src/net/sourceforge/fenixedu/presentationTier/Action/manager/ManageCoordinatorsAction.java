@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -146,9 +149,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 	DynaActionForm coordinatorForm = (DynaActionForm) actionForm;
 	Integer coordinatorNumber = new Integer((String) coordinatorForm.get("number"));
 
-	Object[] args = { executionDegreeId, coordinatorNumber };
 	try {
-	    ServiceManagerServiceFactory.executeService("AddCoordinatorByManager", args);
+	    AddCoordinator.run(executionDegreeId, coordinatorNumber);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
@@ -182,9 +184,9 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
 	if (responsibleCoordinatorsIds != null) {
 	    List responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
-	    Object[] args = { executionDegreeId, responsibleCoordinatorsIdsList };
+
 	    try {
-		ServiceManagerServiceFactory.executeService("ResponsibleCoordinatorsByManager", args);
+		ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
 	    } catch (FenixServiceException e) {
 		e.printStackTrace();
 		errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
@@ -196,13 +198,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
 	if (deletedCoordinatorsIds != null) {
 	    List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
-	    Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
-	    try {
-		ServiceManagerServiceFactory.executeService("RemoveCoordinatorsByManager", args);
-	    } catch (FenixServiceException e) {
-		e.printStackTrace();
-		errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
-	    }
+
+	    RemoveCoordinators.run(executionDegreeId, deletedCoordinatorsIdsList);
 	    if (!errors.isEmpty()) {
 		saveErrors(request, errors);
 	    }

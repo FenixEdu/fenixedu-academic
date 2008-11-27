@@ -13,10 +13,14 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.util.StringFormatter;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCompetenceCourse extends FenixService {
 
-    public CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
+    @Checked("RolePredicates.BOLONHA_MANAGER_PREDICATE")
+    @Service
+    public static CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType,
 	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, Integer unitID) throws FenixServiceException {
 
 	final CompetenceCourseGroupUnit unit = (CompetenceCourseGroupUnit) rootDomainObject.readPartyByOID(unitID);
@@ -27,7 +31,7 @@ public class CreateCompetenceCourse extends FenixService {
 	return new CompetenceCourse(name, nameEn, basic, regimeType, competenceCourseLevel, type, CurricularStage.DRAFT, unit);
     }
 
-    private void checkIfCanCreateCompetenceCourse(final String name, final String nameEn) throws FenixServiceException {
+    private static void checkIfCanCreateCompetenceCourse(final String name, final String nameEn) throws FenixServiceException {
 
 	final String normalizedName = StringFormatter.normalize(name);
 	final String normalizedNameEn = StringFormatter.normalize(nameEn);

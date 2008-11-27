@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCou
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -19,7 +21,9 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
  */
 public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends FenixService {
 
-    public InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static InfoOldInquiriesCoursesRes run(Integer executionPeriodId, Integer degreeId, String courseCode)
 	    throws FenixServiceException, NoSuchMethodException, InvocationTargetException, NoSuchMethodException,
 	    IllegalAccessException {
 	InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = null;

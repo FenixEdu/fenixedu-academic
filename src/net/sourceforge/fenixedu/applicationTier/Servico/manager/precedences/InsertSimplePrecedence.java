@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.precedences.Precedence;
  */
 public class InsertSimplePrecedence extends FenixService {
 
-    public void run(String className, Integer curricularCourseToAddPrecedenceID, Integer precedentCurricularCourseID,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(String className, Integer curricularCourseToAddPrecedenceID, Integer precedentCurricularCourseID,
 	    Integer number) throws FenixServiceException {
 	CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) rootDomainObject
 		.readDegreeModuleByOID(curricularCourseToAddPrecedenceID);

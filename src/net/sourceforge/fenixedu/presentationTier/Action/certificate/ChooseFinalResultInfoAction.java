@@ -16,6 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate.GetEndOfScholarshipDate;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.FinalResult;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.GetEnrolmentList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
@@ -23,9 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
@@ -65,7 +66,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
 	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(studentCurricularPlanID);
+	    infoStudentCurricularPlan = ReadStudentCurricularPlan.run(studentCurricularPlanID);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O aluno");
 	}
@@ -73,8 +74,8 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	List enrolmentList = null;
 	InfoFinalResult infoFinalResult = null;
 	try {
-	    Object argsFinalResult[] = { infoStudentCurricularPlan };
-	    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService("FinalResult", argsFinalResult);
+
+	    infoFinalResult = FinalResult.run(infoStudentCurricularPlan);
 	} catch (FenixServiceException e) {
 	    throw new FenixServiceException("");
 	}
@@ -83,13 +84,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	    throw new FinalResulUnreachedActionException("");
 	}
 
-	try {
-	    Object argsEnrolmentList[] = { infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED };
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", argsEnrolmentList);
-
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("Inscrição", e);
-	}
+	enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED);
 
 	if (enrolmentList.size() == 0) {
 	    throw new NonExistingActionException("Inscrição em Disciplinas");
@@ -97,14 +92,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
 	String conclusionDate = null;
 	Date endOfScholarshipDate = null;
-	try {
-	    Object argsTemp[] = { studentCurricularPlanID };
-	    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService("GetEndOfScholarshipDate", argsTemp);
-
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
-
+	endOfScholarshipDate = GetEndOfScholarshipDate.run(studentCurricularPlanID);
 	conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "/");
 	Date dateConclusion = Data.convertStringDate(conclusionDate, "/");
 	conclusionDate = DateFormat.getDateInstance().format(dateConclusion);

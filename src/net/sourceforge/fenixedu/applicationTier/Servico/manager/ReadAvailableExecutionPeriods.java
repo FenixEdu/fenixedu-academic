@@ -12,9 +12,14 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadAvailableExecutionPeriods extends FenixService {
 
-    public List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
 	final Collection<ExecutionSemester> filteredExecutionPeriods = new ArrayList<ExecutionSemester>(rootDomainObject
 		.getExecutionPeriodsSet());
@@ -25,7 +30,7 @@ public class ReadAvailableExecutionPeriods extends FenixService {
 	return (List) CollectionUtils.collect(filteredExecutionPeriods, TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
     }
 
-    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
+    private static final Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
 	public Object transform(Object executionPeriod) {
 	    return InfoExecutionPeriod.newInfoFromDomain((ExecutionSemester) executionPeriod);
 	}

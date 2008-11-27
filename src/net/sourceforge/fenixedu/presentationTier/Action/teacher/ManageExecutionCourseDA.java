@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.OrderBibliographicReferences;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -790,7 +792,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    finalOrderedReferences.addAll(getOptionalBibliographicReferences(executionCourse));
 	}
 
-	ServiceUtils.executeService("OrderBibliographicReferences", new Object[] { executionCourse, finalOrderedReferences });
+	OrderBibliographicReferences.run(executionCourse, finalOrderedReferences);
 	return mapping.findForward("bibliographicReference");
     }
 

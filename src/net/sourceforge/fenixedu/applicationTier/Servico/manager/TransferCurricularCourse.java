@@ -16,9 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class TransferCurricularCourse extends FenixService {
 
-    public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId, Integer destinationExecutionCourseId) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer sourceExecutionCourseId, final Integer curricularCourseId, Integer destinationExecutionCourseId) {
 
 	final ExecutionCourse sourceExecutionCourse = rootDomainObject.readExecutionCourseByOID(sourceExecutionCourseId);
 	final ExecutionCourse destinationExecutionCourse = rootDomainObject
@@ -50,7 +55,7 @@ public class TransferCurricularCourse extends FenixService {
      * @param transferedStudents
      * @throws ExcepcaoPersistencia
      */
-    private void transferAttends(Integer destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
+    private static void transferAttends(Integer destinationExecutionCourseId, ExecutionCourse sourceExecutionCourse,
 	    ExecutionCourse destinationExecutionCourse, CurricularCourse curricularCourse, Set<Integer> transferedStudents) {
 	for (Attends attend : sourceExecutionCourse.getAttends()) {
 	    Enrolment enrollment = attend.getEnrolment();
@@ -83,7 +88,7 @@ public class TransferCurricularCourse extends FenixService {
      * @param curricularCourse
      * @throws ExcepcaoPersistencia
      */
-    private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, CurricularCourse curricularCourse) {
+    private static void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, CurricularCourse curricularCourse) {
 
 	Set<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 

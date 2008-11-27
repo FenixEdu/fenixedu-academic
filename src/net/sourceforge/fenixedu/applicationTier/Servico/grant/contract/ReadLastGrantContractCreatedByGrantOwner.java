@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Barbosa
@@ -20,7 +22,9 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class ReadLastGrantContractCreatedByGrantOwner extends FenixService {
 
-    public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException {
 
 	GrantOrientationTeacher grantOrientationTeacher = null;
 	final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);

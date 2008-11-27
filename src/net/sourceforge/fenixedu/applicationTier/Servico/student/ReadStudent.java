@@ -6,6 +6,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Serviço LerAluno.
  * 
@@ -20,7 +24,9 @@ public class ReadStudent extends FenixService {
 
     // FIXME: We have to read the student by type also !!
 
-    public Object run(Integer number) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Object run(Integer number) {
 
 	InfoStudent infoStudent = null;
 

@@ -6,10 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ResponsibleCoordinators extends FenixService {
 
-    public void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 	if (executionDegree == null) {

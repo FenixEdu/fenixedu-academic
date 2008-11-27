@@ -10,10 +10,10 @@ import java.util.ResourceBundle;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.ReadStudentByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -225,9 +225,9 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     protected Registration getStudent() {
 	if (this.student == null) {
 	    try {
-		final Object args[] = { getUserView().getUtilizador() };
-		this.student = (Registration) ServiceUtils.executeService("ReadStudentByUsernameForEvaluationEnrolment", args);
-	    } catch (FenixFilterException e) {
+
+		this.student = ReadStudentByUsername.run(getUserView().getUtilizador());
+	    } catch (IllegalDataAccessException e) {
 	    } catch (FenixServiceException e) {
 	    }
 	}

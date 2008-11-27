@@ -3,6 +3,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -109,18 +117,16 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    Collection<Department> departments = rootDomainObject.getDepartments();
 	    for (Department department : departments) {
 		Unit unit = department.getDepartmentUnit();
-		teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-			"ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit, fromExecutionPeriod,
-				untilExecutionPeriod });
+		teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ReadTeachersCreditsResumeByPeriodAndUnit.run(unit, fromExecutionPeriod,
+				untilExecutionPeriod);
 		teachersCreditsByDepartment.put(department, teacherCreditsReportList);
 	    }
 	    request.setAttribute("departmentID", 0);
 	} else {
 	    Department department = rootDomainObject.readDepartmentByOID(departmentID);
 	    Unit departmentUnit = department.getDepartmentUnit();
-	    teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-		    "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { departmentUnit, fromExecutionPeriod,
-			    untilExecutionPeriod });
+	    teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod,
+			    untilExecutionPeriod);
 	    teachersCreditsByDepartment.put(department, teacherCreditsReportList);
 	    request.setAttribute("department", department);
 	    request.setAttribute("departmentID", department.getIdInternal());
@@ -400,17 +406,15 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    Collection<Department> departments = rootDomainObject.getDepartments();
 	    for (Department department : departments) {
 		Unit unit = department.getDepartmentUnit();
-		departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
-			"ReadDepartmentTotalCreditsByPeriod", new Object[] { unit, fromExecutionPeriod, untilExecutionPeriod });
+		departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ReadDepartmentTotalCreditsByPeriod.run(unit, fromExecutionPeriod, untilExecutionPeriod);
 		departmentTotalCredits.put(department, departmentPeriodTotalCredits);
 	    }
 	    request.setAttribute("departmentID", 0);
 	} else {
 	    Department department = rootDomainObject.readDepartmentByOID(departmentID);
 	    Unit departmentUnit = department.getDepartmentUnit();
-	    departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
-		    "ReadDepartmentTotalCreditsByPeriod", new Object[] { departmentUnit, fromExecutionPeriod,
-			    untilExecutionPeriod });
+	    departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ReadDepartmentTotalCreditsByPeriod.run(departmentUnit, fromExecutionPeriod,
+			    untilExecutionPeriod);
 
 	    departmentTotalCredits.put(department, departmentPeriodTotalCredits);
 	    request.setAttribute("department", department);

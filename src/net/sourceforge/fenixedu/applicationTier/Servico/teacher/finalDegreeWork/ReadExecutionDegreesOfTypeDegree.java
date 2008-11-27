@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +25,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 public class ReadExecutionDegreesOfTypeDegree extends FenixService {
 
-    public List run() {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run() {
 	String year = ExecutionYear.readCurrentExecutionYear().getYear();
 	List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
 

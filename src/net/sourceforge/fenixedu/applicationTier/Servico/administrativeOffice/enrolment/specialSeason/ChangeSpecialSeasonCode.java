@@ -5,10 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeSpecialSeasonCode extends FenixService {
 
-    public void run(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode)
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Registration registration, ExecutionYear executionYear, SpecialSeasonCode specialSeasonCode)
 	    throws FenixServiceException {
 	if (executionYear == null) {
 	    throw new FenixServiceException("executionYear.invalid.argument");

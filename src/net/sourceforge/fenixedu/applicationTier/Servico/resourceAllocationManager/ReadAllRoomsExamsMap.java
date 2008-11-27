@@ -6,10 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-/**
- * @author Luis Cruz & Sara Ribeiro
- * 
- */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,9 +23,14 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadAllRoomsExamsMap extends FenixService {
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(InfoExecutionPeriod infoExecutionPeriod) {
 
 	// Object to be returned
 	List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();
@@ -74,7 +75,7 @@ public class ReadAllRoomsExamsMap extends FenixService {
 	return infoRoomExamMapList;
     }
 
-    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
+    private static final Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
 	public Object transform(Object exam) {
 	    InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
 		    .newInfoFromDomain((Exam) exam);

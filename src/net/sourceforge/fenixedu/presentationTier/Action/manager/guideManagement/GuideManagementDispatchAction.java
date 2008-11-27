@@ -19,6 +19,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYea
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlans;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadPaymentTransactionByGuideEntryID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGratuityTransaction;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideEntry;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuideSituation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateInsuranceTransaction;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.DeleteGuideEntryAndPaymentTransactionInManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.DeleteGuideSituationInManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.DeleteGuideVersionInManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.EditGuideInformationInManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
@@ -94,10 +103,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	    InfoGuideEntry guideEntry = (InfoGuideEntry) iter.next();
 	    InfoPaymentTransaction paymentTransaction = null;
 
-	    Object[] argsPaymentTransactions = { guideEntry.getIdInternal() };
 	    try {
-		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService("ReadPaymentTransactionByGuideEntryID",
-			argsPaymentTransactions);
+		paymentTransaction = ReadPaymentTransactionByGuideEntryID.run(guideEntry.getIdInternal());
 	    } catch (FenixServiceException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -157,14 +164,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
 	String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
 
-	Object[] args = { guideID, GraduationType.MASTER_DEGREE, DocumentType.valueOf(newEntryDocumentType), newEntryDescription,
-		newEntryPrice, newEntryQuantity };
-	try {
-	    ServiceUtils.executeService("CreateGuideEntry", args);
-	} catch (FenixServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	CreateGuideEntry.run(guideID, GraduationType.MASTER_DEGREE, DocumentType.valueOf(newEntryDocumentType),
+		newEntryDescription, newEntryPrice, newEntryQuantity);
 
 	guideForm.set("newEntryDescription", null);
 	guideForm.set("newEntryQuantity", null);
@@ -193,14 +194,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(), newSituationDay.intValue()))
 		.getTime();
 
-	Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
-
-	try {
-	    ServiceUtils.executeService("CreateGuideSituation", args);
-	} catch (FenixServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	CreateGuideSituation.run(guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date);
 
 	guideForm.set("newSituationRemarks", null);
 	guideForm.set("newSituationDay", null);
@@ -221,14 +215,12 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	String selectedGuideEntryDocumentType = (String) guideForm.get("selectedGuideEntryDocumentType");
 	Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
-	Object[] args = { selectedGuideEntryID, userView };
-
 	try {
 
 	    if (selectedGuideEntryDocumentType.equals(DocumentType.GRATUITY.name())) {
-		ServiceUtils.executeService("CreateGratuityTransaction", args);
+		CreateGratuityTransaction.run(selectedGuideEntryID, userView);
 	    } else if (selectedGuideEntryDocumentType.equals(DocumentType.INSURANCE.name())) {
-		ServiceUtils.executeService("CreateInsuranceTransaction", args);
+		CreateInsuranceTransaction.run(selectedGuideEntryID, userView);
 	    }
 
 	} catch (FenixServiceException e) {
@@ -252,13 +244,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Integer guideID = (Integer) guideForm.get("guideID");
 	String newPaymentType = (String) guideForm.get("newPaymentType");
 
-	Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType };
-	try {
-	    ServiceUtils.executeService("EditGuideInformationInManager", args);
-	} catch (FenixServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	EditGuideInformationInManager.run(guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType);
 
 	return chooseGuide(mapping, actionForm, request, response);
 
@@ -272,13 +258,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer guideSituationID = (Integer) guideForm.get("guideSituationID");
 
-	Object[] args = { guideSituationID };
-	try {
-	    ServiceUtils.executeService("DeleteGuideSituationInManager", args);
-	} catch (FenixServiceException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
+	DeleteGuideSituationInManager.run(guideSituationID);
 
 	return chooseGuide(mapping, actionForm, request, response);
 
@@ -292,9 +272,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
-	Object[] args = { selectedGuideEntryID };
 	try {
-	    ServiceUtils.executeService("DeleteGuideEntryAndPaymentTransactionInManager", args);
+	    DeleteGuideEntryAndPaymentTransactionInManager.run(selectedGuideEntryID);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -312,9 +291,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer guideID = (Integer) guideForm.get("guideID");
 
-	Object[] args = { guideID };
 	try {
-	    ServiceUtils.executeService("DeleteGuideVersionInManager", args);
+	    DeleteGuideVersionInManager.run(guideID);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();

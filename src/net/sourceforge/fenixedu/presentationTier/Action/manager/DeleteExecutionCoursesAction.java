@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionCourses;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -41,12 +43,11 @@ public class DeleteExecutionCoursesAction extends FenixAction {
 
 	List internalIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-	Object args[] = { internalIds };
 
 	List errorCodes = new ArrayList();
 
 	try {
-	    errorCodes = (List) ServiceUtils.executeService("DeleteExecutionCourses", args);
+	    errorCodes = (List) DeleteExecutionCourses.run(internalIds);
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

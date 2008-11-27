@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadCareers;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,8 +46,7 @@ public class ReadCareersAction extends FenixAction {
 	if ((string != null)) {
 	    careerType = CareerType.valueOf(string);
 
-	    Object[] args = { careerType, userView.getUtilizador() };
-	    SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCareers", args);
+	    SiteView siteView = (SiteView) ReadCareers.run(careerType, userView.getUtilizador());
 
 	    request.setAttribute("siteView", siteView);
 	}

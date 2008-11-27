@@ -10,8 +10,7 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionDegreesForExecutionYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -19,8 +18,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -29,7 +28,7 @@ import net.sourceforge.fenixedu.util.Data;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
+public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean {
     private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
 
     private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
@@ -102,7 +101,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
     private List<DegreeCurricularPlan> createdDegreeCurricularPlans;
 
-    public CreateExecutionDegreesForExecutionYear() {
+    public CreateExecutionDegreesForExecutionYearBean() {
 	super();
     }
 
@@ -289,18 +288,14 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 	gradeSubmissionSpecialSeasonEndDate.set(getGradeSubmissionSpecialSeasonEndYear(),
 		getGradeSubmissionSpecialSeasonEndMonth(), getGradeSubmissionSpecialSeasonEndDay());
 
-	Object[] args = { getChoosenDegreeCurricularPlansIDs(), getChoosenBolonhaDegreeCurricularPlansIDs(),
-		getChoosenExecutionYearID(), getCampus(), getTemporaryExamMap(), lessonSeason1BeginDate, lessonSeason1EndDate,
-		lessonSeason2BeginDate, lessonSeason2EndDate, examsSeason1BeginDate, examsSeason1EndDate, examsSeason2BeginDate,
-		examsSeason2EndDate, examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate, gradeSubmissionNormalSeason1EndDate,
-		gradeSubmissionNormalSeason2EndDate, gradeSubmissionSpecialSeasonEndDate };
-
 	try {
-	    createdDegreeCurricularPlans = (List<DegreeCurricularPlan>) ServiceUtils.executeService(
-		    "CreateExecutionDegreesForExecutionYear", args);
-	} catch (FenixFilterException e) {
-	    throw new FenixActionException(e);
-	} catch (FenixServiceException e) {
+	    createdDegreeCurricularPlans = CreateExecutionDegreesForExecutionYear.run(getChoosenDegreeCurricularPlansIDs(),
+		    getChoosenBolonhaDegreeCurricularPlansIDs(), getChoosenExecutionYearID(), getCampus(), getTemporaryExamMap(),
+		    lessonSeason1BeginDate, lessonSeason1EndDate, lessonSeason2BeginDate, lessonSeason2EndDate,
+		    examsSeason1BeginDate, examsSeason1EndDate, examsSeason2BeginDate, examsSeason2EndDate,
+		    examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate, gradeSubmissionNormalSeason1EndDate,
+		    gradeSubmissionNormalSeason2EndDate, gradeSubmissionSpecialSeasonEndDate);
+	} catch (IllegalDataAccessException e) {
 	    throw new FenixActionException(e);
 	} catch (DomainException e) {
 	    addErrorMessage(getFormatedMessage(domainExceptionBundle, e.getKey(), e.getArgs()));

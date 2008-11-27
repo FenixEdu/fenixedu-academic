@@ -9,10 +9,14 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateOldCurricularCourse extends FenixService {
 
-    public void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,
 	    final Integer maximumValueForAcumulatedEnrollments, final Double weigth, final Integer enrolmentWeigth,
 	    final Double credits, final Double ectsCredits, final Integer year, final Integer semester,
@@ -49,7 +53,7 @@ public class CreateOldCurricularCourse extends FenixService {
 	courseGroup.addContext(curricularCourse, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
-    private CurricularPeriod getCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final Integer year,
+    private static CurricularPeriod getCurricularPeriod(final DegreeCurricularPlan degreeCurricularPlan, final Integer year,
 	    final Integer semester) {
 	CurricularPeriod curricularPeriod = degreeCurricularPlan.getCurricularPeriodFor(year, semester);
 	if (curricularPeriod == null) {

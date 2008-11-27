@@ -9,10 +9,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGrantPart extends FenixService {
 
-    public void run(InfoGrantPart infoGrantPart) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantPart infoGrantPart) throws FenixServiceException {
 
 	GrantPart grantPart = rootDomainObject.readGrantPartByOID(infoGrantPart.getIdInternal());
 	if (grantPart == null) {

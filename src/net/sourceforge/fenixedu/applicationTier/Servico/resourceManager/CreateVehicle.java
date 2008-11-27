@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -9,7 +13,9 @@ import org.joda.time.YearMonthDay;
 
 public class CreateVehicle extends FenixService {
 
-    public void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
+    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
+    @Service
+    public static void run(String numberPlate, String make, String model, YearMonthDay acquisition, YearMonthDay cease,
 	    BigDecimal allocationCostMultiplier) {
 
 	new Vehicle(numberPlate, make, model, acquisition, cease, allocationCostMultiplier);

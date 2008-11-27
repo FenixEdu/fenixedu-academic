@@ -3,6 +3,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurricularCourseScope;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScope;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -49,10 +55,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
-	Object args[] = { curricularCourseScopeId };
 	try {
-	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService("ReadCurricularCourseScope",
-		    args);
+	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ReadCurricularCourseScope.run(curricularCourseScopeId);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
 		    .findForward("readCurricularCourse"));
@@ -68,10 +72,9 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 	dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
 	dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
 
-	Object[] args1 = { degreeCurricularPlanId };
 	List result = null;
 	try {
-	    result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan", args1);
+	    result = (List) ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 	} catch (FenixServiceException e) {
@@ -149,10 +152,9 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 	}
 	newInfoCurricularCourseScope.setAnotation(anotationString);
 
-	Object args[] = { newInfoCurricularCourseScope };
 
 	try {
-	    ServiceUtils.executeService("EditCurricularCourseScope", args);
+	    EditCurricularCourseScope.run(newInfoCurricularCourseScope);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"));
 	} catch (ExistingServiceException e) {

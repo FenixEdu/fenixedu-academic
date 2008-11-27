@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -20,7 +22,9 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends FenixService {
 
-    public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionSemester);
 	for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
@@ -45,7 +49,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 	}
     }
 
-    private String getCodeForCurricularCourse(final CurricularCourse curricularCourse) {
+    private static String getCodeForCurricularCourse(final CurricularCourse curricularCourse) {
 	if (curricularCourse.getAcronym() != null) {
 	    return curricularCourse.getAcronym();
 	}
@@ -71,7 +75,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 	return sigla;
     }
 
-    private Set<String> readExistingExecutionCoursesSiglas(final ExecutionSemester executionSemester) {
+    private static Set<String> readExistingExecutionCoursesSiglas(final ExecutionSemester executionSemester) {
 	final Set<String> existingExecutionCoursesSiglas = new HashSet<String>();
 	for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
 	    existingExecutionCoursesSiglas.add(executionCourse.getSigla().toUpperCase());

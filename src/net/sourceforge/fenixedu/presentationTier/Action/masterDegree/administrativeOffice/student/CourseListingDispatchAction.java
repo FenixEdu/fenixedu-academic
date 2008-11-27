@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -44,11 +48,10 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
 	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	Object args[] = { degreeType };
 
 	List result = null;
 	try {
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadAllMasterDegrees", args);
+	    result = (List) ReadAllMasterDegrees.run(degreeType);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O Degree de Mestrado", e);
 	}
@@ -70,12 +73,11 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 	    masterDegreeID = (Integer) request.getAttribute("degreeID");
 	}
 
-	Object args[] = { masterDegreeID };
 	List result = null;
 
 	try {
 
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadCPlanFromChosenMasterDegree", args);
+	    result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O plano curricular ", e);

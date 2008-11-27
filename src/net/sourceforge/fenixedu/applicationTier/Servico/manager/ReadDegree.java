@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -18,7 +20,9 @@ public class ReadDegree extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    public InfoDegree run(Integer idInternal) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoDegree run(Integer idInternal) throws FenixServiceException {
 	final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
 	if (degree == null) {

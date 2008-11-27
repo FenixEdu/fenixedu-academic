@@ -8,6 +8,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -45,10 +49,9 @@ public final class SessionUtils {
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-	infoCourseList = (ArrayList) ServiceUtils.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-		args);
+
+	infoCourseList = (ArrayList) LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear());
 
 	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 
@@ -69,10 +72,8 @@ public final class SessionUtils {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-	Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-	infoCourseList = (ArrayList) ServiceUtils.executeService("LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
-		args);
+	infoCourseList = (ArrayList) LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear());
 
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 	String[] executionCourseIDArray = (String[]) chooseCourseForm.get("executionCourses");

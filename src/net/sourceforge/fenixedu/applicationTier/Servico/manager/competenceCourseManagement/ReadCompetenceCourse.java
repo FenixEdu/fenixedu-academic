@@ -5,10 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCompetenceCourse extends FenixService {
 
-    public InfoCompetenceCourse run(Integer competenceCourseID) throws Exception {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoCompetenceCourse run(Integer competenceCourseID) throws NotExistingServiceException {
 	CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 	if (competenceCourse == null) {
 	    throw new NotExistingServiceException("Invalid CompetenceCourse ID");

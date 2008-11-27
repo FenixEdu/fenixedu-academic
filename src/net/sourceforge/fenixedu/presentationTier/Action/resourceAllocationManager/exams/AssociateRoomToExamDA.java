@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -98,11 +100,10 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
 	DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-	Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE };
 
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
+		null, null, Boolean.FALSE);
 
 	String[] rooms = (String[]) examForm.get("rooms");
 	List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();

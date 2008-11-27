@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -49,12 +53,14 @@ public class ImportFunctionalities extends FenixService {
      * @throws IOException
      *             when it's not possible to read from the stream
      */
-    public void run(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws IOException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws IOException {
 	Element root = getRootElement(stream);
 	importFunctionalities(module, root.getChildren("functionality"), principalPreserved, uuidUsed);
     }
 
-    protected Element getRootElement(InputStream stream) throws IOException {
+    protected static Element getRootElement(InputStream stream) throws IOException {
 	SAXBuilder build = new SAXBuilder();
 
 	build.setExpandEntities(true);
@@ -68,7 +74,7 @@ public class ImportFunctionalities extends FenixService {
 	}
     }
 
-    protected Element convertVersion(Element root) {
+    protected static Element convertVersion(Element root) {
 	// only supports 1.0 for now
 	if (!"1.0".equals(root.getAttributeValue("version"))) {
 	    throw new InvalidStructureException("functionalities.import.version.notSupported");
@@ -77,7 +83,7 @@ public class ImportFunctionalities extends FenixService {
 	return root;
     }
 
-    protected void importFunctionalities(Module module, List children, boolean principalPreserved, boolean considerUUID) {
+    protected static void importFunctionalities(Module module, List children, boolean principalPreserved, boolean considerUUID) {
 	for (Object element : children) {
 	    Element functionalityElement = (Element) element;
 
@@ -157,7 +163,7 @@ public class ImportFunctionalities extends FenixService {
 	}
     }
 
-    private MultiLanguageString importMultiLanguageString(Element child) {
+    private static MultiLanguageString importMultiLanguageString(Element child) {
 	MultiLanguageString mlString = new MultiLanguageString();
 
 	List values = child.getChildren("value");

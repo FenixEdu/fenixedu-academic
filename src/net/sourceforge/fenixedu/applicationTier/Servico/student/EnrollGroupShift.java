@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -28,7 +32,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class EnrollGroupShift extends FenixService {
 
-    public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
 	    throws FenixServiceException {
 
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -67,7 +73,7 @@ public class EnrollGroupShift extends FenixService {
 	return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
+    private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
 
 	for (final Attends attend : studentGroup.getAttends()) {
 	    if (attend.getRegistration() == registration) {

@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesis;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Formatter;
@@ -37,9 +39,8 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	if (bean == null) {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {
-	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ServiceUtils
-		    .executeService("ReadActiveMasterDegreeThesis", new Object[] { bean.getThesisState(), bean.getYear(),
-			    bean.getDegree() });
+	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ReadActiveMasterDegreeThesis.run(bean.getThesisState(), bean.getYear(),
+			    bean.getDegree());
 
 	    if (bean.getGenerateFile()) {
 		request.setAttribute("chooseDegreeAndYearBean", bean);

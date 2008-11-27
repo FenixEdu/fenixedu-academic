@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadCategories;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class CareerAction extends CRUDActionByOID {
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
 	IUserView userView = UserView.getUser();
-	List categories = (List) ServiceUtils.executeService("ReadCategories", new Object[] {});
+	List categories = (List) ReadCategories.run();
 
 	request.setAttribute("categories", categories);
     }

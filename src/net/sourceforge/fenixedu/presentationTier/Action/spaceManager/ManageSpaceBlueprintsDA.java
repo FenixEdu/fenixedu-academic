@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteBlueprintVersion;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -132,7 +134,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	Blueprint blueprint = getSpaceBlueprintFromParameter(request);
 
 	try {
-	    ServiceUtils.executeService("DeleteBlueprintVersion", new Object[] { blueprint });
+	    DeleteBlueprintVersion.run(blueprint);
 
 	} catch (DomainException ex) {
 	    saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());

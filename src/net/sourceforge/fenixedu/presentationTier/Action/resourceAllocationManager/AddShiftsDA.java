@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddShiftsToSchoolClass;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +29,8 @@ public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearCo
 	final DynaActionForm addShiftsForm = (DynaActionForm) form;
 	List<String> selectedShifts = Arrays.asList((String[]) addShiftsForm.get("selectedItems"));
 
-	Object args[] = { infoClass, selectedShifts };
 	try {
-	    ServiceUtils.executeService("AddShiftsToSchoolClass", args);
+	    AddShiftsToSchoolClass.run(infoClass, selectedShifts);
 	} catch (ExistingServiceException ex) {
 	    // No problem, the user refreshed the page after adding classes
 	    request.setAttribute("selectMultipleItemsForm", null);

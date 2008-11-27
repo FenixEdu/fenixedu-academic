@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +30,9 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class ReadAllClasses extends FenixService {
 
-    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
 	List<InfoClass> infoClasses = null;
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);

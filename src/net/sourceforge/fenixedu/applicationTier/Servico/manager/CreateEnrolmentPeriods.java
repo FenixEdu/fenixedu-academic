@@ -12,10 +12,14 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnr
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateEnrolmentPeriods extends FenixService {
 
-    public void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
 	    final Date startDate, final Date endDate) throws FenixServiceException {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
@@ -26,7 +30,7 @@ public class CreateEnrolmentPeriods extends FenixService {
 	}
     }
 
-    private void createPeriod(final String enrolmentPeriodClassName, final Date startDate, final Date endDate,
+    private static void createPeriod(final String enrolmentPeriodClassName, final Date startDate, final Date endDate,
 	    final ExecutionSemester executionSemester, final DegreeCurricularPlan degreeCurricularPlan)
 	    throws FenixServiceException {
 	if (EnrolmentPeriodInClasses.class.getName().equals(enrolmentPeriodClassName)) {

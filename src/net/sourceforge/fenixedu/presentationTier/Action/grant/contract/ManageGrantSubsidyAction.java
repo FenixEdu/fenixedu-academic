@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantSubsidiesByGrantContractAndState;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -53,12 +54,11 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
 	// Read Subsidies
-	Object[] argsActiveSubsidy = { idContract, InfoGrantSubsidy.getActiveStateValue() };
-	Object[] argsNotActiveSubsidy = { idContract, InfoGrantSubsidy.getInactiveStateValue() };
-	List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService("ReadAllGrantSubsidiesByGrantContractAndState",
-		argsActiveSubsidy);
-	List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService("ReadAllGrantSubsidiesByGrantContractAndState",
-		argsNotActiveSubsidy);
+
+	List infoGrantActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract, InfoGrantSubsidy
+		.getActiveStateValue());
+	List infoGrantNotActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract, InfoGrantSubsidy
+		.getInactiveStateValue());
 
 	// If they exist put them on request
 	if (infoGrantActiveSubsidyList != null && !infoGrantActiveSubsidyList.isEmpty()) {

@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTypeNotFoundException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.CreateOrEditGrantContractAndRegime;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantTypes;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantContractRegimeByContractAndState;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
@@ -45,14 +48,10 @@ public class EditGrantContractAction extends FenixDispatchAction {
     public ActionForward prepareEditGrantContractForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	IUserView userView = UserView.getUser();
-	try {
-	    // Read grant types for the contract
-	    Object[] args2 = {};
-	    List grantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args2);
-	    request.setAttribute("grantTypeList", grantTypeList);
-	} catch (FenixServiceException e) {
-	    return setError(request, mapping, "errors.grant.type.read", "manage-grant-contract", null);
-	}
+	// Read grant types for the contract
+
+	List grantTypeList = ReadAllGrantTypes.run();
+	request.setAttribute("grantTypeList", grantTypeList);
 
 	if (!verifyParameterInRequest(request, "loaddb")) {
 	    // Validation error
@@ -71,9 +70,9 @@ public class EditGrantContractAction extends FenixDispatchAction {
 		InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
 
 		// Read the actual Regime associated with this contract
-		Object[] argregime = { idContract, new Integer(1) };
-		List infoGrantContractRegimeActiveList = (List) ServiceUtils.executeService(
-			"ReadGrantContractRegimeByContractAndState", argregime);
+
+		List infoGrantContractRegimeActiveList = ReadGrantContractRegimeByContractAndState
+			.run(idContract, new Integer(1));
 		// It should only be one active contract regime
 
 		if (infoGrantContractRegimeActiveList.isEmpty()
@@ -125,50 +124,9 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	    request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
 	    // Edit Grant Contract
-	    Object[] args = { infoGrantContract, infoGrantContractRegime };
-	    ServiceUtils.executeService("CreateOrEditGrantContractAndRegime", args);
 
-	    // if (infoGrantContract.getIdInternal() == null
-	    // || infoGrantContract.getIdInternal().equals(new Integer(0))) //In
-	    // // case of a new contract
-	    // {
-	    // Object[] argcontract = {
-	    // infoGrantContract.getGrantOwnerInfo().getIdInternal() };
-	    // infoGrantContract = null;
-	    // infoGrantContract = (InfoGrantContract)
-	    // ServiceUtils.executeService(
-	    // "ReadLastGrantContractCreatedByGrantOwner", argcontract);
-	    //                
-	    //                
-	    // infoGrantContractRegime.setInfoTeacher(infoGrantContract
-	    // .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());
-	    // if (infoGrantContract.getGrantCostCenterInfo()!=null){
-	    // infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.
-	    // getGrantCostCenterInfo());
-	    // infoGrantContractRegime.setCostCenterKey(infoGrantContract.
-	    // getGrantCostCenterInfo().getIdInternal());
-	    // }
-	    // infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
-	    //               
-	    // } else {
-	    // if (infoGrantContract.getGrantCostCenterInfo()!=null &&
-	    // ((infoGrantContractRegime
-	    // .getGrantCostCenterInfo().getNumber()).trim()).length()>0){
-	    // infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.
-	    // getGrantCostCenterInfo());
-	    // infoGrantContractRegime.setCostCenterKey(infoGrantContract.
-	    // getGrantCostCenterInfo().getIdInternal());
-	    // }
-	    //
-	    // infoGrantContractRegime.setInfoTeacher(infoGrantContract
-	    // .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());
-	    // infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
-	    //            	
-	    // }
-	    // //Edit Grant Contract Regime
-	    // Object[] argregime = { infoGrantContractRegime };
-	    // ServiceUtils.executeService("EditGrantContractRegime",
-	    // argregime);
+	    CreateOrEditGrantContractAndRegime.run(infoGrantContract, infoGrantContractRegime);
+
 	    return mapping.findForward("manage-grant-contract");
 	} catch (GrantTypeNotFoundException e) {
 	    return setError(request, mapping, "errors.grant.type.not.found", null, null);

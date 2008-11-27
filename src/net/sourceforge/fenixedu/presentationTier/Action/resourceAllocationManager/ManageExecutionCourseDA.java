@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteCourseLoad;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExecutionCourse;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -78,7 +82,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
 
 	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");
 	try {
-	    ServiceManagerServiceFactory.executeService("EditExecutionCourse", new Object[] { bean });
+	    EditExecutionCourse.run(bean);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -102,7 +106,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
 	CourseLoad courseLoad = getCourseLoadFromParameter(request);
 	ExecutionCourse executionCourse = courseLoad.getExecutionCourse();
 	try {
-	    ServiceManagerServiceFactory.executeService("DeleteCourseLoad", new Object[] { courseLoad });
+	    DeleteCourseLoad.run(courseLoad);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

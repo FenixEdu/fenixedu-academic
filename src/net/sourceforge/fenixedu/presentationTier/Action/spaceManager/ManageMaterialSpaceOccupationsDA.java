@@ -17,6 +17,8 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.ServiceManager;
+import pt.ist.fenixWebFramework.services.ServiceManagerException;
 
 public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 
@@ -63,10 +65,14 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 
 	MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
 	Class occupationClass = materialOccupation.getMaterial().getMaterialSpaceOccupationSubClass();
-	Object[] args = { occupationClass.cast(materialOccupation) };
+
 	try {
-	    executeService("DeleteMaterialSpaceOccupation", args);
+	    ServiceManager.invokeServiceByName(
+		    "net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteMaterialSpaceOccupation", "run",
+		    new Object[] { occupationClass.cast(materialOccupation) });
 	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	} catch (ServiceManagerException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	readAndSetSpaceInformation(request);

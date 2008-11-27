@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.MaterialType;
@@ -8,7 +12,9 @@ import net.sourceforge.fenixedu.domain.material.FireExtinguisher;
 
 public class CreateMaterial extends FenixService {
 
-    public void run(MaterialBean bean) {
+    @Checked("RolePredicates.RESOURCE_MANAGER_PREDICATE")
+    @Service
+    public static void run(MaterialBean bean) {
 
 	if (bean != null) {
 

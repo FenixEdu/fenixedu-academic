@@ -14,12 +14,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepart
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.CreateEditCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.DeleteCompetenceCourses;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadAllCompetenceCourses;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadCompetenceCoursesByDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -58,13 +62,11 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	Integer departmentID = (departmentString != null && StringUtils.isNumeric(departmentString)) ? Integer
 		.valueOf(departmentString) : null;
 
-	Object[] args2 = { departmentID };
 	List<InfoDepartment> infoDepartments;
 	List<InfoCompetenceCourse> infoCompetenceCourses;
 
 	try {
-	    infoCompetenceCourses = (List<InfoCompetenceCourse>) ServiceUtils.executeService("ReadCompetenceCoursesByDepartment",
-		    args2);
+	    infoCompetenceCourses = ReadCompetenceCoursesByDepartment.run(departmentID);
 	    infoDepartments = ReadAllDepartments.run();
 	} catch (FenixServiceException fse) {
 	    throw new FenixActionException(fse.getMessage());
@@ -82,12 +84,9 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	DynaActionForm actionForm = (DynaActionForm) form;
 
 	Integer[] competenceCoursesIDs = (Integer[]) actionForm.get("competenceCoursesIds");
-	Object[] args = { competenceCoursesIDs };
 
 	try {
-	    ServiceUtils.executeService("DeleteCompetenceCourses", args);
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+	    DeleteCompetenceCourses.run(competenceCoursesIDs);
 	} catch (DomainException e) {
 	    return setError(request, mapping, e.getMessage(), "readCompetenceCourses", null);
 	}
@@ -113,17 +112,16 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	IUserView userView = UserView.getUser();
-	Object[] args = {};
+
 	List<InfoCompetenceCourse> infoCompetenceCoursesList = null;
 
-	try {
+	// try {
 
-	    infoCompetenceCoursesList = (List<InfoCompetenceCourse>) ServiceUtils
-		    .executeService("ReadAllCompetenceCourses", args);
+	infoCompetenceCoursesList = ReadAllCompetenceCourses.run();
 
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
-	}
+	// } catch (FenixServiceException fenixServiceException) {
+	// throw new FenixActionException(fenixServiceException.getMessage());
+	// }
 
 	Collections.sort(infoCompetenceCoursesList, new BeanComparator("name", Collator.getInstance()));
 
@@ -136,10 +134,10 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 
 	Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourseID"));
-	Object[] args = { competenceCourseID };
+
 	InfoCompetenceCourse competenceCourse = null;
 	try {
-	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("ReadCompetenceCourse", args);
+	    competenceCourse = ReadCompetenceCourse.run(competenceCourseID);
 	} catch (NotExistingServiceException notExistingServiceException) {
 
 	} catch (FenixServiceException fenixServiceException) {
@@ -173,15 +171,12 @@ public class CompetenceCourseDispatchAction extends FenixDispatchAction {
 	String code = (String) actionForm.get("code");
 	String name = (String) actionForm.get("name");
 	Integer departmentID = (Integer) actionForm.get("departmentID");
-	Object[] args = { null, code, name, departmentID };
+
 	InfoCompetenceCourse competenceCourse = null;
 	try {
-	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("CreateEditCompetenceCourse", args);
-
+	    competenceCourse = CreateEditCompetenceCourse.run(null, code, name, new Integer[] { departmentID });
 	} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
-
-	} catch (NotExistingServiceException notExistingServiceException) {
-
+	    throw new FenixActionException(invalidArgumentsServiceException.getMessage());
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

@@ -42,6 +42,11 @@
 			key="error.NotAuthorized"
 			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
 			/>
+        <exception
+            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
+            key="error.NotAuthorized"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+            />
 	</global-exceptions>
 
 	<!-- ========== Global Forward Definitions =============================== -->

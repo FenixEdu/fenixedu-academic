@@ -32,11 +32,13 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
-    private class GratuityLetterFileEntry {
+    private static class GratuityLetterFileEntry {
 
 	private int numberOfPaymentPhases;
 
@@ -166,7 +168,9 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
     }
 
-    public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
 	ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	InsuranceValue insuranceValue = executionYear.getInsuranceValue();
 	if (insuranceValue == null) {
@@ -288,7 +292,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 	return fileContent;
     }
 
-    private GratuityLetterFileEntry createGratuityLetterFileEntryForGratuitySituation(GratuitySituation gratuitySituation,
+    private static GratuityLetterFileEntry createGratuityLetterFileEntryForGratuitySituation(GratuitySituation gratuitySituation,
 	    String shortYear, Date totalPaymentEndDate) throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 	if ((gratuitySituation.getRemainingValue() == null) || (gratuitySituation.getRemainingValue().doubleValue() <= 0)) {
@@ -339,7 +343,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
     }
 
-    private String addCharToStringUntilMax(char c, String string, int maxlength) {
+    private static String addCharToStringUntilMax(char c, String string, int maxlength) {
 	StringBuilder stringComplete = new StringBuilder();
 
 	int stringLength = 0;
@@ -355,7 +359,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 	return stringComplete.toString();
     }
 
-    private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
+    private static String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
 
 	int sibsPaymentCode = 0;
 	Specialization specialization = studentCurricularPlan.getSpecialization();
@@ -375,7 +379,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 	return sibsPaymentCode + "";
     }
 
-    private byte[] writeLetterFiles(List gratuityLetterFileEntries, ExecutionYear executionYear)
+    private static byte[] writeLetterFiles(List gratuityLetterFileEntries, ExecutionYear executionYear)
 	    throws FileNotCreatedServiceException {
 	StringBuilder letterFile = createLetterFile(0); // this needs cleanup.
 
@@ -447,7 +451,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
     }
 
-    private StringBuilder createLetterFile(int numberOfPhases) {
+    private static StringBuilder createLetterFile(int numberOfPhases) {
 	StringBuilder file = new StringBuilder();
 
 	// add header

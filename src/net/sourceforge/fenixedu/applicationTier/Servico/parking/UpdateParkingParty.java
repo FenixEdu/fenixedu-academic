@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,7 +22,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class UpdateParkingParty extends FenixService {
 
-    public void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState, final Long cardCode,
+    @Checked("RolePredicates.PARKING_MANAGER_PREDICATE")
+    @Service
+    public static void run(ParkingRequest parkingRequest, final ParkingRequestState parkingRequestState, final Long cardCode,
 	    final ParkingGroup parkingGroup, final String note, final DateTime cardStartDate, final DateTime cardEndDate,
 	    final Integer number) {
 
@@ -55,7 +61,7 @@ public class UpdateParkingParty extends FenixService {
 	}
     }
 
-    private boolean changedObject(Object oldObject, Object newObject) {
+    private static boolean changedObject(Object oldObject, Object newObject) {
 	return oldObject == null && newObject == null ? false : (oldObject != null && newObject != null ? (!oldObject
 		.equals(newObject)) : true);
     }

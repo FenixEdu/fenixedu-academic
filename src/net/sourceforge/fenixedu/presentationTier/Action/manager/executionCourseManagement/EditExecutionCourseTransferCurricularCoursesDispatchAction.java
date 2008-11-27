@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferCurricularCourse;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -121,8 +123,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 		&& StringUtils.isNumeric(destinationExecutionCourseIdString)) {
 	    Integer destinationExecutionCourseId = new Integer(destinationExecutionCourseIdString);
 
-	    Object[] args = { executionCourseId, curricularCourseId, destinationExecutionCourseId };
-	    ServiceUtils.executeService("TransferCurricularCourse", args);
+	    TransferCurricularCourse.run(executionCourseId, curricularCourseId, destinationExecutionCourseId);
 	}
 
 	return mapping.findForward("completedTransfer");

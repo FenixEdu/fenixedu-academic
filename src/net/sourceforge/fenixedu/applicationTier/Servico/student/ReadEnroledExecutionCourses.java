@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -16,7 +20,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class ReadEnroledExecutionCourses extends FenixService {
 
-    public List<ExecutionCourse> run(final Registration registration) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List<ExecutionCourse> run(final Registration registration) {
 
 	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
@@ -35,13 +41,13 @@ public class ReadEnroledExecutionCourses extends FenixService {
 	return result;
     }
 
-    private boolean checkPeriodEnrollment(final Grouping grouping) {
+    private static boolean checkPeriodEnrollment(final Grouping grouping) {
 	final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 	final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 	return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
     }
 
-    private boolean checkPeriodEnrollment(final List<Grouping> allGroupProperties) {
+    private static boolean checkPeriodEnrollment(final List<Grouping> allGroupProperties) {
 	for (final Grouping grouping : allGroupProperties) {
 	    if (checkPeriodEnrollment(grouping)) {
 		return true;
@@ -50,7 +56,7 @@ public class ReadEnroledExecutionCourses extends FenixService {
 	return false;
     }
 
-    private boolean checkStudentInAttendsSet(final List<Grouping> allGroupProperties, final Registration registration) {
+    private static boolean checkStudentInAttendsSet(final List<Grouping> allGroupProperties, final Registration registration) {
 	for (final Grouping grouping : allGroupProperties) {
 	    if (grouping.getStudentAttend(registration) != null) {
 		return true;

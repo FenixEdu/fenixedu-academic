@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateSiteInExecutionCourse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,10 +28,10 @@ public class CreateSiteInExecutionCourseAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-	Object args[] = { executionCourseId };
+
 	try {
 
-	    ServiceUtils.executeService("CreateSiteInExecutionCourse", args);
+	    CreateSiteInExecutionCourse.run(executionCourseId);
 	} catch (NonExistingServiceException exception) {
 	    throw new NonExistingActionException(exception.getMessage());
 	} catch (FenixServiceException e) {

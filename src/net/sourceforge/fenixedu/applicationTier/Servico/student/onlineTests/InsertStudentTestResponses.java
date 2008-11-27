@@ -37,20 +37,24 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.log4j.Logger;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InsertStudentTestResponses extends FenixService {
     private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
 
-    private String path;
+    private static String path;
 
-    public InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber, final Integer distributedTestId,
-	    Response[] response, String path) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
+	    final Integer distributedTestId, Response[] response, String path) throws FenixServiceException {
 
 	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId
 		.toString());
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
-	this.path = path.replace('\\', '/');
+	path = path.replace('\\', '/');
 	if (registration == null) {
 	    throw new FenixServiceException();
 	}
@@ -92,7 +96,7 @@ public class InsertStudentTestResponses extends FenixService {
 			// n�o pode aceitar nova resposta
 		    } else {
 			try {
-			    studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, this.path);
+			    studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
 			    studentTestQuestion
 				    .setSubQuestionByItem(correctQuestionValues(studentTestQuestion.getSubQuestionByItem(),
 					    new Double(studentTestQuestion.getTestQuestionValue().doubleValue())));
@@ -192,7 +196,7 @@ public class InsertStudentTestResponses extends FenixService {
 	return infoSiteStudentTestFeedback;
     }
 
-    private boolean compareDates(Calendar date, Calendar hour) {
+    private static boolean compareDates(Calendar date, Calendar hour) {
 	Calendar calendar = Calendar.getInstance();
 	CalendarDateComparator dateComparator = new CalendarDateComparator();
 	CalendarHourComparator hourComparator = new CalendarHourComparator();
@@ -209,7 +213,7 @@ public class InsertStudentTestResponses extends FenixService {
 	return false;
     }
 
-    private SubQuestion correctQuestionValues(SubQuestion subQuestion, Double questionValue) {
+    private static SubQuestion correctQuestionValues(SubQuestion subQuestion, Double questionValue) {
 	Double maxValue = subQuestion.getMaxValue();
 	if (maxValue.compareTo(questionValue) != 0) {
 	    double difValue = questionValue.doubleValue() * Math.pow(maxValue.doubleValue(), -1);
@@ -221,8 +225,8 @@ public class InsertStudentTestResponses extends FenixService {
 	return subQuestion;
     }
 
-    private Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion, StudentTestQuestion nextStudentTestQuestion)
-	    throws FenixServiceException {
+    private static Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion,
+	    StudentTestQuestion nextStudentTestQuestion) throws FenixServiceException {
 	ParseSubQuestion parse = new ParseSubQuestion();
 	try {
 	    parse.parseStudentTestQuestion(nextStudentTestQuestion, path.replace('\\', '/'));
@@ -247,7 +251,7 @@ public class InsertStudentTestResponses extends FenixService {
 	return nextStudentTestQuestion.getSubQuestionByItem().getMaxValue() * diff;
     }
 
-    private String getLogString(Response[] response) {
+    private static String getLogString(Response[] response) {
 	StringBuilder event = new StringBuilder();
 	event.append("Submeter Teste;");
 	for (int questionNumber = 0; questionNumber < response.length; questionNumber++) {

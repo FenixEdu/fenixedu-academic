@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +33,9 @@ import net.sourceforge.fenixedu.domain.Shift;
  */
 public class ReadAvailableClassesForShift extends FenixService {
 
-    public List run(Integer shiftOID) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer shiftOID) {
 
 	final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
 	final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();

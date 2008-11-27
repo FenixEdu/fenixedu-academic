@@ -5,9 +5,9 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
 /**
  * 
@@ -35,10 +35,9 @@ public class ListStudentThesis {
 
     public List getMasterDegreeThesisDataVersions() {
 
-	Object[] args = { degreeCurricularPlanID };
 	try {
-	    return (List) ServiceUtils.executeService("ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan", args);
-	} catch (FenixFilterException e) {
+	    return ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan.run(degreeCurricularPlanID);
+	} catch (IllegalDataAccessException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} catch (FenixServiceException e) {

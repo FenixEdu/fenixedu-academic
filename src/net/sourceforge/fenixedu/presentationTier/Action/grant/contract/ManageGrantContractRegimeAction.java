@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantContractRegimeByContractAndState;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -51,12 +52,10 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 	request.setAttribute("idContract", idContract);
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-	Object[] argsActiveContractRegime = { idContract, InfoGrantContractRegime.getActiveState() };
-	Object[] argsNotActiveContractRegime = { idContract, InfoGrantContractRegime.getInactiveState() };
-	List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService("ReadGrantContractRegimeByContractAndState",
-		argsActiveContractRegime);
-	List infoGrantNotActiveContractRegimeList = (List) ServiceUtils.executeService(
-		"ReadGrantContractRegimeByContractAndState", argsNotActiveContractRegime);
+	List infoGrantActiveContractRegimeList = ReadGrantContractRegimeByContractAndState.run(idContract,
+		InfoGrantContractRegime.getActiveState());
+	List infoGrantNotActiveContractRegimeList = ReadGrantContractRegimeByContractAndState.run(idContract,
+		InfoGrantContractRegime.getInactiveState());
 
 	// If they exist put them on request
 	if (infoGrantActiveContractRegimeList != null && !infoGrantActiveContractRegimeList.isEmpty()) {

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,9 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 
 public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 
-    public Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static Map<ExecutionYear, PeriodCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
 	    ExecutionSemester untilExecutionPeriod) throws ParseException {
 
 	List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
@@ -47,7 +53,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 	return departmentGlobalCredits;
     }
 
-    private void updateCredits(Teacher teacher, ExecutionSemester executionSemester,
+    private static void updateCredits(Teacher teacher, ExecutionSemester executionSemester,
 	    Map<ExecutionYear, PeriodCreditsReportDTO> departmentCredits, ExecutionSemester untilExecutionPeriod)
 	    throws ParseException {
 
@@ -85,7 +91,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 	}
     }
 
-    private List<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
+    private static List<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
 	    ExecutionSemester untilExecutionPeriod) {
 
 	List<ExecutionSemester> executionPeriodsBetween = new ArrayList<ExecutionSemester>();
@@ -99,7 +105,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 	return executionPeriodsBetween;
     }
 
-    private Double round(double n) {
+    private static Double round(double n) {
 	return Math.round((n * 100.0)) / 100.0;
     }
 

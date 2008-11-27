@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +15,9 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation;
 
 public class EditResearchActivityParticipants extends FenixService {
 
-    public List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans)
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans)
 	    throws FenixServiceException {
 
 	List<ResearchActivityParticipantEditionBean> notEditedParticipants = new ArrayList<ResearchActivityParticipantEditionBean>();

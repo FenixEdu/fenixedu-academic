@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,7 +24,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class UpdateProfessorshipsHours extends FenixService {
 
-    public Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours) throws FenixServiceException {
+    @Checked("RolePredicates.CREDITS_MANAGER_PREDICATE")
+    @Service
+    public static Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours) throws FenixServiceException {
 
 	Iterator entries = hours.entrySet().iterator();
 	while (entries.hasNext()) {

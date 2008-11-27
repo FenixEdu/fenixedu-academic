@@ -7,6 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.CreateExternalUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.DeleteExternalUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalCurricularCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
@@ -23,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -185,7 +193,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final CreateExternalUnitBean externalUnitBean = (CreateExternalUnitBean) getRenderedObject();
 
 	try {
-	    final Unit unit = (Unit) executeService("CreateExternalUnit", new Object[] { externalUnitBean });
+	    final Unit unit = CreateExternalUnit.run(externalUnitBean);
 	    final Integer oid = (!externalUnitBean.getParentUnit().isPlanetUnit()) ? externalUnitBean.getParentUnit()
 		    .getIdInternal() : unit.getIdInternal();
 	    request.setAttribute("oid", oid);
@@ -207,11 +215,11 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final EditExternalUnitBean externalUnitBean = (EditExternalUnitBean) getRenderedObject();
 
 	try {
-	    executeService("EditExternalUnit", new Object[] { externalUnitBean });
+	    EditExternalUnit.run(externalUnitBean);
 	    request.setAttribute("oid", externalUnitBean.getExternalUnit().getIdInternal());
 	    return viewUnit(mapping, actionForm, request, response);
 
-	} catch (final NotAuthorizedException e) {
+	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
@@ -228,7 +236,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final Unit parent = getAnyParentUnit(unit);
 
 	try {
-	    executeService("DeleteExternalUnit", new Object[] { unit });
+	    DeleteExternalUnit.run(unit);
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("unit", unit);
@@ -285,7 +293,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final CreateExternalCurricularCourseBean externalCurricularCourseBean = (CreateExternalCurricularCourseBean) getRenderedObject();
 
 	try {
-	    executeService("CreateExternalCurricularCourse", new Object[] { externalCurricularCourseBean });
+	    CreateExternalCurricularCourse.run(externalCurricularCourseBean);
 
 	    request.setAttribute("oid", externalCurricularCourseBean.getParentUnit().getIdInternal());
 	    return viewUnit(mapping, actionForm, request, response);
@@ -315,7 +323,7 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final Unit parent = externalCurricularCourse.getUnit();
 
 	try {
-	    executeService("DeleteExternalCurricularCourse", new Object[] { externalCurricularCourse });
+	    DeleteExternalCurricularCourse.run(externalCurricularCourse);
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("externalCurricularCourse", getExternalCurricularCourse(request));
@@ -338,12 +346,12 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 	final EditExternalCurricularCourseBean externalCurricularCourseBean = (EditExternalCurricularCourseBean) getRenderedObject();
 
 	try {
-	    executeService("EditExternalCurricularCourse", new Object[] { externalCurricularCourseBean });
+	    EditExternalCurricularCourse.run(externalCurricularCourseBean);
 
 	    request.setAttribute("oid", externalCurricularCourseBean.getExternalCurricularCourse().getIdInternal());
 	    return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
-	} catch (final NotAuthorizedException e) {
+	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
@@ -383,13 +391,12 @@ public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
 	final EditExternalEnrolmentBean externalEnrolmentBean = (EditExternalEnrolmentBean) getRenderedObject();
 	try {
-	    executeService("EditExternalEnrolment", new Object[] { externalEnrolmentBean,
-		    externalEnrolmentBean.getExternalEnrolment().getRegistration() });
+	    EditExternalEnrolment.run(externalEnrolmentBean, externalEnrolmentBean.getExternalEnrolment().getRegistration());
 
 	    request.setAttribute("oid", externalEnrolmentBean.getExternalCurricularCourse().getIdInternal());
 	    return viewExternalCurricularCourse(mapping, actionForm, request, response);
 
-	} catch (final NotAuthorizedException e) {
+	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());

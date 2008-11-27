@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -21,6 +20,17 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AddParentInherentFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.AssociateParentUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DeleteUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.DisassociateParentUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.EditUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.RemoveParentInherentFunction;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.SetRootUnit;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -36,7 +46,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,6 +57,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
+
+    private static final String ORG_UNIT_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement";
 
     private String unitName, unitCostCenter, unitTypeName, unitBeginDate, unitEndDate, unitAcronym, administrativeOfficeID;
 
@@ -557,12 +568,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.pt, this.getUnitName());
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
-	final Object[] argsToRead = { null, unitName, this.getUnitCostCenter(), this.getUnitAcronym(),
-		datesResult.getBeginDate(), datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(),
-		parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), null, this.getUnitWebAddress(),
-		this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID() };
+	try {
+	    CreateUnit.run(null, unitName, this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
+		    datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(), parameters.getDegreeID(), parameters
+			    .getAdministrativeOfficeID(), null, this.getUnitWebAddress(), this.getUnitClassification(), this
+			    .getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
 
-	return executeUnitsManagementService(argsToRead, "listAllUnits", "CreateUnit");
+	return "listAllUnits";
     }
 
     public String createSubUnit() throws FenixFilterException, FenixServiceException {
@@ -588,12 +604,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.pt, this.getUnitName());
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
-	final Object[] argsToRead = { this.getUnit(), unitName, this.getUnitCostCenter(), this.getUnitAcronym(),
-		datesResult.getBeginDate(), datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(),
-		parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), accountabilityType, this.getUnitWebAddress(),
-		this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID() };
+	try {
+	    CreateUnit.run(this.getUnit(), unitName, this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
+		    datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(), parameters.getDegreeID(), parameters
+			    .getAdministrativeOfficeID(), accountabilityType, this.getUnitWebAddress(), this
+			    .getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
 
-	return executeUnitsManagementService(argsToRead, "backToUnitDetails", "CreateUnit");
+	return "backToUnitDetails";
     }
 
     public String editUnit() throws FenixFilterException, FenixServiceException {
@@ -608,12 +629,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.pt, this.getUnitName());
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
-	final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), unitName, this.getUnitCostCenter(),
-		this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), parameters.getDepartmentID(),
-		parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(),
-		this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID() };
+	try {
+	    EditUnit.run(this.getChooseUnit().getIdInternal(), unitName, this.getUnitCostCenter(), this.getUnitAcronym(),
+		    datesResult.getBeginDate(), datesResult.getEndDate(), parameters.getDepartmentID(), parameters.getDegreeID(),
+		    parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(), this.getUnitClassification(), this
+			    .getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
 
-	return executeUnitsManagementService(argsToRead, "backToUnitDetails", "EditUnit");
+	return "backToUnitDetails";
     }
 
     private PartyTypeEnum getUnitType() throws FenixFilterException, FenixServiceException {
@@ -643,32 +669,25 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum
 		.valueOf(getUnitRelationTypeValue()));
 
-	final Object[] argsToRead = { this.getUnit().getIdInternal(), this.getChooseUnit().getIdInternal(), accountabilityType };
-
-	return executeUnitsManagementService(argsToRead, "backToUnitDetails", "AssociateParentUnit");
-    }
-
-    public String disassociateParentUnit() throws FenixFilterException, FenixServiceException {
-	final Object[] argsToRead = { this.getAccountabilityID() };
-
-	return executeUnitsManagementService(argsToRead, "backToUnitDetails", "DisassociateParentUnit");
-    }
-
-    private String executeUnitsManagementService(final Object[] argsToRead, String defaultReturn, String serviceName)
-	    throws FenixFilterException {
-
 	try {
-	    ServiceUtils.executeService(serviceName, argsToRead);
-
-	} catch (FenixServiceException e) {
-	    setErrorMessage(e.getMessage());
-	    return "";
+	    AssociateParentUnit.run(this.getUnit().getIdInternal(), this.getChooseUnit().getIdInternal(), accountabilityType);
 	} catch (DomainException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
 	}
 
-	return defaultReturn;
+	return "backToUnitDetails";
+    }
+
+    public String disassociateParentUnit() throws FenixFilterException, FenixServiceException {
+	try {
+	    DisassociateParentUnit.run(this.getAccountabilityID());
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
+
+	return "backToUnitDetails";
     }
 
     private FunctionType getFunctionType() throws FenixFilterException, FenixServiceException {
@@ -692,9 +711,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	functionName.setContent(Language.pt, this.getFunctionName());
 	functionName.setContent(Language.en, this.getFunctionNameEn());
 
-	final Object[] argsToRead = { functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type,
-		this.getUnit().getIdInternal() };
-	return executeFunctionsManagementService(argsToRead, "CreateFunction");
+	try {
+	    CreateFunction.run(functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit()
+		    .getIdInternal());
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
+
+	return "backToUnitDetails";
     }
 
     public String editFunction() throws FenixFilterException, FenixServiceException {
@@ -711,16 +736,27 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	functionName.setContent(Language.pt, this.getFunctionName());
 	functionName.setContent(Language.en, this.getFunctionNameEn());
 
-	final Object[] argsToRead = { this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(),
-		datesResult.getEndDate(), type };
+	try {
+	    EditFunction.run(this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(), datesResult
+		    .getEndDate(), type);
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
 
-	return executeFunctionsManagementService(argsToRead, "EditFunction");
+	return "backToUnitDetails";
     }
 
     public String associateInherentParentFunction() throws FenixFilterException, FenixServiceException {
 	Function function = this.getFunction();
-	final Object[] argsToRead = { function.getIdInternal(), this.principalFunctionID };
-	return executeFunctionsManagementService(argsToRead, "AddParentInherentFunction");
+	try {
+	    AddParentInherentFunction.run(function.getIdInternal(), this.principalFunctionID);
+	} catch (DomainException e) {
+	    setErrorMessage(e.getMessage());
+	    return "";
+	}
+
+	return "backToUnitDetails";
     }
 
     public String prepareAssociateInherentParentFunction() throws FenixFilterException, FenixServiceException {
@@ -733,28 +769,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return "chooseInherentParentFunction";
     }
 
-    private String executeFunctionsManagementService(final Object[] argsToRead, String serviceName) throws FenixFilterException {
-	try {
-	    ServiceUtils.executeService(serviceName, argsToRead);
-	} catch (FenixServiceException e) {
-	    setErrorMessage(e.getMessage());
-	    return "";
-	} catch (DomainException e) {
-	    setErrorMessage(e.getMessage());
-	    return "";
-	}
-
-	return "backToUnitDetails";
-    }
-
     public String disassociateInherentFunction() throws FenixFilterException, FenixServiceException {
 
 	Function function = this.getFunction();
 
-	final Object[] argsToRead = { function.getIdInternal() };
-
 	try {
-	    ServiceUtils.executeService("RemoveParentInherentFunction", argsToRead);
+	    RemoveParentInherentFunction.run(function.getIdInternal());
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -764,9 +784,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String deleteSubUnit() throws FenixFilterException {
-	final Object[] argsToRead = { Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
+
 	try {
-	    ServiceUtils.executeService("DeleteUnit", argsToRead);
+	    DeleteUnit.run(Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()));
 
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
@@ -778,9 +798,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String deleteUnit() throws FenixFilterException {
-	final Object[] argsToRead = { Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()) };
+
 	try {
-	    ServiceUtils.executeService("DeleteUnit", argsToRead);
+	    DeleteUnit.run(Integer.valueOf(this.getChooseUnitIDHidden().getValue().toString()));
 
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
@@ -793,9 +813,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String deleteFunction() throws FenixFilterException {
-	final Object[] argsToRead = { Integer.valueOf(this.getFunctionIDHidden().getValue().toString()) };
+
 	try {
-	    ServiceUtils.executeService("DeleteFunction", argsToRead);
+	    DeleteFunction.run(Integer.valueOf(this.getFunctionIDHidden().getValue().toString()));
 
 	} catch (FenixServiceException e) {
 	    setErrorMessage(e.getMessage());
@@ -950,13 +970,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public List<Accountability> getParentAccountabilities() throws FenixFilterException, FenixServiceException {
-	return new ArrayList<Accountability>((Collection<Accountability>) getUnit().getParentAccountabilitiesByParentClass(
-		Unit.class));
+	return new ArrayList<Accountability>(getUnit().getParentAccountabilitiesByParentClass(Unit.class));
     }
 
     public List<Accountability> getChildAccountabilities() throws FenixFilterException, FenixServiceException {
-	return new ArrayList<Accountability>((Collection<Accountability>) getUnit().getChildAccountabilitiesByChildClass(
-		Unit.class));
+	return new ArrayList<Accountability>(getUnit().getChildAccountabilitiesByChildClass(Unit.class));
     }
 
     private void getParentUnitsRelationTypes() throws FenixFilterException, FenixServiceException {
@@ -1245,9 +1263,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public class PrepareDatesResult {
 
-	private boolean test;
+	private final boolean test;
 
-	private Date beginDate, endDate;
+	private final Date beginDate, endDate;
 
 	public PrepareDatesResult(boolean test, Date beginDate, Date endDate) {
 	    this.test = test;
@@ -1350,8 +1368,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		&& getUnit() != null
 		&& (UnitUtils.readExternalInstitutionUnit() == null || !UnitUtils.readExternalInstitutionUnit().equals(getUnit()))) {
 
-	    final Object[] argsToRead = { getUnit(), Boolean.FALSE };
-	    ServiceUtils.executeService("SetRootUnit", argsToRead);
+	    SetRootUnit.run(getUnit(), Boolean.FALSE);
 	    this.externalInstitutionUnit = externalInstitutionUnit;
 	}
     }
@@ -1368,8 +1385,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	if (institutionUnit && getUnit() != null
 		&& (UnitUtils.readInstitutionUnit() == null || !UnitUtils.readInstitutionUnit().equals(getUnit()))) {
 
-	    final Object[] argsToRead = { getUnit(), Boolean.TRUE };
-	    ServiceUtils.executeService("SetRootUnit", argsToRead);
+	    SetRootUnit.run(getUnit(), Boolean.TRUE);
 	    this.institutionUnit = institutionUnit;
 	}
     }
@@ -1383,7 +1399,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void setEarthUnit(Boolean earthUnit) throws FenixFilterException, FenixServiceException {
 	if (earthUnit && getUnit() != null && UnitUtils.readEarthUnit() != getUnit()) {
-	    ServiceUtils.executeService("SetRootUnit", new Object[] { getUnit(), null });
+	    SetRootUnit.run(getUnit(), null);
 	    this.earthUnit = earthUnit;
 	}
     }

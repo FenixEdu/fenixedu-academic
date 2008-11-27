@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseScopeAtCurricularCourse;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -47,11 +51,10 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
 	Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-	Object[] args = { degreeCurricularPlanId };
 
 	List result = null;
 	try {
-	    result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan", args);
+	    result = (List) ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
 
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
@@ -124,10 +127,9 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 	}
 	infoCurricularCourseScope.setAnotation((String) dynaForm.get("anotation"));
 
-	Object args[] = { infoCurricularCourseScope };
 
 	try {
-	    ServiceUtils.executeService("InsertCurricularCourseScopeAtCurricularCourse", args);
+	    InsertCurricularCourseScopeAtCurricularCourse.run(infoCurricularCourseScope);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);

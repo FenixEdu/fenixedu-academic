@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SubmitHomepage;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.person.GetHomepage;
+
 import java.net.MalformedURLException;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -115,14 +119,13 @@ public class ManageHomepageDA extends SiteManagementDA {
 	}
 	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
 
-	final Object[] args = { getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit),
+	SubmitHomepage.run(getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit),
 		Boolean.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage),
 		Boolean.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans),
 		Boolean.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString,
 		Boolean.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications),
 		Boolean.valueOf(showPatents), Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations),
-		Boolean.valueOf(showPrizes) };
-	executeService("SubmitHomepage", args);
+		Boolean.valueOf(showPrizes));
 
 	return options(mapping, actionForm, request, response);
     }
@@ -130,7 +133,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     @Override
     protected Homepage getSite(HttpServletRequest request) {
 	try {
-	    return (Homepage) ServiceUtils.executeService("GetHomepage", new Object[] { getUserView(request).getPerson(), true });
+	    return (Homepage) GetHomepage.run(getUserView(request).getPerson(), true);
 	} catch (Exception e) {
 	    throw new RuntimeException(e);
 	}

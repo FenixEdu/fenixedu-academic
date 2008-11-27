@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -23,7 +27,9 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidateForRegistration extends FenixService {
 
-    public List run(Integer executionDegreeCode) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer executionDegreeCode) throws FenixServiceException {
 
 	List<SituationName> situationNames = Arrays.asList(new SituationName[] {
 		SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ, SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ,

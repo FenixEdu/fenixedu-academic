@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,9 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 
 public class ReadCategories extends FenixService {
 
-    public List run() throws FenixServiceException {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run() throws FenixServiceException {
 	List<InfoCategory> result = new ArrayList<InfoCategory>();
 
 	for (Category category : Category.readTeacherCategories()) {

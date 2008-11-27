@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ListGuidesByState;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -58,8 +60,8 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
 	List guideList = null;
 	try {
-	    Object args[] = { year, situationOfGuide };
-	    guideList = (List) ServiceManagerServiceFactory.executeService("ListGuidesByState", args);
+
+	    guideList = (List) ListGuidesByState.run(year, situationOfGuide);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

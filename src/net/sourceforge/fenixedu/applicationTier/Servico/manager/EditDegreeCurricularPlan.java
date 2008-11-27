@@ -6,10 +6,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanEditor;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDegreeCurricularPlan extends FenixService {
 
-    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException {
 
 	if (infoDcp.getIdInternal() == null || infoDcp.getName() == null || infoDcp.getInitialDate() == null
 		|| infoDcp.getDegreeDuration() == null || infoDcp.getMinimalYearForOptionalCourses() == null) {

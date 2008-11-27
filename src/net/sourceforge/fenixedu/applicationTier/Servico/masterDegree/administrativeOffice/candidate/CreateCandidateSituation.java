@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -12,7 +16,9 @@ import net.sourceforge.fenixedu.util.State;
 
 public class CreateCandidateSituation extends FenixService {
 
-    public void run(Integer executionDegreeID, Integer personID, SituationName newSituation) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer executionDegreeID, Integer personID, SituationName newSituation) {
 
 	final Person person = (Person) rootDomainObject.readPartyByOID(personID);
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);

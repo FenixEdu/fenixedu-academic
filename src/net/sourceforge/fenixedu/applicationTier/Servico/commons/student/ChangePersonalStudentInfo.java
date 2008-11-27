@@ -19,10 +19,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangePersonalStudentInfo extends FenixService {
 
-    public InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
 	final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
 	if (person == null) {

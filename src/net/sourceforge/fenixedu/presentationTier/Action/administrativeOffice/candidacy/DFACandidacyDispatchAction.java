@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.CreateCandidacy;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.EditPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy.RegisterCandidate;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.StateMachineRunner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
@@ -26,9 +27,9 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -117,16 +118,15 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 		.getObject();
 	Candidacy candidacy = null;
 	try {
-	    candidacy = (Candidacy) ServiceUtils.executeService("CreateCandidacy", new Object[] {
-		    createDFACandidacyBean.getExecutionDegree(), createDFACandidacyBean.getDegreeType(),
-		    createDFACandidacyBean.getName(), createDFACandidacyBean.getIdentificationNumber(),
-		    createDFACandidacyBean.getIdDocumentType(), createDFACandidacyBean.getContributorNumber(),
-		    createDFACandidacyBean.getCandidacyDate() });
+	    candidacy = CreateCandidacy.run(createDFACandidacyBean.getExecutionDegree(), createDFACandidacyBean.getDegreeType(),
+		    createDFACandidacyBean.getName(), createDFACandidacyBean.getIdentificationNumber(), createDFACandidacyBean
+			    .getIdDocumentType(), createDFACandidacyBean.getContributorNumber(), createDFACandidacyBean
+			    .getCandidacyDate());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    RenderUtils.invalidateViewState();
 	    return prepareCreateCandidacy(mapping, actionForm, request, response);
-	} catch (NotAuthorizedFilterException e) {
+	} catch (IllegalDataAccessException e) {
 	    addActionMessage(request, "error.not.authorized");
 	    RenderUtils.invalidateViewState();
 	    return prepareCreateCandidacy(mapping, actionForm, request, response);
@@ -352,9 +352,8 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 		.getObject();
 	Candidacy candidacy = registerCandidacyBean.getCandidacy();
 
-	Object[] args = { registerCandidacyBean };
 	try {
-	    ServiceUtils.executeService("RegisterCandidateNew", args);
+	    RegisterCandidate.run(registerCandidacyBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("candidacy", candidacy);

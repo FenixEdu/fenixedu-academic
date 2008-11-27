@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadEnroledExecutionCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadEnroledExecutionCourses;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +28,8 @@ public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 	final List<Registration> registrations = student.getActiveRegistrations();
 
 	if (registrations.size() == 1) {
-	    request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] { registrations
-		    .get(0) }));
+	    request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registrations
+		    .get(0)));
 	    return mapping.findForward("showEnroledExecutionCourses");
 
 	} else {
@@ -39,7 +43,7 @@ public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
 	final Registration registration = getRegistrationByID(getLoggedPerson(request).getStudent(), getIntegerFromRequest(
 		request, "registrationId"));
-	request.setAttribute("executionCourses", executeService("ReadEnroledExecutionCourses", new Object[] { registration }));
+	request.setAttribute("executionCourses", ReadEnroledExecutionCourses.run(registration));
 	return mapping.findForward("showEnroledExecutionCourses");
     }
 

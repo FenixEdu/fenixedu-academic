@@ -12,6 +12,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Luis Cruz
  * 
@@ -22,7 +25,9 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 	super();
     }
 
-    public boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Registration registration = Registration.readByUsername(username);
 
@@ -44,7 +49,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 	return true;
     }
 
-    private class PREDICATE_FILTER_STUDENT_ID implements Predicate {
+    private static class PREDICATE_FILTER_STUDENT_ID implements Predicate {
 	Integer studentID;
 
 	public boolean evaluate(Object arg0) {
@@ -63,7 +68,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
-    public class GroupProposalCandidaciesExistException extends FenixServiceException {
+    public static class GroupProposalCandidaciesExistException extends FenixServiceException {
 
 	public GroupProposalCandidaciesExistException() {
 	    super();

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.executionCourse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.CreateCourseReports;
+
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -43,8 +45,7 @@ public class CreateCourseReportsForExecutionPeriod extends FenixBackingBean {
 
     public void create(ActionEvent evt) throws FenixFilterException, FenixServiceException {
 
-	Object[] args = { getExecutionPeriodID() };
-	ServiceUtils.executeService("CreateCourseReports", args);
+	CreateCourseReports.run(getExecutionPeriodID());
 
     }
 

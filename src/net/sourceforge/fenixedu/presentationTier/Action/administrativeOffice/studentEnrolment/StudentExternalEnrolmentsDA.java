@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.CreateExternalEnrolments;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.DeleteExternalEnrolments;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalEnrolmentBean;
@@ -20,6 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -121,7 +125,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 	final Registration registration = getRegistration(request, actionForm);
 
 	try {
-	    executeService("CreateExternalEnrolments", new Object[] { registration, externalCurricularCourseEnrolmentBeans });
+	    CreateExternalEnrolments.run(registration, externalCurricularCourseEnrolmentBeans);
 
 	} catch (NotAuthorizedException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
@@ -149,7 +153,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 	request.setAttribute("registration", registration);
 
 	try {
-	    executeService("DeleteExternalEnrolments", new Object[] { registration, externalEnrolmentIDs });
+	    DeleteExternalEnrolments.run(registration, externalEnrolmentIDs);
 	} catch (NotAuthorizedException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 	} catch (DomainException e) {
@@ -174,10 +178,10 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 	final EditExternalEnrolmentBean externalEnrolmentBean = (EditExternalEnrolmentBean) getRenderedObject();
 	final ExternalEnrolment externalEnrolment = externalEnrolmentBean.getExternalEnrolment();
 	try {
-	    executeService("EditExternalEnrolment", new Object[] { externalEnrolmentBean, externalEnrolment.getRegistration() });
+	    EditExternalEnrolment.run(externalEnrolmentBean, externalEnrolment.getRegistration());
 	    return manageExternalEnrolments(mapping, actionForm, request, response);
 
-	} catch (final NotAuthorizedException e) {
+	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage());

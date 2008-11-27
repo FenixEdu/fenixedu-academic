@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateListByPersonAndExecutionDegree;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadMasterDegreeCandidate;
+
 import java.text.DateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -52,14 +56,12 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	    try {
 		if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null) {
-		    Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson() };
-		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-			    "ReadMasterDegreeCandidate", args);
+
+		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadMasterDegreeCandidate.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson());
 		} else {
 		    Integer number = (Integer) session.getAttribute(SessionConstants.REQUESTER_NUMBER);
-		    Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number };
-		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-			    "ReadCandidateListByPersonAndExecutionDegree", args);
+
+		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadCandidateListByPersonAndExecutionDegree.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number);
 		}
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();

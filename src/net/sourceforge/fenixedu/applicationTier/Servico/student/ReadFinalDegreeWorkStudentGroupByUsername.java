@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,12 +20,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class ReadFinalDegreeWorkStudentGroupByUsername extends FenixService {
 
-    public InfoGroup run(final Person personUser, final ExecutionYear executionYear) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoGroup run(final Person personUser, final ExecutionYear executionYear) {
 	final FinalDegreeWorkGroup finalDegreeWorkGroup = findFinalDegreeWorkGroup(personUser, executionYear);
 	return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
     }
 
-    private FinalDegreeWorkGroup findFinalDegreeWorkGroup(final Person personUser, final ExecutionYear executionYear) {
+    private static FinalDegreeWorkGroup findFinalDegreeWorkGroup(final Person personUser, final ExecutionYear executionYear) {
 	FinalDegreeWorkGroup finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.BOLONHA_MASTER_DEGREE);
 	if (finalDegreeWorkGroup == null) {
 	    finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
@@ -35,7 +41,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername extends FenixService {
 	return finalDegreeWorkGroup;
     }
 
-    private FinalDegreeWorkGroup find(final Person personUser, final ExecutionYear executionYear, final DegreeType degreeType) {
+    private static FinalDegreeWorkGroup find(final Person personUser, final ExecutionYear executionYear, final DegreeType degreeType) {
 	for (final Registration registration : personUser.getStudent().getRegistrationsSet()) {
 	    if (registration.getDegreeType() == degreeType) {
 		final FinalDegreeWorkGroup finalDegreeWorkGroup = registration

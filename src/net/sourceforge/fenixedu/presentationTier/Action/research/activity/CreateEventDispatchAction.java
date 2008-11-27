@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -41,7 +43,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
     public ActionForward prepareCreateEventParticipation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ResearchEventCreationBean bean = (ResearchEventCreationBean) getEventBean(request);
+	ResearchEventCreationBean bean = getEventBean(request);
 	if (bean == null)
 	    return prepareEventSearch(mapping, form, request, response);
 
@@ -60,13 +62,13 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	Person person = getLoggedPerson(request);
-	ResearchEventCreationBean bean = (ResearchEventCreationBean) getEventBean(request);
+	ResearchEventCreationBean bean = getEventBean(request);
 	if (bean == null)
 	    return prepareEventSearch(mapping, form, request, response);
 
 	if (bean.getRole() != null) {
 	    try {
-		executeService("CreateResearchActivityParticipation", new Object[] { bean.getEvent(), bean.getRole(), person });
+		CreateResearchActivityParticipation.run(bean.getEvent(), bean.getRole(), person, bean.getRoleMessage());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentEventBean", bean);
@@ -82,15 +84,14 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Person person = getLoggedPerson(request);
 
-	ResearchEventCreationBean bean = (ResearchEventCreationBean) getEventBean(request);
+	ResearchEventCreationBean bean = getEventBean(request);
 	if (bean == null)
 	    return prepareEventSearch(mapping, form, request, response);
 
 	ResearchEvent event = null;
 	try {
-	    event = (ResearchEvent) executeService("CreateResearchEvent", new Object[] { bean.getEventName(),
-		    bean.getEventType(), bean.getLocationType(), bean.getUrl() });
-	    executeService("CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person });
+	    event = CreateResearchEvent.run(bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl());
+	    CreateResearchActivityParticipation.run(event, bean.getRole(), person, bean.getRoleMessage());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("inexistentEventBean", bean);

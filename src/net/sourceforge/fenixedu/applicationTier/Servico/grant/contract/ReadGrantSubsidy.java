@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsi
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Pica
@@ -21,11 +23,13 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
  */
 public class ReadGrantSubsidy extends FenixService {
 
-    protected InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
+    protected static InfoGrantSubsidy newInfoFromDomain(DomainObject domainObject) {
 	return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
     }
 
-    public InfoObject run(Integer objectId) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static InfoObject run(Integer objectId) throws FenixServiceException {
 	final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(objectId);
 	InfoGrantSubsidy infoGrantSubsidy = newInfoFromDomain(grantSubsidy);
 

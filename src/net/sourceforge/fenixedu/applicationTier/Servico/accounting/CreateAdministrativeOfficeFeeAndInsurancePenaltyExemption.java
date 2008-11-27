@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.C
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption extends FenixService {
 
-    public CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption() {
-	super();
-    }
-
-    public void run(final Employee employee,
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final Employee employee,
 	    final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean) {
 
 	new AdministrativeOfficeFeeAndInsurancePenaltyExemption(penaltyExemptionBean.getJustificationType(),

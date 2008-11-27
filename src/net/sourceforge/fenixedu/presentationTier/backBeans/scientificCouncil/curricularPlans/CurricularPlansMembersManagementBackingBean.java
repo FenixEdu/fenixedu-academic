@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +40,8 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 	if (selectedPersonsIDsToAdd != null) {
-	    Object[] args = { getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null };
-	    ServiceUtils.executeService("UpdateDegreeCurricularPlanMembersGroup", args);
+
+	    UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null);
 	}
 	// avoid preset check-boxes after action
 	selectedPersonsIDsToAdd = null;
@@ -46,8 +50,8 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 	if (selectedPersonsIDsToRemove != null) {
-	    Object[] args = { getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove };
-	    ServiceUtils.executeService("UpdateDegreeCurricularPlanMembersGroup", args);
+
+	    UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove);
 	}
 	// avoid preset check-boxes after action
 	selectedPersonsIDsToAdd = null;

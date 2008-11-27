@@ -11,10 +11,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.Email;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeStudentsShift extends FenixService {
 
-    public void run(IUserView userView, Integer oldShiftId, Integer newShiftId, final Set<Registration> registrations)
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(IUserView userView, Integer oldShiftId, Integer newShiftId, final Set<Registration> registrations)
 	    throws FenixServiceException {
 
 	final Shift oldShift = rootDomainObject.readShiftByOID(oldShiftId);
@@ -51,7 +55,7 @@ public class ChangeStudentsShift extends FenixService {
 	new Email("GOP", "gop@ist.utl.pt", null, emptyList, emptyList, toMails, subject, message);
     }
 
-    public class UnableToTransferStudentsException extends FenixServiceException {
+    public static class UnableToTransferStudentsException extends FenixServiceException {
     }
 
 }

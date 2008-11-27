@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuide;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,9 +40,8 @@ public class ViewReimbursementGuideDetailsDispatchAction extends FenixDispatchAc
 
 	InfoReimbursementGuide infoReimbursementGuide = null;
 
-	Object args[] = { reimbursementGuideId };
 	try {
-	    infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService("ViewReimbursementGuide", args);
+	    infoReimbursementGuide = (InfoReimbursementGuide) ViewReimbursementGuide.run(reimbursementGuideId);
 
 	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
 	} catch (FenixServiceException e) {

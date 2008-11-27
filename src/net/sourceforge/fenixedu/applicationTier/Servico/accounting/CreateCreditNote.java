@@ -5,14 +5,14 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateCreditNoteBe
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCreditNote extends FenixService {
 
-    public CreateCreditNote() {
-	super();
-    }
-
-    public CreditNote run(final Employee employee, final CreateCreditNoteBean createCreditNoteBean) {
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static CreditNote run(final Employee employee, final CreateCreditNoteBean createCreditNoteBean) {
 	return createCreditNoteBean.getReceipt().createCreditNote(employee, PaymentMode.CASH,
 		createCreditNoteBean.getSelectedEntries());
     }

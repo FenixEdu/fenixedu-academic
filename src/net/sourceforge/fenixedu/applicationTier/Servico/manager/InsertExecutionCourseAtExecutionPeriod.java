@@ -10,13 +10,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
  */
 public class InsertExecutionCourseAtExecutionPeriod extends FenixService {
 
-    public void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoExecutionCourseEditor infoExecutionCourse) throws FenixServiceException {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionCourse
 		.getInfoExecutionPeriod().getIdInternal());

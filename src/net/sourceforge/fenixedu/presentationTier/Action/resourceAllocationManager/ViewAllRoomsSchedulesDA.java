@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadPavillionsRoomsLessons;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +67,7 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 	    }
 	}
 
-	Object[] args = { selectedPavillions, infoExecutionPeriod };
-	List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService("ReadPavillionsRoomsLessons", args);
+	List infoViewClassScheduleList = (List) ReadPavillionsRoomsLessons.run(selectedPavillions, infoExecutionPeriod);
 
 	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
 	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);

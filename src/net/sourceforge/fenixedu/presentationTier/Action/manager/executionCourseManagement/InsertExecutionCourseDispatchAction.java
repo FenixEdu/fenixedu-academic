@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionCourseAtExecutionPeriod;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,9 +96,8 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourse(form, request);
 
-	Object args[] = { infoExecutionCourse };
 	try {
-	    ServiceUtils.executeService("InsertExecutionCourseAtExecutionPeriod", args);
+	    InsertExecutionCourseAtExecutionPeriod.run(infoExecutionCourse);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);

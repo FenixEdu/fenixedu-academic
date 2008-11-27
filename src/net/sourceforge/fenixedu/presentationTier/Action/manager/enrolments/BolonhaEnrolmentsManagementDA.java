@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.registration.TransitToBolonha;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,8 +177,8 @@ public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollm
 
 	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
 	try {
-	    executeService("TransitToBolonha", new Object[] { null,
-		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date });
+	    TransitToBolonha.run(null,
+		    studentCurricularPlan.getRegistration().getSourceRegistrationForTransition(), date);
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareTransit(mapping, actionForm, request, response);

@@ -9,14 +9,17 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGrantOwner extends FenixService {
 
-    private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) {
+    private static GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber) {
 	return GrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
     }
 
-    private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person, InfoGrantOwner infoGrantOwner, Integer maxNumber) {
+    private static GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person, InfoGrantOwner infoGrantOwner,
+	    Integer maxNumber) {
 
 	if (infoGrantOwner.getGrantOwnerNumber() == null) {
 	    // Generate the GrantOwner's number
@@ -33,12 +36,14 @@ public class EditGrantOwner extends FenixService {
 	return grantOwner;
     }
 
-    protected boolean isNew(DomainObject domainObject) {
+    protected static boolean isNew(DomainObject domainObject) {
 	Integer objectId = domainObject.getIdInternal();
 	return ((objectId == null) || objectId.equals(Integer.valueOf(0)));
     }
 
-    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException {
 	Person person = null;
 	GrantOwner grantOwner = null;
 	Country country = null;

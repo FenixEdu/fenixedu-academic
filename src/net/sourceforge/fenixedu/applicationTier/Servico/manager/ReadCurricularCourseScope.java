@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -20,7 +22,9 @@ public class ReadCurricularCourseScope extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
 	CurricularCourseScope curricularCourseScope;
 
 	curricularCourseScope = rootDomainObject.readCurricularCourseScopeByOID(idInternal);

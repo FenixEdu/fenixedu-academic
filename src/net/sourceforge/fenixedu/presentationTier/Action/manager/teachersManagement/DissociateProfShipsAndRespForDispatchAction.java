@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.DissociateProfessorShipsAndResponsibleFor;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.ReadInfoTeacherByTeacherNumber;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,9 +47,9 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	ActionErrors errors = new ActionErrors();
 	InfoTeacher infoTeacher = null;
-	Object[] args = { teacherNumber };
+
 	try {
-	    infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadInfoTeacherByTeacherNumber", args);
+	    infoTeacher = (InfoTeacher) ReadInfoTeacherByTeacherNumber.run(teacherNumber);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {
@@ -87,9 +91,9 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	ActionErrors errors = new ActionErrors();
 	HashMap professorshipsNotRemoved = null;
-	Object[] args = { teacherNumber, professorshipsToDelete, responsibleForsToDelete };
+
 	try {
-	    professorshipsNotRemoved = (HashMap) ServiceUtils.executeService("DissociateProfessorShipsAndResponsibleFor", args);
+	    professorshipsNotRemoved = (HashMap) DissociateProfessorShipsAndResponsibleFor.run(teacherNumber, professorshipsToDelete, responsibleForsToDelete);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {

@@ -11,12 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.CreateEditCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.ReadCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,15 +52,12 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 	String code = (String) actionForm.get("code");
 	String name = (String) actionForm.get("name");
 	Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
-	Object[] args = { null, code, name, departmentIDs };
+
 	InfoCompetenceCourse competenceCourse = null;
 	try {
-	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("CreateEditCompetenceCourse", args);
-
+	    competenceCourse = CreateEditCompetenceCourse.run(null, code, name, departmentIDs);
 	} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
-
-	} catch (NotExistingServiceException notExistingServiceException) {
-
+	    throw new FenixActionException(invalidArgumentsServiceException.getMessage());
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}
@@ -72,11 +71,11 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 	IUserView userView = UserView.getUser();
 
 	Integer competenceCourseID = Integer.valueOf(request.getParameter("competenceCourse"));
-	Object[] args = { competenceCourseID };
+
 	InfoCompetenceCourse competenceCourse = null;
 	List<InfoDepartment> infoDepartments = null;
 	try {
-	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("ReadCompetenceCourse", args);
+	    competenceCourse = ReadCompetenceCourse.run(competenceCourseID);
 	    infoDepartments = ReadAllDepartments.run();
 	} catch (NotExistingServiceException notExistingServiceException) {
 
@@ -110,15 +109,15 @@ public class CreateEditCompetenceCourseDispatchAction extends FenixDispatchActio
 	String code = (String) actionForm.get("code");
 	String name = (String) actionForm.get("name");
 	Integer[] departmentIDs = (Integer[]) actionForm.get("departmentIDs");
-	Object[] args = { competenceCourseID, code, name, departmentIDs };
+
 	InfoCompetenceCourse competenceCourse = null;
 	try {
-	    competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("CreateEditCompetenceCourse", args);
+	    competenceCourse = CreateEditCompetenceCourse.run(competenceCourseID, code, name, departmentIDs);
 
 	} catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
-
-	} catch (NotExistingServiceException notExistingServiceException) {
-
+	    throw new FenixActionException(invalidArgumentsServiceException.getMessage());
+	} catch (NonExistingServiceException nonExistingServiceException) {
+	    throw new FenixActionException(nonExistingServiceException.getMessage());
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

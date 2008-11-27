@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +31,9 @@ import org.apache.commons.collections.CollectionUtils;
  */
 public class CreateMasterDegreeThesis extends FenixService {
 
-    public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle, List<Integer> guidersNumbers,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle, List<Integer> guidersNumbers,
 	    List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
 	    throws FenixServiceException {
 

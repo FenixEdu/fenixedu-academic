@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +30,9 @@ import org.apache.commons.collections.Transformer;
 
 public class SeperateExecutionCourse extends FenixService {
 
-    public void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
 	    final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer) {
 
 	final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(originExecutionCourseOid);
@@ -50,7 +56,7 @@ public class SeperateExecutionCourse extends FenixService {
 	associateGroupings(originExecutionCourse, destinationExecutionCourse);
     }
 
-    private void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
+    private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
 	    final ExecutionCourse destinationExecutionCourse, final Integer[] curricularCourseIdsToTransfer) {
 	for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(originExecutionCourse
@@ -60,7 +66,7 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private void transferAttends(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+    private static void transferAttends(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
 	final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
 	for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
 	    final Attends attends = originExecutionCourse.getAttends().get(i);
@@ -72,7 +78,7 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse,
+    private static void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse,
 	    final Integer[] shiftIdsToTransfer) {
 	for (final Integer shiftId : shiftIdsToTransfer) {
 	    final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
@@ -92,7 +98,7 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private DomainObject findDomainObjectByID(final Set<? extends DomainObject> domainObjects, final Integer id) {
+    private static DomainObject findDomainObjectByID(final Set<? extends DomainObject> domainObjects, final Integer id) {
 	for (final DomainObject domainObject : (Set<DomainObject>) domainObjects) {
 	    if (domainObject.getIdInternal().equals(id)) {
 		return domainObject;
@@ -101,7 +107,7 @@ public class SeperateExecutionCourse extends FenixService {
 	return null;
     }
 
-    private void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
+    private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
 	for (final Shift shift : executionCourse.getAssociatedShifts()) {
 	    for (int i = 0; i < shift.getStudents().size(); i++) {
 		final Registration registration = shift.getStudents().get(i);
@@ -112,7 +118,7 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private void associateGroupings(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+    private static void associateGroupings(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
 	for (final Grouping grouping : originExecutionCourse.getGroupings()) {
 	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
 		studentGroup.getAttends().clear();
@@ -122,7 +128,7 @@ public class SeperateExecutionCourse extends FenixService {
 	}
     }
 
-    private ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
+    private static ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
 	final String sigla = getUniqueExecutionCourseCode(originExecutionCourse.getNome(), originExecutionCourse
 		.getExecutionPeriod(), originExecutionCourse.getSigla());
 
@@ -146,7 +152,7 @@ public class SeperateExecutionCourse extends FenixService {
 	return destinationExecutionCourse;
     }
 
-    private String getUniqueExecutionCourseCode(final String executionCourseName, final ExecutionSemester executionSemester,
+    private static String getUniqueExecutionCourseCode(final String executionCourseName, final ExecutionSemester executionSemester,
 	    final String originalExecutionCourseCode) {
 	Set<String> executionCourseCodes = getExecutionCourseCodes(executionSemester);
 	return CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.getUniqueSigla(executionCourseCodes,
@@ -169,7 +175,7 @@ public class SeperateExecutionCourse extends FenixService {
 	// return destinationExecutionCourseCode;
     }
 
-    private Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
+    private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
 	List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 	return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
 	    public Object transform(Object arg0) {

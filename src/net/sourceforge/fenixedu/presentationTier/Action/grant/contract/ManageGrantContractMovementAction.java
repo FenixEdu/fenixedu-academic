@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantMovementsByContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -44,15 +45,14 @@ public class ManageGrantContractMovementAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract-movement", null);
 	}
 
-	// Read Contract
-	Object[] args = { idContract };
 	IUserView userView = UserView.getUser();
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract", args);
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService("ReadGrantContract",
+		new Object[] { idContract });
 
 	request.setAttribute("idContract", idContract);
 	request.setAttribute("idGrantOwner", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 
-	List infoGrantContractMovementsList = (List) ServiceUtils.executeService("ReadAllGrantMovementsByContract", args);
+	List infoGrantContractMovementsList = ReadAllGrantMovementsByContract.run(idContract);
 
 	if (infoGrantContractMovementsList != null && !infoGrantContractMovementsList.isEmpty())
 	    request.setAttribute("infoGrantContractMovementsList", infoGrantContractMovementsList);

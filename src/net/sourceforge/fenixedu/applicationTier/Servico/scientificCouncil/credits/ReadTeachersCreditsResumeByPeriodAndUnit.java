@@ -12,10 +12,13 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -24,40 +27,45 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 
-    public List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
-	    ExecutionSemester untilExecutionPeriod) throws ParseException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
+	    ExecutionSemester untilExecutionPeriod) throws FenixServiceException {
+	try {
+	    SortedSet<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
+		    untilExecutionPeriod);
 
-	SortedSet<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
-		untilExecutionPeriod);
+	    List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+		    untilExecutionPeriod.getEndDateYearMonthDay());
 
-	List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod
-		.getEndDateYearMonthDay());
-
-	List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
-	for (Teacher teacher : teachers) {
-	    if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())
-		    && !teacher.isDeceased()) {
-		Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
-			untilExecutionPeriod.getEndDateYearMonthDay());
-		Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
-		if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
-		    TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
-		    creditsReportDTO.setTeacher(teacher);
-		    for (ExecutionSemester executionSemester : executionPeriodsBetween) {
-			updateCreditLine(teacher, executionSemester, creditsReportDTO, true);
+	    List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
+	    for (Teacher teacher : teachers) {
+		if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())
+			&& !teacher.isDeceased()) {
+		    Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
+			    untilExecutionPeriod.getEndDateYearMonthDay());
+		    Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
+		    if (workingUnitDepartment != null && workingUnitDepartment.getDepartment().equals(department.getDepartment())) {
+			TeacherCreditsReportDTO creditsReportDTO = new TeacherCreditsReportDTO();
+			creditsReportDTO.setTeacher(teacher);
+			for (ExecutionSemester executionSemester : executionPeriodsBetween) {
+			    updateCreditLine(teacher, executionSemester, creditsReportDTO, true);
+			}
+			creditsReportDTO.setUnit(workingUnit);
+			creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod
+				.getPreviousExecutionPeriod()));
+			creditLines.add(creditsReportDTO);
 		    }
-		    creditsReportDTO.setUnit(workingUnit);
-		    creditsReportDTO.setPastCredits(teacher.getBalanceOfCreditsUntil(fromExecutionPeriod
-			    .getPreviousExecutionPeriod()));
-		    creditLines.add(creditsReportDTO);
 		}
 	    }
+	    return creditLines;
+	} catch (ParseException e) {
+	    throw new FenixServiceException(e);
 	}
-	return creditLines;
     }
 
-    private void updateCreditLine(Teacher teacher, ExecutionSemester executionSemester, TeacherCreditsReportDTO creditLine,
-	    boolean countCredits) throws ParseException {
+    private static void updateCreditLine(Teacher teacher, ExecutionSemester executionSemester,
+	    TeacherCreditsReportDTO creditLine, boolean countCredits) throws ParseException {
 
 	double totalCredits = 0.0;
 	if (countCredits) {
@@ -72,7 +80,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 	creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);
     }
 
-    private SortedSet<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
+    private static SortedSet<ExecutionSemester> getExecutionPeriodsBetween(ExecutionSemester fromExecutionPeriod,
 	    ExecutionSemester untilExecutionPeriod) {
 
 	SortedSet<ExecutionSemester> executionPeriodsBetween = new TreeSet<ExecutionSemester>(

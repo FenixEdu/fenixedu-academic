@@ -28,11 +28,15 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixService {
 
-    public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException {
 
 	StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
@@ -138,7 +142,9 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * @param outgoingSibsPaymentFile
      * @throws FileNotCreatedServiceException
      */
-    private byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear, StringBuilder outgoingSibsPaymentFile)
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    private static byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear, StringBuilder outgoingSibsPaymentFile)
 	    throws FileNotCreatedServiceException {
 	ByteArrayOutputStream file = new ByteArrayOutputStream();
 	/*
@@ -165,7 +171,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
     /**
      * @param outgoingSibsPaymentFile
      */
-    private void addHeader(StringBuilder outgoingSibsPaymentFile) {
+    private static void addHeader(StringBuilder outgoingSibsPaymentFile) {
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 	outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.HEADER_REGISTER_TYPE);
@@ -192,7 +198,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * 
      * @param totalLines
      */
-    private void addFooter(StringBuilder outgoingSibsPaymentFile, int totalLines) {
+    private static void addFooter(StringBuilder outgoingSibsPaymentFile, int totalLines) {
 
 	outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FOOTER_REGISTER_TYPE);
 	outgoingSibsPaymentFile.append(addCharToStringUntilMax(SibsOutgoingPaymentFileConstants.ZERO_CHAR, "" + totalLines,
@@ -212,8 +218,8 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * @param shortYear
      * @throws InsufficientSibsPaymentPhaseCodesServiceException
      */
-    private int addGratuityLines(StringBuilder outgoingSibsPaymentFile, GratuitySituation gratuitySituation, String shortYear,
-	    Date totalPaymentEndDate) throws InsufficientSibsPaymentPhaseCodesServiceException {
+    private static int addGratuityLines(StringBuilder outgoingSibsPaymentFile, GratuitySituation gratuitySituation,
+	    String shortYear, Date totalPaymentEndDate) throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 	int totalLinesAdded = 0;
 
@@ -331,7 +337,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
 
     }
 
-    private Double getScholarShipPartValue(GratuitySituation gratuitySituation) {
+    private static Double getScholarShipPartValue(GratuitySituation gratuitySituation) {
 	Double scholarShipPartValue = null;
 	if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
 		Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION)) {
@@ -360,8 +366,9 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * @param maxValue
      */
 
-    public void addLine(StringBuilder outgoingSibsPaymentFile, String registerType, String processingCode, String shortYear,
-	    Integer studentNumber, String sibsPaymentCode, Date startDate, Date endDate, Double minValue, Double maxValue) {
+    public static void addLine(StringBuilder outgoingSibsPaymentFile, String registerType, String processingCode,
+	    String shortYear, Integer studentNumber, String sibsPaymentCode, Date startDate, Date endDate, Double minValue,
+	    Double maxValue) {
 
 	if (startDate == null) {
 	    startDate = Calendar.getInstance().getTime();
@@ -410,7 +417,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * @param number
      * @return string
      */
-    private String addCharToStringUntilMax(char c, String string, int maxlength) {
+    private static String addCharToStringUntilMax(char c, String string, int maxlength) {
 	StringBuilder stringComplete = new StringBuilder();
 
 	int stringLength = 0;
@@ -432,7 +439,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
      * 
      * @return
      */
-    private String buildPaymentValue(double value, int intDigits, int decDigits) {
+    private static String buildPaymentValue(double value, int intDigits, int decDigits) {
 	StringBuilder stringBuffer = new StringBuilder();
 
 	String valueString = String.valueOf(value);
@@ -455,7 +462,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends FenixServi
 	return stringBuffer.toString();
     }
 
-    private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
+    private static String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
 
 	int sibsPaymentCode = 0;
 	Specialization specialization = studentCurricularPlan.getSpecialization();

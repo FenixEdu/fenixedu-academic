@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.EditTeacherMasterDegreeCredits;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.GenericTrio;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -33,7 +34,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -159,15 +159,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	Map creditsMap = (Map) dynaForm.get("creditsMap");
 	Map hoursMap = (Map) dynaForm.get("hoursMap");
 
-	Object args[] = { hoursMap, creditsMap };
-	try {
-	    ServiceUtils.executeService("EditTeacherMasterDegreeCredits", args);
-	} catch (FenixServiceException fse) {
-	    Throwable throwable = fse.getCause();
-	    if (throwable.getCause() instanceof NumberFormatException) {
-		throw new NumberFormatException();
-	    }
-	}
+	EditTeacherMasterDegreeCredits.run(hoursMap, creditsMap);
 	return mapping.findForward("successfulEdit");
     }
 
@@ -220,7 +212,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	    if (!ccsList.isEmpty()) {
 
 		while (cssListIter.hasNext()) {
-		    DegreeModuleScope ccs = (DegreeModuleScope) cssListIter.next();
+		    DegreeModuleScope ccs = cssListIter.next();
 		    if (!semesters.contains(ccs.getCurricularSemester())) {
 			semesters.add(ccs.getCurricularSemester());
 		    }

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +28,9 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadAllTransactionsByGratuitySituationID extends FenixService {
 
-    public List run(Integer gratuitySituationID) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer gratuitySituationID) throws FenixServiceException {
 	GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
 	List<InsuranceTransaction> insuranceTransactionList = gratuitySituation.getStudentCurricularPlan().getRegistration()
 		.readAllInsuranceTransactionByExecutionYear(

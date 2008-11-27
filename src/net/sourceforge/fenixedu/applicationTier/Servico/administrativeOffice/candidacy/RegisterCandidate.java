@@ -12,13 +12,18 @@ import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public class RegisterCandidate extends FenixService {
 
-    public void run(RegisterCandidacyBean candidacyBean) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(RegisterCandidacyBean candidacyBean) {
 
 	StateMachine.execute(candidacyBean.getCandidacy().getActiveCandidacySituation(), new StateBean(
 		CandidacySituationType.REGISTERED.name()));

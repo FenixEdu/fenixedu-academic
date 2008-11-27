@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.SetPersonRoles;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -125,9 +127,9 @@ public class ManageRolesDA extends FenixDispatchAction {
 	}
 
 	IUserView userView = UserView.getUser();
-	Object[] args = { person, roles };
+
 	try {
-	    ServiceUtils.executeService("SetPersonRoles", args);
+	    SetPersonRoles.run(person, roles);
 	} catch (Exception e) {
 	    ActionMessages messages = new ActionMessages();
 	    messages.add("invalidRole", new ActionMessage("error.invalidRole"));

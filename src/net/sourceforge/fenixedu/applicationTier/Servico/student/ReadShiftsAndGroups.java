@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +33,8 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadShiftsAndGroups extends FenixService {
 
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 	if (grouping == null) {
@@ -45,6 +51,8 @@ public class ReadShiftsAndGroups extends FenixService {
 	return run(grouping);
     }
 
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
     public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
 	final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 

@@ -10,10 +10,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGrantInsurance extends FenixService {
 
-    public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException {
 
 	GrantInsurance grantInsurance = rootDomainObject.readGrantInsuranceByOID(infoGrantInsurance.getIdInternal());
 	if (grantInsurance == null) {

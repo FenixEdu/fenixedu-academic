@@ -9,11 +9,15 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertDegree extends FenixService {
 
-    public void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
 	    final GradeScale gradeScale) throws FenixServiceException {
 	if (name == null || nameEn == null || code == null || degreeType == null) {
 	    throw new InvalidArgumentsServiceException();

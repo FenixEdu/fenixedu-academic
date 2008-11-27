@@ -8,13 +8,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
  */
 public class ReadExecutionPeriod extends FenixService {
 
-    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	if (executionSemester == null) {
 	    throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);

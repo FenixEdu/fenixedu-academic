@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.EditResearchActivityParticipants;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.RemoveResearchActivityParticipation;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ParticipantBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchActivityParticipantEditionBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,6 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ParticipationsInterface;
+import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 
 import org.apache.struts.action.ActionForm;
@@ -167,8 +171,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	    List<ResearchActivityParticipantEditionBean> notEditedParticipants = null;
 	    try {
-		notEditedParticipants = (List<ResearchActivityParticipantEditionBean>) executeService(
-			"EditResearchActivityParticipants", new Object[] { beans });
+		notEditedParticipants = EditResearchActivityParticipants.run(beans);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
@@ -222,17 +225,15 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 	if (RenderUtils.getViewState() != null) {
 	    ParticipantBean participantBean = (ParticipantBean) RenderUtils.getViewState().getMetaObject().getObject();
 
-	    Object[] objects;
-	    if (participantBean.getActivity() instanceof ScientificJournal) {
-		objects = new Object[] { participantBean.getActivity(), participantBean.getRole(), participantBean.getPerson(),
-			participantBean.getRoleMessage(), participantBean.getBeginDate(), participantBean.getEndDate() };
-	    } else {
-		objects = new Object[] { participantBean.getActivity(), participantBean.getRole(), participantBean.getPerson(),
-			participantBean.getRoleMessage() };
-	    }
 	    try {
-		executeService("CreateResearchActivityParticipation", objects);
-
+		if (participantBean.getActivity() instanceof ScientificJournal) {
+		    CreateResearchActivityParticipation.run((ScientificJournal) participantBean.getActivity(), participantBean
+			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage(), participantBean
+			    .getBeginDate(), participantBean.getEndDate());
+		} else {
+		    CreateResearchActivityParticipation.run((ResearchEvent) participantBean.getActivity(), participantBean
+			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage());
+		}
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("participationRoleBean", participantBean);
@@ -252,7 +253,7 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 
 	if (participation != null) {
 	    try {
-		executeService("RemoveResearchActivityParticipation", new Object[] { participation });
+		RemoveResearchActivityParticipation.run(participation);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

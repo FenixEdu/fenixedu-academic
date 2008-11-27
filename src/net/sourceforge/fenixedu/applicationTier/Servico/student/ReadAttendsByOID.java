@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.Attends;
  */
 public class ReadAttendsByOID extends FenixService {
 
-    public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) {
 	Attends attends = rootDomainObject.readAttendsByOID(idInternal);
 	return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
 

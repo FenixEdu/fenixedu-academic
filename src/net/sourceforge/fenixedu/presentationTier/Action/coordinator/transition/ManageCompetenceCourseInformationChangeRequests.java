@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.ChangeCompetenceCourseInformationChangeRequestStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -62,8 +64,8 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
 	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
 	    try {
-		executeService("ChangeCompetenceCourseInformationChangeRequestStatus", new Object[] { changeRequest,
-			getLoggedPerson(request), status });
+		ChangeCompetenceCourseInformationChangeRequestStatus.run(changeRequest,
+			getLoggedPerson(request), status);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }

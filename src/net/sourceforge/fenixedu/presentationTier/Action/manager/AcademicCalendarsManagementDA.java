@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.DeleteAcademicCalendarEntry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,7 +148,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
 	AcademicCalendarEntry entry = null;
 	try {
-	    entry = (AcademicCalendarEntry) executeService("CreateAcademicCalendarEntry", new Object[] { bean, true });
+	    entry = (AcademicCalendarEntry) CreateAcademicCalendarEntry.run(bean, true);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -176,7 +182,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
 	AcademicCalendarEntry entry = null;
 	try {
-	    entry = (AcademicCalendarEntry) executeService("CreateAcademicCalendarEntry", new Object[] { bean, false });
+	    entry = (AcademicCalendarEntry) CreateAcademicCalendarEntry.run(bean, false);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -203,7 +209,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 	Partial endPartial = getEndFromParameter(request);
 
 	try {
-	    executeService("DeleteAcademicCalendarEntry", new Object[] { entry, rootEntry });
+	    DeleteAcademicCalendarEntry.run(entry, rootEntry);
 
 	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());

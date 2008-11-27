@@ -16,9 +16,14 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateExecutionDegreesForExecutionYear extends FenixService {
 
-    public List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<DegreeCurricularPlan> run(final Integer[] degreeCurricularPlansIDs,
 	    final Integer[] bolonhaDegreeCurricularPlansIDs, final Integer executionYearID, final String campusName,
 	    final Boolean temporaryExamMap, final Calendar lessonSeason1BeginDate, final Calendar lessonSeason1EndDate,
 	    final Calendar lessonSeason2BeginDate, final Calendar lessonSeason2EndDate, final Calendar examsSeason1BeginDate,
@@ -68,7 +73,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	return created;
     }
 
-    private Campus readCampusByName(String campusName) {
+    private static Campus readCampusByName(String campusName) {
 	for (Campus campus : Campus.getAllActiveCampus()) {
 	    if (campus.getName().equalsIgnoreCase(campusName)) {
 		return campus;
@@ -77,7 +82,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	return null;
     }
 
-    private OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate) {
+    private static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate) {
 	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(YearMonthDay.fromCalendarFields(startDate),
 		YearMonthDay.fromCalendarFields(endDate));
 	if (occupationPeriod == null) {
@@ -87,7 +92,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	return occupationPeriod;
     }
 
-    protected void setPeriods(ExecutionDegree executionDegree, OccupationPeriod periodExamsSeason1,
+    protected static void setPeriods(ExecutionDegree executionDegree, OccupationPeriod periodExamsSeason1,
 	    OccupationPeriod periodExamsSeason2, OccupationPeriod periodExamsSpecialSeason, OccupationPeriod periodLessonSeason1,
 	    OccupationPeriod periodLessonSeason2, OccupationPeriod gradeSubmissionNormalSeason1,
 	    OccupationPeriod gradeSubmissionNormalSeason2, OccupationPeriod gradeSubmissionSpecialSeason) {

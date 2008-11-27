@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,8 +60,8 @@ public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDi
 	final CreateOtherPartyPaymentBean createOtherPartyPaymentBean = getCreateOtherPartyBeanFromViewState("confirmCreateOtherPartyPayment");
 
 	try {
-	    executeService("CreateOtherPartyPayment", new Object[] { getUserView(request).getPerson(),
-		    createOtherPartyPaymentBean });
+	    CreateOtherPartyPayment.run(getUserView(request).getPerson(),
+		    createOtherPartyPaymentBean);
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 

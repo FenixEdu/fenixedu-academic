@@ -5,7 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateCandidacyPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.CreateDelegateVotingPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -19,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManagementDispatchAction {
+    private static final String ELECTIONS_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
 
     /*
      * Prepare create single election period (voting or candidacy period)
@@ -119,8 +121,23 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 	RenderUtils.invalidateViewState("newElectionPeriodBean");
 	RenderUtils.invalidateViewState("electionPeriodBean");
 
-	return createYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		"CreateDelegateCandidacyPeriod", "createEditCandidacyPeriods", newElectionPeriodBean);
+	if (selectedDegrees == null) {
+	    CreateDelegateCandidacyPeriod.run(newElectionPeriodBean);
+	} else {
+	    for (String degreeOID : selectedDegrees) {
+		CreateDelegateCandidacyPeriod.run(newElectionPeriodBean, degreeOID);
+	    }
+	}
+
+	newElectionPeriodBean.setCurricularYear(null);
+	newElectionPeriodBean.setStartDate(null);
+	newElectionPeriodBean.setEndDate(null);
+	newElectionPeriodBean.setDegree(null);
+
+	request.setAttribute("forwardTo", "createEditCandidacyPeriods");
+	request.setAttribute("electionPeriodBean", newElectionPeriodBean);
+
+	return selectDegreeType(mapping, actionForm, request, response);
     }
 
     /*
@@ -135,31 +152,11 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 	RenderUtils.invalidateViewState("newElectionPeriodBean");
 	RenderUtils.invalidateViewState("electionPeriodBean");
 
-	return createYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		"CreateDelegateVotingPeriod", "createEditVotingPeriods", newElectionPeriodBean);
-    }
-
-    /*
-     * Create single or multiple elections periods
-     */
-    public ActionForward createYearDelegateElectionPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, List<String> selectedDegrees, String service,
-	    String forwardTo, ElectionPeriodBean newElectionPeriodBean) throws Exception {
-
 	if (selectedDegrees == null) {
-	    try {
-		executeService(service, new Object[] { newElectionPeriodBean });
-
-	    } catch (FenixServiceException ex) {
-		addActionMessage(request, ex.getMessage(), ex.getArgs());
-	    }
+	    CreateDelegateVotingPeriod.run(newElectionPeriodBean);
 	} else {
 	    for (String degreeOID : selectedDegrees) {
-		try {
-		    executeService(service, new Object[] { newElectionPeriodBean, degreeOID });
-		} catch (FenixServiceException ex) {
-		    addActionMessage(request, ex.getMessage(), ex.getArgs());
-		}
+		CreateDelegateVotingPeriod.run(newElectionPeriodBean, degreeOID);
 	    }
 	}
 
@@ -168,7 +165,7 @@ public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManage
 	newElectionPeriodBean.setEndDate(null);
 	newElectionPeriodBean.setDegree(null);
 
-	request.setAttribute("forwardTo", forwardTo);
+	request.setAttribute("forwardTo", "createEditVotingPeriods");
 	request.setAttribute("electionPeriodBean", newElectionPeriodBean);
 
 	return selectDegreeType(mapping, actionForm, request, response);

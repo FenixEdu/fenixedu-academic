@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.interest;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,7 +41,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 	Integer oid = Integer.parseInt(request.getParameter("oid"));
 	IUserView userView = getUserView(request);
 
-	ServiceUtils.executeService("DeleteResearchInterest", new Object[] { oid });
+	DeleteResearchInterest.run(oid);
 
 	return prepare(mapping, form, request, response);
     }
@@ -116,7 +122,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 		orderedInterests.add(index + direction, interest);
 	    }
 
-	    ServiceUtils.executeService("ChangeResearchInterestOrder", new Object[] { person, orderedInterests });
+	    ChangeResearchInterestOrder.run(person, orderedInterests);
 	}
     }
 
@@ -125,7 +131,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
 	String treeStructure = (String) getFromRequest(request, "tree");
 	List<ResearchInterest> newInterestsOrder = reOrderInterests(treeStructure, getOrderedInterests(request));
-	executeService("ChangeResearchInterestOrder", new Object[] { getLoggedPerson(request), newInterestsOrder });
+	ChangeResearchInterestOrder.run(getLoggedPerson(request), newInterestsOrder);
 
 	return prepare(mapping, form, request, response);
     }

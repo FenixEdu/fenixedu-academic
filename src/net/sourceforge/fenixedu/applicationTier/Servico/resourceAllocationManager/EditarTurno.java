@@ -4,6 +4,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Servi�o EditarTurno.
  * 
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class EditarTurno extends FenixService {
 
-    public Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Object run(InfoShift infoShiftOld, InfoShiftEditor infoShiftNew) {
 	final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
 	final ExecutionCourse newExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew
 		.getInfoDisciplinaExecucao().getIdInternal());

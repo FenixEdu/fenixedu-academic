@@ -4,11 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlanById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
@@ -31,15 +30,8 @@ public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
 	IUserView userView = getUserView(request);
 
-	Object args[] = { studentCurricularPlanId };
-
-	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadPosGradStudentCurricularPlanById", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById
+		.run(studentCurricularPlanId);
 
 	request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
 	request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);

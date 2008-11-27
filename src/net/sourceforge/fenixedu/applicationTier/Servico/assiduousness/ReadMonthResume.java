@@ -26,9 +26,14 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ReadMonthResume extends FenixService {
 
-    public List<AssiduousnessMonthlyResume> run(AssiduousnessExportChoices assiduousnessExportChoices) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static List<AssiduousnessMonthlyResume> run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(assiduousnessExportChoices.getYearMonth());
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = new ArrayList<AssiduousnessMonthlyResume>();
 	if (closedMonth == null) {
@@ -59,7 +64,7 @@ public class ReadMonthResume extends FenixService {
 	return assiduousnessMonthlyResumeList;
     }
 
-    private AssiduousnessMonthlyResume getMonthAssiduousnessBalance(Assiduousness assiduousness,
+    private static AssiduousnessMonthlyResume getMonthAssiduousnessBalance(Assiduousness assiduousness,
 	    List<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate, LocalDate endDate) {
 	LocalDate lowerBeginDate = beginDate.minusDays(8);
 	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
@@ -116,8 +121,8 @@ public class ReadMonthResume extends FenixService {
 	return assiduousnessMonthlyResume;
     }
 
-    private HashMap<LocalDate, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate,
-	    LocalDate endDate) {
+    private static HashMap<LocalDate, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords,
+	    LocalDate beginDate, LocalDate endDate) {
 	HashMap<LocalDate, List<Leave>> leavesMap = new HashMap<LocalDate, List<Leave>>();
 	if (assiduousnessRecords != null) {
 	    for (AssiduousnessRecord record : assiduousnessRecords) {
@@ -144,7 +149,7 @@ public class ReadMonthResume extends FenixService {
 	return leavesMap;
     }
 
-    private HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
+    private static HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
 	    HashMap<LocalDate, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
 	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = new HashMap<LocalDate, List<AssiduousnessRecord>>();
 	if (assiduousnessRecords != null) {
@@ -174,7 +179,7 @@ public class ReadMonthResume extends FenixService {
 	return clockingsMap;
     }
 
-    private Duration setUnjustified(WorkDaySheet workDaySheet) {
+    private static Duration setUnjustified(WorkDaySheet workDaySheet) {
 	Duration thisDayUnjustified = workDaySheet.getUnjustifiedTime();
 	if (thisDayUnjustified == null) {
 	    thisDayUnjustified = Duration.ZERO;
@@ -182,7 +187,7 @@ public class ReadMonthResume extends FenixService {
 	return thisDayUnjustified;
     }
 
-    private Duration[] setExtraWork(WorkDaySheet workDaySheet, Duration thisDayBalance) {
+    private static Duration[] setExtraWork(WorkDaySheet workDaySheet, Duration thisDayBalance) {
 	Duration[] result = new Duration[] { Duration.ZERO, Duration.ZERO };
 	Duration thisDayUnjustified = workDaySheet.getUnjustifiedTime();
 	if (thisDayUnjustified == null) {
@@ -202,7 +207,7 @@ public class ReadMonthResume extends FenixService {
 	return result;
     }
 
-    private Duration setNightExtraWork(WorkDaySheet workDaySheet) {
+    private static Duration setNightExtraWork(WorkDaySheet workDaySheet) {
 	if (!workDaySheet.getIrregular() && workDaySheet.getTimeline() != null) {
 	    final Duration midHour = new Duration(1800000);
 	    Duration extraWorkDuration = workDaySheet.getTimeline().calculateWorkPeriodDurationBetweenDates(
@@ -217,7 +222,7 @@ public class ReadMonthResume extends FenixService {
 	return Duration.ZERO;
     }
 
-    private List<Leave> getDayLeaves(HashMap<LocalDate, List<Leave>> leavesMap, LocalDate thisDay) {
+    private static List<Leave> getDayLeaves(HashMap<LocalDate, List<Leave>> leavesMap, LocalDate thisDay) {
 	List<Leave> leavesList = leavesMap.get(thisDay);
 	if (leavesList == null) {
 	    leavesList = new ArrayList<Leave>();
@@ -226,7 +231,7 @@ public class ReadMonthResume extends FenixService {
 	return leavesList;
     }
 
-    private List<AssiduousnessRecord> getDayClockings(HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap,
+    private static List<AssiduousnessRecord> getDayClockings(HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap,
 	    LocalDate thisDay) {
 	List<AssiduousnessRecord> clockingsList = clockingsMap.get(thisDay);
 	if (clockingsList == null) {
@@ -236,7 +241,7 @@ public class ReadMonthResume extends FenixService {
 	return clockingsList;
     }
 
-    private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
@@ -249,7 +254,7 @@ public class ReadMonthResume extends FenixService {
 	return end;
     }
 
-    private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+    private static DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
 	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
@@ -258,7 +263,7 @@ public class ReadMonthResume extends FenixService {
 	return init;
     }
 
-    private HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
+    private static HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));

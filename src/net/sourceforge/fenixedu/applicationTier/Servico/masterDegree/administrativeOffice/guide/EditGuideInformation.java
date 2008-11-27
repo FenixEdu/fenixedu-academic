@@ -31,10 +31,14 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditGuideInformation extends FenixService {
 
-    public InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber, String othersRemarks,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoGuide run(InfoGuide infoGuide, String[] quantityList, Integer contributorNumber, String othersRemarks,
 	    Integer othersQuantity, Double othersPrice) throws FenixServiceException {
 
 	// This will be the flag that indicates if a change has been made to the
@@ -43,7 +47,7 @@ public class EditGuideInformation extends FenixService {
 	boolean change = false;
 
 	// Safety check to see if the Guide can be changed
-	this.chekIfChangeable(infoGuide);
+	chekIfChangeable(infoGuide);
 
 	// Read The Guide
 	Guide guide = Guide.readByNumberAndYearAndVersion(infoGuide.getNumber(), infoGuide.getYear(), infoGuide.getVersion());
@@ -126,7 +130,7 @@ public class EditGuideInformation extends FenixService {
 	    // If there's a change ...
 	    if (change) {
 		// Create a new Guide Version
-		Guide newGuideVersion = this.createNewGuideVersion(infoGuide);
+		Guide newGuideVersion = createNewGuideVersion(infoGuide);
 
 		// fill in the last field in the Others Guide Entry if
 		// necessary
@@ -151,7 +155,7 @@ public class EditGuideInformation extends FenixService {
 		}
 
 		// Write the Guide Entries
-		for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
+		for (InfoGuideEntry infoGuideEntry : newInfoGuideEntries) {
 		    GuideEntry guideEntry = new GuideEntry();
 		    infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
 
@@ -216,7 +220,7 @@ public class EditGuideInformation extends FenixService {
 	return result;
     }
 
-    private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException {
+    private static void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException {
 	// Annuled Guides cannot be changed
 	if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
 	    throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
@@ -228,7 +232,7 @@ public class EditGuideInformation extends FenixService {
 	    throw new InvalidChangeServiceException("Not the Latest Version");
     }
 
-    private Guide createNewGuideVersion(InfoGuide infoGuide) {
+    private static Guide createNewGuideVersion(InfoGuide infoGuide) {
 	// Read the needed information from the DataBase
 	Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
 	Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());

@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEditor;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -13,7 +15,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
  */
 public class EndCurricularCourseScope extends FenixService {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
 
 	if (!newInfoCurricularCourseScope.getEndDate().after(newInfoCurricularCourseScope.getBeginDate())) {
 	    throw new InvalidArgumentsServiceException();

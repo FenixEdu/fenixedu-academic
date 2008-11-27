@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +32,9 @@ public class ManageGrantCostCenterAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	try {
 
-	    Object[] args = { GrantCostCenter.class.getName() };
 
 	    IUserView userView = UserView.getUser();
-	    List infoGrantCostCenterList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
+	    List infoGrantCostCenterList = (List) ReadAllGrantPaymentEntitiesByClassName.run(GrantCostCenter.class.getName());
 
 	    if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())
 		request.setAttribute("infoGrantCostCenterList", infoGrantCostCenterList);

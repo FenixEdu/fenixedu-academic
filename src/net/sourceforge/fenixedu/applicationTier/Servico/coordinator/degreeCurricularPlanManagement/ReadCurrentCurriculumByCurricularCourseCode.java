@@ -22,12 +22,17 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Fernanda Quitério 13/Nov/2003
  */
 public class ReadCurrentCurriculumByCurricularCourseCode extends FenixService {
 
-    public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode) throws FenixServiceException {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode) throws FenixServiceException {
 
 	if (curricularCourseCode == null) {
 	    throw new FenixServiceException("nullCurricularCourse");
@@ -73,7 +78,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends FenixService {
 	return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(InfoCurriculum infoCurriculum, List activeCurricularCourseScopes,
+    private static InfoCurriculum createInfoCurriculum(InfoCurriculum infoCurriculum, List activeCurricularCourseScopes,
 	    List associatedExecutionCourses) {
 
 	List scopes = new ArrayList();

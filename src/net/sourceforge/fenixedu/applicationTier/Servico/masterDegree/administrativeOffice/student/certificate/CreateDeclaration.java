@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 
 public class CreateDeclaration extends FenixService {
 
-    public List run(InfoStudent infoStudent, Specialization specialization) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(InfoStudent infoStudent, Specialization specialization) throws Exception {
 
 	List infoStudentCurricularPlanList = new ArrayList();
 
@@ -48,7 +54,9 @@ public class CreateDeclaration extends FenixService {
 
     }
 
-    public List run(InfoStudent infoStudent, Specialization specialization, StudentCurricularPlanState state) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(InfoStudent infoStudent, Specialization specialization, StudentCurricularPlanState state) throws Exception {
 
 	List infoStudentCurricularPlanList = new ArrayList();
 
@@ -77,7 +85,9 @@ public class CreateDeclaration extends FenixService {
 
     // FIXME change paraemter states to List type, when berserk's reflection bug
     // is fixed
-    public List run(InfoStudent infoStudent, Specialization specialization, ArrayList states) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(InfoStudent infoStudent, Specialization specialization, ArrayList states) throws Exception {
 
 	List studentCurricularPlanList = new ArrayList();
 	List infoStudentCurricularPlanList = new ArrayList();

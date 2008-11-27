@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionCourseAtExecutionPeriod;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -75,10 +77,9 @@ public class InsertExecutionCourseDA extends FenixDispatchAction {
 
 	infoExecutionCourse.setComment((String) dynaForm.get("comment"));
 
-	Object args[] = { infoExecutionCourse };
 
 	try {
-	    ServiceUtils.executeService("InsertExecutionCourseAtExecutionPeriod", args);
+	    InsertExecutionCourseAtExecutionPeriod.run(infoExecutionCourse);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);

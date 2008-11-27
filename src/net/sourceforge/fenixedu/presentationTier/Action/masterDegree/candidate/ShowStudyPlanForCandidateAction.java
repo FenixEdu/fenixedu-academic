@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate.ReadPersonCandidates;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +41,9 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
     private InfoMasterDegreeCandidate getMasterDegreeCandidate(IUserView userView, HttpSession session) {
 	if (session != null) {
 
-	    Object args[] = { userView.getUtilizador() };
 	    List candidates = null;
 	    try {
-		candidates = (List) ServiceManagerServiceFactory.executeService("ReadPersonCandidates", args);
+		candidates = (List) ReadPersonCandidates.run(userView.getUtilizador());
 	    } catch (Exception e) {
 		return null;
 	    }

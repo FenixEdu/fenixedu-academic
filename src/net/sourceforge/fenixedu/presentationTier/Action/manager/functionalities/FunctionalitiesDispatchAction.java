@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ImportFunctionalities;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.ArrangeFunctionalities;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionality;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +193,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception throw by the service
      */
     public static void deleteFunctionality(Content functionality) throws Exception {
-	ServiceUtils.executeService("DeleteFunctionality", new Object[] { functionality });
+	DeleteFunctionality.run(functionality);
     }
 
     /**
@@ -200,7 +208,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements) throws Exception {
-	ServiceUtils.executeService("ArrangeFunctionalities", new Object[] { arrangements });
+	ArrangeFunctionalities.run(arrangements);
     }
 
     /**
@@ -240,7 +248,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            availability
      */
     public static void setGroupAvailability(Content functionality, String expression) throws Exception {
-	ServiceUtils.executeService("CreateGroupAvailability", new Object[] { functionality, expression });
+	CreateGroupAvailability.run(functionality, expression);
     }
 
     /**
@@ -263,7 +271,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      */
     public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed)
 	    throws Exception {
-	ServiceUtils.executeService("ImportFunctionalities", new Object[] { module, stream, principalPreserved, uuidUsed });
+	ImportFunctionalities.run(module, stream, principalPreserved, uuidUsed);
     }
 
     /**

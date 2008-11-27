@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverAula;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +52,8 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 
 	InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
 
-	Object argsRemoverAula[] = { infoLesson, infoTurno };
 
-	ServiceManagerServiceFactory.executeService("RemoverAula", argsRemoverAula);
+	RemoverAula.run(infoLesson, infoTurno);
 
 	return mapping.findForward("Sucesso");
     }

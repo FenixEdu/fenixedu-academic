@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -145,9 +147,8 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
 	InfoGratuityValues infoGratuityValues = fillGratuity(userView, gratuityForm);
 
-	Object[] args = { infoGratuityValues };
 	try {
-	    ServiceManagerServiceFactory.executeService("InsertGratuityData", args);
+	    InsertGratuityData.run(infoGratuityValues);
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("impossible.insertGratuityValues")) {
 		errors.add("exception", new ActionError("error.impossible.insertGratuityValues", gratuityForm.get("degreeName")));

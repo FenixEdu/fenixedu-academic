@@ -4,10 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService {
 
-    public boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
 	if (groupProposal != null) {
@@ -33,7 +37,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService 
 
     }
 
-    private GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final Integer groupProposalOID) {
+    private static GroupProposal findGroupProposal(final FinalDegreeWorkGroup group, final Integer groupProposalOID) {
 	for (final GroupProposal groupProposal : group.getGroupProposalsSet()) {
 	    if (groupProposal.getIdInternal().equals(groupProposalOID)) {
 		return groupProposal;
@@ -42,10 +46,10 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService 
 	return null;
     }
 
-    public class GroupProposalAttributedException extends FenixServiceException {
+    public static class GroupProposalAttributedException extends FenixServiceException {
     }
 
-    public class GroupProposalAttributedByTeacherException extends FenixServiceException {
+    public static class GroupProposalAttributedByTeacherException extends FenixServiceException {
     }
 
 }

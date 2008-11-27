@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.CreateTeacherCreditsFillingPeriod;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,7 +59,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 	TeacherCreditsPeriodBean bean = (TeacherCreditsPeriodBean) getRenderedObject("teacherCreditsBeanID");
 
 	try {
-	    executeService("CreateTeacherCreditsFillingPeriod", new Object[] { bean });
+	    CreateTeacherCreditsFillingPeriod.run(bean);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());

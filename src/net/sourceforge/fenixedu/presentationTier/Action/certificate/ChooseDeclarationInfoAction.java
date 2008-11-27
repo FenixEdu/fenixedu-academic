@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.GetEnrolmentList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -17,9 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -79,13 +77,13 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 	InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(ExecutionYear.readCurrentExecutionYear());
 
 	List enrolmentList = null;
-	Object argsEnrolment[] = { infoStudentCurricularPlan.getIdInternal() };
-	try {
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", argsEnrolment);
 
-	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("Inscrição", e);
-	}
+	// try {
+	enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
+
+	// } catch (NonExistingServiceException e) {
+	// throw new NonExistingActionException("Inscrição", e);
+	// }
 
 	String anoLectivo;
 	if (enrolmentList.size() == 0) {

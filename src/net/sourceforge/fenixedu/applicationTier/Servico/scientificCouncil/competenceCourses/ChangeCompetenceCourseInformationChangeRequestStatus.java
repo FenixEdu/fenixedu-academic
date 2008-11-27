@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixService {
 
-    public void run(CompetenceCourseInformationChangeRequest changeRequest, Person analisedBy, Boolean status)
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(CompetenceCourseInformationChangeRequest changeRequest, Person analisedBy, Boolean status)
 	    throws FenixServiceException {
 	if (changeRequest.getApproved() != null) {
 	    throw new FenixServiceException("error.request.already.processed");
@@ -56,7 +62,7 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends FenixS
 	}
     }
 
-    private void createLoads(CompetenceCourseInformationChangeRequest changeRequest, CompetenceCourseInformation information) {
+    private static void createLoads(CompetenceCourseInformationChangeRequest changeRequest, CompetenceCourseInformation information) {
 	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(changeRequest.getTheoreticalHours(), changeRequest
 		.getProblemsHours(), changeRequest.getLaboratorialHours(), changeRequest.getSeminaryHours(), changeRequest
 		.getFieldWorkHours(), changeRequest.getTrainingPeriodHours(), changeRequest.getTutorialOrientationHours(),

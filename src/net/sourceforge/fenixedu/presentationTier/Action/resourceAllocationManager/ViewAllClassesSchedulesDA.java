@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadDegreesClassesLessons;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -77,8 +79,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	    }
 	}
 
-	Object[] args = { selectedInfoExecutionDegrees, infoExecutionPeriod };
-	List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService("ReadDegreesClassesLessons", args);
+	List infoViewClassScheduleList = (List) ReadDegreesClassesLessons.run(selectedInfoExecutionDegrees, infoExecutionPeriod);
 
 	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
 	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);

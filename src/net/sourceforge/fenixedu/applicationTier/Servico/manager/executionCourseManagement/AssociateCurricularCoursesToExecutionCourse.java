@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class AssociateCurricularCoursesToExecutionCourse extends FenixService {
 
-    public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
 	if (executionCourseId == null) {
 	    throw new FenixServiceException("nullExecutionCourseId");
 	}

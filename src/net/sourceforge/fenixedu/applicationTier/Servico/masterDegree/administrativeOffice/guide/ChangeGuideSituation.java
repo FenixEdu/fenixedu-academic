@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +42,9 @@ import org.apache.commons.collections.Predicate;
 
 public class ChangeGuideSituation extends FenixService {
 
-    public void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
 	    String situationOfGuideString, String paymentType, IUserView userView) throws ExcepcaoInexistente,
 	    FenixServiceException {
 
@@ -146,7 +152,7 @@ public class ChangeGuideSituation extends FenixService {
 
     }
 
-    private boolean verifyChangeValidation(GuideSituation activeGuideSituation, GuideState situationOfGuide) {
+    private static boolean verifyChangeValidation(GuideSituation activeGuideSituation, GuideState situationOfGuide) {
 	if (activeGuideSituation.equals(GuideState.ANNULLED))
 	    return false;
 

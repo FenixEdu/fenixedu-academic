@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditExecutionDegreePeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAllExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.places.campus.ReadAllCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
@@ -66,8 +68,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	List infoExecutionYearList = null;
 	List infoCampusList;
 	try {
-	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
-	    infoCampusList = (List) ReadAllCampus.run();
+	    infoExecutionYearList = ReadAllExecutionYears.run();
+	    infoCampusList = ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -171,10 +173,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	InfoCampus infoCampus = new InfoCampus(Integer.valueOf(campusIdString));
 	infoExecutionDegree.setInfoCampus(infoCampus);
 
-	Object args[] = { infoExecutionDegree };
-
 	try {
-	    ServiceUtils.executeService("EditExecutionDegree", args);
+	    EditExecutionDegree.run(infoExecutionDegree);
 
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("message.manager.existing.execution.degree");
@@ -374,14 +374,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	infoExecutionDegree.setInfoPeriodExamsFirstSemester(periodExamsFirstSemester[0]);
 	infoExecutionDegree.setInfoPeriodExamsSecondSemester(periodExamsSecondSemester[0]);
 
-	Object args[] = { infoExecutionDegree };
-
-	try {
-	    ServiceUtils.executeService("EditExecutionDegreePeriods", args);
-
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
-	}
+	EditExecutionDegreePeriods.run(infoExecutionDegree);
 
 	return mapping.findForward("readDegreeCurricularPlan");
 
@@ -422,8 +415,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
-	    infoCampusList = (List) ReadAllCampus.run();
+	    infoExecutionYearList = ReadAllExecutionYears.run();
+	    infoCampusList = ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -482,8 +475,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	 * jsp
 	 */
 	try {
-	    infoExecutionYearList = (List) ReadAllExecutionYears.run();
-	    infoCampusList = (List) ReadAllCampus.run();
+	    infoExecutionYearList = ReadAllExecutionYears.run();
+	    infoCampusList = ReadAllCampus.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

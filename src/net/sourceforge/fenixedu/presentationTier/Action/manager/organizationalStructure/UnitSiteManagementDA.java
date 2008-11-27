@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.organizationalStructure;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
+
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +44,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 	Unit unit = getUnit(request);
 
 	try {
-	    executeService("CreateUnitSite", new Object[] { unit });
+	    CreateUnitSite.run(unit);
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}

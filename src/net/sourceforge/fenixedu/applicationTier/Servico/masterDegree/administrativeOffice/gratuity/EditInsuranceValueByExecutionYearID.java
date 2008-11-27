@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -8,7 +12,9 @@ import net.sourceforge.fenixedu.domain.InsuranceValue;
 
 public class EditInsuranceValueByExecutionYearID extends FenixService {
 
-    public void run(Integer executionYearID, Double annualValue, Date endDate) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(Integer executionYearID, Double annualValue, Date endDate) {
 
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 

@@ -10,16 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.ReadStudentByNumberAndType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -33,6 +31,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 public class ReadPersonInfoOfStudentsAction extends FenixAction {
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	HttpSession session = request.getSession(false);
@@ -52,12 +51,8 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 	// request);
 
 	InfoStudent infoStudent = null;
-	Object args[] = { studentNumber, DegreeType.MASTER_DEGREE };
-	try {
-	    infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService("ReadStudentByNumberAndType", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+
+	infoStudent = (InfoStudent) ReadStudentByNumberAndType.run(studentNumber, DegreeType.MASTER_DEGREE);
 
 	if (infoStudent == null) {
 	    ActionErrors errors = new ActionErrors();

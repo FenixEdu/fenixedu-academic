@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -16,7 +20,9 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixService {
 
-    public void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(IUserView userView, Integer studentCurricularPlanId, String currentState, Double credits, String startDate,
 	    List<Integer> extraCurricularOIDs, String observations, Integer branchId, String specialization)
 	    throws FenixServiceException {
 	final StudentCurricularPlan scp = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
@@ -58,7 +64,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends FenixServic
 	}
     }
 
-    private Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
+    private static Calendar stringDateToCalendar(String startDate) throws NumberFormatException {
 	final Calendar result = Calendar.getInstance();
 
 	String[] aux = startDate.split("/");

@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConst
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ListGrantContractAndInsuranceByCriteria extends FenixService {
@@ -40,8 +42,10 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
      * @returns an array of objects object[0] List of result object[1]
      *          IndoSpanCriteriaListGrantOwner
      */
-    public Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner) throws FenixServiceException,
-	    FenixFilterException, Exception {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner)
+	    throws FenixServiceException, FenixFilterException, Exception {
 
 	// Read the grant contracts ordered by persistentSupportan
 	List<GrantContractRegime> grantContractBySpanAndCriteria = readAllContractsByCriteria(
@@ -75,7 +79,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	return result;
     }
 
-    private List<InfoListGrantOwnerByOrder> mergeEqualGrantOwners(List<InfoListGrantOwnerByOrder> listGrantContract) {
+    private static List<InfoListGrantOwnerByOrder> mergeEqualGrantOwners(List<InfoListGrantOwnerByOrder> listGrantContract) {
 	Map<Integer, InfoListGrantOwnerByOrder> mergedGrantOwners = new HashMap<Integer, InfoListGrantOwnerByOrder>();
 	List<InfoListGrantOwnerByOrder> repeatedGrantOwners = new ArrayList<InfoListGrantOwnerByOrder>();
 	for (InfoListGrantOwnerByOrder grantOwnerByOrder : listGrantContract) {
@@ -94,7 +98,8 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	return repeatedGrantOwners;
     }
 
-    private void mergeInfoGrantOwner(InfoListGrantOwnerByOrder grantOwnerByOrder, InfoListGrantOwnerByOrder grantOwnerByOrderMap) {
+    private static void mergeInfoGrantOwner(InfoListGrantOwnerByOrder grantOwnerByOrder,
+	    InfoListGrantOwnerByOrder grantOwnerByOrderMap) {
 	if (grantOwnerByOrder.getBeginContract() != null && grantOwnerByOrderMap.getBeginContract() != null
 		&& grantOwnerByOrder.getBeginContract().before(grantOwnerByOrderMap.getBeginContract())) {
 	    grantOwnerByOrderMap.setBeginContract(grantOwnerByOrder.getBeginContract());
@@ -116,7 +121,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
      * 
      * @throws ParseException
      */
-    private void convertToInfoListGrantOwnerByOrder(GrantContractRegime grantContractRegime,
+    private static void convertToInfoListGrantOwnerByOrder(GrantContractRegime grantContractRegime,
 	    InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result)
 	    throws ParseException {
 
@@ -146,7 +151,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	    }
 	}
 
-	GrantInsurance grantInsurance = (GrantInsurance) grantContractRegime.getGrantContract().getGrantInsurance();
+	GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
 
 	// InfoGrantInsurance infoGrantInsurance = new InfoGrantInsurance();
 
@@ -228,7 +233,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
     /*
      * Returns the order string to add to the criteria
      */
-    private String propertyOrderBy(String orderBy) {
+    private static String propertyOrderBy(String orderBy) {
 	String result = null;
 	if (orderBy.equals("orderByGrantOwnerNumber")) {
 	    result = "grantOwner.number";
@@ -246,7 +251,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	return result;
     }
 
-    public List<GrantContractRegime> readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
+    public static List<GrantContractRegime> readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
 	    Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract, Integer spanNumber,
 	    Integer numberOfElementsInSpan, Integer grantTypeId, Date validToTheDate) throws FenixFilterException,
 	    FenixServiceException, Exception {
@@ -268,7 +273,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 
 	Collections.sort(grantList, new BeanComparator("grantContract.grantOwner.number"));
 	Collections.reverse(grantList);
-	for (final GrantContractRegime grantContractRegime : ((List<GrantContractRegime>) grantList)) {
+	for (final GrantContractRegime grantContractRegime : (grantList)) {
 	    final GrantContract grantContract = grantContractRegime.getGrantContract();
 	    if (grantContract == null) {
 		continue;
@@ -357,7 +362,8 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	return result.subList(begin, Math.min(end, result.size()));
     }
 
-    public List<GrantContract> readBySpan(Integer spanNumber, Integer numberOfElementsInSpan, List<GrantContract> grantContract) {
+    public static List<GrantContract> readBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
+	    List<GrantContract> grantContract) {
 	List<GrantContract> result = new ArrayList<GrantContract>();
 	Iterator iter = grantContract.iterator();
 
@@ -378,7 +384,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	return result;
     }
 
-    public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
+    public static Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
 	    Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException {
 	Integer result = Integer.valueOf(0);
 
@@ -401,7 +407,7 @@ public class ListGrantContractAndInsuranceByCriteria extends FenixService {
 	// "grantContract.grantOwner.number"), true);
 	// Collections.sort(grantContractRegimes, comparatorChain);
 	// Collections.reverse(grantContractRegimes);
-	for (final GrantContractRegime grantContractRegime : ((List<GrantContractRegime>) grantList)) {
+	for (final GrantContractRegime grantContractRegime : (grantList)) {
 	    final GrantContract grantContract = grantContractRegime.getGrantContract();
 
 	    if (grantContract == null) {

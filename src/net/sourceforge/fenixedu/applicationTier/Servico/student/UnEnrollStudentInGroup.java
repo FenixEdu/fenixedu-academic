@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +32,16 @@ import pt.utl.ist.fenix.tools.util.EMail;
 
 public class UnEnrollStudentInGroup extends FenixService {
 
-    public String mailServer() {
+    public static String mailServer() {
 	final String server = PropertiesManager.getProperty("mail.smtp.host");
 	return (server != null) ? server : "mail.adm";
     }
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
 
 	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 

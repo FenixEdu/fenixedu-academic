@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionDegreeAtDegreeCurricularPlan;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -317,10 +319,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 	infoExecutionDegree.setInfoPeriodExamsFirstSemester(periodExamsFirstSemester[0]);
 	infoExecutionDegree.setInfoPeriodExamsSecondSemester(periodExamsSecondSemester[0]);
 
-	Object args[] = { infoExecutionDegree };
 
 	try {
-	    ServiceUtils.executeService("InsertExecutionDegreeAtDegreeCurricularPlan", args);
+	    InsertExecutionDegreeAtDegreeCurricularPlan.run(infoExecutionDegree);
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);
 	} catch (NonExistingServiceException exception) {

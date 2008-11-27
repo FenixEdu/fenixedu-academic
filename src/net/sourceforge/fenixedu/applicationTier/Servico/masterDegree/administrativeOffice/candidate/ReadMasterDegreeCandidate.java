@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.util.State;
 
 public class ReadMasterDegreeCandidate extends FenixService {
 
-    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, Integer candidateNumber,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, Integer candidateNumber,
 	    Specialization degreeType) {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
@@ -29,7 +35,9 @@ public class ReadMasterDegreeCandidate extends FenixService {
 	return getInfoMasterDegreeCandidate(masterDegreeCandidate);
     }
 
-    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) {
 
 	final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
@@ -39,7 +47,7 @@ public class ReadMasterDegreeCandidate extends FenixService {
 	return getInfoMasterDegreeCandidate(masterDegreeCandidate);
     }
 
-    private InfoMasterDegreeCandidate getInfoMasterDegreeCandidate(final MasterDegreeCandidate masterDegreeCandidate) {
+    private static InfoMasterDegreeCandidate getInfoMasterDegreeCandidate(final MasterDegreeCandidate masterDegreeCandidate) {
 
 	final State candidateState = new State(State.ACTIVE);
 

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -44,8 +48,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-		"ReadExecutionCourseWithShiftsAndCurricularCoursesByOID", new Object[] { executionCourseId });
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 	List executionDegrees = (List) ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
@@ -121,9 +124,9 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	    destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
 	}
 
-	ServiceManagerServiceFactory.executeService("SeperateExecutionCourse", new Object[] { executionCourseId,
+	SeperateExecutionCourse.run(executionCourseId,
 		destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
-		makeIntegerArray(curricularCourseIdsToTransfer) });
+		makeIntegerArray(curricularCourseIdsToTransfer));
 
 	return mapping.findForward("returnFromTransfer");
     }

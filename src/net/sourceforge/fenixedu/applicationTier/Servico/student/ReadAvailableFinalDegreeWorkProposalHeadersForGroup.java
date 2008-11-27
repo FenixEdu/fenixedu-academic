@@ -17,13 +17,18 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Luis Cruz
  * 
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends FenixService {
 
-    public List run(Integer groupOID) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List run(Integer groupOID) {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
@@ -41,7 +46,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends FenixSe
 	return result;
     }
 
-    private class PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL implements Predicate {
+    private static class PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL implements Predicate {
 
 	Proposal proposal;
 

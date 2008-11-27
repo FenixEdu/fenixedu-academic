@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.function;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +23,9 @@ import org.joda.time.YearMonthDay;
  */
 public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends FenixService {
 
-    public List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
+    @Checked("RolePredicates.PERSON_PREDICATE")
+    @Service
+    public static List<PersonFunction> run(Integer personID, Integer executionYearID) throws FenixServiceException {
 	Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
 	List<PersonFunction> personFunctions = null;

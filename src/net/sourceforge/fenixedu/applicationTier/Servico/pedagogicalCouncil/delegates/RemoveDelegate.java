@@ -12,14 +12,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveDelegate extends FenixService {
 
-    public void run(Student student) throws FenixServiceException {
-	this.run(student, FunctionType.DELEGATE_OF_YEAR);
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Student student) throws FenixServiceException {
+	run(student, FunctionType.DELEGATE_OF_YEAR);
     }
 
-    public void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException {
 	final DegreeUnit degreeUnit = student.getLastActiveRegistration().getDegree().getUnit();
 
 	if (delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)) {
@@ -42,7 +48,9 @@ public class RemoveDelegate extends FenixService {
 	}
     }
 
-    public void run(Person person, Function delegateFunction) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Person person, Function delegateFunction) throws FenixServiceException {
 	PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit) delegateFunction.getUnit();
 
 	unit.removeActiveDelegatePersonFunctionFromPersonByFunction(person, delegateFunction);

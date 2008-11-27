@@ -71,7 +71,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>createExecutionDegrees</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYear</managed-bean-class>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.degree.CreateExecutionDegreesForExecutionYearBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
 

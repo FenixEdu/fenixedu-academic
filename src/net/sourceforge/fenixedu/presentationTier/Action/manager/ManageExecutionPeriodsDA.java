@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.AlterExecutionPeriodState;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -54,9 +56,8 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 	final String periodStateToSet = request.getParameter("periodState");
 	final PeriodState periodState = new PeriodState(periodStateToSet);
 
-	final Object[] args = { year, semester, periodState };
 	try {
-	    ServiceUtils.executeService("AlterExecutionPeriodState", args);
+	    AlterExecutionPeriodState.run(year, semester, periodState);
 	} catch (InvalidArgumentsServiceException ex) {
 	    throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
 	}

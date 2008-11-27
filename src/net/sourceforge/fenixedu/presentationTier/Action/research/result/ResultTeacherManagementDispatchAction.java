@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.RemoveResultFromTeacherInformationSheet;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.research.teacher.AddResultToTeacherInformationSheet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +80,8 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 	Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
 	try {
-	    Object[] args = { userView.getPerson().getTeacher(), resultId, type };
-	    ServiceUtils.executeService("AddResultToTeacherInformationSheet", args);
+
+	    AddResultToTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId, type);
 	} catch (Exception ex) {
 	    addActionMessage(request, ex.getMessage());
 	}
@@ -92,8 +96,8 @@ public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 	Integer resultId = getRequestParameterAsInteger(request, "resultId");
 
 	try {
-	    Object[] args = { userView.getPerson().getTeacher(), resultId };
-	    ServiceUtils.executeService("RemoveResultFromTeacherInformationSheet", args);
+
+	    RemoveResultFromTeacherInformationSheet.run(userView.getPerson().getTeacher(), resultId);
 	} catch (Exception ex) {
 	    addActionMessage(request, ex.getMessage());
 	}

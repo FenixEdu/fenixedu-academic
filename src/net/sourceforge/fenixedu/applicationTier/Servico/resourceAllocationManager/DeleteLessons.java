@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DeleteLessons extends FenixService {
 
-    public void run(final List<Integer> lessonOIDs) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(final List<Integer> lessonOIDs) throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
 	for (final Integer lessonOID : lessonOIDs) {

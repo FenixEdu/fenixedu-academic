@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +23,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadShiftsByTypeFromExecutionCourse extends FenixService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
 	final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);
 

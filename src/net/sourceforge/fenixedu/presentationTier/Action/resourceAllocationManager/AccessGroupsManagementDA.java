@@ -5,8 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddPersonToAccessGroup;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.AccessGroupBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole.ResourceAllocationAccessGroupType;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -47,7 +49,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
 
 	try {
 	    PersonGroup personGroup = new PersonGroup(person);
-	    executeService("AddPersonToAccessGroup", new Object[] { accessGroupType, personGroup.getExpression(), true, role });
+	    AddPersonToAccessGroup.run(accessGroupType, personGroup.getExpression(), true, (ResourceAllocationRole) role);
 
 	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());
@@ -68,7 +70,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
 	ResourceAllocationAccessGroupType groupType = getAccessGroupTypeFromRequest(request);
 
 	try {
-	    executeService("AddPersonToAccessGroup", new Object[] { groupType, groupExpression, false, role });
+	    AddPersonToAccessGroup.run(groupType, groupExpression, false, (ResourceAllocationRole) role);
 
 	} catch (DomainException domainException) {
 	    addActionMessage(request, domainException.getMessage());

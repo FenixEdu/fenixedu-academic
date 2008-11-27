@@ -24,13 +24,17 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
  */
 public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
-    public boolean run(IUserView userView, Integer executionDegreeOID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(IUserView userView, Integer executionDegreeOID) throws FenixServiceException {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 	Scheduleing scheduleing = executionDegree.getScheduling();
 
@@ -141,7 +145,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	return true;
     }
 
-    private boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
+    private static boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
 	for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
 	    final Degree degree = degreeCurricularPlan.getDegree();
@@ -163,7 +167,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	return false;
     }
 
-    private Registration findStudent(final Person person) {
+    private static Registration findStudent(final Person person) {
 	if (person != null) {
 	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
 		if (registration.getActiveStudentCurricularPlan() != null) {
@@ -174,13 +178,13 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	return null;
     }
 
-    public class CandidacyInOtherExecutionDegreesNotAllowed extends FenixServiceException {
+    public static class CandidacyInOtherExecutionDegreesNotAllowed extends FenixServiceException {
 	public CandidacyInOtherExecutionDegreesNotAllowed() {
 	    super();
 	}
     }
 
-    public class CandidacyPeriodNotDefinedException extends FenixServiceException {
+    public static class CandidacyPeriodNotDefinedException extends FenixServiceException {
 
 	public CandidacyPeriodNotDefinedException() {
 	    super();
@@ -204,7 +208,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     }
 
-    public class OutOfCandidacyPeriodException extends FenixServiceException {
+    public static class OutOfCandidacyPeriodException extends FenixServiceException {
 
 	public OutOfCandidacyPeriodException() {
 	    super();
@@ -228,25 +232,25 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     }
 
-    public class NotCompletedCurricularYearException extends FenixServiceException {
+    public static class NotCompletedCurricularYearException extends FenixServiceException {
 	public NotCompletedCurricularYearException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    public class InsufficientCompletedCreditsInSecondCycleException extends FenixServiceException {
+    public static class InsufficientCompletedCreditsInSecondCycleException extends FenixServiceException {
 	public InsufficientCompletedCreditsInSecondCycleException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    public class InsufficientCompletedCoursesException extends FenixServiceException {
+    public static class InsufficientCompletedCoursesException extends FenixServiceException {
 	public InsufficientCompletedCoursesException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    public class NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException extends FenixServiceException {
+    public static class NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException extends FenixServiceException {
 
 	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException() {
 	    super();
@@ -270,7 +274,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     }
 
-    public class NumberOfNecessaryCompletedCoursesNotSpecifiedException extends FenixServiceException {
+    public static class NumberOfNecessaryCompletedCoursesNotSpecifiedException extends FenixServiceException {
 
 	public NumberOfNecessaryCompletedCoursesNotSpecifiedException() {
 	    super();
@@ -294,7 +298,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     }
 
-    public class NoDegreeStudentCurricularPlanFoundException extends FenixServiceException {
+    public static class NoDegreeStudentCurricularPlanFoundException extends FenixServiceException {
     }
 
 }

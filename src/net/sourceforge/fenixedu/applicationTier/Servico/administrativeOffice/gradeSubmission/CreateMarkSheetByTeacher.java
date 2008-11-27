@@ -27,9 +27,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateMarkSheetByTeacher extends FenixService {
 
-    public List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List<EnrolmentEvaluation> run(MarkSheetTeacherGradeSubmissionBean submissionBean)
 	    throws InvalidArgumentsServiceException {
 
 	ExecutionCourse executionCourse = submissionBean.getExecutionCourse();
@@ -43,7 +48,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	return createMarkSheets(markSheetsInformation, executionCourse, teacher, submissionBean.getEvaluationDate());
     }
 
-    private void createMarkSheetEnrolmentEvaluationBeans(MarkSheetTeacherGradeSubmissionBean submissionBean,
+    private static void createMarkSheetEnrolmentEvaluationBeans(MarkSheetTeacherGradeSubmissionBean submissionBean,
 	    ExecutionCourse executionCourse,
 	    Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation)
 	    throws InvalidArgumentsServiceException {
@@ -59,7 +64,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	}
     }
 
-    private List<EnrolmentEvaluation> createMarkSheets(
+    private static List<EnrolmentEvaluation> createMarkSheets(
 	    Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
 	    ExecutionCourse executionCourse, Teacher responsibleTeacher, Date evaluationDate)
 	    throws InvalidArgumentsServiceException {
@@ -90,14 +95,14 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	return enrolmetnEvaluations;
     }
 
-    private void checkIfTeacherLecturesExecutionCourse(Teacher teacher, ExecutionCourse executionCourse)
+    private static void checkIfTeacherLecturesExecutionCourse(Teacher teacher, ExecutionCourse executionCourse)
 	    throws InvalidArgumentsServiceException {
 	if (!teacher.hasProfessorshipForExecutionCourse(executionCourse)) {
 	    throw new InvalidArgumentsServiceException("error.teacher.doesnot.lectures.executionCourse");
 	}
     }
 
-    private void addMarkSheetEvaluationBeanToMap(
+    private static void addMarkSheetEvaluationBeanToMap(
 	    Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
 	    CurricularCourse curricularCourse, ExecutionCourse executionCourse,
 	    MarkSheetEnrolmentEvaluationBean markSheetEvaluationBean) throws InvalidArgumentsServiceException {
@@ -112,7 +117,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	evaluationBeans.add(markSheetEvaluationBean);
     }
 
-    private Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> getEvaluationBeansForMarkSheetType(
+    private static Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> getEvaluationBeansForMarkSheetType(
 	    Map<CurricularCourse, Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>>> markSheetsInformation,
 	    CurricularCourse curricularCourse) {
 
@@ -125,7 +130,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	return evaluationBeansForMarkSheetType;
     }
 
-    private Collection<MarkSheetEnrolmentEvaluationBean> getEvaluationBeans(
+    private static Collection<MarkSheetEnrolmentEvaluationBean> getEvaluationBeans(
 	    Map<MarkSheetType, Collection<MarkSheetEnrolmentEvaluationBean>> evaluationBeansForMarkSheetType,
 	    MarkSheetType markSheetType) {
 	Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans = evaluationBeansForMarkSheetType.get(markSheetType);
@@ -136,7 +141,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	return evaluationBeans;
     }
 
-    private MarkSheetType findMarkSheetType(ExecutionCourse executionCourse, Enrolment enrolment)
+    private static MarkSheetType findMarkSheetType(ExecutionCourse executionCourse, Enrolment enrolment)
 	    throws InvalidArgumentsServiceException {
 
 	if (enrolment.isImprovementForExecutionCourse(executionCourse)
@@ -157,7 +162,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 	}
     }
 
-    private Grade getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
+    private static Grade getGrade(Attends attends, MarkSheetTeacherMarkBean markBean, Date evaluationDate, Date nowDate) {
 	final String value;
 
 	final FinalMark finalMark = attends.getFinalMark();

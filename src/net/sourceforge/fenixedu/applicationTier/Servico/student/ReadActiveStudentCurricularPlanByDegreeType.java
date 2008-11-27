@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class ReadActiveStudentCurricularPlanByDegreeType extends FenixService {
 
-    public InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType) {
 
 	final Person person = userView.getPerson();
 	final Registration registration = person.getStudentByType(degreeType);

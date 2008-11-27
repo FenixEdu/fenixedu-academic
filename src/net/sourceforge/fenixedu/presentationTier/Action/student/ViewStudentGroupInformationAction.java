@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupingAndStudentGroupWithoutShift;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -35,6 +36,7 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewStudentGroupInformationAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
@@ -47,13 +49,10 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 	ISiteComponent viewStudentGroup;
-	Object[] args = { studentGroupCode };
-	Object[] argsAux = { studentGroupCode, groupPropertiesCode, shiftCodeString, userView.getUtilizador() };
-
 	try {
-
-	    Integer type = (Integer) ServiceUtils.executeService("VerifyGroupingAndStudentGroupWithoutShift", argsAux);
-	    viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
+	    Integer type = VerifyGroupingAndStudentGroupWithoutShift.run(studentGroupCode, groupPropertiesCode, shiftCodeString,
+		    userView.getUtilizador());
+	    viewStudentGroup = ReadStudentGroupInformation.run(studentGroupCode);
 	    request.setAttribute("ShiftType", type);
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -83,8 +82,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 	InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
 	request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
-		.run(groupPropertiesCode);
+	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	return mapping.findForward("sucess");

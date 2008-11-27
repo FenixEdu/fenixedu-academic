@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +65,9 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends FenixServi
 
     }
 
-    public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber) {
 	final SearchSet searchSet = new SearchSet(studentName, idNumber, studentNumber);
 	Registration.readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(searchSet, studentName, idNumber, idType,
 		studentNumber);

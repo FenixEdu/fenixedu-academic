@@ -9,10 +9,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExecutionDegreePeriods extends FenixService {
 
-    public void run(InfoExecutionDegreeEditor infoExecutionDegree) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoExecutionDegreeEditor infoExecutionDegree) {
 
 	final ExecutionDegree oldExecutionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
@@ -31,7 +35,7 @@ public class EditExecutionDegreePeriods extends FenixService {
     }
 
     // retorna o primeiro period do executiondegree
-    private OccupationPeriod setCompositePeriod(InfoPeriod infoPeriod) {
+    private static OccupationPeriod setCompositePeriod(InfoPeriod infoPeriod) {
 	List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
 	infoPeriodList.add(infoPeriod);

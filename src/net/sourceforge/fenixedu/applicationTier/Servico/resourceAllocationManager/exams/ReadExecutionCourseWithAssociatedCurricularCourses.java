@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,9 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadExecutionCourseWithAssociatedCurricularCourses extends FenixService {
 
-    public InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 	if (executionCourse == null) {
 	    throw new FenixServiceException("error.noExecutionCourse");

@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.CreateMasterDegreeCandidate;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,11 +62,10 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	    DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	    Object args[] = { degreeType };
 
 	    List result = null;
 	    try {
-		result = (List) ServiceManagerServiceFactory.executeService("ReadAllMasterDegrees", args);
+		result = (List) ReadAllMasterDegrees.run(degreeType);
 	    } catch (NonExistingServiceException e) {
 		throw new NonExistingActionException("O Degree de Mestrado", e);
 	    }
@@ -85,12 +90,11 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 		masterDegreeID = (Integer) request.getAttribute("degreeID");
 	    }
 
-	    Object args[] = { masterDegreeID };
 	    List result = null;
 
 	    try {
 
-		result = (List) ServiceManagerServiceFactory.executeService("ReadCPlanFromChosenMasterDegree", args);
+		result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
 
 	    } catch (NonExistingServiceException e) {
 		throw new NonExistingActionException("O plano curricular ", e);
@@ -189,13 +193,11 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	String identificationDocumentNumber = (String) createCandidateForm.get("identificationDocumentNumber");
 	String identificationDocumentType = (String) createCandidateForm.get("identificationDocumentType");
 
-	Object args[] = { Specialization.valueOf(degreeType), executionDegreeOID, name, identificationDocumentNumber,
-		IDDocumentType.valueOf(identificationDocumentType) };
 
 	InfoMasterDegreeCandidate createdCandidate = null;
 	try {
-	    createdCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "CreateMasterDegreeCandidate", args);
+	    createdCandidate = (InfoMasterDegreeCandidate) CreateMasterDegreeCandidate.run(Specialization.valueOf(degreeType), executionDegreeOID, name, identificationDocumentNumber,
+		IDDocumentType.valueOf(identificationDocumentType));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("O Candidato", e);
 	}

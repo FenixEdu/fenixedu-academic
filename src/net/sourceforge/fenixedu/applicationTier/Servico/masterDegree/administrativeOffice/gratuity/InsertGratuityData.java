@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,7 +32,9 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class InsertGratuityData extends FenixService {
 
-    public Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
 	if (infoGratuityValues == null) {
 	    throw new FenixServiceException("impossible.insertGratuityValues");
 	}
@@ -88,14 +94,14 @@ public class InsertGratuityData extends FenixService {
 	return Boolean.TRUE;
     }
 
-    private void checkPaymentMode(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
+    private static void checkPaymentMode(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
 	if (infoGratuityValues.getEndPayment() == null
 		&& (infoGratuityValues.getInfoPaymentPhases() == null || infoGratuityValues.getInfoPaymentPhases().size() == 0)) {
 	    throw new FenixServiceException("error.masterDegree.gratuity.paymentPhasesNeedToBeDefined");
 	}
     }
 
-    private Double validateGratuity(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
+    private static Double validateGratuity(InfoGratuityValues infoGratuityValues) throws FenixServiceException {
 	// find the gratuity's value
 	Double gratuityValue = null;
 
@@ -138,7 +144,7 @@ public class InsertGratuityData extends FenixService {
 	return gratuityValue;
     }
 
-    private void validateDatesOfPaymentPhases(List<InfoPaymentPhase> paymentPhasesList) throws FenixServiceException {
+    private static void validateDatesOfPaymentPhases(List<InfoPaymentPhase> paymentPhasesList) throws FenixServiceException {
 	List<InfoPaymentPhase> paymentPhaseListAux = new ArrayList<InfoPaymentPhase>(paymentPhasesList);
 	Collections.sort(paymentPhaseListAux, new BeanComparator("endDate"));
 
@@ -159,10 +165,10 @@ public class InsertGratuityData extends FenixService {
 	}
     }
 
-    private void validatePaymentPhasesWithTransaction(GratuityValues gratuityValues) throws FenixServiceException {
+    private static void validatePaymentPhasesWithTransaction(GratuityValues gratuityValues) throws FenixServiceException {
     }
 
-    private void registerWhoAndWhen(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues) {
+    private static void registerWhoAndWhen(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues) {
 	// employee who made register
 	Person person = Person.readPersonByUsername(infoGratuityValues.getInfoEmployee().getPerson().getUsername());
 	if (person != null) {
@@ -173,7 +179,7 @@ public class InsertGratuityData extends FenixService {
 	gratuityValues.setWhen(now.getTime());
     }
 
-    private void writePaymentPhases(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues)
+    private static void writePaymentPhases(InfoGratuityValues infoGratuityValues, GratuityValues gratuityValues)
 	    throws FenixServiceException {
 	if (gratuityValues.hasAnyPaymentPhaseList()) {
 	    for (PaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {

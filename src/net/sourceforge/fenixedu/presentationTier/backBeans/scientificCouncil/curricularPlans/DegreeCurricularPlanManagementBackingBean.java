@@ -10,13 +10,16 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.CreateDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.EditDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean {
@@ -111,13 +114,28 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public String createCurricularPlan() {
-	Object[] args = { this.getDegreeId(), this.name, null }; // GradeScale.
 	// valueOf
 	// (this.
 	// gradeScale)
 	// };
-	return changeDegreeCurricularPlan("CreateDegreeCurricularPlan", args, "degreeCurricularPlan.created",
-		"error.creatingDegreeCurricularPlan");
+	try {
+	    CreateDegreeCurricularPlan.run(this.getDegreeId(), this.name, null);
+	} catch (IllegalDataAccessException e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+	    return "curricularPlansManagement";
+	} catch (FenixServiceException e) {
+	    this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+	    return "";
+	} catch (DomainException e) {
+	    addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
+	    return "";
+	} catch (Exception e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.creatingDegreeCurricularPlan"));
+	    return "curricularPlansManagement";
+	}
+
+	this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.created"));
+	return "curricularPlansManagement";
     }
 
     public List<SelectItem> getCurricularStages() {
@@ -162,8 +180,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 
-	final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
-	final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ReadNotClosedExecutionYears.run();
+	final InfoExecutionYear currentInfoExecutionYear = ReadCurrentExecutionYear.run();
+	final List<InfoExecutionYear> notClosedInfoExecutionYears = ReadNotClosedExecutionYears.run();
 	for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
 	    if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
 		result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
@@ -174,16 +192,10 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     }
 
     public String editCurricularPlan() {
-	Object[] args = { getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()),
-		DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID() };
-	return changeDegreeCurricularPlan("EditDegreeCurricularPlan", args, "degreeCurricularPlan.edited",
-		"error.editingDegreeCurricularPlan");
-    }
-
-    private String changeDegreeCurricularPlan(String serviceName, Object[] args, String successfulMsg, String errorMsg) {
 	try {
-	    ServiceUtils.executeService(serviceName, args);
-	} catch (FenixFilterException e) {
+	    EditDegreeCurricularPlan.run(getDcpId(), getName(), CurricularStage.valueOf(getCurricularStage()),
+		    DegreeCurricularPlanState.valueOf(getState()), null, getExecutionYearID());
+	} catch (IllegalDataAccessException e) {
 	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
 	    return "curricularPlansManagement";
 	} catch (FenixServiceException e) {
@@ -193,18 +205,33 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
 	    addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
 	    return "";
 	} catch (Exception e) {
-	    this.addErrorMessage(scouncilBundle.getString(errorMsg));
+	    this.addErrorMessage(scouncilBundle.getString("error.editingDegreeCurricularPlan"));
 	    return "curricularPlansManagement";
 	}
 
-	this.addInfoMessage(scouncilBundle.getString(successfulMsg));
+	this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.edited"));
 	return "curricularPlansManagement";
     }
 
     public String deleteCurricularPlan() {
-	Object[] args = { this.getDcpId() };
-	return changeDegreeCurricularPlan("DeleteDegreeCurricularPlan", args, "degreeCurricularPlan.deleted",
-		"error.deletingDegreeCurricularPlan");
+	try {
+	    DeleteDegreeCurricularPlan.run(this.getDcpId());
+	} catch (IllegalDataAccessException e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
+	    return "curricularPlansManagement";
+	} catch (FenixServiceException e) {
+	    this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
+	    return "";
+	} catch (DomainException e) {
+	    addErrorMessages(domainExceptionBundle, e.getKey(), e.getArgs());
+	    return "";
+	} catch (Exception e) {
+	    this.addErrorMessage(scouncilBundle.getString("error.deletingDegreeCurricularPlan"));
+	    return "curricularPlansManagement";
+	}
+
+	this.addInfoMessage(scouncilBundle.getString("degreeCurricularPlan.deleted"));
+	return "curricularPlansManagement";
     }
 
 }

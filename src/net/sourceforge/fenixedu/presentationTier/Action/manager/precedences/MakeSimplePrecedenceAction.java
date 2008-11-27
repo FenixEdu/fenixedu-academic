@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.precedences;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.InsertSimplePrecedence;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -132,9 +134,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 	request.setAttribute("curricularCourseToAddPrecedenceID", curricularCourseToAddPrecedenceID);
 	request.setAttribute("precedentCurricularCourseID", precedentCurricularCourseID);
 
-	Object[] args = { classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID, number };
 	try {
-	    ServiceManagerServiceFactory.executeService("InsertSimplePrecedence", args);
+	    InsertSimplePrecedence.run(classeNameRestriction, curricularCourseToAddPrecedenceID, precedentCurricularCourseID, number);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));

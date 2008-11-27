@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -19,7 +21,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class ReadStudentCurricularInformation extends FenixService {
 
-    public List run(final Integer studentNumber, final DegreeType degreeType) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(final Integer studentNumber, final DegreeType degreeType) {
 
 	final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 
@@ -32,7 +36,8 @@ public class ReadStudentCurricularInformation extends FenixService {
 	return infoStudentCurricularPlans;
     }
 
-    protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(final StudentCurricularPlan studentCurricularPlan) {
+    protected static InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
+	    final StudentCurricularPlan studentCurricularPlan) {
 	return InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
     }
 

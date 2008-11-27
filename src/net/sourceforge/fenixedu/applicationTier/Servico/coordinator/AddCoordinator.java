@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AddCoordinator extends FenixService {
 
-    public Boolean run(Integer executionDegreeId, Integer number) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Boolean run(Integer executionDegreeId, Integer number) throws FenixServiceException {
 
 	final Employee employee = Employee.readByNumber(number);
 

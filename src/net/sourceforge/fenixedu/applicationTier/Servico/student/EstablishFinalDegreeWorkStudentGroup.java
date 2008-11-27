@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -22,7 +24,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
  */
 public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 
-    public boolean run(Person person, Integer executionDegreeOID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Person person, Integer executionDegreeOID) throws FenixServiceException {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
 	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
@@ -53,7 +57,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 	return true;
     }
 
-    private Registration getRegistrationForExecutionDegree(final Person person, final ExecutionDegree executionDegree) {
+    private static Registration getRegistrationForExecutionDegree(final Person person, final ExecutionDegree executionDegree) {
 	final Student student = person.getStudent();
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	for (final Registration registration : student.getRegistrationsSet()) {
@@ -75,7 +79,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 	return null;
     }
 
-    public class StudentCannotBeACandidateForSelectedDegree extends FenixServiceException {
+    public static class StudentCannotBeACandidateForSelectedDegree extends FenixServiceException {
 
 	public StudentCannotBeACandidateForSelectedDegree() {
 	    super();

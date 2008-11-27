@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.CreateGroupAvailability;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -100,7 +102,7 @@ public class ContentManagement extends FenixDispatchAction {
 	ExpressionBean bean = (ExpressionBean) RenderUtils.getViewState("expressionBean").getMetaObject().getObject();
 
 	try {
-	    executeService("CreateGroupAvailability", new Object[] { content, bean.getExpression() });
+	    CreateGroupAvailability.run(content, bean.getExpression());
 	} catch (GroupExpressionException groupExpression) {
 	    createParserReport(request, groupExpression, bean);
 	    return prepareEditAvailabilityPolicy(mapping, form, request, response);

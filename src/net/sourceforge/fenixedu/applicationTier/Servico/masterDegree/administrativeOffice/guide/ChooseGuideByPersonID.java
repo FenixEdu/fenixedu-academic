@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -23,7 +27,9 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ChooseGuideByPersonID extends FenixService {
 
-    public List run(Integer personID) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(Integer personID) throws Exception {
 
 	// Check if person exists
 	Person person = (Person) rootDomainObject.readPartyByOID(personID);
@@ -55,7 +61,7 @@ public class ChooseGuideByPersonID extends FenixService {
      * @param guides
      * @return The latest version for the guides
      */
-    private List getLatestVersions(List guides) {
+    private static List getLatestVersions(List guides) {
 	List result = new ArrayList();
 
 	Collections.reverse(guides);

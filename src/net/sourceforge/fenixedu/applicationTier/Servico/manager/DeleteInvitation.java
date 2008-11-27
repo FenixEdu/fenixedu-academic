@@ -2,10 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteInvitation extends FenixService {
 
-    public void run(Invitation invitation) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Invitation invitation) {
 	if (invitation != null) {
 	    invitation.delete();
 	}

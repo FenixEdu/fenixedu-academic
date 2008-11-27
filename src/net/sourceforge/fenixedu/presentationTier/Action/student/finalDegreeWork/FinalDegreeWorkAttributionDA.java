@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadFinalDegreeWorkStudentGroupByUsername;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
@@ -53,8 +57,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
 	request.setAttribute("executionYears", executionYears);
 
-	Object[] args = { userView.getPerson(), executionYear };
-	InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService("ReadFinalDegreeWorkStudentGroupByUsername", args);
+	InfoGroup infoGroup = (InfoGroup) ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionYear);
 	if (infoGroup != null && infoGroup.getGroupProposals() != null) {
 	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGroup.getExecutionDegree()
 		    .getIdInternal());
@@ -98,8 +101,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 
 	if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
-	    Object args[] = { userView.getUtilizador(), new Integer(selectedGroupProposalOID) };
-	    ServiceUtils.executeService("ConfirmAttributionOfFinalDegreeWork", args);
+
+	    ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), new Integer(selectedGroupProposalOID));
 	}
 
 	return mapping.findForward("prepareShowFinalDegreeWorkList");

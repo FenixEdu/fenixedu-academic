@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,7 +18,9 @@ import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
  */
 public class ReadMasterDegreeProofVersionByID extends FenixService {
 
-    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
 	MasterDegreeProofVersion masterDegreeProofVersion = rootDomainObject
 		.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
 	if (masterDegreeProofVersion == null)

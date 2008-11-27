@@ -8,10 +8,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInterminatedCurricularCourseScopes extends FenixService {
 
-    public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 
 	List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getInterminatedScopes();

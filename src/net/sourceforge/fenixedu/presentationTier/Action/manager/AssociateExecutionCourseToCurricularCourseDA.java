@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.AssociateExecutionCourseToCurricularCourse;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByExecutionPeriod;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -43,11 +47,10 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
 	Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 
-	Object args[] = { executionPeriodId };
 
 	List infoExecutionCoursesList = null;
 	try {
-	    infoExecutionCoursesList = (List) ServiceUtils.executeService("ReadExecutionCoursesByExecutionPeriod", args);
+	    infoExecutionCoursesList = (List) ReadExecutionCoursesByExecutionPeriod.run(executionPeriodId);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
@@ -83,10 +86,9 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
 	Integer executionCourseId = new Integer((String) associateForm.get("executionCourseId"));
 
-	Object args[] = { executionCourseId, curricularCourseId, executionPeriodId };
 
 	try {
-	    ServiceUtils.executeService("AssociateExecutionCourseToCurricularCourse", args);
+	    AssociateExecutionCourseToCurricularCourse.run(executionCourseId, curricularCourseId, executionPeriodId);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("readAvailableExecutionPeriods"));
 	} catch (NonExistingServiceException ex) {

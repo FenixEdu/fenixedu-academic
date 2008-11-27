@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,11 +51,9 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	RenderUtils.invalidateViewState();
 
 	try {
-	    ServiceUtils
-		    .executeService("ChangeSpecialSeasonCode", new Object[] {
-			    specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(),
+	    ChangeSpecialSeasonCode.run(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(),
 			    specialSeasonCodeBean.getExecutionPeriod().getExecutionYear(),
-			    specialSeasonCodeBean.getSpecialSeasonCode() });
+			    specialSeasonCodeBean.getSpecialSeasonCode());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    specialSeasonCodeBean.setSpecialSeasonCode(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration()

@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeEdit
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCurricularCourseScope extends FenixService {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException {
 
 	CurricularCourseScope oldCurricularCourseScope = null;
 	CurricularSemester newCurricularSemester = null;

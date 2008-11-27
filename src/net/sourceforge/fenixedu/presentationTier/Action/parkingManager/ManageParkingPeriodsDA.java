@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.DeleteParkingRequestPeriod;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.parking.RenewParkingCards;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -115,8 +119,8 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	    return mapping.findForward("cardsRenewal");
 	}
-	ServiceUtils.executeService("RenewParkingCards", new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
-		parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup() });
+	RenewParkingCards.run(parkingCardSearchBean.getSelectedParkingParties(),
+		parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup());
 	parkingCardSearchBean.getSelectedParkingParties().clear();
 	parkingCardSearchBean.setRenewalEndDate(null);
 	parkingCardSearchBean.setNewParkingGroup(null);
@@ -153,7 +157,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("idInternal"));
-	ServiceUtils.executeService("DeleteParkingRequestPeriod", new Object[] { parkingRequestPeriodToDeleteCode });
+	DeleteParkingRequestPeriod.run(parkingRequestPeriodToDeleteCode);
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }
 

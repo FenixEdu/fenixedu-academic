@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourseInformationChangeRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -114,7 +118,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	CompetenceCourseInformationChangeRequest changeRequest = getChangeRequest(request);
 	if (changeRequest != null && isAllowedToViewChangeRequest(getLoggedPerson(request), changeRequest)) {
 	    try {
-		executeService("DeleteCompetenceCourseInformationChangeRequest", new Object[] { changeRequest });
+		DeleteCompetenceCourseInformationChangeRequest.run(changeRequest);
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 	    }
@@ -186,7 +190,7 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	CompetenceCourseLoadBean load = (CompetenceCourseLoadBean) RenderUtils.getViewState("editVersionLoad").getMetaObject()
 		.getObject();
 	try {
-	    executeService("CreateCompetenceCourseInformationRequest", new Object[] { bean, load, getLoggedPerson(request) });
+	    CreateCompetenceCourseInformationChangeRequest.run(bean, load, getLoggedPerson(request));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return prepareCreateVersion(mapping, form, request, response);

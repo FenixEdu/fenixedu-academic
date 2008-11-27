@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrollGroupShift;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadGroupingShifts;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,9 +56,8 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 	Integer studentGroupCode = new Integer(studentGroupCodeString);
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-	Object[] args1 = { groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5) };
 	try {
-	    ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
+	    VerifyStudentGroupAtributes.run(groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(5));
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
@@ -93,9 +98,9 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 	}
 
 	InfoSiteShifts infoSiteShifts = null;
-	Object[] args2 = { groupPropertiesCode, studentGroupCode };
+
 	try {
-	    infoSiteShifts = (InfoSiteShifts) ServiceUtils.executeService("ReadGroupingShifts", args2);
+	    infoSiteShifts = (InfoSiteShifts) ReadGroupingShifts.run(groupPropertiesCode, studentGroupCode);
 
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -182,10 +187,10 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
 	}
 	Integer newShiftCode = new Integer(newShiftString);
-	Object args[] = { studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador() };
+
 
 	try {
-	    ServiceUtils.executeService("EnrollGroupShift", args);
+	    EnrollGroupShift.run(studentGroupCode, groupPropertiesCode, newShiftCode, userView.getUtilizador());
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
 	    ActionError error2 = null;

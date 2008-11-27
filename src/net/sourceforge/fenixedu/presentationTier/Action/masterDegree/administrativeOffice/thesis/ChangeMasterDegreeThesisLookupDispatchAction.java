@@ -5,12 +5,24 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisData;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlreadyChosenActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -21,6 +33,7 @@ import org.apache.struts.action.ActionMapping;
 
 public class ChangeMasterDegreeThesisLookupDispatchAction extends CreateOrEditMasterDegreeThesisLookupDispatchAction {
 
+    @Override
     protected Map getKeyMethodMap() {
 	Map map = super.getKeyMethodMap();
 	map.put("button.submit.masterDegree.thesis.changeThesis", "changeMasterDegreeThesis");
@@ -35,7 +48,48 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends CreateOrEditMa
 
     public ActionForward changeMasterDegreeThesis(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	return super.createOrEditMasterDegreeThesis(mapping, form, request, response, "ChangeMasterDegreeThesisData");
+	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+	IUserView userView = UserView.getUser();
+
+	Integer scpID = (Integer) createMasterDegreeForm.get("scpID");
+	String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
+
+	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+	ActionErrors actionErrors = new ActionErrors();
+
+	try {
+	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+		    actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    actionErrors);
+	} catch (Exception e1) {
+	    throw new FenixActionException(e1);
+	} finally {
+	    saveErrors(request, actionErrors);
+
+	    if (actionErrors.isEmpty() == false)
+		return mapping.findForward("start");
+
+	}
+
+	try {
+	    ChangeMasterDegreeThesisData.run(userView, scpID, dissertationTitle, operations.getTeachersNumbers(form,
+		    "guidersNumbers"), operations.getTeachersNumbers(form, "assistentGuidersNumbers"), operations
+		    .getExternalPersonsIDs(form, "externalGuidersIDs"), operations.getExternalPersonsIDs(form,
+		    "externalAssistentGuidersIDs"));
+	} catch (GuiderAlreadyChosenServiceException e) {
+	    throw new GuiderAlreadyChosenActionException(e.getMessage(), mapping.findForward("start"));
+	} catch (ExistingServiceException e) {
+	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+	} catch (FenixServiceException e) {
+	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+	}
+
+	return mapping.findForward("success");
     }
 
 }

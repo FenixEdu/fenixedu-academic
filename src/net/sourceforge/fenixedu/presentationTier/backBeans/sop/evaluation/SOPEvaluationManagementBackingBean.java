@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -969,11 +973,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	examEndTime.set(Calendar.SECOND, 0);
 	examEndTime.set(Calendar.MILLISECOND, 0);
 
-	Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE };
 
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
+		null, null, Boolean.FALSE);
 
 	if (this.getEvaluationID() != null) {
 	    for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
@@ -1410,9 +1413,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public String commentExecutionCourse() throws FenixFilterException, FenixServiceException {
 	try {
-	    Object argsDefineComment[] = { this.getExecutionCourse().getSigla(),
-		    this.getExecutionCourse().getExecutionPeriod().getIdInternal(), this.getComment() };
-	    ServiceUtils.executeService("DefineExamComment", argsDefineComment);
+
+	    DefineExamComment.run(this.getExecutionCourse().getSigla(),
+		    this.getExecutionCourse().getExecutionPeriod().getIdInternal(), this.getComment());
 	} catch (FenixFilterException e) {
 	    this.setErrorMessage(e.getMessage());
 	    return "";

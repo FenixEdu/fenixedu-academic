@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 
 public class GeneratePasswordsForCandidacies extends FenixService {
 
-    public List<PasswordBean> run(final List<Integer> studentCandidacyIds) {
+    @Checked("RolePredicates.OPERATOR_PREDICATE")
+    @Service
+    public static List<PasswordBean> run(final List<Integer> studentCandidacyIds) {
 
 	final Set<StudentCandidacy> studentCandidacies = StudentCandidacy.readByIds(studentCandidacyIds);
 	final List<PasswordBean> result = new ArrayList<PasswordBean>();

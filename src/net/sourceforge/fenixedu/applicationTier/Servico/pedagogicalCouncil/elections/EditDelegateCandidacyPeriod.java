@@ -7,9 +7,13 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditDelegateCandidacyPeriod extends FenixService {
-    public void run(ElectionPeriodBean bean) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(ElectionPeriodBean bean) throws FenixServiceException {
 	DelegateElection election = bean.getElection();
 
 	try {
@@ -19,7 +23,9 @@ public class EditDelegateCandidacyPeriod extends FenixService {
 	}
     }
 
-    public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException {
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	final Degree degree = rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
 
@@ -33,6 +39,6 @@ public class EditDelegateCandidacyPeriod extends FenixService {
 		    bean.getCurricularYear().getYear().toString() });
 	}
 
-	this.run(bean);
+	run(bean);
     }
 }

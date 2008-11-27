@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteGlossaryEntry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateGlossaryEntry;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -46,8 +50,7 @@ public class ManageGlossaryDA extends FenixDispatchAction {
 	infoGlossaryEntry.setTerm(term);
 	infoGlossaryEntry.setDefinition(definition);
 
-	Object[] args = { infoGlossaryEntry };
-	ServiceUtils.executeService("CreateGlossaryEntry", args);
+	CreateGlossaryEntry.run(infoGlossaryEntry);
 
 	return mapping.getInputForward();
     }
@@ -58,8 +61,8 @@ public class ManageGlossaryDA extends FenixDispatchAction {
 
 	if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
 	    Integer entryId = new Integer(entryIdString);
-	    Object[] args = { entryId };
-	    ServiceUtils.executeService("DeleteGlossaryEntry", args);
+
+	    DeleteGlossaryEntry.run(entryId);
 	}
 
 	return mapping.getInputForward();

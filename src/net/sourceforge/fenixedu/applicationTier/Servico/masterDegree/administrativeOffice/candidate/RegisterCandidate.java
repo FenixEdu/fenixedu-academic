@@ -37,9 +37,14 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class RegisterCandidate extends FenixService {
 
-    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
 	    throws FenixServiceException {
 	MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
 
@@ -75,7 +80,7 @@ public class RegisterCandidate extends FenixService {
 
     }
 
-    private InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate,
+    private static InfoCandidateRegistration createNewInfoCandidateRegistration(MasterDegreeCandidate masterDegreeCandidate,
 	    StudentCurricularPlan studentCurricularPlan) {
 	InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
 	infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
@@ -85,14 +90,14 @@ public class RegisterCandidate extends FenixService {
 	infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
 	Iterator<Enrolment> iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
 	while (iteratorSCPs.hasNext()) {
-	    Enrolment enrolment = (Enrolment) iteratorSCPs.next();
+	    Enrolment enrolment = iteratorSCPs.next();
 	    infoCandidateRegistration.getEnrolments().add(InfoEnrolment.newInfoFromDomain(enrolment));
 	}
 	return infoCandidateRegistration;
     }
 
-    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan)
-	    throws GratuityValuesNotDefinedServiceException {
+    private static void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
+	    StudentCurricularPlan studentCurricularPlan) throws GratuityValuesNotDefinedServiceException {
 
 	GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
@@ -103,7 +108,7 @@ public class RegisterCandidate extends FenixService {
 	new GratuitySituation(gratuityValues, studentCurricularPlan);
     }
 
-    private void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
+    private static void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
 	Qualification qualification = new Qualification();
 	if (masterDegreeCandidate.getAverage() != null) {
 	    qualification.setMark(masterDegreeCandidate.getAverage().toString());
@@ -126,7 +131,7 @@ public class RegisterCandidate extends FenixService {
 	qualification.setDegree(masterDegreeCandidate.getMajorDegree());
     }
 
-    private void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
+    private static void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
 	masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
 
 	CandidateSituation candidateSituation = new CandidateSituation();
@@ -136,7 +141,7 @@ public class RegisterCandidate extends FenixService {
 	candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
     }
 
-    private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
+    private static void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
 	    StudentCurricularPlan studentCurricularPlan) {
 	List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
 	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
@@ -146,7 +151,7 @@ public class RegisterCandidate extends FenixService {
 	}
     }
 
-    private StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
+    private static StudentCurricularPlan createNewStudentCurricularPlan(Registration registration, Integer branchID,
 	    MasterDegreeCandidate masterDegreeCandidate) {
 	Branch branch = rootDomainObject.readBranchByOID(branchID);
 	DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
@@ -157,11 +162,11 @@ public class RegisterCandidate extends FenixService {
 	return studentCurricularPlan;
     }
 
-    private Registration createNewRegistration(Person person, Integer studentNumber) {
+    private static Registration createNewRegistration(Person person, Integer studentNumber) {
 	return new Registration(person, studentNumber);
     }
 
-    private void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
+    private static void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
 	if (studentNumber != null) {
 
 	    Registration existingStudent = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
@@ -172,7 +177,7 @@ public class RegisterCandidate extends FenixService {
 	}
     }
 
-    private void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
+    private static void checkCandidateSituation(CandidateSituation situation) throws InvalidChangeServiceException {
 	if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)
 		|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_OBJ)
 		|| situation.getSituation().equals(SituationName.ADMITED_CONDICIONAL_FINALIST_OBJ)

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +33,9 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class ChangeMasterDegreeProof extends FenixService {
 
-    public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
 	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
 	    List<Integer> externalJuriesIDs) throws FenixServiceException {
 

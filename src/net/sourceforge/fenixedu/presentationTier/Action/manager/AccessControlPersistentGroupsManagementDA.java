@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistentGroupMember;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersistentGroup;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,7 +43,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
-	executeService("DeletePersistentGroupInManager", new Object[] { persistentGroup });
+	DeletePersistentGroup.run(persistentGroup);
 	return listAllGroups(mapping, form, request, response);
     }
 
@@ -48,7 +52,7 @@ public class AccessControlPersistentGroupsManagementDA extends FenixDispatchActi
 
 	PersistentGroupMembers persistentGroup = getPersistentGroupFromParameter(request);
 	Person person = getPersonFromParameter(request);
-	executeService("RemovePersistentGroupMemberInManager", new Object[] { person, persistentGroup });
+	RemovePersistentGroupMember.run(person, persistentGroup);
 	return prepareEditPersistentGroup(mapping, form, request, response);
     }
 

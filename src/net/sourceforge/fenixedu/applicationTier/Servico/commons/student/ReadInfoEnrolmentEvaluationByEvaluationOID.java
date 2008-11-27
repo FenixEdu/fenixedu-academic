@@ -14,11 +14,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID extends FenixService {
 
-    public InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType, Integer enrolmentOID)
-	    throws ExcepcaoInexistente, FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoEnrolmentEvaluation run(IUserView userView, Integer studentNumber, DegreeType degreeType,
+	    Integer enrolmentOID) throws ExcepcaoInexistente, FenixServiceException {
 	return (new GetEnrolmentGrade()).run((Enrolment) rootDomainObject.readCurriculumModuleByOID(enrolmentOID));
     }
 

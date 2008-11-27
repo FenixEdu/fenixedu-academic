@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -78,8 +80,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 
 	try {
 
-	    Object[] args = { formFile.getFileData(), outputStream.toByteArray(), contentType, username };
-	    ServiceUtils.executeService("StorePersonalPhoto", args);
+	    StorePersonalPhoto.run(formFile.getFileData(), outputStream.toByteArray(), contentType, username);
 
 	} catch (ExcepcaoInexistente e) {
 	    actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExistingPerson", username));

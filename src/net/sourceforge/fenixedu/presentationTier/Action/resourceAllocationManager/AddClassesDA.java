@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.AddSchoolClassesToShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableClassesForShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,13 +31,12 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
 
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	Object[] args = { infoShift.getIdInternal() };
 	List classes = null;
-	try {
-	    classes = (List) ServiceUtils.executeService("ReadAvailableClassesForShift", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	// try {
+	classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
+	// } catch (FenixServiceException e) {
+	// throw new FenixActionException(e);
+	// }
 
 	if (classes != null && !classes.isEmpty()) {
 	    Collections.sort(classes, new BeanComparator("nome"));
@@ -60,9 +59,8 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
 	    classOIDs.add(new Integer(selectedClasses[i]));
 	}
 
-	Object args[] = { infoShift, classOIDs };
 	try {
-	    ServiceUtils.executeService("AddSchoolClassesToShift", args);
+	    AddSchoolClassesToShift.run(infoShift, classOIDs);
 	} catch (FenixServiceException ex) {
 	    // No probem, the user refreshed the page after adding classes
 	    request.setAttribute("selectMultipleItemsForm", null);

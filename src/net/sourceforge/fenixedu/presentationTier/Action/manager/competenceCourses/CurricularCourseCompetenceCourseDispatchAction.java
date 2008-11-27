@@ -11,12 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlansByDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.AssociateCurricularCoursesToCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement.RemoveCurricularCoursesFromCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -35,14 +36,11 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
 
 	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
 	Integer[] curricularCoursesIDs = (Integer[]) actionForm.get("curricularCoursesIds");
-	Object[] args = { competenceCourseID, curricularCoursesIDs };
 
 	try {
-	    ServiceUtils.executeService("RemoveCurricularCoursesFromCompetenceCourse", args);
+	    RemoveCurricularCoursesFromCompetenceCourse.run(competenceCourseID, curricularCoursesIDs);
 	} catch (NotExistingServiceException notExistingServiceException) {
-
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+	    throw new FenixActionException(notExistingServiceException.getMessage());
 	}
 	request.setAttribute("competenceCourseID", competenceCourseID);
 	return mapping.findForward("showCompetenceCourse");
@@ -55,14 +53,11 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
 
 	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
 	Integer[] curricularCoursesIDs = (Integer[]) actionForm.get("curricularCoursesIds");
-	Object[] args = { competenceCourseID, curricularCoursesIDs };
 
 	try {
-	    ServiceUtils.executeService("AssociateCurricularCoursesToCompetenceCourse", args);
+	    AssociateCurricularCoursesToCompetenceCourse.run(competenceCourseID, curricularCoursesIDs);
 	} catch (NotExistingServiceException notExistingServiceException) {
-
-	} catch (FenixServiceException fenixServiceException) {
-	    throw new FenixActionException(fenixServiceException.getMessage());
+	    throw new FenixActionException(notExistingServiceException.getMessage());
 	}
 	request.setAttribute("competenceCourseID", competenceCourseID);
 	return mapping.findForward("showCompetenceCourse");

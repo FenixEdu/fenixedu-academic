@@ -16,6 +16,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteBranches;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditBranch;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertBranch;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranch;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranchEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -24,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -65,10 +69,9 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	// degreeCurricularPlanIdString);
 	// request.setAttribute("degreeId", degreeIdString);
 
-	Object[] args = { degreeCurricularPlanId };
 	List infoBranches;
 	try {
-	    infoBranches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan", args);
+	    infoBranches = ReadBranchesByDegreeCurricularPlan.run(degreeCurricularPlanId);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 	} catch (FenixServiceException ex) {
@@ -93,12 +96,10 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
 	List branchesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-	Object args[] = { branchesIds, new Boolean(false) };
-
 	List errorCodes = new ArrayList();
 
 	try {
-	    errorCodes = (List) ServiceUtils.executeService("DeleteBranches", args);
+	    errorCodes = DeleteBranches.run(branchesIds, new Boolean(false));
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
 	}
@@ -129,10 +130,8 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
 	List branchesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-	Object args[] = { branchesIds, new Boolean(true) };
-
 	try {
-	    ServiceUtils.executeService("DeleteBranches", args);
+	    DeleteBranches.run(branchesIds, new Boolean(true));
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}
@@ -190,16 +189,16 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	infoBranch.setNameEn(nameEn);
 	infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-	Object[] args = { infoBranch };
-
 	try {
-	    ServiceUtils.executeService("InsertBranch", args);
+	    InsertBranch.run(infoBranch);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
-	} catch (ExistingServiceException exception) {
-	    throw new ExistingActionException("message.already.existing.branch", mapping.findForward("insertBranch"));
-	} catch (FenixServiceException ex) {
-	    throw new FenixActionException(ex.getMessage());
+	    // } catch (ExistingServiceException exception) {
+	    // throw new
+	    // ExistingActionException("message.already.existing.branch",
+	    // mapping.findForward("insertBranch"));
+	    // } catch (FenixServiceException ex) {
+	    // throw new FenixActionException(ex.getMessage());
 	}
 
 	return showBranches(mapping, form, request, response);
@@ -214,11 +213,11 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	DynaActionForm editForm = (DynaActionForm) form;
 	IUserView userView = UserView.getUser();
 	Integer branchId = new Integer(request.getParameter("branchId"));
-	Object[] args = { branchId };
+
 	InfoBranch infoBranch;
 
 	try {
-	    infoBranch = (InfoBranch) ServiceUtils.executeService("ReadBranch", args);
+	    infoBranch = ReadBranch.run(branchId);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.non.existing.branch", showBranches(mapping, form, request, response));
 	} catch (FenixServiceException ex) {
@@ -260,10 +259,8 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	infoBranch.setNameEn(nameEn);
 	infoBranch.setIdInternal(branchId);
 
-	Object[] args = { infoBranch };
-
 	try {
-	    ServiceUtils.executeService("EditBranch", args);
+	    EditBranch.run(infoBranch);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("message.non.existing.branch", showBranches(mapping, form, request, response));
 	} catch (ExistingServiceException exception) {

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionalityParameter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -318,7 +320,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 
     private void deleteFunctionalityParameter(FunctionalityParameter functionalityParameter) throws FenixFilterException,
 	    FenixServiceException {
-	executeService("DeleteFunctionalityParameter", new Object[] { functionalityParameter });
+	DeleteFunctionalityParameter.run(functionalityParameter);
 
     }
 

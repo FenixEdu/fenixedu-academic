@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Serviço RemoverTurno
  * 
@@ -18,7 +22,9 @@ import org.apache.commons.collections.Predicate;
 
 public class RemoverTurno extends FenixService {
 
-    public Object run(final InfoShift infoShift, final InfoClass infoClass) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static Object run(final InfoShift infoShift, final InfoClass infoClass) {
 	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 	if (shift == null) {
 	    return Boolean.FALSE;

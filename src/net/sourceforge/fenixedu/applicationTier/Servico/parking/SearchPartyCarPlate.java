@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
@@ -21,7 +23,9 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchPartyCarPlate extends FenixService {
 
-    public List<Party> run(String nameSearch, String carPlateNumber, Long parkingCardNumber) {
+    @Checked("RolePredicates.PARKING_MANAGER_PREDICATE")
+    @Service
+    public static List<Party> run(String nameSearch, String carPlateNumber, Long parkingCardNumber) {
 	List<Party> result = new ArrayList<Party>();
 	if (!StringUtils.isEmpty(carPlateNumber) || !StringUtils.isEmpty(nameSearch) || parkingCardNumber != null) {
 	    List<ParkingParty> parkingParties = rootDomainObject.getParkingParties();
@@ -37,7 +41,7 @@ public class SearchPartyCarPlate extends FenixService {
 	return result;
     }
 
-    private boolean satisfiedName(ParkingParty parkingParty, String nameSearch) {
+    private static boolean satisfiedName(ParkingParty parkingParty, String nameSearch) {
 	if (!StringUtils.isEmpty(nameSearch)) {
 	    String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase().split("\\p{Space}+");
 	    return areNamesPresent(parkingParty.getParty().getName(), nameValues);
@@ -45,7 +49,7 @@ public class SearchPartyCarPlate extends FenixService {
 	return true;
     }
 
-    private boolean satisfiedParkingCardNumber(ParkingParty parkingParty, Long parkingCardNumber) {
+    private static boolean satisfiedParkingCardNumber(ParkingParty parkingParty, Long parkingCardNumber) {
 	if (parkingCardNumber != null) {
 	    return (parkingParty.getCardNumber() != null && parkingParty.getCardNumber().toString().contains(
 		    parkingCardNumber.toString())) ? true : false;
@@ -53,12 +57,12 @@ public class SearchPartyCarPlate extends FenixService {
 	return true;
     }
 
-    private boolean satisfiedPlateNumber(ParkingParty parkingParty, String carPlateNumber) {
+    private static boolean satisfiedPlateNumber(ParkingParty parkingParty, String carPlateNumber) {
 	return !StringUtils.isEmpty(carPlateNumber) ? (parkingParty.hasVehicleContainingPlateNumber(carPlateNumber.trim()))
 		: true;
     }
 
-    private boolean areNamesPresent(String name, String[] searchNameParts) {
+    private static boolean areNamesPresent(String name, String[] searchNameParts) {
 	String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
 	for (int i = 0; i < searchNameParts.length; i++) {
 	    String namePart = searchNameParts[i];

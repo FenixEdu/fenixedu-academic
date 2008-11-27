@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -40,9 +44,9 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
 	List masterDegrees = null;
 	IUserView userView = UserView.getUser();
 	DegreeType degreeType = DegreeType.MASTER_DEGREE;
-	Object args[] = { degreeType };
+
 	try {
-	    masterDegrees = (List) ServiceManagerServiceFactory.executeService("ReadAllMasterDegrees", args);
+	    masterDegrees = (List) ReadAllMasterDegrees.run(degreeType);
 	} catch (NonExistingServiceException e) {
 	    errors.add("noMasterDegree", new ActionError("error.masterDegree.noDegrees"));
 	    saveErrors(request, errors);
@@ -62,10 +66,10 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
 
 	List degreeCurricularPlans = null;
 	IUserView userView = UserView.getUser();
-	Object args[] = { Integer.valueOf(masterDegreeId) };
+
 	try {
 
-	    degreeCurricularPlans = (List) ServiceManagerServiceFactory.executeService("ReadCPlanFromChosenMasterDegree", args);
+	    degreeCurricularPlans = (List) ReadCPlanFromChosenMasterDegree.run(Integer.valueOf(masterDegreeId));
 
 	} catch (NonExistingServiceException e) {
 	    errors.add("noDegreeCurricularPlan", new ActionError("error.masterDegree.noDegreeCurricularPlan"));

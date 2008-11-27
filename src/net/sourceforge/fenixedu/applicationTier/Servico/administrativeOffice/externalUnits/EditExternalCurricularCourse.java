@@ -3,10 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ex
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.EditExternalCurricularCourseBean;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExternalCurricularCourse extends FenixService {
 
-    public void run(final EditExternalCurricularCourseBean bean) {
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final EditExternalCurricularCourseBean bean) {
 	final ExternalCurricularCourse externalCurricularCourse = bean.getExternalCurricularCourse();
 	externalCurricularCourse.edit(bean.getName(), bean.getCode());
     }

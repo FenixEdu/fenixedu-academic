@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -18,7 +20,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DeleteDegreeCurricularPlans extends FenixService {
 
-    public List run(List degreeCurricularPlansIds) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List degreeCurricularPlansIds) throws FenixServiceException {
 	Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
 	List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();

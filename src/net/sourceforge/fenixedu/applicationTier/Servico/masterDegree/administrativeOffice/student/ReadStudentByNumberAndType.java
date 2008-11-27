@@ -6,6 +6,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Serviço LerAluno.
  * 
@@ -21,7 +25,9 @@ public class ReadStudentByNumberAndType extends FenixService {
 
     // FIXME: We have to read the student by type also !!
 
-    public Object run(Integer number, DegreeType degreeType) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(Integer number, DegreeType degreeType) {
 
 	InfoStudent infoStudent = null;
 

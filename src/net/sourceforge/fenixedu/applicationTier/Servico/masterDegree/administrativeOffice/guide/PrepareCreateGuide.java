@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +41,9 @@ import org.apache.commons.collections.Predicate;
  */
 public class PrepareCreateGuide extends FenixService {
 
-    public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number, String requesterType,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number, String requesterType,
 	    Party contributorParty) throws FenixServiceException {
 
 	MasterDegreeCandidate masterDegreeCandidate = null;
@@ -141,7 +147,7 @@ public class PrepareCreateGuide extends FenixService {
 	return infoGuide;
     }
 
-    private String getDescription(String graduationType) {
+    private static String getDescription(String graduationType) {
 	switch (Specialization.valueOf(graduationType)) {
 	case STUDENT_CURRICULAR_PLAN_MASTER_DEGREE:
 	    return "Mestrado";

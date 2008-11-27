@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,9 @@ import org.apache.commons.lang.StringUtils;
 
 public class MergeExternalUnits extends FenixService {
 
-    public void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Unit fromUnit, Unit destinationUnit, Boolean sendMail) {
 
 	if (fromUnit != null && destinationUnit != null) {
 

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteMaterial;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateMaterial;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +88,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
 	MaterialBean bean = (MaterialBean) getRenderedObject("createMaterialBeanID");
 
 	try {
-	    executeService("CreateMaterial", new Object[] { bean });
+	    CreateMaterial.run(bean);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -103,7 +107,7 @@ public class MaterialManagementDA extends FenixDispatchAction {
 	MaterialType materialType = MaterialType.getMaterialTypeByMaterialClass(materialClass);
 
 	try {
-	    executeService("DeleteMaterial", new Object[] { material });
+	    DeleteMaterial.run(material);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    MaterialBean bean = new MaterialBean(material.getIdentification(), materialType);

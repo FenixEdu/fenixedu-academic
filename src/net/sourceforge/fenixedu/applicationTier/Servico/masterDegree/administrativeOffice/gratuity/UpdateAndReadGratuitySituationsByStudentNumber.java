@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +23,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class UpdateAndReadGratuitySituationsByStudentNumber extends FenixService {
 
-    public List<InfoGratuitySituation> run(Integer studentNumber) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List<InfoGratuitySituation> run(Integer studentNumber) {
 
 	List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
 

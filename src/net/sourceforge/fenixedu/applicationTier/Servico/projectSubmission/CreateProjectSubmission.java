@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +42,9 @@ public class CreateProjectSubmission extends FenixService {
 	super();
     }
 
-    public void run(java.io.File uploadFile, String filename, Attends attends, Project project, StudentGroup studentGroup,
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(java.io.File uploadFile, String filename, Attends attends, Project project, StudentGroup studentGroup,
 	    Person person) throws FenixServiceException, IOException {
 
 	checkPermissions(attends, person);
@@ -56,18 +62,18 @@ public class CreateProjectSubmission extends FenixService {
 	}
     }
 
-    private Group createPermittedGroup(Attends attends, StudentGroup studentGroup) {
+    private static Group createPermittedGroup(Attends attends, StudentGroup studentGroup) {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
 	return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse), new StudentGroupStudentsGroup(studentGroup));
     }
 
-    private void checkPermissions(Attends attends, Person person) throws FenixServiceException {
+    private static void checkPermissions(Attends attends, Person person) throws FenixServiceException {
 	if (!person.getCurrentAttends().contains(attends)) {
 	    throw new FenixServiceException("error.NotAuthorized");
 	}
     }
 
-    private ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends, Project project,
+    private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends, Project project,
 	    StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException, FileManagerException {
 
 	final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
@@ -102,7 +108,7 @@ public class CreateProjectSubmission extends FenixService {
 
     }
 
-    private String getFileToDeleteExternalId(Project project, StudentGroup studentGroup) {
+    private static String getFileToDeleteExternalId(Project project, StudentGroup studentGroup) {
 	String fileToDeleteStorageId = null;
 	if (!project.canAddNewSubmissionWithoutExceedLimit(studentGroup)) {
 	    fileToDeleteStorageId = project.getOldestProjectSubmissionForStudentGroup(studentGroup).getProjectSubmissionFile()
@@ -112,7 +118,7 @@ public class CreateProjectSubmission extends FenixService {
 	return fileToDeleteStorageId;
     }
 
-    private VirtualPath getVirtualPath(final ExecutionCourse executionCourse, final Project project,
+    private static VirtualPath getVirtualPath(final ExecutionCourse executionCourse, final Project project,
 	    final StudentGroup studentGroup) {
 	final VirtualPath filePath = new VirtualPath();
 

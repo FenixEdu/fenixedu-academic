@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInGroup;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentGroupInformation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,9 +49,8 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 	String shiftCodeString = request.getParameter("shiftCode");
 	request.setAttribute("shiftCode", shiftCodeString);
 
-	Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(3) };
 	try {
-	    ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
+	    VerifyStudentGroupAtributes.run(null, null, studentGroupCode, userView.getUtilizador(), new Integer(3));
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -83,10 +88,10 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 	}
 
 	ISiteComponent viewStudentGroup;
-	Object[] args = { studentGroupCode };
+
 
 	try {
-	    viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
+	    viewStudentGroup = (InfoSiteStudentGroup) ReadStudentGroupInformation.run(studentGroupCode);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -115,10 +120,9 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 	String studentGroupCodeString = request.getParameter("studentGroupCode");
 	Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-	Object[] args1 = { userName, studentGroupCode };
 	Boolean shiftWithGroups;
 	try {
-	    shiftWithGroups = (Boolean) ServiceUtils.executeService("UnEnrollStudentInGroup", args1);
+	    shiftWithGroups = (Boolean) UnEnrollStudentInGroup.run(userName, studentGroupCode);
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors = new ActionErrors();

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -10,7 +14,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateDegreeCurricularPlan extends FenixService {
 
-    public void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
 
 	if (degreeId == null || name == null) {
 	    throw new InvalidArgumentsServiceException();

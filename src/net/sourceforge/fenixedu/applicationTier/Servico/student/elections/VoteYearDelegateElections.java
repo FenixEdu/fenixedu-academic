@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -15,7 +19,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class VoteYearDelegateElections extends FenixService {
 
-    public void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent)
 	    throws FenixServiceException {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());

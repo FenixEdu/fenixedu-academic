@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportJustifications;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthResume;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -77,8 +85,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(
-		"ReadAllAssiduousnessWorkSheets", new Object[] { assiduousnessExportChoices });
+	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ReadAllAssiduousnessWorkSheets.run(assiduousnessExportChoices);
 	if (employeeWorkSheetList.size() != 0) {
 	    Map<String, String> parameters = new HashMap<String, String>();
 	    if (assiduousnessExportChoices.getYearMonth() != null) {
@@ -119,8 +126,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = (List<AssiduousnessMonthlyResume>) ServiceUtils
-		.executeService("ReadMonthResume", new Object[] { assiduousnessExportChoices });
+	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = (List<AssiduousnessMonthlyResume>) ReadMonthResume.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=resumoMes.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -140,8 +146,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService("ExportJustifications",
-		new Object[] { assiduousnessExportChoices });
+	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ExportJustifications.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=justificacoes.xls");
 	final ServletOutputStream writer = response.getOutputStream();
@@ -199,8 +204,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("choose-year-month");
 	}
 
-	List<EmployeeAnualInfo> assignedEmployeeInfoList = (List<EmployeeAnualInfo>) ServiceUtils.executeService(
-		"ExportEmployeesAnualInfo", new Object[] { yearMonth, assiduousnessStatus });
+	List<EmployeeAnualInfo> assignedEmployeeInfoList = (List<EmployeeAnualInfo>) ExportEmployeesAnualInfo.run(yearMonth, assiduousnessStatus);
 
 	Collections.sort(assignedEmployeeInfoList, new BeanComparator("employee.employeeNumber"));
 	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("personnelSection.employeesAnualInfo", null, null,

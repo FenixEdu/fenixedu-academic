@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadAllTransactionsByGratuitySituationID;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -63,10 +67,9 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 
 	// Read Gratuity Situation
 	InfoGratuitySituation infoGratuitySituation = null;
-	Object argsGratuitySituation[] = { new Integer(gratuitySituationId) };
+
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService("ReadGratuitySituationById",
-		    argsGratuitySituation);
+	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(new Integer(gratuitySituationId));
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);
@@ -77,10 +80,10 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 
 	// Read Transactions
 	List infoTransactions = null;
-	Object argsTransactions[] = { infoGratuitySituation.getIdInternal() };
+
 
 	try {
-	    infoTransactions = (List) ServiceUtils.executeService("ReadAllTransactionsByGratuitySituationID", argsTransactions);
+	    infoTransactions = (List) ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

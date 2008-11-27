@@ -20,15 +20,16 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditExamRooms;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadEmptyRoomsForExam;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
@@ -57,16 +58,11 @@ public class EditExamRoomsDA extends
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
-	Object args1[] = { infoExecutionCourse.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod() };
 	InfoExam infoExam = null;
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
-	try {
-	    infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
-		    "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
-	    infoExam = infoViewExamByDayAndShift.getInfoExam();
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoViewExamByDayAndShift = (ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod.run(infoExecutionCourse
+		.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod()));
+	infoExam = infoViewExamByDayAndShift.getInfoExam();
 
 	List examRooms = infoExam.getAssociatedRooms();
 
@@ -80,10 +76,9 @@ public class EditExamRoomsDA extends
 	    editExamRoomsForm.set("selectedRooms", null);
 	}
 
-	Object[] args = { infoExam };
 	List availableRooms;
 	try {
-	    availableRooms = (List) ServiceManagerServiceFactory.executeService("ReadEmptyRoomsForExam", args);
+	    availableRooms = ReadEmptyRoomsForExam.run(infoExam);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -123,16 +118,11 @@ public class EditExamRoomsDA extends
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
-	Object args1[] = { infoExecutionCourse.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod() };
 	InfoExam infoExam = null;
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
-	try {
-	    infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
-		    "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
-	    infoExam = infoViewExamByDayAndShift.getInfoExam();
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	infoViewExamByDayAndShift = (ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod.run(infoExecutionCourse
+		.getSigla(), oldExamsSeason, infoExecutionCourse.getInfoExecutionPeriod()));
+	infoExam = infoViewExamByDayAndShift.getInfoExam();
 
 	String[] rooms = (String[]) editExamRoomsForm.get("selectedRooms");
 	List roomsToSet = new ArrayList();
@@ -140,9 +130,8 @@ public class EditExamRoomsDA extends
 	    roomsToSet.add(new Integer(rooms[i]));
 	}
 
-	Object[] args = { infoExam, roomsToSet };
 	try {
-	    infoExam = (InfoExam) ServiceManagerServiceFactory.executeService("EditExamRooms", args);
+	    infoExam = EditExamRooms.run(infoExam, roomsToSet);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e);
 	} catch (FenixServiceException e) {

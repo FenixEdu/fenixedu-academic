@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author lmac1
@@ -18,7 +20,9 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class EditCurriculum extends FenixService {
 
-    public void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum
 		.getInfoCurricularCourse().getIdInternal());
 

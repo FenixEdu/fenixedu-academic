@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +23,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
  */
 public class ReadExecutionCoursesByStudentTests extends FenixService {
 
-    public Set<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Set<ExecutionCourse> run(final Student student, final ExecutionYear executionYear) {
 	final Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    if (registration.isActive()) {

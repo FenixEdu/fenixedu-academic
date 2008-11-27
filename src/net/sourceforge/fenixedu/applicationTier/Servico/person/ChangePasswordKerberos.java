@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,6 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ChangePasswordKerberos extends FenixService {
 
     @Service
+    @Checked("RolePredicates.PERSON_PREDICATE")
     public static void run(IUserView userView, String oldPassword, String newPassword) throws Exception {
 	Person person = userView.getPerson();
 

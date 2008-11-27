@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -23,7 +27,9 @@ public class ArrangeFunctionalities extends FenixService {
      * @param arrangements
      *            list of pairs (parent, child)
      */
-    public void run(List<Pair<Module, Content>> arrangements) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(List<Pair<Module, Content>> arrangements) {
 	for (Pair<Module, Content> pair : arrangements) {
 	    ((IFunctionality) pair.getValue()).setModule(pair.getKey());
 	}

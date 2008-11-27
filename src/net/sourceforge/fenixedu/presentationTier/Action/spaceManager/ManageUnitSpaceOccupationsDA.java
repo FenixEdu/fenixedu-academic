@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteUnitSpaceOccupation;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,9 +64,9 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
-	Object[] args = { unitSpaceOccupation };
+
 	try {
-	    ServiceUtils.executeService("DeleteUnitSpaceOccupation", args);
+	    DeleteUnitSpaceOccupation.run(unitSpaceOccupation);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}

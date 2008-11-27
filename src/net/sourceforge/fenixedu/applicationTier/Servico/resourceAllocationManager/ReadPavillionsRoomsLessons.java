@@ -6,6 +6,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -25,7 +29,9 @@ import net.sourceforge.fenixedu.domain.space.Building;
 
 public class ReadPavillionsRoomsLessons extends FenixService {
 
-    public List run(List<String> pavillions, InfoExecutionPeriod infoExecutionPeriod) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List run(List<String> pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());

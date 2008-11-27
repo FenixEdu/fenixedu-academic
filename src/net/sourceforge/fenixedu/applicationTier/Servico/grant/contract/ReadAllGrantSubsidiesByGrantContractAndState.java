@@ -18,6 +18,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Barbosa
  * @author Pica
@@ -25,7 +28,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadAllGrantSubsidiesByGrantContractAndState extends FenixService {
 
-    public List run(Integer idContract, Integer state) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer idContract, Integer state) throws FenixServiceException {
 	final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
 	final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
 	if (subsidies == null)

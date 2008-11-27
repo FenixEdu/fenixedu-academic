@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -23,7 +27,9 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Fenix
     public ReadInsuranceTransactionByStudentIDAndExecutionYearID() {
     }
 
-    public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoInsuranceTransaction run(Integer studentId, Integer executionYearId) throws FenixServiceException {
 
 	InfoInsuranceTransaction infoInsuranceTransaction = null;
 

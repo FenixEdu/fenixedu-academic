@@ -6,6 +6,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
@@ -29,7 +33,9 @@ import net.sourceforge.fenixedu.util.Season;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends FenixService {
 
-    public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod) {
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());

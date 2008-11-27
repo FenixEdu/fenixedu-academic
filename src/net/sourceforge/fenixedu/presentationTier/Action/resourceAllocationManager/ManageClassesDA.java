@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteClasses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -98,8 +102,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
 	IUserView userView = UserView.getUser();
 
-	Object argsApagarTurma[] = { infoClass };
-	ServiceUtils.executeService("ApagarTurma", argsApagarTurma);
+	ApagarTurma.run(infoClass);
 
 	request.removeAttribute(SessionConstants.CLASS_VIEW);
 
@@ -124,8 +127,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	    classOIDs.add(new Integer(selectedClasses[i]));
 	}
 
-	Object args[] = { classOIDs };
-	ServiceUtils.executeService("DeleteClasses", args);
+	DeleteClasses.run(classOIDs);
 
 	return mapping.findForward("ShowShiftList");
 

@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPartsByGrantSubsidy;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -45,15 +46,15 @@ public class ManageGrantPartAction extends FenixDispatchAction {
 	}
 
 	// Read Subsidy
-	Object[] args = { idSubsidy };
+
 	IUserView userView = UserView.getUser();
-	InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ServiceUtils.executeService("ReadGrantSubsidy", args);
+	InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ReadGrantSubsidy.run(idSubsidy);
 
 	request.setAttribute("idSubsidy", idSubsidy);
 	request.setAttribute("idContract", infoGrantSubsidy.getInfoGrantContract().getIdInternal());
 	request.setAttribute("idGrantOwner", infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo().getIdInternal());
 
-	List infoGrantPartList = (List) ServiceUtils.executeService("ReadAllGrantPartsByGrantSubsidy", args);
+	List infoGrantPartList = ReadAllGrantPartsByGrantSubsidy.run(idSubsidy);
 
 	if (infoGrantPartList != null && !infoGrantPartList.isEmpty())
 	    request.setAttribute("infoGrantPartList", infoGrantPartList);

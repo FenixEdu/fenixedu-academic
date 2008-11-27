@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollGroupShift;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,10 +43,9 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 	Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 	Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-	Object args[] = { studentGroupCode, groupPropertiesCode, userView.getUtilizador() };
 
 	try {
-	    ServiceUtils.executeService("UnEnrollGroupShift", args);
+	    UnEnrollGroupShift.run(studentGroupCode, groupPropertiesCode, userView.getUtilizador());
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
 	    ActionError error2 = null;

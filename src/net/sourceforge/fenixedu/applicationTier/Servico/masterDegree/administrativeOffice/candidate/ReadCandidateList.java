@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +24,9 @@ import net.sourceforge.fenixedu.util.SituationName;
 
 public class ReadCandidateList extends FenixService {
 
-    public List run(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static List run(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber,
 	    String executionYearString) {
 
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);

@@ -20,6 +20,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConst
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Barbosa
  * @author Pica
@@ -27,7 +30,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class SearchGrantOwner extends FenixService {
 
-    public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber, Boolean onlyGrantOwner,
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber, Boolean onlyGrantOwner,
 	    Integer startIndex) throws FenixServiceException {
 
 	List grantOwnerList = new ArrayList();

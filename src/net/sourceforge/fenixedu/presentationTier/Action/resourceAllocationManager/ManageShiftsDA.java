@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteShifts;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -21,10 +24,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
@@ -106,14 +107,13 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	infoShift.setTipos(shiftTypes);
 
-	Object argsCriarTurno[] = { infoShift };
-	try {
-	    final InfoShift newInfoShift = (InfoShift) ServiceUtils.executeService("CriarTurno", argsCriarTurno);
-	    request.setAttribute(SessionConstants.SHIFT, newInfoShift);
+	// try {
+	final InfoShift newInfoShift = CriarTurno.run(infoShift);
+	request.setAttribute(SessionConstants.SHIFT, newInfoShift);
 
-	} catch (ExistingServiceException ex) {
-	    throw new ExistingActionException("O Shift", ex);
-	}
+	// } catch (ExistingServiceException ex) {
+	// throw new ExistingActionException("O Shift", ex);
+	// }
 
 	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
 
@@ -129,9 +129,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	Object args[] = { infoShiftToDelete };
 	try {
-	    ServiceUtils.executeService("DeleteShift", args);
+	    DeleteShift.run(infoShiftToDelete);
 	} catch (FenixServiceException exception) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    if (exception.getMessage() != null && exception.getMessage().length() > 0) {
@@ -163,10 +162,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	    shiftOIDs.add(Integer.valueOf(selectedShifts[i]));
 	}
 
-	final Object args[] = { shiftOIDs };
-
 	try {
-	    ServiceUtils.executeService("DeleteShifts", args);
+	    DeleteShifts.run(shiftOIDs);
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
 
@@ -191,9 +188,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 
-	Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear };
-	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
-		"ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear", args);
+	List<InfoShift> infoShifts = ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(infoExecutionPeriod,
+		infoExecutionDegree, infoCurricularYear);
 
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 

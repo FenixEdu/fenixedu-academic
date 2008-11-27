@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuide;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -117,8 +119,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 		throw new NoEntryChosenActionException(); //,mapping.findForward
 	    // ("error")
 
-	    Object createArgs[] = { infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView };
-	    Integer reimbursementGuideID = (Integer) ServiceUtils.executeService("CreateReimbursementGuide", createArgs);
+	    Integer reimbursementGuideID = (Integer) CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView);
 
 	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 

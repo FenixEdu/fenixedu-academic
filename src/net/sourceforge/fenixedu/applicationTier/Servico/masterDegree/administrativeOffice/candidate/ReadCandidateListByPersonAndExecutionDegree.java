@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.util.State;
 
 public class ReadCandidateListByPersonAndExecutionDegree extends FenixService {
 
-    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson, Integer number)
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson, Integer number)
 	    throws FenixServiceException {
 
 	final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());

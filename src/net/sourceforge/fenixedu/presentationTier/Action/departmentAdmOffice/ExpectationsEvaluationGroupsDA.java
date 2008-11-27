@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.DeleteExpectationEvaluationGroup;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.CreateExpectationEvaluationGroup;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -80,8 +84,8 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 	ExpectationEvaluationGroupBean bean = (ExpectationEvaluationGroupBean) viewState.getMetaObject().getObject();
 
 	try {
-	    executeService("CreateExpectationEvaluationGroup", new Object[] { bean.getAppraiser(), bean.getEvaluated(),
-		    bean.getExecutionYear() });
+	    CreateExpectationEvaluationGroup.run(bean.getAppraiser(), bean.getEvaluated(),
+		    bean.getExecutionYear());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -108,7 +112,7 @@ public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 
 	if (appraiserDepartment != null && employeeDepartment != null && appraiserDepartment.equals(employeeDepartment)) {
 	    try {
-		executeService("DeleteExpectationEvaluationGroup", new Object[] { group });
+		DeleteExpectationEvaluationGroup.run(group);
 		request.setAttribute("evaluatedTeacherGroups", appraiser.getEvaluatedExpectationEvaluationGroups(executionYear));
 		request.setAttribute("expectationEvaluationGroupBean", new ExpectationEvaluationGroupBean(appraiser,
 			executionYear));

@@ -13,18 +13,24 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AddNewDelegate extends FenixService {
 
     /* Year Delegates */
-    public void run(Student student, YearDelegateElection election) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Student student, YearDelegateElection election) throws FenixServiceException {
 	election.setElectedStudent(student);
 
-	this.run(student, election.getCurricularYear(), election.getDegree());
+	run(student, election.getCurricularYear(), election.getDegree());
     }
 
     /* Year Delegates */
-    public void run(Student student, CurricularYear curricularYear, Degree degree) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Student student, CurricularYear curricularYear, Degree degree) throws FenixServiceException {
 	final DegreeUnit degreeUnit = degree.getUnit();
 	final Person studentPerson = student.getPerson();
 
@@ -38,7 +44,9 @@ public class AddNewDelegate extends FenixService {
     }
 
     /* All other delegates */
-    public void run(Student student, Degree degree, FunctionType delegateFunctionType) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Student student, Degree degree, FunctionType delegateFunctionType) throws FenixServiceException {
 	final DegreeUnit degreeUnit = degree.getUnit();
 	final Person studentPerson = student.getPerson();
 
@@ -52,7 +60,9 @@ public class AddNewDelegate extends FenixService {
     }
 
     /* GGAE Delegates */
-    public void run(Person person, Function delegateFunction) throws FenixServiceException {
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(Person person, Function delegateFunction) throws FenixServiceException {
 	final PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit) delegateFunction.getUnit();
 
 	try {

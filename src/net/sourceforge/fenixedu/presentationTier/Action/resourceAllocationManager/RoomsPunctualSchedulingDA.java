@@ -1,5 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -97,7 +103,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
 	GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
 	try {
-	    executeService("DeleteGenericEvent", new Object[] { genericEventFromParameter });
+	    DeleteGenericEvent.run(genericEventFromParameter);
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}
@@ -206,7 +212,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
 	try {
-	    executeService("CreateRoomsPunctualScheduling", new Object[] { bean });
+	    CreateRoomsPunctualScheduling.run(bean);
 
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
@@ -224,7 +230,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
 	try {
-	    executeService("EditRoomsPunctualScheduling", new Object[] { bean });
+	    EditRoomsPunctualScheduling.run(bean);
 
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);

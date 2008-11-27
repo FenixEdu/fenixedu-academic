@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateMarkSheetByTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherGradeSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.gradeSubmission.MarkSheetTeacherMarkBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -106,11 +106,10 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) ServiceUtils.executeService(
-		    "CreateMarkSheetByTeacher", new Object[] { submissionBean });
+	    List<EnrolmentEvaluation> marksSubmited = CreateMarkSheetByTeacher.run(submissionBean);
 	    request.setAttribute("marksSubmited", marksSubmited);
 	    return mapping.findForward("viewGradesSubmited");
-	} catch (NotAuthorizedException e) {
+	} catch (IllegalDataAccessException e) {
 	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (InvalidArgumentsServiceException e) {
 	    addMessage(request, actionMessages, e.getMessage());

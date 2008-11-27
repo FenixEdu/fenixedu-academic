@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.UpdateDepartmentsCompetenceCourseManagementGroup;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.UpdateDepartmentsCompetenceCourseManagementGroup;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -95,8 +99,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 	if (selectedPersonsIDsToAdd != null) {
-	    Object[] args = { getDepartment(), selectedPersonsIDsToAdd, null };
-	    ServiceUtils.executeService("UpdateDepartmentsCompetenceCourseManagementGroup", args);
+
+	    UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), selectedPersonsIDsToAdd, null);
 	}
 	// avoid preset check-boxes after action
 	selectedPersonsIDsToAdd = null;
@@ -105,8 +109,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 	if (selectedPersonsIDsToRemove != null) {
-	    Object[] args = { getDepartment(), null, selectedPersonsIDsToRemove };
-	    ServiceUtils.executeService("UpdateDepartmentsCompetenceCourseManagementGroup", args);
+
+	    UpdateDepartmentsCompetenceCourseManagementGroup.run(getDepartment(), null, selectedPersonsIDsToRemove);
 	}
 	// avoid preset check-boxes after action
 	selectedPersonsIDsToAdd = null;

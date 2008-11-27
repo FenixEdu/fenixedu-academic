@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.FixSibsEntryByID;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadNonProcessedSibsEntries;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,11 +48,10 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 
 	IUserView userView = UserView.getUser();
 
-	Object args[] = {};
 	List infoSibsPaymentFileEntries = null;
 
 	try {
-	    infoSibsPaymentFileEntries = (List) ServiceUtils.executeService("ReadNonProcessedSibsEntries", args);
+	    infoSibsPaymentFileEntries = (List) ReadNonProcessedSibsEntries.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -82,9 +85,8 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-	Object args[] = { sibsPaymentFileEntryId };
 	try {
-	    ServiceUtils.executeService("FixSibsEntryByID", args);
+	    FixSibsEntryByID.run(sibsPaymentFileEntryId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

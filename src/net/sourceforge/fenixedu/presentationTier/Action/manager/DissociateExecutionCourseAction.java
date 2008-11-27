@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DissociateExecutionCourse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,10 +36,9 @@ public class DissociateExecutionCourseAction extends FenixAction {
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 	Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-	Object args[] = { executionCourseId, curricularCourseId };
 
 	try {
-	    ServiceUtils.executeService("DissociateExecutionCourse", args);
+	    DissociateExecutionCourse.run(executionCourseId, curricularCourseId);
 
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), "");

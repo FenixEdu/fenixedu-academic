@@ -6,10 +6,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan extends FenixService {
 
-    public List run(List<Integer> executionDegreesIds) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List run(List<Integer> executionDegreesIds) throws FenixServiceException {
 	List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
 	for (final Integer executionDegreeId : executionDegreesIds) {

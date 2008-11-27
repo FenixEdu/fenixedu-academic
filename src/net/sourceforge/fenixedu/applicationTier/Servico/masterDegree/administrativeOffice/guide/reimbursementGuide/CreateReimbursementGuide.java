@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +55,9 @@ public class CreateReimbursementGuide extends FenixService {
      * @throws ExcepcaoPersistencia
      */
 
-    public Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries, IUserView userView)
 	    throws FenixServiceException {
 
 	Guide guide = rootDomainObject.readGuideByOID(guideId);
@@ -114,7 +120,7 @@ public class CreateReimbursementGuide extends FenixService {
      *         guide entry with the new reimbursement guide entry is less or
      *         equal than their guide entry
      */
-    private boolean checkReimbursementGuideEntriesSum(InfoReimbursementGuideEntry newReimbursementGuideEntry,
+    private static boolean checkReimbursementGuideEntriesSum(InfoReimbursementGuideEntry newReimbursementGuideEntry,
 	    GuideEntry guideEntry) {
 
 	Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
@@ -139,7 +145,7 @@ public class CreateReimbursementGuide extends FenixService {
 
     }
 
-    private boolean isGreaterThan(Double guideEntryValue, Double sum) {
+    private static boolean isGreaterThan(Double guideEntryValue, Double sum) {
 	if (sum.doubleValue() > guideEntryValue.doubleValue()) {
 	    return false;
 	}

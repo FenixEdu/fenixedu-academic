@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * 
  * @author Luis Cruz
@@ -18,7 +22,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 public class SwitchPublishedExamsFlag extends FenixService {
 
-    public void run(final Integer executionPeriodOID) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer executionPeriodOID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodOID);
 	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear.getYear());

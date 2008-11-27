@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -20,7 +24,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
  */
 public class CleanSubQuestions extends FenixService {
 
-    public void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
 	    String path) throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new FenixServiceException();

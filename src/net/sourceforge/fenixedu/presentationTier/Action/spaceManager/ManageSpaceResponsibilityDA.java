@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpaceResponsibility;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,9 +38,9 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
-	Object[] args = { spaceResponsibility };
+
 	try {
-	    ServiceUtils.executeService("DeleteSpaceResponsibility", args);
+	    DeleteSpaceResponsibility.run(spaceResponsibility);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}

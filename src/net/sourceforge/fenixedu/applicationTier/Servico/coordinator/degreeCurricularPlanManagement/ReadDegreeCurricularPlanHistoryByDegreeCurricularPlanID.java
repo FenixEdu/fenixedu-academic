@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -15,7 +17,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends FenixService {
-    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
@@ -32,7 +36,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Fen
 	return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
+    private static InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan,
 	    List allCurricularCourses) {
 	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }

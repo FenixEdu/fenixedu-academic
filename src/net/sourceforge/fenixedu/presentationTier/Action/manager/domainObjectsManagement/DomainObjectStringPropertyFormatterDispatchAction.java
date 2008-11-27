@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DomainObjectStringPropertyFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,8 +78,7 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
 	String domainObjectClass = (String) actionForm.get("domainObjectClass");
 	String slotName = (String) actionForm.get("slotName");
 
-	Object[] args = { Class.forName(domainObjectClass), slotName };
-	ServiceUtils.executeService("DomainObjectStringPropertyFormatter", args);
+	DomainObjectStringPropertyFormatter.run(Class.forName(domainObjectClass), slotName);
 
 	ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));

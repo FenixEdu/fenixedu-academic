@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -11,7 +15,9 @@ import net.sourceforge.fenixedu.domain.util.Email;
 
 public class NotifyStudentGroup extends FenixService {
 
-    public void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
 
 	ArrayList<String> emails = new ArrayList<String>();
 

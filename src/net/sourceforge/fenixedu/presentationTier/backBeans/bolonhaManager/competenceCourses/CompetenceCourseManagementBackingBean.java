@@ -14,8 +14,12 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse;
+import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourseLoad;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.competenceCourses.TransferCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
@@ -35,10 +39,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -669,14 +675,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	    }
 
 	    if (valid) {
-		final Object args[] = { getName(), getNameEn(), null, getBasic(), RegimeType.SEMESTRIAL,
-			getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(), getCompetenceCourseGroupUnitID() };
-		final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
-			"CreateCompetenceCourse", args);
+
+		final CompetenceCourse competenceCourse = CreateCompetenceCourse.run(getName(), getNameEn(), null, getBasic(),
+			RegimeType.SEMESTRIAL, getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(),
+			getCompetenceCourseGroupUnitID());
 		setCompetenceCourse(competenceCourse);
 		return "setCompetenceCourseLoad";
 	    }
-	} catch (FenixFilterException e) {
+	} catch (IllegalDataAccessException e) {
 	    addErrorMessage(bolonhaResources.getString("error.creatingCompetenceCourse"));
 	} catch (ExistingCompetenceCourseInformationException e) {
 	    addErrorMessage(getFormatedMessage(bolonhaResources, e.getKey(), e.getArgs()));
@@ -758,8 +764,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private void setCompetenceCourseLoad() throws FenixFilterException, FenixServiceException {
-	Object args[] = { getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getNumberOfPeriods(), getCourseLoads() };
-	ServiceUtils.executeService("EditCompetenceCourseLoad", args);
+
+	EditCompetenceCourseLoad.run(getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getNumberOfPeriods(),
+		getCourseLoads());
     }
 
     private void setCompetenceCourseAdditionalInformation() throws FenixFilterException, FenixServiceException {
@@ -770,13 +777,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String deleteCompetenceCourse() {
 	try {
-	    Object[] args = { getCompetenceCourseID() };
-	    ServiceUtils.executeService("DeleteCompetenceCourse", args);
+
+	    DeleteCompetenceCourse.run(getCompetenceCourseID());
 	    addInfoMessage(bolonhaResources.getString("competenceCourseDeleted"));
 	    return "competenceCoursesManagement";
-	} catch (FenixFilterException e) {
-	    addErrorMessage(bolonhaResources.getString("error.deletingCompetenceCourse"));
-	} catch (FenixServiceException e) {
+	} catch (IllegalDataAccessException e) {
 	    addErrorMessage(bolonhaResources.getString("error.deletingCompetenceCourse"));
 	} catch (DomainException e) {
 	    addErrorMessage(domainResources.getString(e.getMessage()));
@@ -999,9 +1004,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 		return "competenceCoursesManagement";
 	    }
 
-	    final Object args[] = { getCompetenceCourse(), readCompetenceCourseGroupUnitToTransferTo() };
-	    ServiceUtils.executeService("TransferCompetenceCourse", args);
-	} catch (FenixFilterException e) {
+	    TransferCompetenceCourse.run(getCompetenceCourse(),
+		    (CompetenceCourseGroupUnit) readCompetenceCourseGroupUnitToTransferTo());
+	} catch (IllegalDataAccessException e) {
 	    this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
 	} catch (FenixServiceException e) {
 	    addErrorMessage(scouncilBundle.getString("error.transferingCompetenceCourse"));

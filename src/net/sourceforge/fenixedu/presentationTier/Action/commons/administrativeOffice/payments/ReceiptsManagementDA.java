@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -294,8 +296,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
 
 	try {
-	    executeService("EditReceipt", new Object[] { editReceiptBean.getReceipt(), editReceiptBean.getEmployee(),
-		    editReceiptBean.getContributorParty(), editReceiptBean.getContributorName() });
+	    EditReceipt.run(editReceiptBean.getReceipt(), editReceiptBean.getEmployee(),
+		    editReceiptBean.getContributorParty(), editReceiptBean.getContributorName());
 	} catch (DomainException e) {
 	    request.setAttribute("editReceiptBean", editReceiptBean);
 	    addActionMessage(request, e.getKey(), e.getArgs());

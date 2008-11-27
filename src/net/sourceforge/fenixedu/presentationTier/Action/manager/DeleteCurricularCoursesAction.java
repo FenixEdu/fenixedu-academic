@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCoursesOfDegreeCurricularPlan;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,12 +42,11 @@ public class DeleteCurricularCoursesAction extends FenixAction {
 
 	List curricularCoursesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-	Object args[] = { curricularCoursesIds };
 
 	List errorsList = new ArrayList();
 
 	try {
-	    errorsList = (List) ServiceUtils.executeService("DeleteCurricularCoursesOfDegreeCurricularPlan", args);
+	    errorsList = (List) DeleteCurricularCoursesOfDegreeCurricularPlan.run(curricularCoursesIds);
 	} catch (FenixServiceException fenixServiceException) {
 	    throw new FenixActionException(fenixServiceException.getMessage());
 	}

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadInfoEnrolmentEvaluationByEvaluationOID;
+
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -135,9 +137,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
 	InfoEnrolmentEvaluation newEnrolmentEvaluation = null;
 	try {
-	    Object args[] = { userView, studentNumber, DegreeType.MASTER_DEGREE, infoEnrolmentTemp.getIdInternal() };
-	    newEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
-		    "ReadInfoEnrolmentEvaluationByEvaluationOID", args);
+
+	    newEnrolmentEvaluation = (InfoEnrolmentEvaluation) ReadInfoEnrolmentEvaluationByEvaluationOID.run(userView, studentNumber, DegreeType.MASTER_DEGREE, infoEnrolmentTemp.getIdInternal());
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}

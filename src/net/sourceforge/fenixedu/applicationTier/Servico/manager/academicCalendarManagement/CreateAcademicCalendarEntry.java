@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 
 public class CreateAcademicCalendarEntry extends FenixService {
 
-    public AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static AcademicCalendarEntry run(CalendarEntryBean bean, boolean toCreate) {
 
 	if (toCreate) {
 

@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantSubsidy;
+
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,8 +74,8 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
 		}
 	    } else {
 		// Read the subsidy
-		Object[] args = { idSubsidy };
-		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ServiceUtils.executeService("ReadGrantSubsidy", args);
+
+		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ReadGrantSubsidy.run(idSubsidy);
 
 		idContract = infoGrantSubsidy.getInfoGrantContract().getIdInternal();
 		// Read the contract

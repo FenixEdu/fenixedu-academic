@@ -40,26 +40,31 @@ import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class ExportClosedExtraWorkMonth extends FenixService {
+    private static class StateWrapper {
+	public List<LocalDate> unjustifiedDays;
+
+	public JustificationMotive a66JustificationMotive;
+
+	public JustificationMotive unjustifiedJustificationMotive;
+
+	public JustificationMotive maternityJustificationMotive;
+
+	public List<Assiduousness> maternityJustificationList;
+    }
+
     private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("yyyyMMdd");
 
-    private DecimalFormat monthFormat = new DecimalFormat("00");
+    private static final DecimalFormat monthFormat = new DecimalFormat("00");
 
-    private DecimalFormat employeeNumberFormat = new DecimalFormat("000000");
+    private static final DecimalFormat employeeNumberFormat = new DecimalFormat("000000");
 
-    private DecimalFormat justificationCodeFormat = new DecimalFormat("000");
+    private static final DecimalFormat justificationCodeFormat = new DecimalFormat("000");
 
-    private String fieldSeparator = ("\t");
-
-    private List<LocalDate> unjustifiedDays;
-
-    private JustificationMotive a66JustificationMotive;
-
-    private JustificationMotive unjustifiedJustificationMotive;
-
-    private JustificationMotive maternityJustificationMotive;
-
-    private List<Assiduousness> maternityJustificationList;
+    private static final String fieldSeparator = ("\t");
 
     private static String maternityMovementCode = "508";
 
@@ -77,11 +82,15 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     public static String extraWorkWeekDaySecondLevelMovementCode = "201";
 
-    public String run(ClosedMonth closedMonth) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static String run(ClosedMonth closedMonth) {
 	return run(closedMonth, true, true);
     }
 
-    public String run(ClosedMonth closedMonth, Boolean getWorkAbsences, Boolean getExtraWorkMovements) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static String run(ClosedMonth closedMonth, Boolean getWorkAbsences, Boolean getExtraWorkMovements) {
 	LocalDate beginDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
@@ -107,17 +116,18 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
 	HashMap<Assiduousness, List<LeaveBean>> allUnpaidLicenseLeaves = getLeaves(allAssiduousnessRecord,
 		beginUnpaidLicenseDate, endUnpaidLicenseDate, true);
-	a66JustificationMotive = getA66JustificationMotive();
-	unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
-	maternityJustificationMotive = getMaternityJustificationMotive();
-	maternityJustificationList = new ArrayList<Assiduousness>();
+	StateWrapper state = new StateWrapper();
+	state.a66JustificationMotive = getA66JustificationMotive();
+	state.unjustifiedJustificationMotive = getUnjustifiedJustificationMotive();
+	state.maternityJustificationMotive = getMaternityJustificationMotive();
+	state.maternityJustificationList = new ArrayList<Assiduousness>();
 
 	StringBuilder extraWorkResult = new StringBuilder();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
-	    unjustifiedDays = new ArrayList<LocalDate>();
+	    state.unjustifiedDays = new ArrayList<LocalDate>();
 	    if (!isADISTEmployee(assiduousnessClosedMonth)) {
 		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
-			.getAssiduousnessStatusHistory().getAssiduousness()));
+			.getAssiduousnessStatusHistory().getAssiduousness()), state);
 		if (getWorkAbsences) {
 		    result.append(lineResult);
 		    List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
@@ -125,7 +135,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		    if (leaveBeanList != null) {
 			for (LeaveBean leaveBean : leaveBeanList) {
 			    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
-				    endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1)));
+				    endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1), state));
 			}
 		    }
 		}
@@ -137,7 +147,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	if (endDate.getDayOfMonth() != 30 && getExtraWorkMovements) {
 	    StringBuilder maternityJustificationResult = new StringBuilder();
 	    Integer daysNumber = endDate.getDayOfMonth() - 30;
-	    for (Assiduousness assiduousness : maternityJustificationList) {
+	    for (Assiduousness assiduousness : state.maternityJustificationList) {
 		maternityJustificationResult.append(getExtraWorkMovement(assiduousness, beginDate, endDate,
 			maternityMovementCode, daysNumber));
 	    }
@@ -146,14 +156,14 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return result.append(extraWorkResult).toString();
     }
 
-    private String getExtraWorkMovement(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, String movementCode,
-	    Integer daysNumber) {
+    private static String getExtraWorkMovement(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate,
+	    String movementCode, Integer daysNumber) {
 	return getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1).getMonthOfYear(),
 		beginDate, endDate, movementCode, daysNumber);
     }
 
-    private String getExtraWorkMovement(Assiduousness assiduousness, int year, int month, LocalDate beginDate, LocalDate endDate,
-	    String movementCode, Integer daysNumber) {
+    private static String getExtraWorkMovement(Assiduousness assiduousness, int year, int month, LocalDate beginDate,
+	    LocalDate endDate, String movementCode, Integer daysNumber) {
 	StringBuilder result = new StringBuilder();
 	result.append(year).append(fieldSeparator);
 	result.append(monthFormat.format(month)).append(fieldSeparator);
@@ -166,7 +176,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return result.toString();
     }
 
-    private String getAssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth) {
+    private static String getAssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth) {
 	StringBuilder result = new StringBuilder();
 	Map<WorkScheduleType, Duration> nightWorkByWorkScheduleType = assiduousnessClosedMonth.getNightWorkByWorkScheduleType();
 	for (WorkScheduleType workScheduleType : nightWorkByWorkScheduleType.keySet()) {
@@ -244,7 +254,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return result.toString();
     }
 
-    private String getAssiduousnessMonthBalance(AssiduousnessClosedMonth assiduousnessClosedMonth, List<LeaveBean> leavesBeans) {
+    private static String getAssiduousnessMonthBalance(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    List<LeaveBean> leavesBeans, StateWrapper state) {
 	StringBuilder result = new StringBuilder();
 	if (leavesBeans != null && !leavesBeans.isEmpty()) {
 	    Collections.sort(leavesBeans, LeaveBean.COMPARATOR_BY_DATE);
@@ -252,7 +263,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.MULTIPLE_MONTH_BALANCE)) {
-		    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean));
+		    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, state));
 		} else if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.HALF_OCCURRENCE_TIME)
 			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
@@ -285,7 +296,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		JustificationMotive justificationMotive = JustificationMotive.getJustificationMotiveByGiafCode(giafCode,
 			assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 		if (justificationMotive != null) {
-		    result.append(getLeaveLine(assiduousnessClosedMonth, justificationMotive, justificationDays, leavesBeans));
+		    result.append(getLeaveLine(assiduousnessClosedMonth, justificationMotive, justificationDays, leavesBeans,
+			    state));
 		}
 	    }
 	}
@@ -306,21 +318,23 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	int unjustifiedToDiscount = (int) ((assiduousnessClosedMonth.getAccumulatedUnjustified() - previousUnjustified) + previousNotCompleteUnjustified);
 
 	if (A66ToDiscount != 0) {
-	    result.append(getLeaveLine(assiduousnessClosedMonth, a66JustificationMotive, A66ToDiscount, leavesBeans));
+	    result
+		    .append(getLeaveLine(assiduousnessClosedMonth, state.a66JustificationMotive, A66ToDiscount, leavesBeans,
+			    state));
 	}
 
 	if (unjustifiedToDiscount != 0) {
-	    result.append(getLeaveLine(assiduousnessClosedMonth, unjustifiedJustificationMotive, unjustifiedToDiscount,
-		    leavesBeans));
+	    result.append(getLeaveLine(assiduousnessClosedMonth, state.unjustifiedJustificationMotive, unjustifiedToDiscount,
+		    leavesBeans, state));
 	}
 
 	return result.toString();
     }
 
-    private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    JustificationMotive justificationMotive, int justificationDays, List<LeaveBean> leavesBeans) {
+    private static StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    JustificationMotive justificationMotive, int justificationDays, List<LeaveBean> leavesBeans, StateWrapper state) {
 	List<LocalDate> daysToUnjustify = getJustificationDays(assiduousnessClosedMonth, justificationMotive, justificationDays,
-		leavesBeans);
+		leavesBeans, state);
 	StringBuilder line = new StringBuilder();
 	for (LocalDate day : daysToUnjustify) {
 	    LocalDate nextMontDate = day.plusMonths(1);
@@ -340,8 +354,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return line;
     }
 
-    private List<LocalDate> getJustificationDays(AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    JustificationMotive justificationMotive, int daysNumber, List<LeaveBean> leavesBeans) {
+    private static List<LocalDate> getJustificationDays(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    JustificationMotive justificationMotive, int daysNumber, List<LeaveBean> leavesBeans, StateWrapper state) {
 	List<LocalDate> days = new ArrayList<LocalDate>();
 	YearMonth yearMonth = new YearMonth(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
 	yearMonth.addMonth();
@@ -349,17 +363,17 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	while (daysNumber != 0) {
 	    day = getPreviousWorkingDay(justificationMotive, assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		    .getAssiduousness(), day, true);
-	    if (!unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day)) {
+	    if (!state.unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day)) {
 		days.add(day);
 		daysNumber--;
 	    }
 	    day = day.minusDays(1);
 	}
-	unjustifiedDays.addAll(days);
+	state.unjustifiedDays.addAll(days);
 	return days;
     }
 
-    private boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, LocalDate day) {
+    private static boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, LocalDate day) {
 	if (leavesBeans != null) {
 	    for (LeaveBean leaveBean : leavesBeans) {
 		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
@@ -375,13 +389,14 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return false;
     }
 
-    private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean) {
+    private static StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
+	    StateWrapper state) {
 	return getLeaveLine(assiduousnessClosedMonth, leaveBean, assiduousnessClosedMonth.getBeginDate(),
-		assiduousnessClosedMonth.getEndDate(), null);
+		assiduousnessClosedMonth.getEndDate(), null, state);
     }
 
-    private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
-	    LocalDate beginDate, LocalDate endDate, LocalDate paymentMonth) {
+    private static StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
+	    LocalDate beginDate, LocalDate endDate, LocalDate paymentMonth, StateWrapper state) {
 	StringBuilder line = new StringBuilder();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	if (leaveBean.getLeave().getTotalInterval().overlaps(interval)) {
@@ -401,11 +416,11 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		    assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 
 	    if (code != 0) {
-		if (leaveBean.getLeave().getJustificationMotive() == maternityJustificationMotive
+		if (leaveBean.getLeave().getJustificationMotive() == state.maternityJustificationMotive
 			&& endDate.getDayOfMonth() != 30 && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
-		    if (!maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
+		    if (!state.maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
 			    && !isContractedEmployee(leaveBean.getLeave().getAssiduousness(), start, end)) {
-			maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
+			state.maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
 		    }
 		}
 		if (paymentMonth == null) {
@@ -429,7 +444,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return line;
     }
 
-    private LocalDate getNextWorkingDay(Leave leave, LocalDate day, boolean putOnlyWorkingDays) {
+    private static LocalDate getNextWorkingDay(Leave leave, LocalDate day, boolean putOnlyWorkingDays) {
 	if (leave.getJustificationMotive().getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = leave.getAssiduousness().getCampusForInterval(day, day);
 	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
@@ -443,8 +458,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return day;
     }
 
-    private LocalDate getPreviousWorkingDay(JustificationMotive justificationMotive, Assiduousness assiduousness, LocalDate day,
-	    boolean putOnlyWorkingDays) {
+    private static LocalDate getPreviousWorkingDay(JustificationMotive justificationMotive, Assiduousness assiduousness,
+	    LocalDate day, boolean putOnlyWorkingDays) {
 	if (justificationMotive.getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = assiduousness.getCampusForInterval(day, day);
 	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
@@ -458,7 +473,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return day;
     }
 
-    private StringBuilder getHalfLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, Leave leave) {
+    private static StringBuilder getHalfLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, Leave leave) {
 	Integer code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
@@ -476,8 +491,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return line;
     }
 
-    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(Set<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate,
-	    LocalDate endDate, Boolean unpaidLicenceLeaves) {
+    private static HashMap<Assiduousness, List<LeaveBean>> getLeaves(Set<AssiduousnessRecord> assiduousnessRecords,
+	    LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
@@ -511,7 +526,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return finalAssiduousnessLeaves;
     }
 
-    private List<LeaveBean> joinLeaves(List<Leave> leaves) {
+    private static List<LeaveBean> joinLeaves(List<Leave> leaves) {
 	if (leaves != null) {
 	    List<LeaveBean> leaveBeanList = new ArrayList<LeaveBean>();
 	    Map<JustificationMotive, List<Leave>> leavesByMotive = new HashMap<JustificationMotive, List<Leave>>();
@@ -538,10 +553,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		    if (nextLeave != null) {
 			leave = nextLeave;
 		    } else {
-			leave = (Leave) iterator.next();
+			leave = iterator.next();
 		    }
 		    if (iterator.hasNext()) {
-			nextLeave = (Leave) iterator.next();
+			nextLeave = iterator.next();
 		    }
 		    if (nextLeave != null) {
 			if (leave.getEndLocalDate().plusDays(1).isEqual(nextLeave.getDate().toLocalDate())) {
@@ -582,12 +597,12 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return null;
     }
 
-    private Boolean isADISTEmployee(AssiduousnessClosedMonth assiduousnessClosedMonth) {
+    private static Boolean isADISTEmployee(AssiduousnessClosedMonth assiduousnessClosedMonth) {
 	return (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousnessStatus().getDescription()
 		.equals("Contratado pela ADIST"));
     }
 
-    private Boolean isContractedEmployee(Assiduousness assiduousness, LocalDate start, LocalDate end) {
+    private static Boolean isContractedEmployee(Assiduousness assiduousness, LocalDate start, LocalDate end) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousness.getStatusBetween(start, end)) {
 	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equals("Contrato a termo certo")) {
 		return true;
@@ -596,7 +611,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return false;
     }
 
-    private JustificationMotive getUnjustifiedJustificationMotive() {
+    private static JustificationMotive getUnjustifiedJustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
 	    if (justificationMotive.getAcronym().equalsIgnoreCase("FINJUST")) {
 		return justificationMotive;
@@ -605,7 +620,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return null;
     }
 
-    private JustificationMotive getA66JustificationMotive() {
+    private static JustificationMotive getA66JustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
 	    if (justificationMotive.getAcronym().equalsIgnoreCase("A66")) {
 		return justificationMotive;
@@ -614,7 +629,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return null;
     }
 
-    public JustificationMotive getMaternityJustificationMotive() {
+    public static JustificationMotive getMaternityJustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
 	    if (justificationMotive.getAcronym().equalsIgnoreCase("LP25%")) {
 		return justificationMotive;

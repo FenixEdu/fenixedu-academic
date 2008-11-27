@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllAssiduousnessWorkSheets extends FenixService {
 
-    public List<EmployeeWorkSheet> run(AssiduousnessExportChoices assiduousnessExportChoices) {
+    @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
+    @Service
+    public static List<EmployeeWorkSheet> run(AssiduousnessExportChoices assiduousnessExportChoices) {
 	final List<EmployeeWorkSheet> employeeWorkSheetList = new ArrayList<EmployeeWorkSheet>();
 	ReadAssiduousnessWorkSheet workSheet = new ReadAssiduousnessWorkSheet();
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {

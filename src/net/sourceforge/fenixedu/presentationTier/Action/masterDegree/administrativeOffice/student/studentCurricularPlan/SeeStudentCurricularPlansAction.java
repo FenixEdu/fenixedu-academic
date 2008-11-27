@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,12 +39,11 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
 	    throw new FenixActionException(e);
 	}
 
-	Object args[] = { studentId2 };
 	IUserView userView = getUserView(request);
 
 	List studentCurricularPlansList = null;
 	try {
-	    studentCurricularPlansList = (ArrayList) ServiceUtils.executeService("ReadPosGradStudentCurricularPlans", args);
+	    studentCurricularPlansList = (ArrayList) ReadPosGradStudentCurricularPlans.run(studentId2);
 	    if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
 		Collections.sort(studentCurricularPlansList);
 	    }

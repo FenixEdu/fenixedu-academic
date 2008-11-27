@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -14,7 +18,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 
 public class DeleteShift extends FenixService {
 
-    public void run(InfoShift infoShift) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoShift infoShift) throws FenixServiceException {
 	rootDomainObject.readShiftByOID(infoShift.getIdInternal()).delete();
     }
 

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
  */
 public class GetEndOfScholarshipDate extends FenixService {
 
-    public Date run(Integer studentCurricularPlanID) {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Date run(Integer studentCurricularPlanID) {
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
 	IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory

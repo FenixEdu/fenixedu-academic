@@ -1,5 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.DeliveredAcademicServiceRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ConcludeAcademicServiceRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ReceivedAcademicServiceRequestFromExternalEntity;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -109,7 +121,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    executeService("ProcessNewAcademicServiceRequests", new Object[] { academicServiceRequest });
+	    ProcessNewAcademicServiceRequests.run(academicServiceRequest);
 	    addActionMessage(request, "academic.service.request.processed.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
@@ -142,8 +154,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    executeService("SendAcademicServiceRequestToExternalEntity", new Object[] { serviceRequest,
-		    requestBean.getSituationDate(), requestBean.getJustification() });
+	    SendAcademicServiceRequestToExternalEntity.run(serviceRequest,
+		    requestBean.getSituationDate(), requestBean.getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -173,8 +185,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    executeService("ReceivedAcademicServiceRequestFromExternalEntity", new Object[] { serviceRequest,
-		    requestBean.getSituationDate(), requestBean.getJustification() });
+	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest,
+		    requestBean.getSituationDate(), requestBean.getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -204,7 +216,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
-	    executeService("RejectAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
+	    RejectAcademicServiceRequest.run(academicServiceRequest, justification);
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
@@ -265,8 +277,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
 	try {
-	    executeService("ConcludeAcademicServiceRequest", new Object[] { academicServiceRequest, getSendEmailToStudent(form),
-		    getSituationDate(), getJustification() });
+	    ConcludeAcademicServiceRequest.run(academicServiceRequest, getSendEmailToStudent(form),
+		    getSituationDate(), getJustification());
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
 	    if (academicServiceRequest.isDocumentRequest()
@@ -303,7 +315,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    executeService("DeliveredAcademicServiceRequest", new Object[] { academicServiceRequest });
+	    DeliveredAcademicServiceRequest.run(academicServiceRequest);
 	    addActionMessage(request, "academic.service.request.delivered.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());

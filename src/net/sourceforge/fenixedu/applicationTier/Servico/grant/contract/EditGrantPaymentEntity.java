@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProje
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Barbosa
@@ -20,7 +22,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
  */
 public class EditGrantPaymentEntity extends FenixService {
 
-    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantCostCenter infoObject) throws FenixServiceException {
 	GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject
 		.getIdInternal());
 	if (grantCostCenter == null) {
@@ -37,7 +41,9 @@ public class EditGrantPaymentEntity extends FenixService {
 	}
     }
 
-    public void run(InfoGrantProject infoObject) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantProject infoObject) throws FenixServiceException {
 	GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal());
 	if (grantProject == null) {
 	    grantProject = new GrantProject();

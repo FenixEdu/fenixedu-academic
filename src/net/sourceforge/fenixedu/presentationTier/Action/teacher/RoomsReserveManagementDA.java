@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserve;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -95,7 +97,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 
 	PunctualRoomsOccupationRequest punctualRequest = null;
 	try {
-	    punctualRequest = (PunctualRoomsOccupationRequest) executeService("CreateNewRoomsReserve", new Object[] { bean });
+	    punctualRequest = (PunctualRoomsOccupationRequest) CreateNewRoomsReserve.run(bean);
 
 	} catch (DomainException e) {
 	    saveMessages(request, e);

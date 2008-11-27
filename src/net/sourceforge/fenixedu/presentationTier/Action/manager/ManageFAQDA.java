@@ -4,6 +4,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFAQEntry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFAQEntry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFAQSection;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFAQSection;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,8 +124,7 @@ public class ManageFAQDA extends FenixDispatchAction {
 	}
 	infoFAQSection.setSectionName(sectionName);
 
-	Object[] args = { infoFAQSection };
-	ServiceUtils.executeService("CreateFAQSection", args);
+	CreateFAQSection.run(infoFAQSection);
 
 	return mapping.findForward("Manage");
     }
@@ -128,8 +135,8 @@ public class ManageFAQDA extends FenixDispatchAction {
 
 	if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
 	    Integer sectionId = new Integer(sectionIdString);
-	    Object[] args = { sectionId };
-	    ServiceUtils.executeService("DeleteFAQSection", args);
+
+	    DeleteFAQSection.run(sectionId);
 	}
 
 	return mapping.findForward("Manage");
@@ -153,8 +160,7 @@ public class ManageFAQDA extends FenixDispatchAction {
 	infoFAQEntry.setAnswer(answer);
 	infoFAQEntry.setParentSection(infoFAQSection);
 
-	Object[] args = { infoFAQEntry };
-	ServiceUtils.executeService("CreateFAQEntry", args);
+	CreateFAQEntry.run(infoFAQEntry);
 
 	return mapping.getInputForward();
     }
@@ -165,8 +171,8 @@ public class ManageFAQDA extends FenixDispatchAction {
 
 	if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
 	    Integer entryId = new Integer(entryIdString);
-	    Object[] args = { entryId };
-	    ServiceUtils.executeService("DeleteFAQEntry", args);
+
+	    DeleteFAQEntry.run(entryId);
 	}
 
 	return mapping.getInputForward();

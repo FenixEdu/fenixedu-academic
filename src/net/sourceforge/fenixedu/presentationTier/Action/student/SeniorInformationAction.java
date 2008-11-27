@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.senior.ReadStudentSenior;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,7 +51,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	if (registration == null) {
 	    throw new FenixActionException();
 	} else {
-	    final Senior senior = (Senior) executeService("ReadStudentSenior", new Object[] { registration });
+	    final Senior senior = (Senior) ReadStudentSenior.run(registration);
 	    request.setAttribute("senior", senior);
 	    return mapping.findForward("show-form");
 	}

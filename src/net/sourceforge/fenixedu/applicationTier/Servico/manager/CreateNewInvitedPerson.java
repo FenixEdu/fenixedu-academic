@@ -4,10 +4,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateNewInvitedPerson extends FenixService {
 
-    public Invitation run(InvitedPersonBean bean) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Invitation run(InvitedPersonBean bean) {
 	Person person = new Person(bean);
 	Invitation invitation = new Invitation(person, bean.getUnit(), bean.getResponsible(), bean.getBegin(), bean.getEnd());
 	person.setIstUsername();

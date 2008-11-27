@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.AddPersonRole;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,8 +36,7 @@ public class CreatePersonAction extends FenixDispatchAction {
 
 	final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 
-	final Object[] args = { person, RoleType.PERSON };
-	ServiceUtils.executeService("AddPersonRole", args);
+	AddPersonRole.run(person, RoleType.PERSON);
 
 	// It simply returns Success - The object is created by the renderer
 	// mechanism

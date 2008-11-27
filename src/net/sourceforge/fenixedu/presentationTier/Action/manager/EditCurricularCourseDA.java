@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditCurricularCourse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -181,10 +183,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 	}
 	newInfoCurricularCourse.setRegimeType(regimeType);
 
-	Object args[] = { newInfoCurricularCourse };
 
 	try {
-	    ServiceUtils.executeService("EditCurricularCourse", args);
+	    EditCurricularCourse.run(newInfoCurricularCourse);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
 	} catch (ExistingServiceException e) {

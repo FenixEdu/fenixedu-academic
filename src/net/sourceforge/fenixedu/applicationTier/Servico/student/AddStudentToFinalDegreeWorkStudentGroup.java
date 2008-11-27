@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -34,7 +38,9 @@ import org.apache.commons.collections.Predicate;
  */
 public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 
-    public boolean run(Integer groupOID, String username) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer groupOID, String username) throws FenixServiceException {
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Registration registration = findSomeRegistration(username);
 	if (group == null
@@ -141,7 +147,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	return true;
     }
 
-    private Registration findSomeRegistration(final String username) {
+    private static Registration findSomeRegistration(final String username) {
 	final Login login = Login.readLoginByUsername(username);
 	if (login != null) {
 	    final Person person = login.getUser().getPerson();
@@ -177,7 +183,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	return null;
     }
 
-    public class MaximumNumberOfStudentsUndefinedException extends FenixServiceException {
+    public static class MaximumNumberOfStudentsUndefinedException extends FenixServiceException {
 	public MaximumNumberOfStudentsUndefinedException() {
 	    super();
 	}
@@ -199,7 +205,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
-    public class MaximumNumberOfStudentsReachedException extends FenixServiceException {
+    public static class MaximumNumberOfStudentsReachedException extends FenixServiceException {
 	public MaximumNumberOfStudentsReachedException() {
 	    super();
 	}
@@ -221,7 +227,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
-    public class MinimumNumberOfCompletedCoursesUndefinedException extends FenixServiceException {
+    public static class MinimumNumberOfCompletedCoursesUndefinedException extends FenixServiceException {
 	public MinimumNumberOfCompletedCoursesUndefinedException() {
 	    super();
 	}
@@ -243,7 +249,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
-    public class MinimumCompletedCreditsSecondCycleUndefinedException extends FenixServiceException {
+    public static class MinimumCompletedCreditsSecondCycleUndefinedException extends FenixServiceException {
 	public MinimumCompletedCreditsSecondCycleUndefinedException() {
 	    super();
 	}
@@ -265,25 +271,25 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
-    public class NotCompletedCurricularYearException extends FenixServiceException {
+    public static class NotCompletedCurricularYearException extends FenixServiceException {
 	public NotCompletedCurricularYearException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
+    public static class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
 	public MinimumNumberOfCompletedCoursesNotReachedException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    public class MinimumCompletedCreditsSecondCycleNotReachedException extends FenixServiceException {
+    public static class MinimumCompletedCreditsSecondCycleNotReachedException extends FenixServiceException {
 	public MinimumCompletedCreditsSecondCycleNotReachedException(String s, String[] args) {
 	    super(s, args);
 	}
     }
 
-    private class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
+    private static class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
 	Registration registration = null;
 
 	public boolean evaluate(Object arg0) {

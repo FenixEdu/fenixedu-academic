@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveGradesFromConfirmedMarkSheet;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -214,7 +216,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
 	List<EnrolmentEvaluation> evaluations = getEvaluationsToRemove(form);
 	try {
-	    executeService("RemoveGradesFromConfirmedMarkSheet", new Object[] { markSheet, evaluations });
+	    RemoveGradesFromConfirmedMarkSheet.run(markSheet, evaluations);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    return listMarkSheet(mapping, actionForm, request, response);

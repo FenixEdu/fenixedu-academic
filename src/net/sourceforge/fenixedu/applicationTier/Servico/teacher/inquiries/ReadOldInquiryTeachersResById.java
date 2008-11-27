@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
  */
 public class ReadOldInquiryTeachersResById extends FenixService {
 
-    public InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, IllegalAccessException,
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, IllegalAccessException,
 	    InvocationTargetException, NoSuchMethodException {
 	InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;
 

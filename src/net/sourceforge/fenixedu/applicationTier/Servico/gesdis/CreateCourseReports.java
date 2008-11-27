@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -18,7 +20,9 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
  */
 public class CreateCourseReports extends FenixService {
 
-    public void run(Integer executionPeriodID) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer executionPeriodID) {
 	Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

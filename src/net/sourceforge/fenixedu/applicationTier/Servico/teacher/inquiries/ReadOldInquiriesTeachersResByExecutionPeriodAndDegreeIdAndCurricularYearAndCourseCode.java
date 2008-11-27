@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -22,7 +26,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode extends FenixService {
 
-    public List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode)
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode)
 	    throws FenixServiceException {
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 

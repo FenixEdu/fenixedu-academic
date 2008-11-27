@@ -5,10 +5,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsuranceWithContractAndPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadGrantInsuranceByGrantContract extends FenixService {
 
-    public InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static InfoGrantInsurance run(Integer idContract) throws FenixServiceException {
 	GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
 	if (grantContract.getGrantInsurance() != null) {
 	    return InfoGrantInsuranceWithContractAndPaymentEntity.newInfoFromDomain(grantContract.getGrantInsurance());

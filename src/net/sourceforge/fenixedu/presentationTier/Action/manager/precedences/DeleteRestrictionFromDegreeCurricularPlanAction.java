@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.DeleteRestrictionFromDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences.ReadPrecedencesFromDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,6 +25,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class DeleteRestrictionFromDegreeCurricularPlanAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 
@@ -33,12 +35,9 @@ public class DeleteRestrictionFromDegreeCurricularPlanAction extends FenixAction
 	Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 	Integer restrictionID = new Integer(request.getParameter("restrictionId"));
 
-	Object args1[] = { restrictionID };
-	Object args2[] = { degreeCurricularPlanID };
-
 	try {
-	    ServiceUtils.executeService("DeleteRestrictionFromDegreeCurricularPlan", args1);
-	    Map result = (Map) ServiceUtils.executeService("ReadPrecedencesFromDegreeCurricularPlan", args2);
+	    DeleteRestrictionFromDegreeCurricularPlan.run(restrictionID);
+	    Map result = ReadPrecedencesFromDegreeCurricularPlan.run(degreeCurricularPlanID);
 	    request.setAttribute("precedences", result);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

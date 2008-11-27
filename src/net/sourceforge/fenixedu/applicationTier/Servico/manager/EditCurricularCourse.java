@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author lmac1
  */
@@ -22,7 +25,9 @@ public class EditCurricularCourse extends FenixService {
     public EditCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
 	CurricularCourse oldCurricularCourse = null;
 	String newName = null;
 	String newNameEn = null;
@@ -82,7 +87,7 @@ public class EditCurricularCourse extends FenixService {
 	}
     }
 
-    public class ExistingAcronymException extends FenixServiceException {
+    public static class ExistingAcronymException extends FenixServiceException {
 
 	public ExistingAcronymException() {
 	}
@@ -99,6 +104,7 @@ public class EditCurricularCourse extends FenixService {
 	    super(message, cause);
 	}
 
+	@Override
 	public String toString() {
 	    String result = "[ExistingAcronymException\n";
 	    result += "message" + this.getMessage() + "\n";

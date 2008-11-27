@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -204,9 +208,8 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	Integer sourceOrder = Integer.valueOf(request.getParameter("source"));
 	String slotName = request.getParameter("slotName");
 
-	Object[] args = { (sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2 : domainObject1,
-		slotName };
-	ServiceUtils.executeService("TransferDomainObjectProperty", args);
+	TransferDomainObjectProperty.run((sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2 : domainObject1,
+		slotName);
 
 	return chooseObjects(mapping, form, request, response);
 
@@ -220,9 +223,9 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	Integer objectIdInternal = Integer.valueOf(request.getParameter("objectIdInternal"));
 
 	final String classToMerge = request.getParameter("classToMerge");
-	Object[] args = { Class.forName(classToMerge), objectIdInternal };
+
 	try {
-	    ServiceUtils.executeService("DeleteObjectByOID", args);
+	    DeleteObjectByOID.run(Class.forName(classToMerge), objectIdInternal);
 	} catch (DomainException e) {
 	    e.printStackTrace();
 	    return chooseObjects(mapping, form, request, response);

@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +27,9 @@ import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricu
 
 public class ReadCoordinatedDegrees extends FenixService {
 
-    public List<InfoDegreeCurricularPlan> run(IUserView userView) throws FenixServiceException {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static List<InfoDegreeCurricularPlan> run(IUserView userView) throws FenixServiceException {
 	final Person person = userView.getPerson();
 	if (person == null) {
 	    throw new InvalidArgumentsServiceException();

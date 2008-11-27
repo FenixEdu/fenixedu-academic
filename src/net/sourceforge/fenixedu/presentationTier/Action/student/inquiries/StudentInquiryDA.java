@@ -3,6 +3,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiry;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiryNotAnswer;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SubmitStudentSpentTimeInPeriod;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.RetrieveOrCreateStudentInquiriesRegistries;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -60,8 +68,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = lastPeriod.getExecutionPeriod();
 
 	final Student student = AccessControl.getPerson().getStudent();
-	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) executeService(
-		"RetrieveOrCreateStudentInquiriesRegistries", new Object[] { student, executionSemester });
+	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) RetrieveOrCreateStudentInquiriesRegistries.run(student, executionSemester);
 
 	boolean isAnyInquiryToAnswer = false;
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
@@ -95,8 +102,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
 
 	try {
-	    executeService("SubmitStudentSpentTimeInPeriod", new Object[] { AccessControl.getPerson().getStudent(), courses,
-		    weeklySpentHours.getInteger(), executionSemester });
+	    SubmitStudentSpentTimeInPeriod.run(AccessControl.getPerson().getStudent(), courses,
+		    weeklySpentHours.getInteger(), executionSemester);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}
@@ -145,8 +152,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    }
 	}
 
-	executeService("WriteStudentInquiryNotAnswer", new Object[] { inquiriesRegistry, justification,
-		notAnsweredOtherJustification });
+	WriteStudentInquiryNotAnswer.run(inquiriesRegistry, justification,
+		notAnsweredOtherJustification);
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 
@@ -242,7 +249,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
-	executeService("WriteStudentInquiry", new Object[] { studentInquiry });
+	WriteStudentInquiry.run(studentInquiry);
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 

@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,7 +75,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 	    Integer classToDeleteId = (Integer) actionForm.get("classToManageId");
 
 	    try {
-		executeService("DeleteObjectByOID", new Object[] { Class.forName(classToDelete), classToDeleteId });
+		DeleteObjectByOID.run(Class.forName(classToDelete), classToDeleteId);
 		request.setAttribute("message", "Object " + classToDelete + " with ID:" + classToDeleteId
 			+ " Deleted. God have mercy of your soul...");
 

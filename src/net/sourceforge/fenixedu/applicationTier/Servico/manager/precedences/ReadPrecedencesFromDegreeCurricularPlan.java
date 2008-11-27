@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +20,9 @@ import net.sourceforge.fenixedu.domain.precedences.Precedence;
 
 public class ReadPrecedencesFromDegreeCurricularPlan extends FenixService {
 
-    public Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static Map run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
 	Map finalListOfInfoPrecedences = new HashMap();
 
@@ -35,7 +41,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan extends FenixService {
 	return finalListOfInfoPrecedences;
     }
 
-    private void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
+    private static void putInMap(Map finalListOfInfoPrecedences, CurricularCourse curricularCourse, List precedences) {
 
 	if (!precedences.isEmpty()) {
 	    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
@@ -46,7 +52,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan extends FenixService {
 	}
     }
 
-    private List clone(List precedences) {
+    private static List clone(List precedences) {
 
 	List result = new ArrayList();
 

@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -20,7 +24,9 @@ public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
 	super();
     }
 
-    public boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
 	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
 	if (groupProposal != null) {
@@ -51,7 +57,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
 	return true;
     }
 
-    public class NoAttributionToConfirmException extends FenixServiceException {
+    public static class NoAttributionToConfirmException extends FenixServiceException {
 
 	public NoAttributionToConfirmException() {
 	    super();

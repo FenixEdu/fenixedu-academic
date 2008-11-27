@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -21,7 +25,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldInquiriesTeachersResByDegreeId extends FenixService {
 
-    public List run(Integer degreeId) throws FenixServiceException {
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    @Service
+    public static List run(Integer degreeId) throws FenixServiceException {
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
 	if (degree == null) {

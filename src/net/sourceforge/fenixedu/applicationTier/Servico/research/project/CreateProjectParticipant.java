@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.project;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -28,7 +32,9 @@ public class CreateProjectParticipant extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    public ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId) throws FenixServiceException {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId) throws FenixServiceException {
 	ProjectParticipation participation = null;
 	final Project project = rootDomainObject.readProjectByOID(projectId);
 	if (project == null) {
@@ -56,7 +62,9 @@ public class CreateProjectParticipant extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    public ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws FenixServiceException {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws FenixServiceException {
 	final ProjectParticipation participation;
 	final ExternalContract externalPerson;
 
@@ -86,7 +94,9 @@ public class CreateProjectParticipant extends FenixService {
 	return participation;
     }
 
-    public ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId) throws FenixServiceException {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId) throws FenixServiceException {
 	final ProjectParticipation participation;
 	final Unit unit;
 

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.AddNewDelegate;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.delegates.RemoveDelegate;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -143,7 +145,6 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	DelegateBean bean = (DelegateBean) getFromRequest(request, "newYearDelegateBean");
 
-	Object[] args = null;
 	if (bean != null) { /* From Delegates management main page */
 	    final Integer studentNumber = bean.getStudentNumber();
 	    final Student student = Student.readStudentByNumber(studentNumber);
@@ -155,7 +156,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 		return prepareViewDelegates(mapping, actionForm, request, response);
 	    }
 
-	    args = new Object[] { student, bean.getCurricularYear(), bean.getDegree() };
+	    AddNewDelegate.run(student, bean.getCurricularYear(), bean.getDegree());
 	} else { /* From selected delegate election voting results */
 	    final Integer electionOID = Integer.parseInt(request.getParameter("selectedElection"));
 	    final YearDelegateElection election = (YearDelegateElection) rootDomainObject.readDelegateElectionByOID(electionOID);
@@ -163,10 +164,11 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	    final Student student = rootDomainObject.readStudentByOID(studentOID);
 
 	    bean = getInitializedBean(election.getDegree());
-	    args = new Object[] { student, election };
+	    AddNewDelegate.run(student, election);
 	}
-
-	return createDelegate(mapping, actionForm, request, response, args, bean, "prepareViewDelegates");
+	RenderUtils.invalidateViewState("delegateBean");
+	request.setAttribute("delegateBean", bean);
+	return mapping.findForward("prepareViewDelegates");
     }
 
     public ActionForward addDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -186,22 +188,10 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	final Degree degree = bean.getDegree();
 	final FunctionType functionType = bean.getDelegateType();
 
-	return createDelegate(mapping, actionForm, request, response, new Object[] { student, degree, functionType }, bean,
-		"prepareViewDelegates");
-    }
-
-    private ActionForward createDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, Object[] args, DelegateBean bean, String forwardTo) throws Exception {
-
-	try {
-	    executeService("AddNewDelegate", args);
-	} catch (FenixServiceException ex) {
-	    addActionMessage(request, ex.getMessage(), ex.getArgs());
-	}
-
+	AddNewDelegate.run(student, degree, functionType);
 	RenderUtils.invalidateViewState("delegateBean");
 	request.setAttribute("delegateBean", bean);
-	return mapping.findForward(forwardTo);
+	return mapping.findForward("prepareViewDelegates");
     }
 
     public ActionForward removeDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -209,19 +199,15 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
 	final Student student = rootDomainObject.readStudentByOID(delegateOID);
 
-	Object[] args = null;
-
-	if (request.getParameter("delegateType") != null) {
-	    final String delegateType = request.getParameter("delegateType");
-	    final FunctionType delegateFunctionType = FunctionType.valueOf(delegateType);
-
-	    args = new Object[] { student, delegateFunctionType };
-	} else {
-	    args = new Object[] { student };
-	}
-
 	try {
-	    executeService("RemoveDelegate", args);
+	    if (request.getParameter("delegateType") != null) {
+		final String delegateType = request.getParameter("delegateType");
+		final FunctionType delegateFunctionType = FunctionType.valueOf(delegateType);
+
+		RemoveDelegate.run(student, delegateFunctionType);
+	    } else {
+		RemoveDelegate.run(student);
+	    }
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
@@ -258,7 +244,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChangeDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
-	final Student delegate = (Student) rootDomainObject.readStudentByOID(delegateOID);
+	final Student delegate = rootDomainObject.readStudentByOID(delegateOID);
 
 	DelegateElection election = delegate.getLastElectedDelegateElection();
 
@@ -335,8 +321,10 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	final Person person = bean.getGgaeDelegate();
 
 	final Function delegateFunction = bean.getGgaeDelegateFunction();
-	return createDelegate(mapping, actionForm, request, response, new Object[] { person, delegateFunction }, bean,
-		"prepareViewGGAEDelegates");
+	AddNewDelegate.run(person, delegateFunction);
+	RenderUtils.invalidateViewState("delegateBean");
+	request.setAttribute("delegateBean", bean);
+	return mapping.findForward("prepareViewGGAEDelegates");
     }
 
     public ActionForward removeGGAEDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -348,7 +336,7 @@ public class DelegatesManagementDispatchAction extends FenixDispatchAction {
 	final Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionId);
 
 	try {
-	    executeService("RemoveDelegate", new Object[] { person, function });
+	    RemoveDelegate.run(person, function);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}

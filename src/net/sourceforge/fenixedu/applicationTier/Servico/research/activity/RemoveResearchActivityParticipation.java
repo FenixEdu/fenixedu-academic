@@ -8,39 +8,66 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipati
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveResearchActivityParticipation extends FenixService {
 
-    public void run(EventParticipation participation) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(EventParticipation participation) {
 	ResearchEvent event = participation.getEvent();
 	participation.delete();
 	event.sweep();
     }
 
-    public void run(ScientificJournalParticipation participation) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(ScientificJournalParticipation participation) {
 	ScientificJournal journal = participation.getScientificJournal();
 	participation.delete();
 	journal.sweep();
     }
 
-    public void run(EventEditionParticipation participation) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(EventEditionParticipation participation) {
 	EventEdition edition = participation.getEventEdition();
 	participation.delete();
 	edition.sweep();
     }
 
-    public void run(JournalIssueParticipation participation) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(JournalIssueParticipation participation) {
 	JournalIssue issue = participation.getJournalIssue();
 	participation.delete();
 	issue.sweep();
     }
 
-    public void run(CooperationParticipation participation) {
+    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Service
+    public static void run(CooperationParticipation participation) {
 	Cooperation cooperation = participation.getCooperation();
 	participation.delete();
 	cooperation.sweet();
+    }
+
+    public static void run(Participation participation) {
+	if (participation instanceof EventParticipation) {
+	    run((EventParticipation) participation);
+	} else if (participation instanceof ScientificJournalParticipation) {
+	    run((ScientificJournalParticipation) participation);
+	} else if (participation instanceof EventEditionParticipation) {
+	    run((EventEditionParticipation) participation);
+	} else if (participation instanceof JournalIssueParticipation) {
+	    run((JournalIssueParticipation) participation);
+	} else if (participation instanceof CooperationParticipation) {
+	    run((CooperationParticipation) participation);
+	}
     }
 }

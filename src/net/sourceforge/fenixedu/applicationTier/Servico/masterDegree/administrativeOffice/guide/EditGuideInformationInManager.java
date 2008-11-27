@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
  */
 public class EditGuideInformationInManager extends FenixService {
 
-    public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType) {
 	Guide guide = rootDomainObject.readGuideByOID(guideID);
 
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);

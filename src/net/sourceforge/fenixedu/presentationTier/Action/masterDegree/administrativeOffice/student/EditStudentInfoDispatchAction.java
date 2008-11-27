@@ -12,6 +12,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ChangePersonalStudentInfo;
+
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,8 +150,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
 
 	InfoPerson newInfoPerson = null;
 	try {
-	    newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService("ChangePersonalStudentInfo",
-		    new Object[] { infoPerson });
+	    newInfoPerson = (InfoPerson) ChangePersonalStudentInfo.run(infoPerson);
 
 	} catch (DomainException e) {
 	    ActionMessages actionMessages = new ActionMessages();

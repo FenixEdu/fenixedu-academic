@@ -1,5 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExecutionCourseWithAssociatedCurricularCourses;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -47,11 +61,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	Integer executionCourseOID = ((InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE))
 		.getIdInternal();
 
-	Object args[] = { executionCourseOID };
 	InfoExecutionCourse executionCourse;
 	try {
-	    executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-		    "ReadExecutionCourseWithAssociatedCurricularCourses", args);
+	    executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(executionCourseOID);
 	} catch (Exception ex) {
 	    throw new Exception(ex);
 	}
@@ -183,11 +195,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	List executionCourseList = new ArrayList();
 	for (int i = 0; i < executionCourseArray.length; i++) {
-	    Object args[] = { new Integer(executionCourseArray[i]) };
+
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-			"ReadExecutionCourseWithAssociatedCurricularCourses", args);
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -251,11 +262,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	List executionCourseList = new ArrayList();
 	for (int i = 0; i < executionCourseArray.length; i++) {
-	    Object args[] = { new Integer(executionCourseArray[i]) };
+
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-			"ReadExecutionCourseWithAssociatedCurricularCourses", args);
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -372,11 +382,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	List executionCourseList = new ArrayList();
 	for (int i = 0; i < executionCourseArray.length; i++) {
 
-	    Object args[] = { new Integer(executionCourseArray[i]) };
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-			"ReadExecutionCourseWithAssociatedCurricularCourses", args);
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -425,11 +433,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	List newExecutionCourseList = new ArrayList();
 	while (iter.hasNext()) {
 	    InfoExecutionCourse element = (InfoExecutionCourse) iter.next();
-	    Object args[] = { element.getIdInternal() };
+
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-			"ReadExecutionCourseWithAssociatedCurricularCourses", args);
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(element.getIdInternal());
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -594,11 +601,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	List executionCourseList = new ArrayList();
 	for (int i = 0; i < executionCourseArray.length; i++) {
-	    Object args[] = { new Integer(executionCourseArray[i]) };
+
 	    InfoExecutionCourse executionCourse;
 	    try {
-		executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-			"ReadExecutionCourseWithAssociatedCurricularCourses", args);
+		executionCourse = (InfoExecutionCourse) ReadExecutionCourseWithAssociatedCurricularCourses.run(new Integer(executionCourseArray[i]));
 	    } catch (Exception ex) {
 		throw new Exception(ex);
 	    }
@@ -659,11 +665,10 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    return prepare(mapping, form, request, response);
 	}
 
-	Object args[] = { YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE };
 
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
+		null, null, Boolean.FALSE);
 
 	String[] rooms = (String[]) examForm.get("rooms");
 	List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();

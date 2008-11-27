@@ -4,6 +4,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -108,10 +116,9 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	request.setAttribute("studentNumber", studentNumber);
 
 	List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
-	Object[] args = { studentNumber, DegreeType.MASTER_DEGREE };
+
 	try {
-	    List<StudentCurricularPlan> studentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree", args);
+	    List<StudentCurricularPlan> studentCurricularPlans = (List) ReadStudentCurricularPlansByNumberAndDegreeType.run(studentNumber, DegreeType.MASTER_DEGREE);
 
 	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 		if (studentCurricularPlan.getDegreeCurricularPlan().getExecutionYears().contains(executionYear)) {
@@ -157,10 +164,9 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 
 	// read student curricular plan only for show in jsp
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-	Object[] args = { studentCurricularPlanID };
+
 	try {
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-		    "ReadStudentCurricularPlanInMasterDegree", args);
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(studentCurricularPlanID);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
@@ -171,10 +177,9 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 
 	// read gratuity values of the execution course
 	InfoGratuityValues infoGratuityValues = null;
-	Object args3[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear };
+
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(
-		    "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear", args3);
+	    infoGratuityValues = (InfoGratuityValues) ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear.run(infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(), executionYear);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -196,10 +201,9 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 
 	// read gratuity situation of the student
 	InfoGratuitySituation infoGratuitySituation = null;
-	Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal() };
+
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-		    "ReadGratuitySituationByStudentCurricularPlanByGratuityValues", args2);
+	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationByStudentCurricularPlanByGratuityValues.run(studentCurricularPlanID, infoGratuityValues.getIdInternal());
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noGratuitySituation", new ActionError("error.impossible.insertExemptionGratuity"));

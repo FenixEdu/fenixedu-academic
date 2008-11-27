@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.GroupEnrolment;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -60,10 +66,9 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	    shiftCode = new Integer(shiftCodeString);
 	}
 
-	Object[] args1 = { groupPropertiesCode, shiftCode, null, userView.getUtilizador(), new Integer(2) };
 	try {
 
-	    ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
+	    VerifyStudentGroupAtributes.run(groupPropertiesCode, shiftCode, null, userView.getUtilizador(), new Integer(2));
 
 	} catch (NotAuthorizedException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
@@ -100,9 +105,9 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	}
 
 	InfoSiteStudentsWithoutGroup studentsNotEnroled = null;
-	Object[] args3 = { groupPropertiesCode, userView.getUtilizador() };
+
 	try {
-	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ServiceUtils.executeService("ReadStudentsWithoutGroup", args3);
+	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCode, userView.getUtilizador());
 
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors1 = new ActionErrors();
@@ -161,9 +166,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
 	List studentUsernames = Arrays.asList((String[]) enrolmentForm.get("studentsNotEnroled"));
 
-	Object[] args = { groupPropertiesCode, shiftCode, groupNumber, studentUsernames, userView.getUtilizador() };
 	try {
-	    ServiceUtils.executeService("GroupEnrolment", args);
+	    GroupEnrolment.run(groupPropertiesCode, shiftCode, groupNumber, studentUsernames, userView.getUtilizador());
 
 	} catch (NonExistingServiceException e) {
 	    ActionErrors actionErrors1 = new ActionErrors();

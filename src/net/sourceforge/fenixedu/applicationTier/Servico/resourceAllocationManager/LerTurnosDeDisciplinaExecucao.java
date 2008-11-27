@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 /**
  * Servi�o LerTurnosDeDisciplinaExecucao.
  * 
@@ -23,7 +27,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 
 public class LerTurnosDeDisciplinaExecucao extends FenixService {
 
-    public List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
 
 	List<InfoShift> infoShifts = new ArrayList<InfoShift>();
 

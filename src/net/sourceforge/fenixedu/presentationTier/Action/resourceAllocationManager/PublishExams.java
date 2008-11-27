@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.SwitchPublishedExamsFlag;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,8 +29,7 @@ public class PublishExams extends FenixContextDispatchAction {
 	final DynaActionForm dynaActionForm = (DynaActionForm) form;
 	final Integer executionPeriodOID = new Integer((String) dynaActionForm.get("executionPeriodOID"));
 
-	Object[] args = new Object[] { executionPeriodOID };
-	ServiceManagerServiceFactory.executeService("SwitchPublishedExamsFlag", args);
+	SwitchPublishedExamsFlag.run(executionPeriodOID);
 
 	return mapping.findForward("switch");
     }

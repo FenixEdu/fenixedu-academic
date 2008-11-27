@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadAvailableExecutionPeriods;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -62,9 +64,8 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 	    unavailableExecutionPeriodsIds.add(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 	}
 
-	Object args2[] = { unavailableExecutionPeriodsIds };
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadAvailableExecutionPeriods", args2);
+	    List infoExecutionPeriods = (List) ReadAvailableExecutionPeriods.run(unavailableExecutionPeriodsIds);
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 

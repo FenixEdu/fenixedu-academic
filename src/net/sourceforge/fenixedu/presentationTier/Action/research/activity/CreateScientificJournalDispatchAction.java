@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateScientificJournal;
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchScientificJournalCreationBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -60,14 +62,14 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	Person person = getLoggedPerson(request);
-	ResearchScientificJournalCreationBean bean = (ResearchScientificJournalCreationBean) getJournalBean(request);
+	ResearchScientificJournalCreationBean bean = getJournalBean(request);
 	if (bean == null)
 	    return prepareJournalSearch(mapping, form, request, response);
 
 	if (bean.getRole() != null) {
 	    try {
-		executeService("CreateResearchActivityParticipation", new Object[] { bean.getScientificJournal(), bean.getRole(),
-			person, bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate() });
+		CreateResearchActivityParticipation.run(bean.getScientificJournal(), bean.getRole(), person, bean
+			.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentJournalBean", bean);
@@ -83,17 +85,16 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Person person = getLoggedPerson(request);
 
-	ResearchScientificJournalCreationBean bean = (ResearchScientificJournalCreationBean) getJournalBean(request);
+	ResearchScientificJournalCreationBean bean = getJournalBean(request);
 	if (bean == null)
 	    return prepareJournalSearch(mapping, form, request, response);
 
 	ScientificJournal journal = null;
 	try {
-	    journal = (ScientificJournal) executeService("CreateScientificJournal", new Object[] {
-		    bean.getScientificJournalName(), (bean.getIssn() != null ? bean.getIssn() : ""), bean.getPublisher(),
-		    bean.getLocationType() });
-	    executeService("CreateResearchActivityParticipation", new Object[] { journal, bean.getRole(), person,
-		    bean.getRoleMessage() });
+	    journal = CreateScientificJournal.run(bean.getScientificJournalName(),
+		    (bean.getIssn() != null ? bean.getIssn() : ""), bean.getPublisher(), bean.getLocationType());
+	    CreateResearchActivityParticipation.run(journal, bean.getRole(), person, bean.getRoleMessage(), bean.getBeginDate(),
+		    bean.getEndDate());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("inexistentJournalBean", bean);

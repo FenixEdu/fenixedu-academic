@@ -13,9 +13,14 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateStudentCurricularPlan extends FenixService {
 
-    public void run(final Integer studentNumber, final DegreeType degreeType,
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer studentNumber, final DegreeType degreeType,
 	    final StudentCurricularPlanState studentCurricularPlanState, final Integer degreeCurricularPlanId,
 	    final Date startDate) throws FenixServiceException {
 

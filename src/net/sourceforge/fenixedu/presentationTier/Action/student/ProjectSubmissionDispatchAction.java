@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission.CreateProjectSubmission;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -139,9 +141,9 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 	File file = null;
 	try {
 	    file = FileUtils.copyToTemporaryFile(is);
-	    executeService("CreateProjectSubmission", new Object[] { file, createProjectSubmissionBean.getFilename(),
+	    CreateProjectSubmission.run(file, createProjectSubmissionBean.getFilename(),
 		    createProjectSubmissionBean.getAttends(), createProjectSubmissionBean.getProject(),
-		    createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson() });
+		    createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson());
 
 	} catch (DomainException ex) {
 	    saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());

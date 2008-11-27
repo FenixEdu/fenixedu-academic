@@ -4,6 +4,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.EditMasterDegreeCandidate;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByPerson;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateList;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -145,11 +151,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	if (candidateSituationTemp != null && candidateSituationTemp.length() != 0)
 	    situationName = new SituationName(candidateSituationTemp);
 
-	Object args[] = { executionDegree, specialization, situationName, candidateNumber, executionYear };
 	List result = null;
 
 	try {
-	    result = (List) ServiceManagerServiceFactory.executeService("ReadCandidateList", args);
+	    result = (List) ReadCandidateList.run(executionDegree, specialization, situationName, candidateNumber, executionYear);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}
@@ -201,9 +206,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	List result = null;
 
-	Object args[] = { personID };
 	try {
-	    result = (List) ServiceManagerServiceFactory.executeService("GetCandidatesByPerson", args);
+	    result = (List) GetCandidatesByPerson.run(personID);
 	} catch (Exception e) {
 	    throw new Exception(e);
 	}
@@ -423,9 +427,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
 	try {
 	    final MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
-	    final Object args[] = { masterDegreeCandidate, newCandidate, infoPerson };
-	    infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-		    "EditMasterDegreeCandidate", args);
+
+	    infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) EditMasterDegreeCandidate.run(masterDegreeCandidate, newCandidate, infoPerson);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("Esta Person", e);
 	} catch (FenixServiceException e) {

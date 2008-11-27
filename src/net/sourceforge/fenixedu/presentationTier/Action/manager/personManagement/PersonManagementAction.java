@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInvitedPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewPersonInvitation;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteInvitation;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationHostUnit;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditInvitationResponsible;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
@@ -192,10 +197,9 @@ public class PersonManagementAction extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithLoginInfo");
 	InvitedPersonBean invitedPersonBean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 
-	Object[] args = { invitedPersonBean };
 	Invitation invitation = null;
 	try {
-	    invitation = (Invitation) executeService("CreateNewInvitedPerson", args);
+	    invitation = CreateNewInvitedPerson.run(invitedPersonBean);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -278,7 +282,15 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward editPersonInvitationHostUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	return processInvitationEditService("EditInvitationHostUnit", mapping, request);
+	Invitation invitation = getInvitationFromParameter(request);
+	Unit hostUnit = getHostUnitFromParameter(request);
+	try {
+	    EditInvitationHostUnit.run(invitation, hostUnit);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+	request.setAttribute("invitation", invitation);
+	return mapping.findForward("prepareEditInvitation");
     }
 
     public ActionForward prepareCreateNewPersonInvitation(ActionMapping mapping, ActionForm actionForm,
@@ -303,9 +315,8 @@ public class PersonManagementAction extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState("invitedPersonBeanWithTimeInterval");
 	InvitedPersonBean bean = (InvitedPersonBean) viewState.getMetaObject().getObject();
 
-	Object[] args = { bean };
 	try {
-	    executeService("CreateNewPersonInvitation", args);
+	    CreateNewPersonInvitation.run(bean);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -318,16 +329,24 @@ public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward editPersonInvitationResponsible(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	return processInvitationEditService("EditInvitationResponsible", mapping, request);
+	Invitation invitation = getInvitationFromParameter(request);
+	Unit hostUnit = getHostUnitFromParameter(request);
+	try {
+	    EditInvitationResponsible.run(invitation, hostUnit);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	}
+	request.setAttribute("invitation", invitation);
+	return mapping.findForward("prepareEditInvitation");
     }
 
     public ActionForward deletePersonInvitation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	Invitation invitation = getInvitationFromParameter(request);
-	Object[] args = { invitation };
+
 	try {
-	    executeService("DeleteInvitation", args);
+	    DeleteInvitation.run(invitation);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -348,21 +367,6 @@ public class PersonManagementAction extends FenixDispatchAction {
 	request.setAttribute("invitation", invitation);
 	request.setAttribute("infoToEdit", infoToEdit);
 	return mapping.findForward("prepareEditInvitationDetails");
-    }
-
-    private ActionForward processInvitationEditService(String serviceName, ActionMapping mapping, HttpServletRequest request)
-	    throws FenixFilterException, FenixServiceException {
-
-	Invitation invitation = getInvitationFromParameter(request);
-	Unit hostUnit = getHostUnitFromParameter(request);
-	Object[] args = { invitation, hostUnit };
-	try {
-	    executeService(serviceName, args);
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	}
-	request.setAttribute("invitation", invitation);
-	return mapping.findForward("prepareEditInvitation");
     }
 
     private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request,

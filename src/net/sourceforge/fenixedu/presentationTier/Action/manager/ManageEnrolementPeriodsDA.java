@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateEnrolmentPeriods;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues;
+
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
@@ -58,9 +62,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	final String startTimeString = (String) actionForm.get("startTime");
 	final String endTimeString = (String) actionForm.get("endTime");
 
-	final Object[] args = { Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
-		getDate(endDateString, endTimeString) };
-	ServiceManagerServiceFactory.executeService("ChangeEnrolmentPeriodValues", args);
+	ChangeEnrolmentPeriodValues.run(Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
+		getDate(endDateString, endTimeString));
 
 	return prepare(mapping, form, request, response);
     }
@@ -81,9 +84,8 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
 	final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
 
-	final Object[] args = { Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
-		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString) };
-	ServiceManagerServiceFactory.executeService("CreateEnrolmentPeriods", args);
+	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
+		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString));
 
 	return prepare(mapping, form, request, response);
     }

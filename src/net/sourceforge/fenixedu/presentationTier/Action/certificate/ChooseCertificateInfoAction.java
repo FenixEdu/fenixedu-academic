@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.certificate;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeProofVersionByStudentCurricularPlan;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -85,20 +89,18 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	try {
 	    if (certificateString.equals("Fim de curso de Mestrado discriminada com média")
 		    || certificateString.equals("Fim de curso de Mestrado simples") || certificateString.equals("Carta de Curso")) {
-		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
+
 		try {
-		    infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
-			    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan", argsMasterDegreeThesisDataVersion);
+		    infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan.run(infoStudentCurricularPlan);
 		} catch (NonExistingServiceException e) {
 		    throw new NonExistingActionException("O registo da tese ", e);
 
 		}
 
 		/* get master degree proof */
-		Object argsMasterDegreeProofVersion[] = { studentCurricularPlanID };
+
 		try {
-		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
-			    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan", argsMasterDegreeProofVersion);
+		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ReadActiveMasterDegreeProofVersionByStudentCurricularPlan.run(studentCurricularPlanID);
 		} catch (NonExistingServiceException e) {
 		    throw new NonExistingActionException("O registo da tese ", e);
 		} catch (ScholarshipNotFinishedServiceException e) {

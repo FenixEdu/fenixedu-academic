@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SelectAllExecutionCoursesForInquiries;
+
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +41,7 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
     public ActionForward selectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final ExecutionCourseSearchBean executionCourseSearchBean = (ExecutionCourseSearchBean) getRenderedObject();
-	executeService("SelectAllExecutionCoursesForInquiries", new Object[] { executionCourseSearchBean });
+	SelectAllExecutionCoursesForInquiries.run(executionCourseSearchBean);
 	return search(mapping, actionForm, request, response);
     }
 

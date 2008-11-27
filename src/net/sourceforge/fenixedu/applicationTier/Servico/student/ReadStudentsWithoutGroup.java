@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -33,7 +37,9 @@ public class ReadStudentsWithoutGroup extends FenixService {
     public class NewStudentGroupAlreadyExists extends FenixServiceException {
     }
 
-    public ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static ISiteComponent run(final Integer groupPropertiesCode, final String username) throws FenixServiceException {
 
 	final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -95,7 +101,7 @@ public class ReadStudentsWithoutGroup extends FenixService {
 	return infoSiteStudentsWithoutGroup;
     }
 
-    protected InfoStudent getInfoStudentFromStudent(Registration userStudent) {
+    protected static InfoStudent getInfoStudentFromStudent(Registration userStudent) {
 	return InfoStudent.newInfoFromDomain(userStudent);
     }
 }

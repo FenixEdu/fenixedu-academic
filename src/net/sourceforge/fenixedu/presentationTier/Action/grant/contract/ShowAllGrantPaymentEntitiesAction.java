@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +45,7 @@ public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 	    throw new Exception();
 	}
 
-	Object[] args = { grantPaymentEntity };
-	List grantPaymentList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
+	List grantPaymentList = (List) ReadAllGrantPaymentEntitiesByClassName.run(grantPaymentEntity);
 	request.setAttribute("grantPaymentList", grantPaymentList);
 
 	return mapping.findForward("show-payment-entities");

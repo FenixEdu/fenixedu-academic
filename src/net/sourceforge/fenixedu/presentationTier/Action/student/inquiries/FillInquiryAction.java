@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByOID;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByStudentIdAndExecutionPeriodId;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -153,10 +157,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	// THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING
 	// ONES
-	Object[] argsStudentIdExecutionPeriodId = { registration.getIdInternal(), currentExecutionPeriod.getIdInternal(),
-		Boolean.TRUE, Boolean.TRUE };
-	List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> studentAttends = (List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>) ServiceUtils
-		.executeService("student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
+
+	List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> studentAttends = (List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>) ReadAttendsByStudentIdAndExecutionPeriodId.run(registration.getIdInternal(), currentExecutionPeriod.getIdInternal(),
+		Boolean.TRUE, Boolean.TRUE);
 	// Order by execution course name
 	Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
 
@@ -964,9 +967,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 	// Obtaining the selected attends
 	Integer attendsId = new Integer((String) InquiriesUtil.getFromRequest(InquiriesUtil.STUDENT_ATTENDS_ID, request));
-	Object[] argsAttendsId = { attendsId };
-	InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers attends = (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) ServiceUtils
-		.executeService("student.ReadAttendsByOID", argsAttendsId);
+
+	InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers attends = (InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers) ReadAttendsByOID.run(attendsId);
 
 	// Obtaining all School Classes associated with the attending course
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(attends.getDisciplinaExecucao()

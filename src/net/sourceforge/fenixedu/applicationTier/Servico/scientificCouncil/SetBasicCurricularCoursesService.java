@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,7 +25,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
  */
 public class SetBasicCurricularCoursesService extends FenixService {
 
-    public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
 
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 

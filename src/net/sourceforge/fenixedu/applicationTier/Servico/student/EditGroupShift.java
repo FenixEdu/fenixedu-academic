@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +42,9 @@ public class EditGroupShift extends FenixService {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
 	    throws FenixServiceException {
 
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
@@ -80,7 +86,7 @@ public class EditGroupShift extends FenixService {
 	return true;
     }
 
-    private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
+    private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
 	boolean found = false;
 	List studentGroupAttends = studentGroup.getAttends();
 	Attends attend = null;
@@ -94,7 +100,7 @@ public class EditGroupShift extends FenixService {
 	return found;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
+    private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
 	final List<String> emails = new ArrayList<String>();
 	for (final Attends attends : studentGroup.getAttends()) {
 	    emails.add(attends.getRegistration().getPerson().getEmail());

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.activity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchActivityParticipation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEvent;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -109,8 +113,8 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 	ResearchEventEditionCreationBean bean = (ResearchEventEditionCreationBean) getEventEditionBean(request);
 
 	try {
-	    ResearchEvent event = (ResearchEvent) executeService("CreateResearchEvent", new Object[] { bean.getEventName(),
-		    bean.getEventType(), bean.getLocationType(), bean.getUrl() });
+	    ResearchEvent event = (ResearchEvent) CreateResearchEvent.run(bean.getEventName(),
+		    bean.getEventType(), bean.getLocationType(), bean.getUrl());
 	    EventEdition edition = (EventEdition) CreateResearchEventEdition.run(event, bean);
 	    bean.setEvent(event);
 	    bean.setEventEdition(edition);
@@ -135,8 +139,8 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 
 	if (bean.getEditionRole() != null) {
 	    try {
-		executeService("CreateResearchActivityParticipation", new Object[] { bean.getEventEdition(),
-			bean.getEditionRole(), person, bean.getRoleMessage() });
+		CreateResearchActivityParticipation.run(bean.getEventEdition(),
+			bean.getEditionRole(), person, bean.getRoleMessage());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentEventBean", bean);

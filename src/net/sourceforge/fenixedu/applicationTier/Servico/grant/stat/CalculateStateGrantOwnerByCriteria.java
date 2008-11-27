@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatResultGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Pica
@@ -17,7 +19,9 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
  */
 public class CalculateStateGrantOwnerByCriteria extends FenixService {
 
-    public Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException {
 
 	final GrantType grantType = rootDomainObject.readGrantTypeByOID(infoStatGrantOwner.getGrantType());
 	Integer totalNumberOfGrantOwners = rootDomainObject.getGrantOwners().size();

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginPeriod;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.loginsManagement.DeleteLoginAlias;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -67,7 +71,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	Login login = (loginAlias != null) ? loginAlias.getLogin() : null;
 
 	try {
-	    executeService("DeleteLoginAlias", new Object[] { loginAlias });
+	    DeleteLoginAlias.run(loginAlias);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -150,7 +154,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	Login login = (loginPeriod != null) ? loginPeriod.getLogin() : null;
 
 	try {
-	    executeService("DeleteLoginPeriod", new Object[] { loginPeriod });
+	    DeleteLoginPeriod.run(loginPeriod);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

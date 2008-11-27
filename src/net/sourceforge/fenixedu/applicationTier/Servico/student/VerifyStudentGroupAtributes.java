@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -27,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class VerifyStudentGroupAtributes extends FenixService {
 
-    private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username) throws FenixServiceException {
 	boolean result = false;
 
 	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
@@ -55,7 +59,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 	return true;
     }
 
-    private boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+    private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
 	    throws FenixServiceException {
 	boolean result = false;
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -84,7 +88,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 	return true;
     }
 
-    private boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
+    private static boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username) throws FenixServiceException {
 
 	boolean result = false;
 
@@ -112,7 +116,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 	return true;
     }
 
-    private boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
 	    throws FenixServiceException {
 	boolean result = false;
 
@@ -144,7 +148,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 	return true;
     }
 
-    private boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
+    private static boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode, String username)
 	    throws FenixServiceException {
 	boolean result = false;
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
@@ -181,7 +185,9 @@ public class VerifyStudentGroupAtributes extends FenixService {
      * @throws ExcepcaoPersistencia
      */
 
-    public boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username, Integer option)
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username, Integer option)
 	    throws FenixServiceException {
 
 	boolean result = false;

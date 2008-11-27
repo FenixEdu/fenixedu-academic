@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -14,7 +18,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public class EditGratuitySituationById extends FenixService {
 
-    public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
 	if (infoGratuitySituation == null) {
 	    throw new FenixServiceException();
 	}

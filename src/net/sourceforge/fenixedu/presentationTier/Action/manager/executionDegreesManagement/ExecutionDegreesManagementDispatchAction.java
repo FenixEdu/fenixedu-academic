@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
+import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionDegreesOfDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionDegreesManagement.EditExecutionDegree;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -21,10 +26,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -108,10 +112,10 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 	final Integer executionDegreeID = (Integer) form.get("executionDegreeID");
 
 	try {
-	    final Object[] args = { executionDegreeID, coordinatorNumber };
-	    ServiceManagerServiceFactory.executeService("AddCoordinatorByManager", args);
 
-	} catch (final FenixFilterException e) {
+	    AddCoordinator.run(executionDegreeID, coordinatorNumber);
+
+	} catch (final IllegalDataAccessException e) {
 	    addMessage(request, "error.notAuthorized");
 	} catch (final FenixServiceException e) {
 	    addMessage(request, e.getMessage());
@@ -129,14 +133,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
 	try {
 	    final Integer[] coordinatorsToBeResponsibleIDs = (Integer[]) form.get("responsibleCoordinatorsIDs");
-	    ServiceManagerServiceFactory.executeService("ResponsibleCoordinatorsByManager", new Object[] { executionDegreeID,
-		    Arrays.asList(coordinatorsToBeResponsibleIDs) });
+	    ResponsibleCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToBeResponsibleIDs));
 
 	    final Integer[] coordinatorsToRemoveIDs = (Integer[]) form.get("removeCoordinatorsIDs");
-	    ServiceManagerServiceFactory.executeService("RemoveCoordinatorsByManager", new Object[] { executionDegreeID,
-		    Arrays.asList(coordinatorsToRemoveIDs) });
+	    RemoveCoordinators.run(executionDegreeID, Arrays.asList(coordinatorsToRemoveIDs));
 
-	} catch (final FenixFilterException e) {
+	} catch (final IllegalDataAccessException e) {
 	    addMessage(request, "error.notAuthorized");
 	} catch (final FenixServiceException e) {
 	    addMessage(request, e.getMessage());
@@ -240,13 +242,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 	    final Date periodGradeSubmissionSpecialSeasonEnd = DateFormatUtil.parse(dateFormat, (String) form
 		    .get("periodGradeSubmissionSpecialSeasonEnd"));
 
-	    ServiceUtils.executeService("EditBolonhaExecutionDegree", new Object[] { executionDegreeID, executionYearID,
-		    campusID, temporaryExamMap, periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd,
-		    periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd, periodLessonsSecondSemesterBegin,
-		    periodLessonsSecondSemesterEnd, periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd,
-		    periodExamsSpecialSeasonBegin, periodExamsSpecialSeasonEnd,
-		    periodGradeSubmissionNormalSeasonFirstSemesterEnd, periodGradeSubmissionNormalSeasonSecondSemesterEnd,
-		    periodGradeSubmissionSpecialSeasonEnd });
+	    EditExecutionDegree.run(executionDegreeID, executionYearID, campusID, temporaryExamMap,
+		    periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd, periodExamsFirstSemesterBegin,
+		    periodExamsFirstSemesterEnd, periodLessonsSecondSemesterBegin, periodLessonsSecondSemesterEnd,
+		    periodExamsSecondSemesterBegin, periodExamsSecondSemesterEnd, periodExamsSpecialSeasonBegin,
+		    periodExamsSpecialSeasonEnd, periodGradeSubmissionNormalSeasonFirstSemesterEnd,
+		    periodGradeSubmissionNormalSeasonSecondSemesterEnd, periodGradeSubmissionSpecialSeasonEnd);
 
 	    return readExecutionDegrees(mapping, actionForm, request, response);
 
@@ -325,9 +326,8 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 	List<Integer> executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
 	try {
-	    Object args[] = { executionDegreesIds };
-	    List<String> undeletedExecutionDegreesYears = (List<String>) ServiceUtils.executeService(
-		    "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
+
+	    List<String> undeletedExecutionDegreesYears = DeleteExecutionDegreesOfDegreeCurricularPlan.run(executionDegreesIds);
 
 	    if (!undeletedExecutionDegreesYears.isEmpty()) {
 		ActionErrors actionErrors = new ActionErrors();

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -10,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadStudentsByNameIDnumberIDtypeAndStudentNumber;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -74,17 +72,11 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
 	    return mapping.getInputForward();
 	}
 
-	Object args[] = { studentName2, idNumber2, idType2, studentNumber2 };
 	IUserView userView = getUserView(request);
 
-	List studentList = null;
-	try {
-	    studentList = (ArrayList) ServiceUtils.executeService("ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
-	    if (studentList != null && !studentList.isEmpty()) {
-		this.sort(studentList);
-	    }
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+	List studentList = ReadStudentsByNameIDnumberIDtypeAndStudentNumber.run(studentName2, idNumber2, idType2, studentNumber2);
+	if (studentList != null && !studentList.isEmpty()) {
+	    this.sort(studentList);
 	}
 
 	if (studentList != null && !studentList.isEmpty()) {

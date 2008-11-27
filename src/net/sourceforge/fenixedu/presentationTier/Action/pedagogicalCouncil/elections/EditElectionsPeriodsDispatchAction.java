@@ -5,7 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.DeleteDelegateCandidacyPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.DeleteDelegateVotingPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.EditDelegateCandidacyPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections.EditDelegateVotingPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
@@ -18,6 +21,8 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManagementDispatchAction {
+
+    private static final String ELECTIONS_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
 
     private ActionForward prepareEditYearDelegateElectionPeriod(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response, DelegateElection election, YearMonthDay startDate,
@@ -125,12 +130,38 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
 	}
 
 	if (request.getParameter("delete") != null) {
-	    return editYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		    "DeleteDelegateCandidacyPeriod", editElectionBean);
+	    if (selectedDegrees == null) {
+		DeleteDelegateCandidacyPeriod.run(editElectionBean);
+	    } else {
+		for (String degreeOID : selectedDegrees) {
+		    DeleteDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
+		}
+	    }
+
+	    editElectionBean.setCurricularYear(null);
+	    editElectionBean.setStartDate(null);
+	    editElectionBean.setEndDate(null);
+	    editElectionBean.setDegree(null);
+	    editElectionBean.setElection(null);
+
+	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	return editYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		"EditDelegateCandidacyPeriod", editElectionBean);
+	if (selectedDegrees == null) {
+	    EditDelegateCandidacyPeriod.run(editElectionBean);
+	} else {
+	    for (String degreeOID : selectedDegrees) {
+		EditDelegateCandidacyPeriod.run(editElectionBean, degreeOID);
+	    }
+	}
+
+	editElectionBean.setCurricularYear(null);
+	editElectionBean.setStartDate(null);
+	editElectionBean.setEndDate(null);
+	editElectionBean.setDegree(null);
+	editElectionBean.setElection(null);
+
+	return selectDegreeType(mapping, actionForm, request, response);
     }
 
     public ActionForward editYearDelegateVotingPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -150,32 +181,28 @@ public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManageme
 	}
 
 	if (request.getParameter("delete") != null) {
-	    return editYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		    "DeleteDelegateVotingPeriod", editElectionBean);
+	    if (selectedDegrees == null) {
+		DeleteDelegateVotingPeriod.run(editElectionBean);
+	    } else {
+		for (String degreeOID : selectedDegrees) {
+		    DeleteDelegateVotingPeriod.run(editElectionBean, degreeOID);
+		}
+	    }
+
+	    editElectionBean.setCurricularYear(null);
+	    editElectionBean.setStartDate(null);
+	    editElectionBean.setEndDate(null);
+	    editElectionBean.setDegree(null);
+	    editElectionBean.setElection(null);
+
+	    return selectDegreeType(mapping, actionForm, request, response);
 	}
 
-	return editYearDelegateElectionPeriods(mapping, actionForm, request, response, selectedDegrees,
-		"EditDelegateVotingPeriod", editElectionBean);
-    }
-
-    public ActionForward editYearDelegateElectionPeriods(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response, List<String> selectedDegrees, String service,
-	    ElectionPeriodBean editElectionBean) throws Exception {
-
 	if (selectedDegrees == null) {
-	    try {
-		executeService(service, new Object[] { editElectionBean });
-
-	    } catch (FenixServiceException ex) {
-		addActionMessage(request, ex.getMessage(), ex.getArgs());
-	    }
+	    EditDelegateVotingPeriod.run(editElectionBean);
 	} else {
 	    for (String degreeOID : selectedDegrees) {
-		try {
-		    executeService(service, new Object[] { editElectionBean, degreeOID });
-		} catch (FenixServiceException ex) {
-		    addActionMessage(request, ex.getMessage(), ex.getArgs());
-		}
+		EditDelegateVotingPeriod.run(editElectionBean, degreeOID);
 	    }
 	}
 

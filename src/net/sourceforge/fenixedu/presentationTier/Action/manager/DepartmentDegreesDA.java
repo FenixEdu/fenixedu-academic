@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveDegreeFromDepartment;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,7 +40,7 @@ public class DepartmentDegreesDA extends FenixDispatchAction {
 	final String degreeString = request.getParameter("degreeID");
 	final Department department = rootDomainObject.readDepartmentByOID(Integer.valueOf(departmentString));
 	final Degree degree = rootDomainObject.readDegreeByOID(Integer.valueOf(degreeString));
-	executeService("RemoveDegreeFromDepartment", new Object[] { department, degree });
+	RemoveDegreeFromDepartment.run(department, degree);
 	final DepartmentDegreeBean departmentDegreeBean = new DepartmentDegreeBean();
 	departmentDegreeBean.setDepartment(department);
 	return forwardToPage(mapping, request, departmentDegreeBean);

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -12,7 +16,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class ReadInfoTeacherByTeacherNumber extends FenixService {
 
-    public InfoTeacher run(Integer teacherNumber) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static InfoTeacher run(Integer teacherNumber) throws FenixServiceException {
 	if (teacherNumber == null) {
 	    throw new FenixServiceException("error.readInfoTeacherByTeacherNumber.nullTeacherNumber");
 	}

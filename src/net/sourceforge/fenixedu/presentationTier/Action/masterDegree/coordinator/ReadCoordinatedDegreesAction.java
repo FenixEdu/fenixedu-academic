@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadCoordinatedDegrees;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +32,8 @@ public class ReadCoordinatedDegreesAction extends FenixAction {
 	    IUserView userView = UserView.getUser();
 
 	    try {
-		Object args[] = { userView };
-		List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory
-			.executeService("ReadCoordinatedDegrees", args);
+
+		List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ReadCoordinatedDegrees.run(userView);
 		session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.DeleteVehicle;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceManager.CreateVehicle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,8 +98,8 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	VehicleBean bean = (VehicleBean) getRenderedObject("createVehicleBeanID");
 
 	try {
-	    executeService("CreateVehicle", new Object[] { bean.getNumberPlate(), bean.getMake(), bean.getModel(),
-		    bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier() });
+	    CreateVehicle.run(bean.getNumberPlate(), bean.getMake(), bean.getModel(),
+		    bean.getAcquisition(), bean.getCease(), bean.getAllocationCostMultiplier());
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -112,7 +116,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
 	Vehicle vehicle = getVehicleFromParameter(request);
 
 	try {
-	    executeService("DeleteVehicle", new Object[] { vehicle });
+	    DeleteVehicle.run(vehicle);
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

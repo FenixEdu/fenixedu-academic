@@ -13,9 +13,14 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class InsertCurricularCourseAtDegreeCurricularPlan extends FenixService {
 
-    public void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
 
 	Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
@@ -66,7 +71,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan extends FenixService {
 	}
     }
 
-    public class ExistingAcronymException extends FenixServiceException {
+    public static class ExistingAcronymException extends FenixServiceException {
 
 	public ExistingAcronymException() {
 	}

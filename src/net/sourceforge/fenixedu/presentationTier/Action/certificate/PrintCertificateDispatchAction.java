@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.certificate.GetEndOfScholarshipDate;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.FinalResult;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.GetEnrolmentList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -25,10 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.util.Data;
@@ -78,7 +77,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	    String anoLectivo = new String();
 	    InfoExecutionYear infoExecutionYear = null;
 	    try {
-		infoExecutionYear = (InfoExecutionYear) ReadCurrentExecutionYear.run();
+		infoExecutionYear = ReadCurrentExecutionYear.run();
 	    } catch (RuntimeException e) {
 
 		throw new RuntimeException("Error", e);
@@ -86,13 +85,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	    if ((certificate.equals("Matrícula")) || (certificate.equals("Matrícula e Inscrição"))
 		    || (certificate.equals(CertificateList.DURACAO_CURSO_STRING))) {
 
-		List enrolmentList = null;
-		Object args[] = { infoStudentCurricularPlan.getIdInternal() };
-		try {
-		    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", args);
-		} catch (NonExistingServiceException e) {
-		    throw new NonExistingActionException("Inscrição", e);
-		}
+		List enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
 		if (enrolmentList.size() == 0)
 		    anoLectivo = infoExecutionYear.getYear();
 		else
@@ -119,12 +112,8 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		List enrolmentList = null;
 		if (certificate.equals("Inscrição")) {
 		    // , EnrolmentState.ENROLED
-		    Object args[] = { infoStudentCurricularPlan.getIdInternal() };
-		    try {
-			enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", args);
-		    } catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("Inscrição", e);
-		    }
+
+		    enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
 		    if (enrolmentList.size() == 0) {
 			ActionErrors errors = new ActionErrors();
 			errors.add("AlunoNãoExiste", new ActionError("error.enrolment.notExist"));
@@ -158,13 +147,9 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		} else {
 		    if ((certificate.equals("Aproveitamento"))
 			    || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
-			Object args[] = { infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED, Boolean.TRUE,
-				Boolean.TRUE };
-			try {
-			    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", args);
-			} catch (NonExistingServiceException e) {
-			    throw new NonExistingActionException("Inscrição", e);
-			}
+
+			enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED,
+				Boolean.TRUE, Boolean.TRUE);
 			if (enrolmentList.size() == 0) {
 			    ActionErrors errors = new ActionErrors();
 			    errors.add("AlunoNãoExiste", new ActionError("error.enrolment.notExist"));
@@ -221,9 +206,8 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    || (certificate.equals("Carta de Curso"))) {
 				InfoFinalResult infoFinalResult = null;
 				try {
-				    Object args[] = { infoStudentCurricularPlan };
-				    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService(
-					    "FinalResult", args);
+
+				    infoFinalResult = FinalResult.run(infoStudentCurricularPlan);
 				} catch (FenixServiceException e) {
 				    throw new FenixServiceException("");
 				}
@@ -236,12 +220,9 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    //FinalResulUnreachedActionException("aqui")
 				    // ;
 				}
-				Object args[] = { infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED };
-				try {
-				    enrolmentList = (List) ServiceManagerServiceFactory.executeService("GetEnrolmentList", args);
-				} catch (NonExistingServiceException e) {
-				    throw new NonExistingActionException("Inscrição", e);
-				}
+
+				enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(),
+					EnrollmentState.APROVED);
 				// if (enrolmentList.size() == 0) {
 				// ActionErrors errors = new ActionErrors();
 				// errors.add("AlunoNãoExiste", new ActionError(
@@ -252,13 +233,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
 				String conclusionDate = null;
 				Date endOfScholarshipDate = null;
-				try {
-				    Object argsTemp[] = { infoStudentCurricularPlan.getIdInternal() };
-				    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(
-					    "GetEndOfScholarshipDate", argsTemp);
-				} catch (FenixServiceException e) {
-				    throw new FenixActionException(e);
-				}
+				endOfScholarshipDate = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getIdInternal());
 				conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
 
 				List normalEnrolment = new ArrayList();
@@ -279,13 +254,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    }
 				}
 
-				Object argsAux[] = { infoStudentCurricularPlan.getIdInternal() };
-				Date date = null;
-				try {
-				    date = (Date) ServiceManagerServiceFactory.executeService("GetEndOfScholarshipDate", argsAux);
-				} catch (NonExistingServiceException e) {
-				    throw new NonExistingActionException("Inscrição", e);
-				}
+				Date date = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getIdInternal());
 				conclusionDate = DateFormat.getDateInstance().format(date);
 				session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
 				session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);

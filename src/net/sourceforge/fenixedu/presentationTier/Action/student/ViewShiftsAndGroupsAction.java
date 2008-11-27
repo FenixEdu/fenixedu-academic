@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsAndGroups;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,9 +51,9 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
-	Object[] args = { groupPropertiesCode, username };
+
 	try {
-	    infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService("ReadShiftsAndGroups", args);
+	    infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ReadShiftsAndGroups.run(groupPropertiesCode, username);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();

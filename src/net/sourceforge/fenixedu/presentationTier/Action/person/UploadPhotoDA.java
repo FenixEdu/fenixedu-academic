@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
+
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 
@@ -91,9 +93,9 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
-	Object[] args = { new ByteArray(photo.getFileInputStream()).getBytes(),
-		new ByteArray(photo.getCompressedInputStream()).getBytes(), ContentType.getContentType(photo.getContentType()) };
-	ServiceUtils.executeService("UploadOwnPhoto", args);
+
+	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
+		new ByteArray(photo.getCompressedInputStream()).getBytes(), ContentType.getContentType(photo.getContentType()));
 	return mapping.findForward("visualizePersonalInformation");
     }
 

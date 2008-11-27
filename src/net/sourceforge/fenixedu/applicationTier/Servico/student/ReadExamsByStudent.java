@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -32,7 +36,9 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadExamsByStudent extends FenixService {
 
-    public Object run(String username) {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Object run(String username) {
 
 	List examsToEnroll = new ArrayList();
 
@@ -110,7 +116,7 @@ public class ReadExamsByStudent extends FenixService {
 
     }
 
-    private boolean isInDate(Exam exam) {
+    private static boolean isInDate(Exam exam) {
 	if (exam.getEnrollmentBeginDay() == null || exam.getEnrollmentEndDay() == null || exam.getEnrollmentBeginTime() == null
 		|| exam.getEnrollmentEndTime() == null) {
 	    return false;

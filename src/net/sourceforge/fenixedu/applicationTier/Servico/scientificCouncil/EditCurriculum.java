@@ -5,6 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
@@ -17,7 +21,9 @@ import net.sourceforge.fenixedu.domain.Curriculum;
  */
 public class EditCurriculum extends FenixService {
 
-    public Boolean run(Integer curriculumId, String program, String programEn, String operacionalObjectives,
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static Boolean run(Integer curriculumId, String program, String programEn, String operacionalObjectives,
 	    String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn, Boolean basic)
 	    throws FenixServiceException {
 

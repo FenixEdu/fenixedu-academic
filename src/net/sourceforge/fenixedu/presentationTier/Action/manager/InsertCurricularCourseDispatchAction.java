@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertCurricularCourseAtDegreeCurricularPlan;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -110,10 +112,9 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 	}
 	infoCurricularCourse.setGradeScale(gradeScale);
 
-	Object args[] = { infoCurricularCourse };
 
 	try {
-	    ServiceUtils.executeService("InsertCurricularCourseAtDegreeCurricularPlan", args);
+	    InsertCurricularCourseAtDegreeCurricularPlan.run(infoCurricularCourse);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);

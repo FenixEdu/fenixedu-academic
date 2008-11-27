@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Luis Cruz
@@ -18,7 +20,9 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
  */
 public class DeleteStudentCurricularPlan extends FenixService {
 
-    public void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(final Integer studentCurricularPlanId) throws DomainException, NonExistingServiceException {
 	final StudentCurricularPlan studentCurricularPlan = rootDomainObject
 		.readStudentCurricularPlanByOID(studentCurricularPlanId);
 

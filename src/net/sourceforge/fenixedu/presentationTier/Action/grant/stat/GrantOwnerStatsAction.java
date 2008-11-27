@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantTypes;
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.stat.CalculateStateGrantOwnerByCriteria;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,22 +34,18 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	IUserView userView = UserView.getUser();
-	try {
-	    // Read grant types for the contract
-	    Object[] args = {};
-	    List grantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
-	    // Adding a select country line to the list (presentation reasons)
-	    InfoGrantType grantType = new InfoGrantType();
-	    grantType.setIdInternal(null);
-	    grantType.setSigla("[Escolha um tipo de bolsa]");
-	    grantTypeList.add(0, grantType);
+	// Read grant types for the contract
 
-	    request.setAttribute("grantTypeList", grantTypeList);
+	List grantTypeList = ReadAllGrantTypes.run();
+	// Adding a select country line to the list (presentation reasons)
+	InfoGrantType grantType = new InfoGrantType();
+	grantType.setIdInternal(null);
+	grantType.setSigla("[Escolha um tipo de bolsa]");
+	grantTypeList.add(0, grantType);
 
-	    ((DynaValidatorForm) form).set("filterType", new Integer(1));
-	} catch (FenixServiceException e) {
-	    return setError(request, mapping, "errors.grant.type.read", "manage-grant-contract", null);
-	}
+	request.setAttribute("grantTypeList", grantTypeList);
+
+	((DynaValidatorForm) form).set("filterType", new Integer(1));
 	return mapping.findForward("grantowner-stats-options");
     }
 
@@ -64,8 +60,8 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
 	}
 
 	IUserView userView = UserView.getUser();
-	Object[] args = { infoStatGrantOwner };
-	Object[] result = (Object[]) ServiceUtils.executeService("CalculateStateGrantOwnerByCriteria", args);
+
+	Object[] result = new CalculateStateGrantOwnerByCriteria().run(infoStatGrantOwner);
 
 	// Set the request with the variables
 	Integer filterType = new Integer(1);

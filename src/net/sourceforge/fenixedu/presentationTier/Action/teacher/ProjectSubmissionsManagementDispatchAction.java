@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -165,9 +167,9 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 
 	ExecutionCourse course = (ExecutionCourse) RootDomainObject.readDomainObjectByOID(ExecutionCourse.class,
 		getExecutionCourseID(request));
-	Object[] args = { project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
-		getLoggedPerson(request) };
-	executeService("NotifyStudentGroup", args);
+
+	NotifyStudentGroup.run(project.getLastProjectSubmissionForStudentGroup(getStudentGroup(request)), course,
+		getLoggedPerson(request));
 
 	return prepareGroupComment(mapping, form, request, response);
     }

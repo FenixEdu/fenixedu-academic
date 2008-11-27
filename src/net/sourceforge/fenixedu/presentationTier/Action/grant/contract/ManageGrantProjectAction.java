@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +31,8 @@ public class ManageGrantProjectAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	Object[] args = { GrantProject.class.getName() };
 	IUserView userView = UserView.getUser();
-	List infoGrantProjectList = (List) ServiceUtils.executeService("ReadAllGrantPaymentEntitiesByClassName", args);
+	List infoGrantProjectList = (List) ReadAllGrantPaymentEntitiesByClassName.run(GrantProject.class.getName());
 
 	if (infoGrantProjectList != null && !infoGrantProjectList.isEmpty())
 	    request.setAttribute("infoGrantProjectList", infoGrantProjectList);

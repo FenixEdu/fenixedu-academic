@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -9,7 +13,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class CreateExtraEnrolment extends FenixService {
 
-    public void run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static void run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
 	    final CurricularCourse curricularCourse, final NoCourseGroupCurriculumGroupType groupType) {
 	studentCurricularPlan.createNoCourseGroupCurriculumGroupEnrolment(curricularCourse, executionSemester, groupType,
 		AccessControl.getPerson());

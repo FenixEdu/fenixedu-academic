@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadDegreeCandidates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -35,13 +35,8 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 	Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanID"));
 
 	List candidates = null;
-	Object args[] = { degreeCurricularPlanId };
 
-	try {
-	    candidates = (List) ServiceManagerServiceFactory.executeService("ReadDegreeCandidates", args);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	candidates = ReadDegreeCandidates.run(degreeCurricularPlanId);
 
 	if (candidates.size() == 0)
 	    throw new NonExistingActionException("error.exception.nonExistingCandidates", "", null);

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -19,7 +23,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends FenixService {
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    @Checked("RolePredicates.COORDINATOR_PREDICATE")
+    @Service
+    public static List run(Integer degreeCurricularPlanID) throws FenixServiceException {
 
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 

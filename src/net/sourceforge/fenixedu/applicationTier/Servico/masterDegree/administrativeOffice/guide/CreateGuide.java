@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +36,9 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class CreateGuide extends FenixService {
 
-    public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
 	    GuideState situationOfGuide, String paymentType) throws FenixServiceException {
 
 	GuideSituation guideSituation = null;

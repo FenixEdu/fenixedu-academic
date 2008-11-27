@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -29,7 +33,9 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class CreateMasterDegreeCandidate extends FenixService {
 
-    public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID, String name,
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID, String name,
 	    String identificationDocumentNumber, IDDocumentType identificationDocumentType) throws Exception {
 
 	// Read the Execution of this degree in the current execution Year

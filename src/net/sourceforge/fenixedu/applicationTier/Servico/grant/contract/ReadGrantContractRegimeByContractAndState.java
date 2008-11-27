@@ -17,6 +17,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Barbosa
  * @author Pica
@@ -24,7 +27,9 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadGrantContractRegimeByContractAndState extends FenixService {
 
-    public List run(Integer grantContractId, Integer state) throws FenixServiceException {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static List run(Integer grantContractId, Integer state) throws FenixServiceException {
 	List contractRegimes = null;
 
 	GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);

@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 
 public class ReadAllCurricularCoursesByCompetenceCourse extends FenixService {
 
-    public List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<CurricularCourse> run(final Integer competenceID) throws NonExistingServiceException {
 	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceID);
 	if (competenceCourse == null) {
 	    throw new NonExistingServiceException("error.manager.noCompetenceCourse");

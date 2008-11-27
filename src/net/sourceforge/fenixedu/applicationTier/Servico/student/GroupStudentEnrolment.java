@@ -5,6 +5,10 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -31,7 +35,9 @@ public class GroupStudentEnrolment extends FenixService {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
+    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Service
+    public static Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
 
 	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 	if (studentGroup == null) {
@@ -68,7 +74,7 @@ public class GroupStudentEnrolment extends FenixService {
 	return Boolean.TRUE;
     }
 
-    private void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
+    private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
 
 	final StringBuilder executionCourseNames = new StringBuilder();
 	for (final ExecutionCourse executionCourse : grouping.getExecutionCourses()) {
@@ -79,7 +85,7 @@ public class GroupStudentEnrolment extends FenixService {
 	}
     }
 
-    private void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
+    private static void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
 	    final StudentGroup studentGroupEnrolled, final Attends studentAttend) throws InvalidSituationServiceException {
 
 	for (final StudentGroup studentGroup : studentGroups) {

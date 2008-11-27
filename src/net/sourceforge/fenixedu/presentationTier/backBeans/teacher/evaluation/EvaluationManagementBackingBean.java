@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -565,9 +569,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String editMarks() throws FenixFilterException, FenixServiceException {
-	final Object[] args = { getExecutionCourseID(), getEvaluationID(), this.marks };
+
 	try {
-	    ServiceUtils.executeService("WriteMarks", args);
+	    WriteMarks.run(getExecutionCourseID(), getEvaluationID(), this.marks);
 	} catch (FenixServiceMultipleException e) {
 	    for (DomainException domainException : e.getExceptionList()) {
 		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
@@ -668,9 +672,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    inputStream = fileItem.getInputStream();
 	    final Map<Integer, String> marks = loadMarks(inputStream);
 
-	    final Object[] args = { getExecutionCourseID(), getEvaluationID(), marks };
 
-	    ServiceUtils.executeService("WriteMarks", args);
+	    WriteMarks.run(getExecutionCourseID(), getEvaluationID(), marks);
 
 	    return "success";
 

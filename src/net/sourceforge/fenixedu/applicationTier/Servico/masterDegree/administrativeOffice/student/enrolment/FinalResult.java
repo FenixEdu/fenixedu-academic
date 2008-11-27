@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
@@ -13,7 +17,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
  */
 public class FinalResult extends FenixService {
 
-    public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
+    @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    public static InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
 
 	boolean result = false;
 

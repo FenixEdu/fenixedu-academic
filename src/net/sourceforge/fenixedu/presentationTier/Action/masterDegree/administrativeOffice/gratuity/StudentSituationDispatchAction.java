@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadInsuranceValueByExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.UpdateAndReadGratuitySituationsByStudentNumber;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -21,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -76,15 +78,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
-	List gratuitySituations = null;
-	Object argsGratuitySituations[] = { studentNumber };
-
-	try {
-	    gratuitySituations = (List) ServiceUtils.executeService("UpdateAndReadGratuitySituationsByStudentNumber",
-		    argsGratuitySituations);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
-	}
+	List gratuitySituations = UpdateAndReadGratuitySituationsByStudentNumber.run(studentNumber);
 
 	InfoGratuitySituation infoGratuitySituation = null;
 	InfoInsuranceTransaction infoInsuranceTransaction = null;
@@ -97,12 +91,11 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	while (iterator.hasNext()) {
 
 	    infoGratuitySituation = (InfoGratuitySituation) iterator.next();
-	    Object argsInsurance[] = { infoStudent.getIdInternal(),
-		    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getIdInternal() };
 
 	    try {
-		infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils.executeService(
-			"ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
+		infoInsuranceTransaction = ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(),
+			infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear()
+				.getIdInternal());
 	    } catch (FenixServiceException e) {
 		errors.add("insurance", new ActionError("error.duplicate.insurance", studentNumber));
 		saveErrors(request, errors);
@@ -113,11 +106,8 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
 	    infoExecutionYear = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear();
 
-	    Object argsInsuranceValue[] = { infoExecutionYear.getIdInternal() };
-
 	    try {
-		infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
-			argsInsuranceValue);
+		infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(infoExecutionYear.getIdInternal());
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

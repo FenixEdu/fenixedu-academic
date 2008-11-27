@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,9 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
  */
 public class EditExamRooms extends FenixService {
 
-    public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
+    @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
+    @Service
+    public static InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws FenixServiceException {
 
 	final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();
 	for (final Integer id : roomsForExam) {

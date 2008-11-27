@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -68,8 +70,7 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 	Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
 	Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
 
-	Object[] args = { degreeCurricularPlansIDs, executionPeriodID };
-	ServiceUtils.executeService("CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod", args);
+	CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod.run(degreeCurricularPlansIDs, executionPeriodID);
 
 	return mapping.findForward("createExecutionCoursesSuccess");
 

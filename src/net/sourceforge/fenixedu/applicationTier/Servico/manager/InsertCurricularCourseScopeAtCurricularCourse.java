@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.IllegalWriteException;
 
 /**
@@ -19,7 +21,9 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse extends FenixService {
 
-    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException {
 	Branch branch = null;
 	CurricularSemester curricularSemester = null;
 	try {

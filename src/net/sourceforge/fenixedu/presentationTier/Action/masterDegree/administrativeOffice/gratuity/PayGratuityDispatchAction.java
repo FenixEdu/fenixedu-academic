@@ -1,5 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadInsuranceValueByExecutionYearID;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuide;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -97,11 +107,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    Integer executionYearID = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
 		    .getInfoExecutionYear().getIdInternal();
 
-	    Object argsInsurance[] = { infoStudent.getIdInternal(), executionYearID };
 
 	    try {
-		infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils.executeService(
-			"ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
+		infoInsuranceTransaction = (InfoInsuranceTransaction) ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(), executionYearID);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
@@ -211,9 +219,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    infoGuideEntry.setDescription("");
 
 	    List studentCurricularPlans = null;
-	    Object argsSCP[] = { infoStudent.getIdInternal() };
+
 	    try {
-		studentCurricularPlans = (List) ServiceUtils.executeService("ReadPosGradStudentCurricularPlans", argsSCP);
+		studentCurricularPlans = (List) ReadPosGradStudentCurricularPlans.run(infoStudent.getIdInternal());
 
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
@@ -266,9 +274,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	infoGuide.setVersion(new Integer(1));
 	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
-	Object argsGuide[] = { infoGuide, "", null, "", GuideState.NON_PAYED, "" };
 	try {
-	    infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuide", argsGuide);
+	    infoGuide = (InfoGuide) CreateGuide.run(infoGuide, "", null, "", GuideState.NON_PAYED, "");
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -315,10 +322,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
 	    throws FenixActionException, FenixFilterException {
 	InfoGratuitySituation infoGratuitySituation = null;
-	Object argsGratuitySituation[] = { gratuitySituationId };
+
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService("ReadGratuitySituationById",
-		    argsGratuitySituation);
+	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(gratuitySituationId);
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);
@@ -363,10 +369,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
     private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
 	    throws FenixActionException, FenixFilterException {
 	InfoInsuranceValue infoInsuranceValue = null;
-	Object argsInsuranceValue[] = { insuranceExecutionYearId };
+
 	try {
-	    infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService("ReadInsuranceValueByExecutionYearID",
-		    argsInsuranceValue);
+	    infoInsuranceValue = (InfoInsuranceValue) ReadInsuranceValueByExecutionYearID.run(insuranceExecutionYearId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

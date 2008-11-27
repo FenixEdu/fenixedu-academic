@@ -4,6 +4,16 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadStudentCurricularInformation;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteStudentCurricularPlan;
+
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -59,8 +69,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 	final Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
 	final IUserView userView = UserView.getUser();
-	final Object[] args = new Object[] { studentCurricularPlanId };
-	ServiceUtils.executeService("DeleteStudentCurricularPlan", args);
+
+	DeleteStudentCurricularPlan.run(studentCurricularPlanId);
 
 	return show(mapping, form, request, response);
     }
@@ -76,8 +86,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 	final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
 	final IUserView userView = UserView.getUser();
-	final Object[] args = new Object[] { studentNumber, degreeType, enrollmentId };
-	ServiceUtils.executeService("DeleteEnrollment", args);
+
+	DeleteEnrollment.run(studentNumber, degreeType, enrollmentId);
 
 	return show(mapping, form, request, response);
     }
@@ -125,9 +135,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
 	    final IUserView userView = UserView.getUser();
 
-	    final Object[] args = new Object[] { studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanId,
-		    startDate };
-	    ServiceUtils.executeService("CreateStudentCurricularPlan", args);
+	    CreateStudentCurricularPlan.run(studentNumber, degreeType, studentCurricularPlanState, degreeCurricularPlanId,
+		    startDate);
 	}
 
 	return show(mapping, form, request, response);
@@ -159,9 +168,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
 	    final IUserView userView = UserView.getUser();
 
-	    final Object[] args = new Object[] { selectedStudentCurricularPlanId, enrollmentIDsToTransfer,
-		    selectedCurriculumGroupID };
-	    ServiceUtils.executeService("TransferEnrollments", args);
+	    TransferEnrollments.run(selectedStudentCurricularPlanId, enrollmentIDsToTransfer,
+		    selectedCurriculumGroupID);
 	}
 
 	return show(mapping, form, request, response);
@@ -170,8 +178,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request, final Integer studentNumber,
 	    final DegreeType degreeType) throws FenixFilterException, FenixServiceException {
 	final IUserView userView = UserView.getUser();
-	final Object[] args = new Object[] { studentNumber, degreeType };
-	final List infoStudentCurricularPlans = (List) ServiceUtils.executeService("ReadStudentCurricularInformation", args);
+
+	final List infoStudentCurricularPlans = (List) ReadStudentCurricularInformation.run(studentNumber, degreeType);
 	request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
     }
 

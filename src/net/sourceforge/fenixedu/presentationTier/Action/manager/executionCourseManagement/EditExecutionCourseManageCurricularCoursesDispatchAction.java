@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.AssociateCurricularCoursesToExecutionCourse;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.DissociateCurricularCourseByExecutionCourseId;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -61,9 +65,8 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 	    separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
 	}
 
-	Object[] args = { executionCourseId, curricularCourseId };
 	try {
-	    ServiceUtils.executeService("DissociateCurricularCourseByExecutionCourseId", args);
+	    DissociateCurricularCourseByExecutionCourseId.run(executionCourseId, curricularCourseId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -196,9 +199,8 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 	List curricularCourseIds = getInformationToDissociate(request, curricularCoursesListSize, "curricularCourse",
 		"idInternal", "chosen");
 
-	Object args[] = { Integer.valueOf(executionCourseId), curricularCourseIds };
 	try {
-	    ServiceUtils.executeService("AssociateCurricularCoursesToExecutionCourse", args);
+	    AssociateCurricularCoursesToExecutionCourse.run(Integer.valueOf(executionCourseId), curricularCourseIds);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

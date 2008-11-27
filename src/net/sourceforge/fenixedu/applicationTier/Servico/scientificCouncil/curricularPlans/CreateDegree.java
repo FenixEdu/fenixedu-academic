@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -13,7 +17,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CreateDegree extends FenixService {
 
-    public void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
+    @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
+    @Service
+    public static void run(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
 	    String prevailingScientificArea) throws FenixServiceException {
 
 	if (name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {

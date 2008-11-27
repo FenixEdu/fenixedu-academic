@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsByTypeFromExecutionCourse;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -57,12 +61,11 @@ public class ShowShiftListAction extends Action {
 		.getInfoEnrolmentWithShift().get(indexi.intValue()))).getTypeLessonsAndInfoShifts().get(indexj.intValue()))
 		.getTypeLesson();
 
-	Object[] argsReadShiftsByType = { executionCourse, lessonType };
 
 	List shiftsList = new ArrayList();
 
 	try {
-	    shiftsList = (ArrayList) ServiceUtils.executeService("ReadShiftsByTypeFromExecutionCourse", argsReadShiftsByType);
+	    shiftsList = (ArrayList) ReadShiftsByTypeFromExecutionCourse.run(executionCourse, lessonType);
 	    if (!shiftsList.isEmpty()) {
 		request.setAttribute("shiftsList", shiftsList);
 	    }
@@ -79,8 +82,8 @@ public class ShowShiftListAction extends Action {
 	    Iterator iterator = shiftsList.iterator();
 	    while (iterator.hasNext()) {
 		InfoShift element = (InfoShift) iterator.next();
-		Object[] args = { new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()) };
-		List students = (ArrayList) ServiceUtils.executeService("LerAlunosDeTurno", args);
+
+		List students = (ArrayList) LerAlunosDeTurno.run(new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()));
 		Integer vacancy = element.getLotacao();
 
 		vacancy = new Integer(vacancy.intValue() - students.size());

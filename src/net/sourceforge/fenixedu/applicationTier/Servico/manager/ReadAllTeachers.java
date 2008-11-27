@@ -7,10 +7,14 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAllTeachers extends FenixService {
 
-    public List<InfoTeacher> run() throws FenixServiceException {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static List<InfoTeacher> run() throws FenixServiceException {
 	final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
 	for (final Teacher teacher : rootDomainObject.getTeachers()) {

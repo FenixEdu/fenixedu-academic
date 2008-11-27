@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -17,7 +19,9 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
  */
 public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID extends FenixService {
 
-    public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID, Integer teacherID)
+    @Checked("RolePredicates.PERSON_PREDICATE")
+    @Service
+    public static List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID, Integer teacherID)
 	    throws FenixServiceException {
 	Department department = rootDomainObject.readDepartmentByOID(departmentID);
 

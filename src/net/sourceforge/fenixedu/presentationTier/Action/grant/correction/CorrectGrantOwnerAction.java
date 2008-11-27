@@ -1,5 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.grant.correction;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.EditGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonUsername;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,8 +58,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 
 	// Read the grant owner
-	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(true), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", argsGrantOwner);
+
+	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(true), null);
 
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -59,8 +67,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 
 	// Read the new person
-	Object[] argsPerson = { null, documentIdNumber.toString(), documentIdType, null, new Boolean(false), null };
-	List infoPersonList = (List) ServiceUtils.executeService("SearchGrantOwner", argsPerson);
+
+	List infoPersonList = (List) SearchGrantOwner.run(null, documentIdNumber.toString(), documentIdType, null, new Boolean(false), null);
 
 	if (infoPersonList.isEmpty() || infoPersonList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownPerson", null, null);
@@ -92,12 +100,10 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	    String newUsernameNewPerson = "B";
 	    newUsernameNewPerson += infoGrantOwner.getGrantOwnerNumber().toString();
 
-	    Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal(), RoleType.GRANT_OWNER };
-	    ServiceUtils.executeService("ChangePersonUsername", argsChangeUsername);
+	    ChangePersonUsername.run(newUsernameNewPerson, infoPerson.getIdInternal(), RoleType.GRANT_OWNER);
 	}
 
-	Object[] argsNewGrantOwner = { infoGrantOwner };
-	ServiceUtils.executeService("EditGrantOwner", argsNewGrantOwner);
+	EditGrantOwner.run(infoGrantOwner);
 
 	request.setAttribute("correctionNumber1", "yes");
 	return mapping.findForward("correct-grant-owner");

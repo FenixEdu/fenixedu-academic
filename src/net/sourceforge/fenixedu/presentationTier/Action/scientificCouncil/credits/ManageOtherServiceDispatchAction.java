@@ -3,6 +3,12 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateOtherService;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditOtherService;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -97,11 +103,11 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	if (otherServiceID == null || otherServiceID == 0) {
 	    Integer teacherID = (Integer) otherServiceForm.get("teacherId");
 	    Integer executionPeriodID = Integer.valueOf((String) otherServiceForm.get("executionPeriodId"));
-	    Object[] args = { teacherID, executionPeriodID, credits, reason };
-	    ServiceUtils.executeService("CreateOtherService", args);
+
+	    CreateOtherService.run(teacherID, executionPeriodID, credits, reason);
 	} else {
-	    Object[] args = { otherServiceID, credits, reason };
-	    ServiceUtils.executeService("EditOtherService", args);
+
+	    EditOtherService.run(otherServiceID, credits, reason);
 	}
 
 	return mapping.findForward("successful-edit");
@@ -112,7 +118,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm otherServiceForm = (DynaActionForm) form;
 	Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
-	ServiceUtils.executeService("DeleteOtherServiceByOID", new Object[] { otherServiceID });
+	DeleteOtherServiceByOID.run(otherServiceID);
 	return mapping.findForward("successful-delete");
     }
 

@@ -19,9 +19,14 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreateOrEditGrantContractAndRegime extends FenixService {
 
-    public void run(InfoGrantContract infoGrantContract, InfoGrantContractRegime infoGrantContractRegime) throws Exception {
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public static void run(InfoGrantContract infoGrantContract, InfoGrantContractRegime infoGrantContractRegime) throws Exception {
 	GrantContract grantContract = createOrEditGrantContract(infoGrantContract);
 	GrantOrientationTeacher grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
 	if (grantOrientationTeacher == null) {
@@ -41,8 +46,8 @@ public class CreateOrEditGrantContractAndRegime extends FenixService {
 	new EditGrantContractRegime().run(infoGrantContractRegime);
     }
 
-    private GrantContract createOrEditGrantContract(InfoGrantContract infoGrantContract) throws GrantTypeNotFoundException,
-	    FenixServiceException, InvalidGrantPaymentEntityException {
+    private static GrantContract createOrEditGrantContract(InfoGrantContract infoGrantContract)
+	    throws GrantTypeNotFoundException, FenixServiceException, InvalidGrantPaymentEntityException {
 	final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract.getGrantOwnerInfo().getIdInternal());
 	GrantContract grantContract;
 	if (infoGrantContract.getContractNumber() == null) {
@@ -91,8 +96,8 @@ public class CreateOrEditGrantContractAndRegime extends FenixService {
 	return grantContract;
     }
 
-    private GrantOrientationTeacher createNewGrantOrientationTeacher(InfoGrantOrientationTeacher grantOrientationTeacherInfo,
-	    GrantContract grantContract) throws FenixServiceException {
+    private static GrantOrientationTeacher createNewGrantOrientationTeacher(
+	    InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract) throws FenixServiceException {
 
 	final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherNumber());
 

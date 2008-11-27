@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import pt.ist.fenixWebFramework.services.Service;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -25,7 +29,9 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public class CreateGratuityTransaction extends FenixService {
 
-    public void run(Integer guideEntryID, IUserView userView) {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Service
+    public static void run(Integer guideEntryID, IUserView userView) {
 
 	GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 

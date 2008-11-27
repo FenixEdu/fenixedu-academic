@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.EndCurricularCourseScope;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourseScope;
+
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,11 +48,9 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 	Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
 	InfoCurricularCourseScope oldInfoCurricularCourseScope = null;
 
-	Object args[] = { curricularCourseScopeId };
 
 	try {
-	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService("ReadCurricularCourseScope",
-		    args);
+	    oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ReadCurricularCourseScope.run(curricularCourseScopeId);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
 		    .findForward("readCurricularCourse"));
@@ -88,10 +90,10 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 	    endDateCalendar.setTime(Data.convertStringDate(endDateString, "/"));
 	    newInfoCurricularCourseScope.setEndDate(endDateCalendar);
 	}
-	Object args[] = { newInfoCurricularCourseScope };
+
 
 	try {
-	    ServiceUtils.executeService("EndCurricularCourseScope", args);
+	    EndCurricularCourseScope.run(newInfoCurricularCourseScope);
 	} catch (NonExistingServiceException ex) {
 	    throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"), ex);
 	} catch (InvalidArgumentsServiceException ex) {

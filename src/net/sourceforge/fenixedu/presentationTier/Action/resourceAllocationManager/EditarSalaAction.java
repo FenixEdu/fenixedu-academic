@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarSala;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,9 +58,9 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
 		(String) salaBean.get("capacityExame")), roomToEdit.getRoom());
 
 	// Edit room
-	Object argsCriarSala[] = { editedRoom };
+
 	try {
-	    ServiceManagerServiceFactory.executeService("EditarSala", argsCriarSala);
+	    EditarSala.run(editedRoom);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("A Room", e);
 	}
