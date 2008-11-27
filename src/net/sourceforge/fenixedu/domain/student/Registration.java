@@ -1124,7 +1124,23 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear getLastApprovementExecutionYear() {
-	return getLastStudentCurricularPlan().getLastApprovementExecutionYear();
+	if (isBolonha()) {
+	    return getLastStudentCurricularPlan().getLastApprovementExecutionYear();
+	} else {
+	    ExecutionYear result = null;
+	    for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
+		final ExecutionYear year = plan.getLastApprovementExecutionYear();
+		if (year != null && (result == null || result.isBefore(year))) {
+		    result = year;
+		}
+	    }
+
+	    if (result == null && isConcluded()) {
+		return getActiveState().getExecutionYear();
+	    }
+
+	    return result;
+	}
     }
 
     final public Collection<ExecutionSemester> getEnrolmentsExecutionPeriods() {
