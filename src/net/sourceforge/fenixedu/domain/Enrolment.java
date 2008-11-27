@@ -46,7 +46,7 @@ import org.joda.time.YearMonthDay;
 /**
  * @author dcs-rjao
  * 
- *         24/Mar/2003
+ * 24/Mar/2003
  */
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
@@ -720,7 +720,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public YearMonthDay calculateConclusionDate() {
-	return getLatestEnrolmentEvaluationExceptImprovements().getExamDateYearMonthDay();
+	if (!isApproved()) {
+	    throw new DomainException("error.Enrolment.not.approved");
+	}
+
+	EnrolmentEvaluation exceptImprovements = getLatestEnrolmentEvaluationExceptImprovements();
+	if (exceptImprovements == null || exceptImprovements.getExamDateYearMonthDay() == null) {
+	    return getLatestEnrolmentEvaluation().getExamDateYearMonthDay();
+	} else {
+	    return exceptImprovements.getExamDateYearMonthDay();
+	}
     }
 
     @Override
@@ -1361,12 +1370,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     /**
      * 
      * After create new Enrolment, must delete OptionalEnrolment (to delete
-     * OptionalEnrolment disconnect at least: ProgramCertificateRequests, CourseLoadRequests,
-     * ExamDateCertificateRequests)
+     * OptionalEnrolment disconnect at least: ProgramCertificateRequests,
+     * CourseLoadRequests, ExamDateCertificateRequests)
      * 
      * @param optionalEnrolment
-     * @param curriculumGroup
-     *            : new CurriculumGroup for Enrolment
+     * @param curriculumGroup :
+     *                new CurriculumGroup for Enrolment
      * @return Enrolment
      */
     static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
