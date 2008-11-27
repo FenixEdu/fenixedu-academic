@@ -2325,6 +2325,17 @@ public class Registration extends Registration_Base {
 		}
 	    }
 
+	    if (getDegreeType() == DegreeType.MASTER_DEGREE) {
+		final LocalDate date = getDissertationThesisDiscussedDate();
+		if (date != null && (result == null || result.isBefore(date))) {
+		    result = new YearMonthDay(date);
+		}
+	    }
+
+	    if (result == null && isConcluded()) {
+		return getActiveState().getStateDate().toYearMonthDay();
+	    }
+
 	    return result;
 	}
     }
