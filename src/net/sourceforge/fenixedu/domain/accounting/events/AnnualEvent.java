@@ -71,11 +71,9 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
-    public void delete() {
-
+    protected void disconnect() {
 	super.setExecutionYear(null);
-
-	super.delete();
+	super.disconnect();
     }
 
     @Override

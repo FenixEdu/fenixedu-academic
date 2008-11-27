@@ -198,11 +198,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
-    public void delete() {
-
+    protected void disconnect() {
 	super.setStudentCurricularPlan(null);
-
-	super.delete();
+	super.disconnect();
     }
 
     public boolean isGratuityEventWithPaymentPlan() {

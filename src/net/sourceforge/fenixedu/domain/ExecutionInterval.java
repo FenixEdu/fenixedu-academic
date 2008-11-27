@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
@@ -114,7 +116,16 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     public boolean hasAnyStandaloneCandidacyPeriod() {
 	return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
     }
-    
+
+    public PaymentCode findNewCodeInPaymentCodeMapping(final PaymentCode oldCode) {
+	for (final PaymentCodeMapping mapping : getPaymentCodeMappingsSet()) {
+	    if (mapping.hasOldPaymentCode(oldCode)) {
+		return mapping.getNewPaymentCode();
+	    }
+	}
+	return null;
+    }
+
     abstract public String getQualifiedName();
 
     // static information

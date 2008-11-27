@@ -4402,5 +4402,12 @@
             <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
-
+	<service>
+        <name>SearchPaymentCodesByExecutionYear</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.SearchPaymentCodesByExecutionYear</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 </serviceDefinitions>

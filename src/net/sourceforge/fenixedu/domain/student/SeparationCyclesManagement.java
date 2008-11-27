@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,17 +16,16 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -51,6 +49,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExtraCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -530,84 +529,37 @@ public class SeparationCyclesManagement {
     }
 
     private void movePayments(final GratuityEventWithPaymentPlan firstEvent, final GratuityEventWithPaymentPlan secondEvent) {
-	if (firstEvent.isClosed()) {
-	    if (canAddExemption(secondEvent)) {
-		createPercentageGratuityExemptionForSecondDebt(firstEvent, secondEvent);
-	    }
-	} else if (firstEvent.hasAnyPayments()) {
-	    if (secondEvent.hasCustomGratuityPaymentPlan()) {
-		throw new DomainException("error.SeparationCyclesManagement.secondEvent.already.has.custom.payment.plan");
-	    }
-	    createNewPaymentPlan(firstEvent, secondEvent);
-	} else {
+
+	if (firstEvent.hasCustomGratuityPaymentPlan()) {
+	    return;
+	}
+
+	if (!firstEvent.hasAnyPayments()) {
 	    firstEvent.cancel(getNoPaymentsReason(secondEvent));
-	}
-    }
-
-    private void createNewPaymentPlan(final GratuityEventWithPaymentPlan firstEvent,
-	    final GratuityEventWithPaymentPlan secondEvent) {
-
-	createValueGratuityExemption(firstEvent, secondEvent, firstEvent.calculateAmountToPay(new DateTime()));
-
-	Money amountLessPenalty = firstEvent.getPayedAmountLessPenalty();
-	final PaymentPlan oldPaymentPlan = secondEvent.getGratuityPaymentPlan();
-
-	final Set<Installment> installmentsToCreate = new HashSet<Installment>();
-
-	for (final Installment installment : oldPaymentPlan.getInstallmentsSortedByEndDate()) {
-	    if (amountLessPenalty.greaterOrEqualThan(installment.getAmount())) {
-		amountLessPenalty = amountLessPenalty.subtract(installment.getAmount());
-	    } else {
-		installmentsToCreate.add(installment);
-	    }
+	    return;
 	}
 
-	secondEvent.configureCustomPaymentPlan();
-
-	final PaymentPlan newPaymentPlan = secondEvent.getGratuityPaymentPlan();
-	for (final Installment installment : installmentsToCreate) {
-	    createInstallment(installment, newPaymentPlan, installment.getAmount().subtract(amountLessPenalty));
-	    amountLessPenalty = Money.ZERO;
+	// First Event
+	final Money amountLessPenalty = firstEvent.getPayedAmountLessPenalty();
+	firstEvent.configureCustomPaymentPlan();
+	createInstallment(firstEvent, firstEvent.getGratuityPaymentPlan(), firstEvent.getPayedAmount());
+	for (final PaymentCode paymentCode : firstEvent.getNonProcessedPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.INVALID);
 	}
+	firstEvent.recalculateState(new DateTime());
 
+	// Second Event
+	final Money originalTotalAmount = secondEvent.getGratuityPaymentPlan().calculateOriginalTotalAmount();
+	secondEvent.addDiscount(getPerson(), Money.min(amountLessPenalty, originalTotalAmount));
 	secondEvent.recalculateState(new DateTime());
     }
 
-    private void createValueGratuityExemption(final GratuityEventWithPaymentPlan firstEvent,
-	    final GratuityEventWithPaymentPlan secondEvent, final Money amountToPay) {
-	new ValueGratuityExemption(firstEvent, GratuityExemptionJustificationType.SEPARATION_CYCLES_AUTHORIZATION,
-		getReasonWhenHasAnyPaymentsInFirstDebt(secondEvent), new YearMonthDay(), amountToPay);
+    private Person getPerson() {
+	return AccessControl.getPerson();
     }
 
-    private void createPercentageGratuityExemptionForSecondDebt(final GratuityEventWithPaymentPlan firstEvent,
-	    final GratuityEventWithPaymentPlan secondEvent) {
-	new PercentageGratuityExemption(secondEvent, GratuityExemptionJustificationType.SEPARATION_CYCLES_AUTHORIZATION,
-		getIsClosedReason(firstEvent), new YearMonthDay(), BigDecimal.valueOf(1));
-    }
-
-    private void createInstallment(final Installment installment, final PaymentPlan paymentPlan, final Money amount) {
-	if (installment.isWithMonthlyPenalty()) {
-	    final InstallmentWithMonthlyPenalty penalty = (InstallmentWithMonthlyPenalty) installment;
-	    new InstallmentWithMonthlyPenalty(paymentPlan, amount, penalty.getStartDate(), penalty.getEndDate(), penalty
-		    .getPenaltyPercentage(), penalty.getWhenStartToApplyPenalty(), penalty.getMaxMonthsToApplyPenalty());
-	} else {
-	    throw new DomainException("error.SeparationCyclesManagement.unexpected.installment.type");
-	}
-    }
-
-    private boolean canAddExemption(final GratuityEventWithPaymentPlan secondEvent) {
-	return !secondEvent.hasGratuityExemption() && !secondEvent.isClosed() && !secondEvent.hasAnyPayments()
-		&& !secondEvent.hasCustomGratuityPaymentPlan();
-    }
-
-    private String getReasonWhenHasAnyPaymentsInFirstDebt(final GratuityEvent second) {
-	final String message = RESOURCE_BUNDLE.getString("label.SeparationCyclesManagement.hasAnyPaymentsInFirstDebt.reason");
-	return MessageFormat.format(message, second.getStudentCurricularPlan().getName());
-    }
-
-    private String getIsClosedReason(final GratuityEvent event) {
-	final String message = RESOURCE_BUNDLE.getString("label.SeparationCyclesManagement.isClosed.reason");
-	return MessageFormat.format(message, event.getStudentCurricularPlan().getName(), event.getExecutionYear().getName());
+    private void createInstallment(final GratuityEvent event, final PaymentPlan paymentPlan, final Money amount) {
+	new Installment(paymentPlan, amount, event.getStartDate().toYearMonthDay(), event.getLastPaymentDate().toYearMonthDay());
     }
 
     private String getNoPaymentsReason(final GratuityEvent second) {

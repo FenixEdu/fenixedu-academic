@@ -337,4 +337,8 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     public boolean isInsidePeriod(final LocalDate startDate, final LocalDate endDate) {
 	return !getWhenRegistered().toLocalDate().isBefore(startDate) && !getWhenRegistered().toLocalDate().isAfter(endDate);
     }
+
+    public boolean isInstallment() {
+	return false;
+    }
 }

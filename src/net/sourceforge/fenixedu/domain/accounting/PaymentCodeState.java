@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 public enum PaymentCodeState {
-    NEW, PROCESSED, CANCELLED;
+
+    NEW, PROCESSED, CANCELLED, INVALID;
 
     public String getName() {
 	return name();

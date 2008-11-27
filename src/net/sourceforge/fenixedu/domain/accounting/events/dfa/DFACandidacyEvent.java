@@ -124,12 +124,11 @@ public class DFACandidacyEvent extends DFACandidacyEvent_Base {
 	return labelFormatter;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
-    public void delete() {
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    protected void disconnect() {
 	super.setCandidacy(null);
-
-	super.delete();
+	super.disconnect();
     }
 
 }

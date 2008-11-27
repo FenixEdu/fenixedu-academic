@@ -753,3 +753,44 @@
 <schema name="EditTeacherDomainObject" type="net.sourceforge.fenixedu.domain.Teacher" bundle="MANAGER_RESOURCES">
 	<slot name="teacherNumber" />
 </schema>
+
+<schema name="PaymentCodeMappingBean.search" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">
+	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="format" value="${qualifiedName}" />
+	</slot>
+</schema>
+
+<schema name="PaymentCodeMappingBean.create" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">
+	<slot name="executionInterval.qualifiedName" key="label.executionInterval" read-only="true" />
+	<slot name="oldCode" key="label.paymentCodeMapping.oldCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="code"/>
+		<property name="indicatorShown" value="true"/>
+				
+		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
+		<property name="serviceArgs" value="executionYearOid=${executionInterval.OID}"/>
+		
+		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
+		<property name="minChars" value="4"/>
+	</slot>
+	<slot name="newCode" key="label.paymentCodeMapping.newCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="code"/>
+		<property name="indicatorShown" value="true"/>
+				
+		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
+		<property name="serviceArgs" value="executionYearOid=${executionInterval.OID}"/>
+		
+		<property name="className" value="net.sourceforge.fenixedu.domain.accounting.PaymentCode"/>
+		<property name="minChars" value="4"/>
+	</slot>
+</schema>
+
+<schema name="PaymentCodeMapping.view" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping" bundle="MANAGER_RESOURCES">
+	<slot name="executionInterval" key="label.executionInterval" layout="format" >
+		<property name="format" value="${qualifiedName}" />
+	</slot>
+	<slot name="oldPaymentCode.formattedCode" key="label.paymentCodeMapping.oldCode" />
+	<slot name="newPaymentCode.formattedCode" key="label.paymentCodeMapping.newCode" />
+</schema>

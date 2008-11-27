@@ -40,6 +40,11 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
     }
 
     @Override
+    public boolean isInstallment() {
+	return true;
+    }
+
+    @Override
     public void delete() {
 	super.setInstallment(null);
 	super.delete();

@@ -138,7 +138,6 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	}
 
 	return result;
-
     }
 
     private class CashFlowBox {
@@ -148,12 +147,18 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	public List<AccountingTransaction> transactions;
 	public BigDecimal discountPercentage;
 	public Event event;
+	public Money discountValue;
+	public boolean usedDiscountValue;
+	private Money discountedValue;
 
 	public CashFlowBox(final Event event, final DateTime when, final BigDecimal discountPercentage) {
 	    this.event = event;
 	    this.transactions = new ArrayList<AccountingTransaction>(event.getSortedNonAdjustingTransactions());
 	    this.when = when;
 	    this.discountPercentage = discountPercentage;
+	    this.discountValue = event.getTotalDiscount();
+	    this.discountedValue = Money.ZERO;
+	    this.usedDiscountValue = false;
 
 	    if (transactions.isEmpty()) {
 		this.amount = Money.ZERO;
@@ -170,12 +175,29 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    return this.amount.greaterOrEqualThan(amount);
 	}
 
-	public boolean subtractMoneyFor(final Installment installment) {
-	    final Money instalmentAmount = installment.calculateAmount(this.event, this.currentTransactionDate,
-		    this.discountPercentage, isToApplyPenalty(this.event, installment));
-	    if (hasMoneyFor(instalmentAmount)) {
-		this.amount = this.amount.subtract(instalmentAmount);
+	private boolean hasDiscountValue() {
+	    return this.discountValue.isPositive();
+	}
 
+	public boolean subtractMoneyFor(final Installment installment) {
+
+	    if (hasDiscountValue() && this.discountValue.greaterOrEqualThan(installment.getAmount())) {
+		usedDiscountValue = true;
+		this.discountValue = this.discountValue.subtract(installment.getAmount());
+		return true;
+	    }
+
+	    Money installmentAmount = installment.calculateAmount(this.event, this.currentTransactionDate,
+		    this.discountPercentage, isToApplyPenalty(this.event, installment));
+	    
+	    if (hasDiscountValue()) {
+		installmentAmount = installmentAmount.subtract(this.discountValue);
+		this.discountedValue = this.discountValue;
+	    }
+
+	    if (hasMoneyFor(installmentAmount)) {
+		this.amount = this.amount.subtract(installmentAmount);
+		this.discountValue = Money.ZERO;
 		return true;
 	    }
 
@@ -183,29 +205,38 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 		return false;
 	    }
 
-	    this.amount = this.amount.add(this.transactions.get(0).getAmountWithAdjustment());
-	    this.currentTransactionDate = this.transactions.get(0).getWhenRegistered();
-	    this.transactions.remove(0);
+	    final AccountingTransaction transaction = this.transactions.remove(0);
+	    this.amount = this.amount.add(transaction.getAmountWithAdjustment());
+	    this.currentTransactionDate = transaction.getWhenRegistered();
 
 	    return subtractMoneyFor(installment);
-
 	}
 
-	public Money subtractRemaingingFor(final Installment installment) {
+	public Money subtractRemainingFor(final Installment installment) {
 	    final Money result = installment.calculateAmount(this.event, this.when, this.discountPercentage,
-		    isToApplyPenalty(this.event, installment)).subtract(this.amount);
-	    this.amount = Money.ZERO;
-
+		    isToApplyPenalty(this.event, installment)).subtract(this.discountValue).subtract(this.amount);
+	    this.amount = this.discountValue = Money.ZERO;
 	    return result;
 	}
 
 	public Money calculateTotalAmountFor(final Installment installment) {
-	    final DateTime dateToCalculate = !subtractMoneyFor(installment) ? this.when : this.currentTransactionDate;
-	    return installment.calculateAmount(this.event, dateToCalculate, this.discountPercentage, isToApplyPenalty(this.event,
-		    installment));
-
+	    final Money result;
+	    if (subtractMoneyFor(installment)) {
+		if (usedDiscountValue) {
+		    result = Money.ZERO;
+		} else {
+		    result = installment.calculateAmount(this.event, this.currentTransactionDate, this.discountPercentage,
+			    isToApplyPenalty(this.event, installment)).subtract(this.discountedValue);
+		    this.discountedValue = Money.ZERO;
+		}
+	    } else {
+		result = installment.calculateAmount(this.event, this.when, this.discountPercentage, isToApplyPenalty(this.event,
+			installment)).subtract(this.discountedValue);
+		this.discountedValue = Money.ZERO;
+	    }
+	    usedDiscountValue = false;
+	    return result;
 	}
-
     }
 
     public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
@@ -216,9 +247,8 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	for (final Installment installment : getInstallmentsSortedByEndDate()) {
 
 	    if (!cashFlowBox.subtractMoneyFor(installment)) {
-		result.put(installment, cashFlowBox.subtractRemaingingFor(installment));
+		result.put(installment, cashFlowBox.subtractRemainingFor(installment));
 	    }
-
 	}
 
 	return result;

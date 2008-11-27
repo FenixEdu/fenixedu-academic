@@ -13,6 +13,7 @@ public class PenaltyExemptionJustificationFactory {
 
 	case SOCIAL_SHARE_GRANT_OWNER:
 	case ENROLMENT_AFTER_EQUIVALENCE:
+	case SEPARATION_CYCLES_AUTHORIZATION:
 	    return new PenaltyExemptionJustification(penaltyExemption, justificationType, reason);
 	case DIRECTIVE_COUNCIL_AUTHORIZATION:
 	case NUCLEUS_COORDINATOR_AUTHORIZATION:

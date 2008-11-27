@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -568,6 +569,10 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
+    public List<AccountingEventPaymentCode> getAllPaymentCodes() {
+	return Collections.unmodifiableList(super.getPaymentCodes());
+    }
+
     @Override
     public void addPaymentCodes(AccountingEventPaymentCode paymentCode) {
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.Event.cannot.add.paymentCode");
@@ -761,9 +766,12 @@ public abstract class Event extends Event_Base {
 
     abstract public PostingRule getPostingRule();
 
-    public void delete() {
+    final public void delete() {
 	checkRulesToDelete();
+	disconnect();
+    }
 
+    protected void disconnect() {
 	while (!super.getPaymentCodes().isEmpty()) {
 	    super.getPaymentCodes().get(0).delete();
 	}
@@ -778,7 +786,7 @@ public abstract class Event extends Event_Base {
 	deleteDomainObject();
     }
 
-    private void checkRulesToDelete() {
+    protected void checkRulesToDelete() {
 	if (isClosed() || !getNonAdjustingTransactions().isEmpty()) {
 	    throw new DomainException(
 		    "error.accounting.Event.cannot.delete.because.event.is.already.closed.or.has.transactions.associated");
@@ -886,7 +894,7 @@ public abstract class Event extends Event_Base {
     }
 
     public void markLetterSent() {
-	setWhenSentLetter(new YearMonthDay());
+	setWhenSentLetter(new LocalDate());
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -957,4 +965,17 @@ public abstract class Event extends Event_Base {
     public boolean isDepositSupported() {
 	return !isCancelled() && !getPossibleEntryTypesForDeposit().isEmpty();
     }
+
+    public void addDiscount(final Person responsible, final Money amount) {
+	addDiscounts(new Discount(responsible, amount));
+    }
+
+    public Money getTotalDiscount() {
+	Money result = Money.ZERO;
+	for (final Discount discount : getDiscounts()) {
+	    result = result.add(discount.getAmount());
+	}
+	return result;
+    }
+
 }

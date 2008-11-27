@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
@@ -180,6 +181,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return getState() == PaymentCodeState.CANCELLED;
     }
 
+    public boolean isInvalid() {
+	return getState() == PaymentCodeState.INVALID;
+    }
+
     public void cancel() {
 	setState(PaymentCodeState.CANCELLED);
     }
@@ -203,6 +208,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	    return;
 	}
 
+	if (isInvalid()) {
+	    throw new DomainException("error.accounting.PaymentCode.cannot.process.invalid.codes");
+	}
+
 	internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId, comments);
 	setState(PaymentCodeState.PROCESSED);
     }
@@ -224,6 +233,18 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return enumerationResources.getString(getType().getQualifiedName());
     }
 
+    abstract protected void internalProcess(final Person person, final Money amount, final DateTime whenRegistered,
+	    final String sibsTransactionId, final String comments);
+
+    public PaymentCodeMapping getOldPaymentCodeMapping(final ExecutionYear executionYear) {
+	for (final PaymentCodeMapping mapping : getOldPaymentCodeMappingsSet()) {
+	    if (mapping.has(executionYear)) {
+		return mapping;
+	    }
+	}
+	return null;
+    }
+
     static public PaymentCode readByCode(final String code) {
 	if (StringUtils.isEmpty(code)) {
 	    return null;
@@ -235,8 +256,5 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	}
 	return null;
     }
-
-    abstract protected void internalProcess(final Person person, final Money amount, final DateTime whenRegistered,
-	    final String sibsTransactionId, final String comments);
 
 }

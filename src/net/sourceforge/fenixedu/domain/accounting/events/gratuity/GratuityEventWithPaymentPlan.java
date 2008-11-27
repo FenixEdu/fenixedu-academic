@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -381,12 +382,12 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     @Override
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void delete() {
+    protected void disconnect() {
 	if (hasCustomGratuityPaymentPlan()) {
 	    ((CustomGratuityPaymentPlan) getGratuityPaymentPlan()).delete();
 	}
 	super.setGratuityPaymentPlan(null);
-	super.delete();
+	super.disconnect();
     }
 
     @Override
@@ -411,7 +412,18 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 		result = result.add(installment.getAmount());
 	    }
 	}
-	return result;
+
+	return result.add(getPayedAmountLessInstallments());
+    }
+
+    private Money getPayedAmountLessInstallments() {
+	Money payedAmount = Money.ZERO;
+	for (final AccountingTransaction transaction : getNonAdjustingTransactions()) {
+	    if (!transaction.isInstallment()) {
+		payedAmount = payedAmount.add(transaction.getToAccountEntry().getAmountWithAdjustment());
+	    }
+	}
+	return payedAmount;
     }
 
     @Override

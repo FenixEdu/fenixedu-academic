@@ -1314,11 +1314,10 @@ class DomainObject {
 		DateTime eventStateDate;
 		EventType eventType;
 		DateTime whenOccured;
-		YearMonthDay whenSentLetter;
+		LocalDate whenSentLetter;
 	}
 
 		class accounting.AcademicEvent extends accounting.Event {
-		
 		}
 	
 		class accounting.ResidenceEvent extends accounting.Event {
@@ -1503,6 +1502,12 @@ class DomainObject {
 
 		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
 		}
+		
+	class accounting.Discount extends DomainObject {
+		DateTime whenCreated;
+		String username;
+		Money amount;
+	}
 
 	class accounting.Installment extends DomainObject {
 		Money amount;
@@ -1550,6 +1555,9 @@ class DomainObject {
 
 		class accounting.paymentCodes.MasterDegreeInsurancePaymentCode extends accounting.PaymentCode {
 		}
+		
+	class accounting.PaymentCodeMapping extends DomainObject {
+	}
 
 	class accounting.PaymentPlan extends DomainObject {
 		Boolean defaultPlan;
@@ -5860,6 +5868,13 @@ relation AccountingEventEmployeeResponsibleForCancel {
 	}
 }
 
+relation AccountingEventDiscount {
+	accounting.Event playsRole event;
+	accounting.Discount playsRole discounts {
+		multiplicity *;
+	}
+}
+
 relation AccountingTransactionAccountingTransactionDetail {
 	accounting.AccountingTransaction playsRole transaction;
 	accounting.AccountingTransactionDetail playsRole transactionDetail;
@@ -8694,6 +8709,34 @@ relation PaymentCodeGratuitySituation {
 	accounting.paymentCodes.GratuitySituationPaymentCode playsRole paymentCode;
 }
 
+relation RootDomainObjectPaymentCodeMapping {
+	RootDomainObject playsRole rootDomainObject;
+	accounting.PaymentCodeMapping playsRole paymentCodeMappings {
+		multiplicity *;
+	}
+}
+
+relation PaymentCodeMappingExecutionInterval {
+	ExecutionInterval playsRole executionInterval;
+	accounting.PaymentCodeMapping playsRole paymentCodeMappings {
+		multiplicity *;
+	}
+}
+
+relation PaymentCodeMappingOldPaymentCode {
+	accounting.PaymentCode playsRole oldPaymentCode;
+	accounting.PaymentCodeMapping playsRole oldPaymentCodeMappings {
+		multiplicity *;
+	}
+}
+
+relation PaymentCodeMappingNewPaymentCode {
+	accounting.PaymentCode playsRole newPaymentCode;
+	accounting.PaymentCodeMapping playsRole newPaymentCodeMappings {
+		multiplicity *;
+	}
+}
+
 relation PaymentPhaseGratuityValues {
 	PaymentPhase playsRole paymentPhaseList {
 		multiplicity *;
@@ -9629,6 +9672,13 @@ relation RootDomainObjectAccountabilityType {
 relation RootDomainObjectAccountingEvent {
 	RootDomainObject playsRole rootDomainObject;
 	accounting.Event playsRole accountingEvents {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAccountingDiscount {
+	RootDomainObject playsRole rootDomainObject;
+	accounting.Discount playsRole discounts {
 		multiplicity *;
 	}
 }

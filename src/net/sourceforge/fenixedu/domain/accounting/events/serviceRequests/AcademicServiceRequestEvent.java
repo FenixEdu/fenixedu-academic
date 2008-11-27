@@ -59,9 +59,9 @@ abstract public class AcademicServiceRequestEvent extends AcademicServiceRequest
     }
 
     @Override
-    public void delete() {
+    protected void disconnect() {
 	super.setAcademicServiceRequest(null);
-	super.delete();
+	super.disconnect();
     }
 
 }
