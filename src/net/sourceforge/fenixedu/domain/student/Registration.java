@@ -963,7 +963,18 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<CurriculumLine> getApprovedCurriculumLines() {
-	return getLastStudentCurricularPlan().getApprovedCurriculumLines();
+	if (isBolonha()) {
+	    return getLastStudentCurricularPlan().getApprovedCurriculumLines();
+	} else {
+	    final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+
+	    for (final StudentCurricularPlan plan : getStudentCurricularPlansSet()) {
+		result.addAll(plan.getApprovedCurriculumLines());
+	    }
+
+	    return result;
+	}
+
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
