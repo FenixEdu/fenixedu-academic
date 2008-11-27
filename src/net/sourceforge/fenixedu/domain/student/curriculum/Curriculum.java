@@ -20,7 +20,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private CurriculumModule curriculumModule;
 
-    private boolean bolonhaDegree;
+    private Boolean bolonhaDegree;
 
     private ExecutionYear executionYear;
 
@@ -58,7 +58,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private Curriculum(final CurriculumModule curriculumModule, final ExecutionYear executionYear) {
 	this.curriculumModule = curriculumModule;
-	this.bolonhaDegree = curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
+	this.bolonhaDegree = curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan().isBolonhaDegree();
 	this.executionYear = executionYear;
     }
 
@@ -74,6 +74,11 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public void add(final Curriculum curriculum) {
+	if (this.curriculumModule == null) {
+	    this.curriculumModule = curriculum.getCurriculumModule();
+	    this.bolonhaDegree = curriculum.isBolonha();
+	}
+
 	addAverageEntries(averageEnrolmentRelatedEntries, curriculum.getEnrolmentRelatedEntries());
 	addAverageEntries(averageDismissalRelatedEntries, curriculum.getDismissalRelatedEntries());
 	addCurricularYearEntries(curricularYearEntries, curriculum.getCurricularYearEntries());
@@ -100,7 +105,7 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     private void add(final Set<ICurriculumEntry> entries, final ICurriculumEntry newEntry) {
-	if (bolonhaDegree || !isAlreadyCurricularYearEntry(newEntry)) {
+	if (isBolonha() || !isAlreadyCurricularYearEntry(newEntry)) {
 	    entries.add(newEntry);
 	}
     }
@@ -139,6 +144,10 @@ public class Curriculum implements Serializable, ICurriculum {
 
     public CurriculumModule getCurriculumModule() {
 	return curriculumModule;
+    }
+
+    public Boolean isBolonha() {
+	return bolonhaDegree;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -338,7 +347,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.append("\n[ENTRIES]");
 	for (final ICurriculumEntry entry : averageEnrolmentRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
-		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
+		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().toString() + "\t[WEIGHT] "
 		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
 		    + entry.getClass().getSimpleName());
 	}
@@ -346,7 +355,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	result.append("\n[DISMISSAL RELATED ENTRIES]");
 	for (final ICurriculumEntry entry : averageDismissalRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
-		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().getNumericValue() + "\t[WEIGHT] "
+		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().toString() + "\t[WEIGHT] "
 		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
 		    + entry.getClass().getSimpleName());
 	}
