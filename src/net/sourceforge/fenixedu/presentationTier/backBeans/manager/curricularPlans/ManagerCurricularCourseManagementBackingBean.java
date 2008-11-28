@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -10,11 +12,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateOldCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditOldCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CurricularCourseManagementBackingBean;
+
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class ManagerCurricularCourseManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -209,9 +214,22 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     @Override
     protected List<SelectItem> readExecutionYearItems() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
+	if (isBolonha()) {
+	    readBolonhaExecutionYears(result);
+	} else {
+	    readPreBolonhaExecutionYears(result);
+	}
+	Collections.sort(result, new Comparator<SelectItem>() {
+	    @Override
+	    public int compare(SelectItem o1, SelectItem o2) {
+		return -o1.getLabel().compareTo(o2.getLabel());
+	    }
+	});
+	return result;
+    }
 
+    private void readBolonhaExecutionYears(final List<SelectItem> result) {
 	final List<ExecutionDegree> executionDegrees = getDegreeCurricularPlan().getExecutionDegrees();
-
 	if (executionDegrees.isEmpty()) {
 	    for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
 		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
@@ -219,18 +237,39 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    if (getExecutionYearID() == null) {
 		setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
 	    }
-	    return result;
+	} else {
+	    for (final ExecutionDegree executionDegree : executionDegrees) {
+		result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear()
+			.getYear()));
+	    }
+	    if (getExecutionYearID() == null) {
+		setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+	    }
 	}
+    }
 
-	for (final ExecutionDegree executionDegree : executionDegrees) {
-	    result.add(new SelectItem(executionDegree.getExecutionYear().getIdInternal(), executionDegree.getExecutionYear()
-		    .getYear()));
+    private void readPreBolonhaExecutionYears(final List<SelectItem> result) {
+	for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+	    result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
 	}
-
 	if (getExecutionYearID() == null) {
-	    setExecutionYearID(getDegreeCurricularPlan().getMostRecentExecutionDegree().getExecutionYear().getIdInternal());
+	    setExecutionYearID(ExecutionYear.readCurrentExecutionYear().getIdInternal());
 	}
+    }
 
+    @Override
+    protected List<SelectItem> readExecutionPeriodItems() {
+	return isBolonha() ? super.readExecutionPeriodItems() : readPreBolonhaExecutionPeriodItems();
+    }
+
+    private List<SelectItem> readPreBolonhaExecutionPeriodItems() {
+	final List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriods());
+	Collections.sort(semesters, new ReverseComparator(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	for (final ExecutionSemester semester : semesters) {
+	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+	}
 	return result;
     }
 
