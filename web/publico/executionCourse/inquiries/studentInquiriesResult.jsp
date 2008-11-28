@@ -61,7 +61,7 @@
 
 	boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
 		if (isCasEnabled) {
-			String casValue = request.getScheme() + "://" + request.getServerName() + ":"
+			String casValue = request.getScheme() + "://" + request.getServerName()
 				+ port + request.getContextPath() + "/loginCAS.do";
 			String urlSuffix = "?service=" + casValue;
 		    String loginPage = PropertiesManager.getProperty("cas.loginUrl") + urlSuffix;
