@@ -206,6 +206,12 @@ public class RolePredicates {
 	};
     };
 
+    public static final AccessControlPredicate<Object> STUDENT_AND_TEACHER_PREDICATE = new AccessControlPredicate<Object>() {
+	public boolean evaluate(Object domainObject) {
+	    return hasRole(RoleType.TEACHER) || hasRole(RoleType.STUDENT);
+	};
+    };
+    
     public static final AccessControlPredicate<Object> TREASURY_PREDICATE = new AccessControlPredicate<Object>() {
 	public boolean evaluate(Object domainObject) {
 	    return hasRole(RoleType.TREASURY);

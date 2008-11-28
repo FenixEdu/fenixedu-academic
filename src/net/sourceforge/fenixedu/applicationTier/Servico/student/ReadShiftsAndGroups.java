@@ -33,7 +33,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadShiftsAndGroups extends FenixService {
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
     public static ISiteComponent run(Integer groupingCode, String username) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
@@ -51,7 +51,8 @@ public class ReadShiftsAndGroups extends FenixService {
 	return run(grouping);
     }
 
-    @Checked("RolePredicates.STUDENT_PREDICATE")
+    @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
+   
     @Service
     public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
 	final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
