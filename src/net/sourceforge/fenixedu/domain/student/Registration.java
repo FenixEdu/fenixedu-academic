@@ -2019,7 +2019,7 @@ public class Registration extends Registration_Base {
     }
 
     final public RegistrationState getFirstState() {
-	return hasAnyRegistrationStates() ? Collections.min(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
+	return getFirstRegistrationState();
     }
 
     final public RegistrationStateType getActiveStateType() {
@@ -2047,6 +2047,11 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return false;
+    }
+
+    public boolean hasActiveFirstState(final ExecutionYear period) {
+	final Set<RegistrationState> states = getRegistrationStates(period);
+	return states.isEmpty() ? false : Collections.min(states, RegistrationState.DATE_COMPARATOR).isActive();
     }
 
     public boolean hasActiveLastState(final ExecutionSemester executionSemester) {
