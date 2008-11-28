@@ -73,17 +73,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("name", StringFormatter.prettyPrint(person.getName()));
 	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
 	addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
-	addParameter("birthLocale", getBirthLocale(person));
-    }
-
-    private String getBirthLocale(final Person person) {
-	final StringBuilder result = new StringBuilder();
-
-	result.append(StringFormatter.prettyPrint(person.getParishOfBirth()));
-	result.append(", ");
-	result.append(StringFormatter.prettyPrint(person.getDistrictSubdivisionOfBirth()));
-
-	return result.toString();
+	addParameter("birthLocale", getBirthLocale(person, true));
     }
 
     private String getConclusionDate(final DiplomaRequest diplomaRequest,

@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
@@ -226,8 +227,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
 	builder = new StringBuilder();
 	builder.append(getResourceBundle().getString("documents.birthLocale"));
-	builder.append(SINGLE_SPACE).append(person.getParishOfBirth().toUpperCase());
-	builder.append(",").append(SINGLE_SPACE).append(person.getDistrictSubdivisionOfBirth().toUpperCase());
+	builder.append(SINGLE_SPACE).append(getBirthLocale(person, false));
 	addParameter("birthLocale", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
 	builder = new StringBuilder();
@@ -236,6 +236,22 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	builder.append(SINGLE_SPACE).append(nationality.toUpperCase());
 	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.nationality.two"));
 	addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+    }
+
+    protected String getBirthLocale(final Person person, final boolean prettyPrint) {
+	final StringBuilder result = new StringBuilder();
+
+	final String parishOfBirth = prettyPrint ? StringFormatter.prettyPrint(person.getParishOfBirth()) : person
+		.getParishOfBirth();
+	final String districtSubdivision = prettyPrint ? StringFormatter.prettyPrint(person.getDistrictSubdivisionOfBirth())
+		: person.getDistrictSubdivisionOfBirth();
+
+	result.append(parishOfBirth);
+	if (!parishOfBirth.equals(districtSubdivision)) {
+	    result.append(",").append(SINGLE_SPACE).append(districtSubdivision);
+	}
+
+	return result.toString();
     }
 
     protected String getDegreeDescription() {
