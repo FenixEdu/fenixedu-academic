@@ -100,7 +100,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends FenixServic
 	    }
 
 	    if (!this.firstYear) {
-		// SHIT!!!!!!!!!!!!
+		// TODO: check if this is right (sana)
 		removeWrongGratuitySituation(gratuitySituation);
 		return;
 	    }

@@ -57,7 +57,7 @@ public class CheckOJBConversors {
 	    System.out.println(key);
 	    for (String type : types) {
 		System.out.println("\t- " + type);
-		//System.out.println("primitiveJavaType2DataTypeConversor.put(\""
+		// System.out.println("primitiveJavaType2DataTypeConversor.put(\""
 		// + key + "\", \"" + type + "\");");
 	    }
 	}
@@ -141,7 +141,7 @@ public class CheckOJBConversors {
 			    }
 			} else if (slot.getType().equals("java.util.Date")) {
 			    if ((descriptor.getColumnType().equals("TIME") || descriptor.getColumnType().equals("TIME"))) {
-				System.out.println("SHIT here -> " + classDescriptor.getClassNameOfObject() + " - "
+				System.out.println("ERROR here -> " + classDescriptor.getClassNameOfObject() + " - "
 					+ descriptor.getAttributeName());
 
 			    }
