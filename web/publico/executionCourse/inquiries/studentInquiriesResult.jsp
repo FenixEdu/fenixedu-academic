@@ -3,6 +3,7 @@
 <%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
+<%@page import="java.net.URLEncoder"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -47,23 +48,29 @@
 	<br/>
 	<bean:message key="message.inquiries.information.not.public" bundle="INQUIRIES_RESOURCES"/>
 	<%
+		String port = request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : Integer.toString(request.getServerPort());
+
 		String value = request.getScheme() + "://" + request.getServerName() + ":"
-		+ request.getServerPort() + request.getContextPath() + executionCourse.getSite().getReversePath() + "/resultados-quc";
-		String urlSuffix = "?service=" + value;
-		boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
+			+ port + request.getContextPath() + executionCourse.getSite().getReversePath() + "/resultados-quc";
+		session.setAttribute("ORIGINAL_REQUEST", Boolean.TRUE);
+		session.setAttribute("ORIGINAL_URI", value);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("service", value);
+		session.setAttribute("ORIGINAL_PARAMETER_MAP", map);
+		session.setAttribute("ORIGINAL_ATTRIBUTE_MAP", map);
+
+	boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
 		if (isCasEnabled) {
+			String casValue = request.getScheme() + "://" + request.getServerName() + ":"
+				+ port + request.getContextPath() + "/loginCAS.do";
+			String urlSuffix = "?service=" + casValue;
 		    String loginPage = PropertiesManager.getProperty("cas.loginUrl") + urlSuffix;
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%
 		} else {
+			String urlSuffix = "?service=" + value;
 			String loginPage = PropertiesManager.getProperty("login.page") + urlSuffix;
-		    session.setAttribute("ORIGINAL_REQUEST", Boolean.TRUE);
-		    session.setAttribute("ORIGINAL_URI", value);
-		    Map<String, Object> map = new HashMap<String, Object>();
-		    map.put("service", value);
-			session.setAttribute("ORIGINAL_PARAMETER_MAP", map);
-			session.setAttribute("ORIGINAL_ATTRIBUTE_MAP", map);
 	%>
 			<html:link href="<%= loginPage %>">Login</html:link>
 	<%
