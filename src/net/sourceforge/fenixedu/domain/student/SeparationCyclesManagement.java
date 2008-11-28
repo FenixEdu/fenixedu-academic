@@ -117,6 +117,7 @@ public class SeparationCyclesManagement {
 	final Student student = oldStudentCurricularPlan.getRegistration().getStudent();
 	final CycleCurriculumGroup oldSecondCycle = oldStudentCurricularPlan.getSecondCycle();
 	final DegreeCurricularPlan degreeCurricularPlan = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule();
+	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 
 	final Registration newRegistration = createRegistration(student, oldStudentCurricularPlan);
 	final StudentCurricularPlan newStudentCurricularPlan = createStudentCurricularPlan(newRegistration, degreeCurricularPlan);
@@ -126,7 +127,6 @@ public class SeparationCyclesManagement {
 	moveExtraCurriculumGroupInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
 	moveExtraAttends(oldStudentCurricularPlan, newStudentCurricularPlan);
 	tryRemoveOldSecondCycle(oldSecondCycle);
-	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 	moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
 	createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
 
@@ -216,8 +216,14 @@ public class SeparationCyclesManagement {
 
     private YearMonthDay getBeginDate(final StudentCurricularPlan sourceStudentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
-	final YearMonthDay start = sourceStudentCurricularPlan.getStartDateYearMonthDay();
-	return executionSemester.getBeginDateYearMonthDay().isBefore(start) ? start : executionSemester
+
+	final Registration registration = sourceStudentCurricularPlan.getRegistration();
+	if (!registration.isConcluded()) {
+	    throw new DomainException("error.SeparationCyclesManagement.source.studentCurricularPlan.is.not.concluded");
+	}
+
+	final YearMonthDay stateDate = registration.getActiveState().getStateDate().toYearMonthDay();
+	return executionSemester.getBeginDateYearMonthDay().isBefore(stateDate) ? stateDate : executionSemester
 		.getBeginDateYearMonthDay();
     }
 
