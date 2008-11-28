@@ -41,3 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Valid Field to Student Group" addValidToStudentGroup.sql
+execute "Create payment code mapping table" createPaymentCodeMappingTable.sql
+execute "Add payment codes functionality to manager portal" paymentsFunctionality.sql
+execute "Create discount table" createAccountingDiscountTable.sql
