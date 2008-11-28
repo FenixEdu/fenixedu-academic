@@ -519,7 +519,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return totalTime;
     }
 
-    public BigDecimal getWeeklyCourseLoadTotalQuantityByShitType(ShiftType type) {
+    public BigDecimal getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType type) {
 	CourseLoad courseLoad = getCourseLoadByShiftType(type);
 	return courseLoad != null ? courseLoad.getWeeklyHours() : BigDecimal.ZERO;
     }
@@ -1906,15 +1906,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    return code;
 	}
 	int c;
-	for (c = 0; existsMatchingCode(code + "-" + c); c++);
+	for (c = 0; existsMatchingCode(code + "-" + c); c++)
+	    ;
 	return code + "-" + c;
     }
 
     private boolean existsMatchingCode(final String code) {
 	for (final ExecutionCourse executionCourse : getExecutionPeriod().getAssociatedExecutionCoursesSet()) {
-	     if (executionCourse != this && executionCourse.getSigla().equalsIgnoreCase(code)) {
-		 return true;
-	     }
+	    if (executionCourse != this && executionCourse.getSigla().equalsIgnoreCase(code)) {
+		return true;
+	    }
 	}
 	return false;
     }

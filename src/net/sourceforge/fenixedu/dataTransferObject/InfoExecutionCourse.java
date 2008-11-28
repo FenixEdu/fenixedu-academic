@@ -67,39 +67,39 @@ public class InfoExecutionCourse extends InfoObject {
     // =======================
 
     public Double getWeeklyTheoreticalHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TEORICA).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICA).doubleValue();
     }
 
     public Double getWeeklyPraticalHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.PRATICA).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PRATICA).doubleValue();
     }
 
     public Double getWeeklyTheoPratHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TEORICO_PRATICA).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TEORICO_PRATICA).doubleValue();
     }
 
     public Double getWeeklyLabHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.LABORATORIAL).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.LABORATORIAL).doubleValue();
     }
 
     public Double getWeeklyFieldWorkHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.FIELD_WORK).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.FIELD_WORK).doubleValue();
     }
 
     public Double getWeeklyProblemsHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.PROBLEMS).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.PROBLEMS).doubleValue();
     }
 
     public Double getWeeklySeminaryHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.SEMINARY).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.SEMINARY).doubleValue();
     }
 
     public Double getWeeklyTrainingPeriodHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TRAINING_PERIOD).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TRAINING_PERIOD).doubleValue();
     }
 
     public Double getWeeklyTutorialOrientationHours() {
-	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShitType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();
+	return getExecutionCourse().getWeeklyCourseLoadTotalQuantityByShiftType(ShiftType.TUTORIAL_ORIENTATION).doubleValue();
     }
 
     public String getNome() {
