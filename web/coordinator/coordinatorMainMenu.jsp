@@ -58,11 +58,11 @@
 					<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 				</html:link> 
 			</li>
-<!--	       <li>-->
-<!--	           <html:link page="<%="/viewInquiriesResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">-->
-<!--	           		<bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>-->
-<!--	           </html:link>-->
-<!--	       </li>			-->
+		<li>
+			<html:link page="<%="/viewInquiriesResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+				<bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+			</html:link>
+		</li>
 		</logic:equal>
         <li>
             <html:link page="<%="/sendMail.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">

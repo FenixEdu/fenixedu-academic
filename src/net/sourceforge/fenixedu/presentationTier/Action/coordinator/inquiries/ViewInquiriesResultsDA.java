@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
@@ -38,12 +41,29 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("executionDegrees", getExecutionDegrees(request, actionForm));
 	request.setAttribute("executionCourses", Collections.EMPTY_LIST);
 	((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(getIntegerFromRequest(request,
 		"degreeCurricularPlanID"));
 
 	return actionMapping.findForward("inquiryResults");
+    }
+
+    private List<ExecutionSemester> getExecutionSemesters(HttpServletRequest request, ActionForm actionForm) {
+	Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
+	if (degreeCurricularPlanID == null || degreeCurricularPlanID == 0) {
+	    degreeCurricularPlanID = ((ViewInquiriesResultPageDTO) actionForm).getDegreeCurricularPlanID();
+	}
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanID"));
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    final ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    executionSemesters.addAll(executionYear.getExecutionPeriodsSet());
+	}
+	Collections.sort(executionSemesters);
+	Collections.reverse(executionSemesters);
+	return executionSemesters;
     }
 
     private List<ExecutionDegree> getExecutionDegrees(HttpServletRequest request, ActionForm actionForm) {
@@ -53,6 +73,39 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	}
 	return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanID"))
 		.getExecutionDegrees();
+    }
+
+    public ActionForward selectexecutionSemester(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	ViewInquiriesResultPageDTO resultPageDTO = (ViewInquiriesResultPageDTO) actionForm;
+	final ExecutionSemester executionSemester = resultPageDTO.getExecutionSemester();
+	if (executionSemester == null) {
+	    return prepare(actionMapping, actionForm, request, response);
+	}
+	final ExecutionYear executionYear = executionSemester.getExecutionYear();
+	final DegreeCurricularPlan degreeCurricularPlan = resultPageDTO.getDegreeCurricularPlan();
+	final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
+	if (executionDegree == null) {
+	    return prepare(actionMapping, actionForm, request, response);
+	}
+
+	resultPageDTO.setExecutionDegreeID(executionDegree.getIdInternal());
+
+	Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
+	    final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
+	    if (executionCourse.getExecutionPeriod() == executionSemester) {
+		executionCourses.add(executionCourse);
+	    }
+	}
+	Collections.sort((List<ExecutionCourse>) executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+
+	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
+	request.setAttribute("executionDegrees", getExecutionDegrees(request, actionForm));
+	request.setAttribute("executionCourses", executionCourses);
+
+	return actionMapping.findForward("inquiryResults");
     }
 
     public ActionForward selectExecutionDegree(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -71,6 +124,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	}
 	Collections.sort((List<ExecutionCourse>) executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 
+	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("executionDegrees", getExecutionDegrees(request, actionForm));
 	request.setAttribute("executionCourses", executionCourses);
 
@@ -85,7 +139,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	    request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(executionCourse,
 		    ((ViewInquiriesResultPageDTO) actionForm).getExecutionDegree()));
 	}
-	return selectExecutionDegree(actionMapping, actionForm, request, response);
+	return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
 
     private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(

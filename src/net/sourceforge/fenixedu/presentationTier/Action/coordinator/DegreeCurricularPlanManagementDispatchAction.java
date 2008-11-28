@@ -218,23 +218,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 	try {
 	    canEdit = LoggedCoordinatorCanEdit.run(infoExecutionDegreeCode, infoCurricularCourseCode, userView.getUtilizador());
-
-	} catch (NonExistingServiceException e) {
-	    if (e.getMessage().equals("nullExecutionDegreeCode")) {
-		addErrorMessage(request, "nullExecutionDegreeCode", "error.coordinator.noExecutionDegree");
-		return mapping.findForward("degreeCurricularPlanManagement");
-
-	    } else if (e.getMessage().equals("nullUsername")) {
-		addErrorMessage(request, "nullUsername", "error.coordinator.noUserView");
-		return mapping.findForward("degreeCurricularPlanManagement");
-
-	    } else if (e.getMessage().equals("nullCurricularCourseCode")) {
-		addErrorMessage(request, "nullCurricularCourseCode", "error.coordinator.noCurricularCourse");
-		return mapping.findForward("degreeCurricularPlanManagement");
-
-	    } else {
-		throw new FenixActionException();
-	    }
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("nullExecutionDegreeCode")) {
 		addErrorMessage(request, "nullExecutionDegreeCode", "error.coordinator.noExecutionDegree");
