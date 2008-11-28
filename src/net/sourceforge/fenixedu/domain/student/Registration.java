@@ -3086,7 +3086,7 @@ public class Registration extends Registration_Base {
 		result = getDissertationEnrolment().getThesis().getFinalFullTitle().getContent();
 	    }
 
-	    result = result.trim().replace("\"", "");
+	    result = result.trim();
 	}
 
 	return result;
