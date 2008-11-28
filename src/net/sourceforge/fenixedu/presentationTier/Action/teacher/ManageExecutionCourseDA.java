@@ -14,11 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.CreateLessonPlanningBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.ImportLessonPlanningsBean.ImportType;
@@ -814,8 +810,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	String executionCourseID = request.getParameter("executionCourseID");
 
-	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(Integer.valueOf(executionCourseID));
-	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
 	SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
 
 	request.setAttribute("shifts", shifts);
@@ -831,13 +826,11 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	String executionCourseID = request.getParameter("executionCourseID");
 	String registrationID = request.getParameter("registrationID");
 
-	InfoShift infoShift = ReadShiftByOID.run(Integer.valueOf(shiftID));
-	Shift shift = infoShift.getShift();
-	ExecutionCourse executionCourse = shift.getRootDomainObject()
-		.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
+	Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
 
 	if (registrationID != null) {
-	    Registration registration = shift.getRootDomainObject().readRegistrationByOID(Integer.valueOf(registrationID));
+	    Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	    shift.removeAttendFromShift(registration, executionCourse);
 	    request.setAttribute("registration", registration);
 	}
