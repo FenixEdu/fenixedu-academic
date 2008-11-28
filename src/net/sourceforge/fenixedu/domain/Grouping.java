@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -292,7 +293,7 @@ public class Grouping extends Grouping_Base {
 
     public void delete() {
 
-	if (!this.getStudentGroups().isEmpty()) {
+	if (!super.getStudentGroups().isEmpty()) {
 	    throw new DomainException(this.getClass().getName(), "");
 	}
 
@@ -318,7 +319,7 @@ public class Grouping extends Grouping_Base {
 
     public int findMaxGroupNumber() {
 	int max = 0;
-	for (final StudentGroup studentGroup : getStudentGroups()) {
+	for (final StudentGroup studentGroup : super.getStudentGroups()) {
 	    max = Math.max(max, studentGroup.getGroupNumber().intValue());
 	}
 	return max;
@@ -350,7 +351,7 @@ public class Grouping extends Grouping_Base {
     public Map<Shift, SortedSet<StudentGroup>> getStudentGroupsIndexedByShift() {
 	final Map<Shift, SortedSet<StudentGroup>> map = new TreeMap<Shift, SortedSet<StudentGroup>>(
 		Shift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-	for (final StudentGroup studentGroup : getStudentGroupsSet()) {
+	for (final StudentGroup studentGroup : getStudentGroups()) {
 	    if (studentGroup.hasShift()) {
 		final Shift shift = studentGroup.getShift();
 		final SortedSet<StudentGroup> studentGroups;
@@ -368,7 +369,7 @@ public class Grouping extends Grouping_Base {
 
     public SortedSet<StudentGroup> getStudentGroupsOrderedByGroupNumber() {
 	final SortedSet<StudentGroup> studentGroups = new TreeSet<StudentGroup>(StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
-	studentGroups.addAll(getStudentGroupsSet());
+	studentGroups.addAll(getStudentGroups());
 	return studentGroups;
     }
     
@@ -391,7 +392,7 @@ public class Grouping extends Grouping_Base {
 		result.add(sg);
 	    }
 	}
-	return result;
+	return Collections.unmodifiableList(result);
     }
     
     public List<StudentGroup> getDeletedStudentGroups() {

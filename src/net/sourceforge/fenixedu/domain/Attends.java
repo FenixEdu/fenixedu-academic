@@ -103,15 +103,19 @@ public class Attends extends Attends_Base {
 	}
     }
 
+    public List<StudentGroup> getAllStudentGroups() {
+	return super.getStudentGroups();
+    }
+    
     @Override
     public List<StudentGroup> getStudentGroups() {
-	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
-	for(StudentGroup sg : super.getStudentGroups()){
-	    if (sg.getValid()){
+	List<StudentGroup> result = new ArrayList<StudentGroup>();
+	for (StudentGroup sg : super.getStudentGroups()) {
+	    if (sg.getValid()) {
 		result.add(sg);
 	    }
 	}
-	return result;
+	return Collections.unmodifiableList(result);
     }
 
     @Override
@@ -451,7 +455,7 @@ public class Attends extends Attends_Base {
     }
 
     public StudentGroup getStudentGroupByGrouping(final Grouping grouping) {
-	for (StudentGroup studentGroup : getStudentGroupsSet()) {
+	for (StudentGroup studentGroup : getStudentGroups()) {
 	    if (studentGroup.getGrouping().equals(grouping)) {
 		return studentGroup;
 	    }

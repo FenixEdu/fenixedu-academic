@@ -398,7 +398,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends FenixService {
 	Map result = new HashMap();
 
 	for (final Grouping grouping : groupPropertiesList) {
-	    for (final StudentGroup studentGroup : grouping.getStudentGroupsSet()) {
+	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
 		List groupAttends = studentGroup.getAttends();
 		List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
 		    public Object transform(Object input) {

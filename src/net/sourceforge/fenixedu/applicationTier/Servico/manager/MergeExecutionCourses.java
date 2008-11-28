@@ -270,7 +270,7 @@ public class MergeExecutionCourses extends FenixService {
 		for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
 			0)))
 		    ;
-		for (; !attends.getStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getStudentGroups().get(0)))
+		for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups().get(0)))
 		    ;
 		attends.delete();
 	    }

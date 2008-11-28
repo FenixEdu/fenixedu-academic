@@ -109,7 +109,7 @@ public class Shift extends Shift_Base {
 		result.add(sg);
 	    }
 	}
-	return result;
+	return Collections.unmodifiableList(result);
     }
 
     @Override
