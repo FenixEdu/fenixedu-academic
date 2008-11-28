@@ -1079,9 +1079,7 @@ public class Registration extends Registration_Base {
 	    List<Registration> registrations = getStudent().getRegistrations();
 	    for (Registration registration : registrations) {
 		if (registration != this && !registration.isBolonha()) {
-		    if (registration.isConcluded()) {
-			System.out.println("SHIT!! :: " + registration.getNumber());
-		    } else {
+		    if (!registration.isConcluded()) {
 			result.addAll(registration.getEnrolmentsExecutionYears());
 		    }
 		}
@@ -2400,7 +2398,7 @@ public class Registration extends Registration_Base {
 
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
 	if (cycleType == null) {
-	    if (isConcluded()) {
+	    if (isRegistrationConclusionProcessed()) {
 		return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), locale);
 	    }
 
