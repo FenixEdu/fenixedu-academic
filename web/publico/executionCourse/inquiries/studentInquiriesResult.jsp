@@ -48,9 +48,9 @@
 	<br/>
 	<bean:message key="message.inquiries.information.not.public" bundle="INQUIRIES_RESOURCES"/>
 	<%
-		String port = request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : Integer.toString(request.getServerPort());
+		String port = request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort();
 
-		String value = request.getScheme() + "://" + request.getServerName() + ":"
+		String value = request.getScheme() + "://" + request.getServerName()
 			+ port + request.getContextPath() + executionCourse.getSite().getReversePath() + "/resultados-quc";
 		session.setAttribute("ORIGINAL_REQUEST", Boolean.TRUE);
 		session.setAttribute("ORIGINAL_URI", value);
