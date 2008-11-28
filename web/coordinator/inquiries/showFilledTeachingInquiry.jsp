@@ -110,62 +110,20 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
-	<tr>
-		<th>
-			Escala
-		</th>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>2</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>4</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>6</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>8</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-	</tr>
-</table>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
+<table class="tstyle1 thlight thleft tdleft">
 	<tr>
 		<th><bean:message key="label.teachingInquiries.loadAndClassTypeContributionToFullfilmentOfCUProgram" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.loadAndClassTypeContributionToFullfilmentOfCUProgram}" /></td>
+		<td><c:out value="${teachingInquiry.loadAndClassTypeContributionToFullfilmentOfCUProgram}" />/9</td>
 
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.teacherNumberSuitableForCUOperation" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.teacherNumberSuitableForCUOperation}" /></td>
+		<td><c:out value="${teachingInquiry.teacherNumberSuitableForCUOperation}" />/9</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.establishedScheduleSuitable" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.establishedScheduleSuitable}" /></td>
+		<td><c:out value="${teachingInquiry.establishedScheduleSuitable}" />/9</td>
 	</tr>
 
 	<tr>
@@ -176,62 +134,20 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
-	<tr>
-		<th>
-			Escala
-		</th>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>2</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>4</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>6</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-		<td>
-			<br/>
-			<br/>
-			<b>8</b>
-		</td>
-		<td>
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/>
-		</td>
-	</tr>
-</table>
 
 <table class="tstyle1 thlight thleft tdleft">
 	<tr>
 
 		<th><bean:message key="label.teachingInquiries.studentsReadyForFollowingCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.studentsReadyForFollowingCU}" /></td>
+		<td><c:out value="${teachingInquiry.studentsReadyForFollowingCU}" />/9</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.evaluationMethodSuitableForCUTeachingTypeAndObjective" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.evaluationMethodSuitableForCUTeachingTypeAndObjective}" /></td>
+		<td><c:out value="${teachingInquiry.evaluationMethodSuitableForCUTeachingTypeAndObjective}" />/9</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.disturbingEventsInClasses" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.disturbingEventsInClasses}" /></td>
+		<td><c:out value="${teachingInquiry.disturbingEventsInClasses}" />/9</td>
 
 	</tr>
 	<tr>
@@ -328,114 +244,44 @@ padding-right: 8px;
 	</tr>
 </table>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
-	<tr>
-		<th>
-			Escala
-		</th>
-		<td>
-			<b> < 5%</b>
-		</td>
-		<td>
-			<b>25%</b>
-		</td>
-		<td>
-			<b>50%</b>
-		</td>
-		<td>
-			<b>75%</b>
-		</td>
-		<td>
-			<b>> 95%</b>
-		</td>
-	</tr>
-</table>
 
 <table class="tstyle1 thlight thleft td50px tdcenter">
 
 	<tr>
 		<th><bean:message key="label.teachingInquiries.activeAndInteressedStudentsRatio" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.activeAndInteressedStudentsRatio}" /></td>
+		<td><c:out value="${teachingInquiry.activeAndInteressedStudentsRatio}" />%</td>
 	</tr>
 </table>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
-	<tr>
-		<th>
-			Escala
-		</th>
-		<td>
-			Mau
-			<br/>
-			<b>1</b>
-		</td>
-		<td>
-			<br/>
-			<b>2</b>
-		</td>
-		<td>
-			<br/>
-			<b>3</b>
-		</td>
-		<td>
-			Excelente
-			<br/>
-			<b>4</b>
-		</td>
-	</tr>
-</table> 	
+	
 
 <table class="tstyle1 thlight thleft td50px tdcenter">
 	<tr>
 		<th><bean:message key="label.teachingInquiries.studentsPerformance" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.studentsPerformance}" /></td>
+		<td><c:out value="${teachingInquiry.studentsPerformance}" />/4</td>
 	</tr>
 </table>	
  
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
-<table class="tstyle1 thlight thleft td50px tdcenter">
-	<tr>
-		<th>
-			Escala
-		</th>
-		<td>
-			Mau
-			<br/>
-			<b>1</b>
-		</td>
-		<td>
-			<br/>
-			<b>2</b>
-		</td>
-		<td>
-			<br/>
-			<b>3</b>
-		</td>
-		<td>
-			Excelente
-			<br/>
-			<b>4</b>
-		</td>
-	</tr>
-</table> 	
+
 
 <table class="tstyle1 thlight thleft tdleft">
 	<tr>
 		<th><bean:message key="label.teachingInquiries.classesAndOtherActivitiesFrequency" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesFrequency}" /></td>
+		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesFrequency}" />/4</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.classesAndOtherActivitiesPonctuality" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesPonctuality}" /></td>
+		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesPonctuality}" />/4</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.globalQualityOfTeachingInCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.globalQualityOfTeachingInCU}" /></td>
+		<td><c:out value="${teachingInquiry.globalQualityOfTeachingInCU}" />/4</td>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.pedagogicalActivitiesDeveloped" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.pedagogicalActivitiesDeveloped}" /></td>
+		<td><c:out value="${teachingInquiry.pedagogicalActivitiesDeveloped}" />/4</td>
 	</tr>	
 	<tr>
 		<th><bean:message key="label.teachingInquiries.relativePedagogicalInitiatives" bundle="INQUIRIES_RESOURCES"/></th>
@@ -491,7 +337,7 @@ padding-right: 8px;
 
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.cuGlobalEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
-<table class="tstyle1 thlight thleft td50px tdcenter">
+<table class="tstyle1 thlight thleft tdcenter">
 
 	<tr>
 		<th><bean:message key="label.teachingInquiries.workLoadClassification" bundle="INQUIRIES_RESOURCES"/></th>
@@ -543,7 +389,7 @@ padding-right: 8px;
 
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.cuTeachingProcess" bundle="INQUIRIES_RESOURCES"/></strong></p>
-<table class="tstyle1 thlight thleft td50px tdcenter">
+<table class="tstyle1 thlight thleft tdleft">
 
 	<tr>
 		<th><bean:message key="label.teachingInquiries.strongPointsOfCUTeachingProcess" bundle="INQUIRIES_RESOURCES"/></th>
@@ -561,10 +407,10 @@ padding-right: 8px;
 </table>
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></strong></p>
-<table class="tstyle1 thlight thleft td50px tdcenter">
+<table class="tstyle1 thlight thleft tdleft">
 	<tr>
 		<th><bean:message key="label.teachingInquiries.negativeResultsResolutionAndImproovementPlanOfAction" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.negativeResultsResolutionAndImproovementPlanOfAction}" /></td>
+		<td style="vertical-align: top;"><c:out value="${teachingInquiry.negativeResultsResolutionAndImproovementPlanOfAction}" /></td>
 	</tr>
 </table>
 

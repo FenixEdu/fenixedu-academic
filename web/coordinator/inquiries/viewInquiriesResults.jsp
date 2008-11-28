@@ -8,35 +8,42 @@
 
 <h2><bean:message key="title.inquiries.resultsWithDescription" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<bean:message key="message.inquiries.coordinator.instructions" bundle="INQUIRIES_RESOURCES"/>
+<p>
+	<bean:message key="message.inquiries.coordinator.instructions" bundle="INQUIRIES_RESOURCES"/>
+</p>
 
 <html:form action="/viewInquiriesResults.do">
 	<html:hidden property="method" value="prepare"/>
 	<html:hidden property="degreeCurricularPlanID"/>
-	<label for="executionSemesterID"><bean:message key="label.inquiries.semesterAndYear" bundle="INQUIRIES_RESOURCES"/>:</label><br/>
-	<html:select property="executionSemesterID" onchange="this.form.method.value='selectexecutionSemester';this.form.submit();">
-		<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
- 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
-	</html:select>
-	<br/>
 	<html:hidden property="executionDegreeID"/>
-<%--
-	<label for="executionDegreeID"><bean:message key="label.inquiries.semesterAndYear" bundle="INQUIRIES_RESOURCES"/>:</label><br/>
-	<html:select property="executionDegreeID" onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
-		<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
- 		<html:options collection="executionDegrees" property="idInternal" labelProperty="executionYear.name"/>
-	</html:select>
-	<br/>
---%>
-	<label for="executionDegreeID"><bean:message key="label.inquiries.curricularUnit" bundle="INQUIRIES_RESOURCES"/>:</label><br/>
-	<html:select property="executionCourseID" onchange="this.form.method.value='selectExecutionCourse';this.form.submit();">
-		<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>		
- 		<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
-	</html:select>	
+	<table class="tstyle5 thlight thright mvert05">
+	<tr>
+		<th>
+		<label for="executionSemesterID"><bean:message key="label.inquiries.semesterAndYear" bundle="INQUIRIES_RESOURCES"/>:</label>
+		</th>
+		<td>
+		<html:select property="executionSemesterID" onchange="this.form.method.value='selectexecutionSemester';this.form.submit();">
+			<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
+	 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
+		</html:select>
+		</td>
+	</tr>
+	<tr>
+	<th>
+		<label for="executionDegreeID"><bean:message key="label.inquiries.curricularUnit" bundle="INQUIRIES_RESOURCES"/>:</label><br/>
+	</th>
+	<td>
+		<html:select property="executionCourseID" onchange="this.form.method.value='selectExecutionCourse';this.form.submit();">
+			<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>		
+	 		<html:options collection="executionCourses" property="idInternal" labelProperty="nome"/>
+		</html:select>
+	</td>
+	</tr>
+	</table>
 </html:form>
 
 <logic:present name="studentInquiriesCourseResults">
-	<p class="separator2 mtop2"><bean:message key="title.inquiries.studentResults" bundle="INQUIRIES_RESOURCES"/></p>
+	<p class="separator2 mtop2"><b><bean:message key="title.inquiries.studentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
 	<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
 		<p class="mtop2">
 			<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
@@ -60,9 +67,11 @@
 		</logic:notEmpty>
 	</logic:iterate>
 	
-	<p class="separator2 mtop2"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
-	<p>
+	<p class="separator2 mtop2"><b><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></b></p>
+	<p class="mbottom05">
 		<bean:message key="message.inquiries.teachers.inquiries.instructions1" bundle="INQUIRIES_RESOURCES"/>
+	</p>
+	<p class="mtop05">
 		<bean:message key="message.inquiries.teachers.inquiries.instructions2" bundle="INQUIRIES_RESOURCES"/>
 	</p>
 	<ul>
@@ -83,7 +92,7 @@
 
 	<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean">
 	
-		<p class="separator2 mtop2"><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></p>
+		<p class="separator2 mtop2"><b><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
 
 		<table class="tstyle1 thlight thleft tdcenter">
 			<tr class="top">
@@ -101,7 +110,7 @@
 		<logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
 			<table class="tstyle1 thlight tdcenter">
 				<tr>		
-					<th><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
+					<th class="nowrap"><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
 					<th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
 					<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAssiduity" bundle="INQUIRIES_RESOURCES"/></th>
 					<th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPresencialLearning" bundle="INQUIRIES_RESOURCES"/></th>
@@ -111,7 +120,7 @@
 				</tr>
 				<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
 					<tr>		
-						<td class="aleft"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
+						<td class="aleft nowrap"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
 						<td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
 						<td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsAssiduity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 						<td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsPresencialLearning().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
