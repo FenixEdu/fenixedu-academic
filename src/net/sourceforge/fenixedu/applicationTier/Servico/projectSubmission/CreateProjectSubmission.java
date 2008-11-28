@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,8 +26,11 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -73,8 +72,9 @@ public class CreateProjectSubmission extends FenixService {
 	}
     }
 
-    private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends, Project project,
-	    StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException, FileManagerException {
+    private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends,
+	    Project project, StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException,
+	    FileManagerException {
 
 	final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
 	final VirtualPath filePath = getVirtualPath(attends.getExecutionCourse(), project, studentGroup);
@@ -84,13 +84,8 @@ public class CreateProjectSubmission extends FenixService {
 	metaData.add(FileSetMetaData.createTitleMeta(filename));
 	metaData.add(new FileSetMetaData("type", null, null, EducationalResourceType.PROJECT_SUBMISSION.toString()));
 
-	// final FileDescriptor fileDescriptor =
-	// FileManagerFactory.getFactoryInstance
-	// ().getFileManager().saveFile(filePath,
-	// filename, (permittedGroup != null) ? true : false, metaData,
-	// inputStream);
-	FileDescriptor fileDescriptor = new FileDescriptor("/home/nurv", "exemplo", "text/plain",
-		"21d11429eb32d6d485b5be391e9c759d", "md5", 10, "" + (System.currentTimeMillis()));
+	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
+		filename, (permittedGroup != null) ? true : false, metaData, inputStream);
 	final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, fileDescriptor
 		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
 		fileDescriptor.getUniqueId(), permittedGroup);
