@@ -68,10 +68,10 @@
 	</logic:iterate>
 	
 	<p class="separator2 mtop2"><b><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></b></p>
-	<p class="mbottom05">
+	<p class="mbottom05" style="font-size: 80%">
 		<bean:message key="message.inquiries.teachers.inquiries.instructions1" bundle="INQUIRIES_RESOURCES"/>
 	</p>
-	<p class="mtop05">
+	<p class="mtop05" style="font-size: 80%">
 		<bean:message key="message.inquiries.teachers.inquiries.instructions2" bundle="INQUIRIES_RESOURCES"/>
 	</p>
 	<ul>

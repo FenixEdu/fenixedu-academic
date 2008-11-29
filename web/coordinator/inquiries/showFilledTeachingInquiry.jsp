@@ -110,6 +110,48 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
+<table class="tstyle1 thlight thleft td50px tdcenter"> 
+	<tr> 
+		<th> 
+			Escala 
+		</th> 
+		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>2</b> 
+ 		</td> 
+ 		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>4</b> 
+ 		</td> 
+ 		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>6</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>8</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+	</tr> 
+</table>
 
 <table class="tstyle1 thlight thleft tdleft">
 	<tr>
@@ -134,6 +176,48 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.studentsEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
+<table class="tstyle1 thlight thleft td50px tdcenter"> 
+	<tr> 
+		<th> 
+			Escala 
+		</th> 
+		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>2</b> 
+ 		</td> 
+ 		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>4</b> 
+ 		</td> 
+ 		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>6</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>8</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+	</tr> 
+</table>
 
 <table class="tstyle1 thlight thleft tdleft">
 	<tr>
@@ -245,6 +329,29 @@ padding-right: 8px;
 </table>
 
 
+<table class="tstyle1 thlight thleft td50px tdcenter"> 
+	<tr> 
+		<th> 
+			Escala 
+		</th> 
+		<td> 
+			<b> < 5%</b> 
+		</td> 
+		<td> 
+			<b>25%</b> 
+		</td> 
+		<td> 
+			<b>50%</b> 
+		</td> 
+		<td> 
+			<b>75%</b> 
+		</td> 
+		<td> 
+			<b>> 95%</b> 
+		</td> 
+	</tr> 
+</table> 
+
 <table class="tstyle1 thlight thleft td50px tdcenter">
 
 	<tr>
@@ -253,7 +360,32 @@ padding-right: 8px;
 	</tr>
 </table>
 
-	
+
+<table class="tstyle1 thlight thleft td50px tdcenter"> 
+	<tr> 
+		<th> 
+			Escala 
+		</th> 
+		<td> 
+			Mau 
+			<br/> 
+			<b>1</b> 
+		</td> 
+		<td> 
+			<br/> 
+			<b>2</b> 
+		</td> 
+		<td> 
+			<br/> 
+			<b>3</b> 
+		</td> 
+		<td> 
+			Excelente 
+			<br/> 
+			<b>4</b> 
+		</td> 
+	</tr> 
+</table>
 
 <table class="tstyle1 thlight thleft td50px tdcenter">
 	<tr>
@@ -264,7 +396,31 @@ padding-right: 8px;
  
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
-
+<table class="tstyle1 thlight thleft td50px tdcenter"> 
+	<tr> 
+		<th> 
+			Escala 
+		</th> 
+		<td> 
+			Mau 
+			<br/> 
+			<b>1</b> 
+		</td> 
+		<td> 
+			<br/> 
+			<b>2</b> 
+		</td> 
+		<td> 
+			<br/> 
+			<b>3</b> 
+		</td> 
+		<td> 
+			Excelente 
+			<br/> 
+			<b>4</b> 
+		</td> 
+	</tr> 
+</table>
 
 <table class="tstyle1 thlight thleft tdleft">
 	<tr>
