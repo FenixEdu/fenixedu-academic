@@ -1434,6 +1434,9 @@ class DomainObject {
 				class accounting.events.serviceRequests.PastFreeSolicitationAcademicRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 					Money pastAmount;
 				}
+				
+				class accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+				}
 
 		class accounting.events.gratuity.PhDGratuityEvent extends accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
@@ -4224,6 +4227,9 @@ class DomainObject {
 			class serviceRequests.FreeSolicitationAcademicRequest extends serviceRequests.RegistrationAcademicServiceRequest {
 				String subject;
 				String purpose;
+			}
+			
+			class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
 			}
 						
 		class serviceRequests.PersonAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {

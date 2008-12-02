@@ -363,7 +363,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     }
 
-    private void checkRulesToChangeState(final AcademicServiceRequestSituationType situationType) {
+    protected void checkRulesToChangeState(final AcademicServiceRequestSituationType situationType) {
 
 	if (!isAcceptedSituationType(situationType)) {
 	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(getActiveSituation()
@@ -525,6 +525,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return this instanceof DocumentRequest;
     }
 
+    /**
+     * Indicates if is possible to print document again
+     */
     abstract public boolean isToPrint();
 
     public boolean isRequestAvailableToSendToExternalEntity() {
@@ -585,6 +588,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     abstract public AcademicServiceRequestType getAcademicServiceRequestType();
 
+    /**
+     * Indicates if the service result needs personal info
+     */
     abstract public boolean hasPersonalInfo();
 
     protected boolean hasMissingPersonalInfo() {

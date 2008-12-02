@@ -287,7 +287,11 @@
 	
 					<fr:property name="linkFormat(cancel)" value="/academicServiceRequestsManagement.do?method=prepareCancelAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}&amp;registrationID=${registration.idInternal}"/>
 					<fr:property name="key(cancel)" value="cancel"/>
-					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>				
+					<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
+
+					<fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
+					<fr:property name="key(payments)" value="payments"/>
+					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 					
 					<fr:property name="linkFormat(send)" value="/academicServiceRequestsManagement.do?method=prepareSendAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
 					<fr:property name="key(send)" value="label.send"/>
@@ -304,9 +308,10 @@
 					<fr:property name="order(view)" 		value="1" />
 					<fr:property name="order(reject)" 		value="2" />
 					<fr:property name="order(cancel)"		value="3" />
-					<fr:property name="order(send)"			value="4" />
-					<fr:property name="order(receiveFrom)"	value="5" />
-					<fr:property name="order(conclude)"		value="6" />
+					<fr:property name="order(payments)"		value="4" />
+					<fr:property name="order(send)"			value="5" />
+					<fr:property name="order(receiveFrom)"	value="6" />
+					<fr:property name="order(conclude)"		value="7" />
 					
 					<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 				</fr:layout>

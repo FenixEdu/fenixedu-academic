@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.FreeSolicitationAcademicRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.PartialRegistrationRegimeRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -57,8 +59,12 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    result = new PhotocopyRequest(this);
 	    break;
 
+	case PARTIAL_REGIME_REQUEST:
+	    result = new PartialRegistrationRegimeRequest(this);
+	    break;
+
 	default:
-	    result = null;
+	    throw new DomainException("error.RegistrationAcademicServiceRequestCreator.no.executor");
 	}
 
 	return result;

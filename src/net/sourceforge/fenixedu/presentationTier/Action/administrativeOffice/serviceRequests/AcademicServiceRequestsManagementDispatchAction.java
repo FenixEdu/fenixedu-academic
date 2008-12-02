@@ -1,17 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.DeliveredAcademicServiceRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ConcludeAcademicServiceRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ReceivedAcademicServiceRequestFromExternalEntity;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -25,6 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ConcludeAcademicServiceRequest;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.DeliveredAcademicServiceRequest;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ReceivedAcademicServiceRequestFromExternalEntity;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest;
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationAcademicServiceRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -124,7 +118,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    ProcessNewAcademicServiceRequests.run(academicServiceRequest);
 	    addActionMessage(request, "academic.service.request.processed.with.success");
 	} catch (DomainException ex) {
-	    addActionMessage(request, ex.getKey());
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    request.setAttribute("failingCondition", ex.getKey());
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
 	}
@@ -154,8 +148,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    SendAcademicServiceRequestToExternalEntity.run(serviceRequest,
-		    requestBean.getSituationDate(), requestBean.getJustification());
+	    SendAcademicServiceRequestToExternalEntity.run(serviceRequest, requestBean.getSituationDate(), requestBean
+		    .getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -185,8 +179,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest,
-		    requestBean.getSituationDate(), requestBean.getJustification());
+	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest, requestBean.getSituationDate(), requestBean
+		    .getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -277,8 +271,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
 	try {
-	    ConcludeAcademicServiceRequest.run(academicServiceRequest, getSendEmailToStudent(form),
-		    getSituationDate(), getJustification());
+	    ConcludeAcademicServiceRequest.run(academicServiceRequest, getSendEmailToStudent(form), getSituationDate(),
+		    getJustification());
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
 	    if (academicServiceRequest.isDocumentRequest()
