@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,7 +32,9 @@ public class IndexAction extends FenixAction {
 
 	final IUserView userView = UserView.getUser();
 	String costCenter = request.getParameter("costCenter");
-	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter });
+	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
+	request.setAttribute("it", it);
+	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter, it });
 
 	if (costCenter != null && !costCenter.equals("")) {
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {

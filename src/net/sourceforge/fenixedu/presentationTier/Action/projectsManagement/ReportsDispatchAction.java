@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
 
 import org.apache.struts.action.ActionForm;
@@ -34,11 +35,13 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	final IUserView userView = UserView.getUser();
 	final String helpPage = request.getParameter("helpPage");
 	final String costCenter = request.getParameter("costCenter");
-	getCostCenterName(request, costCenter);
+	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
+	request.setAttribute("it", it);
+	getCostCenterName(request, costCenter, it);
 	final RubricType rubricType = RubricType.getRubricType(helpPage);
 	if (rubricType != null) {
 	    List infoRubricList = (List) ServiceUtils.executeService("ReadRubric", new Object[] { userView.getUtilizador(),
-		    costCenter, rubricType });
+		    costCenter, rubricType, it });
 	    request.setAttribute("infoRubricList", infoRubricList);
 	} else if (!helpPage.equals("listHelp"))
 	    return mapping.findForward("index");
@@ -95,12 +98,12 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	return code;
     }
 
-    protected void getCostCenterName(HttpServletRequest request, String costCenter) throws FenixServiceException,
+    protected void getCostCenterName(HttpServletRequest request, String costCenter, Boolean it) throws FenixServiceException,
 	    FenixFilterException {
 	if (costCenter != null && !costCenter.equals("")) {
 	    final IUserView userView = UserView.getUser();
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter }));
+		    userView.getUtilizador(), costCenter, it }));
 	}
     }
 
