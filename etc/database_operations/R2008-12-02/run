@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add itProjectManager Role" addItProjectManagerRole.sql
+execute "Add itProjectManager functionalities" addItProjectManagerFunctionalities.sql
