@@ -155,15 +155,15 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return curriculumModule == null ? null : curriculumModule.getStudentCurricularPlan();
+	return getCurriculumModule() == null ? null : getCurriculumModule().getStudentCurricularPlan();
     }
 
     public boolean hasAverageEntry() {
-	return curriculumModule != null && !getCurriculumEntries().isEmpty();
+	return getCurriculumModule() != null && !getCurriculumEntries().isEmpty();
     }
 
     public boolean isEmpty() {
-	return curriculumModule == null || (getCurriculumEntries().isEmpty() && curricularYearEntries.isEmpty());
+	return getCurriculumModule() == null || (getCurriculumEntries().isEmpty() && curricularYearEntries.isEmpty());
     }
 
     public Collection<ICurriculumEntry> getCurriculumEntries() {
@@ -327,7 +327,8 @@ public class Curriculum implements Serializable, ICurriculum {
 
     public Integer getTotalCurricularYears() {
 	return getStudentCurricularPlan().getDegreeType().getYears(
-		curriculumModule.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) curriculumModule).getCycleType() : null);
+		getCurriculumModule().isCycleCurriculumGroup() ? ((CycleCurriculumGroup) getCurriculumModule()).getCycleType()
+			: null);
     }
 
     @Override
@@ -335,20 +336,24 @@ public class Curriculum implements Serializable, ICurriculum {
 	final StringBuilder result = new StringBuilder();
 
 	result.append("\n[CURRICULUM]");
-	if (curriculumModule == null) {
+	if (getCurriculumModule() == null) {
 	    result.append("\n[NO CURRICULUM_MODULE]");
 	} else {
-	    result.append("\n[CURRICULUM_MODULE][ID] " + curriculumModule.getIdInternal() + "\t[NAME]"
-		    + curriculumModule.getName().getContent());
+	    result.append("\n[CURRICULUM_MODULE][ID] " + getCurriculumModule().getIdInternal() + "\t[NAME]"
+		    + getCurriculumModule().getName().getContent());
 	}
+	result.append("\n[BOLONHA] " + isBolonha().toString());
 	result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
 	result.append("\n[SUM Pi] " + getSumPi().toString());
 	result.append("\n[AVERAGE] " + getAverage());
+	result.append("\n[ROUNDED_AVERAGE] " + getRoundedAverage());
 	result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());
 	result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
+	result.append("\n[REMAINING CREDITS] " + getRemainingCredits().toString());
+	result.append("\n[TOTAL CURRICULAR YEARS] " + getTotalCurricularYears());
 
-	result.append("\n[ENTRIES]");
+	result.append("\n[AVERAGE ENROLMENT ENTRIES]");
 	for (final ICurriculumEntry entry : averageEnrolmentRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
 		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().toString() + "\t[WEIGHT] "
@@ -356,7 +361,7 @@ public class Curriculum implements Serializable, ICurriculum {
 		    + entry.getClass().getSimpleName());
 	}
 
-	result.append("\n[DISMISSAL RELATED ENTRIES]");
+	result.append("\n[AVERAGE DISMISSAL RELATED ENTRIES]");
 	for (final ICurriculumEntry entry : averageDismissalRelatedEntries) {
 	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
 		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().toString() + "\t[WEIGHT] "
