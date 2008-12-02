@@ -6,10 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpeningProjectFileReport;
-import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
+import net.sourceforge.fenixedu.domain.projectsManagement.OpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectMemberBudget;
@@ -30,9 +29,9 @@ public class ReadOpeningProjectFileReport extends FenixService {
 			.getByUsernameAndProjectCode(username, projectCode, it) != null)
 		|| (costCenter != null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it) != null)) {
 
-	    IPersistentOpeningProjectFileReport persistentOpeningProjectFile = new PersistentOpeningProjectFileReport();
+	    PersistentOpeningProjectFileReport persistentOpeningProjectFile = new PersistentOpeningProjectFileReport();
 
-	    IOpeningProjectFileReport openingProjectFileReport = persistentOpeningProjectFile.getCompleteReport(
+	    OpeningProjectFileReport openingProjectFileReport = persistentOpeningProjectFile.getCompleteReport(
 		    ReportType.OPENING_PROJECT_FILE, projectCode, it);
 	    if (openingProjectFileReport != null) {
 		openingProjectFileReport.setProjectFinancialEntities(persistentOpeningProjectFile.getReportRubricList(
