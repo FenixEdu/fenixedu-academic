@@ -136,4 +136,29 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	return BigDecimal.valueOf(getStudentCurricularPlan().getGivenCredits());
     }
 
+    @Override
+    public String toString() {
+	final StringBuilder result = new StringBuilder();
+
+	result.append("\n[CURRICULUM]");
+	result.append("\n[SUM ENTRIES] " + getCurriculumEntries().size());
+	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
+	result.append("\n[SUM Pi] " + getSumPi().toString());
+	result.append("\n[AVERAGE] " + getAverage());
+	result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());
+	result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
+	result.append("\n[REMAINING CREDITS] " + getRemainingCredits().toString());
+	result.append("\n[TOTAL CURRICULAR YEARS] " + getTotalCurricularYears());
+
+	result.append("\n[ENTRIES]");
+	for (final ICurriculumEntry entry : getCurriculumEntries()) {
+	    result.append("\n[ENTRY] [NAME]" + entry.getName().getContent() + "\t[CREATION_DATE]"
+		    + entry.getCreationDateDateTime() + "\t[GRADE] " + entry.getGrade().toString() + "\t[WEIGHT] "
+		    + entry.getWeigthForCurriculum() + "\t[ECTS] " + entry.getEctsCreditsForCurriculum() + "\t[CLASS_NAME] "
+		    + entry.getClass().getSimpleName());
+	}
+
+	return result.toString();
+    }
+
 }
