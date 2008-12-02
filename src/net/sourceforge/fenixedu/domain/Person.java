@@ -109,6 +109,7 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -1236,6 +1237,7 @@ public class Person extends Person_Base {
 	    case DEPARTMENT_ADMINISTRATIVE_OFFICE:
 	    case PERSONNEL_SECTION:
 	    case PROJECTS_MANAGER:
+	    case IT_PROJECTS_MANAGER:
 	    case INSTITUCIONAL_PROJECTS_MANAGER:
 		addRoleIfNotPresent(person, RoleType.EMPLOYEE);
 		break;
@@ -1593,17 +1595,15 @@ public class Person extends Person_Base {
 	return studentCurricularPlans;
     }
 
-    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode) {
-
-	final YearMonthDay now = new YearMonthDay();
+    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode, Boolean it) {
 	final List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
 	for (final ProjectAccess projectAccess : getProjectAccessesSet()) {
-	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode)) {
-		if (!now.isBefore(projectAccess.getBeginDateTime().toYearMonthDay())
-			&& !now.isAfter(projectAccess.getEndDateTime().toYearMonthDay())) {
-		    result.add(projectAccess);
+	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode) && projectAccess.getItProject().equals(it)) {
+		if (!projectAccess.getProjectAccessInterval().containsNow()) {
+		    continue;
 		}
+		result.add(projectAccess);
 	    }
 	}
 	return result;
