@@ -19,9 +19,10 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentCompleteExpensesReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentExpensesReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentExpensesResume;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -30,43 +31,43 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 public class ReadExpensesReport extends FenixService {
 
     public InfoExpensesReport run(String username, String costCenter, ReportType reportType, Integer projectCode, String rubric,
-	    String userNumber) throws ExcepcaoPersistencia {
-	IPersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    Boolean it, String userNumber) throws ExcepcaoPersistencia {
 	Integer coordID = new Integer(userNumber);
 	InfoExpensesReport infoReport = new InfoExpensesReport();
+	PersistentProject persistentProject = new PersistentProject();
 	if (coordID != null
 		&& projectCode != null
-		&& (p.getIPersistentProject().isUserProject(coordID, projectCode)
-			|| ProjectAccess.getByUsernameAndProjectCode(username, projectCode) != null || (costCenter != null && ProjectAccess
-			.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter) != null))) {
+		&& (persistentProject.isUserProject(coordID, projectCode, it)
+			|| ProjectAccess.getByUsernameAndProjectCode(username, projectCode, it) != null || (costCenter != null && ProjectAccess
+			.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it) != null))) {
 	    List infoLines = new ArrayList();
-	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(projectCode, it)));
 	    List lines = null;
 	    IPersistentExpensesReport persistentExpensesReport = null;
 	    if (reportType.equals(ReportType.EXPENSES)) {
-		persistentExpensesReport = p.getIPersistentExpensesReport();
+		persistentExpensesReport = new PersistentExpensesReport();
 	    } else {
-		persistentExpensesReport = p.getIPersistentCompleteExpensesReport();
+		persistentExpensesReport = new PersistentCompleteExpensesReport();
 	    }
 	    if (rubric == null || rubric.equals(""))
-		lines = persistentExpensesReport.getCompleteReport(reportType, projectCode);
+		lines = persistentExpensesReport.getCompleteReport(reportType, projectCode, it);
 	    else
-		lines = persistentExpensesReport.getReportByRubric(reportType, projectCode, rubric);
+		lines = persistentExpensesReport.getReportByRubric(reportType, projectCode, rubric, it);
 	    for (int i = 0; i < lines.size(); i++)
 		infoLines.add(InfoExpensesReportLine.newInfoFromDomain((IExpensesReportLine) lines.get(i)));
 	    infoReport.setLines(infoLines);
-	    infoReport.setRubricList(persistentExpensesReport.getRubricList(reportType, projectCode));
+	    infoReport.setRubricList(persistentExpensesReport.getRubricList(reportType, projectCode, it));
 
-	    IPersistentExpensesResume persistentExpensesResume = p.getIPersistentExpensesResume();
+	    PersistentExpensesResume persistentExpensesResume = new PersistentExpensesResume();
 
 	    infoReport.setAdiantamentosReport(InfoAdiantamentosReportLine.newInfoFromDomain(persistentExpensesResume
-		    .getAdiantamentosReportLine(ReportType.SUMMARY_ADIANTAMENTOS, projectCode)));
+		    .getAdiantamentosReportLine(ReportType.SUMMARY_ADIANTAMENTOS, projectCode, it)));
 	    infoReport.setCabimentosReport(InfoCabimentosReportLine.newInfoFromDomain(persistentExpensesResume
-		    .getCabimentosReportLine(ReportType.SUMMARY_CABIMENTOS, projectCode)));
+		    .getCabimentosReportLine(ReportType.SUMMARY_CABIMENTOS, projectCode, it)));
 	    infoReport.setSummaryEURReport(InfoSummaryEURReportLine.newInfoFromDomain(persistentExpensesResume
-		    .getSummaryEURReportLine(ReportType.SUMMARY_EUR, projectCode)));
+		    .getSummaryEURReportLine(ReportType.SUMMARY_EUR, projectCode, it)));
 	    infoReport.setSummaryPTEReport(InfoSummaryPTEReportLine.newInfoFromDomain(persistentExpensesResume
-		    .getSummaryPTEReportLine(ReportType.SUMMARY_PTE, projectCode)));
+		    .getSummaryPTEReportLine(ReportType.SUMMARY_PTE, projectCode, it)));
 	}
 	return infoReport;
     }

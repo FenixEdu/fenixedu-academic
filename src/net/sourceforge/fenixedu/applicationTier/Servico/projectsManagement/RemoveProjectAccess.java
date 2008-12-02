@@ -15,15 +15,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 
 /**
  * @author Susana Fernandes
  */
 public class RemoveProjectAccess extends FenixService {
 
-    public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber)
+    public void run(String username, String costCenter, String personUsername, Integer projectCode, Boolean it, String userNumber)
 	    throws ExcepcaoPersistencia {
 	Person person = Person.readPersonByUsername(personUsername);
 
@@ -34,11 +33,10 @@ public class RemoveProjectAccess extends FenixService {
 	    isCostCenter = true;
 	}
 
-	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true);
+	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, it);
 
 	if (projectAccesses.size() == 1) {
-	    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
-	    if (persistentSupportOracle.getIPersistentProject().countUserProject(getUserNumber(person)) == 0) {
+	    if (new PersistentProject().countUserProject(getUserNumber(person), it) == 0) {
 		Iterator iter = person.getPersonRolesIterator();
 		while (iter.hasNext()) {
 		    Role role = (Role) iter.next();
@@ -49,7 +47,7 @@ public class RemoveProjectAccess extends FenixService {
 	    }
 	}
 
-	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
+	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, it);
 	projectAccess.delete();
     }
 

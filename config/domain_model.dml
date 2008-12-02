@@ -3721,6 +3721,7 @@ class DomainObject {
 		DateTime endDateTime;
 		Integer keyProject;
 		Integer keyProjectCoordinator;
+		Boolean itProject;
 	}
 
 	class protocols.Protocol extends DomainObject {

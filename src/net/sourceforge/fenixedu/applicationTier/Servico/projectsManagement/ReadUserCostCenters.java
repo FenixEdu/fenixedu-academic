@@ -13,21 +13,21 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadUserCostCenters extends FenixService {
 
-    public List run(Person person, String costCenter, String userNumber) throws ExcepcaoPersistencia {
+    public List run(Person person, String costCenter, Boolean it, String userNumber) throws ExcepcaoPersistencia {
 	List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-	List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(new Integer(userNumber));
+	PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
+	List<IRubric> costCenterList = persistentProjectUser.getInstitucionalProjectCoordId(new Integer(userNumber), it);
 
 	List<Integer> projectCodes = new ArrayList<Integer>();
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person);
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person, it);
 	for (ProjectAccess access : accesses) {
 	    Integer keyCostCenter = access.getKeyProjectCoordinator();
 
@@ -36,7 +36,7 @@ public class ReadUserCostCenters extends FenixService {
 	    }
 	}
 
-	costCenterList.addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(projectCodes));
+	costCenterList.addAll(persistentProjectUser.getInstitucionalProjectByCCIDs(projectCodes, it));
 
 	for (IRubric cc : costCenterList) {
 	    infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,12 +22,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ReadUserProjects extends FenixService {
 
-    public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
+    public List<InfoProject> run(String username, String costCenter, Boolean all, Boolean it, String userNumber)
+	    throws ExcepcaoPersistencia {
 	List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
 
 	List<Integer> projectCodes = new ArrayList<Integer>();
 	List<Integer> costCenterCodes = new ArrayList<Integer>();
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it);
 	for (ProjectAccess access : accesses) {
 	    Integer keyProject = access.getKeyProject();
 	    if (keyProject == null && access.getCostCenter() && !costCenterCodes.contains(access.getKeyProjectCoordinator())) {
@@ -35,17 +37,17 @@ public class ReadUserProjects extends FenixService {
 		projectCodes.add(keyProject);
 	    }
 	}
+	PersistentProject persistentProject = new PersistentProject();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	List<Project> projectList = new ArrayList<Project>();
 	if (StringUtils.isEmpty(costCenter) || costCenter.equals(userNumber)) {
-	    projectList = p.getIPersistentProject().readByUserLogin(userNumber);
+	    projectList = persistentProject.readByUserLogin(userNumber, it);
 	}
 
 	if (all) {
-	    projectList.addAll(p.getIPersistentProject().readByProjectsCodes(projectCodes));
+	    projectList.addAll(persistentProject.readByProjectsCodes(projectCodes, it));
 	    for (Integer ccCode : costCenterCodes) {
-		projectList.addAll(p.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(ccCode, null));
+		projectList.addAll(persistentProject.readByCoordinatorAndNotProjectsCodes(ccCode, null, it));
 	    }
 	}
 	for (Project project : projectList) {

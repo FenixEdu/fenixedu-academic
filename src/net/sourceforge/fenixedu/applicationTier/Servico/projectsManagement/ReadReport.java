@@ -19,7 +19,10 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalan
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentMovementReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectBudgetaryBalanceReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentRevenueReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -27,30 +30,30 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadReport extends FenixService {
 
-    public InfoProjectReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, String userNumber)
-	    throws ExcepcaoPersistencia {
+    public InfoProjectReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, Boolean it,
+	    String userNumber) throws ExcepcaoPersistencia {
 	InfoProjectReport infoReport = new InfoProjectReport();
 	List<IReportLine> infoLines = new ArrayList<IReportLine>();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	PersistentProject persistentProject = new PersistentProject();
 	if (projectCode != null
-		&& (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess
-			.getByUsernameAndProjectCode(userView, projectCode) != null)
-		|| (costCenter != null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter) != null)) {
-	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+		&& (persistentProject.isUserProject(new Integer(userNumber), projectCode, it) || ProjectAccess
+			.getByUsernameAndProjectCode(userView, projectCode, it) != null)
+		|| (costCenter != null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter, it) != null)) {
+	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(persistentProject.readProject(projectCode, it)));
 	    if (reportType.equals(ReportType.REVENUE)) {
-		List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
+		List<IRevenueReportLine> lines = new PersistentRevenueReport().getCompleteReport(reportType, projectCode, it);
 		for (IRevenueReportLine revenueReportLine : lines) {
 		    infoLines.add(InfoRevenueReportLine.newInfoFromDomain(revenueReportLine));
 		}
 	    } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
-		List<IMovementReport> lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
+		List<IMovementReport> lines = new PersistentMovementReport().getCompleteReport(reportType, projectCode, it);
 		for (IMovementReport movementReport : lines) {
 		    infoLines.add(InfoMovementReport.newInfoFromDomain(movementReport));
 		}
 	    } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
-		List<IProjectBudgetaryBalanceReportLine> lines = p.getIPersistentProjectBudgetaryBalanceReport()
-			.getCompleteReport(reportType, projectCode);
+		List<IProjectBudgetaryBalanceReportLine> lines = new PersistentProjectBudgetaryBalanceReport().getCompleteReport(
+			reportType, projectCode, it);
 		for (IProjectBudgetaryBalanceReportLine projectBudgetaryBalanceReportLine : lines) {
 		    infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain(projectBudgetaryBalanceReportLine));
 		}

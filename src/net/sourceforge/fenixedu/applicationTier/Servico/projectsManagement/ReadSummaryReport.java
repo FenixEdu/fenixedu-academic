@@ -15,7 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummar
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSummaryReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -23,20 +24,20 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadSummaryReport extends FenixService {
 
-    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber)
+    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, Boolean it, String userNumber)
 	    throws ExcepcaoPersistencia {
 	InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	if (coordinatorCode == null)
 	    coordinatorCode = new Integer(userNumber);
 	List lines = null;
 	if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
-	    lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
+	    lines = new PersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode, it);
 	} else {
 	    List<Integer> projectCodes = new ArrayList<Integer>();
 
-	    List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, false);
+	    List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, false,
+		    it);
 	    for (ProjectAccess access : accesses) {
 		Integer keyProject = access.getKeyProject();
 		if (keyProject == null && access.getCostCenter()) {
@@ -46,15 +47,14 @@ public class ReadSummaryReport extends FenixService {
 		    projectCodes.add(keyProject);
 		}
 	    }
-	    lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode,
-		    projectCodes);
+	    lines = new PersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode,
+		    projectCodes, it);
 
 	}
 	if (lines != null) {
-	    infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(
-		    coordinatorCode)));
+	    infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(new PersistentProjectUser().readProjectCoordinator(
+		    coordinatorCode, it)));
 	    List<IReportLine> infoLines = new ArrayList<IReportLine>();
-
 	    for (int line = 0; line < lines.size(); line++)
 		infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(line)));
 	    infoReport.setLines(infoLines);

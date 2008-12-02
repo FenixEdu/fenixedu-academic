@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -35,9 +35,13 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
 	final IUserView userView = getRemoteUser(request);
-	String costCenter = (String) request.getServiceParameters().parametersArray()[1];
-
-	ServiceParameters s = request.getServiceParameters();
+	ServiceParameters serviceParameters = request.getServiceParameters();
+	Object[] parametersArray = serviceParameters.parametersArray();
+	String costCenter = (String) parametersArray[1];
+	Boolean it = false;
+	if (parametersArray.length > 1 && parametersArray[2] != null) {
+	    it = true;
+	}
 
 	final Person person = userView.getPerson();
 	final Teacher teacher = person == null ? null : person.getTeacher();
@@ -51,23 +55,26 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	}
 	if (userNumber == null)
 	    throw new NotAuthorizedFilterException();
-	s.addParameter("userNumber", userNumber.toString(), s.parametersArray().length);
+	serviceParameters.addParameter("userNumber", userNumber.toString(), serviceParameters.parametersArray().length);
 
 	if (costCenter != null && !costCenter.equals("")) {
 	    Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 	    if (!costCenter.equals(role.getPortalSubApplication())) {
-		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-		if (p.getIPersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter)) != null) {
-		    s.addParameter("userNumber", costCenter, s.parametersArray().length - 1);
+		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), false) != null) {
+		    serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
 		}
 	    }
 	    roleToAuthorize = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
 	} else {
-	    roleToAuthorize = RoleType.PROJECTS_MANAGER;
-	    s.addParameter("costCenter", "", 1);
+	    if (it) {
+		roleToAuthorize = RoleType.IT_PROJECTS_MANAGER;
+	    } else {
+		roleToAuthorize = RoleType.PROJECTS_MANAGER;
+	    }
+	    serviceParameters.addParameter("costCenter", "", 1);
 	}
 	super.execute(request, response);
-	request.setServiceParameters(s);
+	request.setServiceParameters(serviceParameters);
     }
 
     protected RoleType getRoleType() {

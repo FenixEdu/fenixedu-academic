@@ -12,25 +12,21 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadCoordinators extends FenixService {
 
-    public ReadCoordinators() {
-    }
-
-    public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
+    public List run(String username, String costCenter, Boolean it, String userNumber) throws ExcepcaoPersistencia {
 	List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
 
-	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
 	Integer thisCoordinator = new Integer(userNumber);
 
 	List<Integer> coordinatorsCodes = new ArrayList<Integer>();
 
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it);
 	for (ProjectAccess access : accesses) {
 	    Integer keyProjectCoordinator = access.getKeyProjectCoordinator();
 
@@ -39,10 +35,12 @@ public class ReadCoordinators extends FenixService {
 	    }
 	}
 
-	if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator))
+	if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator)) {
 	    coordinatorsCodes.add(thisCoordinator);
+	}
+	PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
 	for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
-	    IRubric rubric = p.getIPersistentProjectUser().readProjectCoordinator(coordinatorsCodes.get(coord));
+	    IRubric rubric = persistentProjectUser.readProjectCoordinator(coordinatorsCodes.get(coord), it);
 	    if (rubric != null)
 		coordinatorsList.add(InfoRubric.newInfoFromDomain(rubric));
 	}

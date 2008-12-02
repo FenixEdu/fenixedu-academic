@@ -19,8 +19,10 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IOverheadsSummaryRepor
 import net.sourceforge.fenixedu.domain.projectsManagement.ITransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentGeneratedOverheadsReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentOverheadsSummaryReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentTransferedOverheadsReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -28,29 +30,29 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadOverheadReport extends FenixService {
 
-    public InfoOverheadReport run(String userView, String costCenter, ReportType reportType, Integer projectCode,
+    public InfoOverheadReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, Boolean it,
 	    String userNumber) throws ExcepcaoPersistencia {
 	InfoOverheadReport infoReport = new InfoOverheadReport();
 	List<IReportLine> infoLines = new ArrayList<IReportLine>();
-	IPersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-	infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().getCostCenterByID(
-		new Integer(costCenter))));
-	if (userNumber.equals(costCenter) || hasFullCostCenterAccess(userView, costCenter)) {
+	PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
+	infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(persistentProjectUser.getCostCenterByID(
+		new Integer(costCenter), it)));
+	if (userNumber.equals(costCenter) || hasFullCostCenterAccess(userView, costCenter, it)) {
 	    if (reportType.equals(ReportType.GENERATED_OVERHEADS)) {
-		List<IGeneratedOverheadsReportLine> lines = p.getIPersistentGeneratedOverheadsReport().getCompleteReport(
-			reportType, new Integer(costCenter));
+		List<IGeneratedOverheadsReportLine> lines = new PersistentGeneratedOverheadsReport().getCompleteReport(
+			reportType, new Integer(costCenter), it);
 		for (IGeneratedOverheadsReportLine generatedOverheadsReportLine : lines) {
 		    infoLines.add(InfoGeneratedOverheadsReportLine.newInfoFromDomain(generatedOverheadsReportLine));
 		}
 	    } else if (reportType.equals(ReportType.TRANSFERED_OVERHEADS)) {
-		List<ITransferedOverheadsReportLine> lines = p.getIPersistentTransferedOverheadsReport().getCompleteReport(
-			reportType, new Integer(costCenter));
+		List<ITransferedOverheadsReportLine> lines = new PersistentTransferedOverheadsReport().getCompleteReport(
+			reportType, new Integer(costCenter), it);
 		for (ITransferedOverheadsReportLine transferedOverheadsReportLine : lines) {
 		    infoLines.add(InfoTransferedOverheadsReportLine.newInfoFromDomain(transferedOverheadsReportLine));
 		}
 	    } else if (reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-		List<IOverheadsSummaryReportLine> lines = p.getIPersistentOverheadsSummaryReport().getCompleteReport(reportType,
-			new Integer(costCenter));
+		List<IOverheadsSummaryReportLine> lines = new PersistentOverheadsSummaryReport().getCompleteReport(reportType,
+			new Integer(costCenter), it);
 		for (IOverheadsSummaryReportLine overheadsSummaryReportLine : lines) {
 		    infoLines.add(InfoOverheadsSummaryReportLine.newInfoFromDomain(overheadsSummaryReportLine));
 		}
@@ -60,8 +62,8 @@ public class ReadOverheadReport extends FenixService {
 	return infoReport;
     }
 
-    private boolean hasFullCostCenterAccess(String username, String costCenter) {
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
+    private boolean hasFullCostCenterAccess(String username, String costCenter, Boolean it) {
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter, it);
 	for (ProjectAccess access : accesses) {
 	    if (access.getKeyProject() == null && access.getCostCenter()
 		    && access.getKeyProjectCoordinator().equals(new Integer(costCenter))) {

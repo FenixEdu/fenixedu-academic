@@ -18,8 +18,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 
 /**
  * @author Susana Fernandes
@@ -27,28 +26,27 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 public class InsertNewProjectAccess extends FenixService {
 
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate,
-	    String userNumber) throws ExcepcaoPersistencia {
+	    Boolean it, String userNumber) throws ExcepcaoPersistencia {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null)
 	    throw new IllegalArgumentException();
 
 	deletePastProjectAccesses(person);
 
-	IPersistentSuportOracle po = PersistentSuportOracle.getProjectDBInstance();
 	Integer coordinatorCode = new Integer(userNumber);
-	Boolean isCostCenter = setProjectsRoles(person, costCenter);
+	Boolean isCostCenter = setProjectsRoles(person, costCenter, it);
 
 	List<Integer> projectCodes = new ArrayList<Integer>();
 
-	for (ProjectAccess projectAccess : person.readProjectAccessesByCoordinator(coordinatorCode)) {
+	for (ProjectAccess projectAccess : person.readProjectAccessesByCoordinator(coordinatorCode, it)) {
 	    projectCodes.add(projectAccess.getKeyProject());
 	}
 
-	List<Project> projectList = po.getIPersistentProject()
-		.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
+	PersistentProject persistentProject = new PersistentProject();
+	List<Project> projectList = persistentProject.readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes, it);
 
 	for (Project project : projectList) {
-	    if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode())) != null) {
+	    if (ProjectAccess.getByPersonAndProject(person, new Integer(project.getProjectCode()), it) != null) {
 		throw new IllegalArgumentException();
 	    }
 	    ProjectAccess projectAccess = new ProjectAccess();
@@ -58,27 +56,29 @@ public class InsertNewProjectAccess extends FenixService {
 	    projectAccess.setBeginDate(beginDate);
 	    projectAccess.setEndDate(endDate);
 	    projectAccess.setCostCenter(isCostCenter);
+	    projectAccess.setItProject(it);
 	}
 
     }
 
     public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
-	    GregorianCalendar endDate, String userNumber) {
+	    GregorianCalendar endDate, Boolean it, String userNumber) {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null)
 	    throw new IllegalArgumentException();
 
-	Boolean isCostCenter = setProjectsRoles(person, costCenter);
+	Boolean isCostCenter = setProjectsRoles(person, costCenter, it);
 
 	for (int i = 0; i < projectCodes.length; i++) {
 	    Integer projectCode = new Integer(projectCodes[i]);
-	    ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode);
+	    ProjectAccess projectAccess = getPersonOldProjectAccess(person, projectCode, it);
 	    if (projectAccess == null) {
 		projectAccess = new ProjectAccess();
 		projectAccess.setPerson(person);
 		projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
 		projectAccess.setKeyProject(projectCode);
 		projectAccess.setCostCenter(isCostCenter);
+		projectAccess.setItProject(it);
 	    }
 	    projectAccess.setBeginDate(beginDate);
 	    projectAccess.setEndDate(endDate);
@@ -87,18 +87,21 @@ public class InsertNewProjectAccess extends FenixService {
 	deletePastProjectAccesses(person);
     }
 
-    private ProjectAccess getPersonOldProjectAccess(Person person, Integer projectCode) {
+    private ProjectAccess getPersonOldProjectAccess(Person person, Integer projectCode, Boolean it) {
 	for (ProjectAccess projectAccess : person.getProjectAccesses()) {
-	    if (projectAccess.getKeyProject().equals(projectCode)) {
+	    if (projectAccess.getKeyProject().equals(projectCode) && projectAccess.getItProject().equals(it)) {
 		return projectAccess;
 	    }
 	}
 	return null;
     }
 
-    private Boolean setProjectsRoles(Person person, String costCenter) {
+    private Boolean setProjectsRoles(Person person, String costCenter, Boolean it) {
 	Boolean isCostCenter = Boolean.FALSE;
 	RoleType roleType = RoleType.PROJECTS_MANAGER;
+	if (it) {
+	    roleType = RoleType.IT_PROJECTS_MANAGER;
+	}
 	if (costCenter != null && !costCenter.equals("")) {
 	    roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
 	    isCostCenter = Boolean.TRUE;
