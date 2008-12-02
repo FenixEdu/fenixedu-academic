@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
  */
 public class PersistentProjectUser implements IPersistentProjectUser {
 
-    public IRubric readProjectCoordinator(Integer userCode) throws ExcepcaoPersistencia {
+    public IRubric readProjectCoordinator(Integer userCode, Boolean it) throws ExcepcaoPersistencia {
 	StringBuilder queryBuffer = new StringBuilder();
 	queryBuffer.append("select NOME, IDCOORD from V_COORD where IDCOORD = '");
 	queryBuffer.append(userCode);
@@ -29,7 +29,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	String query = queryBuffer.toString();
 	IRubric result = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);
@@ -47,7 +47,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	return result;
     }
 
-    public List<IRubric> getInstitucionalProjectCoordId(Integer userCode) throws ExcepcaoPersistencia {
+    public List<IRubric> getInstitucionalProjectCoordId(Integer userCode, Boolean it) throws ExcepcaoPersistencia {
 	StringBuilder queryBuffer = new StringBuilder();
 	queryBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD = '");
 	queryBuffer.append(userCode);
@@ -55,7 +55,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	String query = queryBuffer.toString();
 	List<IRubric> result = new ArrayList<IRubric>();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery();
@@ -73,7 +73,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	return result;
     }
 
-    public List<IRubric> getInstitucionalProjectByCCIDs(List<Integer> ccCodes) throws ExcepcaoPersistencia {
+    public List<IRubric> getInstitucionalProjectByCCIDs(List<Integer> ccCodes, Boolean it) throws ExcepcaoPersistencia {
 	List<IRubric> result = new ArrayList<IRubric>();
 
 	if (ccCodes != null && ccCodes.size() != 0) {
@@ -88,7 +88,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	    String query = stringBuffer.toString();
 
 	    try {
-		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 		p.startTransaction();
 		PreparedStatement stmt = p.prepareStatement(query);
 		ResultSet rs = stmt.executeQuery();
@@ -107,7 +107,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	return result;
     }
 
-    public String getCCNameByCoordinatorAndCC(Integer userNumber, Integer costCenter) throws ExcepcaoPersistencia {
+    public String getCCNameByCoordinatorAndCC(Integer userNumber, Integer costCenter, Boolean it) throws ExcepcaoPersistencia {
 	StringBuilder query = new StringBuilder();
 	query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
 	query.append(costCenter);
@@ -115,7 +115,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	query.append(userNumber);
 	query.append("'");
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    PreparedStatement stmt = p.prepareStatement(query.toString());
 	    ResultSet rs = stmt.executeQuery();
@@ -130,13 +130,13 @@ public class PersistentProjectUser implements IPersistentProjectUser {
 	return null;
     }
 
-    public IRubric getCostCenterByID(Integer costCenter) throws ExcepcaoPersistencia {
+    public IRubric getCostCenterByID(Integer costCenter, Boolean it) throws ExcepcaoPersistencia {
 	StringBuilder query = new StringBuilder();
 	query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
 	query.append(costCenter);
 	query.append("'");
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    PreparedStatement stmt = p.prepareStatement(query.toString());
 	    ResultSet rs = stmt.executeQuery();

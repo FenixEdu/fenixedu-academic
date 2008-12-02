@@ -24,11 +24,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentProjectMemberBudget extends PersistentReport implements IPersistentReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    String rubricTableOrView = getTableOrViewName(p, ReportType.RUBRIC_BUDGET_MEMBER);

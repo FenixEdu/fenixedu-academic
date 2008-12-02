@@ -22,11 +22,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentSummaryReport extends PersistentReport implements IPersistentSummaryReport {
 
-    public List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode) throws ExcepcaoPersistencia {
+    public List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -62,11 +62,11 @@ public class PersistentSummaryReport extends PersistentReport implements IPersis
 	return result;
     }
 
-    public List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes)
+    public List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes, Boolean it)
 	    throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder queryBuffer = new StringBuilder();

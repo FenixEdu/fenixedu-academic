@@ -27,11 +27,11 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentCompleteExpensesReport extends PersistentReport implements IPersistentExpensesReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -79,11 +79,12 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 	return result;
     }
 
-    public List getReportByRubric(ReportType reportType, Integer projectCode, String rubric) throws ExcepcaoPersistencia {
+    public List getReportByRubric(ReportType reportType, Integer projectCode, String rubric, Boolean it)
+	    throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -132,10 +133,10 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 	return result;
     }
 
-    public List getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public List getRubricList(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List rubricList = new ArrayList();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    StringBuilder stringBuffer = new StringBuilder();

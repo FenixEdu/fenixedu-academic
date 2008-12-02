@@ -68,6 +68,8 @@ public enum RoleType {
     DELEGATE("Delegate"),
 
     PROJECTS_MANAGER("Projects Management"),
+    
+    IT_PROJECTS_MANAGER("IT Projects Management"),
 
     INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),
 
@@ -108,6 +110,7 @@ public enum RoleType {
 	rolesImportance.add(RoleType.STUDENT);
 	rolesImportance.add(RoleType.GRANT_OWNER);
 	rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.IT_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.ALUMNI);
 	rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);

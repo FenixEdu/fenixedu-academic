@@ -13,7 +13,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProject;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -21,9 +20,9 @@ import org.apache.struts.util.LabelValueBean;
  * @author Susana Fernandes
  * 
  */
-public class PersistentProject implements IPersistentProject {
+public class PersistentProject {
 
-    public List<Project> readByUserLogin(String userLogin) throws ExcepcaoPersistencia {
+    public List<Project> readByUserLogin(String userLogin, Boolean it) throws ExcepcaoPersistencia {
 	List<Project> projects = new ArrayList<Project>();
 
 	StringBuilder query = new StringBuilder();
@@ -37,7 +36,7 @@ public class PersistentProject implements IPersistentProject {
 	// and p.projectCode = up.id_proj order by p.projectCode";
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query.toString());
@@ -65,7 +64,7 @@ public class PersistentProject implements IPersistentProject {
 	return projects;
     }
 
-    public List<Project> readByProjectsCodes(List<Integer> projectCodes) throws ExcepcaoPersistencia {
+    public List<Project> readByProjectsCodes(List<Integer> projectCodes, Boolean it) throws ExcepcaoPersistencia {
 	List<Project> projects = new ArrayList<Project>();
 	if (projectCodes != null && projectCodes.size() != 0) {
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -80,7 +79,7 @@ public class PersistentProject implements IPersistentProject {
 	    String query = stringBuffer.toString();
 
 	    try {
-		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 		p.startTransaction();
 
 		PreparedStatement stmt = p.prepareStatement(query);
@@ -107,7 +106,7 @@ public class PersistentProject implements IPersistentProject {
 	return projects;
     }
 
-    public List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes)
+    public List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes, Boolean it)
 	    throws ExcepcaoPersistencia {
 	List<Project> projects = new ArrayList<Project>();
 	StringBuilder stringBuffer = new StringBuilder();
@@ -128,7 +127,7 @@ public class PersistentProject implements IPersistentProject {
 	String query = stringBuffer.toString();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);
@@ -154,12 +153,12 @@ public class PersistentProject implements IPersistentProject {
 	return projects;
     }
 
-    public Project readProject(Integer projectCode) throws ExcepcaoPersistencia {
+    public Project readProject(Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	String query = "select title, c.nome, tp.descricao, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO  from V_Projectos p, V_COORD c , V_TIPOS_PROJECTOS tp  where p.idCoord = c.idCoord and tp.cod = p.tipo and p.projectCode ="
 		+ projectCode;
 	Project project = new Project();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery();
@@ -182,12 +181,12 @@ public class PersistentProject implements IPersistentProject {
 	return project;
     }
 
-    public boolean isUserProject(Integer userCode, Integer projectCode) throws ExcepcaoPersistencia {
+    public boolean isUserProject(Integer userCode, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	boolean result = false;
 	String query = " select count(*) from web_user_projs up where up.login='" + userCode + "' and up.id_proj=" + projectCode;
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);
@@ -204,14 +203,14 @@ public class PersistentProject implements IPersistentProject {
 	return result;
     }
 
-    public int countUserProject(Integer userCode) throws ExcepcaoPersistencia {
+    public int countUserProject(Integer userCode, Boolean it) throws ExcepcaoPersistencia {
 	int result = 0;
 	StringBuilder stringBuffer = new StringBuilder();
 	stringBuffer.append("select count(*) from web_user_projs up where up.login='");
 	stringBuffer.append(userCode);
 	stringBuffer.append("'");
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(stringBuffer.toString());

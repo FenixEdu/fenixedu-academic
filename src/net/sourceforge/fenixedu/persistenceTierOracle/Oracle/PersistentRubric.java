@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentRubric;
  */
 public class PersistentRubric implements IPersistentRubric {
 
-    public List<IRubric> getRubricList(String rubricTableName) throws ExcepcaoPersistencia {
+    public List<IRubric> getRubricList(String rubricTableName, Boolean it) throws ExcepcaoPersistencia {
 	List<IRubric> rubricList = new ArrayList<IRubric>();
 
 	String query = "select COD, DESCRICAO from " + rubricTableName + " order by COD";
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);

@@ -27,11 +27,12 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentExpensesReport extends PersistentReport implements IPersistentExpensesReport {
 
-    public List<IExpensesReportLine> getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public List<IExpensesReportLine> getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+	    throws ExcepcaoPersistencia {
 	List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -70,12 +71,12 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 	return result;
     }
 
-    public List<IExpensesReportLine> getReportByRubric(ReportType reportType, Integer projectCode, String rubric)
+    public List<IExpensesReportLine> getReportByRubric(ReportType reportType, Integer projectCode, String rubric, Boolean it)
 	    throws ExcepcaoPersistencia {
 	List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -116,10 +117,10 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 	return result;
     }
 
-    public List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List<LabelValueBean> rubricList = new ArrayList<LabelValueBean>();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    StringBuilder query = new StringBuilder();
 	    query.append("select distinct r.COD, r.DESCRICAO from ");

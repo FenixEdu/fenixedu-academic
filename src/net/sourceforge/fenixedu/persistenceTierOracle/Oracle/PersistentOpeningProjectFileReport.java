@@ -26,11 +26,12 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentOpeningProjectFileReport extends PersistentReport implements IPersistentOpeningProjectFileReport {
 
-    public IOpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+    public IOpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+	    throws ExcepcaoPersistencia {
 	IOpeningProjectFileReport report = null;
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -95,10 +96,11 @@ public class PersistentOpeningProjectFileReport extends PersistentReport impleme
 	return report;
     }
 
-    public List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue) throws ExcepcaoPersistencia {
+    public List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue, Boolean it)
+	    throws ExcepcaoPersistencia {
 	List report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();

@@ -24,11 +24,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentGeneratedOverheadsReport extends PersistentReport implements IPersistentReport {
 
-    public List<IGeneratedOverheadsReportLine> getCompleteReport(ReportType reportType, Integer costCenterCoordinatorId)
-	    throws ExcepcaoPersistencia {
+    public List<IGeneratedOverheadsReportLine> getCompleteReport(ReportType reportType, Integer costCenterCoordinatorId,
+	    Boolean it) throws ExcepcaoPersistencia {
 	List<IGeneratedOverheadsReportLine> result = new ArrayList<IGeneratedOverheadsReportLine>();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
