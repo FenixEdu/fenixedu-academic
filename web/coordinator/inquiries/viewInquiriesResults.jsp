@@ -67,13 +67,8 @@
 		</logic:notEmpty>
 	</logic:iterate>
 	
-	<p class="separator2 mtop2"><b><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></b></p>
-	<p class="mbottom05" style="font-size: 80%">
-		<bean:message key="message.inquiries.teachers.inquiries.instructions1" bundle="INQUIRIES_RESOURCES"/>
-	</p>
-	<p class="mtop05" style="font-size: 80%">
-		<bean:message key="message.inquiries.teachers.inquiries.instructions2" bundle="INQUIRIES_RESOURCES"/>
-	</p>
+	<p class="separator2 mtop25"><b><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></b></p>
+
 	<ul>
 		<logic:iterate id="professorship" name="executionCourse" property="professorships" >
 			<li>
@@ -90,9 +85,23 @@
 		</logic:iterate>
 	</ul>
 
+	<div class="infoop8 mtop15">
+		<p class="mvert025 color777">
+			<em>
+				Nota: <bean:message key="message.inquiries.teachers.inquiries.instructions1" bundle="INQUIRIES_RESOURCES"/>
+			</em>
+		</p>
+		<p class="mtop025 color777">
+			<em>
+				Nota: <bean:message key="message.inquiries.teachers.inquiries.instructions2" bundle="INQUIRIES_RESOURCES"/>
+			</em>
+		</p>
+	</div>
+
+
 	<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean">
 	
-		<p class="separator2 mtop2"><b><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
+		<p class="separator2 mtop25"><b><bean:message key="title.teachingInquiries.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
 
 		<table class="tstyle1 thlight thleft tdcenter">
 			<tr class="top">
