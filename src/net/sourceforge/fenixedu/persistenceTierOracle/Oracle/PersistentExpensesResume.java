@@ -17,14 +17,13 @@ import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryEURReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryPTEReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentExpensesResume extends PersistentReport implements IPersistentExpensesResume {
+public class PersistentExpensesResume extends PersistentReport {
 
     public ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, Integer projectCode, Boolean it)
 	    throws ExcepcaoPersistencia {

@@ -15,14 +15,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.RevenueReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentRevenueReport extends PersistentReport implements IPersistentReport {
+public class PersistentRevenueReport extends PersistentReport {
 
     public List<IRevenueReportLine> getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
 	    throws ExcepcaoPersistencia {

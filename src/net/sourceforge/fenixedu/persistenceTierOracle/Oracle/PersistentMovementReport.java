@@ -17,14 +17,13 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.MovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.MovementReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentMovementReport extends PersistentReport implements IPersistentReport {
+public class PersistentMovementReport extends PersistentReport {
 
     public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();

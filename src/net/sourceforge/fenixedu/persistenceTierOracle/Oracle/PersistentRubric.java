@@ -13,13 +13,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentRubric;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentRubric implements IPersistentRubric {
+public class PersistentRubric {
 
     public List<IRubric> getRubricList(String rubricTableName, Boolean it) throws ExcepcaoPersistencia {
 	List<IRubric> rubricList = new ArrayList<IRubric>();

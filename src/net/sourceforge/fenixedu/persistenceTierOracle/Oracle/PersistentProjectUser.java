@@ -13,13 +13,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentProjectUser implements IPersistentProjectUser {
+public class PersistentProjectUser {
 
     public IRubric readProjectCoordinator(Integer userCode, Boolean it) throws ExcepcaoPersistencia {
 	StringBuilder queryBuffer = new StringBuilder();

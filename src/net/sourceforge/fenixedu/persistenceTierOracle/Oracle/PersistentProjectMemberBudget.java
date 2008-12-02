@@ -15,14 +15,13 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectMemberBudget;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentProjectMemberBudget extends PersistentReport implements IPersistentReport {
+public class PersistentProjectMemberBudget extends PersistentReport {
 
     public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();

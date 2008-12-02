@@ -12,23 +12,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.OpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentOpeningProjectFileReport extends PersistentReport implements IPersistentOpeningProjectFileReport {
+public class PersistentOpeningProjectFileReport extends PersistentReport {
 
-    public IOpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+    public OpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
 	    throws ExcepcaoPersistencia {
-	IOpeningProjectFileReport report = null;
+	OpeningProjectFileReport report = null;
 
 	try {
 	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);

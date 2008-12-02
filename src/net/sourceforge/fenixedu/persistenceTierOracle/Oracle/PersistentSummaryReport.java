@@ -13,14 +13,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSummaryReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentSummaryReport extends PersistentReport implements IPersistentSummaryReport {
+public class PersistentSummaryReport extends PersistentReport {
 
     public List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode, Boolean it) throws ExcepcaoPersistencia {
 	List result = new ArrayList();

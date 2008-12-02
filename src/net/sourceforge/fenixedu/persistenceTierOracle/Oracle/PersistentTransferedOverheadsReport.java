@@ -15,14 +15,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ITransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.TransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class PersistentTransferedOverheadsReport extends PersistentReport implements IPersistentReport {
+public class PersistentTransferedOverheadsReport extends PersistentReport {
 
     public List<ITransferedOverheadsReportLine> getCompleteReport(ReportType reportType, Integer costCenterCoordinatorId,
 	    Boolean it) throws ExcepcaoPersistencia {
