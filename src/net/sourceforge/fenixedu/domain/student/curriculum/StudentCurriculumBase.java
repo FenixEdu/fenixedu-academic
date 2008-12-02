@@ -145,6 +145,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
 	result.append("\n[SUM Pi] " + getSumPi().toString());
 	result.append("\n[AVERAGE] " + getAverage());
+	result.append("\n[ROUNDED_AVERAGE] " + getRoundedAverage());
 	result.append("\n[SUM ECTS CREDITS] " + getSumEctsCredits().toString());
 	result.append("\n[CURRICULAR YEAR] " + getCurricularYear());
 	result.append("\n[REMAINING CREDITS] " + getRemainingCredits().toString());
