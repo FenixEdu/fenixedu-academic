@@ -30,6 +30,11 @@
 			<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 		</logic:present>
+		<logic:present name="it" scope="request">
+			<logic:equal name="it" value="true">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.it" property="it" value="true" />
+			</logic:equal>
+		</logic:present>
 		<table>
 			<tr>
 				<td><bean:message key="label.username" /></td>

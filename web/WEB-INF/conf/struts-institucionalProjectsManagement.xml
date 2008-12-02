@@ -54,6 +54,7 @@
     <forward name="redirect" path="/redirect.do" contextRelative="true"/>
     <forward name="index" path="/index.do" />
     <forward name="institucionalProjectIndex" path="/institucionalProjectIndex.do" />
+    <forward name="itProjectIndex" path="/itProjectIndex.do" />
   </global-forwards>
 
   <!-- ========== Action Mapping Definitions ============================== -->
@@ -63,6 +64,9 @@
     </action>
     <action path="/institucionalProjectIndex" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.InstitucionalProjectManagerIndexAction">
     	<forward name="success" path="df.page.institucionaProjectManager"/>
+    </action>
+    <action path="/itProjectIndex" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction">
+    	<forward name="success" path="df.page.projectManager"/>
     </action>
     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
     <action path="/projectReport" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectReportsDispatchAction" 

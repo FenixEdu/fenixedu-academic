@@ -9,6 +9,11 @@
 	<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 	<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
 </logic:present>
+<logic:present name="it" scope="request">
+	<logic:equal name="it" value="true">
+		<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+	</logic:equal>
+</logic:present>
 <ul>
 	<li class="navheader"><bean:message key="label.listByProject" /></li>
 	<li><html:link page="<%="/projectReport.do?method=prepareShowReport&amp;reportType=expensesReport"+code%>">
@@ -50,7 +55,6 @@
 		--%>
 
 <logic:present name="infoCostCenter" scope="request">
-
 	<li class="navheader"><bean:message key="label.overheadsList" /></li>
 		<li><html:link page="<%="/overheadReport.do?method=getReport&amp;reportType=generatedOverheadsReport"+code%>">
 			<bean:message key="link.generatedOverheads" />

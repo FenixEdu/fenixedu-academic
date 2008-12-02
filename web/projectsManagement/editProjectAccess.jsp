@@ -46,7 +46,11 @@ function getIndex(input){
 			<bean:define id="cc" name="infoCostCenter" property="code" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
 		</logic:present>
-
+		<logic:present name="it" scope="request">
+			<logic:equal name="it" value="true">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.it" property="it" value="true" />
+			</logic:equal>
+		</logic:present>
 		<table>
 			<tr>
 				<td><strong><bean:message key="label.username" />:</strong></td>
@@ -111,6 +115,11 @@ function getIndex(input){
 		<logic:present name="infoCostCenter" scope="request">
 			<bean:define id="cc" name="infoCostCenter" property="code" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
+		</logic:present>
+		<logic:present name="it" scope="request">
+			<logic:equal name="it" value="true">
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.it" property="it" value="true" />
+			</logic:equal>
 		</logic:present>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="label.back" />

@@ -8,8 +8,17 @@
 	<br />
 	<table>
 		<tr>
-			<td rowspan="3"><img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
-				src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
+			<td rowspan="3">
+		
+		<logic:present name="it" scope="request">
+			<img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+					src="<%= request.getContextPath()+"/images/Logo_IT.jpg" %>" />
+		</logic:present>
+		<logic:notPresent name="it" scope="request">
+			<img height="110" alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+				src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />			
+		</logic:notPresent>
+		</td>
 		</tr>
 		<tr>
 			<td colspan="3">

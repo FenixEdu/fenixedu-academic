@@ -3,12 +3,17 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <bean:define id="code" value="" />
-<h2><bean:message key="title.accessDelegation" /> <logic:present name="infoCostCenter" scope="request">
+<h2><bean:message key="title.accessDelegation" />
+<logic:present name="infoCostCenter" scope="request">
 	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
 	<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 	<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
 </logic:present></h2>
-
+<logic:present name="it" scope="request">
+	<logic:equal name="it" value="true">
+		<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+	</logic:equal>
+</logic:present>
 <script language="Javascript" type="text/javascript">
 <!--
 var disable = false;
@@ -122,6 +127,11 @@ function getIndex(input){
 				<logic:present name="infoCostCenter" scope="request">
 					<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />
+				</logic:present>
+				<logic:present name="it" scope="request">
+					<logic:equal name="it" value="true">
+						<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="it" value="true" />
+					</logic:equal>
 				</logic:present>
 				<logic:present name="noProjectsSelected">
 					<span class="error"><!-- Error messages go here --><bean:message key="errors.requiredProject" /></span>

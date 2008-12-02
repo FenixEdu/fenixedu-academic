@@ -8,6 +8,11 @@
 	<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 	<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
 </logic:present></h2>
+<logic:present name="it" scope="request">
+	<logic:equal name="it" value="true">
+		<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+	</logic:equal>
+</logic:present>
 <br />
 <logic:present name="projectsAccessesList" scope="request">
 	<logic:notEmpty name="projectsAccessesList" scope="request">
