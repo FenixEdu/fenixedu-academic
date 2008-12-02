@@ -110,10 +110,11 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.teachingAndLearningConditions" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
+<bean:define id="teachingInquiry" name="teachingInquiry" type="net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry"/> 
+
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
 	<tr> 
-		<th> 
-			Escala 
+		<th>
 		</th> 
 		<td> 
  			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
@@ -150,27 +151,41 @@ padding-right: 8px;
 		<td> 
 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
 		</td> 
-	</tr> 
-</table>
-
-<table class="tstyle1 thlight thleft tdleft">
+	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.loadAndClassTypeContributionToFullfilmentOfCUProgram" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.loadAndClassTypeContributionToFullfilmentOfCUProgram}" />/9</td>
-
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getLoadAndClassTypeContributionToFullfilmentOfCUProgram().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.teacherNumberSuitableForCUOperation" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.teacherNumberSuitableForCUOperation}" />/9</td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getTeacherNumberSuitableForCUOperation().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.establishedScheduleSuitable" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.establishedScheduleSuitable}" />/9</td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getEstablishedScheduleSuitable().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 
 	<tr>
 		<th><bean:message key="label.teachingInquiries.establishedScheduleNotSuitableReason" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.establishedScheduleNotSuitableReason}" /></td>
+		<td colspan="9"><c:out value="${teachingInquiry.establishedScheduleNotSuitableReason}" /></td>
 	</tr>
 </table>
 
@@ -178,8 +193,7 @@ padding-right: 8px;
 
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
 	<tr> 
-		<th> 
-			Escala 
+		<th>
 		</th> 
 		<td> 
  			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
@@ -217,26 +231,40 @@ padding-right: 8px;
 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
 		</td> 
 	</tr> 
-</table>
-
-<table class="tstyle1 thlight thleft tdleft">
 	<tr>
 
 		<th><bean:message key="label.teachingInquiries.studentsReadyForFollowingCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.studentsReadyForFollowingCU}" />/9</td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getStudentsReadyForFollowingCU().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.evaluationMethodSuitableForCUTeachingTypeAndObjective" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.evaluationMethodSuitableForCUTeachingTypeAndObjective}" />/9</td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getEvaluationMethodSuitableForCUTeachingTypeAndObjective().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.disturbingEventsInClasses" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.disturbingEventsInClasses}" />/9</td>
-
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getDisturbingEventsInClasses().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.disturbingEventsInClassesDescription" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.disturbingEventsInClassesDescription}" /></td>
+		<td colspan="9"><c:out value="${teachingInquiry.disturbingEventsInClassesDescription}" /></td>
 	</tr>
 </table>
 
@@ -331,8 +359,7 @@ padding-right: 8px;
 
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
 	<tr> 
-		<th> 
-			Escala 
+		<th>
 		</th> 
 		<td> 
 			<b> < 5%</b> 
@@ -350,13 +377,33 @@ padding-right: 8px;
 			<b>> 95%</b> 
 		</td> 
 	</tr> 
-</table> 
-
-<table class="tstyle1 thlight thleft td50px tdcenter">
-
 	<tr>
 		<th><bean:message key="label.teachingInquiries.activeAndInteressedStudentsRatio" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.activeAndInteressedStudentsRatio}" />%</td>
+		<% if (teachingInquiry.getActiveAndInteressedStudentsRatio().equals("5")) { %>
+			<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+		<% } else { %>
+			<td></td>
+		<% } %>
+		<% if (teachingInquiry.getActiveAndInteressedStudentsRatio().equals("25")) { %>
+			<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+		<% } else { %>
+			<td></td>
+		<% } %>
+		<% if (teachingInquiry.getActiveAndInteressedStudentsRatio().equals("50")) { %>
+			<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+		<% } else { %>
+			<td></td>
+		<% } %>
+		<% if (teachingInquiry.getActiveAndInteressedStudentsRatio().equals("75")) { %>
+			<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+		<% } else { %>
+			<td></td>
+		<% } %>
+		<% if (teachingInquiry.getActiveAndInteressedStudentsRatio().equals("95")) { %>
+			<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+		<% } else { %>
+			<td></td>
+		<% } %>
 	</tr>
 </table>
 
@@ -364,7 +411,6 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
 	<tr> 
 		<th> 
-			Escala 
 		</th> 
 		<td> 
 			Mau 
@@ -384,23 +430,25 @@ padding-right: 8px;
 			<br/> 
 			<b>4</b> 
 		</td> 
-	</tr> 
-</table>
-
-<table class="tstyle1 thlight thleft td50px tdcenter">
+	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.studentsPerformance" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.studentsPerformance}" />/4</td>
+		<% for (int i = 1; i < 5; i++) { %>
+			<% if (teachingInquiry.getStudentsPerformance().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 </table>	
  
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 
 <table class="tstyle1 thlight thleft td50px tdcenter"> 
-	<tr> 
-		<th> 
-			Escala 
-		</th> 
+	<tr>
+		<th>
+		</th>
 		<td> 
 			Mau 
 			<br/> 
@@ -420,28 +468,49 @@ padding-right: 8px;
 			<b>4</b> 
 		</td> 
 	</tr> 
-</table>
-
-<table class="tstyle1 thlight thleft tdleft">
 	<tr>
 		<th><bean:message key="label.teachingInquiries.classesAndOtherActivitiesFrequency" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesFrequency}" />/4</td>
+		<% for (int i = 1; i < 5; i++) { %>
+			<% if (teachingInquiry.getClassesAndOtherActivitiesFrequency().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.classesAndOtherActivitiesPonctuality" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.classesAndOtherActivitiesPonctuality}" />/4</td>
+		<% for (int i = 1; i < 5; i++) { %>
+			<% if (teachingInquiry.getClassesAndOtherActivitiesPonctuality().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.globalQualityOfTeachingInCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.globalQualityOfTeachingInCU}" />/4</td>
+		<% for (int i = 1; i < 5; i++) { %>
+			<% if (teachingInquiry.getGlobalQualityOfTeachingInCU().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.pedagogicalActivitiesDeveloped" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.pedagogicalActivitiesDeveloped}" />/4</td>
+		<% for (int i = 1; i < 5; i++) { %>
+			<% if (teachingInquiry.getPedagogicalActivitiesDeveloped().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>	
 	<tr>
 		<th><bean:message key="label.teachingInquiries.relativePedagogicalInitiatives" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.relativePedagogicalInitiatives}" /></td>
+		<td colspan="4"><c:out value="${teachingInquiry.relativePedagogicalInitiatives}" /></td>
 	</tr>
 </table>
 

@@ -266,7 +266,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     private boolean checkCandidacyConditions(IUserView userView, String executionDegreeOID) throws FenixServiceException,
 	    FenixFilterException {
 
-	CheckCandidacyConditionsForFinalDegreeWork.run(userView, new Integer(executionDegreeOID));
+	if (executionDegreeOID != null && executionDegreeOID.length() > 0) {
+	    CheckCandidacyConditionsForFinalDegreeWork.run(userView, new Integer(executionDegreeOID));
+	}
 	return true;
     }
 

@@ -486,6 +486,10 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	spreadsheet.setHeader("Nome Corientador");
 	spreadsheet.setHeader("Affiliacao Corientador");
 	spreadsheet.setHeader("Distribuicao Creditos Corientador");
+	spreadsheet.setHeader("Numero Presidente");
+	spreadsheet.setHeader("Nome Presidente");
+	spreadsheet.setHeader("Affiliacao Presidente");
+	spreadsheet.setHeader("Nota Dissertação");
 
 	for (final Thesis thesis : rootDomainObject.getThesesSet()) {
 	    final Enrolment enrolment = thesis.getEnrolment();
@@ -508,6 +512,9 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
 		addTeacherRows(thesis, row, ThesisParticipationType.ORIENTATOR);
 		addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
+		addTeacherRows(thesis, row, ThesisParticipationType.PRESIDENT);
+
+		row.setCell(thesis.getMark());
 	    }
 	}
 	spreadsheet.exportToXLSSheet(writer);
@@ -545,16 +552,20 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		oasb.append("--");
 	    }
 
-	    if (odsb.length() > 0) {
-		odsb.append(" ");
+	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+		if (odsb.length() > 0) {
+		    odsb.append(" ");
+		}
+		final double credistDistribution = thesisEvaluationParticipant.getCreditsDistribution();
+		odsb.append(Double.toString(credistDistribution));
 	    }
-	    final double credistDistribution = thesisEvaluationParticipant.getCreditsDistribution();
-	    odsb.append(Double.toString(credistDistribution));
 	}
 	row.setCell(numbers.toString());
 	row.setCell(names.toString());
 	row.setCell(oasb.toString());
-	row.setCell(odsb.toString());
+	if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+	    row.setCell(odsb.toString());
+	}
     }
 
 }
