@@ -114,5 +114,5 @@ th { width: 150px; }
 </logic:present>
 
 <logic:notPresent name="candidacy">
-	<h3>As candidaturas a estágios internacionais abrem às 9h do dia 10 de Novembro de 2008</h3>
+	<h3>As candidaturas a estágios internacionais estão fechadas</h3>
 </logic:notPresent>
