@@ -20,6 +20,11 @@ public class TextLengthValidator extends HtmlValidator {
     private TextType type;
     private Integer length;
 
+    public TextLengthValidator() {
+	super();
+	setType("character");
+    }
+
     public TextLengthValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 

@@ -12,6 +12,12 @@ public class GradeValidator extends HtmlValidator {
 
     private boolean required = false;
 
+    public GradeValidator() {
+	super();
+	setMessage("renderers.validator.grade");
+	setKey(true);
+    }
+
     public GradeValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 	setMessage("renderers.validator.grade");

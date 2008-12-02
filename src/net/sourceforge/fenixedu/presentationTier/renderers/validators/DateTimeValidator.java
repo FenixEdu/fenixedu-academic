@@ -9,6 +9,11 @@ public class DateTimeValidator extends HtmlValidator {
 
     private boolean required;
 
+    public DateTimeValidator() {
+	super();
+	setKey(true);
+    }
+
     public DateTimeValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 	setKey(true);

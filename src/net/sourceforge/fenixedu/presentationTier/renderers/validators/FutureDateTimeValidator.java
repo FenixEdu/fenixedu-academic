@@ -7,6 +7,10 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 public class FutureDateTimeValidator extends DateTimeValidator {
 
+    public FutureDateTimeValidator() {
+	super();
+    }
+
     public FutureDateTimeValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
     }

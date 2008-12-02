@@ -7,6 +7,11 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class RequiredAutoCompleteSelectionValidator extends HtmlValidator {
 
+    public RequiredAutoCompleteSelectionValidator() {
+	super();
+	setMessage("renderers.validator.autoComplete.required");
+    }
+
     public RequiredAutoCompleteSelectionValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 

@@ -14,6 +14,12 @@ public class DoubleRangeValidator extends HtmlValidator {
 
     private Double lowerBound;
 
+    public DoubleRangeValidator() {
+	super();
+	upperBound = null;
+	lowerBound = null;
+    }
+
     public DoubleRangeValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 

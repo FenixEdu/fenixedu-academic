@@ -5,6 +5,10 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 public class NotRequiredEmailValidator extends EmailValidator {
 
+    public NotRequiredEmailValidator() {
+	super();
+    }
+
     public NotRequiredEmailValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
     }

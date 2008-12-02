@@ -8,6 +8,10 @@ import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 
 public class RequiredMultiLanguageStringValidator extends MultiLanguageStringValidator {
 
+    public RequiredMultiLanguageStringValidator() {
+	super();
+    }
+
     public RequiredMultiLanguageStringValidator(HtmlChainValidator htmlChainValidator) {
 	super(htmlChainValidator);
 
