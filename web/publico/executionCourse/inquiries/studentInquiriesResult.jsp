@@ -37,6 +37,7 @@
 	</logic:iterate>
 	
 	<logic:empty name="studentInquiriesCourseResults">
+		<br/>
 		<bean:message key="message.teachingInquiries.noResults.reasons" bundle="INQUIRIES_RESOURCES"/>
 	</logic:empty>
 </logic:present>
