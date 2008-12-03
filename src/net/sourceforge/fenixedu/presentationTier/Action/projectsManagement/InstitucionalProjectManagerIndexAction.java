@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,9 +33,10 @@ public class InstitucionalProjectManagerIndexAction extends FenixAction {
 	    throws FenixFilterException, FenixServiceException {
 
 	final IUserView userView = UserView.getUser();
-
+	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
+	request.setAttribute("it", it);
 	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(),
-		mapping.getModuleConfig().getPrefix() });
+		mapping.getModuleConfig().getPrefix(), it });
 	List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService("ReadUserCostCenters",
 		new Object[] { userView.getPerson(), mapping.getModuleConfig().getPrefix(), false });
 	request.setAttribute("infoCostCenterList", infoCostCenterList);
