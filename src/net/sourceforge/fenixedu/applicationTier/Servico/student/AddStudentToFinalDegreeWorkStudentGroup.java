@@ -40,7 +40,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer groupOID, String username) throws FenixServiceException {
+    public static Boolean run(Integer groupOID, String username) throws FenixServiceException {
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Registration registration = findSomeRegistration(username);
 	if (group == null

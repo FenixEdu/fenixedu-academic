@@ -21,7 +21,7 @@ public class DeleteObjectByOID extends FenixService {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static boolean run(Class clazz, Integer idInternal) throws FenixServiceException {
+    public static Boolean run(Class clazz, Integer idInternal) throws FenixServiceException {
 	try {
 	    MethodUtils.invokeMethod(rootDomainObject.readDomainObjectByOID(clazz, idInternal), "delete", null);
 	} catch (InvocationTargetException e) {

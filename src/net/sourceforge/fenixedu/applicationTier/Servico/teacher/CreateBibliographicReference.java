@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class CreateBibliographicReference extends FenixService {
 
-    public boolean run(Integer infoExecutionCourseID, String newBibliographyTitle, String newBibliographyAuthors,
+    public Boolean run(Integer infoExecutionCourseID, String newBibliographyTitle, String newBibliographyAuthors,
 	    String newBibliographyReference, String newBibliographyYear, Boolean newBibliographyOptional)
 	    throws FenixServiceException {
 

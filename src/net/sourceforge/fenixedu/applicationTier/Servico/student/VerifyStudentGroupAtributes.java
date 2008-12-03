@@ -187,7 +187,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username, Integer option)
+    public static Boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode, String username, Integer option)
 	    throws FenixServiceException {
 
 	boolean result = false;

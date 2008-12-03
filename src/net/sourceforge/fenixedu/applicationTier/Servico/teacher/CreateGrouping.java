@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 
 public class CreateGrouping extends FenixService {
 
-    public boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
+    public Boolean run(Integer executionCourseID, InfoGrouping infoGrouping) throws FenixServiceException {
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 	if (executionCourse == null) {

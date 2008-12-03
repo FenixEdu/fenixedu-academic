@@ -34,7 +34,7 @@ public class EnrollGroupShift extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
+    public static Boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode, String username)
 	    throws FenixServiceException {
 
 	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);

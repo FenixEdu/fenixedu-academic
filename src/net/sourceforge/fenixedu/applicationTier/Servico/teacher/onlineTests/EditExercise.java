@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
 public class EditExercise extends FenixService {
 
-    public boolean run(Integer executionCourseId, Integer metadataId, String author, String description, String difficulty,
+    public Boolean run(Integer executionCourseId, Integer metadataId, String author, String description, String difficulty,
 	    Calendar learningTime, String level, String mainSubject, String secondarySubject) throws FenixServiceException {
 	Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
 	if (metadata == null)

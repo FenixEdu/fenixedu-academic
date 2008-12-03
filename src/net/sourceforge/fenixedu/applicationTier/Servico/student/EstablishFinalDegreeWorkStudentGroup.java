@@ -26,7 +26,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Person person, Integer executionDegreeOID) throws FenixServiceException {
+    public static Boolean run(Person person, Integer executionDegreeOID) throws FenixServiceException {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
 	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);

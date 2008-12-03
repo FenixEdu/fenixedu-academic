@@ -11,7 +11,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends FenixService 
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
+    public static Boolean run(Integer groupOID, Integer groupProposalOID) throws FenixServiceException {
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	final GroupProposal groupProposal = findGroupProposal(group, groupProposalOID);
 	if (groupProposal != null) {

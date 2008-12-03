@@ -27,7 +27,7 @@ public class SetBasicCurricularCoursesService extends FenixService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
+    public static Boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId) throws FenixServiceException {
 
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 

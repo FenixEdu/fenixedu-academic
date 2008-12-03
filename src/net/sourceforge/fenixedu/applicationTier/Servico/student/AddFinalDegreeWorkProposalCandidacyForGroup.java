@@ -21,7 +21,7 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer groupOID, Integer proposalOID) throws FenixServiceException {
+    public static Boolean run(Integer groupOID, Integer proposalOID) throws FenixServiceException {
 
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Proposal proposal = rootDomainObject.readProposalByOID(proposalOID);

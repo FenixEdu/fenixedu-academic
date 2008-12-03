@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
  */
 public class VerifyIfCanEnrollStudentGroupsInShift extends FenixService {
 
-    public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
 	if (grouping == null) {

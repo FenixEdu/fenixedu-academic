@@ -31,7 +31,7 @@ public class CreateStudentGroup extends FenixService {
 	return studentList;
     }
 
-    public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID, List studentUserNames)
+    public Boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID, Integer shiftID, List studentUserNames)
 	    throws FenixServiceException {
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
 

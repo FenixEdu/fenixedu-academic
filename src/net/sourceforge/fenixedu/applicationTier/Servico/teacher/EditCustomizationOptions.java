@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 
 public class EditCustomizationOptions extends FenixService {
 
-    public boolean run(Integer infoExecutionCourseCode, final String alternativeSite, final String mail,
+    public Boolean run(Integer infoExecutionCourseCode, final String alternativeSite, final String mail,
 	    final Boolean dynamicMailDistribution, final String initialStatement, final String introduction)
 	    throws FenixServiceException {
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);

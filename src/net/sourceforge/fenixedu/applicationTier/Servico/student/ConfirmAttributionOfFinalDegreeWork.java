@@ -26,7 +26,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
+    public static Boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
 	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
 	if (groupProposal != null) {

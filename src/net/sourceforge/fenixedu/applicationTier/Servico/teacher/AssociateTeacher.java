@@ -24,7 +24,7 @@ public class AssociateTeacher extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber) throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer teacherNumber) throws FenixServiceException {
 	Teacher iTeacher = Teacher.readByNumber(teacherNumber);
 	if (iTeacher == null) {
 	    throw new InvalidArgumentsServiceException();

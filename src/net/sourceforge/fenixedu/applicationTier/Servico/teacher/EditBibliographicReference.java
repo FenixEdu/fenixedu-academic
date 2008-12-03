@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
  */
 public class EditBibliographicReference extends FenixService {
 
-    public boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference, String newYear,
+    public Boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors, String newReference, String newYear,
 	    Boolean optional) throws FenixServiceException {
 
 	final BibliographicReference bibliographicReference = rootDomainObject

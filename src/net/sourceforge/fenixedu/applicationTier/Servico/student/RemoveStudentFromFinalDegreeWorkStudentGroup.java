@@ -27,7 +27,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
+    public static Boolean run(String username, Integer groupOID, Integer studentToRemoveID) throws FenixServiceException {
 	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
 	Registration registration = Registration.readByUsername(username);
 

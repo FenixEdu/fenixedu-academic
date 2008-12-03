@@ -11,7 +11,7 @@ public class DeletePersonSpaceOccupation extends FenixService {
 
     @Checked("RolePredicates.SPACE_MANAGER_PREDICATE")
     @Service
-    public static boolean run(PersonSpaceOccupation personSpaceOccupation) {
+    public static Boolean run(PersonSpaceOccupation personSpaceOccupation) {
 	if (personSpaceOccupation != null) {
 	    personSpaceOccupation.delete();
 	}

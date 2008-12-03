@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class DeleteGroupingMembers extends FenixService {
 
-    public boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
+    public Boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
 	    throws FenixServiceException {
 
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);

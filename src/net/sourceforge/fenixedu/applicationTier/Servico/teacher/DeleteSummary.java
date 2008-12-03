@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class DeleteSummary extends FenixService {
 
-    public boolean run(ExecutionCourse executionCourse, Summary summary, Teacher loggedTeacher) throws FenixServiceException {
+    public Boolean run(ExecutionCourse executionCourse, Summary summary, Teacher loggedTeacher) throws FenixServiceException {
 
 	if (summary == null)
 	    throw new InvalidArgumentsServiceException();

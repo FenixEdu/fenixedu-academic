@@ -44,7 +44,7 @@ public class EditGroupShift extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
+    public static Boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
 	    throws FenixServiceException {
 
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);

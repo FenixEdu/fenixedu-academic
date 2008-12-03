@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class DeleteProjectProposal extends FenixService {
 
-    public boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
+    public Boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
 	    String withdrawalPersonUsername) throws FenixServiceException {
 
 	Person withdrawalPerson = Teacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();

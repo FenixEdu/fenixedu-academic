@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseHasProposals extends FenixService {
 
-    public boolean run(Integer executionCourseCode) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode) throws FenixServiceException {
 	boolean result = false;
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 

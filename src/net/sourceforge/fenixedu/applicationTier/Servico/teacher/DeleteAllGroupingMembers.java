@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class DeleteAllGroupingMembers extends FenixService {
 
-    public boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
+    public Boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
 	Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 
 	if (grouping == null) {

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.XMLQuestion;
  */
 public class CreateExercise extends FenixService {
 
-    public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+    public Boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 	    QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
 	    String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
 	    String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,

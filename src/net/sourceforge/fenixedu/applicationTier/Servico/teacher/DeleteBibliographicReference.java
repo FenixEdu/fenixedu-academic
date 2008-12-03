@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
  */
 public class DeleteBibliographicReference extends FenixService {
 
-    public boolean run(Integer bibliographicReferenceOID) throws FenixServiceException {
+    public Boolean run(Integer bibliographicReferenceOID) throws FenixServiceException {
 
 	BibliographicReference bibliographicReference = rootDomainObject
 		.readBibliographicReferenceByOID(bibliographicReferenceOID);

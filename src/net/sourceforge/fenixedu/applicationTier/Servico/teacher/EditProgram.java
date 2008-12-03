@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class EditProgram extends FenixService {
 
-    public boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
+    public Boolean run(Integer executionCourseOID, Integer curricularCourseOID, InfoCurriculum infoCurriculumNew, String username)
 	    throws FenixServiceException {
 
 	final Person person = Person.readPersonByUsername(username);

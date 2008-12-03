@@ -9,7 +9,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class EditEvaluation extends FenixService {
 
-    public boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
+    public Boolean run(final ExecutionCourse executionCourse, final MultiLanguageString evaluationMethod) {
 	if (executionCourse.getEvaluationMethod() == null) {
 	    executionCourse.createEvaluationMethod(evaluationMethod);
 	} else {
