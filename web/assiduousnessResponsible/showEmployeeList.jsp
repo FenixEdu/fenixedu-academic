@@ -15,21 +15,21 @@
 </logic:messagesPresent>
 
 <logic:present name="yearMonth">
-	<div class="mvert1 invisible">
-	<fr:form action="/assiduousnessResponsible.do?method=showEmployeeList">
-		<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
-			<fr:layout>
-		        <fr:property name="classes" value="thlight thright mtop1"/>
-			</fr:layout>
-		</fr:edit>
-		<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" >
-			<bean:message key="button.submit" />
-		</html:submit>
-		</p>
-	</fr:form>
+	<div class="mtop1 mbottom15 invisible">
+		<fr:form action="/assiduousnessResponsible.do?method=showEmployeeList">
+			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
+				<fr:layout>
+			        <fr:property name="classes" value="thlight thright mtop1"/>
+				</fr:layout>
+			</fr:edit>
+			<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible" >
+				<bean:message key="button.submit" />
+			</html:submit>
+			</p>
+		</fr:form>
 	</div>
-	
+
 	<div class="toprint">
 		<p class="bold mbottom0">
 			<bean:define id="month" name="yearMonth" property="month"/>
@@ -46,17 +46,18 @@
 	</logic:empty>
 	<logic:notEmpty name="unitEmployeesList">
 		<logic:iterate id="unitEmployees" name="unitEmployeesList">
-			<fr:view name="unitEmployees" property="unit">
-				<fr:layout name="link">
-					<fr:property name="classes" value="bold"/>
-					<fr:property name="linkFormat" value="<%="/assiduousnessResponsible.do?idInternal=${idInternal}&method=showEmployeeList&month="+month.toString()+"&year="+year.toString()%>"/>
-					<fr:property name="moduleRelative" value="true"/>
-					<fr:property name="contextRelative" value="true"/>
-					<fr:property name="subSchema" value="unit.name"/>
-					<fr:property name="subLayout" value="values"/>
-				</fr:layout>
-			</fr:view>
-			<br/>
+			<p class="mtop1 mbottom05">
+				<fr:view name="unitEmployees" property="unit">
+					<fr:layout name="link">
+						<fr:property name="classes" value="bold"/>
+						<fr:property name="linkFormat" value="<%="/assiduousnessResponsible.do?idInternal=${idInternal}&method=showEmployeeList&month="+month.toString()+"&year="+year.toString()%>"/>
+						<fr:property name="moduleRelative" value="true"/>
+						<fr:property name="contextRelative" value="true"/>
+						<fr:property name="subSchema" value="unit.name"/>
+						<fr:property name="subLayout" value="values"/>
+					</fr:layout>
+				</fr:view>
+			</p>
 			<logic:present name="unitToShow">
 				<bean:define id="unitToShow" name="unitToShow"/>
 				<logic:equal name="unitEmployees" property="unit.idInternal" value="<%=unitToShow.toString()%>">

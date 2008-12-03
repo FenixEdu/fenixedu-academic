@@ -8,9 +8,10 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.workSheet" /></h2>
 
-<div class="toprint">
 
 <logic:present name="employeeWorkSheet">
+
+<div class="toprint">
 	<span class="toprint"><br/></span>
 	<fr:view name="employeeWorkSheet" property="employee" schema="show.employeeInformation">
 		<fr:layout name="tabular">
@@ -42,7 +43,7 @@
 		</div>
 		
 		<div class="toprint">
-			<p class="mbottom0">
+			<p class="mbottom1">
 				<strong>
 					<bean:define id="month" name="yearMonth" property="month"/>
 					<bean:message key="<%=month.toString()%>" bundle="ENUMERATION_RESOURCES"/>

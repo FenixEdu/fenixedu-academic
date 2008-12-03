@@ -9,10 +9,11 @@
 <h2><bean:message key="link.showEmployeeWorkSheet" bundle="ASSIDUOUSNESS_RESOURCES"/></h2>
 
 <logic:messagesPresent message="true">
-	<html:messages id="message" message="true" bundle="ASSIDUOUSNESS_RESOURCES">
-		<p><span class="error0"><bean:write name="message"/></span></p>
-	</html:messages>
-	<br/>
+	<p>
+		<html:messages id="message" message="true" bundle="ASSIDUOUSNESS_RESOURCES">
+			<p class=""><span class="error0"><bean:write name="message"/></span></p>
+		</html:messages>
+	</p>
 </logic:messagesPresent>
 
 <logic:present name="employeeWorkSheet">
