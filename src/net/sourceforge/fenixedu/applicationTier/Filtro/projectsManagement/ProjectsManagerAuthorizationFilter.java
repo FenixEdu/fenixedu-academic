@@ -39,8 +39,8 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	Object[] parametersArray = serviceParameters.parametersArray();
 	String costCenter = (String) parametersArray[1];
 	Boolean it = false;
-	if (parametersArray.length > 1 && parametersArray[2] != null) {
-	    it = (Boolean) parametersArray[2];
+	if (parametersArray[parametersArray.length - 1] != null) {
+	    it = (Boolean) parametersArray[parametersArray.length - 1];
 	}
 
 	final Person person = userView.getPerson();
