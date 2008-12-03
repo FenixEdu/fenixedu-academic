@@ -100,19 +100,21 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
-	    if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
-		if (lastReported == null) {
-		    lastReported = cycle;
-		} else {
-		    result.append(generateEndLine()).append(LINE_BREAK);
-		}
-
-		result.append(getMLSTextContent(cycle.getName())).append(":").append(LINE_BREAK);
-
+	    if (!cycle.isConclusionProcessed()) {
 		final ApprovementCertificateRequest request = ((ApprovementCertificateRequest) getDocumentRequest());
 		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
 		ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
-		reportEntries(result, entries, academicUnitIdentifiers);
+
+		if (!entries.isEmpty()) {
+		    if (lastReported == null) {
+			lastReported = cycle;
+		    } else {
+			result.append(generateEndLine()).append(LINE_BREAK);
+		    }
+
+		    result.append(getMLSTextContent(cycle.getName())).append(":").append(LINE_BREAK);
+		    reportEntries(result, entries, academicUnitIdentifiers);
+		}
 
 		entries.clear();
 	    }
