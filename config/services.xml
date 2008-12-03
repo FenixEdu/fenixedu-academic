@@ -1,4 +1,12 @@
 <serviceDefinitions>
+
+    <service>
+        <name>SearchGrantOwner</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.SearchGrantOwner</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+
     <service>
         <name>AcceptNewProjectProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.AcceptNewProjectProposal</implementationClass>
