@@ -258,6 +258,9 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+    <slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation.view"
@@ -275,11 +278,9 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
-<!-- 
     <slot name="language" layout="null-as-label">
         <property name="label" value="-"/>
     </slot>
--->
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"
@@ -650,7 +651,6 @@
 <schema name="PartialRegistrationRegimeRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.PartialRegistrationRegimeRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
-
 
 <schema name="AcademicServiceRequestBean.external.entity.edit" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean"
 		bundle="ACADEMIC_OFFICE_RESOURCES">
