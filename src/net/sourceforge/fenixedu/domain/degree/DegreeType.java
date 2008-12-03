@@ -752,12 +752,12 @@ public enum DegreeType {
     }
 
     public int getYears() {
-	return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight()).intValue() : 0;
+	return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight()).intValue() : Integer.valueOf(0);
     }
 
     public int getSemesters() {
 	return hasAcademicPeriod() ? Float.valueOf(academicPeriod.getWeight() / AcademicPeriod.SEMESTER.getWeight()).intValue()
-		: 0;
+		: Integer.valueOf(0);
     }
 
     public Integer getYears(final CycleType cycleType) {
@@ -765,7 +765,7 @@ public enum DegreeType {
 	    return getYears();
 	}
 
-	return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : null;
+	return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : Integer.valueOf(0);
     }
 
     public Integer getSemesters(final CycleType cycleType) {
