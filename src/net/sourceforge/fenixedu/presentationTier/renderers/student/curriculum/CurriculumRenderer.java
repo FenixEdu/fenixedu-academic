@@ -201,20 +201,24 @@ public class CurriculumRenderer extends InputRenderer {
 		return container;
 	    }
 
-	    if (this.curriculum.getEnrolmentRelatedEntries().isEmpty() && this.curriculum.getDismissalRelatedEntries().isEmpty()) {
-		container.addChild(createHtmlTextItalic(studentResources.getString("message.no.enrolments")));
+	    if (this.curriculum.isEmpty()) {
+		container.addChild(createHtmlTextItalic(studentResources.getString("message.no.approvals")));
 
 		return container;
 	    }
 
-	    final HtmlContainer averageContainer = new HtmlBlockContainer();
-	    averageContainer.setStyle("padding-bottom: 3.5em;");
-	    container.addChild(averageContainer);
-	    final HtmlTable averageEntriesTable = new HtmlTable();
-	    averageContainer.addChild(averageEntriesTable);
-	    averageEntriesTable.setClasses(getTableClass());
-	    generateAverageRows(averageEntriesTable);
-	    generateAverageSums(averageEntriesTable);
+	    if (this.curriculum.getCurriculumEntries().isEmpty()) {
+		container.addChild(createHtmlTextItalic(studentResources.getString("message.empty.curriculum")));
+	    } else {
+		final HtmlContainer averageContainer = new HtmlBlockContainer();
+		averageContainer.setStyle("padding-bottom: 3.5em;");
+		container.addChild(averageContainer);
+		final HtmlTable averageEntriesTable = new HtmlTable();
+		averageContainer.addChild(averageEntriesTable);
+		averageEntriesTable.setClasses(getTableClass());
+		generateAverageRows(averageEntriesTable);
+		generateAverageSums(averageEntriesTable);
+	    }
 
 	    if (isVisibleCurricularYearEntries()) {
 		final HtmlContainer curricularYearContainer = new HtmlBlockContainer();
