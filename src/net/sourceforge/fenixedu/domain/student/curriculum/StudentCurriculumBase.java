@@ -139,7 +139,7 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
 
     final public BigDecimal getRemainingCredits() {
 	final StudentCurricularPlan plan = getStudentCurricularPlan();
-	if (plan == null) {
+	if (plan == null || !plan.hasGivenCredits()) {
 	    return BigDecimal.ZERO;
 	}
 
