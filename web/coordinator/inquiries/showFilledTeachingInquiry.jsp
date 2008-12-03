@@ -551,7 +551,12 @@ padding-right: 8px;
 	</tr>			
 	<tr>
 		<th><bean:message key="label.teachingInquiries.teachingLanguage" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.teachingLanguage}" /></td>
+		<td>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="PT">Portugûes</logic:equal>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="EN">Inglês</logic:equal>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="BOTH">Ambos</logic:equal>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="OTHER">Outros</logic:equal>
+		</td>
 	</tr>	
 	<tr>
 		<th><bean:message key="label.teachingInquiries.otherTeachingLanguage" bundle="INQUIRIES_RESOURCES"/></th>
@@ -563,18 +568,90 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.cuGlobalEvaluation" bundle="INQUIRIES_RESOURCES"/></strong></p>
 <table class="tstyle1 thlight thleft tdcenter">
-
+	<tr>
+		<th>
+		</th>
+		<td> 
+			Abaixo do previsto
+			<br/> 
+			<b>1</b> 
+		</td> 
+		<td>
+			Adequada
+			<br/> 
+			<b>2</b> 
+		</td> 
+		<td>
+			Acima do previsto
+			<br/> 
+			<b>3</b> 
+		</td>
+	</tr> 
 	<tr>
 		<th><bean:message key="label.teachingInquiries.workLoadClassification" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.workLoadClassification}" /></td>
+		<% for (int i = 1; i < 4; i++) { %>
+			<% if (teachingInquiry.getWorkLoadClassification().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.workLoadClassificationReasons" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.workLoadClassificationReasons}" /></td>
+		<td colspan="4"><c:out value="${teachingInquiry.workLoadClassificationReasons}" /></td>
+	</tr>
+</table>
+
+<table class="tstyle1 thlight thleft tdcenter">
+	<tr> 
+		<th>
+		</th> 
+		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>2</b> 
+ 		</td> 
+ 		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>4</b> 
+ 		</td> 
+ 		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>6</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>8</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.positionOfCUInStudentCurricularPlan" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.positionOfCUInStudentCurricularPlan}" /></td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getPositionOfCUInStudentCurricularPlan().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	
 </table>	
@@ -582,32 +659,127 @@ padding-right: 8px;
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.cuStudentsCompetenceAcquisitionAndDevelopmentLevel" bundle="INQUIRIES_RESOURCES"/></strong></p>
 <table class="tstyle1 thlight thleft td50px tdcenter">
-
+	<tr> 
+		<th>
+		</th> 
+ 		<td> 
+ 			Não se aplica
+ 			<br/> 
+ 			<br/>
+ 			<br/> 
+ 			<b>0</b> 
+ 		</td> 
+ 		<td> 
+ 			Com dificuldade
+ 			<br/> 
+ 			<br/>
+ 			<br/> 
+ 			<b>1</b> 
+ 		</td> 
+		<td> 
+			Com facilidade
+			<br/> 
+			<br/>
+			<br/> 
+			<b>2</b> 
+		</td> 
+		<td> 
+			Com bastante facilidade
+			<br/> 
+			<br/> 
+			<b>3</b> 
+		</td> 
+	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.comprehensionAndKnowledgeOfCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.comprehensionAndKnowledgeOfCU}" /></td>
+		<% for (int i = 0; i < 4; i++) { %>
+			<% if (teachingInquiry.getComprehensionAndKnowledgeOfCU().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.comprehensionApplicationOfCU" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.comprehensionApplicationOfCU}" /></td>
+		<% for (int i = 0; i < 4; i++) { %>
+			<% if (teachingInquiry.getComprehensionApplicationOfCU().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.criticalSenseAndReflexiveSpirit" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.criticalSenseAndReflexiveSpirit}" /></td>
+		<% for (int i = 0; i < 4; i++) { %>
+			<% if (teachingInquiry.getCriticalSenseAndReflexiveSpirit().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 	<tr>
 		<th><bean:message key="label.teachingInquiries.cooperationAndCommunicationCapacity" bundle="INQUIRIES_RESOURCES"/></th>
-		<td><c:out value="${teachingInquiry.cooperationAndCommunicationCapacity}" /></td>
+		<% for (int i = 0; i < 4; i++) { %>
+			<% if (teachingInquiry.getCooperationAndCommunicationCapacity().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 		
 </table>
 
 <p class="mtop2"><strong><bean:message key="title.teachingInquiries.globalClassificationOfThisCU" bundle="INQUIRIES_RESOURCES"/></strong></p>
 <table class="tstyle1 thlight thleft td50px tdcenter">
-
+	<tr> 
+		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>2</b> 
+ 		</td> 
+ 		<td> 
+ 			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/> 
+ 		</td> 
+ 		<td> 
+ 			<br/> 
+ 			<br/> 
+ 			<b>4</b> 
+ 		</td> 
+ 		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>6</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+		<td> 
+			<br/> 
+			<br/> 
+			<b>8</b> 
+		</td> 
+		<td> 
+			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
+		</td> 
+	</tr>
 	<tr>
-		<th></th>
-		<td><c:out value="${teachingInquiry.globalClassificationOfThisCU}" /></td>
+		<% for (int i = 1; i < 10; i++) { %>
+			<% if (teachingInquiry.getGlobalClassificationOfThisCU().intValue() == i) { %>
+				<td><img src="<%= request.getContextPath() %>/images/cross03.gif"/></td>
+			<% } else { %>
+				<td></td>
+			<% } %>
+		<% } %>
 	</tr>
 		
 </table>
