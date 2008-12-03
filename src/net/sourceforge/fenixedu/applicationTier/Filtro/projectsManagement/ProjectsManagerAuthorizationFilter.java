@@ -26,14 +26,14 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
 public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilter {
     public final static ProjectsManagerAuthorizationFilter instance = new ProjectsManagerAuthorizationFilter();
 
-    protected RoleType roleToAuthorize = RoleType.PROJECTS_MANAGER;
+    protected ThreadLocal<RoleType> roleToAuthorize = new ThreadLocal<RoleType>();
 
     public static Filtro getInstance() {
 	return instance;
     }
 
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-
+	roleToAuthorize.set(RoleType.PROJECTS_MANAGER);
 	final IUserView userView = getRemoteUser(request);
 	ServiceParameters serviceParameters = request.getServiceParameters();
 	Object[] parametersArray = serviceParameters.parametersArray();
@@ -64,12 +64,10 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 		    serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
 		}
 	    }
-	    roleToAuthorize = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+	    roleToAuthorize.set(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 	} else {
 	    if (it) {
-		roleToAuthorize = RoleType.IT_PROJECTS_MANAGER;
-	    } else {
-		roleToAuthorize = RoleType.PROJECTS_MANAGER;
+		roleToAuthorize.set(RoleType.IT_PROJECTS_MANAGER);
 	    }
 	    serviceParameters.addParameter("costCenter", "", 1);
 	}
@@ -78,7 +76,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
     }
 
     protected RoleType getRoleType() {
-	return roleToAuthorize;
+	return roleToAuthorize.get();
     }
 
 }
