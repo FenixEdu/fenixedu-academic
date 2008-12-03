@@ -69,7 +69,12 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     }
 
     public Integer getTotalCurricularYears() {
-	return getStudentCurricularPlan().getDegreeType().getYears();
+	final StudentCurricularPlan plan = getStudentCurricularPlan();
+	if (plan == null) {
+	    return Integer.valueOf(0);
+	}
+
+	return plan.getDegreeType().getYears();
     }
 
     private AverageType averageType = AverageType.WEIGHTED;
@@ -133,7 +138,12 @@ abstract public class StudentCurriculumBase implements Serializable, ICurriculum
     }
 
     final public BigDecimal getRemainingCredits() {
-	return BigDecimal.valueOf(getStudentCurricularPlan().getGivenCredits());
+	final StudentCurricularPlan plan = getStudentCurricularPlan();
+	if (plan == null) {
+	    return BigDecimal.ZERO;
+	}
+
+	return BigDecimal.valueOf(plan.getGivenCredits());
     }
 
     @Override
