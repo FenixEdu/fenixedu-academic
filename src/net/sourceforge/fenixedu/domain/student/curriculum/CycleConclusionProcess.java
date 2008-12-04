@@ -41,6 +41,7 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
 	new CycleConclusionProcess(bean);
     }
 
+    @Override
     final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
 	    final String notes) {
 	addVersions(new RegistrationConclusionBean(getRegistration(), getCycle()));

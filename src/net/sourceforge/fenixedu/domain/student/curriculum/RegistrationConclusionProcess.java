@@ -57,6 +57,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	}
     }
 
+    @Override
     final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
 	    final String notes) {
 	addVersions(new RegistrationConclusionBean(getRegistration()));
