@@ -109,7 +109,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
 	final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
 	jobData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS", "COD_AREA_NEGOCIO",
-		"AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO" });
+		"AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO", "REMUN_MENSAL_BRUTA" });
 
 	final Spreadsheet formationData = new Spreadsheet("ALUMNI_FORMATION_DATA");
 	formationData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
@@ -162,7 +162,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 		    row.setCell(registration.getStartDate().toString("dd/MM/yyyy"));
 		    final CycleCurriculumGroup lastConcludedCycle = concludeCycles.last();
 		    row.setCell(lastConcludedCycle.isConclusionProcessed() ? lastConcludedCycle.getConclusionDate().toString(
-				    "dd/MM/yyyy") : lastConcludedCycle.calculateConclusionDate().toString("dd/MM/yyyy"));
+			    "dd/MM/yyyy") : lastConcludedCycle.calculateConclusionDate().toString("dd/MM/yyyy"));
 		    row.setCell("Bolonha");
 		}
 
@@ -174,7 +174,8 @@ public class AlumniInformationAction extends FenixDispatchAction {
 		    row.setCell(studentNumber);
 		    row.setCell(registration.getDegreeName());
 		    row.setCell(registration.getStartDate().toString("dd/MM/yyyy"));
-		    row.setCell(registration.getConclusionDate() != null ? registration.getConclusionDate().toString("dd/MM/yyyy") : "n/a");
+		    row.setCell(registration.getConclusionDate() != null ? registration.getConclusionDate()
+			    .toString("dd/MM/yyyy") : "n/a");
 		    row.setCell("Pre-Bolonha");
 		}
 	    }
@@ -211,6 +212,9 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	row.setCell(job.getBeginDate().toString("dd/MM/YYYY"));
 	row.setCell(job.getEndDate() != null ? job.getEndDate().toString("dd/MM/YYYY") : "n/a");
 	row.setCell(job.getContractType() != null ? eBundle.getString(job.getContractType().getQualifiedName()) : "n/a");
+	row.setCell(job.getJobApplicationType() != null ? eBundle.getString(job.getJobApplicationType().getQualifiedName())
+		: "n/a");
+	row.setCell(job.getSalaryType() != null ? eBundle.getString(job.getSalaryType().getQualifiedName()) : "n/a");
     }
 
     private void addFormationDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Formation formation) {
