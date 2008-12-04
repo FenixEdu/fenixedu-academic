@@ -42,3 +42,5 @@ function executeWithTempFile() {
 }
 
 execute "addNewLanguageToCountryNationality" addNewLanguageToCountryNationality.sql
+execute "createConclusionProcessTableAndRelations" createConclusionProcessTableAndRelations.sql
+
