@@ -4325,9 +4325,6 @@ class DomainObject {
 		Boolean requestedChangeDegree;
 		YearMonthDay startDate;
 		YearMonthDay studiesStartDate;
-		Integer finalAverage;
-		YearMonthDay conclusionDate;
-		String conclusionProcessNotes;
 		Ingression ingression;
 		EntryPhase entryPhase;
 	}
@@ -4446,9 +4443,6 @@ class DomainObject {
 		}
 
 			class studentCurriculum.CycleCurriculumGroup extends studentCurriculum.CurriculumGroup {
-				Integer finalAverage;
-				YearMonthDay conclusionDate;
-				String conclusionProcessNotes;
 			}
 
 				class studentCurriculum.ExternalCurriculumGroup extends studentCurriculum.CycleCurriculumGroup {
@@ -9484,20 +9478,6 @@ relation ResponsibleForConclusionProcessVersion {
 	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
 		multiplicity *;	
 	}
-}
-
-relation ResponsibleForRegistrationConclusionProcess {
-	student.Registration playsRole conclusionProcessedRegistrations {
-		multiplicity *;	
-	}
-	Person playsRole conclusionProcessResponsible;
-}
-
-relation ResponsibleForCycleCurriculumGroupConclusionProcess {
-	studentCurriculum.CycleCurriculumGroup playsRole conclusionProcessedCycleCurriculumGroups {
-		multiplicity *;	
-	}
-	Person playsRole conclusionProcessResponsible;
 }
 
 relation RegistrationRegistrationConclusionProcess {

@@ -708,9 +708,7 @@ public class Registration extends Registration_Base {
 	    }
 	}
 
-	return super.getFinalAverage();
-	// return isRegistrationConclusionProcessed() ?
-	// getConclusionProcess().getFinalAverage() : null;
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getFinalAverage() : null;
     }
 
     final public Integer getFinalAverage(final CycleType cycleType) {
@@ -2292,9 +2290,7 @@ public class Registration extends Registration_Base {
     }
 
     final public Person getConclusionProcessResponsible() {
-	return super.getConclusionProcessResponsible();
-	// return isRegistrationConclusionProcessed() ?
-	// getConclusionProcess().getResponsible() : null;
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getResponsible() : null;
     }
 
     final public Person getConclusionProcessLastResponsible() {
@@ -2335,9 +2331,8 @@ public class Registration extends Registration_Base {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.for.cannot.get.conclusion.date.in.registration.for.bolonha");
 	}
-	return super.getConclusionDate();
-	// return isRegistrationConclusionProcessed() ?
-	// getConclusionProcess().getConclusionYearMonthDay() : null;
+
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYearMonthDay() : null;
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
@@ -2405,9 +2400,7 @@ public class Registration extends Registration_Base {
     }
 
     final public String getConclusionProcessNotes() {
-	return super.getConclusionProcessNotes();
-	// return isRegistrationConclusionProcessed() ?
-	// getConclusionProcess().getNotes() : null;
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getNotes() : null;
     }
 
     final public DateTime getConclusionProcessCreationDateTime() {

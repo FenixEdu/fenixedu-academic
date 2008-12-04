@@ -196,9 +196,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     final public Integer getFinalAverage() {
-	return super.getFinalAverage();
-	// return isConclusionProcessed() ?
-	// getConclusionProcess().getFinalAverage() : null;
+	return isConclusionProcessed() ? getConclusionProcess().getFinalAverage() : null;
     }
 
     @Override
@@ -223,9 +221,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     final public YearMonthDay getConclusionDate() {
-	return super.getConclusionDate();
-	// return isConclusionProcessed() ?
-	// getConclusionProcess().getConclusionYearMonthDay() : null;
+	return isConclusionProcessed() ? getConclusionProcess().getConclusionYearMonthDay() : null;
     }
 
     @Override
@@ -246,9 +242,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     final public Person getConclusionProcessResponsible() {
-	return super.getConclusionProcessResponsible();
-	// return isConclusionProcessed() ?
-	// getConclusionProcess().getResponsible() : null;
+	return isConclusionProcessed() ? getConclusionProcess().getResponsible() : null;
     }
 
     final public Person getConclusionProcessLastResponsible() {
@@ -256,9 +250,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     final public String getConclusionProcessNotes() {
-	return super.getConclusionProcessNotes();
-	// return isConclusionProcessed() ? getConclusionProcess().getNotes() :
-	// null;
+	return isConclusionProcessed() ? getConclusionProcess().getNotes() : null;
     }
 
     final public DateTime getConclusionProcessCreationDateTime() {
