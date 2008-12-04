@@ -1130,8 +1130,11 @@ public class Registration extends Registration_Base {
 		}
 	    }
 
-	    if (result == null && isConcluded()) {
-		return getActiveState().getExecutionYear();
+	    if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
+		final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+		states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
+
+		return states.last().getExecutionYear();
 	    }
 
 	    return result;
@@ -2271,7 +2274,7 @@ public class Registration extends Registration_Base {
     public double calculateCredits() {
 	return getTotalEctsCredits((ExecutionYear) null).doubleValue();
     }
-    
+
     final public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumEctsCredits();
     }
@@ -2373,8 +2376,11 @@ public class Registration extends Registration_Base {
 		}
 	    }
 
-	    if (result == null && isConcluded()) {
-		return getActiveState().getStateDate().toYearMonthDay();
+	    if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
+		final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+		states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
+
+		return states.last().getStateDate().toYearMonthDay();
 	    }
 
 	    return result;
