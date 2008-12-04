@@ -1318,6 +1318,7 @@ class DomainObject {
 	}
 
 		class accounting.AcademicEvent extends accounting.Event {
+		
 		}
 	
 		class accounting.ResidenceEvent extends accounting.Event {
@@ -1434,7 +1435,7 @@ class DomainObject {
 				class accounting.events.serviceRequests.PastFreeSolicitationAcademicRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 					Money pastAmount;
 				}
-				
+
 				class accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 
@@ -1510,7 +1511,7 @@ class DomainObject {
 		DateTime whenCreated;
 		String username;
 		Money amount;
-	}
+		}
 
 	class accounting.Installment extends DomainObject {
 		Money amount;
@@ -1558,7 +1559,7 @@ class DomainObject {
 
 		class accounting.paymentCodes.MasterDegreeInsurancePaymentCode extends accounting.PaymentCode {
 		}
-		
+
 	class accounting.PaymentCodeMapping extends DomainObject {
 	}
 
@@ -4281,6 +4282,25 @@ class DomainObject {
 			String identification;
 		}
 
+	class student.curriculum.ConclusionProcess extends DomainObject {
+	}
+
+		class student.curriculum.RegistrationConclusionProcess extends student.curriculum.ConclusionProcess {
+		}
+	
+		class student.curriculum.CycleConclusionProcess extends student.curriculum.ConclusionProcess {
+		}
+	
+	class student.curriculum.ConclusionProcessVersion extends DomainObject {
+		DateTime creationDateTime (REQUIRED);
+		LocalDate conclusionDate (REQUIRED);
+		Integer finalAverage (REQUIRED);
+		BigDecimal average (REQUIRED);
+		BigDecimal credits (REQUIRED);
+		String curriculum (REQUIRED);
+		String notes;
+	}
+
 	class student.ExternalRegistrationData extends DomainObject {
 		String coordinatorName;
 	}
@@ -5628,6 +5648,7 @@ class residence.ResidencePriceTable extends DomainObject {
 class residence.ResidenceMonth extends DomainObject {
 	Month month;
 }
+
 class internship.InternshipCandidacy extends DomainObject {
     Integer candidacyCode;
     DateTime candidacyDate;
@@ -6398,6 +6419,34 @@ relation CompetenceCourseUnit {
 	organizationalStructure.CompetenceCourseGroupUnit playsRole competenceCourseGroupUnit;
 	}
 
+relation ConclusionProcessConclusionProcessVersion {
+	student.curriculum.ConclusionProcess playsRole conclusionProcess;
+	student.curriculum.ConclusionProcessVersion playsRole versions {
+		multiplicity *;	
+	}
+}
+
+relation ConclusionProcessConclusionYear {
+	student.curriculum.ConclusionProcess playsRole conclusionProcessesConcluded {
+		multiplicity *;
+	}
+	ExecutionYear playsRole conclusionYear;
+}
+
+relation ConclusionProcessVersionConclusionYear {
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersionsConcluded {
+		multiplicity *;
+	}
+	ExecutionYear playsRole conclusionYear;
+}
+
+relation ConclusionProcessVersionIngressionYear {
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersionsBegined {
+		multiplicity *;
+	}
+	ExecutionYear playsRole ingressionYear;
+}
+
 relation ConferenceArticlesEventConferenceArticlesAssociation {
 	research.result.publication.ConferenceArticles playsRole conferenceArticle;
 	research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociation;
@@ -6700,6 +6749,11 @@ relation CurriculumPerson {
 	Person playsRole personWhoAltered;
 }
 
+relation CycleCurriculumGroupCycleConclusionProcess {
+	studentCurriculum.CycleCurriculumGroup playsRole cycle;
+	student.curriculum.CycleConclusionProcess playsRole conclusionProcess;
+}
+
 relation DFACandidacyEventCandidacy {
 	candidacy.DFACandidacy playsRole candidacy;
 	accounting.events.dfa.DFACandidacyEvent playsRole dfaCandidacyEvent;
@@ -6886,6 +6940,13 @@ relation DistributedTestScope {
 		multiplicity *;
 	}
 	onlineTests.TestScope playsRole testScope;
+}
+
+relation DissertationEnrolmentConclusionProcess {
+	Enrolment playsRole dissertationEnrolment;
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
+		multiplicity *;	
+	}
 }
 
 relation DomainObjectActionLogDomainObjectActionLogEntry {
@@ -8335,6 +8396,13 @@ relation MasterDegreeProofVersionMasterDegreeThesis {
 	MasterDegreeThesis playsRole masterDegreeThesis;
 }
 
+relation MasterDegreeThesisConclusionProcess {
+	MasterDegreeThesis playsRole masterDegreeThesis;
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
+		multiplicity *;	
+	}
+}
+
 relation MasterDegreeThesisDataVersionAssistentGuider {
 	MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
 		multiplicity *;
@@ -8629,6 +8697,20 @@ relation PartyPartySocialSecurityNumber {
 	organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumber;
 }
 
+relation RootDomainObjectConclusionProcess {
+	RootDomainObject playsRole rootDomainObject;
+	student.curriculum.ConclusionProcess playsRole conclusionProcesses {
+		multiplicity *;	
+	}
+}
+
+relation RootDomainObjectConclusionProcessVersion {
+	RootDomainObject playsRole rootDomainObject;
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
+		multiplicity *;	
+	}
+}
+
 relation RootDomainObjectPartySocialSecurityNumber {
 	RootDomainObject playsRole rootDomainObject;
 	organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumbers {
@@ -8734,7 +8816,7 @@ relation PaymentCodeMappingOldPaymentCode {
 	accounting.PaymentCode playsRole oldPaymentCode;
 	accounting.PaymentCodeMapping playsRole oldPaymentCodeMappings {
 		multiplicity *;
-	}
+}
 }
 
 relation PaymentCodeMappingNewPaymentCode {
@@ -9397,6 +9479,13 @@ relation RegistrationDegree {
 	}
 }
 
+relation ResponsibleForConclusionProcessVersion {
+	Person playsRole responsible;
+	student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
+		multiplicity *;	
+	}
+}
+
 relation ResponsibleForRegistrationConclusionProcess {
 	student.Registration playsRole conclusionProcessedRegistrations {
 		multiplicity *;	
@@ -9409,6 +9498,11 @@ relation ResponsibleForCycleCurriculumGroupConclusionProcess {
 		multiplicity *;	
 	}
 	Person playsRole conclusionProcessResponsible;
+}
+
+relation RegistrationRegistrationConclusionProcess {
+	student.Registration playsRole registration;
+	student.curriculum.RegistrationConclusionProcess playsRole conclusionProcess;
 }
 
 relation RegistrationRegistrationNumber {
