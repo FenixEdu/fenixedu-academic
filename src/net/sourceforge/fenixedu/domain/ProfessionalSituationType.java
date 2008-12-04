@@ -10,6 +10,8 @@ public enum ProfessionalSituationType {
 	    false), REQUESTED_FROM(false, false),
 
     EXERCISE_OF_FUNCTIONS(false, false),
+	    
+    LIFETIME_TEACHER_BY_DIRECTIVE_COUNCIL_AUTHORIZATION(false, false),
 
     // Functions Accumulation
     FUNCTIONS_ACCUMULATION_WITH_LEADING_POSITIONS(false, false),
@@ -34,9 +36,7 @@ public enum ProfessionalSituationType {
 	    true, false), TEACHER_SERVICE_EXEMPTION_E_C_D_U(true, false), TEACHER_SERVICE_EXEMPTION_E_C_D_U_ART27(true, false), FUNCTIONS_MANAGEMENT_SERVICE_EXEMPTION(
 	    true, false), INCAPACITY_FOR_TOGETHER_DOCTOR_OF_THE_CGA(true, false), PUBLIC_MANAGER(true, false), DETACHED_TO(true,
 	    false), GOVERNMENT_MEMBER(true, false), SPECIAL_LICENSE_MACAU_TIMOR(true, false), NOMINATION_BY_RECLASSIFICATION(
-	    false, false), REQUESTED_FOR_EXTERNAL_ENTITY(false, false),
-
-    LIFETIME_TEACHER_BY_DIRECTIVE_COUNCIL_AUTHORIZATION(false, false)
+	    false, false), REQUESTED_FOR_EXTERNAL_ENTITY(false, false)
 
     ;
 
