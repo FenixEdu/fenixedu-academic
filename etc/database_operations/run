@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Data fix regarding an ExecutionCourse Merge that went wrong" dataFix.sql
