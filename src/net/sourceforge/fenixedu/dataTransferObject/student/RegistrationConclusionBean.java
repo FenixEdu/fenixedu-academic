@@ -8,12 +8,14 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -61,41 +63,62 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public Integer getFinalAverage() {
 	if (isConclusionProcessed()) {
-	    return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getFinalAverage() : getRegistration().getFinalAverage();
+	    return isByCycle() ? getCycleCurriculumGroup().getFinalAverage() : getRegistration().getFinalAverage();
 	}
 
 	return calculateFinalAverage();
     }
 
     public Integer calculateFinalAverage() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration()
-		.calculateFinalAverage();
+	return isByCycle() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration().calculateRoundedAverage();
     }
 
     public BigDecimal getAverage() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
+	if (isConclusionProcessed()) {
+	    return isByCycle() ? getCycleCurriculumGroup().getAverage() : getRegistration().getAverage();
+	}
+
+	return calculateAverage();
+    }
+
+    public BigDecimal calculateAverage() {
+	return isByCycle() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
     }
 
     public YearMonthDay getConclusionDate() {
 	if (isConclusionProcessed()) {
-	    return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionDate() : getRegistration()
-		    .getConclusionDate();
+	    return isByCycle() ? getCycleCurriculumGroup().getConclusionDate() : getRegistration().getConclusionDate();
 	}
 
 	return calculateConclusionDate();
     }
 
     public YearMonthDay calculateConclusionDate() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration()
-		.calculateConclusionDate();
+	return isByCycle() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration().calculateConclusionDate();
     }
 
     public ExecutionYear getIngressionYear() {
-	return getRegistration().getIngressionYear();
+	if (isConclusionProcessed()) {
+	    return isByCycle() ? getCycleCurriculumGroup().getIngressionYear() : getRegistration().getIngressionYear();
+	}
+
+	return calculateIngressionYear();
+    }
+
+    public ExecutionYear calculateIngressionYear() {
+	return isByCycle() ? getCycleCurriculumGroup().calculateIngressionYear() : getRegistration().calculateIngressionYear();
     }
 
     public ExecutionYear getConclusionYear() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getLastApprovementExecutionYear() : getRegistration().getLastApprovementExecutionYear();
+	if (isConclusionProcessed()) {
+	    return isByCycle() ? getCycleCurriculumGroup().getConclusionYear() : getRegistration().getConclusionYear();
+	}
+
+	return calculateConclusionYear();
+    }
+
+    public ExecutionYear calculateConclusionYear() {
+	return isByCycle() ? getCycleCurriculumGroup().calculateConclusionYear() : getRegistration().calculateConclusionYear();
     }
 
     public boolean hasDissertationThesis() {
@@ -111,11 +134,19 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public double getEctsCredits() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCreditsConcluded() : getRegistration().getEctsCredits();
+	if (isConclusionProcessed()) {
+	    return isByCycle() ? getCycleCurriculumGroup().getCreditsConcluded() : getRegistration().getEctsCredits();
+	}
+
+	return calculateCredits();
+    }
+
+    public double calculateCredits() {
+	return isByCycle() ? getCycleCurriculumGroup().calculateCreditsConcluded() : getRegistration().calculateCredits();
     }
 
     public ICurriculum getCurriculumForConclusion() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
+	return isByCycle() ? getCycleCurriculumGroup().getCurriculum() : getRegistration().getCurriculum();
     }
 
     public int getCurriculumEntriesSize() {
@@ -123,17 +154,17 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public String getDegreeDescription() {
-	return hasCycleCurriculumGroup() ? getRegistration().getDegreeDescription(getCycleCurriculumGroup().getCycleType())
-		: getRegistration().getDegreeDescription();
+	return isByCycle() ? getRegistration().getDegreeDescription(getCycleCurriculumGroup().getCycleType()) : getRegistration()
+		.getDegreeDescription();
     }
 
     public boolean isConcluded() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
+	return isByCycle() ? getCycleCurriculumGroup().isConcluded() : getRegistration().hasConcluded();
     }
 
     public Collection<CurriculumModule> getCurriculumModulesWithNoConlusionDate() {
 	final Collection<CurriculumModule> result = new HashSet<CurriculumModule>();
-	if (hasCycleCurriculumGroup()) {
+	if (isByCycle()) {
 	    getCycleCurriculumGroup().assertConclusionDate(result);
 	} else {
 	    getRegistration().assertConclusionDate(result);
@@ -142,17 +173,17 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public Collection<CurriculumGroup> getCurriculumGroupsNotVerifyingStructure() {
-	if (hasCycleCurriculumGroup()) {
+	if (isByCycle()) {
 	    final Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 	    getCycleCurriculumGroup().assertCorrectStructure(result);
 	    return result;
 	} else {
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
     }
 
     public boolean isConclusionProcessed() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
+	return isByCycle() ? getCycleCurriculumGroup().isConclusionProcessed() : getRegistration()
 		.isRegistrationConclusionProcessed();
     }
 
@@ -181,13 +212,28 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public String getConclusionProcessNotes() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessNotes() : getRegistration()
+	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessNotes() : getRegistration()
 		.getConclusionProcessNotes();
     }
 
-    public String getConclusionProcessResponsibleIstUsername() {
-	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getConclusionProcessResponsibleIstUsername()
-		: getRegistration().getConclusionProcessResponsibleIstUsername();
+    public Person getConclusionProcessResponsible() {
+	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessResponsible() : getRegistration()
+		.getConclusionProcessResponsible();
+    }
+
+    public Person getConclusionProcessLastResponsible() {
+	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessLastResponsible() : getRegistration()
+		.getConclusionProcessLastResponsible();
+    }
+
+    public DateTime getConclusionProcessCreationDateTime() {
+	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessCreationDateTime() : getRegistration()
+		.getConclusionProcessCreationDateTime();
+    }
+
+    public DateTime getConclusionProcessLastModificationDateTime() {
+	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessLastModificationDateTime() : getRegistration()
+		.getConclusionProcessLastModificationDateTime();
     }
 
 }
