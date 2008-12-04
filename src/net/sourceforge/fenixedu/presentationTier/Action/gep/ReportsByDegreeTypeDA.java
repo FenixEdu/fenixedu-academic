@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +43,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
+import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -58,7 +60,8 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -79,6 +82,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	public ExecutionYear getExecutionYear() {
 	    return executionYearReference == null ? null : executionYearReference.getObject();
+	}
+
+	public Integer getExecutionYearOID() {
+	    return getExecutionYear() == null ? null : getExecutionYear().getIdInternal();
 	}
 
 	public void setExecutionYear(final ExecutionYear executionYear) {
@@ -104,6 +111,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return executionYearFourYearsBack;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ReportBean reportBean = (ReportBean) getRenderedObject();
@@ -117,20 +125,27 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private DegreeType getDegreeType(final HttpServletRequest httpServletRequest) {
 	final String degreeTypeString = httpServletRequest.getParameter("degreeType");
-	return DegreeType.valueOf(degreeTypeString);
+	return StringUtils.isEmpty(degreeTypeString) ? null : DegreeType.valueOf(degreeTypeString);
     }
 
     private ExecutionYear getExecutionYear(final HttpServletRequest httpServletRequest) {
-	final String executionYearIdString = httpServletRequest.getParameter("executionYearID");
-	return rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearIdString));
+	final String OIDString = httpServletRequest.getParameter("executionYearID");
+	return StringUtils.isEmpty(OIDString) ? null : rootDomainObject.readExecutionYearByOID(Integer.valueOf(OIDString));
     }
 
     private String getFormat(final HttpServletRequest httpServletRequest) {
 	return httpServletRequest.getParameter("format");
     }
 
-    private String getReportName(final String prefix, final String degreeTypeName, final ExecutionYear executionYear) {
-	return prefix + degreeTypeName + executionYear.getYear().replace('/', '_');
+    private String getReportName(final String prefix, final DegreeType degreeType, final ExecutionYear executionYear) {
+
+	final StringBuilder result = new StringBuilder();
+	result.append(new LocalDateTime().toString("yyyy_MM_dd_HH_mm")).append("_");
+	result.append(prefix).append("_");
+	result.append(degreeType == null ? "Todos_Cursos" : degreeType.getLocalizedName()).append("_");
+	result.append(executionYear == null ? "Todos_Anos" : executionYear.getName().replace('/', '_'));
+
+	return result.toString();
     }
 
     private void outputReport(final HttpServletResponse httpServletResponse, final String reportName,
@@ -150,12 +165,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadEurAce(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("eurAce", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("eurAce", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportEurAce(spreadsheet, degreeType, executionYear);
@@ -164,13 +180,14 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadEctsLabelForCurricularCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("ectsLabel", degreeType.getLocalizedName() + "_Disciplinas_", executionYear);
+	final String reportName = getReportName("ectsLabel_Disciplinas", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportEctsLabelForCurricularCourses(spreadsheet, degreeType, executionYear);
@@ -179,12 +196,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadEctsLabelForDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("ectsLabel", degreeType.getLocalizedName() + "_Cursos_", executionYear);
+	final String reportName = getReportName("ectsLabel_Cursos", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportEctsLabelForDegrees(spreadsheet, degreeType, executionYear);
@@ -193,12 +211,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadStatusAndAproval(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("statusAndAproval", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("statusAndAproval", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportStatusAndAproval(spreadsheet, degreeType, executionYear);
@@ -225,12 +244,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(degree.getSigla());
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadEti(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("etiGrades", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportEti(spreadsheet, degreeType, executionYear);
@@ -239,12 +259,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("matriculas", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("matriculas", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportRegistrations(spreadsheet, degreeType, executionYear);
@@ -253,12 +274,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadFlunked(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("prescricoes", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("prescricoes", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportFlunked(spreadsheet, degreeType, executionYear);
@@ -267,12 +289,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadGraduations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("diplomados", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("diplomados", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportGraduations(spreadsheet, degreeType, executionYear);
@@ -281,12 +304,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadTeachersByShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("teachersByShift", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("teachersByShift", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportTeachersByShift(spreadsheet, degreeType, executionYear);
@@ -295,18 +319,31 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    @SuppressWarnings("unused")
     public ActionForward downloadCourseLoads(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("teachersByShift", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("teachersByShift", degreeType, executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportCourseLoads(spreadsheet, degreeType, executionYear);
 
 	outputReport(response, reportName, spreadsheet, format);
 	return null;
+    }
+
+    private boolean checkDegreeType(final DegreeType degreeType, final Degree degree) {
+	return degreeType == null || degree.getDegreeType() == degreeType;
+    }
+
+    private boolean checkExecutionYear(final ExecutionYear executionYear, final DegreeCurricularPlan degreeCurricularPlan) {
+	return executionYear == null || degreeCurricularPlan.hasExecutionDegreeFor(executionYear);
+    }
+
+    private boolean checkExecutionYear(ExecutionYear executionYear, final CurricularCourse curricularCourse) {
+	return executionYear == null || curricularCourse.isActive(executionYear);
     }
 
     private void reportEurAce(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
@@ -316,11 +353,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("créditos");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		    if (checkExecutionYear(executionYear, degreeCurricularPlan)) {
 			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
-			    if (curricularCourse.isActive(executionYear)) {
+			    if (checkExecutionYear(executionYear, curricularCourse)) {
 				for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
 				    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 					final Teacher teacher = professorship.getTeacher();
@@ -357,9 +394,9 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	createEctsLabelDegreesHeader(spreadsheet);
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		    if (checkExecutionYear(executionYear, degreeCurricularPlan)) {
 			addEctsLabelDegreeRow(spreadsheet, degreeCurricularPlan, executionYear);
 		    }
 		}
@@ -454,11 +491,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	createEctsLabelCurricularCoursesHeader(spreadsheet);
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		    if (checkExecutionYear(executionYear, degreeCurricularPlan)) {
 			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
-			    if (curricularCourse.isActive(executionYear) && !curricularCourse.isOptionalCurricularCourse()) {
+			    if (checkExecutionYear(executionYear, curricularCourse)
+				    && !curricularCourse.isOptionalCurricularCourse()) {
 				for (final Context context : curricularCourse.getParentContextsByExecutionYear(executionYear)) {
 				    addEctsLabelContextRow(spreadsheet, context, executionYear);
 				}
@@ -508,7 +546,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(curricular.getName(executionSemester));
 	row.setCell(curricular.getNameEn(executionSemester));
 	final CompetenceCourse competenceCourse = curricular.getCompetenceCourse();
-	if (competenceCourse != null) {	    
+	if (competenceCourse != null) {
 	    row.setCell(competenceCourse.getAcronym(executionSemester));
 	} else {
 	    row.setCell("");
@@ -694,7 +732,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 		.getFirstExecutionPeriod();
 	final ExecutionSemester lastExecutionSemester = executionYear.getLastExecutionPeriod();
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		if (isActive(degree, executionYear)) {
 		    for (final Registration registration : degree.getRegistrationsSet()) {
 			if (registration.isRegistered(executionYear)) {
@@ -730,7 +768,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private boolean isActive(final Degree degree, final ExecutionYear executionYear) {
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-	    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+	    if (checkExecutionYear(executionYear, degreeCurricularPlan)) {
 		return true;
 	    }
 	}
@@ -757,11 +795,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("disponível para inquérito");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		    if (checkExecutionYear(executionYear, degreeCurricularPlan)) {
 			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
-			    if (curricularCourse.isActive(executionYear)) {
+			    if (checkExecutionYear(executionYear, curricularCourse)) {
 
 				for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
 				    if (curriculumModule.isEnrolment()) {
@@ -864,7 +902,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("ano curricular");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		if (isActive(degree, executionYear)) {
 		    for (final Registration registration : degree.getRegistrationsSet()) {
 			if (registration.isRegistered(executionYear)) {
@@ -911,7 +949,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	setDegreeHeaders(spreadsheet);
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
+	    if (checkDegreeType(degreeType, degree)) {
 		for (final Registration registration : degree.getRegistrationsSet()) {
 		    for (final RegistrationState registrationState : registration.getRegistrationStates()) {
 			final RegistrationStateType registrationStateType = registrationState.getStateType();
@@ -927,13 +965,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
     }
 
-    private void reportGraduations(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+    private void reportGraduations(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
 	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
-	if (degreeType.isBolonhaType()) {
-	    spreadsheet.setHeader("ciclo");
-	}
+	spreadsheet.setHeader("ciclo");
 	spreadsheet.setHeader("ano de ingresso");
 	spreadsheet.setHeader("ano lectivo conclusão");
 	spreadsheet.setHeader("data conclusão");
@@ -946,44 +982,39 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("email");
 	spreadsheet.setHeader("sexo");
 
-	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getDegreeType() == degreeType) {
-		if (isActive(degree, executionYear)) {
-		    for (final Registration reg : degree.getRegistrationsSet()) {
-			if (!reg.getStudentCurricularPlansSet().isEmpty()) {
-			    if (degreeType.isBolonhaType()) {
-				for (final CycleCurriculumGroup group : reg.getConclusionProcessedCycles(executionYear)) {
-				    reportGraduate(spreadsheet, reg, group);
-				}
-			    } else if (reg.isRegistrationConclusionProcessed()) {
-				reportGraduate(spreadsheet, reg, (CycleCurriculumGroup) null);
-			    }
-			}
-		    }
+	final Set<ExecutionYear> toInspectSet = executionYear == null ? rootDomainObject.getExecutionYearsSet() : Collections
+		.singleton(executionYear);
+
+	for (final ExecutionYear toInspect : toInspectSet) {
+	    for (final ConclusionProcess conclusionProcess : toInspect.getConclusionProcessesConcludedSet()) {
+		if (checkDegreeType(degreeType, conclusionProcess.getDegree())) {
+		    reportGraduate(spreadsheet, conclusionProcess);
 		}
 	    }
 	}
-
     }
 
-    private void reportGraduate(final Spreadsheet sheet, final Registration registration, final CycleCurriculumGroup group) {
+    private void reportGraduate(final Spreadsheet sheet, final ConclusionProcess conclusionProcess) {
 	final Row row = sheet.addRow();
 
-	final ExecutionYear ingressionYear = registration.getIngressionYear();
-	final ExecutionYear conclusion = group == null ? registration.getConclusionYear() : group.getConclusionYear();
-	final YearMonthDay conclusionDate = group == null ? registration.getConclusionDate() : group.getConclusionDate();
+	final Registration registration = conclusionProcess.getRegistration();
+	final ExecutionYear ingression = conclusionProcess.getIngressionYear();
+	final ExecutionYear conclusion = conclusionProcess.getConclusionYear();
+	final LocalDate conclusionDate = conclusionProcess.getConclusionDate();
 
 	row.setCell(registration.getNumber());
 	row.setCell(registration.getName());
 	setDegreeCells(row, registration.getDegree());
-	if (group != null) {
-	    row.setCell(group.getCycleType().getDescription());
+	if (conclusionProcess.isCycleConclusionProcess()) {
+	    row.setCell(((CycleConclusionProcess) conclusionProcess).getCycleType().getDescription());
+	} else {
+	    row.setCell(StringUtils.EMPTY);
 	}
-	row.setCell(ingressionYear.getYear());
+	row.setCell(ingression.getYear());
 	row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
 	row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
-	row.setCell(conclusion == null ? StringUtils.EMPTY : String.valueOf(ingressionYear.getDistanceInCivilYears(conclusion)));
-	row.setCell(group == null ? registration.getFinalAverage() : group.getFinalAverage());
+	row.setCell(conclusion == null ? StringUtils.EMPTY : String.valueOf(ingression.getDistanceInCivilYears(conclusion) + 1));
+	row.setCell(conclusionProcess.getFinalAverage());
 
 	setPersonCells(registration, row);
     }
