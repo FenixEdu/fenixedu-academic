@@ -16,6 +16,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -82,6 +83,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
+import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -637,6 +639,10 @@ public class Registration extends Registration_Base {
     }
 
     final public BigDecimal getAverage() {
+	if (!isBolonha() && isRegistrationConclusionProcessed()) {
+	    return getConclusionProcess().getAverage();
+	}
+
 	return getAverage((ExecutionYear) null, (CycleType) null);
     }
 
@@ -683,7 +689,7 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public Integer calculateFinalAverage() {
+    public Integer calculateRoundedAverage() {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.for.cannot.calculate.final.average.in.registration.for.bolonha");
 	}
@@ -691,8 +697,7 @@ public class Registration extends Registration_Base {
 	return Curriculum.getRoundedAverage(calculateAverage());
     }
 
-    @Override
-    public Integer getFinalAverage() {
+    final public Integer getFinalAverage() {
 	if (isBolonha()) {
 	    final List<CycleCurriculumGroup> internalCycleCurriculumGrops = getLastStudentCurricularPlan()
 		    .getInternalCycleCurriculumGrops();
@@ -704,6 +709,8 @@ public class Registration extends Registration_Base {
 	}
 
 	return super.getFinalAverage();
+	// return isRegistrationConclusionProcessed() ?
+	// getConclusionProcess().getFinalAverage() : null;
     }
 
     final public Integer getFinalAverage(final CycleType cycleType) {
@@ -721,15 +728,6 @@ public class Registration extends Registration_Base {
 
 	return getLastStudentCurricularPlan().getCycle(cycleType).getFinalAverage();
 
-    }
-
-    @Override
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void setFinalAverage(Integer finalAverage) {
-	if (isBolonha()) {
-	    throw new DomainException("error.Registration.cannot.modify.final.average.in.registration.for.bolonha");
-	}
-	super.setFinalAverage(finalAverage);
     }
 
     final public String getFinalAverageDescription() {
@@ -785,7 +783,6 @@ public class Registration extends Registration_Base {
     }
 
     private boolean hasGlobalEquivalence(final CurricularCourse curricularCourse, final CurricularCourse enrolmentCurricularCourse) {
-	// TODO Auto-generated method stub
 	return false;
     }
 
@@ -1855,6 +1852,14 @@ public class Registration extends Registration_Base {
     }
 
     final public ExecutionYear getIngressionYear() {
+	if (!isBolonha() && isRegistrationConclusionProcessed()) {
+	    return getConclusionProcess().getIngressionYear();
+	}
+
+	return calculateIngressionYear();
+    }
+
+    public ExecutionYear calculateIngressionYear() {
 	return inspectIngressionYear(this);
     }
 
@@ -2256,9 +2261,17 @@ public class Registration extends Registration_Base {
     }
 
     final public double getEctsCredits() {
-	return getTotalEctsCredits((ExecutionYear) null).doubleValue();
+	if (!isBolonha() && isRegistrationConclusionProcessed()) {
+	    return getConclusionProcess().getCredits().doubleValue();
+	}
+
+	return calculateCredits();
     }
 
+    public double calculateCredits() {
+	return getTotalEctsCredits((ExecutionYear) null).doubleValue();
+    }
+    
     final public BigDecimal getTotalEctsCredits(final ExecutionYear executionYear) {
 	return getCurriculum(executionYear).getSumEctsCredits();
     }
@@ -2275,15 +2288,21 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear).getCurricularYear();
     }
 
-    public String getConclusionProcessResponsibleIstUsername() {
-	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
+    final public Person getConclusionProcessResponsible() {
+	return super.getConclusionProcessResponsible();
+	// return isRegistrationConclusionProcessed() ?
+	// getConclusionProcess().getResponsible() : null;
+    }
+
+    final public Person getConclusionProcessLastResponsible() {
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getLastResponsible() : null;
     }
 
     public boolean isRegistrationConclusionProcessed() {
 	if (getDegreeType().isBolonhaType()) {
 	    return getLastStudentCurricularPlan().isConclusionProcessed();
 	} else {
-	    return getFinalAverage() != null;
+	    return hasConclusionProcess();
 	}
     }
 
@@ -2302,15 +2321,20 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear getConclusionYear() {
-	return isRegistrationConclusionProcessed() ? getLastStudentCurricularPlan().getLastApprovementExecutionYear() : null;
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYear() : null;
     }
 
-    @Override
+    public ExecutionYear calculateConclusionYear() {
+	return getLastApprovementExecutionYear();
+    }
+
     public YearMonthDay getConclusionDate() {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.for.cannot.get.conclusion.date.in.registration.for.bolonha");
 	}
 	return super.getConclusionDate();
+	// return isRegistrationConclusionProcessed() ?
+	// getConclusionProcess().getConclusionYearMonthDay() : null;
     }
 
     final public YearMonthDay getConclusionDate(final CycleType cycleType) {
@@ -2328,24 +2352,6 @@ public class Registration extends Registration_Base {
 	}
 
 	return lastStudentCurricularPlan.getConclusionDate(cycleType);
-    }
-
-    @Override
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void setConclusionDate(YearMonthDay conclusionDate) {
-	if (isBolonha()) {
-	    throw new DomainException("error.Registration.cannot.modify.conclusion.date");
-	}
-	super.setConclusionDate(conclusionDate);
-    }
-
-    @Override
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void setConclusionProcessResponsible(Person responsibleForConclusionProcess) {
-	if (isBolonha()) {
-	    throw new DomainException("error.Registration.cannot.modify.responsibleForConclusionProcess");
-	}
-	super.setConclusionProcessResponsible(responsibleForConclusionProcess);
     }
 
     public YearMonthDay calculateConclusionDate() {
@@ -2390,6 +2396,20 @@ public class Registration extends Registration_Base {
 	}
 
 	return lastStudentCurricularPlan.calculateConclusionDate(cycleType);
+    }
+
+    final public String getConclusionProcessNotes() {
+	return super.getConclusionProcessNotes();
+	// return isRegistrationConclusionProcessed() ?
+	// getConclusionProcess().getNotes() : null;
+    }
+
+    final public DateTime getConclusionProcessCreationDateTime() {
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getCreationDateTime() : null;
+    }
+
+    final public DateTime getConclusionProcessLastModificationDateTime() {
+	return isRegistrationConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
     final public String getGraduateTitle() {
@@ -2538,18 +2558,25 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.Registration.already.concluded");
 	}
 
-	super.setFinalAverage(calculateFinalAverage());
-	super.setConclusionDate(calculateConclusionDate());
-	super.setConclusionProcessResponsible(AccessControl.getPerson());
+	RegistrationConclusionProcess.conclude(new RegistrationConclusionBean(this));
+    }
 
-	if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-	    if (!isSchoolPartConcluded()) {
-		RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(),
-			RegistrationStateType.SCHOOLPARTCONCLUDED);
-	    }
-	} else {
-	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
+	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
+	    final String notes) {
+	if (!isRegistrationConclusionProcessed()) {
+	    throw new DomainException("error.Registration.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
 	}
+
+	check(finalAverage, "error.Registration.argument.must.not.be.null");
+	check(conclusion, "error.Registration.argument.must.not.be.null");
+
+	getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
     }
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
@@ -3381,18 +3408,6 @@ public class Registration extends Registration_Base {
 	attends.getStudentGroups().clear();
 	attends.removeShifts();
 	attends.delete();
-    }
-
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void removeConcludedInformation() {
-	if (isBolonha()) {
-	    throw new DomainException("error.Registration.cannot.remove.concluded.information.in.registration.for.bolonha");
-	}
-
-	super.setFinalAverage(null);
-	super.setConclusionDate(null);
-	super.setConclusionProcessResponsible(null);
-	super.setConclusionProcessNotes(null);
     }
 
     public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {

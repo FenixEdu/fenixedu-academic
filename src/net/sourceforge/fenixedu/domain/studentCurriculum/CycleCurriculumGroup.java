@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -157,31 +157,29 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void conclude() {
-	if (hasFinalAverage()) {
+	if (isConclusionProcessed()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup().getName());
 	}
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
 	}
 
-	super.setFinalAverage(getCurriculum().getRoundedAverage());
-	super.setConclusionDate(calculateConclusionDate());
-	super.setConclusionProcessResponsible(AccessControl.getPerson());
+	CycleConclusionProcess.conclude(new RegistrationConclusionBean(getRegistration(), this));
     }
 
     @Override
     public boolean isConcluded() {
-	return hasFinalAverage() || super.isConcluded();
+	return isConclusionProcessed() || super.isConcluded();
     }
 
     @Override
     public ConclusionValue isConcluded(final ExecutionYear executionYear) {
-	return hasConclusionDate() && !executionYear.getBeginDateYearMonthDay().isBefore(getConclusionDate()) ? ConclusionValue.CONCLUDED
+	return isConclusionProcessed() && !executionYear.getBeginDateYearMonthDay().isBefore(getConclusionDate()) ? ConclusionValue.CONCLUDED
 		: super.isConcluded(executionYear);
     }
 
     final public BigDecimal getAverage() {
-	return getAverage((ExecutionYear) null);
+	return isConclusionProcessed() ? getConclusionProcess().getAverage() : getAverage((ExecutionYear) null);
     }
 
     final public BigDecimal getAverage(final ExecutionYear executionYear) {
@@ -189,30 +187,45 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 		: getCurriculum(new DateTime(), executionYear).getAverage();
     }
 
-    public boolean hasFinalAverage() {
-	return super.getFinalAverage() != null;
-    }
-
-    public boolean hasConclusionDate() {
-	return super.getConclusionDate() != null;
-    }
-
     final public ExecutionYear getConclusionYear() {
-	return isConclusionProcessed() ? getLastApprovementExecutionYear() : null;
+	return isConclusionProcessed() ? getConclusionProcess().getConclusionYear() : null;
+    }
+
+    final public ExecutionYear calculateConclusionYear() {
+	return getLastApprovementExecutionYear();
+    }
+
+    final public Integer getFinalAverage() {
+	return super.getFinalAverage();
+	// return isConclusionProcessed() ?
+	// getConclusionProcess().getFinalAverage() : null;
+    }
+
+    @Override
+    final public Double getCreditsConcluded() {
+	return isConclusionProcessed() ? getConclusionProcess().getCredits().doubleValue() : calculateCreditsConcluded();
+    }
+
+    final public Double calculateCreditsConcluded() {
+	return super.getCreditsConcluded();
+    }
+
+    final public ExecutionYear getIngressionYear() {
+	return isConclusionProcessed() ? getConclusionProcess().getIngressionYear() : calculateIngressionYear();
+    }
+
+    final public ExecutionYear calculateIngressionYear() {
+	return getRegistration().calculateIngressionYear();
     }
 
     public boolean isConclusionProcessed() {
-	return hasFinalAverage();
+	return hasConclusionProcess();
     }
 
-    @Override
-    public void setFinalAverage(Integer finalAverage) {
-	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.final.average");
-    }
-
-    @Override
-    public void setConclusionDate(YearMonthDay conclusionDate) {
-	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.conclusion.date");
+    final public YearMonthDay getConclusionDate() {
+	return super.getConclusionDate();
+	// return isConclusionProcessed() ?
+	// getConclusionProcess().getConclusionYearMonthDay() : null;
     }
 
     @Override
@@ -232,52 +245,47 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return result;
     }
 
-    @Override
-    public void setConclusionProcessResponsible(Person responsibleForConclusionProcess) {
-	throw new DomainException("error.CycleCurriculumGroup.cannot.modify.responsibleForConclusionProcess");
+    final public Person getConclusionProcessResponsible() {
+	return super.getConclusionProcessResponsible();
+	// return isConclusionProcessed() ?
+	// getConclusionProcess().getResponsible() : null;
     }
 
-    public String getConclusionProcessResponsibleIstUsername() {
-	return hasConclusionProcessResponsible() ? getConclusionProcessResponsible().getIstUsername() : null;
+    final public Person getConclusionProcessLastResponsible() {
+	return isConclusionProcessed() ? getConclusionProcess().getLastResponsible() : null;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void removeConcludedInformation() {
-	// checkRulesToRemoveConcludedInformation();
-
-	super.setFinalAverage(null);
-	super.setConclusionDate(null);
-	super.setConclusionProcessResponsible(null);
+    final public String getConclusionProcessNotes() {
+	return super.getConclusionProcessNotes();
+	// return isConclusionProcessed() ? getConclusionProcess().getNotes() :
+	// null;
     }
 
-    private void checkRulesToRemoveConcludedInformation() {
-	// TODO: Hack until requests are migrated to cycles instead of
-	// registrations
-	final DegreeType degreeType = getStudentCurricularPlan().getDegreeType();
-	if (degreeType.getCycleTypes().size() == 1) {
-	    if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
-		    .isEmpty()) {
-		throw new DomainException(
-			"cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
-	    }
+    final public DateTime getConclusionProcessCreationDateTime() {
+	return isConclusionProcessed() ? getConclusionProcess().getCreationDateTime() : null;
+    }
 
-	    if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
-		throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
-	    }
-	} else {
-
-	}
+    final public DateTime getConclusionProcessLastModificationDateTime() {
+	return isConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusionDate) {
+    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
+	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
+	    final String notes) {
 	if (!isConclusionProcessed()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup.its.only.possible.to.edit.after.conclusion.process.has.been.performed");
 	}
 
-	super.setFinalAverage(finalAverage);
-	super.setConclusionDate(conclusionDate);
+	check(finalAverage, "error.CycleCurriculumGroup.argument.must.not.be.null");
+	check(conclusion, "error.CycleCurriculumGroup.argument.must.not.be.null");
+
+	getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
     }
 
     public Double getCurrentDefaultEcts() {
