@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 public abstract class CreditsCurriculumEntry extends CurriculumEntry {
 
     public BigDecimal getWeigthForCurriculum() {
-	throw new RuntimeException();
+	return null;
     }
 
     @Override
@@ -19,7 +19,7 @@ public abstract class CreditsCurriculumEntry extends CurriculumEntry {
 
     @Override
     public Grade getGrade() {
-	return null;
+	return Grade.createEmptyGrade();
     }
 
     @Override
