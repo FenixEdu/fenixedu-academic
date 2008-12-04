@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -74,7 +75,7 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public void add(final Curriculum curriculum) {
-	if (this.curriculumModule == null) {
+	if (!hasCurriculumModule()) {
 	    this.curriculumModule = curriculum.getCurriculumModule();
 	    this.bolonhaDegree = curriculum.isBolonha();
 	}
@@ -146,6 +147,10 @@ public class Curriculum implements Serializable, ICurriculum {
 	return curriculumModule;
     }
 
+    public boolean hasCurriculumModule() {
+	return getCurriculumModule() != null;
+    }
+
     public Boolean isBolonha() {
 	return bolonhaDegree;
     }
@@ -155,15 +160,15 @@ public class Curriculum implements Serializable, ICurriculum {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return getCurriculumModule() == null ? null : getCurriculumModule().getStudentCurricularPlan();
+	return hasCurriculumModule() ? getCurriculumModule().getStudentCurricularPlan() : null;
     }
 
     public boolean hasAverageEntry() {
-	return getCurriculumModule() != null && !getCurriculumEntries().isEmpty();
+	return hasCurriculumModule() && !getCurriculumEntries().isEmpty();
     }
 
     public boolean isEmpty() {
-	return getCurriculumModule() == null || (getCurriculumEntries().isEmpty() && curricularYearEntries.isEmpty());
+	return !hasCurriculumModule() || (getCurriculumEntries().isEmpty() && curricularYearEntries.isEmpty());
     }
 
     public Collection<ICurriculumEntry> getCurriculumEntries() {
@@ -316,19 +321,28 @@ public class Curriculum implements Serializable, ICurriculum {
 	    return Integer.valueOf(1);
 	}
 
-	Integer curricularYears = getTotalCurricularYears();
-	if (curricularYears == null) {
-	    curricularYears = 0;
-	}
 	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60),
 		SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
-	return Math.min(ectsCreditsCurricularYear.intValue(), curricularYears.intValue());
+	return Math.min(ectsCreditsCurricularYear.intValue(), getTotalCurricularYears().intValue());
     }
 
     public Integer getTotalCurricularYears() {
-	return getStudentCurricularPlan().getDegreeType().getYears(
-		getCurriculumModule().isCycleCurriculumGroup() ? ((CycleCurriculumGroup) getCurriculumModule()).getCycleType()
-			: null);
+	final StudentCurricularPlan plan = getStudentCurricularPlan();
+	if (plan == null) {
+	    return Integer.valueOf(0);
+	}
+
+	return plan.getDegreeType().getYears(getCycleType());
+    }
+
+    private CycleType getCycleType() {
+	if (!hasCurriculumModule() || !isBolonha()) {
+	    return null;
+	}
+
+	final CurriculumModule module = getCurriculumModule();
+	final CycleType cycleType = module.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) module).getCycleType() : null;
+	return cycleType;
     }
 
     @Override
@@ -336,13 +350,13 @@ public class Curriculum implements Serializable, ICurriculum {
 	final StringBuilder result = new StringBuilder();
 
 	result.append("\n[CURRICULUM]");
-	if (getCurriculumModule() == null) {
-	    result.append("\n[NO CURRICULUM_MODULE]");
-	} else {
+	if (hasCurriculumModule()) {
 	    result.append("\n[CURRICULUM_MODULE][ID] " + getCurriculumModule().getIdInternal() + "\t[NAME]"
 		    + getCurriculumModule().getName().getContent());
+	    result.append("\n[BOLONHA] " + isBolonha().toString());
+	} else {
+	    result.append("\n[NO CURRICULUM_MODULE]");
 	}
-	result.append("\n[BOLONHA] " + isBolonha().toString());
 	result.append("\n[SUM ENTRIES] " + (averageEnrolmentRelatedEntries.size() + averageDismissalRelatedEntries.size()));
 	result.append("\n[SUM PiCi] " + getSumPiCi().toString());
 	result.append("\n[SUM Pi] " + getSumPi().toString());
