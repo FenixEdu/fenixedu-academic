@@ -238,6 +238,17 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    public List<CurriculumGroup> getChildCurriculumGroups() {
+	final List<CurriculumGroup> result = new ArrayList<CurriculumGroup>();
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (!curriculumModule.isLeaf()) {
+		result.add((CurriculumGroup) curriculumModule);
+	    }
+	}
+
+	return result;
+    }
+
     @Override
     public boolean isRoot() {
 	return false;
