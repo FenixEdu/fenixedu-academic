@@ -97,6 +97,11 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
     }
 
     @Override
+    public void setLastVersionConclusionProcess(ConclusionProcess lastVersionConclusionProcess) {
+	throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
+    }
+
+    @Override
     public void removeConclusionProcess() {
 	throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }

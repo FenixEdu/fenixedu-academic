@@ -6420,6 +6420,11 @@ relation ConclusionProcessConclusionProcessVersion {
 	}
 }
 
+relation ConclusionProcessLastVersion {
+	student.curriculum.ConclusionProcess playsRole lastVersionConclusionProcess;
+	student.curriculum.ConclusionProcessVersion playsRole lastVersion;
+}
+
 relation ConclusionProcessConclusionYear {
 	student.curriculum.ConclusionProcess playsRole conclusionProcessesConcluded {
 		multiplicity *;

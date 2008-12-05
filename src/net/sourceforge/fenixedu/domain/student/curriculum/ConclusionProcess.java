@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.student.curriculum;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -19,18 +17,8 @@ import org.joda.time.YearMonthDay;
 
 abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
-    private SortedSet<ConclusionProcessVersion> getSortedVersions(final Comparator<ConclusionProcessVersion> comparator) {
-	final SortedSet<ConclusionProcessVersion> sorted = new TreeSet<ConclusionProcessVersion>(comparator);
-	sorted.addAll(getVersionsSet());
-	return sorted;
-    }
-
     private ConclusionProcessVersion getFirstVersion() {
-	return getSortedVersions(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID).first();
-    }
-
-    public ConclusionProcessVersion getLastVersion() {
-	return getSortedVersions(ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID).last();
+	return Collections.min(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID);
     }
 
     public DateTime getCreationDateTime() {
@@ -81,10 +69,12 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     abstract public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
 	    final String notes);
 
-    final public void addVersions(final RegistrationConclusionBean bean) {
+    final protected void addVersions(final RegistrationConclusionBean bean) {
 	super.addVersions(new ConclusionProcessVersion(bean));
-	addSpecificVersionInfo();
+	super.setLastVersion(Collections.max(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));
 	super.setConclusionYear(getLastVersion().getConclusionYear());
+
+	addSpecificVersionInfo();
     }
 
     abstract protected void addSpecificVersionInfo();
@@ -104,6 +94,11 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
 
     @Override
     public void removeVersions(ConclusionProcessVersion versions) {
+	throw new DomainException("error.ConclusionProcess.method.not.allowed");
+    }
+
+    @Override
+    public void setLastVersion(ConclusionProcessVersion lastVersion) {
 	throw new DomainException("error.ConclusionProcess.method.not.allowed");
     }
 
