@@ -1016,6 +1016,16 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	getOrCreateDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
     }
 
+    public String getPostalCode() {
+	final StringBuilder result = new StringBuilder();
+	if (getDefaultPhysicalAddress() != null) {
+	    result.append(getDefaultPhysicalAddress().getAreaCode());
+	    result.append(" ");
+	    result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
+	}
+	return result.toString();
+    }
+
     public String getArea() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getArea() : StringUtils.EMPTY;

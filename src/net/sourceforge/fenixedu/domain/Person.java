@@ -109,7 +109,6 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -973,13 +972,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
-     *            for all PersonFunctions
+     *                filter all PersonFunctions to this unit, or
+     *                <code>null</code> for all PersonFunctions
      * @param includeSubUnits
-     *            if even subunits of the given unit are considered
+     *                if even subunits of the given unit are considered
      * @param active
-     *            the state of the function, <code>null</code> for all
-     *            PersonFunctions
+     *                the state of the function, <code>null</code> for all
+     *                PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -1402,16 +1401,6 @@ public class Person extends Person_Base {
 
     public boolean hasStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
 	return (getStudentCandidacyForExecutionDegree(executionDegree) != null);
-    }
-
-    public String getPostalCode() {
-	final StringBuilder result = new StringBuilder();
-	if (getDefaultPhysicalAddress() != null) {
-	    result.append(getDefaultPhysicalAddress().getAreaCode());
-	    result.append(" ");
-	    result.append(getDefaultPhysicalAddress().getAreaOfAreaCode());
-	}
-	return result.toString();
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {
