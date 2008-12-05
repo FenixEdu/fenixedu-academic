@@ -970,6 +970,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("ciclo");
+	spreadsheet.setHeader("campus");
 	spreadsheet.setHeader("ano de ingresso");
 	spreadsheet.setHeader("ano lectivo conclusão");
 	spreadsheet.setHeader("data conclusão");
@@ -977,6 +978,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("média final");
 	spreadsheet.setHeader("morada");
 	spreadsheet.setHeader("código postal");
+	spreadsheet.setHeader("cidade");
+	spreadsheet.setHeader("país");
 	spreadsheet.setHeader("telefone");
 	spreadsheet.setHeader("telemovel");
 	spreadsheet.setHeader("email");
@@ -1010,6 +1013,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	} else {
 	    row.setCell(StringUtils.EMPTY);
 	}
+	row.setCell(conclusionProcess.getDegree().getCurrentCampus().iterator().next().getName());
 	row.setCell(ingression.getYear());
 	row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
 	row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
@@ -1023,6 +1027,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final Person person = registration.getPerson();
 	row.setCell(person.getAddress());
 	row.setCell(person.getPostalCode());
+	row.setCell(person.getArea());
+	row.setCell(person.getCountryOfResidence().getName());
 	row.setCell(person.getPhone());
 	row.setCell(person.getMobile());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
