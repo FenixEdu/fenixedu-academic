@@ -82,7 +82,8 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 		    request.setAttribute("personAccessesList", personAccessesList);
 		    if (personAccessesList == null || personAccessesList.size() == 0) {
 			final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
-				"ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(), costCenter, username });
+				"ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(),
+					costCenter, username, it });
 			request.setAttribute("infoPerson", infoPerson);
 		    }
 

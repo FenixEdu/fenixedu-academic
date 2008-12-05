@@ -38,7 +38,7 @@ public class IndexAction extends FenixAction {
 
 	if (costCenter != null && !costCenter.equals("")) {
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter }));
+		    userView.getUtilizador(), costCenter, it }));
 	}
 	return mapping.findForward("success");
     }

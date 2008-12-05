@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class ReadPersonToDelegateAccess extends FenixService {
 
-    public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException {
+    public InfoPerson run(String userView, String costCenter, String username, Boolean it, String userNumber)
+	    throws FenixServiceException {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null) {
 	    throw new ExcepcaoInexistente();
