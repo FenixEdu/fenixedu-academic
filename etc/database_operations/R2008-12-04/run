@@ -44,3 +44,5 @@ function executeWithTempFile() {
 execute "addNewLanguageToCountryNationality" addNewLanguageToCountryNationality.sql
 execute "createConclusionProcessTableAndRelations" createConclusionProcessTableAndRelations.sql
 
+execute "Data fix regarding an ExecutionCourse Merge that went wrong" dataFix.sql
+
