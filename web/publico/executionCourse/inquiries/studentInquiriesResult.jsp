@@ -44,11 +44,11 @@
 		<%
 						if (executionCourse.getAvailableForInquiries().booleanValue()) {
 		%>
-							<bean:message key="message.teachingInquiries.noResults.msg0" bundle="INQUIRIES_RESOURCES"/>
+							<bean:message key="message.teachingInquiries.noResults.msg1" bundle="INQUIRIES_RESOURCES"/>
 		<%
 						} else {
 		%>
-							<bean:message key="message.teachingInquiries.noResults.msg1" bundle="INQUIRIES_RESOURCES"/>
+							<bean:message key="message.teachingInquiries.noResults.msg0" bundle="INQUIRIES_RESOURCES"/>
 		<%
 						}
 		%>
