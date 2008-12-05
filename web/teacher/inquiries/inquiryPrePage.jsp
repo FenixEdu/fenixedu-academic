@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <html:xhtml />
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
@@ -48,6 +49,20 @@
 			</ul>
 		</logic:notEmpty>
 	</logic:iterate>
+
+	<p class="separator2 mtop25"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
+	<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
+		<% if (professorship.getTeacher().getPerson() == AccessControl.getPerson()) { %>
+			<logic:notEmpty name="professorship" property="teachingInquiry">
+				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
+				<html:link href="<%= request.getContextPath() + "/coordinator/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID %>" target="_blank">
+					<bean:write name="professorship" property="teacher.person.name"/> 
+				</html:link>
+			</logic:notEmpty>
+			<logic:empty name="professorship" property="teachingInquiry">
+				<bean:write name="professorship" property="teacher.person.name"/> 
+			</logic:empty>
+		<% } %>
+	</logic:iterate>
+
 </logic:present>
-
-
