@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
@@ -30,9 +31,11 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
@@ -270,7 +273,8 @@ public class MergeExecutionCourses extends FenixService {
 		for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
 			0)))
 		    ;
-		for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups().get(0)))
+		for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups().get(
+			0)))
 		    ;
 		attends.delete();
 	    }
@@ -349,6 +353,14 @@ public class MergeExecutionCourses extends FenixService {
 	    final Container container = (Container) content;
 	    for (final Node node : container.getOrderedDirectChildren()) {
 		changeGroups(executionCourseTo, node.getChild(), transferedContents);
+	    }
+	}
+	if (content instanceof Attachment) {
+	    Attachment attachment = (Attachment) content;
+
+	    FileContent file = attachment.getFile();
+	    if (file.getPermittedGroup() != null && !(file.getPermittedGroup() instanceof EveryoneGroup)) {
+		file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
 	    }
 	}
     }
