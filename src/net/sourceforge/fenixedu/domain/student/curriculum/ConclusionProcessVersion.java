@@ -106,11 +106,10 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
 	throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }
 
-    // @Override
-    // public void setCreationDateTime(DateTime creationDateTime) {
-    // throw new
-    // DomainException("error.ConclusionProcessVersion.method.not.allowed");
-    // }
+    @Override
+    public void setCreationDateTime(DateTime creationDateTime) {
+	throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
+    }
 
     @Override
     public void setResponsible(Person responsible) {
