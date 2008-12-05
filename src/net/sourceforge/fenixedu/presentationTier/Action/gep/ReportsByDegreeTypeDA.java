@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -336,6 +337,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private boolean checkDegreeType(final DegreeType degreeType, final Degree degree) {
 	return degreeType == null || degree.getDegreeType() == degreeType;
+    }
+
+    private boolean checkDegreeType(final DegreeType degreeType, final ConclusionProcess conclusionProcess) {
+	return degreeType == null || conclusionProcess.getDegree().getDegreeType() == degreeType;
     }
 
     private boolean checkExecutionYear(final ExecutionYear executionYear, final DegreeCurricularPlan degreeCurricularPlan) {
@@ -990,7 +995,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	for (final ExecutionYear toInspect : toInspectSet) {
 	    for (final ConclusionProcess conclusionProcess : toInspect.getConclusionProcessesConcludedSet()) {
-		if (checkDegreeType(degreeType, conclusionProcess.getDegree())) {
+		if (checkDegreeType(degreeType, conclusionProcess)) {
 		    reportGraduate(spreadsheet, conclusionProcess);
 		}
 	    }
@@ -1013,7 +1018,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	} else {
 	    row.setCell(StringUtils.EMPTY);
 	}
-	row.setCell(conclusionProcess.getDegree().getCurrentCampus().iterator().next().getName());
 	row.setCell(ingression.getYear());
 	row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
 	row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
@@ -1025,10 +1029,15 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private void setPersonCells(final Registration registration, final Row row) {
 	final Person person = registration.getPerson();
-	row.setCell(person.getAddress());
-	row.setCell(person.getPostalCode());
-	row.setCell(person.getArea());
-	row.setCell(person.getCountryOfResidence().getName());
+
+	final PhysicalAddress defaultPhysicalAddress = person.getDefaultPhysicalAddress();
+
+	row.setCell(defaultPhysicalAddress.getAddress());
+	row.setCell(defaultPhysicalAddress.getPostalCode());
+	row.setCell(defaultPhysicalAddress.getArea());
+	row.setCell(defaultPhysicalAddress.getCountryOfResidence() == null ? StringUtils.EMPTY : defaultPhysicalAddress
+		.getCountryOfResidence().getName());
+
 	row.setCell(person.getPhone());
 	row.setCell(person.getMobile());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
