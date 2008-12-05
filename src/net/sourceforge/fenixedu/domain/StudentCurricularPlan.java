@@ -1686,11 +1686,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    final public GratuityEvent getGratuityEvent(final ExecutionYear executionYear, final Class<? extends GratuityEvent> type) {
+    final public <T extends GratuityEvent> T getGratuityEvent(final ExecutionYear executionYear,
+	    final Class<? extends GratuityEvent> type) {
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
 	    if (!gratuityEvent.isCancelled() && gratuityEvent.getExecutionYear() == executionYear
 		    && gratuityEvent.getClass().equals(type)) {
-		return gratuityEvent;
+		return (T) gratuityEvent;
 	    }
 	}
 
