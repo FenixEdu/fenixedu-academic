@@ -23,6 +23,7 @@
 			final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 			final ExecutionYear executionYear = executionSemester.getExecutionYear();
 			final int year = executionYear.getBeginDateYearMonthDay().getYear();
+			// TODO: Refactor this... instead check if it is before now and has no response period defined.
 			if (year < 2007 || (year == 2007 && executionSemester.getSemester().intValue() == 1)) {
 		%>
 			    <bean:message key="message.teachingInquiries.noResults.msg2" bundle="INQUIRIES_RESOURCES"/>
