@@ -90,6 +90,8 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setNightHours(nightHours);
 	setExtraNightHours(extraNightHours);
 	setExtraNightDays(extraNightDays);
+	setExtraNightHoursFirstLevel(extraNightFirstLevelHours);
+	setExtraNightHoursSecondLevel(extraNightSecondLevelHours);
 	setHolidayHours(holidayHours);
 	setSaturdayHours(saturdayHours);
 	setSundayHours(sundayHours);
