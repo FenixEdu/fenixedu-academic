@@ -14,6 +14,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.IllegalWriteException;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -41,6 +42,9 @@ public class TransferDomainObjectProperty extends FenixService {
 	    }
 	} catch (InvocationTargetException e) {
 	    if (e.getTargetException() != null) {
+		if (e.getTargetException() instanceof IllegalWriteException) {
+		    throw ((IllegalWriteException) e.getTargetException());
+		}
 		throw new FenixServiceException(e.getTargetException());
 	    }
 	    throw new FenixServiceException(e);
