@@ -2289,6 +2289,10 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear).getCurricularYear();
     }
 
+    final public int getCurricularYear(final DateTime when, final ExecutionYear executionYear) {
+	return getCurriculum(when, executionYear, (CycleType) null).getCurricularYear();
+    }
+
     final public Person getConclusionProcessResponsible() {
 	return isRegistrationConclusionProcessed() ? getConclusionProcess().getResponsible() : null;
     }
