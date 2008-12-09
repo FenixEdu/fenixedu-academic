@@ -74,6 +74,7 @@
 			<forward name="index" path="managementAssiduousnessWelcome"/>
 			<forward name="choose-employee" path="choose-employee"/>
 			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
+			<forward name="show-employee-extra-work-sheet" path="show-employee-extra-work-sheet"/>
 			<forward name="show-schedule" path="show-schedule"/>
 			<forward name="show-clockings" path="show-clockings"/>
 			<forward name="show-justifications" path="show-justifications"/>

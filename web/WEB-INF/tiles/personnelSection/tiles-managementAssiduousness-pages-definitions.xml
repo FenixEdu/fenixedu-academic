@@ -120,4 +120,7 @@
 	<definition name="export-movements-warning" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/exportMovementsWarning.jsp"/>
 	</definition>	
+	<definition name="show-employee-extra-work-sheet" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showExtraWorkSheet.jsp"/>
+	</definition>
 </tiles-definitions>

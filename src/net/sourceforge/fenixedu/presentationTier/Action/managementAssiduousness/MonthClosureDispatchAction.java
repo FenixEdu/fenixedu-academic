@@ -107,7 +107,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    }
 	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 	    HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate
-		    .plusDays(1));
+		    .plusDays(2));
 
 	    List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = (List<AssiduousnessClosedMonth>) ServiceUtils
 		    .executeService("CloseAssiduousnessMonth", new Object[] { assiduousnessRecords, beginDate, endDate });
@@ -163,8 +163,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    }
 	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	    final String result = (String) ExportClosedMonth.run(closedMonth,
-		    beginDate, endDate);
+	    final String result = (String) ExportClosedMonth.run(closedMonth, beginDate, endDate);
 	    response.setContentType("text/plain");
 	    response.addHeader("Content-Disposition", "attachment; filename=Telep.dat");
 	    byte[] data = result.getBytes();
@@ -469,8 +468,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	String fileName = new StringBuilder().append(bundleEnumeration.getString(closedMonthDocumentType.name())).append("-")
 		.append(month).append("-").append(yearMonth.getYear()).append(".txt").toString();
 
-	ActionMessage error = (ActionMessage) ExportToGIAFAndSaveFile.run(closedMonth,
-		fileName, closedMonthDocumentType, result);
+	ActionMessage error = (ActionMessage) ExportToGIAFAndSaveFile.run(closedMonth, fileName, closedMonthDocumentType, result);
 	if (error != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", error);

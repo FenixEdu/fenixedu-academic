@@ -20,14 +20,16 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
     public ExtraWorkRequest(Partial partialPayingDate, Unit unit, Employee employee, Integer nightHours, Integer extraNightHours,
-	    Integer extraNightDays, Integer holidayHours, Integer saturdayHours, Integer sundayHours, Integer workdayHours,
-	    Integer workdayFirstLevelHours, Integer workdaySecondLevelHours, Boolean addToVacations, Boolean addToWeekRestTime,
-	    Employee modifiedBy, boolean approved, Partial hoursDoneIn, Integer normalVacationsDays,
-	    Double normalVacationsAmount, Double accumulatedNormalVacationsAmount, Integer nightVacationsDays,
-	    Double nightVacationsAmount, Double accumulatedNightVacationsAmount, Integer requestedNightHours,
-	    Integer requestedExtraNightHours, Integer requestedHolidayHours, Integer requestedSaturdayHours,
+	    Integer extraNightDays, Integer extraNightFirstLevelHours, Integer extraNightSecondLevelHours, Integer holidayHours,
+	    Integer saturdayHours, Integer sundayHours, Integer workdayHours, Integer workdayFirstLevelHours,
+	    Integer workdaySecondLevelHours, Boolean addToVacations, Boolean addToWeekRestTime, Employee modifiedBy,
+	    boolean approved, Partial hoursDoneIn, Integer normalVacationsDays, Double normalVacationsAmount,
+	    Double accumulatedNormalVacationsAmount, Integer nightVacationsDays, Double nightVacationsAmount,
+	    Double accumulatedNightVacationsAmount, Integer requestedNightHours, Integer requestedExtraNightHours,
+	    Integer requestedExtraNightDays, Integer requestedHolidayHours, Integer requestedSaturdayHours,
 	    Integer requestedSundayHours, Integer requestedWorkdayHours, Double holidayAmount, Double saturdayAmount,
-	    Double sundayAmount, Double workdayFirstLevelAmount, Double workdaySecondLevelAmount) {
+	    Double sundayAmount, Double workdayFirstLevelAmount, Double workdaySecondLevelAmount,
+	    Double extraNightFirstLevelAmount, Double extraNightSecondLevelAmount, Double nightExtraWorkMealAmount) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setPartialPayingDate(partialPayingDate);
@@ -35,6 +37,8 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setAssiduousness(employee.getAssiduousness());
 	setNightHours(nightHours);
 	setExtraNightHours(extraNightHours);
+	setExtraNightHoursFirstLevel(extraNightFirstLevelHours);
+	setExtraNightHoursSecondLevel(extraNightSecondLevelHours);
 	setExtraNightDays(extraNightDays);
 	setHolidayHours(holidayHours);
 	setSaturdayHours(saturdayHours);
@@ -56,6 +60,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setAccumulatedNightVacationsAmount(accumulatedNightVacationsAmount);
 	setRequestedNightHours(requestedNightHours);
 	setRequestedExtraNightHours(requestedExtraNightHours);
+	setRequestedExtraNightDays(requestedExtraNightDays);
 	setRequestedHolidayHours(requestedHolidayHours);
 	setRequestedSaturdayHours(requestedSaturdayHours);
 	setRequestedSundayHours(requestedSundayHours);
@@ -65,19 +70,23 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setSundayAmount(sundayAmount);
 	setWorkdayFirstLevelAmount(workdayFirstLevelAmount);
 	setWorkdaySecondLevelAmount(workdaySecondLevelAmount);
-	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount);
+	setExtraNightFirstLevelAmount(extraNightFirstLevelAmount);
+	setExtraNightSecondLevelAmount(extraNightSecondLevelAmount);
+	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount
+		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount);
 
     }
 
-    public void edit(Integer nightHours, Integer extraNightHours, Integer extraNightDays, Integer holidayHours,
-	    Integer saturdayHours, Integer sundayHours, Integer workdayHours, Integer workdayFirstLevelHours,
-	    Integer workdaySecondLevelHours, Boolean addToVacations, Boolean addToWeekRestTime, Employee modifiedBy,
-	    Partial hoursDoneInPartialDate, Integer normalVacationsDays, Double normalVacationsAmount,
-	    Double accumulatedNormalVacationsAmount, Integer nightVacationsDays, Double nightVacationsAmount,
-	    Double accumulatedNightVacationsAmount, Integer requestedNightHours, Integer requestedExtraNightHours,
-	    Integer requestedHolidayHours, Integer requestedSaturdayHours, Integer requestedSundayHours,
-	    Integer requestedWorkdayHours, Double holidayAmount, Double saturdayAmount, Double sundayAmount,
-	    Double workdayFirstLevelAmount, Double workdaySecondLevelAmount) {
+    public void edit(Integer nightHours, Integer extraNightHours, Integer extraNightDays, Integer extraNightFirstLevelHours,
+	    Integer extraNightSecondLevelHours, Integer holidayHours, Integer saturdayHours, Integer sundayHours,
+	    Integer workdayHours, Integer workdayFirstLevelHours, Integer workdaySecondLevelHours, Boolean addToVacations,
+	    Boolean addToWeekRestTime, Employee modifiedBy, Partial hoursDoneInPartialDate, Integer normalVacationsDays,
+	    Double normalVacationsAmount, Double accumulatedNormalVacationsAmount, Integer nightVacationsDays,
+	    Double nightVacationsAmount, Double accumulatedNightVacationsAmount, Integer requestedNightHours,
+	    Integer requestedExtraNightHours, Integer requestedExtraNightDays, Integer requestedHolidayHours,
+	    Integer requestedSaturdayHours, Integer requestedSundayHours, Integer requestedWorkdayHours, Double holidayAmount,
+	    Double saturdayAmount, Double sundayAmount, Double workdayFirstLevelAmount, Double workdaySecondLevelAmount,
+	    Double extraNightFirstLevelAmount, Double extraNightSecondLevelAmount, Double nightExtraWorkMealAmount) {
 	setNightHours(nightHours);
 	setExtraNightHours(extraNightHours);
 	setExtraNightDays(extraNightDays);
@@ -100,6 +109,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setAccumulatedNightVacationsAmount(accumulatedNightVacationsAmount);
 	setRequestedNightHours(requestedNightHours);
 	setRequestedExtraNightHours(requestedExtraNightHours);
+	setRequestedExtraNightDays(requestedExtraNightDays);
 	setRequestedHolidayHours(requestedHolidayHours);
 	setRequestedSaturdayHours(requestedSaturdayHours);
 	setRequestedSundayHours(requestedSundayHours);
@@ -109,7 +119,10 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setSundayAmount(sundayAmount);
 	setWorkdayFirstLevelAmount(workdayFirstLevelAmount);
 	setWorkdaySecondLevelAmount(workdaySecondLevelAmount);
-	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount);
+	setExtraNightFirstLevelAmount(extraNightFirstLevelAmount);
+	setExtraNightSecondLevelAmount(extraNightSecondLevelAmount);
+	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount
+		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount);
     }
 
     public int getTotalHours() {

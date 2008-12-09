@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "addNewLanguageToCountryNationality" addNewLanguageToCountryNationality.sql
+execute "Alter Extra Work Tables" alterExtraWorkTables.sql

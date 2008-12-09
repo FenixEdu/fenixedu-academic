@@ -19,7 +19,8 @@ public class AssiduousnessExtraWork extends AssiduousnessExtraWork_Base {
 
     public AssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth, WorkScheduleType workScheduleType,
 	    Duration nightBalance, Duration firstLevelBalance, Duration secondLevelBalance, Duration secondLevelBalanceWithLimit,
-	    Duration unjustified) {
+	    Duration firstLevelNightBalance, Duration secondLevelNightBalance, Duration secondLevelNightBalanceWithLimit,
+	    Integer nightExtraWorkDays, Duration unjustified) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousnessClosedMonth(assiduousnessClosedMonth);
 	setWorkScheduleType(workScheduleType);
@@ -27,6 +28,10 @@ public class AssiduousnessExtraWork extends AssiduousnessExtraWork_Base {
 	setFirstLevelBalance(firstLevelBalance);
 	setSecondLevelBalance(secondLevelBalance);
 	setSecondLevelBalanceWithLimit(secondLevelBalanceWithLimit);
+	setFirstLevelNightBalance(firstLevelNightBalance);
+	setSecondLevelNightBalance(secondLevelNightBalance);
+	setSecondLevelNightBalanceWithLimit(secondLevelNightBalanceWithLimit);
+	setNightExtraWorkDays(nightExtraWorkDays);
 	setUnjustified(unjustified);
     }
 

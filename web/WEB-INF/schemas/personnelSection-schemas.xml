@@ -96,6 +96,28 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 </schema>
 
+<schema name="show.extraWorkDaySheet.management"
+	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
+	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="clockingsFormattedToManagement" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="escaped" value="false"/>
+	</slot>
+	<slot name="extraWorkFirstLevelFormatted" key="label.extraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="extraWorkSecondLevelWithLimitFormatted" key="label.extraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="extraWorkSecondLevelFormatted" key="label.extraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightWorkBalanceFormatted" key="label.nightWork" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	
+	<slot name="nightExtraWorkFirstLevelFormatted" key="label.nightExtraWorkFirstLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightExtraWorkSecondLevelWithLimitFormatted" key="label.nightExtraWorkSecondLevel" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="nightExtraWorkSecondLevelFormatted" key="label.nightExtraWorkSecondLevelWithLimit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
+
 <schema name="show.clockingsDaySheet"
 	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.ClockingsDaySheet">
 	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -800,7 +822,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="requestedNightHours" key="label.nightHours" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
-		<property name="readOnly" value="true" />
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
 </schema>

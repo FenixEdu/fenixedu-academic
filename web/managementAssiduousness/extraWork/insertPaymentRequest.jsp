@@ -221,7 +221,7 @@
 			</tr>
 			<tr align="right">
 				<td>
-					<bean:message key="label.extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
+					<bean:message key="label.workdayHours" bundle="ASSIDUOUSNESS_RESOURCES"/>
 					<strong><fr:view name="employeeExtraWorkRequestFactory" property="workdayHours"/></strong>
 				</logic:notEmpty>
 				</td>

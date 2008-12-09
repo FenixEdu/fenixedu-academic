@@ -25,8 +25,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.Hours;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -36,6 +38,11 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 
     @Service
     public static EmployeeWorkSheet run(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+	return run(assiduousness, beginDate, endDate, false);
+    }
+
+    @Service
+    public static EmployeeWorkSheet run(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, Boolean extraWork) {
 	if (assiduousness == null) {
 	    return null;
 	}
@@ -46,14 +53,15 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	endDate = lastActiveStatus;
 	LocalDate lowerBeginDate = beginDate.minusDays(8);
 	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate
-		.plusDays(1));
+		.plusDays(2));
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
 	DateTime end = getEnd(endDate, workScheduleMap);
 	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = assiduousness.getClockingsMap(workScheduleMap, init, end
 		.plusDays(1));
 	HashMap<LocalDate, List<Leave>> leavesMap = assiduousness.getLeavesMap(beginDate, endDate);
 
-	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate, new LocalDate());
+	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate, new LocalDate(),
+		extraWork);
     }
 
     private static EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, LocalDate beginDate,
@@ -86,12 +94,13 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	if (lastActiveStatus == null) {
 	    return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
 	}
-	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, lastActiveStatus, today);
+	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, lastActiveStatus, today,
+		false);
     }
 
     private static EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness,
 	    HashMap<LocalDate, WorkSchedule> workScheduleMap, HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap,
-	    HashMap<LocalDate, List<Leave>> leavesMap, LocalDate beginDate, LocalDate endDate, LocalDate today) {
+	    HashMap<LocalDate, List<Leave>> leavesMap, LocalDate beginDate, LocalDate endDate, LocalDate today, Boolean extraWork) {
 	final List<WorkDaySheet> workSheet = new ArrayList<WorkDaySheet>();
 	Duration totalBalance = Duration.ZERO;
 	Duration totalUnjustified = Duration.ZERO;
@@ -141,8 +150,10 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 
 		    if (thisDay.isBefore(today)) {
 			workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
-			totalBalance = totalBalance.plus(workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight()));
+			Duration balance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
+			totalBalance = totalBalance.plus(balance);
 			totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
+			setExtraWork(workDaySheet, balance, extraWork);
 		    }
 		    workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
 		    workSheet.add(workDaySheet);
@@ -200,6 +211,81 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 
 	employeeWorkSheet.setBalanceToCompensate(totalBalanceToCompensate);
 	return employeeWorkSheet;
+    }
+
+    private static void setExtraWork(WorkDaySheet workDaySheet, Duration balance, Boolean extraWork) {
+	if (extraWork && !workDaySheet.getIrregular() && workDaySheet.getTimeline() != null) {
+	    Duration nightExtraWorkDuration = roundToHalfHour(new Duration(workDaySheet.getTimeline()
+		    .calculateWorkPeriodDurationBetweenDates(
+			    workDaySheet.getDate().toDateTime(Assiduousness.defaultStartNightWorkDay),
+			    workDaySheet.getDate().toDateTime(Assiduousness.defaultEndNightWorkDay).plusDays(1))));
+
+	    if (workDaySheet.getWorkSchedule().getWorkScheduleType().canDoExtraWorkInWeekDays()) {
+		Duration thisDayUnjustified = workDaySheet.getUnjustifiedTime();
+		if (thisDayUnjustified == null) {
+		    thisDayUnjustified = Duration.ZERO;
+		}
+		// TODO Duration thisDayExtraWork = thisDayBalance; ignore
+		// unjustified
+		// TE DIURNO
+		Duration thisDayExtraWork = roundToHalfHour(new Duration(balance.minus(thisDayUnjustified)));
+		if (!thisDayExtraWork.equals(Duration.ZERO)) {
+		    if (thisDayExtraWork.isLongerThan(CloseAssiduousnessMonth.hourDuration)) {
+			workDaySheet.setExtraWorkFirstLevel(CloseAssiduousnessMonth.hourDuration);
+			workDaySheet.setExtraWorkSecondLevel(thisDayExtraWork.minus(CloseAssiduousnessMonth.hourDuration));
+			workDaySheet.setExtraWorkSecondLevelWithLimit(new Duration(Math.min(thisDayExtraWork.minus(
+				CloseAssiduousnessMonth.hourDuration).getMillis(), CloseAssiduousnessMonth.DAY_HOUR_LIMIT.minus(
+				CloseAssiduousnessMonth.hourDuration).getMillis())));
+
+		    } else if (thisDayExtraWork.isLongerThan(Duration.ZERO)) {
+			workDaySheet.setExtraWorkFirstLevel(thisDayExtraWork);
+		    }
+		}
+
+		// TE NOCTURNO
+		if ((!thisDayExtraWork.equals(Duration.ZERO)) && (!nightExtraWorkDuration.equals(Duration.ZERO))) {
+		    if (nightExtraWorkDuration.isShorterThan(thisDayExtraWork)) {
+			if (nightExtraWorkDuration.isLongerThan(CloseAssiduousnessMonth.hourDuration)) {
+			    workDaySheet.setNightExtraWorkFirstLevel(CloseAssiduousnessMonth.hourDuration);
+			    workDaySheet.setNightExtraWorkSecondLevel(nightExtraWorkDuration
+				    .minus(CloseAssiduousnessMonth.hourDuration));
+			    workDaySheet.setNightExtraWorkSecondLevelWithLimit(new Duration(Math.min(nightExtraWorkDuration
+				    .minus(CloseAssiduousnessMonth.hourDuration).getMillis(),
+				    CloseAssiduousnessMonth.DAY_HOUR_LIMIT.minus(CloseAssiduousnessMonth.hourDuration)
+					    .getMillis())));
+			} else {
+			    workDaySheet.setNightExtraWorkFirstLevel(nightExtraWorkDuration);
+			}
+		    } else {
+			if (thisDayExtraWork.isLongerThan(CloseAssiduousnessMonth.hourDuration)) {
+			    workDaySheet.setNightExtraWorkFirstLevel(CloseAssiduousnessMonth.hourDuration);
+			    workDaySheet.setNightExtraWorkSecondLevel(thisDayExtraWork
+				    .minus(CloseAssiduousnessMonth.hourDuration));
+			    workDaySheet.setNightExtraWorkSecondLevelWithLimit(new Duration(Math.min(thisDayExtraWork.minus(
+				    CloseAssiduousnessMonth.hourDuration).getMillis(), CloseAssiduousnessMonth.DAY_HOUR_LIMIT
+				    .minus(CloseAssiduousnessMonth.hourDuration).getMillis())));
+			} else {
+			    workDaySheet.setNightExtraWorkFirstLevel(thisDayExtraWork);
+			}
+		    }
+		}
+		if (!nightExtraWorkDuration.equals(Duration.ZERO)
+			&& workDaySheet.getWorkSchedule().getWorkScheduleType().isNocturnal()) {
+		    workDaySheet.setNightWorkBalance(nightExtraWorkDuration);
+		}
+	    }
+	}
+    }
+
+    private static Duration roundToHalfHour(Duration duration) {
+	if (duration.toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+	    return new Duration(Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours() + 1).toStandardDuration());
+	}
+	Duration result = Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours()).toStandardDuration();
+	if (duration.toPeriod(PeriodType.dayTime()).getMinutes() != 0) {
+	    result = result.plus(CloseAssiduousnessMonth.midHourDuration);
+	}
+	return result;
     }
 
     private static DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {

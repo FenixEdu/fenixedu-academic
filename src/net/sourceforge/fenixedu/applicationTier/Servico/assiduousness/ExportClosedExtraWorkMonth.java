@@ -82,6 +82,12 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     public static String extraWorkWeekDaySecondLevelMovementCode = "201";
 
+    public static String extraNightWorkFirstLevelMovementCode = "202";
+
+    public static String extraNightWorkSecondLevelMovementCode = "204";
+
+    public static String extraNightWorkMealMovementCode = "110";
+
     @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
     @Service
     public static String run(ClosedMonth closedMonth) {
@@ -249,6 +255,31 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
 			    extraWorkWeekDaySecondLevelMovementCode, extraWorkRequest.getWorkdaySecondLevelHours()));
 		}
+
+		if (extraWorkRequest.getExtraNightHoursFirstLevel() != null
+			&& extraWorkRequest.getExtraNightHoursFirstLevel() != 0.0 && (!extraWorkRequest.getAddToVacations())) {
+		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
+			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
+			    extraNightWorkFirstLevelMovementCode, extraWorkRequest.getExtraNightHoursFirstLevel()));
+		}
+
+		if (extraWorkRequest.getExtraNightHoursSecondLevel() != null
+			&& extraWorkRequest.getExtraNightHoursSecondLevel() != 0.0 && (!extraWorkRequest.getAddToVacations())) {
+		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
+			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
+			    extraNightWorkSecondLevelMovementCode, extraWorkRequest.getExtraNightHoursSecondLevel()));
+		}
+
+		if (extraWorkRequest.getExtraNightDays() != null && extraWorkRequest.getExtraNightDays() != 0.0
+			&& (!extraWorkRequest.getAddToVacations())) {
+		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
+			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
+			    extraNightWorkMealMovementCode, extraWorkRequest.getExtraNightDays()));
+		}
+
 	    }
 	}
 	return result.toString();

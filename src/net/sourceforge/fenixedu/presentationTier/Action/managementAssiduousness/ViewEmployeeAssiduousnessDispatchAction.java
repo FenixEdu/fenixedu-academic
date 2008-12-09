@@ -59,7 +59,16 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
     public ActionForward showWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = UserView.getUser();
+	return showWorkSheet(mapping, form, request, response, true, "show-employee-work-sheet");
+    }
+
+    public ActionForward showExtraWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	return showWorkSheet(mapping, form, request, response, true, "show-employee-extra-work-sheet");
+    }
+
+    public ActionForward showWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, Boolean extraWork, String forward) throws FenixServiceException, FenixFilterException {
 	final Employee employee = getEmployee(request, (DynaActionForm) form);
 	ActionForward actionForward = validateEmployee(mapping, request, employee);
 	if (actionForward != null) {
@@ -67,24 +76,23 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	YearMonth yearMonth = getYearMonth(request, employee);
 	if (yearMonth == null) {
-	    return mapping.findForward("show-employee-work-sheet");
+	    return mapping.findForward(forward);
 	}
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	int endDay = beginDate.dayOfMonth().getMaximumValue();
 	if (yearMonth.getYear() == new LocalDate().getYear()
 		&& yearMonth.getMonth().ordinal() + 1 == new LocalDate().getMonthOfYear()) {
-	    // endDay = new LocalDate().getDayOfMonth();
 	    request.setAttribute("displayCurrentDayNote", "true");
 	}
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
 	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(),
-		beginDate, endDate);
+		beginDate, endDate, true);
 
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	setEmployeeStatus(request, employee, beginDate, endDate);
 	request.setAttribute("yearMonth", yearMonth);
-	return mapping.findForward("show-employee-work-sheet");
+	return mapping.findForward(forward);
     }
 
     public ActionForward showSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,

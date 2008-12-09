@@ -61,6 +61,16 @@ public class AssiduousnessMonthlyResume implements Serializable {
 
     Integer payedWorkWeekBalance;
 
+    Integer payedNightWorkWeekBalance;
+
+    Duration firstLevelNightBalance;
+
+    Duration secondLevelNightBalance;
+
+    Duration secondLevelNightBalanceWithoutLimits;
+
+    Integer extraNightDays;
+
     protected final Duration midHourDuration = new Duration(1800000);
 
     public AssiduousnessMonthlyResume(Employee employee, Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
@@ -102,9 +112,21 @@ public class AssiduousnessMonthlyResume implements Serializable {
 			: assiduousnessExtraWork.getSecondLevelBalanceWithLimit();
 		Duration secondLevelBalanceWithoutLimits = assiduousnessExtraWork.getSecondLevelBalance() == null ? Duration.ZERO
 			: assiduousnessExtraWork.getSecondLevelBalance();
+
+		Duration firstLevelNightBalance = assiduousnessExtraWork.getFirstLevelNightBalance() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getFirstLevelNightBalance();
+		Duration secondLevelNightBalance = assiduousnessExtraWork.getSecondLevelNightBalanceWithLimit() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getSecondLevelNightBalanceWithLimit();
+		Duration secondLevelNightBalanceWithoutLimits = assiduousnessExtraWork.getSecondLevelNightBalance() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getSecondLevelNightBalance();
+
 		if (assiduousnessClosedMonth.getBalance().isLongerThan(Duration.ZERO)) {
 		    Duration total = firstLevelBalance.plus(secondLevelBalance);
 		    Duration totalWithoutLimits = firstLevelBalance.plus(secondLevelBalanceWithoutLimits);
+
+		    Duration totalNight = firstLevelNightBalance.plus(secondLevelNightBalance);
+		    Duration totalNightWithoutLimits = firstLevelNightBalance.plus(secondLevelNightBalanceWithoutLimits);
+
 		    if (assiduousnessClosedMonth.getBalance().isShorterThan(total)) {
 			Duration diference = total.minus(assiduousnessClosedMonth.getBalance().getMillis());
 			if (diference.isLongerThan(Duration.ZERO)) {
@@ -119,9 +141,32 @@ public class AssiduousnessMonthlyResume implements Serializable {
 			Duration diference = totalWithoutLimits.minus(assiduousnessClosedMonth.getBalance().getMillis());
 			secondLevelBalanceWithoutLimits = secondLevelBalanceWithoutLimits.minus(diference);
 		    }
+
+		    if (assiduousnessClosedMonth.getBalance().isShorterThan(totalNight)) {
+			Duration diferenceNight = totalNight.minus(assiduousnessClosedMonth.getBalance().getMillis());
+			if (diferenceNight.isLongerThan(Duration.ZERO)) {
+			    if (diferenceNight.isShorterThan(secondLevelNightBalance)) {
+				secondLevelNightBalance = secondLevelNightBalance.minus(diferenceNight);
+				secondLevelNightBalanceWithoutLimits = secondLevelNightBalance;
+			    } else {
+				firstLevelNightBalance = firstLevelNightBalance.minus(diferenceNight
+					.minus(secondLevelNightBalance));
+			    }
+			}
+		    } else if (assiduousnessClosedMonth.getBalance().isShorterThan(totalNightWithoutLimits)) {
+			Duration diferenceNight = totalNightWithoutLimits
+				.minus(assiduousnessClosedMonth.getBalance().getMillis());
+			secondLevelNightBalanceWithoutLimits = secondLevelNightBalanceWithoutLimits.minus(diferenceNight);
+		    }
+
 		    addFirstLevelBalance(roundToHalfHour(firstLevelBalance));
 		    addSecondLevelBalance(roundToHalfHour(secondLevelBalance));
 		    addSecondLevelBalanceWithoutLimits(roundToHalfHour(secondLevelBalanceWithoutLimits));
+
+		    addFirstLevelNightBalance(roundToHalfHour(firstLevelNightBalance));
+		    addSecondLevelNightBalance(roundToHalfHour(secondLevelNightBalance));
+		    addSecondLevelNightBalanceWithoutLimits(roundToHalfHour(secondLevelNightBalanceWithoutLimits));
+		    addExtraNightDays(assiduousnessExtraWork.getNightExtraWorkDays());
 		}
 	    }
 	}
@@ -133,6 +178,8 @@ public class AssiduousnessMonthlyResume implements Serializable {
 		addPayedHolidayBalance(extraWorkRequest.getHolidayHours() == null ? 0 : extraWorkRequest.getHolidayHours());
 		addPayedNightlyBalance(extraWorkRequest.getNightHours() == null ? 0 : extraWorkRequest.getNightHours());
 		addPayedWorkWeekBalance(extraWorkRequest.getWorkdayHours() == null ? 0 : extraWorkRequest.getWorkdayHours());
+		addPayedNightWorkWeekBalance(extraWorkRequest.getExtraNightHours() == null ? 0 : extraWorkRequest
+			.getExtraNightHours());
 	    }
 	}
     }
@@ -335,4 +382,66 @@ public class AssiduousnessMonthlyResume implements Serializable {
     public void addPayedWorkWeekBalance(Integer payedWorkWeekBalance) {
 	setPayedWorkWeekBalance(getPayedWorkWeekBalance() + payedWorkWeekBalance);
     }
+
+    public Duration getFirstLevelNightBalance() {
+	return firstLevelNightBalance == null ? Duration.ZERO : firstLevelNightBalance;
+    }
+
+    public void setFirstLevelNightBalance(Duration firstLevelNightBalance) {
+	this.firstLevelNightBalance = firstLevelNightBalance;
+    }
+
+    public void addFirstLevelNightBalance(Duration firstLevelNightBalance) {
+	setFirstLevelNightBalance(getFirstLevelNightBalance().plus(firstLevelNightBalance));
+    }
+
+    public Duration getSecondLevelNightBalance() {
+	return secondLevelNightBalance == null ? Duration.ZERO : secondLevelNightBalance;
+    }
+
+    public void setSecondLevelNightBalance(Duration secondLevelNightBalance) {
+	this.secondLevelNightBalance = secondLevelNightBalance;
+    }
+
+    public void addSecondLevelNightBalance(Duration secondLevelNightBalance) {
+	setSecondLevelNightBalance(getSecondLevelNightBalance().plus(secondLevelNightBalance));
+    }
+
+    public Duration getSecondLevelNightBalanceWithoutLimits() {
+	return secondLevelNightBalanceWithoutLimits == null ? Duration.ZERO : secondLevelNightBalanceWithoutLimits;
+    }
+
+    public void setSecondLevelNightBalanceWithoutLimits(Duration secondLevelNightBalanceWithoutLimits) {
+	this.secondLevelNightBalanceWithoutLimits = secondLevelNightBalanceWithoutLimits;
+    }
+
+    public void addSecondLevelNightBalanceWithoutLimits(Duration secondLevelNightBalanceWithoutLimits) {
+	setSecondLevelNightBalanceWithoutLimits(getSecondLevelNightBalanceWithoutLimits().plus(
+		secondLevelNightBalanceWithoutLimits));
+    }
+
+    public Integer getPayedNightWorkWeekBalance() {
+	return payedNightWorkWeekBalance == null ? 0 : payedNightWorkWeekBalance;
+    }
+
+    public void setPayedNightWorkWeekBalance(Integer payedNightWorkWeekBalance) {
+	this.payedNightWorkWeekBalance = payedNightWorkWeekBalance;
+    }
+
+    public void addPayedNightWorkWeekBalance(Integer payedNightWorkWeekBalance) {
+	setPayedNightWorkWeekBalance(getPayedNightWorkWeekBalance() + payedNightWorkWeekBalance);
+    }
+
+    public Integer getExtraNightDays() {
+	return extraNightDays == null ? 0 : extraNightDays;
+    }
+
+    public void setExtraNightDays(Integer extraNightDays) {
+	this.extraNightDays = extraNightDays;
+    }
+
+    public void addExtraNightDays(Integer extraNightDays) {
+	this.extraNightDays = getExtraNightDays() + extraNightDays;
+    }
+
 }

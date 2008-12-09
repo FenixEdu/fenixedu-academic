@@ -60,6 +60,105 @@ public class WorkDaySheet implements Serializable {
 
     Duration balanceToCompensate;
 
+    Duration extraWorkFirstLevel;
+
+    Duration extraWorkSecondLevel;
+
+    Duration extraWorkSecondLevelWithLimit;
+
+    Duration nightExtraWorkFirstLevel;
+
+    Duration nightExtraWorkSecondLevel;
+
+    Duration nightExtraWorkSecondLevelWithLimit;
+
+    Duration nightWorkBalance;
+
+    public Duration getExtraWorkFirstLevel() {
+	return extraWorkFirstLevel;
+    }
+
+    public String getExtraWorkFirstLevelFormatted() {
+	return extraWorkFirstLevel != null ? getFormattedPeriod(extraWorkFirstLevel.toPeriod()) : "";
+    }
+
+    public void setExtraWorkFirstLevel(Duration extraWorkFirstLevel) {
+	this.extraWorkFirstLevel = extraWorkFirstLevel;
+    }
+
+    public Duration getExtraWorkSecondLevel() {
+	return extraWorkSecondLevel;
+    }
+
+    public String getExtraWorkSecondLevelFormatted() {
+	return extraWorkSecondLevel != null ? getFormattedPeriod(extraWorkSecondLevel.toPeriod()) : "";
+    }
+
+    public void setExtraWorkSecondLevel(Duration extraWorkSecondLevel) {
+	this.extraWorkSecondLevel = extraWorkSecondLevel;
+    }
+
+    public Duration getExtraWorkSecondLevelWithLimit() {
+	return extraWorkSecondLevelWithLimit;
+    }
+
+    public String getExtraWorkSecondLevelWithLimitFormatted() {
+	return extraWorkSecondLevelWithLimit != null ? getFormattedPeriod(extraWorkSecondLevelWithLimit.toPeriod()) : "";
+    }
+
+    public void setExtraWorkSecondLevelWithLimit(Duration extraWorkSecondLevelWithLimit) {
+	this.extraWorkSecondLevelWithLimit = extraWorkSecondLevelWithLimit;
+    }
+
+    public Duration getNightWorkBalance() {
+	return nightWorkBalance;
+    }
+
+    public String getNightWorkBalanceFormatted() {
+	return nightWorkBalance != null ? getFormattedPeriod(nightWorkBalance.toPeriod()) : "";
+    }
+
+    public void setNightWorkBalance(Duration nightWorkBalance) {
+	this.nightWorkBalance = nightWorkBalance;
+    }
+
+    public Duration getNightExtraWorkFirstLevel() {
+	return nightExtraWorkFirstLevel;
+    }
+
+    public String getNightExtraWorkFirstLevelFormatted() {
+	return nightExtraWorkFirstLevel != null ? getFormattedPeriod(nightExtraWorkFirstLevel.toPeriod()) : "";
+    }
+
+    public void setNightExtraWorkFirstLevel(Duration nightExtraWorkFirstLevel) {
+	this.nightExtraWorkFirstLevel = nightExtraWorkFirstLevel;
+    }
+
+    public Duration getNightExtraWorkSecondLevel() {
+	return nightExtraWorkSecondLevel;
+    }
+
+    public String getNightExtraWorkSecondLevelFormatted() {
+	return nightExtraWorkSecondLevel != null ? getFormattedPeriod(nightExtraWorkSecondLevel.toPeriod()) : "";
+    }
+
+    public void setNightExtraWorkSecondLevel(Duration nightExtraWorkSecondLevel) {
+	this.nightExtraWorkSecondLevel = nightExtraWorkSecondLevel;
+    }
+
+    public Duration getNightExtraWorkSecondLevelWithLimit() {
+	return nightExtraWorkSecondLevelWithLimit;
+    }
+
+    public String getNightExtraWorkSecondLevelWithLimitFormatted() {
+	return nightExtraWorkSecondLevelWithLimit != null ? getFormattedPeriod(nightExtraWorkSecondLevelWithLimit.toPeriod())
+		: "";
+    }
+
+    public void setNightExtraWorkSecondLevelWithLimit(Duration nightExtraWorkSecondLevelWithLimit) {
+	this.nightExtraWorkSecondLevelWithLimit = nightExtraWorkSecondLevelWithLimit;
+    }
+
     public WorkDaySheet() {
 	setBalanceTime(Duration.ZERO.toPeriod());
 	setUnjustifiedTime(Duration.ZERO);
@@ -150,19 +249,23 @@ public class WorkDaySheet implements Serializable {
 
     public String getBalanceTimeFormatted() {
 	Period balancePeriod = getBalanceTime();
+	return getFormattedPeriod(balancePeriod);
+    }
+
+    private String getFormattedPeriod(Period period) {
 	StringBuilder result = new StringBuilder();
-	result.append(balancePeriod.getHours());
+	result.append(period.getHours());
 	result.append(":");
-	if (balancePeriod.getMinutes() > -10 && balancePeriod.getMinutes() < 10) {
+	if (period.getMinutes() > -10 && period.getMinutes() < 10) {
 	    result.append("0");
 	}
-	if (balancePeriod.getMinutes() < 0) {
-	    result.append((-balancePeriod.getMinutes()));
+	if (period.getMinutes() < 0) {
+	    result.append((-period.getMinutes()));
 	    if (!result.toString().startsWith("-")) {
 		result = new StringBuilder("-").append(result);
 	    }
 	} else {
-	    result.append(balancePeriod.getMinutes());
+	    result.append(period.getMinutes());
 	}
 	return result.toString();
     }

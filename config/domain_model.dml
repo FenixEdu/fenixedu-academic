@@ -1899,6 +1899,10 @@ class DomainObject {
 		Duration nightBalance;
 		Duration secondLevelBalance;
 		Duration secondLevelBalanceWithLimit;
+		Duration firstLevelNightBalance;
+		Duration secondLevelNightBalance;
+		Duration secondLevelNightBalanceWithLimit;
+		Integer nightExtraWorkDays;
 		Duration unjustified;
 	}
 
@@ -2013,6 +2017,8 @@ class DomainObject {
 		Boolean approved;
 		Integer extraNightDays;
 		Integer extraNightHours;
+		Integer extraNightHoursFirstLevel;
+		Integer extraNightHoursSecondLevel;
 		Double holidayAmount;
 		Integer holidayHours;
 		Partial hoursDoneInPartialDate;
@@ -2024,6 +2030,7 @@ class DomainObject {
 		Integer normalVacationsDays;
 		Partial partialPayingDate;
 		Integer requestedExtraNightHours;
+		Integer requestedExtraNightDays;
 		Integer requestedHolidayHours;
 		Integer requestedNightHours;
 		Integer requestedSaturdayHours;
@@ -2038,6 +2045,9 @@ class DomainObject {
 		Integer workdaySecondLevelHours;
 		Double workdayFirstLevelAmount;
 		Double workdaySecondLevelAmount;
+		Double extraNightFirstLevelAmount;
+		Double extraNightSecondLevelAmount;
+		Double extraNightMealAmount;
 	}
 
 	class assiduousness.JustificationMotive extends DomainObject {

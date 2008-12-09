@@ -30,6 +30,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private Integer extraNightHours;
 
+    private Integer extraNightHoursFirstLevel;
+
+    private Integer extraNightHoursSecondLevel;
+
     private Integer extraNightDays;
 
     private Integer holidayHours;
@@ -66,6 +70,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private Integer requestedExtraNightHours;
 
+    private Integer requestedExtraNightDays;
+
     private Integer requestedHolidayHours;
 
     private Integer requestedSaturdayHours;
@@ -82,6 +88,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     public static final double secondHourPercentage = 1.50;
 
+    public static final double nightFirstHourPercentage = 1.60;
+
+    public static final double nightSecondHourPercentage = 1.90;
+
     public static final double weeklyRestPercentage = 2;
 
     public static final double extraWorkDayToVacationsCoefficient = 1.25;
@@ -91,6 +101,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
     public static final double paymentLimitCoefficient = 3;
 
     public static final double executiveAuxiliarPaymentLimitPercentage = 0.6;
+
+    public static final BigDecimal nightExtraWorkMealValue = new BigDecimal(4.11);
 
     protected DecimalFormat decimalFormat;
 
@@ -115,6 +127,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	setWorkdayHours(extraWorkRequest.getWorkdayHours());
 	setRequestedNightHours(extraWorkRequest.getRequestedNightHours());
 	setRequestedExtraNightHours(extraWorkRequest.getRequestedExtraNightHours());
+	setRequestedExtraNightDays(extraWorkRequest.getRequestedExtraNightDays());
 	setRequestedHolidayHours(extraWorkRequest.getRequestedHolidayHours());
 	setRequestedSaturdayHours(extraWorkRequest.getRequestedSaturdayHours());
 	setRequestedSundayHours(extraWorkRequest.getRequestedSundayHours());
@@ -251,8 +264,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (!validateRemunerationOptionFields()) {
 		return new ActionMessage("error.extraWorkRequest.invalidRemunerationOptionFields");
 	    }
-	    if (!validateWorkingDaysExtraWorkNightHours()) {
-		return new ActionMessage("error.extraWorkRequest.invalidWorkingDaysExtraWorkRemuneration");
+	    if (!validateWorkingDaysWorkNightHours()) {
+		return new ActionMessage("error.extraWorkRequest.invalidWorkingDaysWorkRemuneration");
 	    }
 	    if (validateNonWorkingDaysExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.invalidNonWorkingDaysExtraWorkRemuneration");
@@ -288,6 +301,18 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (!getAddToVacations() && getWorkdayHours() != null) {
 		workdayHoursFirstLevelAmount = getAmount(hourValue, firstHourPercentage, getWorkdayHoursFirstLevel());
 		workdayHoursSecondLevelAmount = getAmount(hourValue, secondHourPercentage, getWorkdayHoursSecondLevel());
+	    }
+
+	    Double nightExtraWorkHoursFirstLevelAmount = new Double(0);
+	    Double nightExtraWorkHoursSecondLevelAmount = new Double(0);
+	    Double nightExtraWorkMealAmount = new Double(0);
+	    if (!getAddToVacations() && getExtraNightHours() != null) {
+		nightExtraWorkHoursFirstLevelAmount = getAmount(hourValue, nightFirstHourPercentage,
+			getExtraNightHoursFirstLevel());
+		nightExtraWorkHoursSecondLevelAmount = getAmount(hourValue, nightSecondHourPercentage,
+			getExtraNightHoursSecondLevel());
+
+		nightExtraWorkMealAmount = getExtraNightDays() * nightExtraWorkMealValue.doubleValue();
 	    }
 
 	    Integer thisNormalVacationsDays = 0;
@@ -327,29 +352,33 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
 	    if (getExtraWorkRequest() == null) {
 		new ExtraWorkRequest(getExtraWorkRequestFactory().getPartialPayingDate(), getExtraWorkRequestFactory().getUnit(),
-			getEmployee(), getNightHours(), getExtraNightHours(), getExtraNightDays(), getHolidayHours(),
-			getSaturdayHours(), getSundayHours(), getWorkdayHours(), getWorkdayHoursFirstLevel(),
-			getWorkdayHoursSecondLevel(), getAddToVacations(), getAddToWeekRestTime(), getModifiedBy(), false,
-			getExtraWorkRequestFactory().getHoursDoneInPartialDate(), thisNormalVacationsDays,
-			thisNormalVacationsAmount, accumulatedNormalVacationsAmount, thisNightVacationsDays,
-			thisNightVacationsAmount, accumulatedNightVacationsAmount, getRequestedNightHours(),
-			getRequestedExtraNightHours(), getRequestedHolidayHours(), getRequestedSaturdayHours(),
+			getEmployee(), getNightHours(), getExtraNightHours(), getExtraNightDays(),
+			getExtraNightHoursFirstLevel(), getExtraNightHoursSecondLevel(), getHolidayHours(), getSaturdayHours(),
+			getSundayHours(), getWorkdayHours(), getWorkdayHoursFirstLevel(), getWorkdayHoursSecondLevel(),
+			getAddToVacations(), getAddToWeekRestTime(), getModifiedBy(), false, getExtraWorkRequestFactory()
+				.getHoursDoneInPartialDate(), thisNormalVacationsDays, thisNormalVacationsAmount,
+			accumulatedNormalVacationsAmount, thisNightVacationsDays, thisNightVacationsAmount,
+			accumulatedNightVacationsAmount, getRequestedNightHours(), getRequestedExtraNightHours(),
+			getRequestedExtraNightDays(), getRequestedHolidayHours(), getRequestedSaturdayHours(),
 			getRequestedSundayHours(), getRequestedWorkdayHours(), holidayAmount, saturdayAmount, sundayAmount,
-			workdayHoursFirstLevelAmount, workdayHoursSecondLevelAmount);
+			workdayHoursFirstLevelAmount, workdayHoursSecondLevelAmount, nightExtraWorkHoursFirstLevelAmount,
+			nightExtraWorkHoursSecondLevelAmount, nightExtraWorkMealAmount);
 	    } else {
 		if (getExtraWorkRequest().getApproved() && getExtraWorkRequest().getAddToVacations() != getAddToVacations()) {
 		    getExtraWorkRequestFactory().setPerformPayment(false);
 		    getExtraWorkRequestFactory().execute();
 		}
-		getExtraWorkRequest().edit(getNightHours(), getExtraNightHours(), getExtraNightDays(), getHolidayHours(),
-			getSaturdayHours(), getSundayHours(), getWorkdayHours(), getWorkdayHoursFirstLevel(),
-			getWorkdayHoursSecondLevel(), getAddToVacations(), getAddToWeekRestTime(), getModifiedBy(),
+		getExtraWorkRequest().edit(getNightHours(), getExtraNightHours(), getExtraNightDays(),
+			getExtraNightHoursFirstLevel(), getExtraNightHoursSecondLevel(), getHolidayHours(), getSaturdayHours(),
+			getSundayHours(), getWorkdayHours(), getWorkdayHoursFirstLevel(), getWorkdayHoursSecondLevel(),
+			getAddToVacations(), getAddToWeekRestTime(), getModifiedBy(),
 			getExtraWorkRequestFactory().getHoursDoneInPartialDate(), thisNormalVacationsDays,
 			thisNormalVacationsAmount, accumulatedNormalVacationsAmount, thisNightVacationsDays,
 			thisNightVacationsAmount, accumulatedNightVacationsAmount, getRequestedNightHours(),
-			getRequestedExtraNightHours(), getRequestedHolidayHours(), getRequestedSaturdayHours(),
-			getRequestedSundayHours(), getRequestedWorkdayHours(), holidayAmount, saturdayAmount, sundayAmount,
-			workdayHoursFirstLevelAmount, workdayHoursSecondLevelAmount);
+			getRequestedExtraNightHours(), getRequestedExtraNightDays(), getRequestedHolidayHours(),
+			getRequestedSaturdayHours(), getRequestedSundayHours(), getRequestedWorkdayHours(), holidayAmount,
+			saturdayAmount, sundayAmount, workdayHoursFirstLevelAmount, workdayHoursSecondLevelAmount,
+			nightExtraWorkHoursFirstLevelAmount, nightExtraWorkHoursSecondLevelAmount, nightExtraWorkMealAmount);
 		if (getExtraWorkRequest().getApproved() && getExtraWorkRequestFactory().checkUnitMoney() != null) {
 		    getExtraWorkRequestFactory().setPerformPayment(false);
 		    getExtraWorkRequestFactory().execute();
@@ -396,8 +425,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	return result;
     }
 
-    private boolean validateWorkingDaysExtraWorkNightHours() {
-	return (getRequestedExtraNightHours() == null) || getAddToVacations();
+    private boolean validateWorkingDaysWorkNightHours() {
+	return getRequestedNightHours() == null;
     }
 
     private boolean validateNonWorkingDaysExtraWork() {
@@ -430,10 +459,58 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle.getString("label.nightWork"));
 	    }
-	    if (nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours() < getRequestedExtraNightHours()) {
-		setExtraNightHours(nightHoursWorked.toPeriod(PeriodType.dayTime()).getHours());
+
+	    int secondLevel = assiduousnessMonthlyResume.getSecondLevelNightBalance().toPeriod(PeriodType.dayTime()).getHours();
+	    if (employeeExtraWorkAuthorization.getNormalExtraWorkPlusTwoHours()
+		    || employeeExtraWorkAuthorization.getAuxiliarPersonel()) {
+		secondLevel = assiduousnessMonthlyResume.getSecondLevelNightBalanceWithoutLimits().toPeriod(PeriodType.dayTime())
+			.getHours();
+	    }
+
+	    int diference = secondLevel - assiduousnessMonthlyResume.getPayedNightWorkWeekBalance();
+
+	    int notPayedSecondLevel = Math.max(diference, 0);
+	    int notPayedFirstLevel = assiduousnessMonthlyResume.getFirstLevelNightBalance().toPeriod(PeriodType.dayTime())
+		    .getHours();
+	    if (diference < 0) {
+		notPayedFirstLevel = Math.max(notPayedFirstLevel + diference, 0);
+	    }
+
+	    if ((notPayedFirstLevel + notPayedSecondLevel) < getRequestedExtraNightHours()) {
+		setExtraNightHours((notPayedFirstLevel + notPayedSecondLevel));
+		setExtraNightHoursFirstLevel(notPayedFirstLevel);
+		setExtraNightHoursSecondLevel(notPayedSecondLevel);
 	    } else {
-		setExtraNightHours(getRequestedExtraNightHours());
+		setExtraNightHours(getRequestedWorkdayHours());
+		setExtraNightHoursFirstLevel(Math.min(notPayedFirstLevel, getRequestedExtraNightHours()));
+		setExtraNightHoursSecondLevel(Math.min(getRequestedExtraNightHours() - getExtraNightHoursFirstLevel(),
+			notPayedSecondLevel));
+	    }
+
+	    if (!getAddToVacations()) {
+		Double extraNightHoursFirstLevelAmount = getAmount(hourValue, nightFirstHourPercentage,
+			getExtraNightHoursFirstLevel());
+		Double extraNightHoursSecondLevelAmount = getAmount(hourValue, nightSecondHourPercentage,
+			getExtraNightHoursSecondLevel());
+		double limit = Math.pow(paymentLimitCoefficient, -1);
+		if (getEmployeeExtraWorkAuthorization().getExecutiveAuxiliarPersonel()) {
+		    limit = executiveAuxiliarPaymentLimitPercentage;
+		}
+		Double monthLimit = (monthValue.doubleValue() * limit);
+		if ((extraNightHoursFirstLevelAmount + extraNightHoursSecondLevelAmount) > monthLimit) {
+		    if (extraNightHoursFirstLevelAmount > monthLimit) {
+			setExtraNightHoursSecondLevel(0);
+			int hourLimit = Math.max((int) ((monthLimit) / (hourValue.doubleValue() * nightFirstHourPercentage)), 0);
+			setExtraNightHoursFirstLevel(hourLimit);
+		    } else {
+			int hourLimit = (int) (((monthLimit) / (hourValue.doubleValue()) - getExtraNightHoursFirstLevel()
+				* nightFirstHourPercentage) / nightSecondHourPercentage);
+			setExtraNightHoursSecondLevel(hourLimit);
+		    }
+		    setExtraNightHours(getExtraNightHoursFirstLevel() + getExtraNightHoursSecondLevel());
+		}
+	    } else {
+		setExtraNightDays(Math.max(getExtraNightDays(), assiduousnessMonthlyResume.getExtraNightDays()));
 	    }
 	}
 
@@ -492,7 +569,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 			.getHours();
 	    }
 
-	    int diference = secondLevel - assiduousnessMonthlyResume.getPayedWorkWeekBalance();
+	    // Tenho de descontar as nocturnas já pagas.
+	    int diference = secondLevel - (assiduousnessMonthlyResume.getPayedWorkWeekBalance() + getExtraNightHours());
 
 	    int notPayedSecondLevel = Math.max(diference, 0);
 	    int notPayedFirstLevel = assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime()).getHours();
@@ -563,7 +641,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (getExtraWorkRequest() == null || !getExtraWorkRequest().equals(request)) {
 		if (request.getHoursDoneInPartialDate().get(DateTimeFieldType.year()) == getExtraWorkRequestFactory()
 			.getHoursDoneInPartialDate().get(DateTimeFieldType.year())
-			&& request.getApproved() && request.getWorkdayHours() != null) {
+			&& request.getWorkdayHours() != null) {
 		    result = result + request.getWorkdayHours();
 		}
 	    }
@@ -716,6 +794,30 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     public void setWorkdayHoursSecondLevel(Integer workdayHoursSecondLevel) {
 	this.workdayHoursSecondLevel = workdayHoursSecondLevel;
+    }
+
+    public Integer getExtraNightHoursFirstLevel() {
+	return extraNightHoursFirstLevel;
+    }
+
+    public void setExtraNightHoursFirstLevel(Integer extraNightHoursFirstLevel) {
+	this.extraNightHoursFirstLevel = extraNightHoursFirstLevel;
+    }
+
+    public Integer getExtraNightHoursSecondLevel() {
+	return extraNightHoursSecondLevel;
+    }
+
+    public void setExtraNightHoursSecondLevel(Integer extraNightHoursSecondLevel) {
+	this.extraNightHoursSecondLevel = extraNightHoursSecondLevel;
+    }
+
+    public Integer getRequestedExtraNightDays() {
+	return requestedExtraNightDays;
+    }
+
+    public void setRequestedExtraNightDays(Integer requestedExtraNightDays) {
+	this.requestedExtraNightDays = requestedExtraNightDays;
     }
 
 }
