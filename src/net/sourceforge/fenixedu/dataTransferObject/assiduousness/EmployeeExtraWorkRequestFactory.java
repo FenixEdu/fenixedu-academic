@@ -570,7 +570,11 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    }
 
 	    // Tenho de descontar as nocturnas já pagas.
-	    int diference = secondLevel - (assiduousnessMonthlyResume.getPayedWorkWeekBalance() + getExtraNightHours());
+	    Integer alreadyPayed = assiduousnessMonthlyResume.getPayedWorkWeekBalance();
+	    if (getExtraNightHours() != null) {
+		alreadyPayed = alreadyPayed + getExtraNightHours();
+	    }
+	    int diference = secondLevel - alreadyPayed;
 
 	    int notPayedSecondLevel = Math.max(diference, 0);
 	    int notPayedFirstLevel = assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime()).getHours();
