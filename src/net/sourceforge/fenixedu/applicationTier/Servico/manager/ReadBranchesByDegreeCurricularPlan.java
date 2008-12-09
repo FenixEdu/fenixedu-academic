@@ -9,13 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBranchesByDegreeCurricularPlan extends FenixService {
 
-    @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     public static List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
 	if (degreeCurricularPlan == null) {
