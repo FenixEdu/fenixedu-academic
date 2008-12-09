@@ -106,40 +106,46 @@ public class GiafInterface {
 	    YearMonth yearMonthPayingDate = new YearMonth(extraWorkRequest.getPartialPayingDate());
 	    yearMonthPayingDate.addMonth();
 
+	    int paymentYear = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year());
+	    int paymentMonth = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear());
 	    if (yearMonthPayingDate.getYear().equals(year) && yearMonthPayingDate.getNumberOfMonth() == month) {
-		query.append("SELECT a.mov_cod, a.sal_val_brt FROM sldsalario a where a.emp_num=");
-		query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
-		query.append(" and a.mov_cod in (");
-		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
-		query.append(") and extract(year from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
+		query.append("SELECT a.mov_cod, a.sal_va"
+			+ "l_brt, a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
+		query.append(paymentYear);
 		query.append(" and extract(month from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()));
+		query.append(paymentMonth);
 	    } else {
-		query.append("SELECT a.mov_cod,a.sal_val_brt FROM slhsalario a where a.ano=");
+		query.append("SELECT a.mov_cod,a.sal_val_brt, a.emp_ccusto FROM slhsalario a where a.ano=");
 		query.append(yearMonthPayingDate.getYear());
 		query.append(" and a.mes=");
 		query.append(yearMonthPayingDate.getNumberOfMonth());
 		query.append(" and extract(year from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
+		query.append(paymentYear);
 		query.append(" and extract(month from data_mov)=");
-		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()));
-		query.append(" and a.mov_cod in (");
-		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
-		query.append(") and a.emp_num =");
-		query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
+		query.append(paymentMonth);
+	    }
+	    query.append(" and a.mov_cod in (");
+	    query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
+	    query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
+	    query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
+	    query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
+	    query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
+	    query.append(") and a.emp_num =");
+	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
+
+	    int requestsNumber = extraWorkRequest.getAssiduousness().getExtraWorkRequests(paymentYear, paymentMonth).size();
+	    if (requestsNumber > 1) {
+		query.append(" and emp_ccusto =");
+		query.append(extraWorkRequest.getUnit().getCostCenterCode());
 	    }
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
 	    while (rs.next()) {
+		if (requestsNumber > 1) {
+		    if (extraWorkRequest.getUnit().getCostCenterCode().intValue() != rs.getInt("emp_ccusto")) {
+			continue;
+		    }
+		}
 		if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode)) {
 		    extraWorkRequest.setSundayAmount(rs.getDouble("sal_val_brt"));
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode)) {

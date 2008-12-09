@@ -49,9 +49,11 @@ public class Assiduousness extends Assiduousness_Base {
     public static final LocalTime defaultEndNightWorkDay = new LocalTime(7, 0, 0, 0);
 
     public static final Duration normalWorkDayDuration = new Duration(25200000); // 7
+
     // hours
 
     public static final Duration IST_TOLERANCE_TIME = new Duration(3540000); // 59
+
     // minutes
 
     public static final int MAX_A66_PER_MONTH = 2;
@@ -717,11 +719,14 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate begin) {
+	return getExtraWorkRequests(begin.getYear(), begin.getMonthOfYear());
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequests(int year, int month) {
 	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
-	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == begin.getYear()) {
-		if (begin.getMonthOfYear() == request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear())
-			&& request.getApproved())
+	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year) {
+		if (month == request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) && request.getApproved())
 		    result.add(request);
 	    }
 	}
