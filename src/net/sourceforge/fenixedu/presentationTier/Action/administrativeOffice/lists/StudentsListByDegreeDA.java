@@ -137,6 +137,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
+		spreadsheet.addCell(person.getDefaultEmailAddress().getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
 		spreadsheet.addCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
@@ -154,6 +155,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader("Estado da Matrícula");
 	spreadsheet.addHeader("Acordo");
 	if (extendedInfo) {
+	    spreadsheet.addHeader("Email");
 	    spreadsheet.addHeader("Género");
 	    spreadsheet.addHeader("Data Nascimento");
 	    spreadsheet.addHeader("Nº inscrições");
