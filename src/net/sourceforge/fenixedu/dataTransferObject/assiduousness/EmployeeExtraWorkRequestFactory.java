@@ -454,7 +454,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    }
 	}
 
-	if (getRequestedExtraNightHours() != null && getExtraNightDays() != null) {
+	if (getRequestedExtraNightHours() != null && getRequestedExtraNightDays() != null) {
 	    // para quem não tem horário nocturno:
 	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle.getString("label.nightWork"));
@@ -510,7 +510,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		    setExtraNightHours(getExtraNightHoursFirstLevel() + getExtraNightHoursSecondLevel());
 		}
 	    } else {
-		setExtraNightDays(Math.max(getExtraNightDays(), assiduousnessMonthlyResume.getExtraNightDays()));
+		setExtraNightDays(Math.min(getRequestedExtraNightDays(), assiduousnessMonthlyResume.getExtraNightDays()));
 	    }
 	}
 

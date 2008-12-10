@@ -834,7 +834,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="insert.extraNightDays" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="extraNightDays" key="label.extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
+	<slot name="requestedExtraNightDays" key="label.extraNightDays" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="maxLength" value="2" />
 		<property name="size" value="2" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>

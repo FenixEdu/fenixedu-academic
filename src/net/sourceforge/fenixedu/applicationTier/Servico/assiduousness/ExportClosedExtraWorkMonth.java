@@ -86,7 +86,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     public static String extraNightWorkSecondLevelMovementCode = "204";
 
-    public static String extraNightWorkMealMovementCode = "110";
+    public static String extraNightWorkMealMovementCode = "123";
 
     @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
     @Service

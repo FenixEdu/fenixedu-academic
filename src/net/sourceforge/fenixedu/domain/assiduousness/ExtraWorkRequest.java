@@ -196,6 +196,10 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	return getWorkdayFirstLevelAmount() + getWorkdaySecondLevelAmount();
     }
 
+    public Double getExtraNightWorkAmount() {
+	return getExtraNightFirstLevelAmount() + getExtraNightSecondLevelAmount();
+    }
+
     public EmployeeExtraWorkAuthorization getEmployeeExtraWorkAuthorization() {
 	LocalDate begin = new LocalDate(getHoursDoneInPartialDate().get(DateTimeFieldType.year()), getHoursDoneInPartialDate()
 		.get(DateTimeFieldType.monthOfYear()), 1);
