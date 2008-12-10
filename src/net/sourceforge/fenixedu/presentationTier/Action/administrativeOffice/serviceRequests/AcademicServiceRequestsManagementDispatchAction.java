@@ -136,8 +136,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     public ActionForward prepareSendAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	getAndSetAcademicServiceRequest(request);
-	request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean());
+	request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean(getAndSetAcademicServiceRequest(request),
+		AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY));
 	return mapping.findForward("prepareSendAcademicServiceRequest");
     }
 
@@ -167,8 +167,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     public ActionForward prepareReceiveAcademicServiceRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	getAndSetAcademicServiceRequest(request);
-	request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean());
+	request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean(getAndSetAcademicServiceRequest(request),
+		AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY));
 	return mapping.findForward("prepareReceiveAcademicServiceRequest");
     }
 
@@ -257,7 +257,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	((DynaActionForm) actionForm).set("sendEmailToStudent", Boolean.TRUE);
 
 	if (academicServiceRequest.isDocumentRequest()) {
-	    request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean());
+	    request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean(academicServiceRequest,
+		    AcademicServiceRequestSituationType.CONCLUDED));
 	    return mapping.findForward("prepareConcludeDocumentRequest");
 	} else {
 	    return mapping.findForward("prepareConcludeServiceRequest");

@@ -2,17 +2,22 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestBean implements Serializable {
 
@@ -20,14 +25,23 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private DomainReference<Employee> employeeDomainReference;
 
+    private DomainReference<AcademicServiceRequest> requestDomainReference;
+
     private String justification;
 
     private YearMonthDay situationDate;
 
     private Integer serviceRequestYear;
 
-    public AcademicServiceRequestBean() {
+    private AcademicServiceRequestBean() {
 	super();
+    }
+
+    public AcademicServiceRequestBean(final AcademicServiceRequest request,
+	    final AcademicServiceRequestSituationType situationType) {
+	this();
+	setAcademicServiceRequest(request);
+	setAcademicServiceRequestSituationType(situationType);
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
@@ -102,7 +116,32 @@ public class AcademicServiceRequestBean implements Serializable {
 	this.employeeDomainReference = new DomainReference<Employee>(employee);
     }
 
+    private AcademicServiceRequest getAcademicServiceRequest() {
+	return requestDomainReference == null ? null : requestDomainReference.getObject();
+    }
+
+    private void setAcademicServiceRequest(final AcademicServiceRequest request) {
+	this.requestDomainReference = new DomainReference<AcademicServiceRequest>(request);
+    }
+
     public String getJustification() {
+	if (StringUtils.isEmpty(justification)
+		&& getAcademicServiceRequest().getAdministrativeOffice().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE
+		&& getAcademicServiceRequest().isDocumentRequest() && ((DocumentRequest) getAcademicServiceRequest()).isDiploma()) {
+	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED) {
+		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
+			"DiplomaRequest.diploma.printed");
+	    }
+	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY) {
+		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
+			"DiplomaRequest.diploma.sent");
+	    }
+	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY) {
+		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
+			"DiplomaRequest.diploma.received");
+	    }
+	}
+
 	return justification;
     }
 
