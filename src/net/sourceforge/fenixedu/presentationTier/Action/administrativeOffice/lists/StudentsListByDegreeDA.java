@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.struts.action.ActionForm;
@@ -137,7 +138,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
-		spreadsheet.addCell(person.getDefaultEmailAddress().getValue());
+		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? StringUtils.EMPTY : person.getDefaultEmailAddress()
+			.getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
 		spreadsheet.addCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
