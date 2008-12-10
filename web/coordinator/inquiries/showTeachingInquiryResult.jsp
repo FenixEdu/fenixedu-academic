@@ -33,40 +33,35 @@ font-size: 70%;
 th:first-child {
 width: 250px;
 }
-body.survey table {
-}
-body.survey table th {
-vertical-align: bottom;
-}
-body.survey table td {
-text-align: center;
-}
-table.td50px td {
-width: 60px;
-}
+body.survey table { }
+body.survey table th { vertical-align: bottom; }
+body.survey table td { text-align: center; }
+table.td50px td { width: 60px; }
 table tr.top th { border-top: 4px solid #ddd; }
 table tr.top td { border-top: 4px solid #ddd; }
-
-body.survey table {
-}
+body.survey table { }
 .thtop th { vertical-align: top; }
 .vatop { vertical-align: top !important; }
 .vamiddle { vertical-align: middle !important; }
 .tdright td { text-align: right !important; }
 
-a.help {
+a {
+color: #105c93;
+}
+a.help, a.helpleft {
 position: relative;
 text-decoration: none;
 /*color: black !important;*/
 border: none !important;
 width: 20px;
 }
-a.help span {
-display: none;
-}
-a.help:hover {
+a.help span, a.helpleft span { display: none; }
+a.help:hover, a.helpleft:hover {
 /*background: none;*/ /* IE hack */
 z-index: 100;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+border-bottom-color: transparent;
 }
 a.help:hover span {
 display: block !important;
@@ -82,27 +77,31 @@ color: #fff;
 border: 3px solid #97bac6;
 /*cursor: help;*/
 }
-a { color: #105c93; }
+a.helpleft:hover span {
+display: block !important;
+display: inline-block;
+width: 250px;
+position: absolute;
+top: 10px;
+left: -280px;
+text-align: left;
+padding: 7px 10px;
+background: #48869e;
+color: #fff;
+border: 3px solid #97bac6;
+/*cursor: help;*/
+}
+a.helpleft[class]:hover span {
+right: 20px;
+}
 
 table th.separatorright {
 border-right: 3px solid #ddd;
 padding-right: 8px;
-/*
-width: 4px;
-padding: 0;
-background: #ddd;
-border: none;
-*/
 }
 table td.separatorright {
 border-right: 3px solid #ddd;
 padding-right: 8px;
-/*
-width: 0px;
-padding: 0;
-background: #ddd;
-border: none;
-*/
 }
 </style>
 
@@ -136,8 +135,8 @@ border: none;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Responsáveis pela gestão académica <a href="#" class="help">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade académica IST <a href="#" class="help">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 10% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas válidas superior a 5 e a 50% do nº estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
 		<th>Representatividade para divulgação</th>
@@ -150,11 +149,11 @@ border: none;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Assiduidade dos alunos <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
-		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo.</span></a></th>
-		<th class="aright">Capacidade pedagógica <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
-		<th class="aright">Interacção com os alunos <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 questões do grupo.</span></a></th>
-		<th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Passível de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
+		<th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
+		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo.</span></a></th>
+		<th class="aright">Capacidade pedagógica <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
+		<th class="aright">Interacção com os alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 questões do grupo.</span></a></th>
+		<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
 	</tr>
 	<tr>
 		<th>Resultados a melhorar</th>

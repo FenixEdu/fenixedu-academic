@@ -33,40 +33,35 @@ font-size: 70%;
 th:first-child {
 width: 250px;
 }
-body.survey table {
-}
-body.survey table th {
-vertical-align: bottom;
-}
-body.survey table td {
-text-align: center;
-}
-table.td50px td {
-width: 60px;
-}
+body.survey table { }
+body.survey table th { vertical-align: bottom; }
+body.survey table td { text-align: center; }
+table.td50px td { width: 60px; }
 table tr.top th { border-top: 4px solid #ddd; }
 table tr.top td { border-top: 4px solid #ddd; }
-
-body.survey table {
-}
+body.survey table { }
 .thtop th { vertical-align: top; }
 .vatop { vertical-align: top !important; }
 .vamiddle { vertical-align: middle !important; }
 .tdright td { text-align: right !important; }
 
-a.help {
+a {
+color: #105c93;
+}
+a.help, a.helpleft {
 position: relative;
 text-decoration: none;
 /*color: black !important;*/
 border: none !important;
 width: 20px;
 }
-a.help span {
-display: none;
-}
-a.help:hover {
+a.help span, a.helpleft span { display: none; }
+a.help:hover, a.helpleft:hover {
 /*background: none;*/ /* IE hack */
 z-index: 100;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+border-bottom-color: transparent;
 }
 a.help:hover span {
 display: block !important;
@@ -82,27 +77,31 @@ color: #fff;
 border: 3px solid #97bac6;
 /*cursor: help;*/
 }
-a { color: #105c93; }
+a.helpleft:hover span {
+display: block !important;
+display: inline-block;
+width: 250px;
+position: absolute;
+top: 10px;
+left: -280px;
+text-align: left;
+padding: 7px 10px;
+background: #48869e;
+color: #fff;
+border: 3px solid #97bac6;
+/*cursor: help;*/
+}
+a.helpleft[class]:hover span {
+right: 20px;
+}
 
 table th.separatorright {
 border-right: 3px solid #ddd;
 padding-right: 8px;
-/*
-width: 4px;
-padding: 0;
-background: #ddd;
-border: none;
-*/
 }
 table td.separatorright {
 border-right: 3px solid #ddd;
 padding-right: 8px;
-/*
-width: 0px;
-padding: 0;
-background: #ddd;
-border: none;
-*/
 }
 </style>
 
@@ -127,19 +126,19 @@ border: none;
 		<td><c:out value="${inquiryResult.numberOfEnrolled}" /></td>
 	</tr>
 	<tr>
-		<th>Avaliados <a href="#" class="help">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Avaliados <a href="#" class="helpleft">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.evaluatedRatioForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>Aprovados <a href="#" class="help">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Aprovados <a href="#" class="helpleft">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.approvedRatioForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>Média notas <a href="#" class="help">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Média notas <a href="#" class="helpleft">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.gradeAverageForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
+		<th>Sujeita a inquérito <a href="#" class="helpleft">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
 		<td><bean:message key="<%= "label." + result.getAvailableToInquiry().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
@@ -160,7 +159,7 @@ border: none;
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.validInitialFormAnswersRatio}" /></td>
 		</tr>
 		<tr>
-			<th>Respostas válidas inquérito à UC <a href="#" class="help">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a></th>
+			<th>Respostas válidas inquérito à UC <a href="#" class="helpleft">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a></th>
 			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.validInquiryAnswersNumber}" /></td>
 			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.validInquiryAnswersRatio}" /></td>
 		</tr>
@@ -180,8 +179,8 @@ border: none;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Responsáveis pela gestão académica <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 10% do nº inscritos.</span></a></th>
-			<th class="aright">Comunidade académica IST <a href="#" class="help">[?] <span>Representatividade - nº de respostas superior a 5 e a 50% do nº inscritos.</span></a></th>
+			<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas superior a 5 e a 10% do nº inscritos.</span></a></th>
+			<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas superior a 5 e a 50% do nº inscritos.</span></a></th>
 		</tr>
 		<tr>
 			<th>Representatividade para divulgação</th>
@@ -194,9 +193,9 @@ border: none;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Organização da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
-			<th class="aright">Avaliação da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
-			<th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
+			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
+			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
+			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
 		</tr>
 		<tr>
 			<th>Resultados a melhorar</th>
