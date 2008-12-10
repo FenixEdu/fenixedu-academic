@@ -62,7 +62,7 @@ ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_
 		<li class="m-list">subscrição de <html:link target="_blank" href="<%= request.getContextPath() + "/publico/alumni.do?method=checkLists"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.check.mailing.lists"/></html:link> por áreas de licenciatura pré-Bolonha</li>
 		<li class="alerts">um serviço de alertas com mensagens do IST acerca da agenda de realizações em curso: Conferências, Congressos, Colóquios, Cursos, Acções de Formação e outras notícias de interesse. Para beneficiar deste serviço deverá subscrever uma das <html:link href="<%= request.getContextPath() + "/publico/alumni.do?method=checkLists"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.check.mailing.lists"/></html:link></li>
 		<li class="mailfwd">endereço de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php">mail personalizado</html:link> e, se necessário, com <em>forward</em> automático</li>
-		<li class="homepage">alojamento de página web institucional</li>
+		<li class="homepage">alojamento de página web institucional (cf. área Pessoal)</li>
 		<li class="library">acesso à <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
 	</ul>
 </div>

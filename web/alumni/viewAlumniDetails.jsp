@@ -16,6 +16,9 @@
 <em><bean:message key="label.alumni.main.title" bundle="ALUMNI_RESOURCES" /></em>
 <h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
 
+<p class="mtop15 mbottom05">
+	<a href="<%= request.getContextPath() + "/alumni/searchAlumni.do?method=showAlumniList"%>">&laquo; Efectuar nova procura</a>
+</p>
 
 <table class="tstyle2 thlight thleft thwhite">
 	<tr>
@@ -23,12 +26,11 @@
 			<bean:message key="label.name" bundle="ALUMNI_RESOURCES" />:
 		</th>
 		<td>
-			<fr:view name="alumniData" layout="name-with-alias" property="person" />
+			<fr:view name="alumniData" property="person.name" />
 		</td>
 	</tr>
 
-	<bean:define id="availableEmail" name="alumniData" property="person.availableEmail" />
-	<logic:equal name="availableEmail" value="true">
+	<logic:equal name="alumniData" property="person.availableEmail" value="true">
 
 		<bean:define id="emailAddresses" name="alumniData" property="person.emailAddresses" />
 		<bean:size id="size" name="emailAddresses" />
@@ -57,29 +59,26 @@
 
 	</logic:equal>
 
-	<bean:define id="availablePhoto" name="alumniData" property="person.availablePhoto" />
-	<bean:define id="personId" name="alumniData" property="person.idInternal" />
-	<logic:equal name="availablePhoto" value="true">
+
+	<logic:equal name="alumniData" property="person.availablePhoto" value="true">
 		<tr>
 			<th>
 				<bean:message key="label.photo" bundle="ALUMNI_RESOURCES" />:
 			</th>
 			<td>
+				<bean:define id="personId" name="alumniData" property="person.idInternal" />
 				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 			</td>
 		</tr>
 	</logic:equal>
 
-	<bean:define id="availableWebSite" name="alumniData" property="person.availableWebSite" />
-	<logic:equal name="availableWebSite" value="true">
-		<tr>
-			<th>
-				<bean:message key="label.webpage" bundle="ALUMNI_RESOURCES" />:
-			</th>
-			<td>
-				<fr:view name="alumniData" property="person.webAddress" />
-			</td>
-		</tr>
-	</logic:equal>
+
+	<fr:view name="alumniData" property="person.webAddresses">
+	    <fr:layout name="contact-table">
+	       	<fr:property name="publicSpace" value="false"/>
+	        <fr:property name="bundle" value="ALUMNI_RESOURCES" />
+	        <fr:property name="label" value="label.webpage" />
+	    </fr:layout>
+	</fr:view>
 
 </table>

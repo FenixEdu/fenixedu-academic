@@ -30,8 +30,11 @@
 				</a>
 			</li>
 		</ul>
-		<p>
+		<p style="margin-top: 2em;">
 			<bean:message key="label.fenix.login" bundle="ALUMNI_RESOURCES" /> <strong><bean:write name="loginAlias" /></strong> 
+		</p>
+		<p>
+			Caso nunca tenha acedido ao sistema deverá <a href="https://id.ist.utl.pt/password/recover.php" target="_blank">obter uma password</a>.
 		</p>
 	</logic:equal>
 	
@@ -46,7 +49,7 @@
 	</logic:equal>
 
 		
-	<div class="h_box_alt" style="margin-top: 2.5em;">
+	<div class="h_box_alt" style="margin-top: 3em;">
 		<ul class="material">
 			<li class="lightbulb">
 				Está a decorrer o <strong>IV Inquérito ao Percurso Sócio-Profissional dos Diplomados</strong>.
