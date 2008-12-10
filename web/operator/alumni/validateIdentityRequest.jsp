@@ -97,7 +97,18 @@
 				<logic:present name="personBody" property="socialSecurityNumber" >
 					<fr:view name="personBody" property="socialSecurityNumber" />
 				</logic:present>
-				<logic:notPresent name="personBody" property="socialSecurityNumber" >-</logic:notPresent>
+				<logic:notPresent name="personBody" property="socialSecurityNumber">
+					<logic:notPresent name="operation">
+					-
+					</logic:notPresent>
+					<logic:present name="operation">
+						<bean:define id="requestId" name="requestBody" property="idInternal" />
+						<bean:define id="personId" name="personBody" property="idInternal" />
+						<html:link page="<%= "/alumni.do?method=updateSocialSecurityNumber&requestId=" + requestId + "&personId=" + personId %>">
+							<bean:message key="alumni.update.socialSecurityNumber" bundle="MANAGER_RESOURCES"/>
+						</html:link>
+					</logic:present>
+				</logic:notPresent>
 			</td>
 		</tr>
 		<tr>
@@ -127,13 +138,23 @@
 	</table>
 
 	<logic:present name="operation">
-		<p>
-			<bean:message key="identity.validation.info.message" bundle="MANAGER_RESOURCES"/>
-		</p>
 
 		<div class="reg_form">	
 			<fr:form action="/alumni.do">
 				<fr:edit id="requestBody" name="requestBody" visible="false" />
+				
+				<fr:edit id="requestComment" name="requestBody" schema="alumni.identity.request.comment" >
+					<fr:layout name="tabular" >
+						<fr:property name="classes" value="tstyle1 thlight thleft thmiddle"/>
+						<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
+					</fr:layout>
+				</fr:edit>
+
+				<p>
+					<bean:message key="identity.validation.info.message" bundle="MANAGER_RESOURCES"/>
+				</p>
+				
 				<input type="hidden" name="method" value="" />
 				<html:submit bundle="MANAGER_RESOURCES" altKey="label.authorize" onclick="this.form.method.value='confirmIdentity';">
 					<bean:message key="label.authorize" bundle="MANAGER_RESOURCES" />
@@ -143,8 +164,15 @@
 				</html:submit>
 			</fr:form>
 		</div>
-		
 	</logic:present>
+	<logic:notPresent name="operation">
+		<fr:view name="requestBody" schema="alumni.identity.request.comment" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thleft thmiddle"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notPresent>
+	
 </logic:present>
 
 

@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -23,10 +25,14 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward prepareIdentityValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("requestBody", RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(
-		getIntegerFromRequest(request, "requestId")));
-	request.setAttribute("personBody", RootDomainObject.getInstance().readPartyByOID(
-		getIntegerFromRequest(request, "personId")));
+	return innerPrepareValidation(mapping, request, RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(
+		getIntegerFromRequest(request, "requestId")), (Person) RootDomainObject.getInstance().readPartyByOID(
+			getIntegerFromRequest(request, "personId")));
+    }
+
+    private ActionForward innerPrepareValidation(ActionMapping mapping, HttpServletRequest request, AlumniIdentityCheckRequest checkRequest, Person alumniPerson) {
+	request.setAttribute("requestBody", checkRequest);
+	request.setAttribute("personBody", alumniPerson);
 	request.setAttribute("operation", "validate");
 	return mapping.findForward("alumni.validate.request");
     }
@@ -66,6 +72,15 @@ public class AlumniOperations extends FenixDispatchAction {
 
 	request.setAttribute("identityRequestsList", AlumniIdentityCheckRequest.readClosedRequests());
 	return mapping.findForward("alumni.closed.identity.requests");
+    }
+
+    public ActionForward updateSocialSecurityNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AlumniIdentityCheckRequest checkRequest = RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId"));
+	Person alumniPerson = (Person) RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId"));
+	executeService("ValidateAlumniIdentity", new Object[] { checkRequest, alumniPerson });
+	return innerPrepareValidation(mapping, request, checkRequest, alumniPerson);
     }
 
 }

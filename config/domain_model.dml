@@ -247,6 +247,7 @@ class DomainObject {
 		String nameOfMother;
 		DateTime creationDateTime;
 		Boolean approved;
+		String comment;
 		DateTime decisionDateTime;
 		AlumniRequestType requestType;
 		UUID requestToken;

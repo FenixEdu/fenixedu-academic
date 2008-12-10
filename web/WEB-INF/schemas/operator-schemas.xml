@@ -72,6 +72,9 @@
 	<slot name="documentIdNumber" key="label.documentIdNumber" >
 		<property size="20" />
 	</slot>
+	<slot name="approved" key="label.approved" layout="null-as-label" >
+		<property size="40" />
+	</slot>
 </schema>
 
 <schema name="alumni.identity.request.body" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
@@ -83,6 +86,13 @@
 	<slot name="socialSecurityNumber" key="label.socialSecurityNumber" />
 	<slot name="nameOfFather" key="label.nameOfFather" />
 	<slot name="nameOfMother" key="label.nameOfMother" />
+</schema>
+
+<schema name="alumni.identity.request.comment" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
+	<slot name="comment" key="label.comment" layout="longText" >
+		<property name="rows" value="4" />
+		<property name="columns" value="40" />
+	</slot>
 </schema>
 
 <schema name="alumni.person.body" type="net.sourceforge.fenixedu.domain.Person" >

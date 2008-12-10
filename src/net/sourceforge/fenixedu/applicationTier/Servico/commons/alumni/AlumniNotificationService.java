@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
@@ -54,7 +56,7 @@ public class AlumniNotificationService extends FenixService {
 		body += MessageFormat.format(bundle.getString("alumni.identity.request.student.number.info"), request.getAlumni()
 			.getStudent().getNumber().toString());
 		break;
-
+		
 	    default:
 		return;
 	    }
@@ -63,7 +65,7 @@ public class AlumniNotificationService extends FenixService {
 		    .getStudent().getPerson().getFirstAndLastName());
 	}
 
-	sendMail(senderName, senderEmail, request.getContactEmail(), subject, body);
+	sendMail(senderName, senderEmail, request.getContactEmail(), subject, body + " " + request.getComment());
 
     }
 

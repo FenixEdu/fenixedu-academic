@@ -10,5 +10,11 @@ public class ValidateAlumniIdentity extends AlumniNotificationService {
 	identityRequest.validate(approval, operator);
 	sendIdentityCheckEmail(identityRequest, approval);
     }
+    
+    public void run(AlumniIdentityCheckRequest identityRequest, Person alumniPerson) {
+	alumniPerson.setSocialSecurityNumber(identityRequest.getSocialSecurityNumber());
+    }
+    
+    
 
 }
