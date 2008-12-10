@@ -41,4 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "add column to AlumniIdentityCheckRequest" alterTableAlumniIdentityCheckRequest.sql
 
