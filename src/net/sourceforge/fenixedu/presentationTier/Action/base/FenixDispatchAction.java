@@ -75,6 +75,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ResourceBundle.getBundle(bundleName, Language.getLocale());
     }
 
+    @SuppressWarnings("unused")
     protected static IUserView getUserView(HttpServletRequest request) {
 	return UserView.getUser();
     }
@@ -84,10 +85,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
+    @SuppressWarnings( { "static-access", "unchecked", "unused" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
+    @SuppressWarnings( { "static-access", "unchecked", "unused" })
     protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
 	return rootDomainObject.readAllDomainObjects(clazz);
     }
@@ -218,12 +221,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected Object executeFactoryMethod() throws FenixFilterException, FenixServiceException {
-
-	return ExecuteFactoryMethod.run(getFactoryObject());
+	return executeFactoryMethod(getFactoryObject());
     }
 
     protected Object executeFactoryMethod(FactoryExecutor executor) throws FenixFilterException, FenixServiceException {
-
 	return ExecuteFactoryMethod.run(executor);
     }
 
@@ -389,9 +390,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	saveErrors(request, messages);
     }
 
+    @SuppressWarnings("unchecked")
     protected <T extends DomainObject> T getDomainObjectByOID(final HttpServletRequest request, final String name) {
 	final String parameter = request.getParameter(name);
 	final Long oid = parameter != null ? Long.valueOf(parameter) : (Long) request.getAttribute(name);
 	return oid == null ? null : (T) Transaction.getObjectForOID(oid.longValue());
     }
+
 }
