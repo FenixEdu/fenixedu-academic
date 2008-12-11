@@ -812,7 +812,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public ExecutionYear getLastApprovementExecutionYear() {
-	return getApprovedCurriculumLinesLastExecutionYear();
+	return hasAnyApprovedCurriculumLines() ? getApprovedCurriculumLinesLastExecutionYear() : null;
     }
 
     final public boolean hasAnyApprovedCurriculumLines() {
