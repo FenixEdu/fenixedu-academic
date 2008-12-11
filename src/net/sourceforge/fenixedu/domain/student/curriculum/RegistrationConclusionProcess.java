@@ -53,7 +53,9 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 		RegistrationState.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
 	    }
 	} else {
-	    RegistrationState.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
+	    if (!reg.isConcluded()) {
+		RegistrationState.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
+	    }
 	}
     }
 
