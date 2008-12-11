@@ -2,12 +2,17 @@ package net.sourceforge.fenixedu.domain.util.workflow;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
+
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class StateBean implements Serializable {
 
     private String nextState;
+
+    private DomainReference<Person> responsible;
 
     private DateTime stateDateTime;
 
@@ -26,6 +31,14 @@ public class StateBean implements Serializable {
 	setStateDate(stateDate);
     }
 
+    public Person getResponsible() {
+	return responsible == null ? null : responsible.getObject();
+    }
+
+    public void setResponsible(final Person responsible) {
+	this.responsible = responsible == null ? null : new DomainReference<Person>(responsible);
+    }
+
     public String getNextState() {
 	return nextState;
     }
@@ -38,6 +51,10 @@ public class StateBean implements Serializable {
 	return stateDateTime;
     }
 
+    protected void setStateDateTime(final DateTime dateTime) {
+	this.stateDateTime = dateTime;
+    }
+
     /**
      * For presentation usage only.
      * 
@@ -48,11 +65,11 @@ public class StateBean implements Serializable {
 
     public void setStateDate(final YearMonthDay ymd) {
 	if (ymd == null) {
-	    this.stateDateTime = null;
+	    setStateDateTime(null);
 	    return;
 	}
 
-	this.stateDateTime = new YearMonthDay().equals(ymd) ? ymd.toDateTimeAtCurrentTime() : ymd.toDateTimeAtMidnight();
+	setStateDateTime(new YearMonthDay().equals(ymd) ? ymd.toDateTimeAtCurrentTime() : ymd.toDateTimeAtMidnight());
     }
 
 }
