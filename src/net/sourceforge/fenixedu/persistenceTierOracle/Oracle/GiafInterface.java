@@ -102,6 +102,7 @@ public class GiafInterface {
 		month = rs.getInt("mes");
 	    }
 	    rs.close();
+	    stmt.close();
 	    StringBuilder query = new StringBuilder();
 	    YearMonth yearMonthPayingDate = new YearMonth(extraWorkRequest.getPartialPayingDate());
 	    yearMonthPayingDate.addMonth();
@@ -148,7 +149,6 @@ public class GiafInterface {
 			continue;
 		    }
 		}
-
 		if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode)) {
 		    extraWorkRequest.setSundayAmount(rs.getDouble("sal_val_brt"));
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode)) {
@@ -166,11 +166,9 @@ public class GiafInterface {
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode)) {
 		    extraWorkRequest.setExtraNightMealAmount(rs.getDouble("sal_val_brt"));
 		}
-
 		extraWorkRequest.updateAmount();
 	    }
 	    rs.close();
-
 	    stmt.close();
 	} catch (SQLException e) {
 	    e.printStackTrace();
