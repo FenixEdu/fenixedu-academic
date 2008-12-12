@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -31,6 +32,10 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	final Person person = getRemoteUser(request).getPerson();
+
+	if (person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	    return;
+	}
 
 	if (person.getStudent().hasInquiriesToRespond()) {
 	    throw new InquiriesNotAnswered();
