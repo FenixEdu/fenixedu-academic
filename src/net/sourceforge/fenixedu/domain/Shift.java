@@ -395,6 +395,11 @@ public class Shift extends Shift_Base {
 
 	@Override
 	public void afterAdd(Registration registration, Shift shift) {
+	    for (final ShiftEnrolment shiftEnrolment : shift.getShiftEnrolmentsSet()) {
+		if (shiftEnrolment.getRegistration() == registration) {
+		    return ;
+		}
+	    }
 	    new ShiftEnrolment(shift, registration);
 	}
 
