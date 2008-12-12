@@ -222,12 +222,14 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 		alumniBean.getJobBean().setParentBusinessArea(null);
 		request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
 		request.setAttribute("publicAccessBean", alumniBean);
+		request.setAttribute("professionalInformationPostback", "true"); //hack
 		return mapping.findForward("alumniPublicAccessInformationInquiry");
 	    }
 	    
 	    if (StringUtils.isEmpty(alumniBean.getJobBean().getPosition())) {
 		request.setAttribute("position-validated", RESOURCES.getString("label.mandatory.field"));
 		request.setAttribute("publicAccessBean", alumniBean);
+		request.setAttribute("professionalInformationPostback", "true"); //hack
 		return mapping.findForward("alumniPublicAccessInformationInquiry");
 	    }
 	}
@@ -249,6 +251,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	request.setAttribute("publicAccessBean", getRenderedObject("publicAccessBean"));
 	RenderUtils.invalidateViewState("message");
+	request.setAttribute("professionalInformationPostback", "true"); //hack
 	return mapping.findForward("alumniPublicAccessInformationInquiry");
     }
 

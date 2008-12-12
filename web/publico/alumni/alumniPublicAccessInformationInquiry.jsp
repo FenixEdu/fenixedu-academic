@@ -185,6 +185,8 @@
 		</label>
 		<bean:define id="teste" name="publicAccessBean" property="jobBean" />
 		<fr:edit id="beginDate-validated" name="teste" schema="job.begin" >
+			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+			<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformationError"/>
 			<fr:layout name="tabular-break">
 				<fr:property name="style" value="margin-left: -3px; margin-top: -6px; margin-bottom: -4px;" />
 				<fr:property name="displayLabel" value="false" />
