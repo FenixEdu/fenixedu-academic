@@ -255,9 +255,12 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 		    row.createCell(String.valueOf(attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
 			    attends.getEnrolment().getExecutionPeriod())));
 		}
-		row.createCell(enumerationResources.getString(attends.getAttendsStateType().getQualifiedName()));
+
+		final StudentAttendsStateType stateType = attends.getAttendsStateType();
+		row.createCell(stateType != null ? enumerationResources.getString(stateType.getQualifiedName()) : "--");
 		row.createCell(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName());
 		row.createCell(attends.getRegistration().getStudent().getPerson().getFirstAndLastName());
+
 		for (Grouping grouping : groupings) {
 		    StudentGroup studentGroup = attends.getStudentGroupByGrouping(grouping);
 		    if (studentGroup == null) {
