@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -109,7 +110,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	}
 
 	final Collection<AcademicServiceRequest> toInspect = new HashSet<AcademicServiceRequest>();
-	for (int iter = begin.getYear(); iter <= end.getYear(); iter++) {
+	final int beginYear = ExecutionYear.readByDateTime(begin).getBeginDateYearMonthDay().getYear();
+	final int endYear = ExecutionYear.readByDateTime(end).getEndDateYearMonthDay().getYear();
+	for (int iter = beginYear; iter <= endYear; iter++) {
 	    toInspect.addAll(filterRequests(iter));
 	}
 
@@ -127,7 +130,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    }
 
 	    final LocalDate date = registrationRequest.getSituationByType(situationType).getSituationDate().toLocalDate();
-	    if (!begin.isAfter(date) && !end.isBefore(date)) {
+	    if (begin.isAfter(date) || end.isBefore(date)) {
 		continue;
 	    }
 
@@ -150,7 +153,8 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	if (year == null) {
 	    return getAcademicServiceRequestsSet();
 	} else {
-	    return AcademicServiceRequestYear.readByYear(year.intValue()).getAcademicServiceRequestsSet();
+	    AcademicServiceRequestYear readByYear = AcademicServiceRequestYear.readByYear(year.intValue());
+	    return readByYear == null ? Collections.EMPTY_SET : readByYear.getAcademicServiceRequestsSet();
 	}
     }
 
