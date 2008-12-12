@@ -15,9 +15,7 @@ public class ExternalEnrolmentWrapper extends ExternalEnrolmentWrapper_Base {
     }
 
     private void init(final ExternalEnrolment externalEnrolment) {
-	if (externalEnrolment == null) {
-	    throw new RuntimeException("error.EnrolmentWrapper.enrolment.cannot.be.null");
-	}
+	check(externalEnrolment, "error.EnrolmentWrapper.enrolment.cannot.be.null");
 	super.setEnrolment(externalEnrolment);
     }
 

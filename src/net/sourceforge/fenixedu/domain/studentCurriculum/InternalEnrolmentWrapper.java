@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
 
@@ -17,9 +16,7 @@ public class InternalEnrolmentWrapper extends InternalEnrolmentWrapper_Base {
     }
 
     private void init(final Enrolment enrolment) {
-	if (enrolment == null) {
-	    throw new DomainException("error.EnrolmentWrapper.enrolment.cannot.be.null");
-	}
+	check(enrolment, "error.EnrolmentWrapper.enrolment.cannot.be.null");
 	super.setEnrolment(enrolment);
     }
 

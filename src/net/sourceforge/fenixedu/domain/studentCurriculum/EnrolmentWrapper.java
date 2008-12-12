@@ -13,9 +13,7 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
     }
 
     protected void init(final Credits credits) {
-	if (credits == null) {
-	    throw new DomainException("error.EnrolmentWrapper.credits.cannot.be.null");
-	}
+	check(credits, "error.EnrolmentWrapper.credits.cannot.be.null");
 	super.setCredits(credits);
     }
 
