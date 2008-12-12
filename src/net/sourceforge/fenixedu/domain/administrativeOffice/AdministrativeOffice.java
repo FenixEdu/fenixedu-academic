@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.joda.time.LocalDate;
+
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
     private AdministrativeOffice() {
@@ -81,6 +83,51 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	    final RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
 
 	    if (situationType != null && registrationRequest.getAcademicServiceRequestSituationType() != situationType) {
+		continue;
+	    }
+
+	    if (campus != null && registrationRequest.isDocumentRequest()) {
+		final DocumentRequest documentRequest = (DocumentRequest) registrationRequest;
+		final Campus documentCampus = documentRequest.getCampus();
+
+		if (documentCampus != null && !documentCampus.equals(campus)) {
+		    continue;
+		}
+	    }
+
+	    result.add(registrationRequest);
+	}
+
+	return result;
+    }
+
+    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(final LocalDate begin,
+	    final LocalDate end, final AcademicServiceRequestSituationType situationType, final Campus campus) {
+
+	if (end.isBefore(begin) || situationType == null) {
+	    throw new DomainException("error.AdministrativeOffice.wrong.argument");
+	}
+
+	final Collection<AcademicServiceRequest> toInspect = new HashSet<AcademicServiceRequest>();
+	for (int iter = begin.getYear(); iter <= end.getYear(); iter++) {
+	    toInspect.addAll(filterRequests(iter));
+	}
+
+	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
+
+	for (final AcademicServiceRequest request : toInspect) {
+	    if (!request.isRequestForRegistration()) {
+		continue;
+	    }
+
+	    final RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
+
+	    if (situationType != null && registrationRequest.getAcademicServiceRequestSituationType() != situationType) {
+		continue;
+	    }
+
+	    final LocalDate date = registrationRequest.getSituationByType(situationType).getSituationDate().toLocalDate();
+	    if (!begin.isAfter(date) && !end.isBefore(date)) {
 		continue;
 	    }
 
