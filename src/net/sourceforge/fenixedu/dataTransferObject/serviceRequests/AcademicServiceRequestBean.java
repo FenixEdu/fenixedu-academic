@@ -33,7 +33,7 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private Integer serviceRequestYear;
 
-    private AcademicServiceRequestBean() {
+    protected AcademicServiceRequestBean() {
 	super();
     }
 
@@ -197,11 +197,11 @@ public class AcademicServiceRequestBean implements Serializable {
 	return isToCancel() || isToReject();
     }
 
-    private AdministrativeOffice getAdministrativeOffice() {
+    protected AdministrativeOffice getAdministrativeOffice() {
 	return getEmployee() == null ? null : getEmployee().getAdministrativeOffice();
     }
 
-    private Campus getCampus() {
+    protected Campus getCampus() {
 	return getEmployee() == null ? null : getEmployee().getCurrentCampus();
     }
 
