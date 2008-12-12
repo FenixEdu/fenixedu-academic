@@ -11,6 +11,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class PersonFunction extends PersonFunction_Base {
 
     public final static Comparator<PersonFunction> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
@@ -164,6 +166,7 @@ public class PersonFunction extends PersonFunction_Base {
     }
 
     @Override
+    @Service
     public void delete() {
 	if (hasCurricularYear()) {
 	    removeCurricularYear();

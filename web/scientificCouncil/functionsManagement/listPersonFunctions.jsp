@@ -165,12 +165,15 @@
 				</f:facet>				
 				<h:outputText value="#{person_function.credits}" />
 			</h:column>	
-			<h:column> 											
+			<h:column>
 				<h:commandLink action="prepareEditFunction">
 					<h:outputText value="#{bundle['link.functions.management.edit']}"/>					
 					<f:param name="personFunctionID" id="personFunctionID1" value="#{person_function.idInternal}"/>
 					<f:param name="functionID" id="functionID" value="#{person_function.function.idInternal}"/>
 				</h:commandLink>				
+			</h:column>		
+			<h:column>
+				<h:outputLink value="#{scientificCouncilFunctionsManagementBackingBean.contextPath}/scientificCouncil/managePersonFunctions.do?method=deletePersonFunction&personFunctionID=#{person_function.idInternal}"><h:outputText value="#{bundle['link.functions.management.delete']}"/></h:outputLink>
 			</h:column>		
 		</h:dataTable>
 		
