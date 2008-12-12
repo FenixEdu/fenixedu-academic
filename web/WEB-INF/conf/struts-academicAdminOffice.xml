@@ -796,6 +796,13 @@
 		</action>	
 		
 		<!-- Begin: Lists -->
+		<action path="/diplomasListBySituation"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.DiplomasListBySituationDA"
+				parameter="method"
+				scope="request" >
+				<forward name="searchDiplomas" path="lists.searchDiplomasBySituations"/>
+		</action>
+		
 		<action path="/studentsListByDegree"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists.StudentsListByDegreeDA"
 				parameter="method"

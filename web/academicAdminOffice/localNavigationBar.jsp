@@ -63,6 +63,7 @@
 		<li class="navheader"><bean:message key="label.lists" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="link.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 		<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="link.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+		<li><html:link page="/diplomasListBySituation.do?method=prepareBySituation"><bean:message key="link.diplomasListBySituation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
 
 	<ul>

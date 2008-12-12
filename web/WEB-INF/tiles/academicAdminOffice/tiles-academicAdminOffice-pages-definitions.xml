@@ -453,6 +453,9 @@
 		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
 	</definition>	
 	<!-- Lists -->
+	<definition name="lists.searchDiplomasBySituations" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/searchDiplomasBySituation.jsp"></put>
+    </definition>
 	<definition name="lists.searchRegistrationsByDegree" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/lists/searchRegistrationsByDegree.jsp"></put>
     </definition>
