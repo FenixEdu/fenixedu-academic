@@ -141,7 +141,8 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? StringUtils.EMPTY : person.getDefaultEmailAddress()
 			.getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
-		spreadsheet.addCell(person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
+		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? StringUtils.EMPTY : person
+			.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
