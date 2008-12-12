@@ -61,6 +61,7 @@
 	<field name="totalVacationsDaysInYear" class="java.lang.Integer"/>
 	<field name="extraNightWorkAmount" class="java.lang.Double"/>
 	<field name="requestedExtraNightDays" class="java.lang.Integer"/>
+	<field name="extraNightMealAmount" class="java.lang.Double"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -79,7 +80,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="531"  isSplitAllowed="true" >
+			<band height="555"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="6"
@@ -347,7 +348,7 @@
 				<staticText>
 					<reportElement
 						x="4"
-						y="401"
+						y="422"
 						width="98"
 						height="13"
 						key="staticText-14"/>
@@ -364,7 +365,7 @@
 				<staticText>
 					<reportElement
 						x="65"
-						y="414"
+						y="435"
 						width="73"
 						height="13"
 						key="staticText-15"/>
@@ -381,7 +382,7 @@
 				<staticText>
 					<reportElement
 						x="65"
-						y="427"
+						y="448"
 						width="73"
 						height="13"
 						key="staticText-16"/>
@@ -398,7 +399,7 @@
 				<staticText>
 					<reportElement
 						x="65"
-						y="440"
+						y="461"
 						width="73"
 						height="13"
 						key="staticText-17"/>
@@ -518,7 +519,7 @@
 					<reportElement
 						mode="Opaque"
 						x="138"
-						y="440"
+						y="461"
 						width="17"
 						height="13"
 						key="staticText-18">
@@ -538,7 +539,7 @@
 					<reportElement
 						mode="Opaque"
 						x="138"
-						y="414"
+						y="435"
 						width="17"
 						height="13"
 						key="staticText-19">
@@ -558,7 +559,7 @@
 					<reportElement
 						mode="Opaque"
 						x="138"
-						y="427"
+						y="448"
 						width="17"
 						height="13"
 						key="staticText-20">
@@ -910,7 +911,7 @@
 					<reportElement
 						x="3"
 						y="349"
-						width="27"
+						width="432"
 						height="18"
 						key="staticText-26"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -921,7 +922,7 @@
 					<textElement>
 						<font fontName="Verdana"/>
 					</textElement>
-				<text><![CDATA[Total]]></text>
+				<text><![CDATA[Total do trabalho extraordinário]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -1032,7 +1033,7 @@
 				<staticText>
 					<reportElement
 						x="3"
-						y="462"
+						y="483"
 						width="98"
 						height="13"
 						key="staticText-28">
@@ -1056,7 +1057,7 @@
 				<staticText>
 					<reportElement
 						x="68"
-						y="475"
+						y="496"
 						width="133"
 						height="13"
 						key="staticText-29">
@@ -1079,7 +1080,7 @@
 				<staticText>
 					<reportElement
 						x="68"
-						y="488"
+						y="509"
 						width="133"
 						height="13"
 						key="staticText-30">
@@ -1107,7 +1108,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<staticText>
 					<reportElement
 						x="68"
-						y="501"
+						y="522"
 						width="133"
 						height="13"
 						key="staticText-31">
@@ -1126,7 +1127,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<staticText>
 					<reportElement
 						x="68"
-						y="514"
+						y="535"
 						width="133"
 						height="13"
 						key="staticText-32">
@@ -1145,7 +1146,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" pattern="(##0.00)" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="201"
-						y="501"
+						y="522"
 						width="117"
 						height="13"
 						key="textField-16">
@@ -1164,7 +1165,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" pattern="(###0.00)" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="201"
-						y="488"
+						y="509"
 						width="117"
 						height="13"
 						key="textField">
@@ -1192,7 +1193,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="318"
-						y="488"
+						y="509"
 						width="100"
 						height="14"
 						key="textField">
@@ -1220,7 +1221,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="201"
-						y="475"
+						y="496"
 						width="217"
 						height="13"
 						key="textField">
@@ -1243,7 +1244,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="201"
-						y="514"
+						y="535"
 						width="217"
 						height="13"
 						key="textField">
@@ -1262,7 +1263,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="318"
-						y="502"
+						y="523"
 						width="100"
 						height="12"
 						key="textField-17">
@@ -1333,6 +1334,85 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{extraNightDays}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="490"
+						y="369"
+						width="39"
+						height="18"
+						key="textField-20">
+							<printWhenExpression><![CDATA[new Boolean($F{extraNightDays}!=null)]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{extraNightMealAmount}==null? new Double(0):$F{extraNightMealAmount}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="486"
+						y="389"
+						width="44"
+						height="0"
+						key="line-8">
+							<printWhenExpression><![CDATA[new Boolean($F{extraNightDays}!=null)]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="491"
+						y="394"
+						width="39"
+						height="18"
+						key="textField-21">
+							<printWhenExpression><![CDATA[new Boolean($F{extraNightDays}!=null)]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double(
+($F{extraNightWorkAmount}==null? new Double(0):$F{extraNightWorkAmount}).doubleValue()
++
+($F{saturdayAmount}==null? new Double(0):$F{saturdayAmount}).doubleValue()
++
+($F{holidayAmount}==null? new Double(0):$F{holidayAmount}).doubleValue()
++
+($F{sundayAmount}==null? new Double(0):$F{sundayAmount}).doubleValue()
++
+($F{workdayAmount}==null? new Double(0):$F{workdayAmount}).doubleValue()
++
+($F{extraNightMealAmount}==null? new Double(0):$F{extraNightMealAmount}).doubleValue())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="6"
+						y="394"
+						width="27"
+						height="18"
+						key="staticText-34">
+							<printWhenExpression><![CDATA[new Boolean($F{extraNightDays}!=null)]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font fontName="Verdana"/>
+					</textElement>
+				<text><![CDATA[Total]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>
