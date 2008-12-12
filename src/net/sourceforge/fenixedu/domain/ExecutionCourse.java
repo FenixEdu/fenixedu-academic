@@ -1595,10 +1595,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return references;
     }
 
-    public List<Attends> getAttendsEnrolledOrWithActiveSCP() {
-	List<Attends> result = new ArrayList<Attends>();
-	for (Attends attends : this.getAttendsSet()) {
-	    if (attends.isEnrolledOrWithActiveSCP()) {
+    public List<Attends> getActiveAttends() {
+	final List<Attends> result = new ArrayList<Attends>();
+	for (final Attends attends : this.getAttendsSet()) {
+	    if (attends.isActive()) {
 		result.add(attends);
 	    }
 	}
@@ -1975,8 +1975,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Set<DegreeCurricularPlan> getAttendsDegreeCurricularPlans() {
-	Set<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
-	for (Attends attends : this.getAttendsEnrolledOrWithActiveSCP()) {
+	final Set<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
+	for (final Attends attends : this.getActiveAttends()) {
 	    dcps.add(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan());
 	}
 	return dcps;
@@ -1984,11 +1984,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
     public void searchAttends(SearchExecutionCourseAttendsBean attendsBean) {
-	Predicate<Attends> filter = attendsBean.getFilters();
-	Collection<Attends> validAttends = new HashSet<Attends>();
-	Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
-	for (Attends attends : getAttends()) {
-	    if (attends.isEnrolledOrWithActiveSCP() && filter.eval(attends)) {
+	final Predicate<Attends> filter = attendsBean.getFilters();
+	final Collection<Attends> validAttends = new HashSet<Attends>();
+	final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
+	for (final Attends attends : getAttends()) {
+	    if (attends.isActive() && filter.eval(attends)) {
 		validAttends.add(attends);
 		addAttendsToEnrolmentNumberMap(attends, enrolmentNumberMap);
 	    }

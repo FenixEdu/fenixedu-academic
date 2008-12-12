@@ -321,6 +321,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
     }
 
+    public ExecutionSemester getExecutionSemester(final YearMonthDay date) {
+	for (final ExecutionSemester semester : getExecutionPeriods()) {
+	    if (semester.containsDay(date)) {
+		return semester;
+	    }
+	}
+	return null;
+    }
+
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -497,5 +506,4 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
 	return null;
     }
-
 }

@@ -121,7 +121,7 @@
 						<%= ap_av %>
 					</td>
 					<td class="listClasses">
-						<html:link page="<%= "/studentsByCurricularCourse.do?method=prepare&objectCode=" + executionCourseOID +  "&degreeCurricularPlanID=" + degreeCurricularPlanID%>">
+						<html:link page="/searchECAttends.do?method=prepare" paramId="objectCode" paramName="executionCourseOID">
 							<bean:message key ="link.students.see" />
 						</html:link>
 					</td>

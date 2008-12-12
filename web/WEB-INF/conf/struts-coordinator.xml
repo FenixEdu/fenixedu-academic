@@ -10,16 +10,15 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
     	
-
-	   <form-bean name="studentsByCurricularCourseForm" 
-            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+        <form-bean name="studentsByCurricularCourseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="shiftIDs" type="java.lang.Integer[]" />
 			<form-property name="coursesIDs" type="java.lang.Integer[]" />
 			<form-property name="enrollmentType" type="java.lang.String[]" />
+			<form-property name="workingStudentType" type="java.lang.String[]" />						
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
 			<form-property name="viewPhoto" type="java.lang.String" />
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />			
         </form-bean>
 
 		<form-bean name="removeCoordinators"
@@ -839,11 +838,12 @@
 			<forward name="successfull-read" path="view-teaching-report"/>
 	</action>
 
-	<action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
-            name="studentsByCurricularCourseForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.StudentsWithAttendsByCurricularCourseListAction">
-            <forward name="success" path="/viewStudents.jsp" />
+     <!-- Students list -->
+     <action path="/searchECAttends" name="studentsByCurricularCourseForm" scope="request" parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SearchExecutionCourseAttendsAction">
+            <forward name="search" path="viewSearch" />
     </action>
+    
 	<action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>

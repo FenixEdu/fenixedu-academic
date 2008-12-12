@@ -144,6 +144,9 @@
 	<definition name="chooseTutorHistory" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/tutors/chooseTutorHistory.jsp" />
 	</definition>
+	<definition name="viewSearch" extends="definition.coordinator.two-column">
+		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
+	</definition>
 
 	<!-- Enrollment -->
 	<definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu.student">

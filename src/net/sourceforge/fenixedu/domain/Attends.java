@@ -106,7 +106,7 @@ public class Attends extends Attends_Base {
     public List<StudentGroup> getAllStudentGroups() {
 	return super.getStudentGroups();
     }
-    
+
     @Override
     public List<StudentGroup> getStudentGroups() {
 	List<StudentGroup> result = new ArrayList<StudentGroup>();
@@ -407,15 +407,18 @@ public class Attends extends Attends_Base {
 	return getExecutionCourse().getExecutionPeriod();
     }
 
-    public boolean isEnrolledOrWithActiveSCP() {
-	if (!hasEnrolment()) {
-	    final RegistrationState lastRegistrationState = getRegistration().getLastRegistrationState(
-		    getExecutionCourse().getExecutionYear());
-	    if (lastRegistrationState != null && !lastRegistrationState.isActive()) {
-		return false;
-	    }
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
+    }
+
+    public boolean isActive() {
+	final RegistrationState state;
+	if (hasEnrolment()) {
+	    state = getEnrolment().getRegistration().getLastRegistrationState(getExecutionYear());
+	} else {
+	    state = getRegistration().getLastRegistrationState(getExecutionYear());
 	}
-	return true;
+	return state != null && state.isActive();
     }
 
     public void removeShifts() {
@@ -436,11 +439,11 @@ public class Attends extends Attends_Base {
     }
 
     public StudentAttendsStateType getAttendsStateType() {
-	if (getEnrolment() == null) {
+	if (!hasEnrolment()) {
 	    return StudentAttendsStateType.NOT_ENROLED;
 	}
 
-	if ((!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod()) && getEnrolment().hasImprovement())) {
+	if (!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod()) && getEnrolment().hasImprovement()) {
 	    return StudentAttendsStateType.IMPROVEMENT;
 	}
 

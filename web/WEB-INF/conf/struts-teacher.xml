@@ -1082,11 +1082,6 @@
         <!-- End Action for Tests Administration Site -->
         
         <!-- Students list -->
-        <action path="/readCurricularCourseList" input="/teacherAdministrationViewerError.jsp" 
-            scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadCurricularCourseListAction">
-            <forward name="success" path="/viewCurricularCourseListOfStudents.jsp" />
-        </action>
         <action path="/searchECAttends" input="/teacherAdministrationViewerError.jsp" 
             name="studentsByCurricularCourseForm" scope="request" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SearchExecutionCourseAttendsAction">

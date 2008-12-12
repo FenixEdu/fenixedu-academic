@@ -962,7 +962,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Attends> getExecutionCourseAttends() {
 	final List<Attends> result = new ArrayList<Attends>();
-	for (final Attends attends : getExecutionCourse().getAttendsEnrolledOrWithActiveSCP()) {
+	for (final Attends attends : getExecutionCourse().getActiveAttends()) {
 	    if (attends.hasEnrolment()) {
 		if (!attends.getEnrolment().isImpossible()) {
 		    result.add(attends);
@@ -977,7 +977,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Student> getStudentsWithImpossibleEnrolments() {
 	final List<Student> result = new ArrayList<Student>();
-	for (final Attends attends : getExecutionCourse().getAttendsEnrolledOrWithActiveSCP()) {
+	for (final Attends attends : getExecutionCourse().getActiveAttends()) {
 	    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
 		final Student student = attends.getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
 		if (!result.contains(student)) {

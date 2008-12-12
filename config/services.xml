@@ -2768,15 +2768,6 @@
     </service>
 
     <service>
-        <name>ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEnrollmentType</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadExecutionCourseManagerByID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCourseByID</implementationClass>
         <isTransactional>true</isTransactional>
@@ -3338,15 +3329,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="StudentListByDegreeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadStudentsWithAttendsByExecutionCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsWithAttendsByExecutionCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
         </filterChains>
     </service>
 

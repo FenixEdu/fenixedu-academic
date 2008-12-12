@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +14,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class WriteMarks extends FenixService {
 
@@ -37,7 +35,7 @@ public class WriteMarks extends FenixService {
 	    final Attends attends = findStudentAttends(executionCourse, studentNumber);
 
 	    if (attends != null) {
-		if (attends.isEnrolledOrWithActiveSCP()) {
+		if (attends.isActive()) {
 
 		    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
 			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber
