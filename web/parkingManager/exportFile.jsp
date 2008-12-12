@@ -26,4 +26,5 @@
 		
 	<p><html:submit><bean:message key="button.export" bundle="PARKING_RESOURCES"/></html:submit></p>
 	<p><html:submit onclick="this.form.method.value='mergeFilesAndExportToExcel'"><bean:message key="button.exportExcel" bundle="PARKING_RESOURCES"/></html:submit></p>
+	<p><html:submit onclick="this.form.method.value='export'">Exportar sem importar</html:submit></p>
 </fr:form>

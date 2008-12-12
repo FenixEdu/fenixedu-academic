@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.parkingManager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -100,7 +102,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	row.setCell(((Short) accessTableRow.get("Garage")).toString());
 	row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
 	row.setCell(((Short) accessTableRow.get("Type")).toString());
-	row.setCell(getBooleanString(accessTableRow.get("Access"))); // if the
+	row.setCell(getBooleanString(accessTableRow.get("Access"))); // if
+	// the
 	// card is
 	// active
 	// or not
@@ -342,6 +345,34 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    newErrors.addRows(rows);
 
 	    database.close();
+
+	    response.setContentType("application/vnd.ms-access");
+	    response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
+	    final ServletOutputStream writer = response.getOutputStream();
+	    writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
+	    writer.flush();
+	    writer.close();
+
+	    response.flushBuffer();
+	}
+	return null;
+    }
+
+    public ActionForward export(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	String path = getServlet().getServletContext().getRealPath("/").replace('\\', '/');
+	InputStream inputStream = new FileInputStream(path + "/templates/Cartoes_XML.mdb");
+	if (inputStream != null) {
+	    File temp = FileUtils.copyToTemporaryFile(inputStream);
+	    Database db = Database.open(temp, Boolean.FALSE, Boolean.TRUE);
+
+	    Table xml = db.getTable("XML");
+	    List<ParkingParty> parkingParties = getValidParkingParties();
+	    for (ParkingParty parkingParty : parkingParties) {
+		Object[] newRow = new Object[28];
+		fillInRow(parkingParty, newRow);
+		xml.addRow(newRow);
+	    }
 
 	    response.setContentType("application/vnd.ms-access");
 	    response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
