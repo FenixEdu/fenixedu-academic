@@ -35,11 +35,11 @@ public enum AcademicServiceRequestSituationType {
 	return AcademicServiceRequestSituationType.class.getName() + "." + name();
     }
 
-    protected String getLocalizedName() {
+    public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
     }
 
-    protected String getLocalizedName(final Locale locale) {
+    public String getLocalizedName(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
