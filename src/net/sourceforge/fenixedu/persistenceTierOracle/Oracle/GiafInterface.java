@@ -138,14 +138,17 @@ public class GiafInterface {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());
 	    }
+	    System.out.println(query.toString());
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
+	    resetExtraWorkRequestAmounts(extraWorkRequest);
 	    while (rs.next()) {
 		if (requestsNumber > 1) {
 		    if (extraWorkRequest.getUnit().getCostCenterCode().intValue() != rs.getInt("emp_ccusto")) {
 			continue;
 		    }
 		}
+
 		if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode)) {
 		    extraWorkRequest.setSundayAmount(rs.getDouble("sal_val_brt"));
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode)) {
@@ -156,6 +159,12 @@ public class GiafInterface {
 		    extraWorkRequest.setWorkdayFirstLevelAmount(rs.getDouble("sal_val_brt"));
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode)) {
 		    extraWorkRequest.setWorkdaySecondLevelAmount(rs.getDouble("sal_val_brt"));
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraNightWorkFirstLevelMovementCode)) {
+		    extraWorkRequest.setExtraNightFirstLevelAmount(rs.getDouble("sal_val_brt"));
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraNightWorkSecondLevelMovementCode)) {
+		    extraWorkRequest.setExtraNightSecondLevelAmount(rs.getDouble("sal_val_brt"));
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode)) {
+		    extraWorkRequest.setExtraNightMealAmount(rs.getDouble("sal_val_brt"));
 		}
 
 		extraWorkRequest.updateAmount();
@@ -167,6 +176,17 @@ public class GiafInterface {
 	    e.printStackTrace();
 	    throw new ExcepcaoPersistencia();
 	}
+    }
+
+    private void resetExtraWorkRequestAmounts(ExtraWorkRequest extraWorkRequest) {
+	extraWorkRequest.setSundayAmount(new Double(0));
+	extraWorkRequest.setSaturdayAmount(new Double(0));
+	extraWorkRequest.setHolidayAmount(new Double(0));
+	extraWorkRequest.setWorkdayFirstLevelAmount(new Double(0));
+	extraWorkRequest.setWorkdaySecondLevelAmount(new Double(0));
+	extraWorkRequest.setExtraNightFirstLevelAmount(new Double(0));
+	extraWorkRequest.setExtraNightSecondLevelAmount(new Double(0));
+	extraWorkRequest.setExtraNightMealAmount(new Double(0));
     }
 
     public double getTotalMonthAmount(Partial closedYearMonth) throws ExcepcaoPersistencia {
@@ -205,7 +225,10 @@ public class GiafInterface {
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkSecondLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode).append(",");
 		query.append(")");
 	    }
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());

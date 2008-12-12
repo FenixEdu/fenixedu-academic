@@ -72,8 +72,9 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setWorkdaySecondLevelAmount(workdaySecondLevelAmount);
 	setExtraNightFirstLevelAmount(extraNightFirstLevelAmount);
 	setExtraNightSecondLevelAmount(extraNightSecondLevelAmount);
+	setExtraNightMealAmount(nightExtraWorkMealAmount);
 	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount
-		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount);
+		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount + nightExtraWorkMealAmount);
 
     }
 
@@ -123,8 +124,9 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	setWorkdaySecondLevelAmount(workdaySecondLevelAmount);
 	setExtraNightFirstLevelAmount(extraNightFirstLevelAmount);
 	setExtraNightSecondLevelAmount(extraNightSecondLevelAmount);
+	setExtraNightMealAmount(nightExtraWorkMealAmount);
 	setAmount(holidayAmount + saturdayAmount + sundayAmount + workdayFirstLevelAmount + workdaySecondLevelAmount
-		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount);
+		+ extraNightFirstLevelAmount + extraNightSecondLevelAmount + nightExtraWorkMealAmount);
     }
 
     public int getTotalHours() {
@@ -178,8 +180,12 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	BigDecimal sundayAmount = new BigDecimal(getSundayAmount().toString());
 	BigDecimal workdayFirstLevelAmount = new BigDecimal(getWorkdayFirstLevelAmount().toString());
 	BigDecimal workdaySecondLevelAmount = new BigDecimal(getWorkdaySecondLevelAmount().toString());
+	BigDecimal nightExtraWorkFirstLevelAmount = new BigDecimal(getExtraNightFirstLevelAmount().toString());
+	BigDecimal nightExtraWorkSecondLevelAmount = new BigDecimal(getExtraNightSecondLevelAmount().toString());
+	BigDecimal extraNightMealAmount = new BigDecimal(getExtraNightMealAmount().toString());
+
 	setAmount(holidayAmount.add(saturdayAmount).add(sundayAmount).add(workdayFirstLevelAmount).add(workdaySecondLevelAmount)
-		.doubleValue());
+		.add(nightExtraWorkFirstLevelAmount).add(nightExtraWorkSecondLevelAmount).add(extraNightMealAmount).doubleValue());
     }
 
     private YearMonth getPaymentYearMonth() {
@@ -226,9 +232,13 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	YearMonth yearMonth = getPaymentYearMonth();
 	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
 	    if (extraWorkRequest.getPaymentYear().equals(yearMonth.getYear())
-		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()
-		    && extraWorkRequest.getWorkdayHours() != null) {
-		result = result + extraWorkRequest.getWorkdayHours();
+		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()) {
+		if (extraWorkRequest.getWorkdayHours() != null) {
+		    result = result + extraWorkRequest.getWorkdayHours();
+		}
+		if (extraWorkRequest.getExtraNightHours() != null) {
+		    result = result + extraWorkRequest.getExtraNightHours();
+		}
 	    }
 	}
 	return result;
@@ -242,6 +252,9 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()) {
 		if (extraWorkRequest.getWorkdayAmount() != null) {
 		    result = result.add(new BigDecimal(extraWorkRequest.getWorkdayAmount()));
+		}
+		if (extraWorkRequest.getExtraNightWorkAmount() != null) {
+		    result = result.add(new BigDecimal(extraWorkRequest.getExtraNightWorkAmount()));
 		}
 	    }
 	}

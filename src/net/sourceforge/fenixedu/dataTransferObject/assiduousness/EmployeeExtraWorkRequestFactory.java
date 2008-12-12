@@ -454,6 +454,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    }
 	}
 
+	Double nightExtraWorkAmount = new Double(0);
 	if (getRequestedExtraNightHours() != null && getRequestedExtraNightDays() != null) {
 	    // para quem não tem horário nocturno:
 	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
@@ -509,6 +510,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		    }
 		    setExtraNightHours(getExtraNightHoursFirstLevel() + getExtraNightHoursSecondLevel());
 		}
+		nightExtraWorkAmount = new Double(
+			(getExtraNightHoursFirstLevel() * hourValue.doubleValue() * nightFirstHourPercentage)
+				+ (getExtraNightHoursSecondLevel() * hourValue.doubleValue() * nightSecondHourPercentage));
+
 	    } else {
 		setExtraNightDays(Math.min(getRequestedExtraNightDays(), assiduousnessMonthlyResume.getExtraNightDays()));
 	    }
@@ -616,7 +621,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		if (getEmployeeExtraWorkAuthorization().getExecutiveAuxiliarPersonel()) {
 		    limit = executiveAuxiliarPaymentLimitPercentage;
 		}
-		Double monthLimit = (monthValue.doubleValue() * limit);
+		// Tenho de descontar as nocturnas já pagas neste pedido.
+		Double monthLimit = (monthValue.doubleValue() * limit) - nightExtraWorkAmount;
 		if ((workdayHoursFirstLevelAmount + workdayHoursSecondLevelAmount) > monthLimit) {
 		    if (workdayHoursFirstLevelAmount > monthLimit) {
 			setWorkdayHoursSecondLevel(0);
