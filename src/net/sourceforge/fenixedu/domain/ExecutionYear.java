@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import dml.runtime.RelationAdapter;
@@ -463,6 +464,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return executionYearSearchCache.findByDateTime(dateTime);
     }
 
+    static public ExecutionYear readByDateTime(final LocalDate localDate) {
+	return executionYearSearchCache.findByDateTime(localDate.toDateTimeAtCurrentTime());
+    }
+
     public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.getBeginDateYearMonthDay().isEqual(begin) && executionYear.getEndDateYearMonthDay().isEqual(end)) {
@@ -506,4 +511,5 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
 	return null;
     }
+
 }
