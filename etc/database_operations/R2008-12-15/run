@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add assiduousnessStatus functionalities" assiduousnessStatusFunctionalities.sql
+execute "fixConclusionProcessLastVersionRelation" fixConclusionProcessLastVersionRelation.sql
