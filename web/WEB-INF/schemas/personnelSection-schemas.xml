@@ -1355,6 +1355,13 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="secondShiftYearMonthDay" key="label.secondShift" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
-
-
-
+<schema name="assiduousnessStatusSchema" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus"
+constructor="description, state, modifiedBy">
+	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
+	<slot name="state" key="label.assiduousnessControl" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState" />
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="modifiedBy" hidden="true"/>
+	<setter signature="editAssiduousnessStatus(description, state, modifiedBy)"/>
+</schema>

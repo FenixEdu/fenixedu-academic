@@ -106,6 +106,8 @@
 				<forward name="show-regularization-motives" path="show-regularization-motives"/>
 				<forward name="show-assiduousness-exemptions" path="show-assiduousness-exemptions"/>
 				<forward name="edit-assiduousness-exemption" path="edit-assiduousness-exemption"/>
+				<forward name="show-assiduousness-status" path="show-assiduousness-status"/>
+				<forward name="edit-assiduousness-status" path="edit-assiduousness-status"/>
 		</action>
 		<action path="/employeeAssiduousness" name="employeeForm"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 

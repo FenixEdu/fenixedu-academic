@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExemptionBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
@@ -426,6 +427,34 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	request.setAttribute("assiduousnessExemptionBean", assiduousnessExemptionBean);
 	return mapping.findForward("edit-assiduousness-exemption");
     }
+
+    public ActionForward showAssiduousnessStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	List<AssiduousnessStatus> assiduousnessStatus = new ArrayList<AssiduousnessStatus>(rootDomainObject
+		.getAssiduousnessStatus());
+	ComparatorChain chain = new ComparatorChain();
+	chain.addComparator(new BeanComparator("state"));
+	chain.addComparator(new BeanComparator("description"));
+	Collections.sort(assiduousnessStatus, chain);
+	request.setAttribute("assiduousnessStatus", assiduousnessStatus);
+	return mapping.findForward("show-assiduousness-status");
+    }
+
+    public ActionForward editAssiduousnessStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	String parameter = request.getParameter("idInternal");
+	Integer assiduousnessStatusId = parameter == null ? null : new Integer(parameter);
+	if (assiduousnessStatusId != null) {
+	    AssiduousnessStatus assiduousnessStatus = rootDomainObject.readAssiduousnessStatusByOID(assiduousnessStatusId);
+	    if (assiduousnessStatus != null) {
+		request.setAttribute("assiduousnessStatus", assiduousnessStatus);
+	    }
+	}
+	return mapping.findForward("edit-assiduousness-status");
+    }
+
+    // 
+    // prepareEditAssiduousnessStatus
 
     private Interval verifyTimeOfDayAndReturnInterval(LocalTime beginTime, LocalTime endTime, Boolean endNextDay) {
 	if (beginTime == null && endTime == null) {

@@ -53,6 +53,12 @@
 	<definition name="edit-assiduousness-exemption" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/editAssiduousnessExemption.jsp"/>
 	</definition>
+	<definition name="show-assiduousness-status" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/showAssiduousnessStatus.jsp"/>
+	</definition>
+	<definition name="edit-assiduousness-status" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/editAssiduousnessStatus.jsp"/>
+	</definition>
 	<!-- Export -->
 	<definition name="choose-year-month" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/chooseYearMonth.jsp"/>

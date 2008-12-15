@@ -18,6 +18,15 @@ public class AssiduousnessStatus extends AssiduousnessStatus_Base {
 	setModifiedBy(modifiedBy);
     }
 
+    public AssiduousnessStatus(String description, AssiduousnessState assiduousnessState, Employee modifiedBy) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setDescription(description);
+	setState(assiduousnessState);
+	setLastModifiedDate(new DateTime());
+	setModifiedBy(modifiedBy);
+    }
+
     public static AssiduousnessStatus getAssiduousnessStatusByDescription(String assiduousnessStatusDescription) {
 	for (AssiduousnessStatus assiduousnessStatus : RootDomainObject.getInstance().getAssiduousnessStatus()) {
 	    if (assiduousnessStatus.getDescription().equalsIgnoreCase(assiduousnessStatusDescription)) {
@@ -25,6 +34,13 @@ public class AssiduousnessStatus extends AssiduousnessStatus_Base {
 	    }
 	}
 	return null;
+    }
+
+    public void editAssiduousnessStatus(String description, AssiduousnessState assiduousnessState, Employee modifiedBy) {
+	setDescription(description);
+	setState(assiduousnessState);
+	setLastModifiedDate(new DateTime());
+	setModifiedBy(modifiedBy);
     }
 
 }
