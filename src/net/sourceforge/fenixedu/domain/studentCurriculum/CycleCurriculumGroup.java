@@ -233,7 +233,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 		    .readFirstBolonhaTransitionExecutionPeriod();
 	    final YearMonthDay begin = firstBolonhaTransitionExecutionPeriod.getBeginDateYearMonthDay();
 
-	    if (result.isBefore(begin)) {
+	    if (result == null || result.isBefore(begin)) {
 		result = begin;
 	    }
 	}
