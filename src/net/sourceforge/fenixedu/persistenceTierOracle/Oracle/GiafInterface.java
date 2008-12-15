@@ -163,7 +163,7 @@ public class GiafInterface {
 	    System.out.println(query.toString());
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
-	    resetExtraWorkRequestAmounts(extraWorkRequest);
+	    //resetExtraWorkRequestAmounts(extraWorkRequest);
 	    while (rs.next()) {
 		if (requestsNumber > 1) {
 		    if (extraWorkRequest.getUnit().getCostCenterCode().intValue() != rs.getInt("emp_ccusto")) {
