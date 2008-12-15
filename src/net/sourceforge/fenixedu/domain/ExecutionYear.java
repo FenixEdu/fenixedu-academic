@@ -130,14 +130,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 		object.getAcademicInterval().getStartDateTimeWithoutChronology());
     }
 
-    public int getDistanceInCivilYears(final ExecutionYear executionYear) {
-	if (executionYear == null || executionYear == this) {
-	    return 0;
-	}
-
-	return Math.abs(getBeginDateYearMonthDay().getYear() - executionYear.getBeginDateYearMonthDay().getYear());
-    }
-
     public boolean isAfter(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) > 0;
     }
@@ -262,7 +254,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public boolean belongsToCivilYear(int civilYear) {
-	return (getBeginDateYearMonthDay().getYear() == civilYear || getEndDateYearMonthDay().getYear() == civilYear);
+	return (getBeginCivilYear() == civilYear || getEndCivilYear() == civilYear);
+    }
+
+    public int getBeginCivilYear() {
+	return getBeginDateYearMonthDay().getYear();
+    }
+
+    public int getEndCivilYear() {
+	return getEndDateYearMonthDay().getYear();
     }
 
     public boolean belongsToCivilYearInterval(int beginCivilYear, int endCivilYear) {
@@ -275,11 +275,19 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public boolean isBeforeCivilYear(int civilYear) {
-	return getEndDateYearMonthDay().getYear() < civilYear;
+	return getEndCivilYear() < civilYear;
     }
 
     public boolean isAfterCivilYear(int civilYear) {
-	return getBeginDateYearMonthDay().getYear() > civilYear;
+	return getBeginCivilYear() > civilYear;
+    }
+
+    public int getDistanceInCivilYears(final ExecutionYear executionYear) {
+	if (executionYear == null || executionYear == this) {
+	    return 0;
+	}
+
+	return Math.abs(getBeginCivilYear() - executionYear.getBeginCivilYear());
     }
 
     public Collection<DegreeCurricularPlan> getDegreeCurricularPlans() {
