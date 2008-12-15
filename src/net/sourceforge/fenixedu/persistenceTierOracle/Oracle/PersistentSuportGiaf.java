@@ -47,7 +47,7 @@ public class PersistentSuportGiaf {
 	return instance;
     }
 
-    private void openConnection() throws ExcepcaoPersistencia {
+    private Connection openConnection() throws ExcepcaoPersistencia {
 	if (databaseUrl == null) {
 	    String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
 	    String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
@@ -66,12 +66,16 @@ public class PersistentSuportGiaf {
 	}
 	try {
 	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+	    Connection connection = DriverManager.getConnection(databaseUrl);
+	    connectionsMap.put(Thread.currentThread(), connection);
+	    connectionsMap.put(Thread.currentThread(), connection);
+	    return connection;
 	} catch (SQLException e) {
 	    throw new ExcepcaoPersistencia();
 	}
     }
 
-    private void closeConnection() throws ExcepcaoPersistencia {
+    public void closeConnection() throws ExcepcaoPersistencia {
 	Connection thisconnection = (Connection) connectionsMap.get(Thread.currentThread());
 	try {
 	    thisconnection.close();
@@ -83,10 +87,8 @@ public class PersistentSuportGiaf {
 
     public synchronized void startTransaction() throws ExcepcaoPersistencia {
 	try {
-	    openConnection();
-	    Connection connection = DriverManager.getConnection(databaseUrl);
+	    Connection connection = openConnection();
 	    connection.setAutoCommit(false);
-	    connectionsMap.put(Thread.currentThread(), connection);
 	} catch (SQLException e) {
 	    throw new ExcepcaoPersistencia("", e);
 	}
@@ -115,12 +117,7 @@ public class PersistentSuportGiaf {
     public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
 	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
 	if (thisConnection == null) {
-	    try {
-		openConnection();
-		thisConnection = DriverManager.getConnection(databaseUrl);
-	    } catch (java.sql.SQLException e) {
-		throw new ExcepcaoPersistencia(e);
-	    }
+	    thisConnection = openConnection();
 	}
 	PreparedStatement sql = null;
 	try {
@@ -134,12 +131,7 @@ public class PersistentSuportGiaf {
     public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
 	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
 	if (thisConnection == null) {
-	    try {
-		openConnection();
-		thisConnection = DriverManager.getConnection(databaseUrl);
-	    } catch (java.sql.SQLException e) {
-		throw new ExcepcaoPersistencia(e);
-	    }
+	    thisConnection = openConnection();
 	}
 	CallableStatement sql = null;
 	try {

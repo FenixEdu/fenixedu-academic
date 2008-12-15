@@ -101,6 +101,7 @@ public class GiafInterface {
 	    } catch (SQLException e) {
 		e.printStackTrace();
 	    }
+	    persistentSuportOracle.closeConnection();
 	}
 	return salary;
     }
@@ -206,6 +207,7 @@ public class GiafInterface {
 		    e.printStackTrace();
 		}
 	    }
+	    persistentSuportOracle.closeConnection();
 	}
     }
 
@@ -288,6 +290,7 @@ public class GiafInterface {
 	    } catch (SQLException e) {
 		e.printStackTrace();
 	    }
+	    persistentSuportOracle.closeConnection();
 	}
 	return 0;
     }
