@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory;
@@ -50,7 +52,11 @@ public class UpdateParkingParty extends FenixService {
 	parkingRequest.setParkingRequestState(parkingRequestState);
 	parkingRequest.setNote(note);
 
-	String email = parkingParty.getParty().getDefaultEmailAddress().getValue();
+	String email = null;
+	EmailAddress defaultEmailAddress = parkingParty.getParty().getDefaultEmailAddress();
+	if (defaultEmailAddress != null) {
+	    email = defaultEmailAddress.getValue();
+	}
 
 	if (note != null && note.trim().length() != 0 && email != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
