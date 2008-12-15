@@ -246,7 +246,10 @@ public class GiafInterface {
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkSecondLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode);
 		query.append(") and a.ano_pag=");
 		query.append(yearMonth.getYear());
 		query.append(" and a.mes_pag=");
@@ -264,7 +267,7 @@ public class GiafInterface {
 		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraNightWorkFirstLevelMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraNightWorkSecondLevelMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode);
 		query.append(")");
 	    }
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
