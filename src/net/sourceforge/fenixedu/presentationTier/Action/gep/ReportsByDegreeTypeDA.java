@@ -651,10 +651,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     private String normalize(final String text) {
-	if (text == null || text.isEmpty()) {
-	    return "";
+	if (!StringUtils.isEmpty(text)) {
+	    String result = "";
+	    try {
+		result = HtmlToTextConverterUtil.convertToText(text);
+	    } catch (Exception ex) {
+		result = HtmlToTextConverterUtil.convertToTextWithRegEx(text);
+	    }
+	    return result.replace('\t', ' ').replace('\n', ' ').replace('\r', ' ');
 	}
-	return HtmlToTextConverterUtil.convertToText(text).replace('\t', ' ').replace('\n', ' ').replace('\r', ' ');
+	return "";
     }
 
     public static class EnrolmentAndAprovalCounter {

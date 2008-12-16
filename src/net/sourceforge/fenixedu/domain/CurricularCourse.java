@@ -625,6 +625,20 @@ public class CurricularCourse extends CurricularCourse_Base {
 	public void setCurricularCourse(final CurricularCourse curricularCourse) {
 	    curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
 	}
+
+	public String getObjectives() {
+	    if (!StringUtils.isEmpty(getGeneralObjectives()) && !StringUtils.isEmpty(getOperacionalObjectives())) {
+		return getGeneralObjectives() + " " + getOperacionalObjectives();
+	    }
+	    return null;
+	}
+
+	public String getObjectivesEn() {
+	    if (!StringUtils.isEmpty(getGeneralObjectivesEn()) && !StringUtils.isEmpty(getOperacionalObjectivesEn())) {
+		return getGeneralObjectivesEn() + " " + getOperacionalObjectivesEn();
+	    }
+	    return null;
+	}
     }
 
     public static class CurriculumFactoryInsertCurriculum extends CurriculumFactory implements FactoryExecutor {
@@ -689,14 +703,23 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return curriculumFactoryEditCurriculum;
     }
 
+    public CurriculumFactoryEditCurriculum getCurriculumFactoryEditCurriculum(ExecutionSemester period) {
+	final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum = new CurriculumFactoryEditCurriculum(this);
+	final Curriculum curriculum = findLatestCurriculumModifiedBefore(period.getExecutionYear().getEndDate());
+	populateCurriculum(curriculumFactoryEditCurriculum, curriculum);
+	return curriculumFactoryEditCurriculum;
+    }
+    
     private static void populateCurriculum(final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum,
 	    final Curriculum curriculum) {
-	curriculumFactoryEditCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
-	curriculumFactoryEditCurriculum.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
-	curriculumFactoryEditCurriculum.setOperacionalObjectives(curriculum.getOperacionalObjectives());
-	curriculumFactoryEditCurriculum.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
-	curriculumFactoryEditCurriculum.setProgram(curriculum.getProgram());
-	curriculumFactoryEditCurriculum.setProgramEn(curriculum.getProgramEn());
+	if (curriculum != null) {
+	    curriculumFactoryEditCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
+	    curriculumFactoryEditCurriculum.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
+	    curriculumFactoryEditCurriculum.setOperacionalObjectives(curriculum.getOperacionalObjectives());
+	    curriculumFactoryEditCurriculum.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
+	    curriculumFactoryEditCurriculum.setProgram(curriculum.getProgram());
+	    curriculumFactoryEditCurriculum.setProgramEn(curriculum.getProgramEn());
+	}
     }
 
     public Curriculum editCurriculum(String program, String programEn, String generalObjectives, String generalObjectivesEn,
@@ -1360,56 +1383,69 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getObjectives(period);
+	if (isBolonhaDegree()) {
+	    return this.getCompetenceCourse().getObjectives(period);
+	}
+	return getCurriculumFactoryEditCurriculum(period).getObjectives();
     }
 
     public String getObjectives() {
-	if (this.getCompetenceCourse() != null) {
+	if (isBolonhaDegree()) {
 	    return this.getCompetenceCourse().getObjectives();
 	}
-	return null;
+	return getCurriculumFactoryEditCurriculum().getObjectives();
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getObjectivesEn(period);
+	if (isBolonhaDegree()) {
+	    return this.getCompetenceCourse().getObjectivesEn(period);
+	}
+	return getCurriculumFactoryEditCurriculum(period).getObjectivesEn();
     }
 
     public String getObjectivesEn() {
-	if (this.getCompetenceCourse() != null) {
+	if (isBolonhaDegree()) {
 	    return this.getCompetenceCourse().getObjectivesEn();
 	}
-	return null;
+	return getCurriculumFactoryEditCurriculum().getObjectivesEn();
     }
 
     public String getProgram(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getProgram(period);
+	if (isBolonhaDegree()) {
+	    return this.getCompetenceCourse().getProgram();
+	}
+	return getCurriculumFactoryEditCurriculum(period).getProgram();
     }
 
     public String getProgram() {
-	if (this.getCompetenceCourse() != null) {
+	if (isBolonhaDegree()) {
 	    return this.getCompetenceCourse().getProgram();
 	}
-	return null;
+	return getCurriculumFactoryEditCurriculum().getProgram();
     }
 
     public String getProgramEn(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getProgramEn(period);
+	if (isBolonhaDegree()) {
+	    return this.getCompetenceCourse().getProgramEn(period);
+	}
+	return getCurriculumFactoryEditCurriculum(period).getProgramEn();
     }
 
     public String getProgramEn() {
-	if (this.getCompetenceCourse() != null) {
+	if (isBolonhaDegree()) {
 	    return this.getCompetenceCourse().getProgramEn();
 	}
-	return null;
+	return getCurriculumFactoryEditCurriculum().getProgramEn();
     }
 
     public String getEvaluationMethod(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getEvaluationMethod(period);
+	if (this.getCompetenceCourse() != null) {
+	    return this.getCompetenceCourse().getEvaluationMethod(period);
+	}
+	if (this.hasAnyExecutionCourseIn(period))
+	    return getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodText();
+	else
+	    return null;
     }
 
     public String getEvaluationMethod() {
@@ -1420,8 +1456,13 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getEvaluationMethodEn(ExecutionSemester period) {
-	final CompetenceCourse competenceCourse = this.getCompetenceCourse();
-	return competenceCourse == null ? null : competenceCourse.getEvaluationMethodEn(period);
+	if (this.getCompetenceCourse() != null) {
+	    return this.getCompetenceCourse().getEvaluationMethodEn(period);
+	}
+	if (this.hasAnyExecutionCourseIn(period))
+	    return getExecutionCoursesByExecutionPeriod(period).get(0).getEvaluationMethodTextEn();
+	else
+	    return null;
     }
 
     public String getEvaluationMethodEn() {
