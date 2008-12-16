@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class SchoolPartConcludedState extends SchoolPartConcludedState_Base {
 
-    public SchoolPartConcludedState(Registration registration, Person person, DateTime dateTime) {
+    protected SchoolPartConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

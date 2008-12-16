@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class RegisteredState extends RegisteredState_Base {
 
-    public RegisteredState(Registration registration, Person person, DateTime dateTime) {
+    protected RegisteredState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

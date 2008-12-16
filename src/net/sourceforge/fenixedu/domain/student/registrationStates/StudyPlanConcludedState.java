@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 
 public class StudyPlanConcludedState extends StudyPlanConcludedState_Base {
 
-    public StudyPlanConcludedState(Registration registration, Person person, DateTime dateTime) {
+    protected StudyPlanConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
 	registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);

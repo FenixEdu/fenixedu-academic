@@ -7,11 +7,11 @@ import org.joda.time.DateTime;
 
 public class TransitedState extends TransitedState_Base {
 
-    public TransitedState() {
+    private TransitedState() {
 	super();
     }
 
-    public TransitedState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
+    protected TransitedState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
 	this();
 	init(registration, responsiblePerson, stateDate);
     }

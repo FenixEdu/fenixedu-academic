@@ -58,7 +58,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
+    private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
 	    RegistrationStateType stateType) {
 
 	switch (stateType) {
@@ -119,8 +119,8 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public IState nextState(final StateBean bean) {
-	return createState(getRegistration(), AccessControl.getPerson(), bean.getStateDateTime(), RegistrationStateType
-		.valueOf(bean.getNextState()));
+	return createState(getRegistration(), bean.getResponsible(), bean.getStateDateTime(), RegistrationStateType.valueOf(bean
+		.getNextState()));
     }
 
     @Override
@@ -232,6 +232,18 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	public RegistrationStateCreator(Registration registration) {
 	    super(registration);
+	}
+
+	private RegistrationStateCreator(Registration reg, Person responsible, DateTime creation, RegistrationStateType stateType) {
+	    this(reg);
+	    setResponsible(responsible);
+	    setStateDateTime(creation);
+	    setStateType(stateType);
+	}
+
+	public static RegistrationState createState(Registration reg, Person responsible, DateTime creation,
+		RegistrationStateType stateType) {
+	    return (RegistrationState) new RegistrationStateCreator(reg, responsible, creation, stateType).execute();
 	}
 
 	public Object execute() {

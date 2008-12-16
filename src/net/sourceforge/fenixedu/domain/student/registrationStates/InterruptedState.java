@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class InterruptedState extends InterruptedState_Base {
 
-    public InterruptedState(Registration registration, Person person, DateTime dateTime) {
+    protected InterruptedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

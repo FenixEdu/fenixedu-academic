@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class ExternalAbandonState extends ExternalAbandonState_Base {
 
-    public ExternalAbandonState(Registration registration, Person person, DateTime dateTime) {
+    protected ExternalAbandonState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

@@ -10,11 +10,11 @@ import org.joda.time.DateTime;
 
 public class TransitionalState extends TransitionalState_Base {
 
-    public TransitionalState() {
+    private TransitionalState() {
 	super();
     }
 
-    public TransitionalState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
+    protected TransitionalState(final Registration registration, final Person responsiblePerson, final DateTime stateDate) {
 	this();
 	init(registration, responsiblePerson, stateDate);
     }

@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class CanceledState extends CanceledState_Base {
 
-    public CanceledState(Registration registration, Person person, DateTime dateTime) {
+    protected CanceledState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

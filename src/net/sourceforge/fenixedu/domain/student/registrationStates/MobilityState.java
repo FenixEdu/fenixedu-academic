@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class MobilityState extends MobilityState_Base {
 
-    public MobilityState(Registration registration, Person person, DateTime dateTime) {
+    protected MobilityState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }

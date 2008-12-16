@@ -17,7 +17,7 @@ import org.joda.time.DateTime;
  */
 public class ConcludedState extends ConcludedState_Base {
 
-    public ConcludedState(Registration registration, Person person, DateTime dateTime) {
+    protected ConcludedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 
 	if (!registration.hasConcluded()) {

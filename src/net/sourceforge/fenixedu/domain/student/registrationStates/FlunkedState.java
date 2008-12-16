@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
  */
 public class FlunkedState extends FlunkedState_Base {
 
-    public FlunkedState(Registration registration, Person person, DateTime dateTime) {
+    protected FlunkedState(Registration registration, Person person, DateTime dateTime) {
 	super();
 	init(registration, person, dateTime);
     }
