@@ -22,7 +22,7 @@
 					<strong>
 						<bean:define id="infoDegree" name="viewClassSchedule" property="infoClass.infoExecutionDegree.infoDegreeCurricularPlan.infoDegree"/>
 					   	<bean:define id="infoExecutionPeriod" name="viewClassSchedule" property="infoClass.infoExecutionPeriod"/>
-						<jsp:getProperty name="infoDegree" property="degree.presentationName" />
+					   	<bean:write name="infoDegree" property="degree.presentationName"/>
 						<br/>
 						<jsp:getProperty name="infoExecutionPeriod" property="name"/> -
 						<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
