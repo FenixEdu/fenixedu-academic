@@ -737,7 +737,7 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft td50px tdcenter">
 	<tr> 
 		<td> 
- 			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyDisagree" bundle="INQUIRIES_RESOURCES"/> 
+ 			<bean:message key="header.teachingInquiries.veryBad" bundle="INQUIRIES_RESOURCES"/> 
  		</td> 
  		<td> 
  			<br/> 
@@ -745,7 +745,7 @@ padding-right: 8px;
  			<b>2</b> 
  		</td> 
  		<td> 
- 			<bean:message key="header.studentInquiries.firstPageThirdBlock.disagree" bundle="INQUIRIES_RESOURCES"/> 
+ 			<bean:message key="header.teachingInquiries.bad" bundle="INQUIRIES_RESOURCES"/> 
  		</td> 
  		<td> 
  			<br/> 
@@ -753,7 +753,7 @@ padding-right: 8px;
  			<b>4</b> 
  		</td> 
  		<td> 
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree" bundle="INQUIRIES_RESOURCES"/> 
+			<bean:message key="header.teachingInquiries.neitherGoodOrBad" bundle="INQUIRIES_RESOURCES"/> 
 		</td> 
 		<td> 
 			<br/> 
@@ -761,7 +761,7 @@ padding-right: 8px;
 			<b>6</b> 
 		</td> 
 		<td> 
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.agree" bundle="INQUIRIES_RESOURCES"/> 
+			<bean:message key="header.teachingInquiries.good" bundle="INQUIRIES_RESOURCES"/> 
 		</td> 
 		<td> 
 			<br/> 
@@ -769,7 +769,7 @@ padding-right: 8px;
 			<b>8</b> 
 		</td> 
 		<td> 
-			<bean:message key="header.studentInquiries.firstPageThirdBlock.totallyAgree" bundle="INQUIRIES_RESOURCES"/> 
+			<bean:message key="header.teachingInquiries.veryGood" bundle="INQUIRIES_RESOURCES"/> 
 		</td> 
 	</tr>
 	<tr>
