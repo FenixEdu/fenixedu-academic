@@ -1139,13 +1139,6 @@ public class Registration extends Registration_Base {
 		}
 	    }
 
-	    if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
-		final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
-		states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
-
-		return states.last().getExecutionYear();
-	    }
-
 	    return result;
 	}
     }
@@ -2339,7 +2332,16 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear calculateConclusionYear() {
-	return getLastApprovementExecutionYear();
+	ExecutionYear result = getLastApprovementExecutionYear();
+
+	if (result == null && hasState(RegistrationStateType.CONCLUDED)) {
+	    final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+	    states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
+
+	    return states.last().getExecutionYear();
+	}
+
+	return result;
     }
 
     public YearMonthDay getConclusionDate() {
