@@ -20,9 +20,6 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteSearchServ
 
 	final Collection<PaymentCode> result = new ArrayList<PaymentCode>();
 	for (final AnnualEvent event : executionYear.getAnnualEventsSet()) {
-	    if (event.isCancelled()) {
-		continue;
-	    }
 	    for (final AccountingEventPaymentCode code : event.getAllPaymentCodes()) {
 		if (code.getCode().startsWith(value)) {
 		    result.add(code);

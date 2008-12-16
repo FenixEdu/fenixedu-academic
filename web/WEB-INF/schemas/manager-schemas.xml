@@ -766,6 +766,7 @@
 	<slot name="oldCode" key="label.paymentCodeMapping.oldCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="labelField" value="code"/>
+		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
 				
 		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
@@ -777,6 +778,7 @@
 	<slot name="newCode" key="label.paymentCodeMapping.newCode" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="40"/>
 		<property name="labelField" value="code"/>
+		<property name="format" value="${code} (${state})"/>
 		<property name="indicatorShown" value="true"/>
 				
 		<property name="serviceName" value="SearchPaymentCodesByExecutionYear"/>
@@ -791,6 +793,10 @@
 	<slot name="executionInterval" key="label.executionInterval" layout="format" >
 		<property name="format" value="${qualifiedName}" />
 	</slot>
-	<slot name="oldPaymentCode.formattedCode" key="label.paymentCodeMapping.oldCode" />
-	<slot name="newPaymentCode.formattedCode" key="label.paymentCodeMapping.newCode" />
+	<slot name="oldPaymentCode" key="label.paymentCodeMapping.oldCode">
+		<property name="format" value="${formattedCode} (${maxAmount} - ${endDate})" />
+	</slot>
+	<slot name="newPaymentCode" key="label.paymentCodeMapping.newCode">
+		<property name="format" value="${formattedCode} (${maxAmount} - ${endDate})" />
+	</slot>
 </schema>
