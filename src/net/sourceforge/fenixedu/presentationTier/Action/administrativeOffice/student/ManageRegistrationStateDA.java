@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -45,7 +46,10 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeFactoryMethod();
+	    final RegistrationStateCreator creator = (RegistrationStateCreator) getFactoryObject();
+	    creator.setResponsible(AccessControl.getPerson());
+	    executeFactoryMethod(creator);
+
 	    addActionMessage(request, "message.success.state.edit");
 	} catch (DomainExceptionWithLabelFormatter e) {
 	    addActionMessage(request, e.getKey(), solveLabelFormatterArgs(request, e.getLabelFormatterArgs()));

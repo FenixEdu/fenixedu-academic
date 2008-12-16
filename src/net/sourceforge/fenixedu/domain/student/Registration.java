@@ -84,9 +84,9 @@ import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegisteredState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -143,7 +143,7 @@ public class Registration extends Registration_Base {
     private Registration(final DateTime start) {
 	this();
 	setStartDate(start.toYearMonthDay());
-	new RegisteredState(this, AccessControl.getPerson(), start);
+	RegistrationStateCreator.createState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
     }
 
     public Registration(final Person person, final StudentCandidacy studentCandidacy) {
@@ -999,6 +999,17 @@ public class Registration extends Registration_Base {
 
     final public boolean hasAnyApprovedEnrolment() {
 	return getLastStudentCurricularPlan().hasAnyApprovedEnrolment() || hasAnyExternalApprovedEnrolment();
+    }
+
+    final public boolean hasAnyApprovedEnrolments(final ExecutionYear executionYear) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+		if (enrolment.isApproved() && enrolment.getExecutionPeriod().getExecutionYear() == executionYear) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     final public boolean hasAnyEnrolmentsIn(final ExecutionYear executionYear) {
@@ -2595,7 +2606,8 @@ public class Registration extends Registration_Base {
 	cycleCurriculumGroup.conclude();
 
 	if (!isConcluded() && isRegistrationConclusionProcessed()) {
-	    RegistrationState.createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+	    RegistrationStateCreator
+		    .createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
 	}
     }
 
@@ -3290,14 +3302,14 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.student.Registration.cannot.transit.non.active.registrations");
 	}
 
-	RegistrationState.createState(this, person, when, RegistrationStateType.TRANSITED);
+	RegistrationStateCreator.createState(this, person, when, RegistrationStateType.TRANSITED);
 
 	for (final Registration registration : getTargetTransitionRegistrations()) {
 	    if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-		RegistrationState.createState(registration, person, when,
+		RegistrationStateCreator.createState(registration, person, when,
 			registration.hasConcluded() ? RegistrationStateType.CONCLUDED : RegistrationStateType.REGISTERED);
 	    } else {
-		RegistrationState.createState(registration, person, when, RegistrationStateType.REGISTERED);
+		RegistrationStateCreator.createState(registration, person, when, RegistrationStateType.REGISTERED);
 	    }
 
 	    registration.setRegistrationAgreement(getRegistrationAgreement());

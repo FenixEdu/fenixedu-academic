@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -50,11 +50,11 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 
 	if (reg.getDegreeType() == DegreeType.MASTER_DEGREE) {
 	    if (!reg.isSchoolPartConcluded()) {
-		RegistrationState.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
+		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
 	    }
 	} else {
 	    if (!reg.isConcluded()) {
-		RegistrationState.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
+		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.CONCLUDED);
 	    }
 	}
     }

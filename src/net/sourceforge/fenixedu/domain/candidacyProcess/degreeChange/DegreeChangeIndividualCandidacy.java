@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegr
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -167,7 +167,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	    setRegistration(registration);
 
 	    if (!registration.isActive()) {
-		RegistrationState.createState(registration, AccessControl.getPerson(), new DateTime(),
+		RegistrationStateCreator.createState(registration, AccessControl.getPerson(), new DateTime(),
 			RegistrationStateType.REGISTERED);
 	    }
 
@@ -200,7 +200,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	if (getPrecedentDegreeInformation().isInternal()) {
 	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
 	    if (!information.getRegistration().isInternalAbandon()) {
-		RegistrationState.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
+		RegistrationStateCreator.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
 			RegistrationStateType.INTERNAL_ABANDON);
 	    }
 	}

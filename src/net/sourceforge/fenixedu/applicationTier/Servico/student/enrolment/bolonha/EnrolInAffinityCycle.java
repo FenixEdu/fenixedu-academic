@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.DateTime;
@@ -98,7 +99,7 @@ public class EnrolInAffinityCycle extends FenixService {
 	}
 
 	final Registration registration = studentCurricularPlan.getRegistration();
-	final RegistrationState state = RegistrationState.createState(registration, null, new DateTime(),
+	final RegistrationState state = RegistrationStateCreator.createState(registration, null, new DateTime(),
 		RegistrationStateType.CONCLUDED);
 	state.setResponsiblePerson(null);
     }

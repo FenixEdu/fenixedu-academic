@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -496,7 +497,7 @@ public class SeparationCyclesManagement {
 	if (oldStudentCurricularPlan.getRegistration().hasState(RegistrationStateType.CONCLUDED)) {
 	    return;
 	}
-	final RegistrationState state = RegistrationState.createState(oldStudentCurricularPlan.getRegistration(), null,
+	final RegistrationState state = RegistrationStateCreator.createState(oldStudentCurricularPlan.getRegistration(), null,
 		new DateTime(), RegistrationStateType.CONCLUDED);
 	state.setResponsiblePerson(null);
     }
