@@ -58,13 +58,13 @@
 	<!-- TOP LINKS -->
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<logic:equal value="true" name="renderPreviousExecutionPeriod">
-			<li><%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="#currentSem">
+			<li><!-- NO_CHECKSUM --><%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="#currentSem">
 					<bean:write name="execution_period" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="execution_period" property="semester"/>
 				</a>
 			</li>
-			<li><%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="#otherSem">
+			<li><!-- NO_CHECKSUM --><%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="#otherSem">
 					<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="previousInfoExecutionPeriod" property="semester"/>
