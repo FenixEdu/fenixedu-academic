@@ -38,9 +38,19 @@
 									    	Entry entry = iterator.next();
 											String key = (String) entry.getKey();
 											Object value = (Object) entry.getValue();
+											if(value.getClass().isArray()) {
+												Object[] vars = (Object[]) value;
+												for (Object v : vars) {
+												%>
+													<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= v.toString() %>"/>
+												<%
+												}
+											} else {
 									%>
 										<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value.toString() %>"/>
-									<% } %>
+									<% 		}
+										}
+									%>
 								</logic:present>
 
 <%-- 
