@@ -2338,7 +2338,7 @@ public class Registration extends Registration_Base {
 	    final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
 	    states.addAll(getRegistrationStates(RegistrationStateType.CONCLUDED));
 
-	    return states.last().getExecutionYear();
+	    return states.first().getExecutionYear();
 	}
 
 	return result;
