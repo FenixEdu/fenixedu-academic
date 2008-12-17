@@ -251,7 +251,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
 	    final RegistrationState previousState = getRegistration().getStateInDate(getStateDateTime());
 	    if (previousState == null) {
-		createdState = createState(getRegistration(), null, getStateDateTime(), getStateType());
+		createdState = RegistrationState.createState(getRegistration(), null, getStateDateTime(), getStateType());
 	    } else {
 		createdState = (RegistrationState) StateMachine.execute(previousState, this);
 	    }
