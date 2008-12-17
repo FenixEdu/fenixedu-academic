@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Correct onlineTests marks" correctOnlineTestMarks.sql IST
