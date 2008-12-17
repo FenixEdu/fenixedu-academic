@@ -1462,4 +1462,16 @@ public class Student extends Student_Base {
     public boolean getActiveAlumni() {
 	return hasAlumni() && getAlumni().isRegistered();
     }
+
+    public boolean hasAttends(final ExecutionCourse executionCourse) {
+	for (final Registration registration : getRegistrationsSet()) {
+	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
+		if (attends.getExecutionCourse() == executionCourse) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
 }

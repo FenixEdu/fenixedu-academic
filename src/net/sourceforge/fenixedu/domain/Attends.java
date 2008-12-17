@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.Searc
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 
@@ -82,6 +83,10 @@ public class Attends extends Attends_Base {
 
     public Attends(Registration registration, ExecutionCourse executionCourse) {
 	this();
+	final Student student = registration.getStudent();
+	if (student.hasAttends(executionCourse)) {
+	    throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course");
+	}
 	setAluno(registration);
 	setDisciplinaExecucao(executionCourse);
     }
