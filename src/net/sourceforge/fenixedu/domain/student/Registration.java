@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
@@ -1811,6 +1812,18 @@ public class Registration extends Registration_Base {
 	} else {
 	    throw new DomainException("error.registration.withou.student.candidacy");
 	}
+    }
+
+    final public String getPrecedentDegreeConclusionGrade(final SchoolLevelType levelType) {
+	return hasPrecedentDegreeInformation(levelType) ? getPrecedentDegreeInformation(levelType).getConclusionGrade() : null;
+    }
+
+    public boolean hasPrecedentDegreeInformation(SchoolLevelType levelType) {
+	return getPrecedentDegreeInformation(levelType) != null;
+    }
+
+    public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
+	return super.getPrecedentDegreeInformation().getSchoolLevel() == levelType ? super.getPrecedentDegreeInformation() : null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
