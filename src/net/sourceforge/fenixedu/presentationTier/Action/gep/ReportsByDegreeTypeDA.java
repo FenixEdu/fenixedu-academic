@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -981,7 +982,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("ciclo");
-	spreadsheet.setHeader("campus");
+	spreadsheet.setHeader("Nota Conclusão Secundário");
+	spreadsheet.setHeader("Nota Seriação");
 	spreadsheet.setHeader("ano de ingresso");
 	spreadsheet.setHeader("ano lectivo conclusão");
 	spreadsheet.setHeader("data conclusão");
@@ -1024,6 +1026,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	} else {
 	    row.setCell(StringUtils.EMPTY);
 	}
+	row.setCell(registration.getPrecedentDegreeConclusionGrade(SchoolLevelType.SECOND_CYCLE_BASIC_SCHOOL));
+	row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
 	row.setCell(ingression.getYear());
 	row.setCell(conclusion == null ? StringUtils.EMPTY : conclusion.getYear());
 	row.setCell(conclusionDate == null ? StringUtils.EMPTY : conclusionDate.toString("yyyy-MM-dd"));
