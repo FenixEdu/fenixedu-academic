@@ -50,7 +50,9 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
 
     @Override
     protected void addSpecificVersionInfo() {
-	getLastVersion().setDissertationEnrolment(getRegistration().getDissertationEnrolment());
+	if (getCycleType() == CycleType.SECOND_CYCLE) {
+	    getLastVersion().setDissertationEnrolment(getRegistration().getDissertationEnrolment());
+	}
     }
 
     @Override
