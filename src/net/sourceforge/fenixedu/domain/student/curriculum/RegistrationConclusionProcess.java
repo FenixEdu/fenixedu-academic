@@ -48,7 +48,7 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	final Person responsible = conclusionProcess.getResponsible();
 	final DateTime creation = conclusionProcess.getCreationDateTime();
 
-	if (reg.getDegreeType() == DegreeType.MASTER_DEGREE) {
+	if (reg.getDegreeType() == DegreeType.MASTER_DEGREE || reg.getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
 	    if (!reg.isSchoolPartConcluded()) {
 		RegistrationStateCreator.createState(reg, responsible, creation, RegistrationStateType.SCHOOLPARTCONCLUDED);
 	    }
