@@ -19,7 +19,7 @@
 
 
 <logic:empty name="documentRequests">
-	<p class="mtop2"><em><bean:message key="no.document.requests"/><bean:write name="student" property="person.username"/>.</em></p>
+	<p class="mtop2"><em><bean:message key="no.document.requests" bundle="STUDENT_RESOURCES"/><bean:write name="student" property="person.username"/>.</em></p>
 </logic:empty>
 
 <fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
