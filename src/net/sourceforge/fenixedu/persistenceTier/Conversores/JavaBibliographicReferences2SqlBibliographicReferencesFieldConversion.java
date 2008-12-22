@@ -70,8 +70,8 @@ public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversi
 	bibliographicReferences.createBibliographicReference(source.substring(0, indexOfSep1), source.substring(indexOfSep1
 		+ ELEMENT_SEPARATOR.length(), indexOfSep2), source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(),
 		indexOfSep3), source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4), source.substring(
-		indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5), StringUtils.isEmpty(source.substring(indexOfSep5
-		+ ELEMENT_SEPARATOR.length(), indexOfSep6)) ? BibliographicReferenceType.MAIN : BibliographicReferenceType
+		indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),source.substring(indexOfSep5
+		+ ELEMENT_SEPARATOR.length(), indexOfSep6).equals("null") ? BibliographicReferenceType.MAIN : BibliographicReferenceType
 		.valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)), Integer.valueOf(source
 		.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7)));
 
