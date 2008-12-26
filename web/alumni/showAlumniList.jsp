@@ -8,12 +8,12 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 
 <!-- showAlumniList.jsp -->
+<em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
+<h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
+
 <html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
 	<p><span class="error"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
-
-<em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
-<h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
 
 <bean:define id="schema" value="alumni.search.bean" />
 <logic:notEmpty name="searchAlumniBean" property="degreeType" >

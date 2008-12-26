@@ -310,6 +310,7 @@
 	      		parameter="method"  
 	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.AlumniInformationAction"> 	                   
    	       <forward name="alumni.showAlumniStatistics" path="alumni.showAlumniStatistics"/>
+   	       <forward name="alumni.showAlumniDetails" path="alumni.showAlumniDetails"/>
 	    </action>
 
     </action-mappings>

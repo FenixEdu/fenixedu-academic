@@ -84,8 +84,29 @@
 		</slot> 
 		<slot name="degreeName" key="list.column.degree" />
 		<slot name="startExecutionYear.year" key="list.column.year" />
+		<slot name="conclusionDateForBolonha" key="list.column.conclusionDate" layout="null-as-label">
+        	<property name="label" value="n/a"/>
+		</slot>
 		<slot name="student.activeAlumni" layout="boolean" key="list.column.registered" />
 	</schema>
+
+
+	<schema name="alumni.gep.search.bean" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean" bundle="ALUMNI_RESOURCES">
+		<slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="40"/>
+		</slot>
+		<slot name="studentNumber" key="label.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+	</schema>
+
+	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ALUMNI_RESOURCES">
+		<slot name="student.person.name" key="list.column.name" />
+		<slot name="degreeName" key="list.column.degree" />
+		<slot name="startExecutionYear.year" key="list.column.year" />
+		<slot name="conclusionDateForBolonha" key="list.column.conclusionDate" layout="null-as-label">
+        	<property name="label" value="n/a"/>
+		</slot>
+	</schema>
+
 
 	<schema name="alumni.professional.information.job" type="net.sourceforge.fenixedu.domain.Job" bundle="ALUMNI_RESOURCES">
 		<slot name="employerName" key="label.employer.name" />

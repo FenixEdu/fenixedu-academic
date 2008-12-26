@@ -217,19 +217,43 @@ public class Alumni extends Alumni_Base {
 	List<Registration> resultRegistrations = new ArrayList<Registration>();
 	for (Person person : Person.readPersonsByNameAndRoleType(searchBean.getName(), RoleType.ALUMNI)) {
 	    if (person.hasStudent()) {
-		for (Registration registration : (searchBean.getDegreeType() == null ? person.getStudent().getRegistrations()
-			: person.getStudent().getRegistrationsByDegreeType(searchBean.getDegreeType()))) {
 
-		    if (searchBean.getDegree() != null) {
-			if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)
-				&& registration.getDegree().equals(searchBean.getDegree())) {
-			    resultRegistrations.add(registration);
-			}
-		    } else {
+		if (searchBean.getStudentNumber() == null
+			|| person.getStudent().getNumber().equals(searchBean.getStudentNumber())) {
+		    for (Registration registration : (searchBean.getDegreeType() == null ? person.getStudent().getRegistrations()
+			    : person.getStudent().getRegistrationsByDegreeType(searchBean.getDegreeType()))) {
 
-			if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)) {
-			    resultRegistrations.add(registration);
+			if (searchBean.getDegree() != null) {
+			    if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)
+				    && registration.getDegree().equals(searchBean.getDegree())) {
+				resultRegistrations.add(registration);
+			    }
+			} else {
+
+			    if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)) {
+				resultRegistrations.add(registration);
+			    }
 			}
+		    }
+		}
+	    }
+	}
+
+	return resultRegistrations;
+    }
+
+    public static List<Registration> readRegistrations(String studentName, Integer studentNumber) {
+
+	if (StringUtils.isEmpty(studentName) && studentNumber == null) {
+	    return new ArrayList<Registration>();
+	}
+
+	List<Registration> resultRegistrations = new ArrayList<Registration>();
+	for (Person person : Person.readPersonsByNameAndRoleType(studentName, RoleType.ALUMNI)) {
+	    if (person.hasStudent()) {
+		if (studentNumber == null || person.getStudent().getNumber().equals(studentNumber)) {
+		    for (Registration registration : person.getStudent().getRegistrations()) {
+			resultRegistrations.add(registration);
 		    }
 		}
 	    }

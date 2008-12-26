@@ -94,4 +94,7 @@
 	<definition name="alumni.showAlumniStatistics" extends="definition.gep.two-column">
         <put name="body" value="/gep/alumni/alumniStatistics.jsp"/>
     </definition>	
+	<definition name="alumni.showAlumniDetails" extends="definition.gep.two-column">
+        <put name="body" value="/gep/alumni/alumniDetails.jsp"/>
+    </definition>	
 </tiles-definitions>

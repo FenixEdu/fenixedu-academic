@@ -12,6 +12,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
@@ -23,11 +24,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlumniInformationAction extends FenixDispatchAction {
@@ -234,4 +238,32 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	row.setCell(formation.getFormationHours() != null ? formation.getFormationHours().toString() : "n/a");
     }
 
+    public ActionForward searchAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	AlumniSearchBean searchBean;
+	final IViewState viewState = RenderUtils.getViewState("searchAlumniBean");
+	if (viewState != null) {
+	    searchBean = (AlumniSearchBean) viewState.getMetaObject().getObject();
+	} else {
+	    searchBean = new AlumniSearchBean();
+	}
+
+	if (!StringUtils.isEmpty(searchBean.getName()) || searchBean.getStudentNumber() != null) {
+	    List<Registration> resultRegistrations = Alumni
+		    .readRegistrations(searchBean.getName(), searchBean.getStudentNumber());
+	    RenderUtils.invalidateViewState();
+	    searchBean.setAlumni(new ArrayList<Registration>(resultRegistrations));
+	}
+
+	request.setAttribute("searchAlumniBean", searchBean);
+	return mapping.findForward("alumni.showAlumniDetails");
+    }
+
+    public ActionForward searchAlumniError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	request.setAttribute("searchAlumniBean", getFromRequest(request, "searchAlumniBean"));
+	return mapping.findForward("alumni.showAlumniDetails");
+    }
 }
