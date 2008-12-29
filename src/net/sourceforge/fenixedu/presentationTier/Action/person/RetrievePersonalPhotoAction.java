@@ -66,6 +66,9 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
 		return true;
 	    }
+	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI)) {
+		return person.getAvailablePhoto();
+	    }
 	}
 	return false;
     }
