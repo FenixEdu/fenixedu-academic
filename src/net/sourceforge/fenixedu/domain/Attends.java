@@ -383,6 +383,10 @@ public class Attends extends Attends_Base {
 	return getExecutionCourse().getExecutionYear() == executionYear;
     }
 
+    public boolean isFor(final Shift shift) {
+	return isFor(shift.getExecutionCourse());
+    }
+
     @Override
     @Deprecated
     public Registration getAluno() {
@@ -458,6 +462,26 @@ public class Attends extends Attends_Base {
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasExecutionCourseTo(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final CurricularCourse curricularCourse : getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+	    if (degreeCurricularPlan.hasDegreeModule(curricularCourse)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasExecutionCourseTo(final StudentCurricularPlan studentCurricularPlan) {
+	return hasExecutionCourseTo(studentCurricularPlan.getDegreeCurricularPlan());
+    }
+
+    boolean canMove(final StudentCurricularPlan from, final StudentCurricularPlan to) {
+	if (hasEnrolment()) {
+	    return !from.hasEnrolments(getEnrolment()) && to.hasEnrolments(getEnrolment());
+	}
+	return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
     }
 
 }
