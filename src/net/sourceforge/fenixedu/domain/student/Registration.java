@@ -1748,7 +1748,9 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 20; // 10;
+    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 20; // 10
+
+    // ;
 
     private void checkIfReachedAttendsLimit() {
 	final IUserView userView = AccessControl.getUserView();
@@ -3509,6 +3511,15 @@ public class Registration extends Registration_Base {
 
     public String getUniversityCode(final ExecutionYear executionYear) {
 	return Campus.getUniversityCode(getCampus(executionYear)) + getDegree().getMinistryCode();
+    }
+
+    public void changeShifts(final Attends attend, final Registration newRegistration) {
+	for (final Shift shift : getShiftsSet()) {
+	    if (attend.isFor(shift)) {
+		shift.removeStudents(this);
+		shift.addStudents(newRegistration);
+	    }
+	}
     }
 
 }
