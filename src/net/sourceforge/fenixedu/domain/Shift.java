@@ -73,8 +73,7 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
-    
-    
+
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {
 
@@ -101,11 +100,12 @@ public class Shift extends Shift_Base {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
+
     @Override
     public List<StudentGroup> getAssociatedStudentGroups() {
-	List<StudentGroup> result = new ArrayList<StudentGroup>(); 
-	for(StudentGroup sg : super.getAssociatedStudentGroups()){
-	    if (sg.getValid()){
+	List<StudentGroup> result = new ArrayList<StudentGroup>();
+	for (StudentGroup sg : super.getAssociatedStudentGroups()) {
+	    if (sg.getValid()) {
 		result.add(sg);
 	    }
 	}
@@ -134,7 +134,6 @@ public class Shift extends Shift_Base {
 	// TODO Auto-generated method stub
 	return this.getAssociatedStudentGroups().contains(associatedStudentGroups);
     }
-
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {
@@ -395,18 +394,24 @@ public class Shift extends Shift_Base {
 
 	@Override
 	public void afterAdd(Registration registration, Shift shift) {
-	    for (final ShiftEnrolment shiftEnrolment : shift.getShiftEnrolmentsSet()) {
-		if (shiftEnrolment.getRegistration() == registration) {
-		    return ;
-		}
+	    if (!shift.hasShiftEnrolment(registration)) {
+		new ShiftEnrolment(shift, registration);
 	    }
-	    new ShiftEnrolment(shift, registration);
 	}
 
 	@Override
 	public void afterRemove(Registration registration, Shift shift) {
 	    shift.unEnrolStudent(registration);
 	}
+    }
+
+    private boolean hasShiftEnrolment(final Registration registration) {
+	for (final ShiftEnrolment shiftEnrolment : getShiftEnrolmentsSet()) {
+	    if (shiftEnrolment.hasRegistration(registration)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public void unEnrolStudent(final Registration registration) {
