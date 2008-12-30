@@ -46,6 +46,13 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	}
     };
 
+    static final public Comparator<CurriculumModule> COMPARATOR_BY_FULL_PATH_NAME_AND_ID = new Comparator<CurriculumModule>() {
+	public int compare(CurriculumModule o1, CurriculumModule o2) {
+	    int result = o1.getFullPath().compareTo(o2.getFullPath());
+	    return (result == 0) ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : result;
+	}
+    };
+
     public CurriculumModule() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
