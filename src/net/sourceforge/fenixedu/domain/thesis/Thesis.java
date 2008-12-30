@@ -1071,6 +1071,10 @@ public class Thesis extends Thesis_Base {
 	return isDraft() && getSubmission() != null;
     }
 
+    public void removeMark() {
+	super.setMark(null);
+    }
+
     @Override
     public void setMark(Integer mark) {
 	if (!isMarkValid(mark)) {
