@@ -119,8 +119,8 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     /**
      * 
      * After create new OptionalEnrolment, must delete Enrolment (to delete
-     * Enrolment disconnect at least: ProgramCertificateRequests, CourseLoadRequests,
-     * ExamDateCertificateRequests)
+     * Enrolment disconnect at least: ProgramCertificateRequests,
+     * CourseLoadRequests, ExamDateCertificateRequests)
      * 
      * @param enrolment
      * @param curriculumGroup
@@ -152,7 +152,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	optionalEnrolment.getEnrolmentWrappers().addAll(enrolment.getEnrolmentWrappers());
 	optionalEnrolment.getTheses().addAll(enrolment.getTheses());
 	optionalEnrolment.getExamDateCertificateRequests().addAll(enrolment.getExamDateCertificateRequests());
-	optionalEnrolment.getAttends().addAll(enrolment.getAttends());
+	changeAttends(enrolment, optionalEnrolment);
 	optionalEnrolment.createEnrolmentLog(EnrolmentAction.ENROL);
 
 	return optionalEnrolment;

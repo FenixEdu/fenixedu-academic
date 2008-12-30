@@ -155,7 +155,7 @@ public class SeparationCyclesManagement {
 	    final StudentCurricularPlan newStudentCurricularPlan) {
 
 	for (final Shift shift : getShiftsToMove(attend, oldStudentCurricularPlan)) {
-	    shift.unEnrolStudent(oldStudentCurricularPlan.getRegistration());
+	    shift.removeStudents(oldStudentCurricularPlan.getRegistration());
 	    if (!shift.hasStudents(newStudentCurricularPlan.getRegistration())) {
 		shift.addStudents(newStudentCurricularPlan.getRegistration());
 	    }
@@ -165,7 +165,7 @@ public class SeparationCyclesManagement {
     private List<Shift> getShiftsToMove(final Attends attend, final StudentCurricularPlan oldStudentCurricularPlan) {
 	final List<Shift> shifts = new ArrayList<Shift>();
 	for (final Shift shift : oldStudentCurricularPlan.getRegistration().getShifts()) {
-	    if (attend.isFor(shift.getExecutionCourse())) {
+	    if (attend.isFor(shift)) {
 		shifts.add(shift);
 	    }
 	}

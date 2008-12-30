@@ -2638,23 +2638,52 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public OptionalEnrolment convertEnrolmentToOptionalEnrolment(final Enrolment enrolment,
 	    final CurriculumGroup curriculumGroup, final OptionalCurricularCourse curricularCourse) {
+
+	if (!hasEnrolments(enrolment)) {
+	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
+	}
+
 	if (isApproved(curricularCourse)) {
 	    throw new DomainException("error.Enrolment.duplicate.enrolment", curricularCourse.getName());
 	}
+
 	final OptionalEnrolment result = OptionalEnrolment.createBasedOn(enrolment, curriculumGroup, curricularCourse);
 	enrolment.getProgramCertificateRequests().clear();
 	enrolment.getCourseLoadRequests().clear();
 	enrolment.getExamDateCertificateRequests().clear();
 	enrolment.delete();
+
+	if (result.getStudentCurricularPlan() != this) {
+	    correctInvalidAttends(result.getStudentCurricularPlan());
+	}
+
 	return result;
     }
 
+    private void correctInvalidAttends(final StudentCurricularPlan to) {
+	for (final Attends attend : getRegistration().getAssociatedAttends()) {
+	    if (!attend.hasExecutionCourseTo(this) && attend.canMove(this, to)) {
+		getRegistration().changeShifts(attend, to.getRegistration());
+		attend.setRegistration(to.getRegistration());
+	    }
+	}
+    }
+
     public Enrolment convertOptionalEnrolmentToEnrolment(final OptionalEnrolment enrolment, final CurriculumGroup curriculumGroup) {
+	if (!hasEnrolments(enrolment)) {
+	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
+	}
+
 	final Enrolment result = Enrolment.createBasedOn(enrolment, curriculumGroup);
 	enrolment.getProgramCertificateRequests().clear();
 	enrolment.getCourseLoadRequests().clear();
 	enrolment.getExamDateCertificateRequests().clear();
 	enrolment.delete();
+
+	if (result.getStudentCurricularPlan() != this) {
+	    correctInvalidAttends(result.getStudentCurricularPlan());
+	}
+
 	return result;
     }
 

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.CurriculumModuleMoveWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 public class OptionalCurricularCoursesLocationBean implements Serializable {
@@ -114,6 +115,14 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
 	    Collections.sort(curriculumGroups, CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
 	    return curriculumGroups.isEmpty() ? null : curriculumGroups.get(0);
 	}
+
+	public StudentCurricularPlan getStudentCurricularPlan() {
+	    return getEnrolment().getStudentCurricularPlan();
+	}
+
+	public Student getStudent() {
+	    return getStudentCurricularPlan().getRegistration().getStudent();
+	}
     }
 
     static public class OptionalEnrolmentLocationBean implements Serializable {
@@ -139,6 +148,14 @@ public class OptionalCurricularCoursesLocationBean implements Serializable {
 
 	public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
 	    this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
+	}
+
+	public StudentCurricularPlan getStudentCurricularPlan() {
+	    return getEnrolment().getStudentCurricularPlan();
+	}
+
+	public Student getStudent() {
+	    return getStudentCurricularPlan().getRegistration().getStudent();
 	}
     }
 

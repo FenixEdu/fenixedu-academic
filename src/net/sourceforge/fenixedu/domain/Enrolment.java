@@ -46,7 +46,7 @@ import org.joda.time.YearMonthDay;
 /**
  * @author dcs-rjao
  * 
- * 24/Mar/2003
+ *         24/Mar/2003
  */
 
 public class Enrolment extends Enrolment_Base implements IEnrolment {
@@ -1353,11 +1353,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return null;
     }
 
-    public static Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
-	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
-	return enrolments.get(0);
-    }
-
     public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
 	for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluationsSet()) {
 	    if (enrolmentEvaluation.hasMarkSheet() || enrolmentEvaluation.isFinal()) {
@@ -1365,53 +1360,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	}
 	return false;
-    }
-
-    /**
-     * 
-     * After create new Enrolment, must delete OptionalEnrolment (to delete
-     * OptionalEnrolment disconnect at least: ProgramCertificateRequests,
-     * CourseLoadRequests, ExamDateCertificateRequests)
-     * 
-     * @param optionalEnrolment
-     * @param curriculumGroup :
-     *                new CurriculumGroup for Enrolment
-     * @return Enrolment
-     */
-    static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
-	checkParameters(optionalEnrolment, curriculumGroup);
-
-	final Enrolment enrolment = new Enrolment();
-	enrolment.setCurricularCourse(optionalEnrolment.getCurricularCourse());
-	enrolment.setWeigth(optionalEnrolment.getWeigth());
-	enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
-	enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
-	enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
-	enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
-	enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
-	enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
-	enrolment.setCurriculumGroup(curriculumGroup);
-
-	enrolment.getEvaluations().addAll(optionalEnrolment.getEvaluations());
-	enrolment.getProgramCertificateRequests().addAll(optionalEnrolment.getProgramCertificateRequests());
-	enrolment.getCourseLoadRequests().addAll(optionalEnrolment.getCourseLoadRequests());
-	enrolment.getExtraExamRequests().addAll(optionalEnrolment.getExtraExamRequests());
-	enrolment.getEnrolmentWrappers().addAll(optionalEnrolment.getEnrolmentWrappers());
-	enrolment.getTheses().addAll(optionalEnrolment.getTheses());
-	enrolment.getExamDateCertificateRequests().addAll(optionalEnrolment.getExamDateCertificateRequests());
-	enrolment.getAttends().addAll(optionalEnrolment.getAttends());
-	enrolment.createEnrolmentLog(EnrolmentAction.ENROL);
-
-	return enrolment;
-    }
-
-    private static void checkParameters(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
-	if (optionalEnrolment == null) {
-	    throw new DomainException("error.Enrolment.invalid.optionalEnrolment");
-	}
-	if (curriculumGroup == null) {
-	    throw new DomainException("error.Enrolment.invalid.curriculumGroup");
-	}
     }
 
     @Override
@@ -1455,4 +1403,70 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	return false;
     }
+
+    static public Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
+	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
+	return enrolments.get(0);
+    }
+
+    /**
+     * 
+     * After create new Enrolment, must delete OptionalEnrolment (to delete
+     * OptionalEnrolment disconnect at least: ProgramCertificateRequests,
+     * CourseLoadRequests, ExamDateCertificateRequests)
+     * 
+     * @param optionalEnrolment
+     * @param curriculumGroup
+     *            : new CurriculumGroup for Enrolment
+     * @return Enrolment
+     */
+    static Enrolment createBasedOn(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
+	checkParameters(optionalEnrolment, curriculumGroup);
+
+	final Enrolment enrolment = new Enrolment();
+	enrolment.setCurricularCourse(optionalEnrolment.getCurricularCourse());
+	enrolment.setWeigth(optionalEnrolment.getWeigth());
+	enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
+	enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
+	enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
+	enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+	enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
+	enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
+	enrolment.setCurriculumGroup(curriculumGroup);
+
+	enrolment.getEvaluations().addAll(optionalEnrolment.getEvaluations());
+	enrolment.getProgramCertificateRequests().addAll(optionalEnrolment.getProgramCertificateRequests());
+	enrolment.getCourseLoadRequests().addAll(optionalEnrolment.getCourseLoadRequests());
+	enrolment.getExtraExamRequests().addAll(optionalEnrolment.getExtraExamRequests());
+	enrolment.getEnrolmentWrappers().addAll(optionalEnrolment.getEnrolmentWrappers());
+	enrolment.getTheses().addAll(optionalEnrolment.getTheses());
+	enrolment.getExamDateCertificateRequests().addAll(optionalEnrolment.getExamDateCertificateRequests());
+	changeAttends(optionalEnrolment, enrolment);
+	enrolment.createEnrolmentLog(EnrolmentAction.ENROL);
+
+	return enrolment;
+    }
+
+    static protected void changeAttends(final Enrolment from, final Enrolment to) {
+	final Registration oldRegistration = from.getRegistration();
+	final Registration newRegistration = to.getRegistration();
+
+	if (oldRegistration != newRegistration) {
+	    for (final Attends attend : from.getAttends()) {
+		oldRegistration.changeShifts(attend, newRegistration);
+		attend.setRegistration(newRegistration);
+	    }
+	}
+	to.getAttends().addAll(from.getAttends());
+    }
+
+    static private void checkParameters(final OptionalEnrolment optionalEnrolment, final CurriculumGroup curriculumGroup) {
+	if (optionalEnrolment == null) {
+	    throw new DomainException("error.Enrolment.invalid.optionalEnrolment");
+	}
+	if (curriculumGroup == null) {
+	    throw new DomainException("error.Enrolment.invalid.curriculumGroup");
+	}
+    }
+
 }
