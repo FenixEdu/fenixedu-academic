@@ -35,8 +35,6 @@ public class WriteMarks extends FenixService {
 	    final Attends attends = findStudentAttends(executionCourse, studentNumber);
 
 	    if (attends != null) {
-		if (attends.isActive()) {
-
 		    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
 			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber
 				.toString()));
@@ -59,10 +57,6 @@ public class WriteMarks extends FenixService {
 			    }
 			}
 		    }
-
-		} else {
-		    exceptionList.add(new DomainException("errors.student.not.active", studentNumber.toString()));
-		}
 	    } else {
 		exceptionList.add(new DomainException("errors.noStudent", studentNumber.toString()));
 	    }

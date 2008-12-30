@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -414,16 +413,6 @@ public class Attends extends Attends_Base {
 
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
-    }
-
-    public boolean isActive() {
-	final RegistrationState state;
-	if (hasEnrolment()) {
-	    state = getEnrolment().getRegistration().getLastRegistrationState(getExecutionYear());
-	} else {
-	    state = getRegistration().getLastRegistrationState(getExecutionYear());
-	}
-	return state != null && state.isActive();
     }
 
     public void removeShifts() {

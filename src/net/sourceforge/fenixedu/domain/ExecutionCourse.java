@@ -1598,9 +1598,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Attends> getActiveAttends() {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : this.getAttendsSet()) {
-	    if (attends.isActive()) {
 		result.add(attends);
-	    }
 	}
 	return result;
     }
@@ -1976,7 +1974,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Set<DegreeCurricularPlan> getAttendsDegreeCurricularPlans() {
 	final Set<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
-	for (final Attends attends : this.getActiveAttends()) {
+	for (final Attends attends : this.getAttendsSet()) {
 	    dcps.add(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan());
 	}
 	return dcps;
@@ -1988,7 +1986,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	final Collection<Attends> validAttends = new HashSet<Attends>();
 	final Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
 	for (final Attends attends : getAttends()) {
-	    if (attends.isActive() && filter.eval(attends)) {
+	    if (filter.eval(attends)) {
 		validAttends.add(attends);
 		addAttendsToEnrolmentNumberMap(attends, enrolmentNumberMap);
 	    }

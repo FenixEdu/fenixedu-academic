@@ -213,6 +213,9 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 	    HtmlTableCell degreeCell = row1.createCell(applicationResources.getString("label.Degree"));
 	    degreeCell.setRowspan(rowSpan);
 
+	    HtmlTableCell registrationStateCell = row1.createCell(applicationResources.getString("label.registration.state"));
+	    registrationStateCell.setRowspan(rowSpan);
+
 	    HtmlTableCell nameCell = row1.createCell(applicationResources.getString("label.name"));
 	    nameCell.setRowspan(rowSpan);
 
@@ -259,6 +262,7 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 		final StudentAttendsStateType stateType = attends.getAttendsStateType();
 		row.createCell(stateType != null ? enumerationResources.getString(stateType.getQualifiedName()) : "--");
 		row.createCell(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName());
+		row.createCell(attends.getRegistration().getLastRegistrationState(attends.getExecutionYear()).getStateType().getDescription());
 		row.createCell(attends.getRegistration().getStudent().getPerson().getFirstAndLastName());
 
 		for (Grouping grouping : groupings) {

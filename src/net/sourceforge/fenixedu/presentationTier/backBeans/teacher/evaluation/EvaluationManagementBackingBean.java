@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +33,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilt
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -962,7 +959,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Attends> getExecutionCourseAttends() {
 	final List<Attends> result = new ArrayList<Attends>();
-	for (final Attends attends : getExecutionCourse().getActiveAttends()) {
+	for (final Attends attends : getExecutionCourse().getAttendsSet()) {
 	    if (attends.hasEnrolment()) {
 		if (!attends.getEnrolment().isImpossible()) {
 		    result.add(attends);
@@ -977,7 +974,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     public List<Student> getStudentsWithImpossibleEnrolments() {
 	final List<Student> result = new ArrayList<Student>();
-	for (final Attends attends : getExecutionCourse().getActiveAttends()) {
+	for (final Attends attends : getExecutionCourse().getAttendsSet()) {
 	    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
 		final Student student = attends.getEnrolment().getStudentCurricularPlan().getRegistration().getStudent();
 		if (!result.contains(student)) {
