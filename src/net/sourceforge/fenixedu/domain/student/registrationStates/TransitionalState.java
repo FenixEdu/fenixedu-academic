@@ -29,6 +29,7 @@ public class TransitionalState extends TransitionalState_Base {
 	final Set<String> result = new HashSet<String>();
 	result.add(RegistrationStateType.TRANSITED.name());
 	result.add(RegistrationStateType.CANCELED.name());
+	result.add(RegistrationStateType.REGISTERED.name());
 
 	return result;
     }
