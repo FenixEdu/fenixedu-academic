@@ -115,8 +115,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
     void editCandidacyResult(final SecondCycleIndividualCandidacyResultBean bean) {
 
-	checkParameters(bean);
-
 	setProfessionalExperience(bean.getProfessionalExperience());
 	setAffinity(bean.getAffinity());
 	setDegreeNature(bean.getDegreeNature());
@@ -124,16 +122,12 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setInterviewGrade(bean.getInterviewGrade());
 	setSeriesCandidacyGrade(bean.getSeriesGrade());
 	setNotes(bean.getNotes());
-	if (isCandidacyResultStateValid(bean.getState())) {
-	    setState(bean.getState());
-	} else if (bean.getState() == null) {
-	    setState(IndividualCandidacyState.STAND_BY);
-	}
-    }
 
-    private void checkParameters(final SecondCycleIndividualCandidacyResultBean bean) {
-	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
+	if (bean.getState() == null) {
+	    setState(IndividualCandidacyState.STAND_BY);
+	    removeRegistration();
+	} else {
+	    setState(bean.getState());
 	}
     }
 
