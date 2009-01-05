@@ -50,7 +50,7 @@
 				<fr:property name="checkboxValue" value="externalCurricularCourse.idInternal" />	
 			</fr:layout>
 		</fr:view>
-		<html:submit><bean:message key="button.choose" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	</logic:notEmpty>
 
 	<logic:empty name="externalCurricularCourseBeans">
