@@ -30,6 +30,7 @@ public class TransitionalState extends TransitionalState_Base {
 	result.add(RegistrationStateType.TRANSITED.name());
 	result.add(RegistrationStateType.CANCELED.name());
 	result.add(RegistrationStateType.REGISTERED.name());
+	result.add(RegistrationStateType.CONCLUDED.name());
 
 	return result;
     }
