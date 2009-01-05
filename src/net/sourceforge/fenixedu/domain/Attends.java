@@ -153,7 +153,7 @@ public class Attends extends Attends_Base {
 	    throw new DomainException("error.attends.cant.delete");
 	}
 	if (hasAnyAssociatedMarks()) {
-	    throw new DomainException("error.attends.cant.delete");
+	    throw new DomainException("error.attends.cant.delete.has.associated.marks");
 	}
 	if (hasAnyProjectSubmissions()) {
 	    throw new DomainException("error.attends.cant.delete");
