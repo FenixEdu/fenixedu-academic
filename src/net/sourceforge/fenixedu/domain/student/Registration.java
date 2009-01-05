@@ -1932,18 +1932,20 @@ public class Registration extends Registration_Base {
 	final DegreeType degreeType = degree.getDegreeType();
 	if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
 	    res.append(cycleType.getDescription(locale));
-	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male"));
-	    res.append(StringUtils.SINGLE_SPACE);
+	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male")).append(StringUtils.SINGLE_SPACE);
 	}
 
-	res.append(degreeType.getPrefix(locale));
-	res.append(degreeType.getFilteredName(locale).toUpperCase());
+	if (!isEmptyDegree()) {
+	    res.append(degreeType.getPrefix(locale));
+	    res.append(degreeType.getFilteredName(locale).toUpperCase());
 
-	if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
-	    res.append(" (").append(cycleType.getDescription(locale)).append(")");
+	    if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
+		res.append(" (").append(cycleType.getDescription(locale)).append(")");
+	    }
+	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in")).append(StringUtils.SINGLE_SPACE);
 	}
-	res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in"));
-	res.append(StringUtils.SINGLE_SPACE).append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
+
+	res.append(degree.getFilteredName(this.getStartExecutionYear(), locale).toUpperCase());
 
 	return res.toString();
     }
@@ -2565,7 +2567,7 @@ public class Registration extends Registration_Base {
     }
 
     final public CycleType getCycleType(final ExecutionYear executionYear) {
-	if (!isBolonha()) {
+	if (!isBolonha() || isEmptyDegree()) {
 	    return null;
 	}
 
@@ -2589,6 +2591,10 @@ public class Registration extends Registration_Base {
 	    final CycleType last = concludedCycles.last();
 	    return last.hasNext() && getDegreeType().hasCycleTypes(last.getNext()) ? last.getNext() : last;
 	}
+    }
+
+    private boolean isEmptyDegree() {
+	return getLastDegreeCurricularPlan().isEmpty();
     }
 
     final public CycleType getLastConcludedCycleType() {
