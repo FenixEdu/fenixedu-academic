@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Tutorship Role" tutorship.role.sql
+execute "Tutorship CP Portal Access" tutorship.access.sql
