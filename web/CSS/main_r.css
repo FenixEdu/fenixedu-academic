@@ -56,8 +56,8 @@ ul li ul { font-size: 1em}
 ****************************************************/
 
 td#latnav_container { width: 155px; vertical-align: top; background: #eae7e4; border-right: 1px solid #ccc; padding: 0; margin: 0; white-space: nowrap; }
-#latnav { /*float: left;*/ clear: left; left: 0px; top: 89px; background: #eae7e4;}
-#latnav ul { width: 155px; list-style-type: none; font: 1.1em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; line-height: 20px; margin: 0; padding: 0; }
+#latnav { /*float: left;*/ clear: left; left: 0px; top: 89px; background: #eae7e4; font-size: 1.2em; }
+#latnav ul { width: 155px; list-style-type: none; font: 1.0em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #333; line-height: 20px; margin: 0; padding: 0; }
 #latnav li { display: inline; margin: 0; padding: 0; }
 #latnav li a:link, #latnav li a:visited { height: 1%; display: block; text-decoration: none; color: #333; border-bottom: 1px solid #ccc; padding: 0 0 0 10px;}
 #latnav li a:hover { color: #333; background: #fff; }
