@@ -30,7 +30,8 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
 
     @Override
     public IGroup getOwner() {
-	return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new FixedSetGroup(getManagers()));
+	return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new RoleTypeGroup(RoleType.TUTORSHIP),
+		new FixedSetGroup(getManagers()));
     }
 
     @Override

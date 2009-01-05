@@ -112,6 +112,7 @@ public class DataInitializer {
 	new Role(RoleType.RESOURCE_MANAGER, "/resourceManager", "/index.do", "portal.resourceManager");
 	new Role(RoleType.IDENTIFICATION_CARD_MANAGER, "/identificationCardManager", "/index.do",
 		"portal.identificationCardManager");
+	new Role(RoleType.TUTORSHIP, "/pedagogicalCouncil", "/index.do", "portal.PedagogicalCouncil");
     }
 
     private static void createCurricularYearsAndSemesters() {

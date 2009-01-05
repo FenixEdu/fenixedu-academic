@@ -68,7 +68,7 @@ public enum RoleType {
     DELEGATE("Delegate"),
 
     PROJECTS_MANAGER("Projects Management"),
-    
+
     IT_PROJECTS_MANAGER("IT Projects Management"),
 
     INSTITUCIONAL_PROJECTS_MANAGER("Institutional Projects Management"),
@@ -97,7 +97,9 @@ public enum RoleType {
 
     INTERNATIONAL_RELATION_OFFICE("International Relation Office"),
 
-    IDENTIFICATION_CARD_MANAGER("Gestão de Cartões");
+    IDENTIFICATION_CARD_MANAGER("Gestão de Cartões"),
+
+    TUTORSHIP("Tutorship");
 
     public String getName() {
 	return name();

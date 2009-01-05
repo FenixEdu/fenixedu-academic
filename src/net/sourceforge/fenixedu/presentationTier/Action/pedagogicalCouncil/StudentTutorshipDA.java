@@ -100,7 +100,10 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	Registration registration = null;
 
 	final Integer registrationOID = getIntegerFromRequest(request, "registrationOID");
-	final TutorateBean bean = (TutorateBean) getObjectFromViewState("tutorateBean");
+	TutorateBean bean = (TutorateBean) getObjectFromViewState("tutorateBean");
+	if (bean == null) {
+	    bean = (TutorateBean) request.getAttribute("tutorateBean");
+	}
 
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);

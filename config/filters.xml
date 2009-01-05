@@ -707,6 +707,13 @@
     </filter>
 
     <filter>
+        <name>TutorshipAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
+
+    <filter>
         <name>TreasuryAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TreasuryAuthorizationFilter</implementationClass>
         <description></description>

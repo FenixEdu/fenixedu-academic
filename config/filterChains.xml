@@ -490,8 +490,8 @@
     </filterChain>
 
     <filterChain>
-        <name>PedagogicalCouncilOrTeacherAuthorization</name>
-        <expression>PedagogicalCouncilAuthorization || TeacherAuthorization</expression>
+        <name>PedagogicalCouncilOrTeacherOrTutorshipAuthorization</name>
+        <expression>PedagogicalCouncilAuthorization || TeacherAuthorization || TutorshipAuthorization </expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
