@@ -347,8 +347,12 @@ public class StudentDA extends FenixDispatchAction {
 		: null;
 	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
 
-	executeService("DeleteStudentAttendingCourse",
-		new Object[] { registration, attends.getExecutionCourse().getIdInternal() });
+	try {
+	    executeService("DeleteStudentAttendingCourse", new Object[] { registration,
+		    attends.getExecutionCourse().getIdInternal() });
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
 
 	return viewAttends(mapping, actionForm, request, response);
     }
