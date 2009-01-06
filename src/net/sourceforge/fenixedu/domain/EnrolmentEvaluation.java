@@ -530,6 +530,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 
 	super.setGrade(grade);
 
+	final Enrolment enrolment = getEnrolment();
+	if (enrolment != null && enrolment.getCurricularCourse().isDissertation()) {
+	    final Thesis thesis = enrolment.getThesis();
+	    if (thesis != null) {
+		thesis.setMark(Integer.valueOf(grade.getValue()));
+	    }
+	}
+
 	// TODO remove this once we're sure migration to Grade went OK
 	super.setGradeValue(grade.getValue());
     }
