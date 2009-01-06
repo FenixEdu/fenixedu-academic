@@ -45,7 +45,8 @@ public class Schedule extends Schedule_Base {
     public Schedule(EmployeeScheduleFactory employeeScheduleFactory, boolean deletedDays) {
 	super();
 	init(employeeScheduleFactory.getEmployee().getAssiduousness(), employeeScheduleFactory.getBeginDate(),
-		employeeScheduleFactory.getEndDate(), false, new DateTime(), employeeScheduleFactory.getModifiedBy());
+		employeeScheduleFactory.getEndDate(), employeeScheduleFactory.getSchedule().getException(), new DateTime(),
+		employeeScheduleFactory.getModifiedBy());
 
 	for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory.getEmployeeWorkWeekScheduleList()) {
 	    Periodicity periodicity = getPeriodicity(workWeekScheduleBean.getWorkWeekNumber());
@@ -71,7 +72,8 @@ public class Schedule extends Schedule_Base {
 		    DateTimeFieldType.year())).toString());
 	}
 	init(employeeScheduleFactory.getEmployee().getAssiduousness(), employeeScheduleFactory.getBeginDate(),
-		employeeScheduleFactory.getEndDate(), false, new DateTime(), employeeScheduleFactory.getModifiedBy());
+		employeeScheduleFactory.getEndDate(), employeeScheduleFactory.getSchedule().getException(), new DateTime(),
+		employeeScheduleFactory.getModifiedBy());
 	if (overLapsAnotherSchedule(employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate(), false)) {
 	    throw new DomainException("error.schedule.overlapsAnotherSchedule");
 	}
