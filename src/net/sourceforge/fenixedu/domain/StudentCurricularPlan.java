@@ -2540,6 +2540,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasRoot() ? getRoot().getExternalCycleCurriculumGroups() : Collections.EMPTY_LIST;
     }
 
+    public boolean hasExternalCycleCurriculumGroups() {
+	return hasRoot() ? getRoot().hasExternalCycles() : false;
+    }
+
     public Integer getInternalCycleCurriculumGroupsSize() {
 	return getInternalCycleCurriculumGrops().size();
     }
@@ -2690,5 +2694,4 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isEmptyDegree() {
 	return getDegreeCurricularPlan().isEmpty();
     }
-
 }
