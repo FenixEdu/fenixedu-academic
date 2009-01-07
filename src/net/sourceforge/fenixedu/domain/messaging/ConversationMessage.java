@@ -30,6 +30,11 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
     }
 
     @Override
+    public void removeCreator() {
+	super.setCreator(null);
+    }
+
+    @Override
     public void setCreator(Person creator) {
 	if (creator == null) {
 	    throw new DomainException("conversationMessage.creator.cannot.be.null");

@@ -57,6 +57,11 @@ public class ConversationThread extends ConversationThread_Base implements IDate
     }
 
     @Override
+    public void removeCreator() {
+	super.setCreator(null);
+    }
+
+    @Override
     public void setCreator(Person creator) {
 	if (creator == null) {
 	    throw new DomainException("conversationThread.creator.cannot.be.null");
