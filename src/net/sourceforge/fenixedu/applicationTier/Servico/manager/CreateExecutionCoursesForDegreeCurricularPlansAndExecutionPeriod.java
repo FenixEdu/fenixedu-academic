@@ -32,7 +32,9 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 		    .readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	    final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 	    for (final CurricularCourse curricularCourse : curricularCourses) {
-		if (curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).isEmpty()) {
+
+		if (curricularCourse.isOptionalCurricularCourse()
+			|| curricularCourse.getActiveDegreeModuleScopesInExecutionPeriod(executionSemester).isEmpty()) {
 		    continue;
 		}
 		if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
