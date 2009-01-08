@@ -30,6 +30,8 @@ import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * 
  * @author tfc130
@@ -162,7 +164,7 @@ public class Attends extends Attends_Base {
 	return true;
     }
 
-    private boolean hasAnyShiftEnrolments() {
+    public boolean hasAnyShiftEnrolments() {
 	for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
 	    if (shift.getStudents().contains(this.getRegistration())) {
 		return true;
@@ -482,6 +484,15 @@ public class Attends extends Attends_Base {
 	    return !from.hasEnrolments(getEnrolment()) && to.hasEnrolments(getEnrolment());
 	}
 	return !getExecutionPeriod().isBefore(to.getStartExecutionPeriod());
+    }
+
+    @Service
+    public void deleteShiftEnrolments() {
+	final Registration registration = getRegistration();
+	final ExecutionCourse executionCourse = getExecutionCourse();
+	for (final Shift shift : executionCourse.getAssociatedShifts()) {
+	    shift.removeStudents(registration);
+	}	
     }
 
 }

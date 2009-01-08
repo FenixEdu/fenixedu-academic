@@ -357,6 +357,23 @@ public class StudentDA extends FenixDispatchAction {
 	return viewAttends(mapping, actionForm, request, response);
     }
 
+    public ActionForward deleteShiftEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Registration registration = getRegistration(request);
+	request.setAttribute("registration", registration);
+
+	final String attendsIdString = request.getParameter("attendsId");
+	final Integer attendsId = attendsIdString != null && attendsIdString.length() > 0 ? Integer.valueOf(attendsIdString)
+		: null;
+	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
+
+	if (attends != null) {
+	    attends.deleteShiftEnrolments();
+	}
+
+	return viewAttends(mapping, actionForm, request, response);
+    }
+
     public ActionForward showRegimes(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

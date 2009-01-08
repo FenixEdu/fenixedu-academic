@@ -74,18 +74,34 @@
 				<bean:define id="executionPeriod" name="attendsEntry" property="key"/>
 				<bean:define id="attendsSet" name="attendsEntry" property="value"/>
 				<tr>
-					<th colspan="3">
+					<th colspan="5">
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.year"/>:
 						<bean:write name="executionPeriod" property="executionYear.name"/>
 						<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.semester"/>:
 						<bean:write name="executionPeriod" property="semester"/>
 					</th>
 				</tr>
-				<logic:iterate id="attends" name="attendsSet">
+				<logic:iterate id="attends" name="attendsSet" type="net.sourceforge.fenixedu.domain.Attends">
+					<% boolean hasAnyShiftEnrolments = attends.hasAnyShiftEnrolments(); %>
 					<tr>
 						<td>
 							<bean:define id="executionCourse" name="attends" property="executionCourse"/>
 							<bean:write name="executionCourse" property="nome"/>
+						</td>
+						<td>
+							<% if (hasAnyShiftEnrolments) { %>
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.attends.with.shift.enrolment"/>
+							<% } else { %>
+								<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.attends.without.shift.enrolment"/>
+							<% } %>
+						</td>
+						<td>
+							<bean:define id="url" type="java.lang.String">/registration.do?method=deleteShiftEnrolments&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
+							<% if (hasAnyShiftEnrolments) { %>
+								<html:link page="<%= url %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+									<bean:message key="label.delete.shift.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+								</html:link>
+							<% } %>
 						</td>
 						<td>
 							<logic:present name="attends" property="enrolment">
@@ -96,12 +112,14 @@
 							</logic:notPresent>
 						</td>
 						<td>
+							<% if (!hasAnyShiftEnrolments) { %>
 							<logic:notPresent name="attends" property="enrolment">
 								<bean:define id="url" type="java.lang.String">/registration.do?method=deleteAttends&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
 								<html:link page="<%= url %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 									<bean:message key="label.delete.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 								</html:link>
 							</logic:notPresent>
+							<% } %>
 						</td>
 					</tr>
 				</logic:iterate>
