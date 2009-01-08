@@ -13,8 +13,10 @@
 <h1 class="caps center"><bean:message key="label.schedule" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> do <bean:write name="executionPeriod" property="semester"/><bean:message key="label.number.super.identification" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="executionPeriod" property="executionYear.year"/></h1>
 
 <table>
+<logic:present name="teacher">
+	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="teacherNumber"/></td></tr>
+</logic:present>
 <logic:notEmpty name="legalRegimen">
-	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="teacher.teacherNumber"/></td></tr>
 	<tr><td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="category.code"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
 	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="departmentRealName"> <bean:write name="departmentRealName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
 </logic:notEmpty>
