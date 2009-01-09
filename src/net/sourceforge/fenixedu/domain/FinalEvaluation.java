@@ -31,12 +31,12 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 	return Integer.valueOf(++lastVersion);
     }
 
+    @Override
     public FinalMark addNewMark(Attends attends, String markValue) {
-	FinalMark mark = new FinalMark();
-	mark.setAttend(attends);
-	mark.setEvaluation(this);
-	mark.setMark(markValue);
-	return mark;
+	if (attends.getMarkByEvaluation(this) != null) {
+	    throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
+	}
+	return new FinalMark(attends, this, markValue);
     }
 
     public EvaluationType getEvaluationType() {
