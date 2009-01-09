@@ -3022,7 +3022,8 @@ public class Registration extends Registration_Base {
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
 	    if (academicServiceRequest.isConcludedSituationAccepted()
-		    || (academicServiceRequest.isSentToExternalEntity() && academicServiceRequest.hasProcessed())) {
+		    || (academicServiceRequest.isSentToExternalEntity() && academicServiceRequest.hasProcessed() && !academicServiceRequest
+			    .hasConcluded())) {
 		result.add(academicServiceRequest);
 	    }
 	}
