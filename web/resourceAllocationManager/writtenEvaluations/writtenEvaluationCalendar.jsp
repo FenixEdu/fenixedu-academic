@@ -19,14 +19,14 @@
 	<h:messages showSummary="true" errorClass="error" rendered="#{empty SOPEvaluationManagementBackingBean.errorMessage}"/>
 
 	<h:form>
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
+		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.academicIntervalHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.originPage}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedBegin}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.selectedEnd}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		
@@ -35,12 +35,12 @@
 		<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom2'>" escape="false"/>			
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th>" escape="false"/>
-			<h:outputText value="#{bundleSOP['property.executionPeriod']}: " />
+			<h:outputText value="#{bundleSOP['property.academicInterval']}: " />
 		<h:outputText value="</th>" escape="false"/>
 		<h:outputText value="<td>" escape="false"/>
-	 		<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionPeriodID}" 
+	 		<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.academicInterval}" 
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
-				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionPeriods}" />
+				<f:selectItems value="#{SOPEvaluationManagementBackingBean.academicIntervals}" />
 			</h:selectOneMenu>
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
@@ -91,11 +91,10 @@
 	</h:form>
 
 	 	<h:panelGroup rendered="#{SOPEvaluationManagementBackingBean.renderContextSelection}">
-
 		 	<fc:fenixCalendar 
 		 		begin="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarBegin}" 
 		 		end="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarEnd}"
-		 		createLink="showExecutionCourses.faces?executionPeriodID=#{SOPEvaluationManagementBackingBean.executionPeriodID}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&executionPeriodOID=#{SOPEvaluationManagementBackingBean.executionPeriodOID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}&contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
+		 		createLink="showExecutionCourses.faces?academicInterval=#{SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}&contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
 		 		editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
 		 		editLinkParameters="#{SOPEvaluationManagementBackingBean.writtenTestsCalendarLink}"
 		 	/>
@@ -104,7 +103,6 @@
 			<h:panelGroup rendered="#{empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
 				<h:outputText value="<p><em>#{bundleSOP['label.no.defined.written.evaluations']}</em></p>" escape="false" />
 			</h:panelGroup>
-
 		<h:panelGroup rendered="#{!empty SOPEvaluationManagementBackingBean.executionCoursesWithWrittenEvaluations}">
 			<f:verbatim>
 				<table class="style2u">
@@ -126,9 +124,8 @@
 						</td>
 						<td colspan="2" class="header" style="font-weight: bold">
 							<c:url var="creationURL" value="showExecutionCourses.faces">
-								<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-								<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
 								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 							</c:url>
@@ -139,9 +136,8 @@
 						<td colspan="3" class="header">
 							<c:url var="commentURL" value="commentExecutionCourse.faces">
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-								<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
-								<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 								<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 							</c:url>
 							<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">
@@ -208,9 +204,8 @@
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
-									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+									<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
-									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
 								<a href='<c:out escapeXml="false" value="${editEvaluationURL}"/>'>
@@ -221,9 +216,8 @@
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.idInternal}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
-									<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+									<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 									<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.idInternal}"/>
-									<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 									<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 								</c:url>
 								<a href='<c:out value="${deleteEvaluationURL}"/>' onclick="return confirm('#{bundle['message.confirm.written.test']}')">
@@ -251,9 +245,8 @@
 								</td>
 								<td>
 									<c:url var="creationURL" value="showExecutionCourses.faces">
-										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
+										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>										
 										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>
 									</c:url>
@@ -264,9 +257,8 @@
 								<td>
 									<c:url var="commentURL" value="commentExecutionCourse.faces">
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
-										<c:param name="executionPeriodID" value="${SOPEvaluationManagementBackingBean.executionPeriodID}"/>
-										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>
-										<c:param name="executionPeriodOID" value="${SOPEvaluationManagementBackingBean.executionPeriodOID}"/>							
+										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
+										<c:param name="executionCourseID" value="${executionCourse.idInternal}"/>							
 										<c:param name="curricularYearIDsParameterString" value="${SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"/>			
 									</c:url>
 									<a href='<c:out value="${commentURL}"/>' style="text-decoration:none">

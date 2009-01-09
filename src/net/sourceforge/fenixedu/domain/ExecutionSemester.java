@@ -647,7 +647,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	}
 	return null;
     }
-    
+
     public InquiryResponsePeriod getInquiryResponsePeriod(final InquiryResponsePeriodType type) {
 	for (InquiryResponsePeriod inquiryResponsePeriod : getInquiryResponsePeriods()) {
 	    if (inquiryResponsePeriod.getType() == type) {
@@ -664,5 +664,5 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public InquiryResponsePeriod getTeachingInquiryResponsePeriod() {
 	return getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
     }
-    
+
 }

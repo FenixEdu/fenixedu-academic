@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.util.LabelValueBean;
@@ -45,11 +45,12 @@ public abstract class RequestUtils {
 
     public static final InfoExecutionCourse getExecutionCourseBySigla(HttpServletRequest request,
 	    String infoExecutionCourseInitials) throws Exception {
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	final ExecutionSemester executionSemester = RootDomainObject.getInstance().readExecutionSemesterByOID(
-		infoExecutionPeriod.getIdInternal());
-	final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(infoExecutionCourseInitials);
+
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+
+	final ExecutionCourse executionCourse = ExecutionCourse.getExecutionCourseByInitials(academicInterval,
+		infoExecutionCourseInitials);
 	if (executionCourse != null) {
 	    return InfoExecutionCourse.newInfoFromDomain(executionCourse);
 	}

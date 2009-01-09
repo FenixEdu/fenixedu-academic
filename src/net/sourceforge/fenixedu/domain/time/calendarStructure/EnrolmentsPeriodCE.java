@@ -19,6 +19,11 @@ public class EnrolmentsPeriodCE extends EnrolmentsPeriodCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
+    }
+
+    @Override
     public boolean isEnrolmentsPeriod() {
 	return true;
     }

@@ -1,60 +1,33 @@
-<%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page language="java"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="title.manage.schedule"/></h2>
+<%@page
+    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
 
-<p>
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
-</p>
+<em><bean:message key="title.resourceAllocationManager.management" /></em>
+<h2><bean:message key="title.manage.schedule" /></h2>
 
-<p class="mtop15 mbottom05">
-	<bean:message key="label.chooseDegreeAndYear" />:
-</p>
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
+<p class="mtop15 mbottom05"><bean:message key="label.chooseDegreeAndYear" />:</p>
 
-<html:form action="/chooseContext" focus="executionDegreeOID">
+<fr:form action="/chooseContext.do?method=choose">
 
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+	<fr:edit name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>" schema="degreeContext.choose">
+		<fr:destination name="degreePostBack" path="/chooseContext.do?method=choosePostBack" />
+		<fr:destination name="yearPostBack" path="/chooseContext.do?method=choosePostBack" />
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
 
-
-	<table class="tstyle5 thlight thright mtop05">
-		<tr>
-			<th>
-				<bean:message key="property.context.degree"/>:
-			</th>
-			<td>
-				<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1">
-		       		<html:options collection="licenciaturas"
-		       					  property="value"
-		       					  labelProperty="label"/>
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<th>
-				<bean:message key="property.context.curricular.year"/>:
-			</th>
-			<td>
-				<html:select bundle="HTMLALT_RESOURCES" property="curricularYear" size="1">
-		       		<html:options collection="anosCurriculares"
-		       					  property="value"
-		       					  labelProperty="label"/>
-		       	</html:select>
-		    </td>
-		</tr>
-	</table>
-
-
-	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter" styleClass="inputbutton">
-             <bean:message key="label.next"/>
-       </html:submit>
-	</p>
-</html:form>
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter"
+		styleClass="inputbutton">
+		<bean:message key="label.next" />
+	</html:submit></p>
+</fr:form>

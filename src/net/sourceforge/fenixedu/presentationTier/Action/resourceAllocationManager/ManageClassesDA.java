@@ -1,28 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteClasses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurmas;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteClasses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -45,24 +43,34 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
-	List<InfoClass> classesList = (List<InfoClass>) LerTurmas.run(infoExecutionDegree, infoExecutionPeriod,
-		infoCurricularYear.getYear());
-
-	if (classesList != null && !classesList.isEmpty()) {
-	    BeanComparator nameComparator = new BeanComparator("nome");
-	    Collections.sort(classesList, nameComparator);
-
-	    request.setAttribute(SessionConstants.CLASSES, classesList);
+	final Set<SchoolClass> classes;
+	Integer curricularYear = infoCurricularYear.getYear();
+	if (curricularYear != null) {
+	    classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(academicInterval, curricularYear);
+	} else {
+	    classes = executionDegree.findSchoolClassesByAcademicInterval(academicInterval);
 	}
 
+	final List<InfoClass> infoClassesList = new ArrayList<InfoClass>();
+
+	for (final SchoolClass schoolClass : classes) {
+	    InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+	    infoClassesList.add(infoClass);
+	}
+
+	if (infoClassesList != null && !infoClassesList.isEmpty()) {
+	    BeanComparator nameComparator = new BeanComparator("nome");
+	    Collections.sort(infoClassesList, nameComparator);
+
+	    request.setAttribute(SessionConstants.CLASSES, infoClassesList);
+	}
 	request.setAttribute("executionDegreeD", executionDegree);
 
 	return mapping.findForward("ShowClassList");
@@ -77,11 +85,13 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+
 	Integer curricularYear = infoCurricularYear.getYear();
 
 	try {
-	    CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
+	    CriarTurma.run(className, curricularYear, infoExecutionDegree, academicInterval);
 
 	} catch (DomainException e) {
 	    throw new ExistingActionException("A SchoolClass", e);

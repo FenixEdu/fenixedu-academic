@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
 /**
@@ -31,7 +32,7 @@ import net.sourceforge.fenixedu.util.EntryPhase;
  */
 public class InfoExecutionCourse extends InfoObject {
 
-    private DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private final DomainReference<ExecutionCourse> executionCourseDomainReference;
 
     public InfoExecutionCourse(final ExecutionCourse executionCourse) {
 	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
@@ -45,10 +46,12 @@ public class InfoExecutionCourse extends InfoObject {
 	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj instanceof InfoExecutionCourse && getExecutionCourse() == ((InfoExecutionCourse) obj).getExecutionCourse();
     }
 
+    @Override
     public int hashCode() {
 	return getExecutionCourse().hashCode();
     }
@@ -139,8 +142,13 @@ public class InfoExecutionCourse extends InfoObject {
 	return getExecutionCourse().getAvailableGradeSubmission();
     }
 
+    @Deprecated
     public InfoExecutionPeriod getInfoExecutionPeriod() {
 	return InfoExecutionPeriod.newInfoFromDomain(getExecutionCourse().getExecutionPeriod());
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionCourse().getAcademicInterval();
     }
 
     public InfoCourseReport getInfoCourseReport() {
@@ -310,6 +318,7 @@ public class InfoExecutionCourse extends InfoObject {
 	this.filteredAssociatedInfoExams = filteredAssociatedInfoExams;
     }
 
+    @Override
     public String toString() {
 	return getExecutionCourse().toString();
     }

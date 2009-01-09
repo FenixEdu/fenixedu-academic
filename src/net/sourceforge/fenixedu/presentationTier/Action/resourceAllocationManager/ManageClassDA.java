@@ -1,15 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableShiftsForClass;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurma;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByClass;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,8 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurma;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableShiftsForClass;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftsByClass;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveShifts;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -27,7 +22,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
@@ -59,7 +53,6 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	// Get list of shifts and place them in request
 
-
 	List<InfoShift> infoShifts = (List<InfoShift>) ReadShiftsByClass.run(infoClass);
 
 	if (infoShifts != null && !infoShifts.isEmpty()) {
@@ -81,12 +74,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-
 	InfoClass infoClassNew = null;
 	try {
-	    infoClassNew = (InfoClass) EditarTurma.run(infoClassOld.getIdInternal(), className, infoClassOld.getAnoCurricular(),
-		infoClassOld.getInfoExecutionDegree(), infoClassOld.getInfoExecutionPeriod());
-
+	    infoClassNew = (InfoClass) EditarTurma.run(infoClassOld.getIdInternal(), className);
 	} catch (DomainException e) {
 	    throw new ExistingActionException("A SchoolClass", e);
 	}
@@ -119,7 +109,6 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
 	// Get list of available shifts and place them in request
-
 
 	List<InfoShift> infoShifts = (List<InfoShift>) ReadAvailableShiftsForClass.run(infoClass);
 

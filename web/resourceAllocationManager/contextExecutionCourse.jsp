@@ -12,8 +12,7 @@
 			(<bean:write name="executionCourse" property="sigla"/>)
 		</h3>
 		<p>
-			<bean:write name="executionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/> - 
-			<bean:write name="executionCourse" property="infoExecutionPeriod.name"/>
+			<bean:write name="executionCourse" property="academicInterval.pathName"/>
 		</p>
 	</logic:equal>
 	
@@ -23,13 +22,13 @@
 			(<bean:write name="executionCourse" property="sigla"/>)
 		</h3>
 		<p>
-			<bean:write name="executionCourse" property="executionPeriod.executionYear.year"/> - 
-			<bean:write name="executionCourse" property="executionPeriod.name"/>
+			<bean:write name="executionCourse" property="academicInterval.pathName"/>
 		</p>		
 	</logic:equal>
 	
 </logic:present>
 
+<%--
 <logic:notPresent name="executionCourse">	
 	<logic:present name="executionPeriod">
 		<p>
@@ -38,3 +37,4 @@
 		</p>
 	</logic:present>	
 </logic:notPresent>
+--%>

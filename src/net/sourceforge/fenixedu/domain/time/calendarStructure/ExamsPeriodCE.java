@@ -7,6 +7,11 @@ public abstract class ExamsPeriodCE extends ExamsPeriodCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
+    }
+
+    @Override
     public boolean isExamsPeriod() {
 	return true;
     }

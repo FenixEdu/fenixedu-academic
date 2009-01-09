@@ -9721,6 +9721,11 @@ relation RootDomainObjectAcademicCalendarRootEntry {
 	}
 }
 
+relation RootDomainObjectDefaultAcademicCalendar {
+    RootDomainObject playsRole rootDomainObjectForDefaultRootEntry;
+    time.calendarStructure.AcademicCalendarRootEntry playsRole defaultAcademicCalendar;
+}
+
 relation RootDomainObjectAcademicCalendarEntry {
 	RootDomainObject playsRole rootDomainObject;
 	time.calendarStructure.AcademicCalendarEntry playsRole academicCalendarEntries {

@@ -19,11 +19,11 @@
 	<li class="navheader"><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></li>  
 	<li><html:link page="/mainExamsNew.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link>
 		<ul>
-			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"	+ SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.writtenEvaluation.map"/></html:link></li>
-			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationsByRoom.faces?" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.writtenEvaluation.by.room"/></html:link></li>
-			<li><html:link page="<%= "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.exams.searchWrittenEvaluationsByDegreeAndYear"/></html:link></li>
-			<li><html:link page="<%= "/searchWrittenEvaluationsByDate.do?method=prepare&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="	+ pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.written.evaluations.search.by.date"/></html:link></li>
-			<li><html:link page="<%= "/roomSearch.do?method=prepare&amp;nextPage=viewEmptyRooms&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.exams.searchAvailableRooms"/></html:link></li>
+			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"	+ SessionConstants.ACADEMIC_INTERVAL	+ "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.map"/></html:link></li>
+			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationsByRoom.faces?" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.by.room"/></html:link></li>
+			<li><html:link page="<%= "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchWrittenEvaluationsByDegreeAndYear"/></html:link></li>
+			<li><html:link page="<%= "/searchWrittenEvaluationsByDate.do?method=prepare&amp;" + SessionConstants.ACADEMIC_INTERVAL + "="	+ pageContext.findAttribute("academicInterval") %>"><bean:message key="link.written.evaluations.search.by.date"/></html:link></li>
+			<li><html:link page="<%= "/roomSearch.do?method=prepare&amp;nextPage=viewEmptyRooms&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchAvailableRooms"/></html:link></li>
 		</ul>
 	</li>
 	

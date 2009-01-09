@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
@@ -13,7 +14,7 @@
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= request.getAttribute("executionPeriodOID").toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicInterval" property="academicInterval" value="<%= request.getAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 
 	<p>
 		<span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -84,7 +85,7 @@
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<bean:write name="executionCourse" property="nome"/><br />
 						<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
-						<bean:define id="executionPeriodID" name="executionCourse" property="executionPeriod.idInternal"/>
+						<bean:define id="academicInterval" name="academicInterval"/>
 						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.idInternal" type="java.lang.Integer"/>
 					</logic:iterate>
 				</td>
@@ -94,15 +95,10 @@
 						<bean:write name="degreeModuleScope" property="curricularCourse.degreeCurricularPlan.degree.sigla"/><br />
 					</logic:iterate>
 				
+                    <bean:define id="executionDegreeID" name="writtenEvaluation" property="executionDegree.idInternal" />
+    
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<logic:iterate id="curricularCourse" name="executionCourse" property="associatedCurricularCourses">
-													
-							<logic:iterate id="executionDegree" name="curricularCourse" property="degreeCurricularPlan.executionDegrees">
-								<logic:equal name="executionDegree" property="executionYear.idInternal" value="<%= pageContext.findAttribute("executionYearID").toString() %>">
-									<bean:define id="executionDegreeID" name="executionDegree" property="idInternal"/>
-								</logic:equal>
-							</logic:iterate>
-
 							<logic:iterate id="degreeModuleScope" name="curricularCourse" property="degreeModuleScopes">
 								<bean:define id="curricularYearID" name="degreeModuleScope" property="curricularYear"/>
 							</logic:iterate>
@@ -127,13 +123,9 @@
 										+ "="
 										+ pageContext.findAttribute("evaluationTypeClassname") 
 										+ "&amp;"
-										+ "executionPeriodID"
+										+ "academicInterval"
 										+ "="
-										+ pageContext.findAttribute("executionPeriodID")
-										+ "&amp;"
-										+ "executionPeriodOID"
-										+ "="
-										+ pageContext.findAttribute("executionPeriodID")
+										+ pageContext.findAttribute("academicInterval")
 										+ "&amp;"
 										+ "executionCourseID"
 										+ "="

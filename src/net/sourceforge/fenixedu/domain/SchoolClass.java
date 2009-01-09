@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -35,6 +36,22 @@ public class SchoolClass extends SchoolClass_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setExecutionDegree(executionDegree);
 	setExecutionPeriod(executionSemester);
+	setAnoCurricular(curricularYear);
+	setNome(name);
+    }
+
+    @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageSchoolClass")
+    public SchoolClass(ExecutionDegree executionDegree, AcademicInterval academicInterval, String name, Integer curricularYear) {
+	super();
+
+	ExecutionSemester executionInterval = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+	checkIfExistsSchoolClassWithSameName(executionDegree, executionInterval, curricularYear, name);
+
+	setRootDomainObject(RootDomainObject.getInstance());
+	setExecutionDegree(executionDegree);
+	// FIXME: cast shouldn't be needed, SchoolClass should relate directly
+	// with ExecutionInterval.
+	setExecutionPeriod(executionInterval);
 	setAnoCurricular(curricularYear);
 	setNome(name);
     }
@@ -152,6 +169,10 @@ public class SchoolClass extends SchoolClass_Base {
 	final DegreeCurricularPlan degreeCurricularPlan = getExecutionDegree().getDegreeCurricularPlan();
 	final Degree degree = degreeCurricularPlan.getDegree();
 	return StringUtils.substringAfter(getNome(), degree.constructSchoolClassPrefix(getAnoCurricular()));
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionPeriod().getAcademicInterval();
     }
 
 }

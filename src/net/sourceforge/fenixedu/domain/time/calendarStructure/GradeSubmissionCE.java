@@ -7,6 +7,11 @@ public abstract class GradeSubmissionCE extends GradeSubmissionCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
+    }
+
+    @Override
     public boolean isGradeSubmissionPeriod() {
 	return true;
     }

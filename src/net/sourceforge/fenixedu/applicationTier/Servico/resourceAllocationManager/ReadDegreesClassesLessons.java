@@ -6,14 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-/**
- * @author Luis Cruz & Sara Ribeiro
- * 
- */
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,13 +14,15 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewClassSchedule;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * TODO Remove cloner deste servi�o...
@@ -37,7 +31,7 @@ public class ReadDegreesClassesLessons extends FenixService {
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
-    public static List run(List infoExecutionDegrees, InfoExecutionPeriod infoExecutionPeriod) {
+    public static List run(List infoExecutionDegrees, AcademicInterval academicInterval) {
 
 	List infoViewClassScheduleList = new ArrayList();
 
@@ -48,7 +42,7 @@ public class ReadDegreesClassesLessons extends FenixService {
 	    List degreeClasses = executionDegree.getSchoolClasses();
 	    for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext();) {
 		SchoolClass klass = (SchoolClass) iterator.next();
-		if (klass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())) {
+		if (klass.getAcademicInterval().equals(academicInterval)) {
 		    classes.add(klass);
 		}
 	    }

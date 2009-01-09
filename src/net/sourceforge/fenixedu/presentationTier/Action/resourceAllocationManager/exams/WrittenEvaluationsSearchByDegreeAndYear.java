@@ -13,14 +13,13 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -39,23 +38,23 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
-		.getIdInternal());
+	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
 
 	final MessageResources enumMessages = MessageResources.getMessageResources("resources/EnumerationResources");
 	final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 
 	final List<LabelValueBean> executionDegreeLabelValueBeans = new ArrayList<LabelValueBean>();
-	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
+	for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    executionDegreeLabelValueBeans.add(new LabelValueBean(StringAppender.append(enumMessages.getMessage(
 		    getLocale(request), degree.getDegreeType().toString()), " ", messages.getMessage(getLocale(request),
-		    "public.degree.information.label.in"), " ", degree.getNameFor(executionSemester.getExecutionYear())
-		    .getContent(), addAnotherInfoToLabel(executionDegree, executionSemester) ? " - "
-		    + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getIdInternal().toString()));
+		    "public.degree.information.label.in"), " ", degree.getNameFor(academicInterval).getContent(),
+		    addAnotherInfoToLabel(executionDegree, academicInterval) ? " - "
+			    + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getIdInternal()
+		    .toString()));
 	}
 	Collections.sort(executionDegreeLabelValueBeans, new BeanComparator("label"));
 	request.setAttribute("executionDegreeLabelValueBeans", executionDegreeLabelValueBeans);
@@ -63,9 +62,9 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	return mapping.findForward("showForm");
     }
 
-    private boolean addAnotherInfoToLabel(ExecutionDegree executionDegreeToTest, ExecutionSemester executionSemester) {
+    private boolean addAnotherInfoToLabel(ExecutionDegree executionDegreeToTest, AcademicInterval academicInterval) {
 	Degree degreeToTest = executionDegreeToTest.getDegree();
-	for (ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
+	for (ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
 	    if (degreeToTest.equals(executionDegree.getDegree()) && !(executionDegreeToTest.equals(executionDegree))) {
 		return true;
 	    }
@@ -83,9 +82,10 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
     private void prepareInformationToList(final ActionForm form, final HttpServletRequest request) {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Integer executionPeriodId = Integer.valueOf(dynaActionForm.getString(SessionConstants.EXECUTION_PERIOD_OID));
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-	request.setAttribute("executionPeriod", executionSemester);
+
+	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
+		.getString(SessionConstants.ACADEMIC_INTERVAL));
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval);
 
 	final Boolean selectAllCurricularYears = (Boolean) dynaActionForm.get("selectAllCurricularYears");
 	final String[] selectedCurricularYears = (String[]) dynaActionForm.get("selectedCurricularYears");
@@ -105,7 +105,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 				degree2.getNome()) : degree1.getDegreeType().compareTo(degree2.getDegreeType());
 		    }
 		});
-	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
+	for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
 	    if (executionDegreeID == null || executionDegreeID.length() == 0
 		    || executionDegreeID.equals(executionDegree.getIdInternal().toString())) {
 		final Map<Integer, Set<ExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<Integer, Set<ExecutionCourse>>(
@@ -117,10 +117,11 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 		executionCoursesByCurricularYearByExecutionDegree.put(executionDegree, executionCoursesByCurricularYear);
 		for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
 		    for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
-			if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)) {
+			if (degreeModuleScope.isActiveForAcademicInterval(academicInterval)) {
 			    final Integer curricularSemester = degreeModuleScope.getCurricularSemester();
 			    final Integer curricularYear = degreeModuleScope.getCurricularYear();
-			    if (curricularSemester.equals(executionSemester.getSemester())
+			    if (curricularSemester.intValue() == AcademicInterval
+				    .getCardinalityOfAcademicInterval(academicInterval)
 				    && (selectAllCurricularYears != null && selectAllCurricularYears.booleanValue())
 				    || years.contains(curricularYear)) {
 				final Set<ExecutionCourse> executionCourses;
@@ -136,7 +137,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 				    executionCourses = executionCoursesByCurricularYear.get(curricularYear);
 				}
 				for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-				    if (executionSemester == executionCourse.getExecutionPeriod()) {
+				    if (academicInterval.equals(executionCourse.getAcademicInterval())) {
 					executionCourses.add(executionCourse);
 				    }
 				}
@@ -148,6 +149,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	}
 	request.setAttribute("executionCoursesByCurricularYearByExecutionDegree",
 		executionCoursesByCurricularYearByExecutionDegree);
-    }
 
+	request.setAttribute("semester", AcademicInterval.getCardinalityOfAcademicInterval(academicInterval));
+    }
 }

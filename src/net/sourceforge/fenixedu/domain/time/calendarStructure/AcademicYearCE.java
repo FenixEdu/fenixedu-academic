@@ -43,6 +43,11 @@ public class AcademicYearCE extends AcademicYearCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return period.equals(AcademicPeriod.YEAR);
+    }
+
+    @Override
     public boolean isAcademicYear() {
 	return true;
     }

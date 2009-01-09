@@ -31,7 +31,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
 			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation) roomOccupation)
 				.getWrittenEvaluations();
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getExecutionPeriod())) {
+			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getAcademicIntervalObject())) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
 				final CalendarLink calendarLink = new CalendarLink();
 				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());

@@ -14,19 +14,19 @@
 			<tr>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-							+ "executionPeriodOID"
+							+ SessionConstants.ACADEMIC_INTERVAL
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+							+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ "executionDegreeOID"
+							+ SessionConstants.EXECUTION_DEGREE_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ "curricularYearOID"
+							+ SessionConstants.CURRICULAR_YEAR_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
-							+ "executionCourseName"
+							+ "execution_course_name"
 							+ "="
 							+ pageContext.findAttribute("execution_course_name")
 							+ "&amp;sortBy=nome" %>">
@@ -35,19 +35,19 @@
 				</th>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-							+ "executionPeriodOID"
-							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+                            + SessionConstants.ACADEMIC_INTERVAL
+                            + "="
+                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ "executionDegreeOID"
+							+ SessionConstants.EXECUTION_DEGREE_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ "curricularYearOID"
+							+ SessionConstants.CURRICULAR_YEAR_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
-							+ "executionCourseName"
+							+ "execution_course_name"
 							+ "="
 							+ pageContext.findAttribute("execution_course_name")
 							+ "&amp;sortBy=occupancy" %>">
@@ -56,19 +56,19 @@
 				</th>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-							+ "executionPeriodOID"
-							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+                            + SessionConstants.ACADEMIC_INTERVAL
+                            + "="
+                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ "executionDegreeOID"
+							+ SessionConstants.EXECUTION_DEGREE_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ "curricularYearOID"
+							+ SessionConstants.CURRICULAR_YEAR_OID
 							+ "="
 							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
-							+ "executionCourseName"
+							+ "execution_course_name"
 							+ "="
 							+ pageContext.findAttribute("execution_course_name")
 							+ "&amp;sortBy=equalLoad" %>">
@@ -82,9 +82,9 @@
 				<tr>
 					<td>
 						<html:link page="<%= "/manageExecutionCourse.do?method=prepare&amp;"
-								+ SessionConstants.EXECUTION_PERIOD_OID
-								+ "="
-								+ pageContext.findAttribute("executionPeriodOID")
+	                            + SessionConstants.ACADEMIC_INTERVAL
+	                            + "="
+	                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
 								+ "&amp;"
 								+ SessionConstants.EXECUTION_COURSE_OID
 								+ "="

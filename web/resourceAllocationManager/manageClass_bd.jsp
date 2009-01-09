@@ -25,8 +25,8 @@
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareAddShifts"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 			
-				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+                <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                             value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
@@ -45,8 +45,8 @@
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewSchedule"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 			
-				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-							 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+                <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                             value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
@@ -65,8 +65,8 @@
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="listClasses"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 
-				<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-						 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+                <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                             value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 						 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 				<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
@@ -83,8 +83,8 @@
 
 <html:form action="/manageClass" focus="className">
 
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
@@ -119,8 +119,8 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="removeShifts"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+        <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                     value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 		<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
@@ -212,9 +212,9 @@
   										+ "="
   										+ pageContext.findAttribute("infoExecutionCourseOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.EXECUTION_PERIOD_OID
+			  							+ SessionConstants.ACADEMIC_INTERVAL
   										+ "="
-  										+ pageContext.findAttribute("executionPeriodOID")
+  										+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
   										+ "&amp;"
   										+ SessionConstants.CURRICULAR_YEAR_OID
 			  							+ "="
@@ -290,9 +290,9 @@
   										+ "="
   										+ pageContext.findAttribute("classOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.EXECUTION_PERIOD_OID
-  										+ "="
-  										+ pageContext.findAttribute("executionPeriodOID")
+                                        + SessionConstants.ACADEMIC_INTERVAL
+               		                    + "="
+               		                    + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
   										+ "&amp;"
   										+ SessionConstants.CURRICULAR_YEAR_OID
 			  							+ "="

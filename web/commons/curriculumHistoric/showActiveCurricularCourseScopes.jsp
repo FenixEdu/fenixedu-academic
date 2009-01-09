@@ -1,6 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+<%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -18,7 +20,7 @@
 
 <logic:present name="degreeModuleScopes">
 
-	<bean:define id="executionYear" name="executionYearID"/>
+	<bean:define id="academicInterval" name="academicInterval"/>
 
 	<table class="tstyle4 thleft">
 		<%
@@ -56,8 +58,9 @@
 				</td>
 				<td style="text-align:left">
 					<bean:define id="curricularCourseCode" name="degreeModuleScope" property="curricularCourse.idInternal"/>
+                    <bean:define id="currentYear" name="degreeModuleScope" property="curricularYear"/>
 					<bean:define id="currentSemester" name="degreeModuleScope" property="curricularSemester"/>
-					<html:link page="<%="/showCurriculumHistoric.do?method=showCurriculumHistoric&amp;curricularCourseCode=" + curricularCourseCode +"&amp;semester=" + pageContext.findAttribute("currentSemester").toString() + "&amp;executionYearID=" + pageContext.findAttribute("executionYear").toString() %>">
+					<html:link page="<%="/showCurriculumHistoric.do?method=showCurriculumHistoric&amp;curricularCourseCode=" + curricularCourseCode + "&amp;year=" + pageContext.findAttribute("currentYear").toString() + "&amp;semester=" + pageContext.findAttribute("currentSemester").toString() + "&amp;academicInterval=" + ((AcademicInterval)request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>">
 						<bean:write name="degreeModuleScope" property="curricularCourse.name"/>
 					</html:link>
 				</td>

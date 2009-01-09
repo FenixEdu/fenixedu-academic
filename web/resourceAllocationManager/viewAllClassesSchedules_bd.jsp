@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
+
 <br /> 
 <logic:present name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">
 	<logic:iterate id="viewClassSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request" indexId="i">
@@ -20,12 +21,11 @@
 			<tr>
 				<td class="infoselected">
 					<strong>
-						<bean:define id="infoDegree" name="viewClassSchedule" property="infoClass.infoExecutionDegree.infoDegreeCurricularPlan.infoDegree"/>
-					   	<bean:define id="infoExecutionPeriod" name="viewClassSchedule" property="infoClass.infoExecutionPeriod"/>
-					   	<bean:write name="infoDegree" property="degree.presentationName"/>
+						<bean:define id="infoDegree" name="viewClassSchedule" property="infoClass.infoExecutionDegree.infoDegreeCurricularPlan.infoDegree"/>					  
+                    	<bean:define id="academicInterval" name="viewClassSchedule" property="infoClass.academicInterval"/>
+						<jsp:getProperty name="infoDegree" property="presentationName" />
 						<br/>
-						<jsp:getProperty name="infoExecutionPeriod" property="name"/> -
-						<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
+						<jsp:getProperty name="academicInterval" property="pathName"/> 
 					</strong>
 		         </td>
 		    </tr>

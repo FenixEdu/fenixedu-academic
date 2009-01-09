@@ -22,9 +22,7 @@
 			<tr>
 				<td class="infoselected">
 					<strong>
-						<bean:define id="infoExecutionPeriod" name="<%=SessionConstants.INFO_EXECUTION_PERIOD %>" scope="request"/>
-						<bean:write name="infoExecutionPeriod" property="name"/> - 
-						<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
+						<bean:write name="academicInterval" property="pathName"/>
 					</strong>
 		         </td>
 		    </tr>

@@ -1,16 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,12 +22,11 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYearId;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -43,7 +37,6 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
@@ -51,7 +44,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
@@ -61,6 +55,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -78,8 +73,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private static final MessageResources enumerations = MessageResources.getMessageResources("resources/EnumerationResources");
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
-    protected Integer executionPeriodID;
-    protected HtmlInputHidden executionPeriodIdHidden;
+    private String academicInterval;
+    protected HtmlInputHidden academicIntervalHidden;
     protected boolean disableDropDown;
     protected Integer executionDegreeID;
     protected HtmlInputHidden executionDegreeIdHidden;
@@ -89,7 +84,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
     private Integer[] curricularYearIDs;
-    private String chooseMessage = messages.getMessage("label.choose.message");
+    private final String chooseMessage = messages.getMessage("label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
     private HtmlInputHidden yearHidden;
@@ -98,79 +93,71 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private HtmlInputHidden endHourHidden;
     private HtmlInputHidden endMinuteHidden;
     private Integer orderCriteria;
-    private String labelVacancies = messages.getMessage("label.vacancies");
+    private final String labelVacancies = messages.getMessage("label.vacancies");
     private List<Integer> associatedExecutionCourses;
 
     private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
     private Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<Integer, List<SelectItem>>();
     private Map<Integer, List<SelectItem>> curricularCourseContextSelectItems = new HashMap<Integer, List<SelectItem>>();
-    private Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
-    private Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
-    private Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
-    private Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
+    private final Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
+    private final Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
+    private final Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
+    private final Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
 
     private String comment;
-    private Integer executionPeriodOID;
 
-    // BEGIN executionPeriod
-    public Integer getExecutionPeriodID() {
-	if (this.executionPeriodID == null && this.executionPeriodIdHidden.getValue() != null
-		&& !this.executionPeriodIdHidden.getValue().equals("")) {
-	    this.executionPeriodID = Integer.valueOf(this.executionPeriodIdHidden.getValue().toString());
-	} else if (this.getRequestAttribute("executionPeriodID") != null
-		&& !this.getRequestAttribute("executionPeriodID").equals("")) {
-	    this.executionPeriodID = Integer.valueOf(this.getRequestAttribute("executionPeriodID").toString());
-	} else if (this.getRequestParameter("executionPeriodID") != null
-		&& !this.getRequestParameter("executionPeriodID").equals("")) {
-	    this.executionPeriodID = Integer.valueOf(this.getRequestParameter("executionPeriodID"));
-	} else if (this.executionPeriodID == null) {
-	    this.executionPeriodID = getExecutionPeriodOID();
+    // BEGIN academicInterval
+    public String getAcademicInterval() {
+	if (this.academicInterval == null && this.academicIntervalHidden.getValue() != null
+		&& !this.academicIntervalHidden.getValue().equals("")) {
+	    this.academicInterval = this.academicIntervalHidden.getValue().toString();
+	} else if (this.getRequestAttribute("academicInterval") != null
+		&& !this.getRequestAttribute("academicInterval").equals("")) {
+	    this.academicInterval = this.getRequestAttribute("academicInterval").toString();
+	} else if (this.getRequestParameter("academicInterval") != null
+		&& !this.getRequestParameter("academicInterval").equals("")) {
+	    this.academicInterval = this.getRequestParameter("academicInterval");
+	    // } else if (this.academicInterval == null) {
+	    // this.academicInterval = getAcademicIntervalOID();
 	}
-	return executionPeriodID;
+	return academicInterval;
     }
 
-    public void setExecutionPeriodID(Integer executionPeriodID) {
-	if (executionPeriodID != null) {
-	    this.executionPeriodIdHidden.setValue(executionPeriodID);
+    public String getAcademicIntervalEscapeFriendly() {
+	return getAcademicInterval().replaceAll(":", "-");
+    }
+
+    public void setAcademicInterval(String academicInterval) {
+	if (academicInterval != null) {
+	    this.academicIntervalHidden.setValue(academicInterval);
 	}
-	this.executionPeriodID = executionPeriodID;
+	this.academicInterval = academicInterval;
     }
 
-    public HtmlInputHidden getExecutionPeriodIdHidden() {
-	if (this.executionPeriodIdHidden == null) {
-	    this.executionPeriodIdHidden = new HtmlInputHidden();
-	    this.executionPeriodIdHidden.setValue(this.getExecutionPeriodID());
+    public HtmlInputHidden getAcademicIntervalHidden() {
+	if (this.academicIntervalHidden == null) {
+	    this.academicIntervalHidden = new HtmlInputHidden();
+	    this.academicIntervalHidden.setValue(this.getAcademicInterval());
 	}
-	return executionPeriodIdHidden;
+	return academicIntervalHidden;
     }
 
-    public void setExecutionPeriodIdHidden(HtmlInputHidden executionPeriodIdHidden) {
-	if (executionPeriodIdHidden.getValue() != null) {
-	    this.executionPeriodID = Integer.valueOf(executionPeriodIdHidden.getValue().toString());
+    public void setAcademicIntervalHidden(HtmlInputHidden academicIntervalHidden) {
+	if (academicIntervalHidden.getValue() != null && !((String) academicIntervalHidden.getValue()).isEmpty()) {
+	    this.academicInterval = academicIntervalHidden.getValue().toString();
 	}
-	this.executionPeriodIdHidden = executionPeriodIdHidden;
+	this.academicIntervalHidden = academicIntervalHidden;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-	return rootDomainObject.readExecutionSemesterByOID(this.getExecutionPeriodID());
-    }
-
-    public String getExecutionPeriodLabel() {
-	ExecutionSemester executionPeriodSelected = getExecutionPeriod();
-
-	StringBuilder stringBuffer = new StringBuilder();
-	stringBuffer.append(executionPeriodSelected.getName());
-	stringBuffer.append(" - ");
-	stringBuffer.append(executionPeriodSelected.getExecutionYear().getYear());
-
-	return stringBuffer.toString();
+    public String getAcademicIntervalLabel() {
+	return getAcademicIntervalFromParameter(getAcademicInterval()).getPathName();
     }
 
     // END executionPeriod
 
     // BEGIN disableDropDown
     public boolean getDisableDropDown() {
-	if (this.getExecutionPeriodID() == null || this.getExecutionPeriodID() == 0) {
+	if (getAcademicInterval() == null || getAcademicInterval().isEmpty()) {
 	    this.disableDropDown = Boolean.TRUE;
 	} else {
 	    this.disableDropDown = Boolean.FALSE;
@@ -235,7 +222,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		.toString()));
 	stringBuffer.append(" em ");
 	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNameFor(
-		executionDegreeSelected.getExecutionYear()).getContent());
+		executionDegreeSelected.getAcademicInterval()).getContent());
 
 	return stringBuffer.toString();
     }
@@ -438,25 +425,24 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END day, month, year, hour, minute
 
     // BEGIN Drop down menu logic
-    public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ReadNotClosedExecutionPeriods.run();
+    public List<SelectItem> getAcademicIntervals() throws FenixFilterException, FenixServiceException {
+	List<AcademicInterval> academicIntervals = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
+	Collections.sort(academicIntervals, AcademicInterval.COMPARATOR_BY_BEGIN_DATE);
 
-	Collections.sort(infoExecutionPeriods, InfoExecutionPeriod.COMPARATOR_BY_YEAR_AND_SEMESTER);
-
-	List<SelectItem> executionPeriodItems = new ArrayList<SelectItem>(infoExecutionPeriods.size());
-	executionPeriodItems.add(new SelectItem(0, this.chooseMessage));
-	for (InfoExecutionPeriod infoExecutionPeriod : infoExecutionPeriods) {
-	    String label = infoExecutionPeriod.getName() + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear();
-	    executionPeriodItems.add(new SelectItem(infoExecutionPeriod.getIdInternal(), label));
+	List<SelectItem> result = new ArrayList<SelectItem>();
+	result.add(new SelectItem(0, this.chooseMessage));
+	for (AcademicInterval academicInterval : academicIntervals) {
+	    String label = academicInterval.getPathName();
+	    result.add(new SelectItem(academicInterval.getResumedRepresentationInStringFormat(), label));
 	}
 
-	return executionPeriodItems;
+	return result;
     }
 
     public void enableDropDowns(ValueChangeEvent valueChangeEvent) {
-	this.setExecutionPeriodID((Integer) valueChangeEvent.getNewValue());
+	this.setAcademicInterval(valueChangeEvent.getNewValue().toString());
 
-	if ((Integer) valueChangeEvent.getNewValue() == 0) {
+	if (StringUtils.isEmpty((String) valueChangeEvent.getNewValue())) {
 	    this.setDisableDropDown(true);
 	} else {
 	    this.setDisableDropDown(false);
@@ -473,13 +459,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    return new ArrayList<SelectItem>();
 	}
 
-	List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ReadExecutionDegreesByExecutionYearId
-		.run(this.getExecutionPeriod().getExecutionYear().getIdInternal());
+	List<ExecutionDegree> degrees = ExecutionDegree
+		.filterByAcademicInterval(getAcademicIntervalFromParameter(getAcademicInterval()));
+	List<InfoExecutionDegree> infoExecutionDegrees = new ArrayList<InfoExecutionDegree>();
+	for (ExecutionDegree degree : degrees) {
+	    infoExecutionDegrees.add(new InfoExecutionDegree(degree));
+	}
 	Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
 
 	List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());
 	result.add(new SelectItem(0, this.chooseMessage));
-	for (InfoExecutionDegree infoExecutionDegree : (List<InfoExecutionDegree>) infoExecutionDegrees) {
+	for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
 	    StringBuilder label = new StringBuilder();
 	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
 		    .getDegreeType().toString()));
@@ -491,6 +481,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	return result;
+    }
+
+    private AcademicInterval getAcademicIntervalFromParameter(String academicInterval) {
+	if (academicInterval.contains("-"))
+	    return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval.replaceAll("-", ":"));
+	return AcademicInterval.getAcademicIntervalFromResumedString(academicInterval);
     }
 
     private boolean addAnotherInfoDegreeToLabel(List<InfoExecutionDegree> infoExecutionDegrees,
@@ -608,29 +604,28 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public boolean getRenderContextSelection() {
-	if (this.getExecutionPeriodID() == null || this.getExecutionDegreeID() == null || this.getCurricularYearIDs() == null
-		|| this.getCurricularYearIDs().length <= 0 || this.getExecutionPeriodID() == 0
-		|| this.getExecutionDegreeID() == 0) {
+	if (this.getAcademicInterval() == null || this.getExecutionDegreeID() == null || this.getCurricularYearIDs() == null
+		|| this.getCurricularYearIDs().length <= 0 || this.getExecutionDegreeID() == 0) {
 	    return false;
 	}
 	return true;
     }
 
     public Date getWrittenEvaluationsCalendarBegin() {
-	Date beginDate = getExecutionPeriod().getBeginDate();
+	Date beginDate = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
 	final Integer calendarPeriod = getCalendarPeriod();
 	if (calendarPeriod != null && calendarPeriod.intValue() != 0) {
 	    final ExecutionDegree executionDegree = getExecutionDegree();
 	    if (executionDegree != null) {
-		if (getExecutionPeriod().getSemester().intValue() == 1
-			&& executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
+		int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+			.getAcademicIntervalFromResumedString(getAcademicInterval()));
+		if (semester == 1 && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
 		    if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
 			beginDate = executionDegree.getPeriodExamsFirstSemester().getStart();
 		    } else {
 			beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
 		    }
-		} else if (getExecutionPeriod().getSemester().intValue() == 2
-			&& executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
+		} else if (semester == 2 && executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
 		    if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
 			beginDate = executionDegree.getPeriodExamsSecondSemester().getStart();
 		    } else {
@@ -643,20 +638,20 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public Date getWrittenEvaluationsCalendarEnd() {
-	Date endDate = getExecutionPeriod().getEndDate();
+	Date endDate = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
 	final Integer calendarPeriod = getCalendarPeriod();
 	if (calendarPeriod != null && calendarPeriod != 0) {
 	    final ExecutionDegree executionDegree = getExecutionDegree();
 	    if (executionDegree != null) {
-		if (getExecutionPeriod().getSemester().intValue() == 1
-			&& executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
+		int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+			.getAcademicIntervalFromResumedString(getAcademicInterval()));
+		if (semester == 1 && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
 		    if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
 			endDate = executionDegree.getPeriodLessonsFirstSemester().getEnd();
 		    } else {
 			endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
 		    }
-		} else if (getExecutionPeriod().getSemester().intValue() == 2
-			&& executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
+		} else if (semester == 2 && executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
 		    if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
 			endDate = executionDegree.getPeriodLessonsSecondSemester().getEnd();
 		    } else {
@@ -702,15 +697,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
 	linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
-	linkParameters.put("executionPeriodID", this.executionPeriodID.toString());
+	linkParameters.put("academicInterval", this.academicInterval);
 	linkParameters.put("executionDegreeID", this.executionDegreeID.toString());
 	linkParameters.put("curricularYearIDsParameterString", getCurricularYearIDsParameterString());
 	linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
-	if (this.getExecutionPeriodOID() != null) {
-	    linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
-	} else {
-	    linkParameters.put("executionPeriodOID", executionCourse.getExecutionPeriod().getIdInternal().toString());
-	}
 	return linkParameters;
     }
 
@@ -731,17 +721,27 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private List<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
-
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	Integer[] curricularYears = getCurricularYearIDs();
 	if (curricularYears != null) {
 	    for (final Integer curricularYearID : curricularYears) {
-		final Object args[] = { this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
-			this.getExecutionPeriodID(), curricularYearID };
-		executionCourses.addAll((Collection<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
-			"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args));
+		executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+			getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+			rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
 	    }
 	}
+	// Integer[] curricularYears = getCurricularYearIDs();
+	// if (curricularYears != null) {
+	// for (final Integer curricularYearID : curricularYears) {
+	// final Object args[] = {
+	// this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
+	// this.getExecutionPeriodID(), curricularYearID };
+	// executionCourses.addAll((Collection<ExecutionCourse>)
+	// ServiceManagerServiceFactory.executeService(
+	// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
+	// , args));
+	// }
+	// }
 	Collections.sort(executionCourses, new BeanComparator("sigla"));
 	return executionCourses;
     }
@@ -755,9 +755,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	if (curricularYears != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = this.getExecutionDegree().getDegreeCurricularPlan();
 	    for (final Integer curricularYearID : curricularYears) {
-		final Object args[] = { degreeCurricularPlan.getIdInternal(), this.getExecutionPeriodID(), curricularYearID };
-		final Collection<ExecutionCourse> executionCourses = (Collection<ExecutionCourse>) ServiceManagerServiceFactory
-			.executeService("ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
+		// final Object args[] = { degreeCurricularPlan.getIdInternal(),
+		// this.getExecutionPeriodID(), curricularYearID };
+		// final Collection<ExecutionCourse> executionCourses =
+		// (Collection<ExecutionCourse>) ServiceManagerServiceFactory
+		// .executeService(
+		// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
+		// , args);
+		final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+		executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+			getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+			rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+
 		for (final ExecutionCourse executionCourse : executionCourses) {
 		    final Set<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(
 			    WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);
@@ -973,10 +982,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	examEndTime.set(Calendar.SECOND, 0);
 	examEndTime.set(Calendar.MILLISECOND, 0);
 
-
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
-		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
-		null, null, Boolean.FALSE);
+	List<InfoRoom> availableInfoRoom = ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate), YearMonthDay
+		.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond
+		.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
 
 	if (this.getEvaluationID() != null) {
 	    for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
@@ -1008,7 +1016,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
-	for (InfoRoom infoRoom : (List<InfoRoom>) availableInfoRoom) {
+	for (InfoRoom infoRoom : availableInfoRoom) {
 	    StringBuilder label = new StringBuilder();
 	    label.append(infoRoom.getNome());
 	    label.append("  ( ");
@@ -1165,7 +1173,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		stringBuilder.append("&selectedEnd=");
 		stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
 	    }
-	    stringBuilder.append("&executionPeriodOID=").append(getExecutionPeriod().getIdInternal());
+	    stringBuilder.append("&academicInterval=").append(academicInterval);
 	    stringBuilder.append("&");
 	    stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
 	    stringBuilder.append("=");
@@ -1414,8 +1422,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public String commentExecutionCourse() throws FenixFilterException, FenixServiceException {
 	try {
 
-	    DefineExamComment.run(this.getExecutionCourse().getSigla(),
-		    this.getExecutionCourse().getExecutionPeriod().getIdInternal(), this.getComment());
+	    DefineExamComment.run(this.getExecutionCourse().getSigla(), this.getExecutionCourse().getExecutionPeriod()
+		    .getIdInternal(), this.getComment());
 	} catch (FenixFilterException e) {
 	    this.setErrorMessage(e.getMessage());
 	    return "";
@@ -1492,11 +1500,20 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private List<ExecutionCourse> readExecutionCourses() throws FenixFilterException, FenixServiceException {
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
-	final Object args[] = { executionDegree.getDegreeCurricularPlan().getIdInternal(), this.getExecutionPeriodID(),
-		this.getSelectedCurricularYearID() };
-	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>(
-		(List<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
-			"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args));
+	// final Object args[] = {
+	// executionDegree.getDegreeCurricularPlan().getIdInternal(),
+	// this.getExecutionPeriodID(),
+	// this.getSelectedCurricularYearID() };
+	// List<ExecutionCourse> executionCourses = new
+	// ArrayList<ExecutionCourse>(
+	// (List<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
+	// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
+	// , args));
+	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
+	executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+		getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+		rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
+
 	Collections.sort(executionCourses, new BeanComparator("sigla"));
 	return executionCourses;
     }
@@ -1514,10 +1531,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Code to avoid bug in associating execution courses to written
     // evaluation....
 
-    public Integer getExecutionPeriodOID() {
-	return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldIntegerParameter("executionPeriodOID")
-		: executionPeriodOID;
-    }
+    // public Integer getAcademicIntervalOID() {
+    // return (academicIntervalOID == null) ? academicIntervalOID =
+    // getAndHoldIntegerParameter("academicIntervalOID")
+    // : academicIntervalOID;
+    // }
 
     public Map<Integer, Integer> getExecutionCoursesEnroledStudents() {
 	return executionCoursesEnroledStudents;

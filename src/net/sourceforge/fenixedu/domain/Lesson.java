@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -845,7 +846,7 @@ public class Lesson extends Lesson_Base {
 	result.append(getDiaSemana().toString()).append(" (");
 	result.append(getBeginHourMinuteSecond().toString("HH:mm")).append("-");
 	result.append(getEndHourMinuteSecond().toString("HH:mm")).append(") ");
-	result.append(hasSala() ? ((AllocatableSpace) getSala()).getName().toString() : "");
+	result.append(hasSala() ? (getSala()).getName().toString() : "");
 	return result.toString();
     }
 
@@ -934,5 +935,9 @@ public class Lesson extends Lesson_Base {
 	} else {
 	    this.setEnd(null);
 	}
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionPeriod().getAcademicInterval();
     }
 }

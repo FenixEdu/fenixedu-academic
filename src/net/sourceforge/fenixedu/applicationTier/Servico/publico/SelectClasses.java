@@ -7,7 +7,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -20,10 +19,8 @@ public class SelectClasses extends FenixService {
     public static Object run(InfoClass infoClass) {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree()
 		.getIdInternal());
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoClass
-		.getInfoExecutionPeriod().getIdInternal());
-	final Set<SchoolClass> classes = executionDegree.findSchoolClassesByExecutionPeriodAndCurricularYear(executionSemester,
-		infoClass.getAnoCurricular());
+	final Set<SchoolClass> classes = executionDegree.findSchoolClassesByAcademicIntervalAndCurricularYear(infoClass
+		.getAcademicInterval(), infoClass.getAnoCurricular());
 
 	List<InfoClass> infoClasses = new ArrayList<InfoClass>();
 	for (SchoolClass taux : classes) {

@@ -14,9 +14,20 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CriarTurma extends FenixService {
+
+    @Service
+    public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,
+	    final AcademicInterval academicInterval) throws ExistingServiceException {
+
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
+
+	final SchoolClass schoolClass = new SchoolClass(executionDegree, academicInterval, className, curricularYear);
+	return InfoClass.newInfoFromDomain(schoolClass);
+    }
 
     @Service
     public static Object run(final String className, final Integer curricularYear, final InfoExecutionDegree infoExecutionDegree,

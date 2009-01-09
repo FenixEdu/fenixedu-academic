@@ -19,6 +19,11 @@ public class LessonsPeriodCE extends LessonsPeriodCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
+    }
+
+    @Override
     public boolean isLessonsPerid() {
 	return true;
     }

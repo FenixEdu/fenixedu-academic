@@ -13,15 +13,15 @@
 
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
+		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.academicIntervalHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:outputText value="<div class='infoop2 mtop05'>" escape="false"/>
-			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.executionPeriod']}: #{SOPEvaluationManagementBackingBean.executionPeriodLabel}</p>" escape="false"/>
+			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.academicInterval']}: #{SOPEvaluationManagementBackingBean.academicIntervalLabel}</p>" escape="false"/>
 			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.context.degree']}: #{SOPEvaluationManagementBackingBean.executionDegreeLabel}</p>" escape="false"/>
 			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.context.curricular.year']}: #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</p>" escape="false"/>
 			<h:outputText value="<p class='mvert05'>#{bundleSOP['property.aula.disciplina']}: <b>#{SOPEvaluationManagementBackingBean.executionCourse.nome}" escape="false"/>

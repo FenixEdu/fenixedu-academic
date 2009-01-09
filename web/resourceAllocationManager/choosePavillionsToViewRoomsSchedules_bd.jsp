@@ -15,7 +15,7 @@
 
 <html:form action="/viewAllRoomsSchedulesDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
+	<html:hidden alt="<%=SessionConstants.ACADEMIC_INTERVAL%>" property="<%=SessionConstants.ACADEMIC_INTERVAL%>" value="<%= ""+request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)%>" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
 
 	<p class="mbottom2">

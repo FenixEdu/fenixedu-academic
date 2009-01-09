@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -463,14 +464,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    @Deprecated
     public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
 	DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
 	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
 		: degreeInfo.getName();
     }
 
+    @Deprecated
     public MultiLanguageString getNameFor(final ExecutionSemester executionSemester) {
 	return getNameFor(executionSemester != null ? executionSemester.getExecutionYear() : null);
+    }
+
+    public MultiLanguageString getNameFor(final AcademicInterval academicInterval) {
+	DegreeInfo degreeInfo = academicInterval == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(academicInterval);
+	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
+		: degreeInfo.getName();
     }
 
     @Override
@@ -491,6 +500,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     /**
      * @deprecated Use {@link #getNameFor(ExecutionYear)}
      */
+    @Override
     @Deprecated
     public String getNameEn() {
 	DegreeInfo degreeInfo = getMostRecentDegreeInfo();
@@ -798,6 +808,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return executionYear.getDegreeInfo(this);
     }
 
+    @Deprecated
     public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
 	DegreeInfo result = null;
 	for (final DegreeInfo degreeInfo : getDegreeInfosSet()) {
@@ -809,6 +820,21 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		if (result == null || executionYear2.isAfter(result.getExecutionYear())) {
 		    result = degreeInfo;
 		}
+	    }
+	}
+	return result;
+    }
+
+    public DegreeInfo getMostRecentDegreeInfo(AcademicInterval academicInterval) {
+	DegreeInfo result = null;
+	for (final DegreeInfo degreeInfo : getDegreeInfosSet()) {
+	    AcademicInterval academicInterval2 = degreeInfo.getAcademicInterval();
+	    if (academicInterval.equals(academicInterval2))
+		return degreeInfo;
+
+	    if (academicInterval2.isBefore(academicInterval)) {
+		if (result == null || academicInterval2.isAfter(result.getAcademicInterval()))
+		    result = degreeInfo;
 	    }
 	}
 	return result;
@@ -1136,8 +1162,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	YearDelegateElection lastYearDelegateElection = null;
 	if (!elections.isEmpty()) {
-	    lastYearDelegateElection = (YearDelegateElection) Collections.max(elections,
-		    DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE);
+	    lastYearDelegateElection = Collections.max(elections, DelegateElection.ELECTION_COMPARATOR_BY_CANDIDACY_START_DATE);
 	}
 	return lastYearDelegateElection;
     }
@@ -1149,7 +1174,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	YearDelegateElection lastYearDelegateElection = null;
 	if (!elections.isEmpty()) {
-	    lastYearDelegateElection = (YearDelegateElection) Collections.max(elections,
+	    lastYearDelegateElection = Collections.max(elections,
 		    DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
 	}
 	return lastYearDelegateElection;

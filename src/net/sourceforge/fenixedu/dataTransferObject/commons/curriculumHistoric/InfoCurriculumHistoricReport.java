@@ -10,8 +10,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -29,7 +28,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     DomainReference<CurricularCourse> curricularCourse;
 
-    DomainReference<ExecutionSemester> executionSemester;
+    AcademicInterval academicInterval;
 
     public Integer getApproved() {
 	return approved;
@@ -64,25 +63,8 @@ public class InfoCurriculumHistoricReport implements Serializable {
 
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-	return this.executionSemester == null ? null : this.executionSemester.getObject();
-    }
-
-    private void setExecutionPeriod(final ExecutionSemester executionSemester) {
-	this.executionSemester = (executionSemester == null) ? null : new DomainReference<ExecutionSemester>(executionSemester);
-
-    }
-
-    public Integer getSemester() {
-	return getExecutionPeriod().getSemester();
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return getExecutionPeriod().getExecutionYear();
-    }
-
-    public InfoCurriculumHistoricReport(final ExecutionSemester executionSemester, final CurricularCourse curricularCourse) {
-	setExecutionPeriod(executionSemester);
+    public InfoCurriculumHistoricReport(final AcademicInterval academicInterval, final CurricularCourse curricularCourse) {
+	setAcademicInterval(academicInterval);
 	setCurricularCourse(curricularCourse);
 
 	init();
@@ -91,7 +73,7 @@ public class InfoCurriculumHistoricReport implements Serializable {
     private void init() {
 	this.enrolments = new TreeSet<InfoEnrolmentHistoricReport>(new BeanComparator(
 		"enrolment.studentCurricularPlan.registration.number"));
-	for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByExecutionPeriod(getExecutionPeriod())) {
+	for (final Enrolment enrolment : getCurricularCourse().getEnrolmentsByAcademicInterval(academicInterval)) {
 	    if (!enrolment.isAnnulled()) {
 		this.enrolments.add(new InfoEnrolmentHistoricReport(enrolment));
 
@@ -104,6 +86,14 @@ public class InfoCurriculumHistoricReport implements Serializable {
 		}
 	    }
 	}
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return academicInterval;
+    }
+
+    public void setAcademicInterval(AcademicInterval academicInterval) {
+	this.academicInterval = academicInterval;
     }
 
 }

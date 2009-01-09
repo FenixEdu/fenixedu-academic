@@ -43,7 +43,11 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -373,11 +377,27 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return super.getGradeScale() != null ? super.getGradeScale() : getDegree().getGradeScaleChain();
     }
 
+    @Deprecated
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
 	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
 	    if (executionDegree.getExecutionYear() == executionYear) {
 		return executionDegree;
 	    }
+	}
+	return null;
+    }
+
+    public ExecutionDegree getExecutionDegreeByAcademicInterval(AcademicInterval academicInterval) {
+	AcademicCalendarEntry academicCalendarEntry = academicInterval.getAcademicCalendarEntry();
+	while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
+	    if (academicCalendarEntry instanceof AcademicYearCE) {
+		ExecutionYear year = ExecutionYear.getExecutionYear((AcademicYearCE) academicCalendarEntry);
+		for (ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+		    if (executionDegree.getExecutionYear().getAcademicInterval().equals(year.getAcademicInterval()))
+			return executionDegree;
+		}
+	    } else
+		academicCalendarEntry = academicCalendarEntry.getParentEntry();
 	}
 	return null;
     }
@@ -1818,4 +1838,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     }
 
+    public static Collection<DegreeCurricularPlan> readByAcademicInterval(AcademicInterval academicInterval) {
+	ExecutionYear year = ExecutionYear.readByAcademicInterval(academicInterval);
+	return year.getDegreeCurricularPlans();
+    }
 }

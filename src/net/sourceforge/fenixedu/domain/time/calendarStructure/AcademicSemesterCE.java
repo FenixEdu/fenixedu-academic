@@ -46,6 +46,11 @@ public class AcademicSemesterCE extends AcademicSemesterCE_Base {
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return period.equals(AcademicPeriod.SEMESTER);
+    }
+
+    @Override
     public boolean isAcademicSemester() {
 	return true;
     }

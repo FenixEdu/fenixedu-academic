@@ -1,19 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurnosDeDisciplinaExecucao;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveClasses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurno;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -26,6 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurnosDeDisciplinaExecucao;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveClasses;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -37,7 +30,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
@@ -123,8 +115,6 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     public ActionForward editShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
-
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 
 	InfoShift infoShiftOld = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
@@ -175,7 +165,6 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	ContextUtils.setClassContext(request);
 
-	IUserView userView = UserView.getUser();
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
@@ -232,7 +221,6 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    lessonOIDs.add(Integer.valueOf(selectedLessons[i]));
 	}
 
-
 	try {
 	    DeleteLessons.run(lessonOIDs);
 
@@ -255,7 +243,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	ShiftKey shiftKey = new ShiftKey(infoShift.getNome(), infoShift.getInfoDisciplinaExecucao());
 
-	List<InfoStudent> students = (List<InfoStudent>) LerAlunosDeTurno.run(shiftKey);
+	List<InfoStudent> students = LerAlunosDeTurno.run(shiftKey);
 
 	Collections.sort(students, new BeanComparator("number"));
 
@@ -265,7 +253,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-	List<InfoShift> shifts = (List<InfoShift>) LerTurnosDeDisciplinaExecucao.run(infoExecutionCourse);
+	List<InfoShift> shifts = LerTurnosDeDisciplinaExecucao.run(infoExecutionCourse);
 
 	if (shifts != null && !shifts.isEmpty()) {
 	    request.setAttribute(SessionConstants.SHIFTS, shifts);

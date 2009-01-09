@@ -1,8 +1,9 @@
 <%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
@@ -14,43 +15,18 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>  
 </p>
 
+<fr:form action="/viewRoom.do?method=academicIntervalPostBack" >
+    <fr:edit id="roomOccupationWeekBean" schema="roomOccupationWeek.choose" name="roomOccupationWeekBean">
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
+            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        </fr:layout>
+        <fr:destination name="academicIntervalPostBack" path="/viewRoom.do?method=academicIntervalPostBack"/> 
+        <fr:destination name="weekPostBack" path="/viewRoom.do?method=weekPostBack"/>
+    </fr:edit>
+</fr:form>
 
-<html:form action="/viewRoom">
-	<bean:define id="infoRoomOID" name="<%= SessionConstants.ROOM%>" property="idInternal" scope="request"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="execute"/>
-	<html:hidden alt="<%= SessionConstants.ROOM_OID%>" property="<%= SessionConstants.ROOM_OID%>" value="<%=infoRoomOID.toString()%>"/>
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />				
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<table class="tstyle5 thlight thright">
-		<tr>
-		    <th><bean:message key="label.manager.executionPeriod"/></th>
-		    <td>
-		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.selectedExecutionPeriodOID" property="selectedExecutionPeriodOID" size="1"
-		        		onchange="this.form.indexWeek.value='0';this.form.submit();">
-     				<html:options property="value" 
-     					labelProperty="label" 
-						collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" />
-				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
-			</td>
-		</tr>
-		<tr>
-		    <th><bean:message key="property.week"/>:</th>
-		    <td>
-		        <html:select bundle="HTMLALT_RESOURCES" altKey="select.indexWeek" property="indexWeek" size="1" onchange="this.form.submit();">
-     				<html:options property="value" 
-     					labelProperty="label" 
-						collection="<%= SessionConstants.LABELLIST_WEEKS%>" />
-				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
-			</td>
-		</tr>
-	</table>
-</html:form> 
+<bean:define id="execution_period_oid" name="roomOccupationWeekBean" property="executionSemester.idInternal" scope="request" />
 
 <logic:present name="<%= SessionConstants.ROOM%>" scope="request">
             <table class="tstyle4 tdcenter mvert15">
@@ -101,10 +77,11 @@
 		/>
 	</div>
 
-	</logic:present>
+</logic:present>
 
-	<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
-		<p>
-			<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
-		</p>
-	</logic:notPresent>
+<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
+	<p>
+		<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
+	</p>
+</logic:notPresent>
+ 

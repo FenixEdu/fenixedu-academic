@@ -14,23 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCoursesByDegreeAndExecutionPeriodId;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
@@ -45,23 +47,32 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	DynaActionForm degreesForm = (DynaActionForm) form;
 	Integer sourceDegreeId = (Integer) degreesForm.get("sourceDegreeId");
 	Integer destinationDegreeId = (Integer) degreesForm.get("destinationDegreeId");
-	Integer executionPeriodId = (Integer) degreesForm.get("executionPeriodId");
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) degreesForm
+		.get(SessionConstants.ACADEMIC_INTERVAL));
 
-	getSourceAndDestinationExecutionCourses(request, sourceDegreeId, destinationDegreeId, executionPeriodId);
+	getSourceAndDestinationExecutionCourses(request, sourceDegreeId, destinationDegreeId, academicInterval);
 
 	getSourceAndDestinationDegrees(request, sourceDegreeId, destinationDegreeId);
 
-	getExecutionPeriod(request, executionPeriodId);
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval);
 
 	return mapping.findForward("chooseExecutionCourses");
     }
 
-    protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId) throws FenixServiceException,
-	    FenixFilterException {
+    public ActionForward academicIntervalPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-	InfoExecutionPeriod infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodId);
+	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	degrees.addAll(Degree.readNotEmptyDegrees());
 
-	request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, contextSelectionBean.getAcademicInterval());
+	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
+	request.setAttribute("sourceDegrees", degrees);
+	request.setAttribute("destinationDegrees", degrees);
+	return mapping.findForward("chooseDegreesAndExecutionPeriod");
     }
 
     protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId, Integer destinationDegreeId)
@@ -75,11 +86,11 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     }
 
     protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request, Integer sourceDegreeId,
-	    Integer destinationDegreeId, Integer executionPeriodId) throws FenixServiceException, FenixFilterException {
+	    Integer destinationDegreeId, AcademicInterval academicInterval) throws FenixServiceException, FenixFilterException {
 
 	List destinationExecutionCourses = ReadExecutionCoursesByDegreeAndExecutionPeriodId.run(destinationDegreeId,
-		executionPeriodId);
-	List sourceExecutionCourses = ReadExecutionCoursesByDegreeAndExecutionPeriodId.run(sourceDegreeId, executionPeriodId);
+		academicInterval);
+	List sourceExecutionCourses = ReadExecutionCoursesByDegreeAndExecutionPeriodId.run(sourceDegreeId, academicInterval);
 
 	Collator collator = Collator.getInstance();
 	Collections.sort(destinationExecutionCourses, new BeanComparator("nome", collator));
@@ -94,17 +105,11 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readNotEmptyDegrees());
 
-	List executionPeriods = ReadAllExecutionPeriods.run();
-
-	ComparatorChain comparator = new ComparatorChain();
-	comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-	comparator.addComparator(new BeanComparator("name"), true);
-	Collections.sort(executionPeriods, comparator);
-
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, AcademicInterval
+		.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
+	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
 	request.setAttribute("sourceDegrees", degrees);
 	request.setAttribute("destinationDegrees", degrees);
-	request.setAttribute("executionPeriods", executionPeriods);
-
 	return mapping.findForward("chooseDegreesAndExecutionPeriod");
     }
 

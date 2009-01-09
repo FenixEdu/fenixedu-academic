@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class DegreeModuleScope {
@@ -78,7 +79,10 @@ public abstract class DegreeModuleScope {
 
     public abstract CurricularCourse getCurricularCourse();
 
+    @Deprecated
     public abstract boolean isActiveForExecutionPeriod(ExecutionSemester executionSemester);
+
+    public abstract boolean isActiveForAcademicInterval(AcademicInterval academicInterval);
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
 	return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScope(), writtenEvaluation
@@ -164,4 +168,5 @@ public abstract class DegreeModuleScope {
 		.appendLabel("º ").appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
 
     }
+
 }

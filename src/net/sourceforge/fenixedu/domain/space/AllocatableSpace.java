@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -39,8 +40,10 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public abstract RoomClassification getRoomClassification();
 
+    @Override
     public abstract Integer getNormalCapacity();
 
+    @Override
     public abstract Integer getExamCapacity();
 
     protected abstract void setNormalCapacity(Integer capacidadeNormal);
@@ -280,6 +283,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	return true;
     }
 
+    @Deprecated
     public List<Lesson> getAssociatedLessons(final ExecutionSemester executionSemester) {
 	final List<Lesson> lessons = new ArrayList<Lesson>();
 	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {
@@ -287,6 +291,20 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 		LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
 		final Lesson lesson = roomOccupation.getLesson();
 		if (lesson.getExecutionPeriod() == executionSemester) {
+		    lessons.add(lesson);
+		}
+	    }
+	}
+	return lessons;
+    }
+
+    public List<Lesson> getAssociatedLessons(AcademicInterval academicInterval) {
+	final List<Lesson> lessons = new ArrayList<Lesson>();
+	for (ResourceAllocation spaceOccupation : getResourceAllocations()) {
+	    if (spaceOccupation.isLessonSpaceOccupation()) {
+		LessonSpaceOccupation roomOccupation = (LessonSpaceOccupation) spaceOccupation;
+		final Lesson lesson = roomOccupation.getLesson();
+		if (lesson.getAcademicInterval().equals(academicInterval)) {
 		    lessons.add(lesson);
 		}
 	    }
@@ -351,4 +369,5 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}
 	return result;
     }
+
 }

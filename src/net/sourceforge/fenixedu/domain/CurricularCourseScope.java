@@ -7,6 +7,10 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -138,6 +142,24 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	return !getBeginYearMonthDay().isAfter(end) && (getEndYearMonthDay() == null || !getEndYearMonthDay().isBefore(begin));
     }
 
+    public boolean isActiveForAcademicInterval(AcademicInterval academicInterval) {
+	return isActiveForCalendarEntry(academicInterval.getAcademicCalendarEntry());
+    }
+
+    private boolean isActiveForCalendarEntry(AcademicCalendarEntry entry) {
+	if (entry instanceof AcademicCalendarRootEntry)
+	    return false;
+
+	if (entry instanceof AcademicYearCE)
+	    return intersects(entry.getBegin().toDate(), entry.getEnd().toDate());
+
+	if (intersects(entry.getBegin().toDate(), entry.getEnd().toDate())
+		&& new Integer(entry.getAcademicSemesterOfAcademicYear(entry.getAcademicChronology()))
+			.equals(getCurricularSemester().getSemester()))
+	    return true;
+	return isActiveForCalendarEntry(entry.getParentEntry());
+    }
+
     public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
 	return intersects(executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay())
 		&& executionSemester.getSemester().equals(getCurricularSemester().getSemester());
@@ -206,6 +228,11 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	@Override
 	public boolean isActiveForExecutionPeriod(final ExecutionSemester executionSemester) {
 	    return curricularCourseScope.isActiveForExecutionPeriod(executionSemester);
+	}
+
+	@Override
+	public boolean isActiveForAcademicInterval(final AcademicInterval academicInterval) {
+	    return curricularCourseScope.isActiveForAcademicInterval(academicInterval);
 	}
 
 	@Override

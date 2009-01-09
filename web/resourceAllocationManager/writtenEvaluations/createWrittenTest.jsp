@@ -19,7 +19,7 @@
 
 	<h:form>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionCourseIdHidden}" />
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
+		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.academicIntervalHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.calendarPeriodHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.dayHidden}"/>
@@ -27,11 +27,11 @@
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<h:inputHidden value="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:outputText value="<div class='infoop2 mtop05'>" escape="false"/>
-			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b><br/>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.academicInterval']}: <b>#{SOPEvaluationManagementBackingBean.academicIntervalLabel}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b>#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.courses']}: " escape="false"/>
@@ -113,12 +113,12 @@
 		<h:outputText value="<p class='mtop15'>" escape="false"/>
 			<h:commandLink action="associateRoomToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associateRooms']}" escape="false"/>
-				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
+				<f:param name="academicInterval" value="#{SOPEvaluationManagementBackingBean.academicInterval}" />
 			</h:commandLink>
 		<h:outputText value="<br/>" escape="false"/>
 			<h:commandLink action="associateExecutionCourseToWrittenEvaluation">
 				<h:outputText value="#{bundleSOP['property.exam.associate']}" escape="false"/>
-				<f:param name="executionPeriodOID" value="#{SOPEvaluationManagementBackingBean.executionPeriodOID}" />
+				<f:param name="academicInterval" value="#{SOPEvaluationManagementBackingBean.academicInterval}" />
 			</h:commandLink>
 		<h:outputText value="</p>" escape="false"/>
 

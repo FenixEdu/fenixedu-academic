@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -31,10 +32,12 @@ public class InfoClass extends InfoObject {
 	return getSchoolClass().getAnoCurricular();
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj != null && getSchoolClass() == ((InfoClass) obj).getSchoolClass();
     }
 
+    @Override
     public String toString() {
 	return getSchoolClass().toString();
     }
@@ -43,6 +46,11 @@ public class InfoClass extends InfoObject {
 	return InfoExecutionDegree.newInfoFromDomain(getSchoolClass().getExecutionDegree());
     }
 
+    public AcademicInterval getAcademicInterval() {
+	return getSchoolClass().getAcademicInterval();
+    }
+
+    @Deprecated
     public InfoExecutionPeriod getInfoExecutionPeriod() {
 	return InfoExecutionPeriod.newInfoFromDomain(getSchoolClass().getExecutionPeriod());
     }

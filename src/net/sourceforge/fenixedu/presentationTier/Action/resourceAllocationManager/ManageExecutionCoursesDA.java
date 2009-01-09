@@ -8,33 +8,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseScopesByExecutionCourseID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
-import org.apache.struts.util.MessageResources;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -44,119 +34,38 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("ShowSearchForm");
+    }
 
-	// TODO : find a way to refactor this code so it is shared with context
-	// selection.
-	// this implies changing the form value from index to executionPeriodOID
-	// etc.
-	// The same should be done with the selection of the execution course
-	// and
-	// of the curricular year.
-
-	IUserView userView = getUserView(request);
-
-	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
-
-	List executionPeriods = ReadExecutionPeriods.run();
-
-	ComparatorChain chainComparator = new ComparatorChain();
-	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-	chainComparator.addComparator(new BeanComparator("semester"));
-	Collections.sort(executionPeriods, chainComparator);
-
-	if (selectedExecutionPeriod != null) {
-	    DynaActionForm searchExecutionCourse = (DynaActionForm) form;
-	    searchExecutionCourse.set("executionPeriodOID", selectedExecutionPeriod.getIdInternal().toString());
-	}
-
-	List executionPeriodsLabelValueList = new ArrayList();
-	for (int i = 0; i < executionPeriods.size(); i++) {
-	    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-	    executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
-		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
-	}
-
-	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
-
-	////////////////////////////////////////////////////////////////////////
-	// ////
-
-	/* Obtain a list of curricular years */
-	List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
-
-	/* Obtain a list of degrees for the specified execution year */
-
-	List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(selectedExecutionPeriod.getInfoExecutionYear());
-
-	/* Sort the list of degrees */
-	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-
-	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
-	/* Generate a label list for the above list of degrees */
-	List labelListOfExecutionDegrees = ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(executionDegreeList,
-		messageResources, request);// ContextUtils.
-	// getLabelListOfExecutionDegrees
-	// (executionDegreeList);
-	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
-
+    public ActionForward choosePostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	return mapping.findForward("ShowSearchForm");
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
+	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) request
+		.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
 
-	IUserView userView = getUserView(request);
+	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID,
+		contextSelectionBean.getCurricularYear() != null ? contextSelectionBean.getCurricularYear().getIdInternal()
+			: null);
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree().getIdInternal());
 
-	DynaActionForm searchExecutionCourse = (DynaActionForm) form;
-	// Mandatory Selection
-	Integer executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
-	// Optional Selection
-	Integer executionDegreeOID = null;
-	String executionDegreeOIDString = (String) searchExecutionCourse.get("executionDegreeOID");
+	request.setAttribute("execution_course_name", contextSelectionBean.getCourseName().replaceAll("%", "%25"));
 
-	if ((executionDegreeOIDString != null) && (!executionDegreeOIDString.equals("null"))) {
-	    if (executionDegreeOIDString.length() > 0) {
-		executionDegreeOID = new Integer(executionDegreeOIDString);
-	    }
+	List<InfoExecutionCourse> infoExecutionCourses = null;
+
+	Object[] args = null;
+	if (contextSelectionBean.getCurricularYear() == null) {
+	    args = new Object[] { contextSelectionBean.getAcademicInterval(), contextSelectionBean.getExecutionDegree(),
+		    contextSelectionBean.getCourseName() };
+	} else {
+	    args = new Object[] { contextSelectionBean.getAcademicInterval(), contextSelectionBean.getExecutionDegree(),
+		    contextSelectionBean.getCurricularYear(), contextSelectionBean.getCourseName() };
 	}
-
-	// Optional Selection
-	Integer curricularYearOID = null;
-	if (searchExecutionCourse.get("curricularYearOID") != null && !searchExecutionCourse.get("curricularYearOID").equals("")
-		&& !searchExecutionCourse.get("curricularYearOID").equals("null")) {
-	    curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
-	}
-	// Optional Selection
-	String executionCourseName = (String) searchExecutionCourse.get("executionCourseName");
-
-	// Set Context
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());
-	ContextUtils.setExecutionPeriodContext(request);
-
-	if (executionDegreeOID != null) {
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeOID.toString());
-	}
-	ContextUtils.setExecutionDegreeContext(request);
-	if (curricularYearOID != null) {
-	    request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYearOID.toString());
-	    ContextUtils.setCurricularYearContext(request);
-	}
-	request.setAttribute("execution_course_name", executionCourseName);
-
-	// Call some service that queries the list of execution course.
-	List infoExecutionCourses = null;
-
-	Object args[] = { request.getAttribute(SessionConstants.EXECUTION_PERIOD),
-		request.getAttribute(SessionConstants.EXECUTION_DEGREE), request.getAttribute(SessionConstants.CURRICULAR_YEAR),
-		executionCourseName };
-	infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService("SearchExecutionCourses", args);
-
-	// if query result is a list then go to a page where they are listed
-	// if (infoExecutionCourses == null
-	// || infoExecutionCourses.isEmpty()
-	// || infoExecutionCourses.size() > 1) {
+	infoExecutionCourses = (List<InfoExecutionCourse>) ServiceManagerServiceFactory.executeService("SearchExecutionCourses",
+		args);
 
 	if (infoExecutionCourses != null) {
 
@@ -165,22 +74,14 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	    request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
 
 	}
-	return prepareSearch(mapping, form, request, response);
-	// if query result is a sigle item then go directly to the execution
-	// course page
-	// } else {
-	// request.setAttribute(
-	// SessionConstants.EXECUTION_COURSE,
-	// infoExecutionCourses.get(0));
-	// return mapping.findForward("ManageExecutionCourse");
-	// }
+	return mapping.findForward("ShowSearchForm");
     }
 
     /**
      * @param request
      * @param infoExecutionCourses
      */
-    private void sortList(HttpServletRequest request, List infoExecutionCourses) {
+    private void sortList(HttpServletRequest request, List<InfoExecutionCourse> infoExecutionCourses) {
 	String sortParameter = request.getParameter("sortBy");
 	if ((sortParameter != null) && (sortParameter.length() != 0)) {
 	    if (sortParameter.equals("occupancy")) {
@@ -193,20 +94,8 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 	}
     }
 
-    public ActionForward changeExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm searchExecutionCourse = (DynaActionForm) form;
-	Integer executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());
-	ContextUtils.setExecutionPeriodContext(request);
-	return prepareSearch(mapping, form, request, response);
-    }
-
     public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
 
 	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
@@ -335,8 +224,6 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
 
 	Integer executionCourceOId = new Integer(request.getParameter("executionCourseOID"));
 	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourceOId);

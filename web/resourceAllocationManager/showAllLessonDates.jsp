@@ -10,7 +10,7 @@
 
 <logic:present role="RESOURCE_ALLOCATION_MANAGER">
 			
-	<bean:define id="parameters"><%=SessionConstants.LESSON_OID%>=<bean:write name="lesson_" property="idInternal"/>&amp;<%=SessionConstants.SHIFT_OID%>=<bean:write name="shift" property="idInternal"/>&amp;<%=SessionConstants.EXECUTION_COURSE_OID%>=<bean:write name="execution_course" property="idInternal"/>&amp;<%=SessionConstants.EXECUTION_PERIOD_OID%>=<bean:write name="execution_period" property="idInternal"/>&amp;<%=SessionConstants.CURRICULAR_YEAR_OID%>=<bean:write name="curricular_year" property="idInternal"/>&amp;<%=SessionConstants.EXECUTION_DEGREE_OID%>=<bean:write name="execution_degree" property="idInternal"/></bean:define>	
+	<bean:define id="parameters"><%=SessionConstants.LESSON_OID%>=<bean:write name="lesson_" property="idInternal"/>&amp;<%=SessionConstants.SHIFT_OID%>=<bean:write name="shift" property="idInternal"/>&amp;<%=SessionConstants.EXECUTION_COURSE_OID%>=<bean:write name="execution_course" property="idInternal"/>&amp;<%=SessionConstants.ACADEMIC_INTERVAL%>=<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString()%>&amp;<%=SessionConstants.CURRICULAR_YEAR_OID%>=<bean:write name="curricular_year" property="idInternal"/>&amp;<%=SessionConstants.EXECUTION_DEGREE_OID%>=<bean:write name="execution_degree" property="idInternal"/></bean:define>	
 	<bean:define id="linkToReturn">/manageShift.do?method=prepareEditShift&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
 	<bean:define id="linkToCreateNewLessonInstance">/manageLesson.do?method=prepareCreateNewLessonInstance&amp;page=0&amp;<bean:write name="parameters" filter="false"/></bean:define>
 	

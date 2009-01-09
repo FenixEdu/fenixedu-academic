@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCur
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
@@ -342,10 +343,21 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return result;
     }
 
+    @Deprecated
     public List<DegreeModuleScope> getActiveDegreeModuleScopesInExecutionPeriod(final ExecutionSemester executionSemester) {
 	final List<DegreeModuleScope> activeScopesInExecutionPeriod = new ArrayList<DegreeModuleScope>();
 	for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
 	    if (scope.isActiveForExecutionPeriod(executionSemester)) {
+		activeScopesInExecutionPeriod.add(scope);
+	    }
+	}
+	return activeScopesInExecutionPeriod;
+    }
+
+    public List<DegreeModuleScope> getActiveDegreeModuleScopesInAcademicInterval(AcademicInterval academicInterval) {
+	final List<DegreeModuleScope> activeScopesInExecutionPeriod = new ArrayList<DegreeModuleScope>();
+	for (final DegreeModuleScope scope : getDegreeModuleScopes()) {
+	    if (scope.isActiveForAcademicInterval(academicInterval)) {
 		activeScopesInExecutionPeriod.add(scope);
 	    }
 	}
@@ -514,7 +526,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	CurricularYear minCurricularYear = null;
 
-	for (CurricularCourseScope curricularCourseScope : (List<CurricularCourseScope>) listOfScopes) {
+	for (CurricularCourseScope curricularCourseScope : listOfScopes) {
 	    if (curricularCourseScope.isActive(date).booleanValue()) {
 		CurricularYear actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
 		if (minCurricularYear == null
@@ -1187,6 +1199,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
     }
 
+    @Deprecated
     public void addActiveEnrollments(final Collection<Enrolment> enrolments, final ExecutionSemester executionSemester) {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
@@ -1198,10 +1211,28 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
     }
 
+    @Deprecated
     public List<Enrolment> getEnrolmentsByExecutionPeriod(final ExecutionSemester executionSemester) {
 	List<Enrolment> result = new ArrayList<Enrolment>();
 	addActiveEnrollments(result, executionSemester);
 	return result;
+    }
+
+    public List<Enrolment> getEnrolmentsByAcademicInterval(AcademicInterval academicInterval) {
+	List<Enrolment> result = new ArrayList<Enrolment>();
+	addActiveEnrollments(result, academicInterval);
+	return result;
+    }
+
+    private void addActiveEnrollments(List<Enrolment> enrolments, AcademicInterval academicInterval) {
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+		if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)) {
+		    enrolments.add(enrolment);
+		}
+	    }
+	}
     }
 
     public List<Enrolment> getEnrolments() {
@@ -1576,6 +1607,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return curricularCourseScopes;
     }
 
+    public Set<CurricularCourseScope> findCurricularCourseScopesIntersectingExecutionCourse(ExecutionCourse executionCourse) {
+	AcademicInterval academicInterval = executionCourse.getAcademicInterval();
+
+	return this.findCurricularCourseScopesIntersectingPeriod(academicInterval.getStart().toDate(), academicInterval.getEnd()
+		.toDate());
+    }
+
     public Set<Enrolment> getEnrolmentsNotInAnyMarkSheet(MarkSheetType markSheetType, ExecutionSemester executionSemester) {
 
 	final Set<Enrolment> result = new HashSet<Enrolment>();
@@ -1810,6 +1848,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
     }
 
+    public ExecutionDegree getExecutionDegreeFor(AcademicInterval academicInterval) {
+	return getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(academicInterval);
+    }
+
+    @Deprecated
     public ExecutionDegree getExecutionDegreeFor(ExecutionYear executionYear) {
 	return getDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);
     }
@@ -2086,4 +2129,5 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 	return res;
     }
+
 }

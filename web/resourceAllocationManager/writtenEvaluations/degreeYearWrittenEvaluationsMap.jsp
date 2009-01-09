@@ -3,7 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -19,10 +20,10 @@
 				<br/>
 				<bean:define id="year" type="java.lang.Integer" name="executionCoursesByCurricularYearEntry" property="key"/> <bean:message key="label.year" arg0="<%= year.toString() %>"/>
 				-
-				<bean:define id="semester" type="java.lang.Integer" name="executionPeriod" property="semester"/> <bean:message key="label.period" arg0="<%= semester.toString() %>"/>
-				-
-				<bean:write name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.executionYear.year"/>
-				
+                <bean:write name="academicInterval" property="pathName" />
+               
+                <bean:define id="semester" type="java.lang.Integer" name="semester" />
+
 				<bean:define id="degreeCurricularPlan" name="executionCoursesByCurricularYearByExecutionDegreeEntry" property="key.degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
 			</strong>
 			<br/>

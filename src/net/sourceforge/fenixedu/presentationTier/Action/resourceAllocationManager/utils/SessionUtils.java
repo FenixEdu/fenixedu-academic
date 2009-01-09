@@ -8,10 +8,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -22,10 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
@@ -48,10 +46,11 @@ public final class SessionUtils {
 	// Ler Disciplinas em Execucao
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
 
-
-	infoCourseList = (ArrayList) LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear());
+	infoCourseList = LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, academicInterval,
+		infoCurricularYear.getYear());
 
 	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 
@@ -72,8 +71,8 @@ public final class SessionUtils {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-
-	infoCourseList = (ArrayList) LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear());
+	infoCourseList = LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod,
+		infoCurricularYear.getYear());
 
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 	String[] executionCourseIDArray = (String[]) chooseCourseForm.get("executionCourses");

@@ -262,3 +262,118 @@
 	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="person" layout="username-as-person" key="label.access.group.person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			
 </schema>
+
+<schema name="academicIntervalSelectionBean.choosePostBack"
+	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+	bundle="SOP_RESOURCES">
+	<slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+		<property name="format" value="${pathName}" />
+		<property name="destination" value="intervalPostBack" />
+		<property name="nullOptionHidden" value="true" />
+	</slot>
+</schema>
+
+<schema name="academicIntervalSelectionBean.choose"
+    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    bundle="SOP_RESOURCES">
+    <slot name="academicInterval" layout="menu-select" key="property.executionPeriod"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+        <property name="format" value="${pathName}" />
+        <property name="nullOptionHidden" value="true" />
+    </slot>
+</schema>
+
+<schema name="degreeContext.choose"
+	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+	bundle="SOP_RESOURCES">
+	<slot name="executionDegree" layout="menu-select-postback" key="property.context.degree"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
+		<property name="format" value="${presentationName}" />
+		<property name="sortBy" value="presentationName" />
+		<property name="destination" value="degreePostBack" />
+		<property name="nullOptionHidden" value="true" />
+	</slot>
+	<slot name="curricularYear" layout="menu-select-postback" key="property.context.curricular.year"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearForExecutionDegreeProvider" />
+		<property name="format" value="${year} º" />
+		<property name="sortBy" value="year" />
+		<property name="destination" value="yearPostBack" />
+		<property name="nullOptionHidden" value="true" />
+	</slot>
+</schema>
+
+<schema name="executionCourseContext.choose"
+    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    bundle="SOP_RESOURCES">
+    <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+        <property name="format" value="${pathName}" />
+        <property name="destination" value="intervalPostBack" />
+        <property name="nullOptionHidden" value="true" />
+    </slot>
+    <slot name="executionDegree" layout="menu-select-postback" key="property.context.degree"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForAcademicSemesterSelectionBeanProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="presentationName" />
+        <property name="destination" value="degreePostBack" />
+        <property name="nullOptionHidden" value="true" />
+    </slot>
+	<slot name="curricularYear" layout="menu-select-postback" key="property.context.curricular.year">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CurricularYearForExecutionDegreeProvider" />
+		<property name="format" value="${year} º" />
+		<property name="sortBy" value="year" />
+		<property name="destination" value="yearPostBack" />
+		<property name="defaultText" value="Todos" />
+	</slot>
+    <slot name="courseName" key="property.executionCourse.name"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="academicInterval.chooseWithPostBack"
+    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
+    bundle="SOP_RESOURCES">
+    <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+        <property name="format" value="${pathName}" />
+        <property name="nullOptionHidden" value="true" />
+        <property name="destination" value="academicIntervalPostBack" />
+    </slot>
+</schema>
+
+<schema name="roomOccupationWeek.choose"
+    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomOccupationWeekBean"
+    bundle="SOP_RESOURCES">
+    <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
+        <property name="format" value="${pathName}" />
+        <property name="nullOptionHidden" value="true" />
+        <property name="destination" value="academicIntervalPostBack" />
+    </slot>
+    <slot name="weekBean" layout="menu-select-postback" key="property.executionPeriod"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass"
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomOccupationWeekBeanProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="presentationName" />
+        <property name="nullOptionHidden" value="true" />
+        <property name="destination" value="weekPostBack" />
+    </slot>
+</schema>

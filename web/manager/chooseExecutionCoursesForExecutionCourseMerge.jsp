@@ -1,5 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+<%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
@@ -12,14 +14,12 @@
 
 
 <br/>
-<bean:write name="infoExecutionPeriod" property="name" /> - 
-<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" />
+<bean:write name="academicInterval" property="pathName" />
 <br/>
 
-<html:form action="/mergeExecutionCoursesForm" >
-	    
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="mergeExecutionCourses"/>
+<html:form action="/mergeExecutionCoursesForm.do?method=mergeExecutionCourses" >
+
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="<%= SessionConstants.ACADEMIC_INTERVAL%>" value="<%= ((AcademicInterval)request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>"/>
 	<br/>
 	
 	

@@ -2671,15 +2671,6 @@
     </service>
 
     <service>
-        <name>ReadCurriculumHistoricReport</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadCurriculumHistoricReport</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ReadCurriculumHistoricAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReadDegreeCurricularPlan</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlan</implementationClass>
         <isTransactional>true</isTransactional>

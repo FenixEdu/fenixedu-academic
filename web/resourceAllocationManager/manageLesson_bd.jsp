@@ -28,8 +28,8 @@
 	<logic:present name="action">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.action" property="action" value="<%= pageContext.findAttribute("action").toString() %>"/>
 	</logic:present>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"

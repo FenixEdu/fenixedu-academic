@@ -16,8 +16,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -27,11 +26,10 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {
 
     @Service
-    public static List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException {
+    public static List run(Integer degreeId, AcademicInterval academicInterval) throws FenixServiceException {
 	final List infoExecutionCourses = new ArrayList();
 
-	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-	if (executionSemester == null) {
+	if (academicInterval == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
 
@@ -39,11 +37,11 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixServi
 	if (degree == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
-	final ExecutionDegree executionDegree = findExecutionDegree(executionSemester, degree);
+	final ExecutionDegree executionDegree = findExecutionDegree(academicInterval, degree);
 	if (executionDegree != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-	    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+	    for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
 		if (satisfiesCriteria(executionCourse, degreeCurricularPlan)) {
 		    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 		}
@@ -53,13 +51,11 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixServi
 	return infoExecutionCourses;
     }
 
-    private static ExecutionDegree findExecutionDegree(final ExecutionSemester executionSemester, final Degree degree) {
-	final ExecutionYear executionYear = executionSemester.getExecutionYear();
-	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    if (degreeCurricularPlan.getDegree() == degree) {
+    private static ExecutionDegree findExecutionDegree(final AcademicInterval academicInterval, final Degree degree) {
+	List<ExecutionDegree> all = ExecutionDegree.filterByAcademicInterval(academicInterval);
+	for (ExecutionDegree executionDegree : all) {
+	    if (executionDegree.getDegree().equals(degree))
 		return executionDegree;
-	    }
 	}
 	return null;
     }

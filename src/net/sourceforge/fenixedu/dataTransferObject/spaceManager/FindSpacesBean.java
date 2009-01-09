@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 public class FindSpacesBean implements Serializable {
 
@@ -32,24 +32,24 @@ public class FindSpacesBean implements Serializable {
 
     private SpacesSearchCriteriaType searchType;
 
-    private DomainReference<ExecutionSemester> executionPeriodReference;
+    private AcademicInterval academicInterval;
 
     public FindSpacesBean() {
 	setExtraOptions(false);
 	setSearchType(SpacesSearchCriteriaType.SPACE);
     }
 
-    public FindSpacesBean(Space space, ExecutionSemester executionSemester) {
+    public FindSpacesBean(Space space, AcademicInterval academicInterval) {
 	this();
 	setSpace(space);
-	setExecutionPeriod(executionSemester);
+	setAcademicInterval(academicInterval);
     }
 
-    public FindSpacesBean(Space space, SpacesSearchCriteriaType criteriaType, ExecutionSemester executionSemester) {
+    public FindSpacesBean(Space space, SpacesSearchCriteriaType criteriaType, AcademicInterval academicInterval) {
 	setSpace(space);
 	setExtraOptions(false);
 	setSearchType(criteriaType);
-	setExecutionPeriod(executionSemester);
+	setAcademicInterval(academicInterval);
     }
 
     public List<LinkObject> getSuroundingSpacePath() {
@@ -94,13 +94,12 @@ public class FindSpacesBean implements Serializable {
 	return this.selectedSpaceReference != null ? this.selectedSpaceReference.getObject() : null;
     }
 
-    public void setExecutionPeriod(ExecutionSemester executionSemester) {
-	this.executionPeriodReference = executionSemester != null ? new DomainReference<ExecutionSemester>(executionSemester)
-		: null;
+    public void setAcademicInterval(AcademicInterval academicInterval) {
+	this.academicInterval = academicInterval;
     }
 
-    public ExecutionSemester getExecutionPeriod() {
-	return this.executionPeriodReference != null ? this.executionPeriodReference.getObject() : null;
+    public AcademicInterval getAcademicInterval() {
+	return academicInterval;
     }
 
     public void setBuilding(Building building) {

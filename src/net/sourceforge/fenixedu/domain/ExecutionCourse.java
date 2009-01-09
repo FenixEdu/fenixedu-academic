@@ -2031,4 +2031,43 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return result;
     }
+
+    public static List<ExecutionCourse> filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
+	    AcademicInterval academicInterval, DegreeCurricularPlan degreeCurricularPlan, CurricularYear curricularYear,
+	    String name) {
+
+	// FIXME (PERIODS) must be changed when ExecutionCourse is linked to
+	// ExecutionInterval
+	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+
+	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+		degreeCurricularPlan, curricularYear, name);
+    }
+
+    public static List<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
+	// FIXME (PERIODS) must be changed when ExecutionCourse is linked to
+	// ExecutionInterval
+	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+
+	return executionSemester.getAssociatedExecutionCourses();
+    }
+
+    public static ExecutionCourse getExecutionCourseByInitials(AcademicInterval academicInterval, String courseInitials) {
+
+	// FIXME (PERIODS) must be changed when ExecutionCourse is linked to
+	// ExecutionInterval
+	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+	return executionSemester.getExecutionCourseByInitials(courseInitials);
+    }
+
+    public static List<ExecutionCourse> searchByAcademicIntervalAndExecutionDegreeYearAndName(AcademicInterval academicInterval,
+	    ExecutionDegree executionDegree, CurricularYear curricularYear, String name) {
+
+	// FIXME (PERIODS) must be changed when ExecutionCourse is linked to
+	// ExecutionInterval
+	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
+
+	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree
+		.getDegreeCurricularPlan(), curricularYear, name);
+    }
 }

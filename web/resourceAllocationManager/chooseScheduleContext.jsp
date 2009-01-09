@@ -7,5 +7,5 @@
   <tiles:put name="body" value="/resourceAllocationManager/chooseScheduleContext_bd.jsp" />
   <tiles:put name="body-context" value="/commons/blank.jsp" />  
   <tiles:put name="footer" value="/copyright.jsp" />
-  <tiles:put name="context" value="/commons/context.jsp" />
+  <tiles:put name="context" value="/commons/blank.jsp" />
 </tiles:insert>

@@ -31,7 +31,7 @@
 		
 		<h:form>
 			<h:outputText escape="false" value="<input alt='input.submittedForm' id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
-			<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
+			<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{writtenEvaluationsByRoom.academicInterval}'/>"/>
 	
 			<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom05'>" escape="false"/>
 			<h:outputText value="<tr><th>" escape="false"/>
@@ -112,7 +112,7 @@
 				<h:outputText escape="false" value=' | '/>						
 				<h:outputText escape="false" value='<a href="javascript:setCheckBoxValue(false)"> #{bundle["button.selectNone"]}</a></p>' />				
 					
-				<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{writtenEvaluationsByRoom.executionPeriodOID}'/>"/>
+				<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{writtenEvaluationsByRoom.academicInterval}'/>"/>
 				<h:outputText escape="false" value="<input alt='input.startDate' id='startDate' name='startDate' type='hidden' value='#{writtenEvaluationsByRoom.startDate}'/>"/>
 				<h:outputText escape="false" value="<input alt='input.endDate' id='endDate' name='endDate' type='hidden' value='#{writtenEvaluationsByRoom.endDate}'/>"/>
 											
@@ -190,7 +190,7 @@
 		 	<fc:fenixCalendar 
 			 		begin="#{writtenEvaluationsByRoom.calendarBegin}" 
 		 			end="#{writtenEvaluationsByRoom.calendarEnd}"
-					editLinkPage="editWrittenTest.faces"
+					editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
 		 			editLinkParameters="#{calendarLinks.value}"
 		 			extraLines="true"/>
 		</h:panelGroup>

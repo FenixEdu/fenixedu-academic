@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.time.calendarStructure;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
@@ -17,12 +21,26 @@ import org.joda.time.base.AbstractInterval;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {
 
+    private static final String RESUMED_SEPARATOR = ":";
+
+    private static final String NAME_SEPARATOR = " - ";
+
     public static final Comparator<AcademicInterval> COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicInterval>() {
 
 	@Override
 	public int compare(AcademicInterval o1, AcademicInterval o2) {
 	    final int c = o1.getBeginYearMonthDayWithoutChronology().compareTo(o2.getBeginYearMonthDayWithoutChronology());
 	    return c == 0 ? o2.getEndDateTimeWithoutChronology().compareTo(o1.getEndDateTimeWithoutChronology()) : c;
+	}
+
+    };
+
+    public static final Comparator<AcademicInterval> REVERSE_COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicInterval>() {
+
+	@Override
+	public int compare(AcademicInterval o1, AcademicInterval o2) {
+	    final int c = o2.getBeginYearMonthDayWithoutChronology().compareTo(o1.getBeginYearMonthDayWithoutChronology());
+	    return c == 0 ? o1.getEndDateTimeWithoutChronology().compareTo(o2.getEndDateTimeWithoutChronology()) : c;
 	}
 
     };
@@ -77,6 +95,21 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     public String getPresentationName() {
 	return getAcademicCalendarEntry().getPresentationName();
+    }
+
+    public String getPathName() {
+	String result = "";
+
+	AcademicCalendarEntry academicCalendarEntry = getAcademicCalendarEntry();
+	while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
+	    result += academicCalendarEntry.getTitle() + NAME_SEPARATOR;
+	    academicCalendarEntry = academicCalendarEntry.getParentEntry();
+	}
+
+	if (result.endsWith(NAME_SEPARATOR))
+	    result = result.substring(0, result.length() - 3);
+
+	return result;
     }
 
     public AcademicCalendarEntry getAcademicCalendarEntryInIntervalChronology() {
@@ -162,11 +195,12 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public String getRepresentationInStringFormat() {
-	return getEntryClassName() + ":" + getEntryIdInternal() + ":" + getAcademicCalendarIdInternal();
+	return getEntryClassName() + RESUMED_SEPARATOR + getEntryIdInternal() + RESUMED_SEPARATOR
+		+ getAcademicCalendarIdInternal();
     }
 
     public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {
-	String[] split = representationInStringFormat.split(":");
+	String[] split = representationInStringFormat.split(RESUMED_SEPARATOR);
 	String entryClassName = split[0];
 	Integer entryIdInternal = Integer.valueOf(split[1]);
 	Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
@@ -174,11 +208,11 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public String getResumedRepresentationInStringFormat() {
-	return getEntryIdInternal() + ":" + getAcademicCalendarIdInternal();
+	return getEntryIdInternal() + RESUMED_SEPARATOR + getAcademicCalendarIdInternal();
     }
 
     public static AcademicInterval getAcademicIntervalFromResumedString(String representationInStringFormat) {
-	String[] split = representationInStringFormat.split(":");
+	String[] split = representationInStringFormat.split(RESUMED_SEPARATOR);
 	Integer entryIdInternal = Integer.valueOf(split[0]);
 	Integer academicCalendarIdInternal = Integer.valueOf(split[1]);
 	return new AcademicInterval(entryIdInternal, academicCalendarIdInternal);
@@ -219,4 +253,88 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     // ///////
+
+    public AcademicInterval getChildAcademicInterval(AcademicPeriod period, int cardinal) {
+	AcademicCalendarEntry entry = getAcademicCalendarEntry().getChildAcademicCalendarEntry(period, cardinal);
+	return new AcademicInterval(entry, entry.getRootEntry());
+    }
+
+    public static int getCardinalityOfAcademicInterval(AcademicInterval child) {
+	return child.getAcademicCalendarEntry().getParentEntry().getCardinalityOfCalendarEntry(child.getAcademicCalendarEntry());
+    }
+
+    public static AcademicInterval getDefaultAcademicInterval(List<AcademicInterval> academicIntervals) {
+	DateTime now = new DateTime();
+
+	AcademicInterval closest = null;
+	for (AcademicInterval academicInterval : academicIntervals) {
+	    if (closest == null
+		    || Math.abs(academicInterval.getStart().getMillis() - now.getMillis()) > Math.abs(closest.getStart()
+			    .getMillis()
+			    - now.getMillis()))
+		closest = academicInterval;
+	}
+	return closest;
+    }
+
+    @Deprecated
+    public static AcademicInterval readDefaultAcademicInterval(AcademicPeriod academicPeriod) {
+	if (academicPeriod.equals(AcademicPeriod.SEMESTER))
+	    return ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
+	else if (academicPeriod.equals(AcademicPeriod.YEAR))
+	    return ExecutionYear.readCurrentExecutionYear().getAcademicInterval();
+
+	throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
+    }
+
+    @Deprecated
+    public static List<AcademicInterval> readAcademicIntervals(AcademicPeriod academicPeriod) {
+	RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+
+	if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
+	    List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+	    for (ExecutionSemester semester : rootDomainObject.getExecutionPeriods()) {
+		result.add(semester.getAcademicInterval());
+	    }
+
+	    return result;
+	} else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
+	    List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+	    for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+		result.add(executionYear.getAcademicInterval());
+	    }
+
+	    return result;
+	}
+	throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
+    }
+
+    @Deprecated
+    public static List<AcademicInterval> readActiveAcademicIntervals(AcademicPeriod academicPeriod) {
+	if (academicPeriod.equals(AcademicPeriod.SEMESTER)) {
+	    List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+	    for (ExecutionSemester semester : ExecutionSemester.readNotClosedExecutionPeriods()) {
+		result.add(semester.getAcademicInterval());
+	    }
+
+	    return result;
+	} else if (academicPeriod.equals(AcademicPeriod.YEAR)) {
+	    List<AcademicInterval> result = new ArrayList<AcademicInterval>();
+	    for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+		result.add(executionYear.getAcademicInterval());
+	    }
+
+	    return result;
+	}
+	throw new UnsupportedOperationException("Unknown AcademicPeriod " + academicPeriod);
+    }
+
+    public AcademicInterval getNextAcademicInterval() {
+	AcademicCalendarEntry nextAcademicCalendarEntry = getAcademicCalendarEntry().getNextAcademicCalendarEntry();
+	if (nextAcademicCalendarEntry != null)
+	    return new AcademicInterval(nextAcademicCalendarEntry, getAcademicCalendarEntry().getRootEntry());
+
+	return null;
+    }
+
 }

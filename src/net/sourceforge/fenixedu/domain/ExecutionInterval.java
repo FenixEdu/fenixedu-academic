@@ -140,4 +140,12 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 	return result;
     }
 
+    public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
+	for (ExecutionInterval interval : RootDomainObject.getInstance().getExecutionIntervals()) {
+	    if (interval.getAcademicInterval().equals(academicInterval))
+		return interval;
+	}
+	return null;
+    }
+
 }

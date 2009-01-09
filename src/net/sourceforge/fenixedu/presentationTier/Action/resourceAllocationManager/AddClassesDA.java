@@ -31,12 +31,7 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
 
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-	List classes = null;
-	// try {
-	classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
-	// } catch (FenixServiceException e) {
-	// throw new FenixActionException(e);
-	// }
+	List classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
 
 	if (classes != null && !classes.isEmpty()) {
 	    Collections.sort(classes, new BeanComparator("nome"));

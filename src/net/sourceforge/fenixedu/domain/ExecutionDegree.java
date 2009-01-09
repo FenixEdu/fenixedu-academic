@@ -29,6 +29,10 @@ import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -290,6 +294,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return shifts;
     }
 
+    @Deprecated
     public Set<SchoolClass> findSchoolClassesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
@@ -300,11 +305,34 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return schoolClasses;
     }
 
+    public Set<SchoolClass> findSchoolClassesByAcademicInterval(final AcademicInterval academicInterval) {
+	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+	for (final SchoolClass schoolClass : getSchoolClasses()) {
+	    if (schoolClass.getExecutionPeriod().getAcademicInterval().equals(academicInterval)) {
+		schoolClasses.add(schoolClass);
+	    }
+	}
+	return schoolClasses;
+    }
+
+    @Deprecated
     public Set<SchoolClass> findSchoolClassesByExecutionPeriodAndCurricularYear(final ExecutionSemester executionSemester,
 	    final Integer curricularYear) {
 	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
 	for (final SchoolClass schoolClass : getSchoolClasses()) {
 	    if (schoolClass.getExecutionPeriod() == executionSemester && schoolClass.getAnoCurricular().equals(curricularYear)) {
+		schoolClasses.add(schoolClass);
+	    }
+	}
+	return schoolClasses;
+    }
+
+    public Set<SchoolClass> findSchoolClassesByAcademicIntervalAndCurricularYear(final AcademicInterval academicInterval,
+	    final Integer curricularYear) {
+	final Set<SchoolClass> schoolClasses = new HashSet<SchoolClass>();
+	for (final SchoolClass schoolClass : getSchoolClasses()) {
+	    if (schoolClass.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
+		    && schoolClass.getAnoCurricular().equals(curricularYear)) {
 		schoolClasses.add(schoolClass);
 	    }
 	}
@@ -945,4 +973,22 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return false;
     }
 
+    public static List<ExecutionDegree> filterByAcademicInterval(AcademicInterval academicInterval) {
+	AcademicCalendarEntry academicCalendarEntry = academicInterval.getAcademicCalendarEntry();
+	while (!(academicCalendarEntry instanceof AcademicCalendarRootEntry)) {
+	    if (academicCalendarEntry instanceof AcademicYearCE) {
+		ExecutionYear year = ExecutionYear.getExecutionYear((AcademicYearCE) academicCalendarEntry);
+		List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+		result.addAll(year.getExecutionDegrees());
+		return result;
+	    } else
+		academicCalendarEntry = academicCalendarEntry.getParentEntry();
+	}
+
+	return Collections.EMPTY_LIST;
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionYear().getAcademicInterval();
+    }
 }

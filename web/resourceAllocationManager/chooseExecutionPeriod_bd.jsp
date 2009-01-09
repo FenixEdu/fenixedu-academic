@@ -1,26 +1,30 @@
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page language="java"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="title.manage.schedule"/></h2>
+<%@page
+    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
 
-<p>
-	<span class="error"><!-- Error messages go here --><html:errors /></span>
-</p>
+<html:xhtml />
 
-<html:form action="/chooseExecutionPeriod" focus="index">
-<table class="tstyle5">
-  <tr>
-    <td><bean:message key="property.executionPeriod"/>:</td>
-    <td><jsp:include page="selectExecutionPeriodList.jsp"/></td>
-  </tr>
-</table>
+<em><bean:message key="title.resourceAllocationManager.management" /></em>
+<h2><bean:message key="title.manage.schedule" /></h2>
 
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-<bean:message key="label.choose"/>
-</html:submit>
-</html:form>    
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
+<fr:form action="/chooseExecutionPeriod.do?method=choose">
+	<fr:edit schema="academicIntervalSelectionBean.choosePostBack"
+		name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
+
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+		<bean:message key="label.choose" />
+	</html:submit>
+</fr:form>

@@ -6,7 +6,9 @@
 <%@page import="net.sourceforge.fenixedu.domain.ResourceAllocationRole"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionDegree"%>
+<%@page import="pt.ist.fenixWebFramework.renderers.utils.RenderUtils"%><html:xhtml/>
 
 <ul>
 
@@ -15,24 +17,24 @@
 	%>
 	
 	<%			
-		if(ResourceAllocationRole.personHasPermissionToManageSchedulesAllocation(loggedPerson)) { 
+		if(ResourceAllocationRole.personHasPermissionToManageSchedulesAllocation(loggedPerson)) {		    
 	%>	
 	<li class="navheader"><bean:message key="link.schedules.management" bundle="SOP_RESOURCES"/></li>
 	<li><html:link page="/chooseExecutionPeriod.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link>
 		<ul>	
 			<li>
-			<html:link page="<%= "/chooseContext.do?method=prepare&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.chooseContext"/></html:link>
+			<html:link page="<%= "/chooseContext.do?method=prepare&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) %>"><bean:message key="link.schedules.chooseContext"/></html:link>
 				<logic:notEmpty name="curricularYearOID">
 					<logic:notEmpty name="executionDegreeOID">
 						<ul>
-							<li><html:link page="<%= "/manageClasses.do?method=listClasses&amp;page=0&amp;"	+ SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") + "&amp;" + SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turmas</html:link></li>	
-							<li><html:link page="<%= "/manageShifts.do?method=listShifts&amp;page=0&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") + "&amp;"	+ SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;"	+ SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turnos</html:link></li>
+							<li><html:link page="<%= "/manageClasses.do?method=listClasses&amp;page=0&amp;"	+ SessionConstants.ACADEMIC_INTERVAL	+ "=" + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) + "&amp;" + SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turmas</html:link></li>	
+							<li><html:link page="<%= "/manageShifts.do?method=listShifts&amp;page=0&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) + "&amp;"	+ SessionConstants.CURRICULAR_YEAR_OID + "=" + pageContext.findAttribute("curricularYearOID") + "&amp;"	+ SessionConstants.EXECUTION_DEGREE_OID + "=" + pageContext.findAttribute("executionDegreeOID") %>">Gest&atilde;o de Turnos</html:link></li>
 						</ul>
 					</logic:notEmpty>
 				</logic:notEmpty>
 			</li>				
-			<li><html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;" + SessionConstants.EXECUTION_PERIOD_OID	+ "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.listAllByClass"/></html:link></li>
-			<li><html:link page="<%= "/viewAllRoomsSchedulesDA.do?method=choose&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=" + pageContext.findAttribute("executionPeriodOID") %>"><bean:message key="link.schedules.listAllByRoom"/></html:link></li>
+			<li><html:link page="<%= "/viewAllClassesSchedulesDA.do?method=choose&amp;" + SessionConstants.ACADEMIC_INTERVAL	+ "=" + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) %>"><bean:message key="link.schedules.listAllByClass"/></html:link></li>
+			<li><html:link page="<%= "/viewAllRoomsSchedulesDA.do?method=choose&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) %>"><bean:message key="link.schedules.listAllByRoom"/></html:link></li>
 		</ul>
 	</li>
 	

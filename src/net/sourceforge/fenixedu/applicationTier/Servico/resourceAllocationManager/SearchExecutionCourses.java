@@ -28,12 +28,26 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 public class SearchExecutionCourses extends FenixService {
+
+    public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree, String courseName) {
+	List<ExecutionCourse> executionCourses = ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(
+		academicInterval, executionDegree, null, courseName);
+	return fillInfoExecutionCourses(academicInterval, executionCourses);
+    }
+
+    public List<InfoExecutionCourse> run(AcademicInterval academicInterval, ExecutionDegree executionDegree,
+	    CurricularYear curricularYear, String courseName) {
+	List<ExecutionCourse> executionCourses = ExecutionCourse.searchByAcademicIntervalAndExecutionDegreeYearAndName(
+		academicInterval, executionDegree, curricularYear, courseName);
+	return fillInfoExecutionCourses(academicInterval, executionCourses);
+    }
 
     public List<InfoExecutionCourse> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
 	    InfoCurricularYear infoCurricularYear, String executionCourseName) {
@@ -59,6 +73,12 @@ public class SearchExecutionCourses extends FenixService {
 		    executionDegree.getDegreeCurricularPlan(), curricularYear, executionCourseName);
 	}
 
+	return fillInfoExecutionCourses(executionSemester.getAcademicInterval(), executionCourses);
+    }
+
+    private List<InfoExecutionCourse> fillInfoExecutionCourses(final AcademicInterval academicInterval,
+	    List<ExecutionCourse> executionCourses) {
+	List<InfoExecutionCourse> result;
 	result = (List<InfoExecutionCourse>) CollectionUtils.collect(executionCourses, new Transformer() {
 	    public Object transform(Object arg0) {
 		InfoExecutionCourse infoExecutionCourse = null;
@@ -82,7 +102,7 @@ public class SearchExecutionCourses extends FenixService {
 		    while (iter.hasNext()) {
 			CurricularCourse curricularCourse = iter.next();
 
-			final List<Enrolment> enroled = curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester);
+			final List<Enrolment> enroled = curricularCourse.getEnrolmentsByAcademicInterval(academicInterval);
 			enrolledInCurricularCourse += enroled.size();
 			evaluated = Enrolment.countEvaluated(enroled);
 			approved = Enrolment.countApproved(enroled);
@@ -118,7 +138,7 @@ public class SearchExecutionCourses extends FenixService {
 
 		while (iterator.hasNext()) {
 
-		    Shift shift = (Shift) iterator.next();
+		    Shift shift = iterator.next();
 
 		    if (shift.containsType(ShiftType.TEORICA)) {
 			theoreticalCapacity = Integer.valueOf(theoreticalCapacity.intValue() + shift.getLotacao().intValue());
@@ -196,7 +216,7 @@ public class SearchExecutionCourses extends FenixService {
 		int total = 0;
 
 		if (!capacities.isEmpty()) {
-		    total = ((Integer) Collections.min(capacities)).intValue();
+		    total = (Collections.min(capacities)).intValue();
 		}
 
 		if (total == 0) {

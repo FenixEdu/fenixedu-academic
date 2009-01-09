@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.Ex
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -36,15 +37,22 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 	return mapping.findForward("chooseExecutionYear");
     }
 
+    public ActionForward chooseDegree(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
+	executionDegreeBean.setDegreeCurricularPlan(null);
+	executionDegreeBean.setAcademicInterval(null);
+	RenderUtils.invalidateViewState();
+	request.setAttribute("executionDegreeBean", executionDegreeBean);
+	return mapping.findForward("chooseExecutionYear");
+    }
+
     public ActionForward chooseDegreeCurricularPlan(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject();
-	executionDegreeBean.setDegreeCurricularPlan(null);
-
+	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
+	executionDegreeBean.setAcademicInterval(null);
 	RenderUtils.invalidateViewState();
-
 	request.setAttribute("executionDegreeBean", executionDegreeBean);
-
 	return mapping.findForward("chooseExecutionYear");
     }
 
@@ -52,10 +60,10 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("executionYear");
+	final ExecutionDegreeListBean executionDegreeBean = (ExecutionDegreeListBean) getRenderedObject("academicInterval");
 
 	final Object[] args = { executionDegreeBean.getDegreeCurricularPlan().getIdInternal(),
-		executionDegreeBean.getExecutionYear().getIdInternal() };
+		executionDegreeBean.getAcademicInterval() };
 
 	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) executeService(
 		"ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", args);
@@ -68,7 +76,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 	    request.setAttribute("degreeModuleScopes", degreeModuleScopes);
 	}
 
-	request.setAttribute("executionYearID", executionDegreeBean.getExecutionYear().getIdInternal());
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, executionDegreeBean.getAcademicInterval());
 	request.setAttribute("degreeCurricularPlan", executionDegreeBean.getDegreeCurricularPlan());
 
 	return mapping.findForward("showActiveCurricularCourses");

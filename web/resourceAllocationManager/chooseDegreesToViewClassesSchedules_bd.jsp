@@ -13,7 +13,8 @@
 <html:form action="/viewAllClassesSchedulesDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
 	<bean:define id="infoExecutionDegreesList" name="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" scope="request"/>
 	<html:hidden alt="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" property="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" value="infoExecutionDegreesList"/>
 	

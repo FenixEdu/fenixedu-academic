@@ -162,13 +162,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-	return (ExecutionSemester) Collections.min(this.getExecutionPeriods(),
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	return Collections.min(this.getExecutionPeriods(), ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-	return (ExecutionSemester) Collections.max(this.getExecutionPeriods(),
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	return Collections.max(this.getExecutionPeriods(), ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {
@@ -428,7 +426,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public static class ExecutionYearSearchCache {
-	private Map<Integer, Set<ExecutionYear>> map = new HashMap<Integer, Set<ExecutionYear>>();
+	private final Map<Integer, Set<ExecutionYear>> map = new HashMap<Integer, Set<ExecutionYear>>();
 
 	public ExecutionYear findByDateTime(final DateTime dateTime) {
 	    final Integer year = Integer.valueOf(dateTime.getYear());
@@ -516,6 +514,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	    if (!executionYear.hasNextExecutionYear()) {
 		return executionYear;
 	    }
+	}
+	return null;
+    }
+
+    public static ExecutionYear readByAcademicInterval(AcademicInterval academicInterval) {
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+	    if (executionYear.getAcademicInterval().equals(academicInterval))
+		return executionYear;
 	}
 	return null;
     }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import dml.runtime.RelationAdapter;
 
@@ -238,6 +240,15 @@ public class Context extends Context_Base implements Comparable<Context> {
 	return false;
     }
 
+    public boolean isValid(AcademicInterval academicInterval) {
+	ExecutionInterval interval = ExecutionInterval.getExecutionInterval(academicInterval);
+	if (interval instanceof ExecutionSemester)
+	    return isValid((ExecutionSemester) interval);
+	if (interval instanceof ExecutionYear)
+	    return isValid((ExecutionYear) interval);
+	throw new UnsupportedOperationException();
+    }
+
     protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
 	if (beginExecutionPeriod == null) {
 	    throw new DomainException("context.begin.execution.period.cannot.be.null");
@@ -340,6 +351,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 	super.setBeginExecutionPeriod(beginExecutionPeriod);
     }
 
+    @Override
     public void removeBeginExecutionPeriod() {
 	super.setBeginExecutionPeriod(null);
     }
@@ -407,6 +419,11 @@ public class Context extends Context_Base implements Comparable<Context> {
 	    final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	    return getCurricularCourse().isAnual(executionYear) ? getContext().isValid(executionYear) : getContext().isValid(
 		    executionSemester);
+	}
+
+	@Override
+	public boolean isActiveForAcademicInterval(final AcademicInterval academicInterval) {
+	    return getContext().isValid(academicInterval);
 	}
 
 	@Override

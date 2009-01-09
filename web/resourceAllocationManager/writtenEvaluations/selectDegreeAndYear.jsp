@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
@@ -12,8 +13,8 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
-	<bean:define id="executionPeriodOID" name="executionPeriodOID"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID" value="<%= executionPeriodOID.toString() %>"/>
+	<%--<bean:define id="academicInterval" name="academicInterval"/>--%>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicInterval" property="academicInterval" value="<%= (String) request.getAttribute(SessionConstants.ACADEMIC_INTERVAL) %>"/>
 
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 

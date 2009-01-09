@@ -54,6 +54,11 @@ public abstract class TeacherCreditsFillingCE extends TeacherCreditsFillingCE_Ba
     }
 
     @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
+    }
+
+    @Override
     public boolean isTeacherCreditsFilling() {
 	return true;
     }

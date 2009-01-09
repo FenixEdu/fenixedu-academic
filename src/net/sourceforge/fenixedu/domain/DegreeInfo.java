@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.YearMonthDay;
 
@@ -235,6 +236,10 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     public String getAdditionalInfo(final Language language) {
 	return hasAdditionalInfo(language) ? getAdditionalInfo().getContent(language) : "";
+    }
+
+    public AcademicInterval getAcademicInterval() {
+	return getExecutionYear().getAcademicInterval();
     }
 
 }

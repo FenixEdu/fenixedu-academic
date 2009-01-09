@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
@@ -19,9 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -37,8 +36,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -78,8 +75,6 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     public ActionForward createShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = UserView.getUser();
 
 	DynaActionForm createShiftForm = (DynaActionForm) form;
 
@@ -122,8 +117,6 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = UserView.getUser();
 
 	ContextUtils.setShiftContext(request);
 
@@ -181,15 +174,11 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
 	    Exception {
+	ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
 
-	IUserView userView = UserView.getUser();
-
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-
-	List<InfoShift> infoShifts = ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(infoExecutionPeriod,
-		infoExecutionDegree, infoCurricularYear);
+	List<InfoShift> infoShifts = ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context
+		.getAcademicInterval(), new InfoExecutionDegree(context.getExecutionDegree()), new InfoCurricularYear(context
+		.getCurricularYear()));
 
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 

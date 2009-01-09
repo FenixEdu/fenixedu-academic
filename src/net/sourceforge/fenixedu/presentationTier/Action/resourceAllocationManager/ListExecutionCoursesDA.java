@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -26,7 +25,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -35,36 +36,42 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 public class ListExecutionCoursesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
-	final List<ExecutionSemester> sortedExecutionPeriods = new ArrayList<ExecutionSemester>(executionSemesters);
-	Collections.sort(sortedExecutionPeriods);
-	Collections.reverse(sortedExecutionPeriods);
-	request.setAttribute("executionPeriods", sortedExecutionPeriods);
 
+	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
 	return mapping.findForward("show-choose-execution-period-page");
     }
 
     public ActionForward selectExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final ExecutionSemester executionSemester = retrieveDomainObject(form, request);
-	request.setAttribute("executionPeriod", executionSemester);
-	return prepare(mapping, form, request, response);
+
+	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+
+	if (contextSelectionBean == null)
+	    return prepare(mapping, form, request, response);
+
+	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
+	return mapping.findForward("show-choose-execution-period-page");
     }
 
     public ActionForward downloadExecutionCourseGroupings(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final ExecutionSemester executionSemester = retrieveDomainObject(form, request);
+
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
+		.getParameter(SessionConstants.ACADEMIC_INTERVAL));
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings_"
-		+ executionSemester.getQualifiedName().replace(' ', '_') + "_.xls");
+		+ academicInterval.getPathName().replace(' ', '_') + "_.xls");
 
 	final ServletOutputStream servletOutputStream = response.getOutputStream();
-	exportToXls(servletOutputStream, executionSemester);
+	exportToXls(servletOutputStream, academicInterval);
 	servletOutputStream.flush();
 	response.flushBuffer();
 
@@ -81,11 +88,11 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	return rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
     }
 
-    private void exportToXls(final ServletOutputStream servletOutputStream, final ExecutionSemester executionSemester)
+    private void exportToXls(final ServletOutputStream servletOutputStream, final AcademicInterval academicInterval)
 	    throws IOException {
 	final List<Object> headers = getHeaders();
 	final Spreadsheet spreadsheet = new Spreadsheet("Execution Course Groupings", headers);
-	fillSpreadSheet(spreadsheet, executionSemester);
+	fillSpreadSheet(spreadsheet, academicInterval);
 	spreadsheet.exportToXLSSheet(servletOutputStream);
     }
 
@@ -101,8 +108,8 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	return headers;
     }
 
-    private void fillSpreadSheet(final Spreadsheet spreadsheet, final ExecutionSemester executionSemester) {
-	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+    private void fillSpreadSheet(final Spreadsheet spreadsheet, final AcademicInterval academicInterval) {
+	for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
 	    final Row row = spreadsheet.addRow();
 
 	    row.setCell(executionCourse.getNome());
@@ -131,7 +138,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	    }
 	    row.setCell(responsibleForStringBuilder.toString());
 
-	    final Map<Degree, Set<Integer>> degreeOccurenceMap = constructDegreeOccurenceMap(executionSemester, executionCourse);
+	    final Map<Degree, Set<Integer>> degreeOccurenceMap = constructDegreeOccurenceMap(academicInterval, executionCourse);
 
 	    row.setCell(Integer.toString(degreeOccurenceMap.size()));
 
@@ -190,12 +197,12 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	}
     }
 
-    private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final ExecutionSemester executionSemester,
+    private Map<Degree, Set<Integer>> constructDegreeOccurenceMap(final AcademicInterval academicInterval,
 	    final ExecutionCourse executionCourse) {
 	final Map<Degree, Set<Integer>> degreeOccurenceMap = new HashMap<Degree, Set<Integer>>();
 	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
 	    final List<DegreeModuleScope> degreeModuleScopes = curricularCourse
-		    .getActiveDegreeModuleScopesInExecutionPeriod(executionSemester);
+		    .getActiveDegreeModuleScopesInAcademicInterval(academicInterval);
 	    for (final DegreeModuleScope degreeModuleScope : degreeModuleScopes) {
 		final Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 

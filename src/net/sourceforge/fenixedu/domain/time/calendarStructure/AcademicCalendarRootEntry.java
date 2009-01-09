@@ -41,6 +41,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
 	super.delete(rootEntry);
     }
 
+    @Override
     public AcademicChronology getAcademicChronology() {
 	if (academicChronology == null) {
 	    academicChronology = new AcademicChronology(this);
@@ -183,6 +184,11 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     protected boolean isParentEntryInvalid(AcademicCalendarEntry parentEntry) {
 	return true;
+    }
+
+    @Override
+    public boolean isOfType(AcademicPeriod period) {
+	return false;
     }
 
     @Override

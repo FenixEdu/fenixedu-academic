@@ -569,4 +569,7 @@ public abstract class SessionConstants {
 
     public static final String SESSION_IS_VALID = "session_is_valid";
 
+    public static final String ACADEMIC_INTERVAL = "academicInterval";
+
+    public static final String CONTEXT_SELECTION_BEAN = "context_selection_bean";
 }

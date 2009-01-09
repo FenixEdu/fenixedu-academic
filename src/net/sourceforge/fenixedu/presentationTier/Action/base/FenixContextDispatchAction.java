@@ -23,8 +23,11 @@ import org.apache.struts.util.LabelValueBean;
 
 public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+
+	ContextUtils.setContextSelectionBean(request, getRenderedObject());
 
 	ContextUtils.setExecutionPeriodContext(request);
 
@@ -66,7 +69,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 	List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
 	try {
 
-	    infoExecutionDegreeList = (List<InfoExecutionDegree>) ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
+	    infoExecutionDegreeList = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId);
 	} catch (Exception e) {
 	    throw new FenixActionException(e);
 	}
@@ -75,7 +78,7 @@ public abstract class FenixContextDispatchAction extends FenixDispatchAction {
 	for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
 
 	    try {
-		List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ReadNotClosedPublicExecutionPeriodsByExecutionYear
+		List<InfoExecutionPeriod> infoExecutionPeriodsList = ReadNotClosedPublicExecutionPeriodsByExecutionYear
 			.run(infoExecutionDegree.getInfoExecutionYear());
 
 		for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {

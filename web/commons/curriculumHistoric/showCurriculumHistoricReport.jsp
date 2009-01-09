@@ -14,17 +14,13 @@
 
 
 <logic:present name="infoCurriculumHistoricReport">
-	<bean:define id="executionYear" name="infoCurriculumHistoricReport" property="executionYear"/>
-	<bean:define id="semester" name="infoCurriculumHistoricReport" property="semester" type="java.lang.Integer"/>
-
-
 	<h3>
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.name"/>
 		-
 		<bean:write name="infoCurriculumHistoricReport" property="curricularCourse.degreeCurricularPlan.name"/>
 	</h3>
 
-	<p class="mtop15 mbottom1"><em class="highlight5"><bean:write name="executionYear" property="year" />* - <bean:message key="label.period" arg0="<%=semester.toString()%>" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em></p>
+	<p class="mtop15 mbottom1"><em class="highlight5"><bean:write name="infoCurriculumHistoricReport" property="academicInterval.pathName"/>*</em></p>
 	
 	<table class="tstyle1 mtop05">
 		<tr>

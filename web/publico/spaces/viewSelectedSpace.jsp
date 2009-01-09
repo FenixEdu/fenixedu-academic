@@ -29,7 +29,7 @@
 		</logic:equal>
 			
 		<logic:notEmpty name="selectedSpace" property="space.writtenEvaluationSpaceOccupations">
-			<bean:define id="viewWrittenEvaluationsLink">/spaces/writtenEvaluationsByRoom.faces?executionPeriodOID=<bean:write name="selectedSpace" property="executionPeriod.idInternal"/>&selectedRoomID=<bean:write name="selectedSpace" property="space.idInternal"/></bean:define>				
+			<bean:define id="viewWrittenEvaluationsLink">/spaces/writtenEvaluationsByRoom.faces?academicInterval=<bean:write name="selectedSpace" property="academicInterval.resumedRepresentationInStringFormat"/>&selectedRoomID=<bean:write name="selectedSpace" property="space.idInternal"/></bean:define>				
 			<li><html:link target="_blank" page="<%= viewWrittenEvaluationsLink %>"><bean:message key="link.view.written.evaluations"/></html:link></li>
 		</logic:notEmpty>
 	</ul>

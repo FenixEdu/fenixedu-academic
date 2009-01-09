@@ -104,6 +104,15 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return this.getAssociatedExecutionCourses().get(0).getExecutionYear();
     }
 
+    public ExecutionDegree getExecutionDegree() {
+	for (ExecutionCourse cource : getAssociatedExecutionCourses()) {
+	    for (CurricularCourse curricularCource : cource.getAssociatedCurricularCourses()) {
+		return curricularCource.getExecutionDegreeFor(getExecutionYear().getAcademicInterval());
+	    }
+	}
+	return null;
+    }
+
     public Boolean getIsAfterCurrentDate() {
 	DateTime currentDate = new DateTime();
 	return currentDate.isBefore(this.getBeginningDateTime());
@@ -125,6 +134,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     }
 
+    @Override
     public EvaluationType getEvaluationType() {
 	return EvaluationType.EXAM_TYPE;
     }
@@ -417,6 +427,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	checkIntervalBetweenEvaluations();
     }
 
+    @Override
     public void delete() {
 	if (hasAnyWrittenEvaluationEnrolments()) {
 	    throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
@@ -578,7 +589,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     private Registration getRandomStudentFromList(List<Registration> studentsToDistribute) {
 	final Random randomizer = new Random();
 	int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
-	return (Registration) studentsToDistribute.remove(pos % studentsToDistribute.size());
+	return studentsToDistribute.remove(pos % studentsToDistribute.size());
     }
 
     public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Registration registration) {
@@ -624,7 +635,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Integer getCountNumberReservedSeats() {
 	int i = 0;
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
-	    i += ((AllocatableSpace) roomOccupation.getRoom()).getCapacidadeExame().intValue();
+	    i += (roomOccupation.getRoom()).getCapacidadeExame().intValue();
 	}
 	return i;
     }
@@ -659,7 +670,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
 	for (Vigilancy vigilancy : this.getVigilancies()) {
 	    if (vigilancy.isOwnCourseVigilancy()) {
-		vigilancies.add((Vigilancy) vigilancy);
+		vigilancies.add(vigilancy);
 	    }
 	}
 	return vigilancies;
@@ -669,7 +680,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
 	for (Vigilancy vigilancy : this.getVigilancies()) {
 	    if (vigilancy.isOtherCourseVigilancy()) {
-		vigilancies.add((Vigilancy) vigilancy);
+		vigilancies.add(vigilancy);
 	    }
 	}
 	return vigilancies;
@@ -679,7 +690,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
 	for (Vigilancy vigilancy : this.getVigilancies()) {
 	    if (vigilancy.isOtherCourseVigilancy() && vigilancy.isActive()) {
-		vigilancies.add((Vigilancy) vigilancy);
+		vigilancies.add(vigilancy);
 	    }
 	}
 	return vigilancies;

@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -30,10 +30,10 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-
-	final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
+		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	dynaActionForm.set(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
+	dynaActionForm.set(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
 	return mapping.findForward("show");
     }
 
@@ -83,9 +83,9 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     public ActionForward search(ActionMapping mapping, HttpServletRequest request, final Date day, final Date begin,
 	    final Date end, DynaActionForm dynaActionForm) throws Exception {
 
-	final ExecutionSemester executionSemester = getExecutionPeriod(dynaActionForm, request);
+	AcademicInterval academicInterval = getAcademicInterval(dynaActionForm, request);
 	final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
-	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
+	for (final ExecutionCourse executionCourse : ExecutionCourse.filterByAcademicInterval(academicInterval)) {
 	    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 		if (evaluation instanceof WrittenEvaluation) {
 		    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
@@ -105,10 +105,10 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 	return mapping.findForward("show");
     }
 
-    private ExecutionSemester getExecutionPeriod(DynaActionForm dynaActionForm, HttpServletRequest request)
+    private AcademicInterval getAcademicInterval(DynaActionForm dynaActionForm, HttpServletRequest request)
 	    throws FenixFilterException, FenixServiceException {
-	final String executionPeriodString = dynaActionForm.getString(SessionConstants.EXECUTION_PERIOD_OID);
-	return (ExecutionSemester) rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodString));
+	return AcademicInterval
+		.getAcademicIntervalFromResumedString(dynaActionForm.getString(SessionConstants.ACADEMIC_INTERVAL));
     }
 
     private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

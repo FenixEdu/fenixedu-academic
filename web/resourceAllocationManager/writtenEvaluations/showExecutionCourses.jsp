@@ -11,17 +11,17 @@
 	<h:outputText value="<h2>#{bundleSOP['title.choose.discipline']}</h2>" escape="false" />
 	
 	<h:form>
-		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionPeriodIdHidden}"/>
+		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.academicIntervalHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.executionDegreeIdHidden}" />
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.dayHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.monthHidden}"/>
 		<h:inputHidden binding="#{SOPEvaluationManagementBackingBean.yearHidden}"/>
 		<fc:viewState binding="#{SOPEvaluationManagementBackingBean.viewState}" />
-		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{SOPEvaluationManagementBackingBean.executionPeriodOID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
 		<h:outputText value="<div class='infoop2'>" escape="false"/>
-			<h:outputText value="#{bundleSOP['property.executionPeriod']}: <b>#{SOPEvaluationManagementBackingBean.executionPeriodLabel}</b><br/>" escape="false"/>
+			<h:outputText value="#{bundleSOP['property.academicInterval']}: <b>#{SOPEvaluationManagementBackingBean.academicIntervalLabel}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.degree']}: <b>#{SOPEvaluationManagementBackingBean.executionDegreeLabel}</b><br/>" escape="false"/>
 			<h:outputText value="#{bundleSOP['property.context.curricular.year']}: <b> #{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}</b>" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>

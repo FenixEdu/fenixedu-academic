@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric.InfoCurriculumHistoricReport;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,13 +29,14 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
 	final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
 	final Integer semester = getIntegerFromRequest(request, "semester");
-	final Integer executionYearOID = getIntegerFromRequest(request, "executionYearID");
-	final Object[] args = new Object[] { curricularCourseOID, semester, executionYearOID };
+	final Integer year = getIntegerFromRequest(request, "year");
+	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
+		.getParameter("academicInterval"));
 
-	final InfoCurriculumHistoricReport result = (InfoCurriculumHistoricReport) ServiceUtils.executeService(
-		"ReadCurriculumHistoricReport", args);
+	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
 
-	request.setAttribute("infoCurriculumHistoricReport", result);
+	request.setAttribute("infoCurriculumHistoricReport", new InfoCurriculumHistoricReport(academicInterval
+		.getChildAcademicInterval(AcademicPeriod.SEMESTER, semester), curricularCourse));
 
 	return mapping.findForward("show-report");
     }

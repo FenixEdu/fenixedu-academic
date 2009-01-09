@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
@@ -59,7 +60,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     private String examCapacity;
 
-    private Integer executionPeriodOID;
+    private String academicInterval;
 
     private String startDate;
 
@@ -113,9 +114,13 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	this.type = type;
     }
 
-    public Integer getExecutionPeriodOID() {
-	return (executionPeriodOID == null) ? executionPeriodOID = getAndHoldIntegerParameter("executionPeriodOID")
-		: executionPeriodOID;
+    public String getAcademicInterval() {
+	return (academicInterval == null) ? academicInterval = getAndHoldStringParameter("academicInterval") : academicInterval;
+    }
+
+    protected AcademicInterval getAcademicIntervalObject() {
+	return (getAcademicInterval() == null) ? null : AcademicInterval
+		.getAcademicIntervalFromResumedString(getAcademicInterval());
     }
 
     private boolean submittedForm = false;
@@ -152,7 +157,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 		}
 
 	    } else if (getRequest().getParameter("selectedRoomID") != null) {
-		String roomID = (String) getRequest().getParameter("selectedRoomID");
+		String roomID = getRequest().getParameter("selectedRoomID");
 		selectedRoomIDs = new HashSet<Integer>(1);
 		selectedRoomIDs.add(Integer.valueOf(roomID));
 	    }
@@ -261,32 +266,32 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	return roomTypeSelectItems;
     }
 
+    @Deprecated
     public ExecutionSemester getExecutionPeriod() throws FenixFilterException, FenixServiceException {
-	final Integer executionPeriodID = getExecutionPeriodOID();
-	return (executionPeriodID != null) ? rootDomainObject.readExecutionSemesterByOID(executionPeriodID) : null;
+	return (ExecutionSemester) (getAcademicIntervalObject() != null ? ExecutionSemester
+		.getExecutionInterval(getAcademicIntervalObject()) : null);
     }
 
     public Date getCalendarBegin() throws FenixFilterException, FenixServiceException, ParseException {
 	if (getStartDate() != null && getStartDate().length() > 0) {
 	    return DateFormatUtil.parse("dd/MM/yyyy", getStartDate());
 	}
-	final ExecutionSemester executionSemester = getExecutionPeriod();
-	return executionSemester.getBeginDate();
+	return getAcademicIntervalObject().getStart().toDate();
     }
 
     public Date getCalendarEnd() throws FenixFilterException, FenixServiceException, ParseException {
 	if (getEndDate() != null && getEndDate().length() > 0) {
 	    return DateFormatUtil.parse("dd/MM/yyyy", getEndDate());
 	}
-	final ExecutionSemester executionSemester = getExecutionPeriod();
-	return executionSemester.getEndDate();
+	return getAcademicIntervalObject().getEnd().toDate();
     }
 
     public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixFilterException,
 	    FenixServiceException {
 	final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
 	if (rooms != null) {
-	    ExecutionSemester executionSemester = getExecutionPeriod();
+	    AcademicInterval interval = getAcademicIntervalObject();
+
 	    final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap = new HashMap<AllocatableSpace, List<CalendarLink>>();
 	    for (final AllocatableSpace room : rooms) {
 		final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
@@ -295,7 +300,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation) roomOccupation)
 				.getWrittenEvaluations();
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, executionSemester)) {
+			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, interval)) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
 				final CalendarLink calendarLink = new CalendarLink();
 				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
@@ -315,10 +320,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	}
     }
 
-    protected boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation,
-	    ExecutionSemester executionSemester) {
+    protected boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, AcademicInterval interval) {
 	for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-	    if (executionCourse.getExecutionPeriod() == executionSemester) {
+	    if (executionCourse.getAcademicInterval().equals(interval)) {
 		return true;
 	    }
 	}
@@ -348,7 +352,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	    linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());
 	}
 	linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
-	linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
+	linkParameters.put("academicInterval", getAcademicInterval());
 	return linkParameters;
     }
 
