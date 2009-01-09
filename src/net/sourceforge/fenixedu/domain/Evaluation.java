@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -35,11 +36,10 @@ public abstract class Evaluation extends Evaluation_Base {
     }
 
     public Mark addNewMark(Attends attends, String markValue) {
-	Mark mark = new Mark();
-	mark.setAttend(attends);
-	mark.setEvaluation(this);
-	mark.setMark(markValue);
-	return mark;
+	if (attends.getMarkByEvaluation(this) != null) {
+	    throw new DomainException("error.Evaluation.attend.already.has.mark.for.evaluation");
+	}
+	return new Mark(attends, this, markValue);
     }
 
     public abstract EvaluationType getEvaluationType();
