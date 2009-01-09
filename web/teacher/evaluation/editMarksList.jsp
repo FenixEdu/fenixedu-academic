@@ -100,8 +100,16 @@
 					<h:outputText rendered="#{attends.enrolment != null}" value="#{enumerationBundle[attends.enrolment.enrolmentEvaluationType]}"/>
 				</h:column>
 				<h:column>
+					<f:facet name="header"><h:outputText value="#{bundle['label.Degree']}"/></f:facet>
+					<h:outputText value="#{attends.registration.degreeCurricularPlanName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header"><h:outputText value="#{bundle['label.registration.state']}"/></f:facet>
+					<h:outputText value="#{attends.registration.activeStateType.description}" />
+				</h:column>
+				<h:column>
 					<f:facet name="header"><h:outputText value="#{bundle['label.mark']}"/></f:facet>
-					<h:inputText alt="#{htmlAltBundle['inputText.number]']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.aluno.number]}"/>
+					<h:inputText alt="#{htmlAltBundle['inputText.number]']}" size="3" maxlength="4" value="#{evaluationManagementBackingBean.marks[attends.idInternal]}"/>
 				</h:column>
 			</h:dataTable>
 			
@@ -118,6 +126,14 @@
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{bundle['label.name']}"/></f:facet>
 						<h:outputText value="#{student.person.name}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{bundle['label.Degree']}"/></f:facet>
+						<h:outputText value="#{attends.registration.degreeCurricularPlanName}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{bundle['label.registration.state']}"/></f:facet>
+						<h:outputText value="#{attends.registration.activeStateType.description}" />
 					</h:column>
 				</h:dataTable>
 			</h:panelGroup>

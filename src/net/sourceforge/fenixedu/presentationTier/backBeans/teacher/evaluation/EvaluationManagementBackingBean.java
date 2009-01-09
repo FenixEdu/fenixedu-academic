@@ -34,6 +34,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.AttendsMark;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.StudentMark;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -568,7 +570,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String editMarks() throws FenixFilterException, FenixServiceException {
 
 	try {
-	    WriteMarks.run(getExecutionCourseID(), getEvaluationID(), this.marks);
+	    WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
 	} catch (FenixServiceMultipleException e) {
 	    for (DomainException domainException : e.getExceptionList()) {
 		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
@@ -577,6 +579,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    return "";
 	}
 	return getEvaluation().getClass().getSimpleName();
+    }
+
+    private List<AttendsMark> buildAttendsMark() {
+	final List<AttendsMark> result = new ArrayList<AttendsMark>();
+	for (Entry<Integer, String> entry : this.marks.entrySet()) {
+	    result.add(new AttendsMark(entry.getKey(), entry.getValue()));
+	}
+	return result;
     }
 
     public List<WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() throws FenixFilterException, FenixServiceException {
@@ -643,10 +653,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	final ExecutionCourse executionCourse = getExecutionCourse();
 	if (executionCourse != null) {
 	    for (final Attends attends : getExecutionCourseAttends()) {
-		for (final Mark mark : attends.getAssociatedMarks()) {
-		    if (mark.getEvaluation() == evaluation && !marks.containsKey(attends.getRegistration().getNumber())) {
-			marks.put(attends.getRegistration().getNumber(), mark.getMark());
-		    }
+		final Mark mark = attends.getMarkByEvaluation(evaluation);
+		if (mark != null && !marks.containsKey(attends.getIdInternal())) {
+		    marks.put(attends.getIdInternal(), mark.getMark());
 		}
 	    }
 	}
@@ -669,8 +678,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    inputStream = fileItem.getInputStream();
 	    final Map<Integer, String> marks = loadMarks(inputStream);
 
-
-	    WriteMarks.run(getExecutionCourseID(), getEvaluationID(), marks);
+	    WriteMarks.writeByStudent(getExecutionCourseID(), getEvaluationID(), buildStudentMarks(marks));
 
 	    return "success";
 
@@ -692,6 +700,14 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		}
 	    }
 	}
+    }
+
+    private List<StudentMark> buildStudentMarks(Map<Integer, String> marks) {
+	final List<StudentMark> result = new ArrayList<StudentMark>();
+	for (final Entry<Integer, String> entry : marks.entrySet()) {
+	    result.add(new StudentMark(entry.getKey(), entry.getValue()));
+	}
+	return result;
     }
 
     private Map<Integer, String> loadMarks(final InputStream inputStream) throws IOException {
@@ -960,11 +976,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<Attends> getExecutionCourseAttends() {
 	final List<Attends> result = new ArrayList<Attends>();
 	for (final Attends attends : getExecutionCourse().getAttendsSet()) {
-	    if (attends.hasEnrolment()) {
-		if (!attends.getEnrolment().isImpossible()) {
-		    result.add(attends);
-		}
-	    } else {
+	    if (!attends.hasEnrolment() || !attends.getEnrolment().isImpossible()) {
 		result.add(attends);
 	    }
 	}
@@ -1288,7 +1300,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    newRow.setCell(enrolment.getStudent().getNumber().toString());
 	    newRow.setCell(enrolment.getStudent().getPerson().getName());
 	    newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
-	    newRow.setCell(enrolment.getStudent().getDegree().getName());
+	    newRow.setCell(enrolment.getStudent().getDegree().getNameI18N().getContent());
 	}
     }
 

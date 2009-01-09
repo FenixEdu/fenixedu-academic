@@ -1,88 +1,169 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class WriteMarks extends FenixService {
+public class WriteMarks {
 
-    @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
-    public static void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    public static void writeByStudent(final Integer executioCourseOID, final Integer evaluationOID, final List<StudentMark> marks)
 	    throws FenixServiceException {
+
+	final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
+	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+
+	writeMarks(convertMarks(executionCourse, marks), executionCourse, evaluation);
+    }
+
+    @Service
+    @Checked("RolePredicates.TEACHER_PREDICATE")
+    public static void writeByAttend(final Integer executioCourseOID, final Integer evaluationOID, final List<AttendsMark> marks)
+	    throws FenixServiceException {
+
+	final Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationOID);
+	final ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(executioCourseOID);
+
+	writeMarks(marks, executionCourse, evaluation);
+    }
+
+    private static List<AttendsMark> convertMarks(final ExecutionCourse executionCourse, final List<StudentMark> marks)
+	    throws FenixServiceMultipleException {
+
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
+	final List<AttendsMark> result = new ArrayList<AttendsMark>();
 
-	final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationOID);
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executioCourseOID);
-
-	for (final Entry<Integer, String> entry : marks.entrySet()) {
-	    final Integer studentNumber = entry.getKey();
-	    final String markValue = entry.getValue();
-
-	    final Attends attends = findStudentAttends(executionCourse, studentNumber);
-
-	    if (attends != null) {
-		    if (attends.hasEnrolment() && attends.getEnrolment().isImpossible()) {
-			exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", studentNumber
-				.toString()));
-		    } else {
-			final Mark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
-
-			if (markValue == null || markValue.length() == 0) {
-			    if (mark != null) {
-				mark.delete();
-			    }
-			} else {
-			    try {
-				if (mark == null) {
-				    evaluation.addNewMark(attends, markValue);
-				} else {
-				    mark.setMark(markValue);
-				}
-			    } catch (InvalidMarkDomainException e) {
-				exceptionList.add(e);
-			    }
-			}
-		    }
-	    } else {
-		exceptionList.add(new DomainException("errors.noStudent", studentNumber.toString()));
+	for (final StudentMark studentMark : marks) {
+	    final Attends attend = findAttend(executionCourse, studentMark.studentNumber, exceptionList);
+	    if (attend != null) {
+		result.add(new AttendsMark(attend.getIdInternal(), studentMark.mark));
 	    }
 	}
+
+	if (!exceptionList.isEmpty()) {
+	    throw new FenixServiceMultipleException(exceptionList);
+	}
+
+	return result;
+    }
+
+    private static Attends findAttend(final ExecutionCourse executionCourse, final Integer studentNumber,
+	    final List<DomainException> exceptionList) {
+
+	final List<Attends> activeAttends = new ArrayList<Attends>(2);
+	for (final Attends attend : executionCourse.getAttends()) {
+	    if (attend.getRegistration().getNumber().equals(studentNumber) && isActive(attend)) {
+		activeAttends.add(attend);
+	    }
+	}
+
+	if (activeAttends.size() == 1) {
+	    return activeAttends.get(0);
+	}
+
+	if (activeAttends.isEmpty()) {
+	    exceptionList.add(new DomainException("errors.student.without.active.attends", studentNumber.toString()));
+	} else {
+	    exceptionList.add(new DomainException("errors.student.with.several.active.attends", studentNumber.toString()));
+	}
+
+	return null;
+    }
+
+    private static boolean isActive(final Attends attends) {
+	final RegistrationState state;
+	if (attends.hasEnrolment()) {
+	    state = attends.getEnrolment().getRegistration().getLastRegistrationState(attends.getExecutionYear());
+	} else {
+	    state = attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
+	}
+	return state != null && state.isActive();
+    }
+
+    private static void writeMarks(final List<AttendsMark> marks, final ExecutionCourse executionCourse,
+	    final Evaluation evaluation) throws FenixServiceMultipleException {
+
+	final List<DomainException> exceptionList = new ArrayList<DomainException>();
+
+	for (final AttendsMark entry : marks) {
+
+	    final Attends attend = findAttend(executionCourse, entry.attendId);
+	    final String markValue = entry.mark;
+
+	    if (attend.hasEnrolment() && attend.getEnrolment().isImpossible()) {
+		exceptionList.add(new DomainException("errors.student.with.impossible.enrolment", attend.getRegistration()
+			.getStudent().getNumber().toString()));
+	    } else {
+		final Mark mark = attend.getMarkByEvaluation(evaluation);
+
+		if (isToDeleteMark(markValue)) {
+		    if (mark != null) {
+			mark.delete();
+		    }
+		} else {
+		    try {
+			if (mark == null) {
+			    evaluation.addNewMark(attend, markValue);
+			} else {
+			    mark.setMark(markValue);
+			}
+		    } catch (InvalidMarkDomainException e) {
+			exceptionList.add(e);
+		    }
+		}
+	    }
+	}
+
 	if (!exceptionList.isEmpty()) {
 	    throw new FenixServiceMultipleException(exceptionList);
 	}
     }
 
-    private static Attends findStudentAttends(final ExecutionCourse executionCourse, final Integer studentNumber) {
-	for (final Attends attends : executionCourse.getAttends()) {
-	    if (attends.getRegistration().getNumber().equals(studentNumber)) {
-		return attends;
+    private static Attends findAttend(final ExecutionCourse executionCourse, final Integer attendId) {
+	for (final Attends attend : executionCourse.getAttends()) {
+	    if (attend.getIdInternal().equals(attendId)) {
+		return attend;
 	    }
 	}
 	return null;
     }
 
-    private static Mark findExistingMark(final List<Mark> marks, Evaluation evaluation) {
-	for (final Mark mark : marks) {
-	    final Evaluation markEvaluation = mark.getEvaluation();
-	    if (markEvaluation.equals(evaluation)) {
-		return mark;
-	    }
+    private static boolean isToDeleteMark(final String markValue) {
+	return markValue == null || markValue.isEmpty();
+    }
+
+    public static class StudentMark implements Serializable {
+	private Integer studentNumber;
+	private String mark;
+
+	public StudentMark(final Integer studentNumber, final String mark) {
+	    this.studentNumber = studentNumber;
+	    this.mark = mark;
 	}
-	return null;
+    }
+
+    public static class AttendsMark implements Serializable {
+	private Integer attendId;
+	private String mark;
+
+	public AttendsMark(final Integer attendId, final String mark) {
+	    this.attendId = attendId;
+	    this.mark = mark;
+	}
     }
 
 }
