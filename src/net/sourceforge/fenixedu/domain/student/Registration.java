@@ -1950,6 +1950,10 @@ public class Registration extends Registration_Base {
 	return res.toString();
     }
 
+    public String getDegreeCurricularPlanName() {
+	return getLastDegreeCurricularPlan().getName();
+    }
+
     @Override
     final public Degree getDegree() {
 	return super.getDegree() != null ? super.getDegree() : (hasAnyStudentCurricularPlans() ? getLastStudentCurricularPlan()
