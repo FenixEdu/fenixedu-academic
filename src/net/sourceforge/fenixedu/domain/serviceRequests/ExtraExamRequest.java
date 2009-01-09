@@ -83,7 +83,7 @@ public class ExtraExamRequest extends ExtraExamRequest_Base {
     }
 
     public boolean hasEnrolment(final Enrolment enrolment) {
-	return getEnrolment().equals(enrolment);
+	return hasEnrolment() && getEnrolment().equals(enrolment);
     }
 
     @Override
