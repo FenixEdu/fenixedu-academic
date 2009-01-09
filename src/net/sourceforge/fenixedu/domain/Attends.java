@@ -42,10 +42,11 @@ public class Attends extends Attends_Base {
 
 	@Override
 	public int compare(Attends attends1, Attends attends2) {
-	    return attends1.getRegistration().getStudent().getNumber().compareTo(
-		    attends2.getRegistration().getStudent().getNumber());
+	    final Integer n1 = attends1.getRegistration().getStudent().getNumber();
+	    final Integer n2 = attends2.getRegistration().getStudent().getNumber();
+	    int res = n1.compareTo(n2);
+	    return res != 0 ? res : COMPARATOR_BY_ID.compare(attends1, attends2);
 	}
-
     };
 
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
@@ -183,7 +184,7 @@ public class Attends extends Attends_Base {
     }
 
     public Mark getMarkByEvaluation(Evaluation evaluation) {
-	for (Mark mark : getAssociatedMarks()) {
+	for (final Mark mark : getAssociatedMarks()) {
 	    if (mark.getEvaluation().equals(evaluation)) {
 		return mark;
 	    }
