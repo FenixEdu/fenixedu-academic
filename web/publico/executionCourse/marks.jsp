@@ -20,6 +20,9 @@
 		<th nowrap>
 			<bean:message key="label.name"/>
 		</th>
+		<th nowrap>
+			<bean:message key="label.Degree"/>
+		</th>
 		<logic:iterate id="evaluation" name="executionCourse" property="orderedAssociatedEvaluations">
 			<logic:present name="evaluation" property="publishmentMessage">
 				<th nowrap>
@@ -53,6 +56,9 @@
 			</td>
 			<td nowrap>
 				<bean:write name="attends" property="registration.person.name"/>
+			</td>
+			<td nowrap>
+				<bean:write name="attends" property="registration.degreeCurricularPlanName"/>
 			</td>
 			<logic:iterate id="evaluationEntry" name="attendEntry" property="value">
 				<td nowrap>
