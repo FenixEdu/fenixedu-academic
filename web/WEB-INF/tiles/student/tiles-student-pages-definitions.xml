@@ -282,6 +282,11 @@
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/cancelSuccess.jsp" />
 	</definition>
 	
+	
+	<definition name="df.page.documents.showAnnualIrsDocuments" extends="definition.student.administrativeOfficeServices">
+		<put name="body" value="/student/administrativeOfficeServices/generatedDocuments/showAnnualIRSDocuments.jsp" />
+	</definition>
+	
 
 	<!-- TimeTable -->
 	<definition name="df.timeTable.chooseRegistration" extends="definition.student.masterPage">

@@ -1827,3 +1827,9 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="numberOfRegisteredStudents" key="label.numberOfRegisteredStudents"/>
 </schema>
+
+<schema name="AnnualIRSDeclarationDocument.view" type="net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument" bundle="APPLICATION_RESOURCES">
+	<slot name="year" />
+	<slot name="filename" />
+   	<slot name="size"/>
+</schema>

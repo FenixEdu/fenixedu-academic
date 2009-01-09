@@ -56,6 +56,8 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
@@ -972,13 +974,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *                filter all PersonFunctions to this unit, or
-     *                <code>null</code> for all PersonFunctions
+     *            filter all PersonFunctions to this unit, or <code>null</code>
+     *            for all PersonFunctions
      * @param includeSubUnits
-     *                if even subunits of the given unit are considered
+     *            if even subunits of the given unit are considered
      * @param active
-     *                the state of the function, <code>null</code> for all
-     *                PersonFunctions
+     *            the state of the function, <code>null</code> for all
+     *            PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -2979,6 +2981,33 @@ public class Person extends Person_Base {
 
 	return false;
 
+    }
+
+    public Set<AnnualIRSDeclarationDocument> getAnnualIRSDocuments() {
+	final Set<AnnualIRSDeclarationDocument> result = new HashSet<AnnualIRSDeclarationDocument>();
+
+	for (final GeneratedDocument each : getAddressedDocument()) {
+	    if (each instanceof AnnualIRSDeclarationDocument) {
+		result.add((AnnualIRSDeclarationDocument) each);
+	    }
+	}
+
+	return result;
+    }
+
+    public AnnualIRSDeclarationDocument getAnnualIRSDocumentFor(final Integer year) {
+	for (final AnnualIRSDeclarationDocument each : getAnnualIRSDocuments()) {
+	    if (each.getYear().compareTo(year) == 0) {
+		return each;
+	    }
+	}
+
+	return null;
+
+    }
+
+    public boolean hasAnnualIRSDocumentFor(final Integer year) {
+	return getAnnualIRSDocumentFor(year) != null;
     }
 
 }

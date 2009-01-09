@@ -688,18 +688,22 @@ class DomainObject {
 		DateTime uploadTime;
 	}
 
-    /* Documents */
-    class documents.GeneratedDocument extends File {
-        GeneratedDocumentType type;
-    }
-
-    class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
-    
-    class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
-
-    class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
-
-    class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
+	    /* Documents */
+	    class documents.GeneratedDocument extends File {
+	        GeneratedDocumentType type;
+	    }
+	
+		    class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
+		    
+		    class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
+		
+		    class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
+		
+		    class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
+		    
+		    class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
+		    	Integer year;
+		    }
 
 		class FileContent extends File {
 		}

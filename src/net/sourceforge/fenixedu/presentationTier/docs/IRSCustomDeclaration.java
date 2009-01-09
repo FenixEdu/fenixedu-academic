@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.text.MessageFormat;
 
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class IRSCustomDeclaration extends FenixReport {
 
@@ -17,20 +18,21 @@ public class IRSCustomDeclaration extends FenixReport {
 
 	private Money otherAmount;
 
-	private String studentName;
+	private String personName;
 
-	private String studentAddress;
+	private String personAddress;
 
-	private String studentAddressArea;
+	private String personAddressArea;
 
-	private String studentAddressPostalCode;
+	private String personAddressPostalCode;
 
 	private Integer studentNumber;
 
-	private String studentDocumentIdNumber;
+	private IDDocumentType idDocumentType;
 
-	public IRSDeclarationDTO(final Integer studentNumber, final int civilYear) {
-	    this.studentNumber = studentNumber;
+	private String documentIdNumber;
+
+	public IRSDeclarationDTO(final int civilYear) {
 	    this.civilYear = civilYear;
 	    this.gratuityAmount = Money.ZERO;
 	    this.otherAmount = Money.ZERO;
@@ -71,39 +73,39 @@ public class IRSCustomDeclaration extends FenixReport {
 	    return this;
 	}
 
-	public String getStudentName() {
-	    return studentName;
+	public String getPersonName() {
+	    return personName;
 	}
 
-	public IRSDeclarationDTO setStudentName(String studentName) {
-	    this.studentName = studentName;
+	public IRSDeclarationDTO setPersonName(String studentName) {
+	    this.personName = studentName;
 	    return this;
 	}
 
-	public String getStudentAddress() {
-	    return studentAddress;
+	public String getPersonAddress() {
+	    return personAddress;
 	}
 
-	public IRSDeclarationDTO setStudentAddress(String studentAddress) {
-	    this.studentAddress = studentAddress;
+	public IRSDeclarationDTO setPersonAddress(String studentAddress) {
+	    this.personAddress = studentAddress;
 	    return this;
 	}
 
-	public String getStudentAddressArea() {
-	    return studentAddressArea;
+	public String getPersonAddressArea() {
+	    return personAddressArea;
 	}
 
-	public IRSDeclarationDTO setStudentAddressArea(String studentAddressArea) {
-	    this.studentAddressArea = studentAddressArea;
+	public IRSDeclarationDTO setPersonAddressArea(String studentAddressArea) {
+	    this.personAddressArea = studentAddressArea;
 	    return this;
 	}
 
-	public String getStudentAddressPostalCode() {
-	    return studentAddressPostalCode;
+	public String getPersonAddressPostalCode() {
+	    return personAddressPostalCode;
 	}
 
-	public IRSDeclarationDTO setStudentAddressPostalCode(String studentAddressPostalCode) {
-	    this.studentAddressPostalCode = studentAddressPostalCode;
+	public IRSDeclarationDTO setPersonAddressPostalCode(String studentAddressPostalCode) {
+	    this.personAddressPostalCode = studentAddressPostalCode;
 	    return this;
 	}
 
@@ -116,13 +118,21 @@ public class IRSCustomDeclaration extends FenixReport {
 	    return this;
 	}
 
-	public String getStudentDocumentIdNumber() {
-	    return studentDocumentIdNumber;
+	public String getDocumentIdNumber() {
+	    return documentIdNumber;
 	}
 
-	public IRSDeclarationDTO setStudentDocumentIdNumber(String studentDocumentIdNumber) {
-	    this.studentDocumentIdNumber = studentDocumentIdNumber;
+	public IRSDeclarationDTO setDocumentIdNumber(String studentDocumentIdNumber) {
+	    this.documentIdNumber = studentDocumentIdNumber;
 	    return this;
+	}
+
+	public IDDocumentType getIdDocumentType() {
+	    return idDocumentType;
+	}
+
+	public void setIdDocumentType(IDDocumentType idDocumentType) {
+	    this.idDocumentType = idDocumentType;
 	}
 
 	public Money getTotalAmount() {
@@ -149,16 +159,18 @@ public class IRSCustomDeclaration extends FenixReport {
 
     private void fillParameters() {
 
-	addParameter("studentName", this.declaration.getStudentName());
-	addParameter("studentAddress", this.declaration.getStudentAddress());
-	addParameter("studentAddressArea", this.declaration.getStudentAddressArea());
-	addParameter("studentAddressPostalCode", this.declaration.getStudentAddressPostalCode());
-	addParameter("studentNumber", this.declaration.getStudentNumber().toString());
-	addParameter("studentDocumentIdNumber", this.declaration.getStudentDocumentIdNumber());
+	addParameter("personName", this.declaration.getPersonName());
+	addParameter("personAddress", this.declaration.getPersonAddress());
+	addParameter("personAddressArea", this.declaration.getPersonAddressArea());
+	addParameter("personAddressPostalCode", this.declaration.getPersonAddressPostalCode());
+	addParameter("studentNumber", this.declaration.getStudentNumber() != null ? this.declaration.getStudentNumber()
+		.toString() : null);
+	addParameter("idDocumentType", this.declaration.getIdDocumentType().getLocalizedName());
+	addParameter("documentIdNumber", this.declaration.getDocumentIdNumber());
 
 	addParameter("civilYear", String.valueOf(this.declaration.getCivilYear()));
 
-	addParameter("date", new YearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+	addParameter("date", new LocalDate().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
 	addParameter("gratuityAmount", this.declaration.getGratuityAmount().toPlainString());
 	addParameter("otherAmount", this.declaration.getOtherAmount().toPlainString());
 	addParameter("totalAmount", this.declaration.getTotalAmount().toPlainString());
@@ -172,9 +184,8 @@ public class IRSCustomDeclaration extends FenixReport {
 
     @Override
     public String getReportFileName() {
-	return MessageFormat.format("DECLARATION-{0}-{1}", this.declaration.getStudentNumber().toString(), new DateTime()
-		.toString(YYYYMMMDD, getLocale()));
+	return MessageFormat.format("IRS-{0}-{1}-{2}", String.valueOf(this.declaration.getCivilYear()), this.declaration
+		.getDocumentIdNumber().replace('/', '-').replace('\\', '-'), new DateTime().toString(YYYYMMMDD, getLocale()));
 
     }
-
 }

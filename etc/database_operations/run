@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table File" AlterTableFile.sql

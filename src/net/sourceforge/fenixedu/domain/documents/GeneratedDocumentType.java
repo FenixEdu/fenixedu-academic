@@ -28,7 +28,7 @@ public enum GeneratedDocumentType {
 
     IRS_DECLARATION,
 
-    IRS_CUSTOM_DECLARATION,
+    ANNUAL_IRS_DECLARATION,
 
     DIPLOMA_REQUEST,
 
