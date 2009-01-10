@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table File" AlterTableFile.sql
+execute "Default Academic Calendar Root Link" defaultAcademicCalendar.sql
