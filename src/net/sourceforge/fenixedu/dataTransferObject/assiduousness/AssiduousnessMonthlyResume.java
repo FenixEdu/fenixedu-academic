@@ -166,7 +166,8 @@ public class AssiduousnessMonthlyResume implements Serializable {
 		    addFirstLevelNightBalance(roundToHalfHour(firstLevelNightBalance));
 		    addSecondLevelNightBalance(roundToHalfHour(secondLevelNightBalance));
 		    addSecondLevelNightBalanceWithoutLimits(roundToHalfHour(secondLevelNightBalanceWithoutLimits));
-		    addExtraNightDays(assiduousnessExtraWork.getNightExtraWorkDays());
+		    addExtraNightDays(assiduousnessExtraWork.getNightExtraWorkDays() == null ? 0 : assiduousnessExtraWork
+			    .getNightExtraWorkDays());
 		}
 	    }
 	}
