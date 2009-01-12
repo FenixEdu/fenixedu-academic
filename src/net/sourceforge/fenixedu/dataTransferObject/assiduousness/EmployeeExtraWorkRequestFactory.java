@@ -271,11 +271,21 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.invalidNonWorkingDaysExtraWorkRemuneration");
 	    }
 
+	    EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization = getEmployeeExtraWorkAuthorization();
 	    BigDecimal hourValue = new BigDecimal(0);
 	    BigDecimal monthValue = new BigDecimal(0);
+	    int day = 1;
+	    if (employeeExtraWorkAuthorization.getExtraWorkAuthorization().getBeginDate().get(DateTimeFieldType.year()) == getExtraWorkRequestFactory()
+		    .getHoursDoneInPartialDate().get(DateTimeFieldType.year())
+		    && employeeExtraWorkAuthorization.getExtraWorkAuthorization().getBeginDate().get(
+			    DateTimeFieldType.monthOfYear()) == getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
+			    DateTimeFieldType.monthOfYear())) {
+		day = employeeExtraWorkAuthorization.getExtraWorkAuthorization().getBeginDate().get(
+			DateTimeFieldType.dayOfMonth());
+	    }
 	    LocalDate date = new LocalDate(
 		    getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
-		    getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
+		    getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), day);
 	    try {
 		hourValue = getEmployee().getAssiduousness().getEmployeeHourValue(date);
 		monthValue = getEmployee().getAssiduousness().getEmployeeSalary(date);
@@ -284,7 +294,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.connectionError");
 	    }
 
-	    ActionMessage actionMessage = validateBalances(hourValue, monthValue);
+	    ActionMessage actionMessage = validateBalances(hourValue, monthValue, employeeExtraWorkAuthorization);
 	    if (actionMessage != null) {
 		return actionMessage;
 	    }
@@ -324,10 +334,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    Double accumulatedNightVacationsAmount = 0.0;
 
 	    if (getAddToVacations() && (getWorkdayHours() != null || getExtraNightHours() != null)) {
-		LocalDate day = new LocalDate(getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
-			DateTimeFieldType.year()), getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
-			DateTimeFieldType.monthOfYear()), 1);
-		Schedule schedule = getEmployee().getAssiduousness().getSchedule(day);
+		Schedule schedule = getEmployee().getAssiduousness().getSchedule(date);
 		int dayHours = 7;
 		if (schedule != null) {
 		    dayHours = schedule.getEqualWorkPeriodDuration().toPeriod(PeriodType.dayTime()).getHours();
@@ -433,14 +440,14 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	return ((getSaturdayHours() != null || getSundayHours() != null || getHolidayHours() != null) && getAddToVacations());
     }
 
-    protected ActionMessage validateBalances(BigDecimal hourValue, BigDecimal monthValue) {
+    protected ActionMessage validateBalances(BigDecimal hourValue, BigDecimal monthValue,
+	    EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization) {
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(getExtraWorkRequestFactory().getHoursDoneInPartialDate());
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 
 	AssiduousnessMonthlyResume assiduousnessMonthlyResume = new AssiduousnessMonthlyResume(getEmployee(), closedMonth,
 		getExtraWorkRequest());
 	Duration nightHoursWorked = assiduousnessMonthlyResume.getNightlyBalance();
-	EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization = getEmployeeExtraWorkAuthorization();
 
 	if (getRequestedNightHours() != null) {
 	    // só para quem tem horário nocturno:
@@ -494,7 +501,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		Double extraNightHoursSecondLevelAmount = getAmount(hourValue, nightSecondHourPercentage,
 			getExtraNightHoursSecondLevel());
 		double limit = Math.pow(paymentLimitCoefficient, -1);
-		if (getEmployeeExtraWorkAuthorization().getExecutiveAuxiliarPersonel()) {
+		if (employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel()) {
 		    limit = executiveAuxiliarPaymentLimitPercentage;
 		}
 		Double monthLimit = (monthValue.doubleValue() * limit);
@@ -618,7 +625,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		Double workdayHoursFirstLevelAmount = getAmount(hourValue, firstHourPercentage, getWorkdayHoursFirstLevel());
 		Double workdayHoursSecondLevelAmount = getAmount(hourValue, secondHourPercentage, getWorkdayHoursSecondLevel());
 		double limit = Math.pow(paymentLimitCoefficient, -1);
-		if (getEmployeeExtraWorkAuthorization().getExecutiveAuxiliarPersonel()) {
+		if (employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel()) {
 		    limit = executiveAuxiliarPaymentLimitPercentage;
 		}
 		// Tenho de descontar as nocturnas já pagas neste pedido.

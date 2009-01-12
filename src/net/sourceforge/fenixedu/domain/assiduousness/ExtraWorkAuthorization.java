@@ -97,7 +97,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 		.toDateTimeAtMidnight());
 	if (begin != null && end != null) {
 	    Interval internalInterval = new Interval(begin.toDateTimeAtStartOfDay(), end.plusDays(1).toDateTimeAtStartOfDay());
-	    return dateInterval.contains(internalInterval) || internalInterval.contains(dateInterval);
+	    return dateInterval.overlaps(internalInterval);
 	} else if (begin != null && end == null) {
 	    return dateInterval.contains(begin.toDateTimeAtStartOfDay());
 	} else if (begin == null && end != null) {
