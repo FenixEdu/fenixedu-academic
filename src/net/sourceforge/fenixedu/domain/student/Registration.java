@@ -844,11 +844,13 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
-	return getStudentCurricularPlan(executionYear).getEnrolmentsByExecutionYear(executionYear);
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
+	return studentCurricularPlan != null ? studentCurricularPlan.getEnrolmentsByExecutionYear(executionYear)
+		: Collections.EMPTY_LIST;
     }
 
     final public Collection<Enrolment> getEnrolments(final ExecutionSemester executionSemester) {
-	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionSemester.getExecutionYear());
+	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionSemester.getExecutionYear());
 	return studentCurricularPlan != null ? studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester)
 		: Collections.EMPTY_LIST;
     }
@@ -2675,6 +2677,10 @@ public class Registration extends Registration_Base {
 	return (degreeType == DegreeType.MASTER_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE);
     }
 
+    final public boolean isPhD() {
+	return getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
+    }
+
     final public EnrolmentModel getEnrolmentModelForCurrentExecutionYear() {
 	return getEnrolmentModelForExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
@@ -2803,11 +2809,11 @@ public class Registration extends Registration_Base {
     }
 
     final public DegreeCurricularPlan getActiveDegreeCurricularPlan() {
-	return getActiveStudentCurricularPlan().getDegreeCurricularPlan();
+	return (getActiveStudentCurricularPlan() != null ? getActiveStudentCurricularPlan().getDegreeCurricularPlan() : null);
     }
 
     final public DegreeCurricularPlan getLastDegreeCurricularPlan() {
-	return getLastStudentCurricularPlan().getDegreeCurricularPlan();
+	return (getLastStudentCurricularPlan() != null ? getLastStudentCurricularPlan().getDegreeCurricularPlan() : null);
     }
 
     public Degree getLastDegree() {
