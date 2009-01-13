@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
@@ -21,6 +22,8 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
     private DomainReference<Degree> degree;
 
     private DomainReference<ExecutionYear> executionYear;
+
+    private DegreeType degreeType;
 
     private List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
 
@@ -56,6 +59,14 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
 
     public void setRegistrationStateTypes(List<RegistrationStateType> registrationStateTypes) {
 	this.registrationStateTypes = registrationStateTypes;
+    }
+
+    public DegreeType getDegreeType() {
+	return degreeType;
+    }
+
+    public void setDegreeType(DegreeType degreeType) {
+	this.degreeType = degreeType;
     }
 
 }

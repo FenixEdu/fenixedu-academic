@@ -34,7 +34,8 @@ public class SearchStudents extends FenixService {
 	final ExecutionYear executionYear = searchbean.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-	    if (degree == null || degreeCurricularPlan.getDegree() == degree) {
+	    if ((searchbean.getDegreeType() == null || degreeCurricularPlan.getDegreeType() == searchbean.getDegreeType())
+		    && (degree == null || degreeCurricularPlan.getDegree() == degree)) {
 		degreeCurricularPlan.getRegistrations(executionYear, registrations);
 	    }
 	}

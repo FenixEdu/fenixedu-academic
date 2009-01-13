@@ -1332,6 +1332,14 @@
 		<property name="format" value="${year}" />
 		<property name="destination" value="postBack"/>
 	</slot>
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeTypesForEmployeeAcademicOfficeProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
+		<property name="destination" value="postBack"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
 	<slot name="degree" key="label.degree"
 		layout="menu-select-postback">
 		<property name="providerClass"
