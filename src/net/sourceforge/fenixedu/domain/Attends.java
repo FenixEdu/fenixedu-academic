@@ -87,9 +87,10 @@ public class Attends extends Attends_Base {
 	this();
 	final Student student = registration.getStudent();
 	if (student.hasAttends(executionCourse)) {
-	    throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course");
+	    throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course", executionCourse
+		    .getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 	}
-	setAluno(registration);
+	setRegistration(registration);
 	setDisciplinaExecucao(executionCourse);
     }
 
@@ -390,6 +391,14 @@ public class Attends extends Attends_Base {
 	return isFor(shift.getExecutionCourse());
     }
 
+    public boolean isFor(final Student student) {
+	return getRegistration().getStudent().equals(student);
+    }
+
+    public boolean isFor(final Registration registration) {
+	return getRegistration().equals(registration);
+    }
+
     @Override
     @Deprecated
     public Registration getAluno() {
@@ -400,7 +409,16 @@ public class Attends extends Attends_Base {
 	return super.getAluno();
     }
 
+    @Override
+    @Deprecated
+    public void setAluno(Registration registration) {
+	setRegistration(registration);
+    }
+
     public void setRegistration(final Registration registration) {
+	if (registration != null && getRegistration() != registration) {
+	    getRegistration().changeShifts(this, registration);
+	}
 	super.setAluno(registration);
     }
 
@@ -493,7 +511,7 @@ public class Attends extends Attends_Base {
 	final ExecutionCourse executionCourse = getExecutionCourse();
 	for (final Shift shift : executionCourse.getAssociatedShifts()) {
 	    shift.removeStudents(registration);
-	}	
+	}
     }
 
 }
