@@ -138,9 +138,9 @@ public class GiafInterface {
 		query.append(yearMonthPayingDate.getYear());
 		query.append(" and a.mes=");
 		query.append(yearMonthPayingDate.getNumberOfMonth());
-		query.append(" and ano_pag=");
+		query.append(" and extract(year from data_mov)=");
 		query.append(paymentYear);
-		query.append(" and mes_pag=");
+		query.append(" and extract(month from data_mov)=");
 		query.append(paymentMonth);
 	    }
 	    query.append(" and a.mov_cod in (");
