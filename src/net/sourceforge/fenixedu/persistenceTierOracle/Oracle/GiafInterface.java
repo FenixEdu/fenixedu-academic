@@ -128,20 +128,20 @@ public class GiafInterface {
 	    int paymentYear = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year());
 	    int paymentMonth = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear());
 	    if (yearMonthPayingDate.getYear().equals(year) && yearMonthPayingDate.getNumberOfMonth() == month) {
-		query.append("SELECT a.mov_cod, a.sal_va"
-			+ "l_brt, a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
+		query
+			.append("SELECT a.mov_cod, sum(a.sal_val_brt), a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
 		query.append(paymentYear);
 		query.append(" and extract(month from data_mov)=");
 		query.append(paymentMonth);
 	    } else {
-		query.append("SELECT a.mov_cod,a.sal_val_brt, a.emp_ccusto FROM slhsalario a where a.ano_pag=");
+		query.append("SELECT a.mov_cod, a.emp_ccusto ,sum(a.sal_val_brt) FROM slhsalario a where a.ano_pag=");
 		query.append(yearMonthPayingDate.getYear());
 		query.append(" and a.mes_pag=");
 		query.append(yearMonthPayingDate.getNumberOfMonth());
-//		query.append(" and ano_pag=");
-//		query.append(paymentYear);
-//		query.append(" and mes_pag=");
-//		query.append(paymentMonth);
+		// query.append(" and ano_pag=");
+		// query.append(paymentYear);
+		// query.append(" and mes_pag=");
+		// query.append(paymentMonth);
 	    }
 	    query.append(" and a.mov_cod in (");
 	    query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
@@ -154,16 +154,16 @@ public class GiafInterface {
 	    query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode);
 	    query.append(") and a.emp_num =");
 	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
-
 	    int requestsNumber = extraWorkRequest.getAssiduousness().getExtraWorkRequests(paymentYear, paymentMonth).size();
 	    if (requestsNumber > 1) {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());
 	    }
+	    query.append(" group by a.mov_cod, a.emp_ccusto");
 	    System.out.println(query.toString());
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
-	    //resetExtraWorkRequestAmounts(extraWorkRequest);
+	    // resetExtraWorkRequestAmounts(extraWorkRequest);
 	    while (rs.next()) {
 		if (requestsNumber > 1) {
 		    if (extraWorkRequest.getUnit().getCostCenterCode().intValue() != rs.getInt("emp_ccusto")) {
