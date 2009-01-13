@@ -101,18 +101,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		1);
-	LocalDate endDate = new LocalDate().withField(DateTimeFieldType.year(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
-		beginDate.dayOfMonth().getMaximumValue());
-	LocalDate beginUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
-		DateTimeFieldType.dayOfMonth(), 1);
-	LocalDate endUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
-		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
-		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
+	LocalDate endDate = beginDate.withField(DateTimeFieldType.dayOfMonth(), beginDate.dayOfMonth().getMaximumValue());
+	LocalDate beginUnpaidLicenseDate = beginDate.plusMonths(1);
+	LocalDate endUnpaidLicenseDate = beginUnpaidLicenseDate.withField(DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate
+		.dayOfMonth().getMaximumValue());
 
 	Set<AssiduousnessRecord> allAssiduousnessRecord = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(
 		beginDate.toDateTimeAtStartOfDay(), endUnpaidLicenseDate.plusDays(1).toDateTimeAtStartOfDay());
