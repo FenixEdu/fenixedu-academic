@@ -134,14 +134,14 @@ public class GiafInterface {
 		query.append(" and extract(month from data_mov)=");
 		query.append(paymentMonth);
 	    } else {
-		query.append("SELECT a.mov_cod,a.sal_val_brt, a.emp_ccusto FROM slhsalario a where a.ano=");
+		query.append("SELECT a.mov_cod,a.sal_val_brt, a.emp_ccusto FROM slhsalario a where a.ano_pag=");
 		query.append(yearMonthPayingDate.getYear());
-		query.append(" and a.mes=");
+		query.append(" and a.mes_pag=");
 		query.append(yearMonthPayingDate.getNumberOfMonth());
-		query.append(" and ano_pag=");
-		query.append(paymentYear);
-		query.append(" and mes_pag=");
-		query.append(paymentMonth);
+//		query.append(" and ano_pag=");
+//		query.append(paymentYear);
+//		query.append(" and mes_pag=");
+//		query.append(paymentMonth);
 	    }
 	    query.append(" and a.mov_cod in (");
 	    query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
