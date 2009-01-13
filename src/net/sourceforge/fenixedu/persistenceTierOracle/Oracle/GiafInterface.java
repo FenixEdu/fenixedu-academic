@@ -129,12 +129,12 @@ public class GiafInterface {
 	    int paymentMonth = extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear());
 	    if (yearMonthPayingDate.getYear().equals(year) && yearMonthPayingDate.getNumberOfMonth() == month) {
 		query
-			.append("SELECT a.mov_cod, sum(a.sal_val_brt), a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
+			.append("SELECT a.mov_cod, sum(a.sal_val_brt) as sal_val_brt, a.emp_ccusto FROM sldsalario a where extract(year from data_mov)=");
 		query.append(paymentYear);
 		query.append(" and extract(month from data_mov)=");
 		query.append(paymentMonth);
 	    } else {
-		query.append("SELECT a.mov_cod, a.emp_ccusto ,sum(a.sal_val_brt) FROM slhsalario a where a.ano_pag=");
+		query.append("SELECT a.mov_cod, a.emp_ccusto ,sum(a.sal_val_brt) as sal_val_brt FROM slhsalario a where a.ano_pag=");
 		query.append(yearMonthPayingDate.getYear());
 		query.append(" and a.mes_pag=");
 		query.append(yearMonthPayingDate.getNumberOfMonth());
