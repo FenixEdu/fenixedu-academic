@@ -3366,46 +3366,29 @@ public class Registration extends Registration_Base {
 	    registration.setRegistrationAgreement(getRegistrationAgreement());
 	    registration.setSourceRegistration(this);
 
-	    transferCurrentExecutionPeriodAttends(registration);
+	    changeAttends(registration, when);
 	}
 
-	transferAnyRemainingCurrentExecutionPeriodAttends();
-    }
-
-    private void transferAnyRemainingCurrentExecutionPeriodAttends() {
 	if (!getTargetTransitionRegistrations().isEmpty()) {
-	    final Registration newRegistration = getTargetTransitionRegistrations().iterator().next();
-	    for (final Attends attends : getAssociatedAttendsSet()) {
-		final ExecutionCourse executionCourse = attends.getExecutionCourse();
-		final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-		if (executionSemester.isCurrent()) {
-		    transferAttends(attends, newRegistration);
-		}
-	    }
+	    // change remaining attends to any target transition registration
+	    changeAttends(getTargetTransitionRegistrations().iterator().next(), when);
 	}
     }
 
-    private void transferCurrentExecutionPeriodAttends(final Registration newRegistration) {
+    private void changeAttends(final Registration newRegistration, final DateTime when) {
+	final ExecutionSemester executionSemester = ExecutionSemester.readByDateTime(when);
+	if (executionSemester == null) {
+	    throw new DomainException("error.Registration.invalid.when.date");
+	}
+
 	for (final Attends attends : getAssociatedAttendsSet()) {
-	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	    if (executionSemester.isCurrent()) {
-		for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
-		    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-		    if (newRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan() == degreeCurricularPlan) {
-			transferAttends(attends, newRegistration);
+	    if (attends.getExecutionPeriod().isAfterOrEquals(executionSemester)) {
+		for (final CurricularCourse curricularCourse : attends.getExecutionCourse().getAssociatedCurricularCoursesSet()) {
+		    if (curricularCourse.getDegreeCurricularPlan() == newRegistration.getLastDegreeCurricularPlan()) {
+			attends.setRegistration(newRegistration);
+			break;
 		    }
 		}
-	    }
-	}
-    }
-
-    private void transferAttends(final Attends attends, final Registration newRegistration) {
-	attends.setAluno(newRegistration);
-	for (final Shift shift : getShiftsSet()) {
-	    if (shift.getExecutionCourse() == attends.getExecutionCourse()) {
-		removeShifts(shift);
-		newRegistration.addShifts(shift);
 	    }
 	}
     }

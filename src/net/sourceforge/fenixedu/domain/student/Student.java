@@ -671,7 +671,7 @@ public class Student extends Student_Base {
 	return getDistributedTestsByExecutionCourse(executionCourse).size();
     }
 
-    public Attends readAttendByExecutionCourse(ExecutionCourse executionCourse) {
+    public Attends readAttendByExecutionCourse(final ExecutionCourse executionCourse) {
 	for (final Registration registration : getRegistrationsSet()) {
 	    Attends attends = registration.readRegistrationAttendByExecutionCourse(executionCourse);
 	    if (attends != null) {
@@ -932,8 +932,8 @@ public class Student extends Student_Base {
 	for (final Registration registration : registrations) {
 	    if (result == null || registration.getStartDate().isAfter(result.getStartDate())) {
 		result = registration;
-    }
-    }
+	    }
+	}
 	return result;
     }
 
@@ -1458,7 +1458,7 @@ public class Student extends Student_Base {
 	}
 	return executionYears;
     }
-    
+
     public boolean getActiveAlumni() {
 	return hasAlumni() && getAlumni().isRegistered();
     }
