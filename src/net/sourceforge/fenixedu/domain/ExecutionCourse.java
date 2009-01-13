@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
@@ -302,6 +303,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Attends getAttendsByStudent(final Registration registration) {
 	for (final Attends attends : getAttendsSet()) {
 	    if (attends.getRegistration() == registration) {
+		return attends;
+	    }
+	}
+	return null;
+    }
+
+    public Attends getAttendsByStudent(final Student student) {
+	for (final Attends attends : getAttends()) {
+	    if (attends.isFor(student)) {
 		return attends;
 	    }
 	}
@@ -1593,14 +1603,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 
 	return references;
-    }
-
-    public List<Attends> getActiveAttends() {
-	final List<Attends> result = new ArrayList<Attends>();
-	for (final Attends attends : this.getAttendsSet()) {
-		result.add(attends);
-	}
-	return result;
     }
 
     public boolean isCompentenceCourseMainBibliographyAvailable() {

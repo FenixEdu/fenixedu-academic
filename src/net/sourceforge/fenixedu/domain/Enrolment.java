@@ -482,11 +482,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 
 	if (executionCourse != null) {
-	    final Attends attend = executionCourse.getAttendsByStudent(registration);
-	    if (attend != null) {
+	    final Attends attend = executionCourse.getAttendsByStudent(registration.getStudent());
+	    if (attend == null) {
+		addAttends(new Attends(registration, executionCourse));
+	    } else if (!attend.hasEnrolment()) {
+		attend.setRegistration(registration);
 		addAttends(attend);
 	    } else {
-		addAttends(new Attends(registration, executionCourse));
+		throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course",
+			executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 	    }
 	}
     }
@@ -501,8 +505,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	}
 
-	Attends attends = new Attends(registration, executionCourse);
-	this.addAttends(attends);
+	this.addAttends(new Attends(registration, executionCourse));
     }
 
     final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee,
