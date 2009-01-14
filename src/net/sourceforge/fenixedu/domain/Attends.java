@@ -415,8 +415,12 @@ public class Attends extends Attends_Base {
 	setRegistration(registration);
     }
 
+    public boolean hasRegistration() {
+	return super.getAluno() != null;
+    }
+
     public void setRegistration(final Registration registration) {
-	if (registration != null && getRegistration() != registration) {
+	if (hasRegistration() && registration != null && getRegistration() != registration) {
 	    getRegistration().changeShifts(this, registration);
 	}
 	super.setAluno(registration);
