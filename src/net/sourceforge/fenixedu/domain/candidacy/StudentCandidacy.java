@@ -162,6 +162,9 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     public void delete() {
 	removeRegistration();
 	removeExecutionDegree();
+	removeSchoolTimeDistrictSubDivisionOfResidence();
+	removeCountryOfResidence();
+	removeDistrictSubdivisionOfResidence();
 
 	if (hasPrecedentDegreeInformation() && !getPrecedentDegreeInformation().hasStudent()) {
 	    getPrecedentDegreeInformation().delete();
