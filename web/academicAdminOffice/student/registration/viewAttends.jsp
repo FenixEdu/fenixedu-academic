@@ -5,6 +5,8 @@
 <%@ page language="java" %>
 <html:xhtml />
 
+<bean:define id="confirmNonReversableOp">return confirm('<bean:message key="message.confirm.non.reversable.operation"/>')</bean:define>
+
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
@@ -98,7 +100,7 @@
 						<td>
 							<bean:define id="url" type="java.lang.String">/registration.do?method=deleteShiftEnrolments&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
 							<% if (hasAnyShiftEnrolments) { %>
-								<html:link page="<%= url %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+								<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 									<bean:message key="label.delete.shift.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 								</html:link>
 							<% } %>
@@ -115,7 +117,7 @@
 							<% if (!hasAnyShiftEnrolments) { %>
 							<logic:notPresent name="attends" property="enrolment">
 								<bean:define id="url" type="java.lang.String">/registration.do?method=deleteAttends&amp;attendsId=<bean:write name="attends" property="idInternal"/></bean:define>
-								<html:link page="<%= url %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+								<html:link page="<%= url %>" onclick="<%= confirmNonReversableOp.toString() %>" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 									<bean:message key="label.delete.attends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 								</html:link>
 							</logic:notPresent>
