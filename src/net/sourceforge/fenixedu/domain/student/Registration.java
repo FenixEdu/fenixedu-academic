@@ -2203,10 +2203,31 @@ public class Registration extends Registration_Base {
 	return getRegistrationStates(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionSemester
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
-
+    
     public Set<RegistrationState> getRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
+	populateRegistrationStates(beginDateTime, endDateTime, result);
+	return result;
+    }
 
+    public List<RegistrationState> getRegistrationStatesList(final ExecutionYear executionYear) {
+	return getRegistrationStatesList(executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionYear
+		.getEndDateYearMonthDay().toDateTimeAtMidnight());
+    }
+
+    public List<RegistrationState> getRegistrationStatesList(final ExecutionSemester executionSemester) {
+	return getRegistrationStatesList(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionSemester
+		.getEndDateYearMonthDay().toDateTimeAtMidnight());
+    }
+
+    public List<RegistrationState> getRegistrationStatesList(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
+	final List<RegistrationState> result = new ArrayList<RegistrationState>();
+	populateRegistrationStates(beginDateTime, endDateTime, result);
+	return result;
+    }
+
+    private void populateRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime,
+	    final Collection<RegistrationState> result) {
 	List<RegistrationState> sortedRegistrationsStates = new ArrayList<RegistrationState>(getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, RegistrationState.DATE_COMPARATOR);
 
@@ -2225,8 +2246,6 @@ public class Registration extends Registration_Base {
 	    }
 
 	}
-
-	return result;
     }
 
     public RegistrationState getFirstRegistrationState() {
