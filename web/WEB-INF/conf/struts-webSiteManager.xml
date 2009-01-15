@@ -57,6 +57,10 @@
         <forward name="Success" path="/manageUnitSite.do?method=prepare"/>
       </action>
 
+      <action path="/manageAssemblySite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+        <forward name="Success" path="/manageUnitSite.do?method=prepare"/>
+      </action>
+
 	  <action path="/manageStudentsSite" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
         <forward name="Success" path="/manageUnitSite.do?method=prepare"/>
       </action>

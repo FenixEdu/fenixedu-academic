@@ -5420,6 +5420,10 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			class TutorSite extends UnitSite {
 			}
 			
+			class AssemblySite extends UnitSite {
+			
+			}
+			 
 			class StudentsSite extends UnitSite {
 			}
 			

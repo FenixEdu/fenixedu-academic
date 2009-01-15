@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add assembly site" createISTAssemblySite.sql IST
