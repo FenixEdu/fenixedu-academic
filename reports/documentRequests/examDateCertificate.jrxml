@@ -72,11 +72,11 @@
 			</band>
 		</background>
 		<title>
-			<band height="273"  isSplitAllowed="true" >
+			<band height="290"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
-						y="105"
+						y="142"
 						width="157"
 						height="25"
 						key="staticText-15"/>
@@ -93,9 +93,9 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="161"
+						y="198"
 						width="469"
-						height="112"
+						height="86"
 						key="textField-16"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -468,9 +468,9 @@ Especial]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
-						x="205"
+						x="172"
 						y="146"
-						width="160"
+						width="233"
 						height="0"
 						key="line-3"/>
 					<graphicElement stretchType="NoStretch"/>
@@ -584,9 +584,9 @@ $P{day}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="176"
+						x="137"
 						y="151"
-						width="239"
+						width="308"
 						height="21"
 						key="textField-29"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -594,7 +594,7 @@ $P{day}]]></textFieldExpression>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
