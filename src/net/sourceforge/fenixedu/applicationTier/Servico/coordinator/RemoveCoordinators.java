@@ -11,7 +11,6 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveCoordinators extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
     public static void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
 
