@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -81,6 +82,10 @@ public class BolonhaStudentOptionalEnrollmentBean implements Serializable {
 
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
 	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return getExecutionPeriod().getExecutionYear();
     }
 
     public CurricularCourse getSelectedOptionalCurricularCourse() {
