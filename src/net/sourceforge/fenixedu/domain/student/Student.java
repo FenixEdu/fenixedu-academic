@@ -932,8 +932,8 @@ public class Student extends Student_Base {
 	for (final Registration registration : registrations) {
 	    if (result == null || registration.getStartDate().isAfter(result.getStartDate())) {
 		result = registration;
-	    }
-	}
+    }
+    }
 	return result;
     }
 
@@ -1156,6 +1156,16 @@ public class Student extends Student_Base {
 		executionYear, FunctionType.DELEGATE_OF_YEAR);
 	int curricularYear = yearDelegateFunction.getCurricularYear().getYear();
 	return degree.getCurricularCoursesFromGivenCurricularYear(curricularYear, executionYear);
+    }
+
+    public Collection<Delegate> getDelegates() {
+	Collection<Delegate> result = new ArrayList<Delegate>();
+	for (Registration registration : getRegistrations()) {
+	    for (Delegate delegate : registration.getDelegates()) {
+		result.add(delegate);
+	    }
+	}
+	return result;
     }
 
     public boolean isGrantOwner(final ExecutionYear executionYear) {
@@ -1458,7 +1468,7 @@ public class Student extends Student_Base {
 	}
 	return executionYears;
     }
-
+    
     public boolean getActiveAlumni() {
 	return hasAlumni() && getAlumni().isRegistered();
     }
