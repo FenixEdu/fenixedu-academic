@@ -11,8 +11,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -35,9 +37,9 @@ public class AddNewDelegate extends FenixService {
 	final Person studentPerson = student.getPerson();
 
 	try {
-	    degreeUnit.addYearDelegatePersonFunction(student, curricularYear);
+	    PersonFunction personFunction = degreeUnit.addYearDelegatePersonFunction(student, curricularYear);
 	    studentPerson.addPersonRoleByRoleType(RoleType.DELEGATE);
-
+	    new YearDelegate(student.getRegistrationsFor(degree).iterator().next(), personFunction);
 	} catch (DomainException ex) {
 	    throw new FenixServiceException(ex.getMessage());
 	}

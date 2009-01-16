@@ -212,7 +212,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     // TODO: controlo de acesso?
-    public void addYearDelegatePersonFunction(Student student, CurricularYear curricularYear) {
+    public PersonFunction addYearDelegatePersonFunction(Student student, CurricularYear curricularYear) {
 
 	if (student.getLastActiveRegistration() != null && !student.getLastActiveRegistration().getDegree().equals(getDegree())) {
 	    throw new DomainException("error.delegates.studentNotBelongsToDegree");
@@ -238,8 +238,8 @@ public class DegreeUnit extends DegreeUnit_Base {
 
 	}
 
-	PersonFunction
-		.createYearDelegatePersonFunction(this, student.getPerson(), currentDate, endDate, function, curricularYear);
+	return PersonFunction.createYearDelegatePersonFunction(this, student.getPerson(), currentDate, endDate, function,
+		curricularYear);
     }
 
     // TODO: controlo de acesso?

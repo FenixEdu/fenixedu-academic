@@ -688,19 +688,19 @@ class DomainObject {
 		DateTime uploadTime;
 	}
 
-	    /* Documents */
-	    class documents.GeneratedDocument extends File {
-	        GeneratedDocumentType type;
-	    }
-	
-		    class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
-		    
-		    class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
-		
-		    class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
-		
-		    class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
-		    
+    /* Documents */
+    class documents.GeneratedDocument extends File {
+        GeneratedDocumentType type;
+    }
+
+    class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
+    
+    class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
+
+    class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
+
+    class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
+
 		    class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
 		    	Integer year;
 		    }
@@ -5718,6 +5718,43 @@ class reports.EurAceQueueJobFile extends QueueJobFile {
 	String reportName;
 	DegreeType degreeType;
 }
+
+class student.Delegate extends DomainObject {
+	
+}
+
+class student.YearDelegate extends student.Delegate {
+	
+}
+
+class student.YearDelegateCourseInquiry extends DomainObject {
+	Long answerDuration;
+	DateTime responseDateTime;
+		
+	Integer workLoadClassification;
+	String  workLoadClassificationReasons;
+	Integer enoughOnlineCUInformation;
+	String  enoughOnlineCUInformationReasons;
+	Integer clearOnlineCUInformation;
+	String  clearOnlineCUInformationReasons;
+	Integer explicitEvaluationMethods;
+	String  explicitEvaluationMethodsReasons;
+	Integer evaluationMethodsWellApplied;
+	String evaluationMethodsWellAppliedReasons;
+	String evaluationMethodsDisclosedToWorkingStudents;
+	String evaluationMethodsDisclosedToSpecialSeasonStudents;
+	Integer evaluationDatesScheduleActiveParticipation;
+	String evaluationDatesScheduleActiveParticipationReasons;
+	Integer supportMaterialAvailableOnTime;
+	String supportMaterialAvailableOnTimeReasons;
+	Integer previousKnowlegdeArticulation;
+	String previousKnowlegdeArticulationReasons;
+	String suggestedBestPractices;
+	String strongAndWeakPointsOfCUTeachingProcess;
+	String finalCommentsAndImproovements;   	
+}
+
+
 
 /*
  * Relations definitions
@@ -14407,4 +14444,44 @@ relation QueueJobRootDomainObject {
                multiplicity *;
        }
        RootDomainObject playsRole rootDomainObject;
+}
+
+relation DelegatePersonFunction {
+	student.Delegate playsRole delegate;
+	organizationalStructure.PersonFunction playsRole delegateFunction;
+}
+
+relation DelegateRegistration {
+	student.Registration playsRole registration;
+	student.Delegate playsRole delegates {
+		multiplicity *;
+	}
+}
+
+relation DelegateRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	student.Delegate playsRole delegates {
+		multiplicity *;
+	}
+}
+
+relation YearDelegateCourseInquiryYearDelegate {
+	student.YearDelegate playsRole delegate;
+	student.YearDelegateCourseInquiry playsRole yearDelegateCourseInquiries {
+		multiplicity *;
+	}
+}
+
+relation YearDelegateCourseInquiryExecutionCourse {
+	ExecutionCourse playsRole executionCourse;
+	student.YearDelegateCourseInquiry playsRole yearDelegateCourseInquiries {
+		multiplicity *;
+	}
+}
+
+relation YearDelegateCourseInquiryRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	student.YearDelegateCourseInquiry playsRole yearDelegateCourseInquiries {
+		multiplicity *;
+	}
 }

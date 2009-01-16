@@ -41,4 +41,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Create Delegate Tables" createDelegateTables.sql
 execute "Creating QueueJob Tables" updates.sql

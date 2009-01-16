@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.DefineInquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,10 +39,14 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	final InquiryResponsePeriodType periodType = StringUtils.isEmpty(periodTypeString) ? InquiryResponsePeriodType.STUDENT
 		: InquiryResponsePeriodType.valueOf(periodTypeString);
 
-	final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(rootDomainObject
+		.getExecutionPeriodsSet());
+	Collections.sort(executionSemesters, new ReverseComparator(
+		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	ExecutionSemester selectedExecutionPeriod = null;
 	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
+	
 	for (final ExecutionSemester executionSemester : executionSemesters) {
 	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear();
 	    executionPeriodLVBs.add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));

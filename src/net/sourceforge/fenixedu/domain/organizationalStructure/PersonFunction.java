@@ -150,12 +150,13 @@ public class PersonFunction extends PersonFunction_Base {
 	return getCredits() > 0d;
     }
 
-    public static void createYearDelegatePersonFunction(DegreeUnit unit, Person person, YearMonthDay startDate,
+    public static PersonFunction createYearDelegatePersonFunction(DegreeUnit unit, Person person, YearMonthDay startDate,
 	    YearMonthDay endDate, Function function, CurricularYear curricularYear) {
 	if (function == null)
 	    throw new DomainException("error.delegates.noDelegateFunction");
 	PersonFunction personFunction = new PersonFunction(unit, person, function, startDate, endDate);
 	personFunction.setCurricularYear(curricularYear);
+	return personFunction;
     }
 
     public static void createDelegatePersonFunction(Unit unit, Person person, YearMonthDay startDate, YearMonthDay endDate,

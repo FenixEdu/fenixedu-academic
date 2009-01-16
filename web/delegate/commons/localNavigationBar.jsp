@@ -54,5 +54,13 @@
 				<bean:message key="link.sendEmailToStudents" bundle="DELEGATES_RESOURCES"/>
 			</html:link>
 		</li>
+		
+		<li class="navheader"><bean:message key="label.participate" bundle="DELEGATES_RESOURCES"/></li>
+		<li>
+			<html:link page="/delegateInquiry.do?method=showCoursesToAnswerPage">
+				<bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/>
+			</html:link>
+		</li>
+					
 	</ul>
 </logic:present>

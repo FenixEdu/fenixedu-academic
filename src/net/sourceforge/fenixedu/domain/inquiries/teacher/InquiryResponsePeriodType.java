@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.domain.inquiries.teacher;
  */
 public enum InquiryResponsePeriodType {
 
-    STUDENT, TEACHING;
+    STUDENT, TEACHING, DELEGATE;
 
     public String getName() {
 	return name();

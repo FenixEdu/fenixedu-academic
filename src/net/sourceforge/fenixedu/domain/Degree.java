@@ -463,6 +463,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return result;
     }
+    
+    public List<ExecutionCourse> getExecutionCourses(final CurricularYear curricularYear,
+	    final ExecutionSemester executionSemester) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+		    if (executionSemester == executionCourse.getExecutionPeriod()) {
+			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
+			    if (scope.getCurricularYear() == curricularYear.getYear()) {
+				result.add(executionCourse);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return result;
+    }
 
     @Deprecated
     public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
