@@ -396,7 +396,7 @@ public class SeparationCyclesManagement {
 	} else if (credits.isEquivalence()) {
 	    final Equivalence equivalence = (Equivalence) credits;
 	    final Equivalence newEquivalence = new Equivalence();
-	    equivalence.setGrade(equivalence.getGrade());
+	    newEquivalence.setGrade(equivalence.getGrade());
 	    newCredits = newEquivalence;
 
 	} else {
