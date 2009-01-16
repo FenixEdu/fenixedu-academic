@@ -5700,6 +5700,25 @@ class internship.InternshipCandidacy extends DomainObject {
     Boolean previousCandidacy;
 }
 
+class QueueJob extends DomainObject {
+               Boolean done;
+               Integer failedCounter;
+               DateTime requestDate;
+               DateTime jobStartTime;
+               DateTime jobEndTime;
+}
+
+class QueueJobFile extends QueueJob {
+       String contentType;
+       ByteArray content;
+}
+
+class reports.EurAceQueueJobFile extends QueueJobFile {
+	String type;
+	String reportName;
+	DegreeType degreeType;
+}
+
 /*
  * Relations definitions
  * 
@@ -14364,31 +14383,28 @@ relation InternshipCandidateAcademicInstitution {
     organizationalStructure.AcademicalInstitutionUnit playsRole university;
 }
 
-class QueueJobContext extends DomainObject {
-		Boolean done;
-		DateTime requestDate;
-		DateTime jobStartTime;
-		DateTime jobEndTime;
-		String callbackService;
+relation ExecutionYearEurAceJob {
+	ExecutionYear playsRole executionYear;
+	reports.EurAceQueueJobFile playsRole eurAceQueueJobFile;
 }
 
-relation QueueJobContextPerson {
-	User playsRole user;
-	QueueJobContext playsRole job {
-		multiplicity *;
-	}
+relation QueueJobPerson {
+       User playsRole user;
+       QueueJob playsRole job {
+               multiplicity *;
+       }
 }
 
 relation QueueJobUndoneRootDomainObject {
-	QueueJobContext playsRole queueJob {
-		multiplicity *;
-  	}
-  	RootDomainObject playsRole rootDomainObject;
+       QueueJob playsRole queueJobUndone {
+               multiplicity *;
+       }
+       RootDomainObject playsRole rootDomainObjectQueueUndone;
 }
 
-relation QueueJobDoneRootDomainObject {
-	QueueJobContext playsRole queueJobUndone {
-		multiplicity *;
-  	}
-  	RootDomainObject playsRole rootDomainObjectQueueUndone;
+relation QueueJobRootDomainObject {
+       QueueJob playsRole queueJob {
+               multiplicity *;
+       }
+       RootDomainObject playsRole rootDomainObject;
 }
