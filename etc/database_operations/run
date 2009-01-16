@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating QueueJob Tables" updates.sql
