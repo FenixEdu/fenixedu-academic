@@ -28,8 +28,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append("<a href='");
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
-	    strBuffer.append(SessionConstants.EXECUTION_PERIOD_OID + "=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
+	    strBuffer.append(SessionConstants.ACADEMIC_INTERVAL + "=");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
 	    strBuffer.append("'>");
@@ -47,8 +47,8 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append("<a href='");
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
-	    strBuffer.append(SessionConstants.EXECUTION_PERIOD_OID + "=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal());
+	    strBuffer.append(SessionConstants.ACADEMIC_INTERVAL + "=");
+	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
 	    strBuffer.append("'>");
@@ -69,7 +69,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("ª época");
+	    strBuffer.append("ï¿½ ï¿½poca");
 
 	} else if (showOccupation instanceof InfoWrittenTest) {
 
