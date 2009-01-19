@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -249,13 +248,14 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    searchBean = new AlumniSearchBean();
 	}
 
-	if (!StringUtils.isEmpty(searchBean.getName()) || searchBean.getStudentNumber() != null) {
-	    List<Registration> resultRegistrations = Alumni
-		    .readRegistrations(searchBean.getName(), searchBean.getStudentNumber());
-	    RenderUtils.invalidateViewState();
-	    searchBean.setAlumni(new ArrayList<Registration>(resultRegistrations));
-	}
+	Integer studentNumber = searchBean.getStudentNumber();
+	String documentIdNumber = searchBean.getDocumentIdNumber();
+	String studentName = searchBean.getName();
 
+	List<Registration> registrations = Alumni.readRegistrations(studentName, studentNumber, documentIdNumber);
+	searchBean.setAlumni(new ArrayList<Registration>(registrations));
+
+	RenderUtils.invalidateViewState();
 	request.setAttribute("searchAlumniBean", searchBean);
 	return mapping.findForward("alumni.showAlumniDetails");
     }

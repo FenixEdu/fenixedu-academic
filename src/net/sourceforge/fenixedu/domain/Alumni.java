@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
@@ -203,34 +204,77 @@ public class Alumni extends Alumni_Base {
 	return null;
     }
 
-    public static List<Registration> readAlumniRegistrations(AlumniSearchBean searchBean) {
+    public static List<Registration> readAlumniRegistrations(AlumniSearchBean bean) {
 
-	if (StringUtils.isEmpty(searchBean.getName())) {
+	if (StringUtils.isEmpty(bean.getName())) {
 	    return new ArrayList<Registration>();
 	}
 
-	ExecutionYear firstExecutionYear = searchBean.getFirstExecutionYear() == null ? ExecutionYear.readFirstExecutionYear()
-		: searchBean.getFirstExecutionYear();
-	ExecutionYear finalExecutionYear = searchBean.getFinalExecutionYear() == null ? ExecutionYear.readLastExecutionYear()
-		: searchBean.getFinalExecutionYear();
+	ExecutionYear firstYear = bean.getFirstExecutionYear() == null ? ExecutionYear.readFirstExecutionYear() : bean
+		.getFirstExecutionYear();
+	ExecutionYear finalYear = bean.getFinalExecutionYear() == null ? ExecutionYear.readLastExecutionYear() : bean
+		.getFinalExecutionYear();
 
 	List<Registration> resultRegistrations = new ArrayList<Registration>();
-	for (Person person : Person.readPersonsByNameAndRoleType(searchBean.getName(), RoleType.ALUMNI)) {
+	for (Person person : Person.readPersonsByNameAndRoleType(bean.getName(), RoleType.ALUMNI)) {
 	    if (person.hasStudent()) {
 
-		if (searchBean.getStudentNumber() == null
-			|| person.getStudent().getNumber().equals(searchBean.getStudentNumber())) {
-		    for (Registration registration : (searchBean.getDegreeType() == null ? person.getStudent().getRegistrations()
-			    : person.getStudent().getRegistrationsByDegreeType(searchBean.getDegreeType()))) {
+		if (bean.getStudentNumber() == null || person.getStudent().getNumber().equals(bean.getStudentNumber())) {
+		    for (Registration registration : (bean.getDegreeType() == null ? person.getStudent().getRegistrations()
+			    : person.getStudent().getRegistrationsByDegreeType(bean.getDegreeType()))) {
 
-			if (searchBean.getDegree() != null) {
-			    if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)
-				    && registration.getDegree().equals(searchBean.getDegree())) {
-				resultRegistrations.add(registration);
+			if (registration.isConcluded()) {
+			    if (bean.getDegree() != null) {
+				if (registration.hasStartedBetween(firstYear, finalYear)
+					&& registration.getDegree().equals(bean.getDegree())) {
+				    resultRegistrations.add(registration);
+				}
+			    } else {
+
+				if (registration.hasStartedBetween(firstYear, finalYear)) {
+				    resultRegistrations.add(registration);
+				}
 			    }
-			} else {
+			}
+		    }
+		}
+	    }
+	}
 
-			    if (registration.hasStartedBetween(firstExecutionYear, finalExecutionYear)) {
+	return resultRegistrations;
+    }
+
+    public static List<Registration> readRegistrations(String personName, Integer studentNumber, String documentIdNumber) {
+
+	List<Registration> resultRegistrations = new ArrayList<Registration>();
+	if (!StringUtils.isEmpty(personName)) {
+	    for (Person person : Person.readPersonsByNameAndRoleType(personName, RoleType.ALUMNI)) {
+		if (matchStudentNumber(person, studentNumber) && matchDocumentIdNumber(person, documentIdNumber)) {
+		    for (Registration registration : person.getStudent().getRegistrations()) {
+			if (registration.isConcluded()) {
+			    resultRegistrations.add(registration);
+			}
+		    }
+		}
+	    }
+	} else {
+
+	    if (studentNumber != null) {
+		Student student = Student.readStudentByNumber(studentNumber);
+		if (student != null && matchDocumentIdNumber(student.getPerson(), documentIdNumber)) {
+		    for (Registration registration : student.getRegistrations()) {
+			if (registration.isConcluded()) {
+			    resultRegistrations.add(registration);
+			}
+		    }
+		}
+	    } else if (documentIdNumber != null) {
+		Collection<Person> persons = Person.readByDocumentIdNumber(documentIdNumber);
+		if (!persons.isEmpty()) {
+		    Person person = persons.iterator().next();
+		    if (matchStudentNumber(person, studentNumber)) {
+			for (Registration registration : person.getStudent().getRegistrations()) {
+			    if (registration.isConcluded()) {
 				resultRegistrations.add(registration);
 			    }
 			}
@@ -242,24 +286,13 @@ public class Alumni extends Alumni_Base {
 	return resultRegistrations;
     }
 
-    public static List<Registration> readRegistrations(String studentName, Integer studentNumber) {
+    private static boolean matchDocumentIdNumber(Person person, String documentIdNumber) {
+	return StringUtils.isEmpty(documentIdNumber)
+		|| (!StringUtils.isEmpty(person.getDocumentIdNumber()) && person.getDocumentIdNumber().equals(documentIdNumber));
+    }
 
-	if (StringUtils.isEmpty(studentName) && studentNumber == null) {
-	    return new ArrayList<Registration>();
-	}
-
-	List<Registration> resultRegistrations = new ArrayList<Registration>();
-	for (Person person : Person.readPersonsByNameAndRoleType(studentName, RoleType.ALUMNI)) {
-	    if (person.hasStudent()) {
-		if (studentNumber == null || person.getStudent().getNumber().equals(studentNumber)) {
-		    for (Registration registration : person.getStudent().getRegistrations()) {
-			resultRegistrations.add(registration);
-		    }
-		}
-	    }
-	}
-
-	return resultRegistrations;
+    private static boolean matchStudentNumber(Person person, Integer studentNumber) {
+	return studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber));
     }
 
     public Boolean hasEmailAddress(String emailAddress) {

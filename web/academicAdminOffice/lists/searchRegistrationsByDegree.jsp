@@ -42,7 +42,7 @@
 	</p>
 	<fr:view schema="studentCurricularPlanList.view" name="studentCurricularPlanList">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thright thlight thcenter"/>
+			<fr:property name="classes" value="tstyle2 thright thlight thcenter tdcenter"/>
 		</fr:layout>	
 	</fr:view>
 	<logic:greaterThan name="studentCurricularPlanListSize" value="0">

@@ -248,6 +248,49 @@
 			<span class="error0"><bean:write name="childBusinessArea-validated" scope="request" bundle="ALUMNI_RESOURCES" /></span>
 		</logic:present>
 
+		
+		<!-- APPLICATION TYPE -->
+		<label for="" class="">
+			<bean:message key="label.application.type" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="applicationType-validated" name="publicAccessBean" slot="jobBean.applicationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:layout name="menu-select">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.JobApplicationType" />
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="style" value="display: inline;"/>
+				<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="applicationType-validated" /></span>
+		
+		<!-- CONTRACT TYPE -->
+		<label for="" class="">
+			<bean:message key="label.contract.type" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="contractType-validated" name="publicAccessBean" slot="jobBean.contractType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:layout name="menu-select">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.ContractType" />
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="style" value="display: inline;"/>
+				<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="contractType-validated" /></span>
+		
+		<!-- SALARY TYPE -->
+		<label for="" class="">
+			<bean:message key="label.salary.type" bundle="ALUMNI_RESOURCES" />:&nbsp;<span class="red">*</span>
+		</label>
+		<fr:edit id="salaryType-validated" name="publicAccessBean" slot="jobBean.salaryType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:layout name="menu-select">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.SalaryType" />
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="style" value="display: inline;"/>
+				<fr:destination name="invalid" path="/alumni.do?method=updateAlumniInformation"/>
+			</fr:layout>
+		</fr:edit>
+		<span class="error0"><fr:message for="salaryType-validated" /></span>
+
 	</fieldset>
 	
 	<p class="mtop15">

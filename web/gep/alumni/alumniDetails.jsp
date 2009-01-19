@@ -15,7 +15,6 @@
 
 
 <fr:form id="searchAlumniForm" action="/alumni.do?method=searchAlumni">
-	
 	<fr:edit id="searchAlumniBean" name="searchAlumniBean" schema="alumni.gep.search.bean" >
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle5 thlight thright mbottom05 thmiddle"/>
@@ -37,7 +36,7 @@
 		<fr:view name="searchAlumniBean" property="alumni" schema="alumni.gep.search.result">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 mtop05" />
-				<fr:property name="columnClasses" value=",,acenter,acenter" />
+				<fr:property name="columnClasses" value=",,acenter,acenter,acenter" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

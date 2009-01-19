@@ -36,6 +36,9 @@ public class RegisterAlumniData extends AlumniNotificationService {
     public Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
 
 	alumni.setRegistered(registered);
+	if (registered) {
+	    sendRegistrationSuccessMail(alumni);
+	}
 	return alumni;
     }
 

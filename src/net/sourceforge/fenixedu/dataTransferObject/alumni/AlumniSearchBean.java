@@ -19,6 +19,7 @@ public class AlumniSearchBean implements Serializable {
     private DomainReference<ExecutionYear> finalExecutionYear;
     private String name;
     private Integer studentNumber;
+    private String documentIdNumber;
     private DegreeType degreeType;
     private DomainReference<Degree> degree;
     private List<DomainReference<Registration>> alumni;
@@ -139,6 +140,14 @@ public class AlumniSearchBean implements Serializable {
 
     public void setStudentNumber(Integer studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public String getDocumentIdNumber() {
+        return documentIdNumber;
+    }
+
+    public void setDocumentIdNumber(String documentIdNumber) {
+        this.documentIdNumber = documentIdNumber;
     }
 
 }
