@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -32,7 +30,7 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (YearDelegateCourseInquiry yearDelegateCourseInquiry : getYearDelegateCourseInquiries()) {
 	    final ExecutionCourse executionCourse = yearDelegateCourseInquiry.getExecutionCourse();
 	    if (executionCourse.getExecutionPeriod() == executionSemester) {
@@ -43,10 +41,10 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public Collection<ExecutionCourse> getNotAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
-	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	final Collection<ExecutionCourse> answeredInquiriesExecutionCourses = getAnsweredInquiriesExecutionCourses(executionSemester);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-	    if (!answeredInquiriesExecutionCourses.contains(executionCourse)) {
+	    if (executionCourse.getAvailableForInquiries() && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
 		result.add(executionCourse);
 	    }
 	}
