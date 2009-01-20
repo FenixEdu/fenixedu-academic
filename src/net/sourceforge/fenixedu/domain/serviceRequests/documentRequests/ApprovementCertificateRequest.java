@@ -6,6 +6,7 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -33,6 +35,21 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	checkParameters(bean);
 	super.setMobilityProgram(bean.getMobilityProgram());
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
+
+	if (isEmployee()) {
+	    if (getEntriesToReport().isEmpty()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+	    }
+
+	    if (getRegistration().isConcluded()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	    }
+	}
+    }
+
+    private boolean isEmployee() {
+	final Person person = AccessControl.getPerson();
+	return person != null && person.hasEmployee();
     }
 
     @Override
@@ -152,11 +169,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 			|| (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
 		    continue;
 		}
-	    } else if (entry instanceof ExternalEnrolment) {
-		final ExternalEnrolment externalEnrolment = (ExternalEnrolment) entry;
-		if (request.getIgnoreExternalEntries()) {
-		    continue;
-		}
+	    } else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {
+		continue;
 	    }
 
 	    result.add(entry);
