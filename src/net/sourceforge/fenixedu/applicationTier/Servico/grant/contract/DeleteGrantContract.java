@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 public class DeleteGrantContract extends DeleteDomainObjectService {
 
     protected void doBeforeDelete(DomainObject domainObject) {
-	GrantContract grantContract = (GrantContract) domainObject;
-
-	deleteAssociatedOrientationTeacher(grantContract);
-	deleteAssociatedRegimes(grantContract);
-	deleteAssociatedMovements(grantContract);
-	deleteAssociatedSubsidiesAndParts(grantContract);
-	deleteAssociatedInsurance(grantContract);
+//	GrantContract grantContract = (GrantContract) domainObject;
+//
+//	deleteAssociatedOrientationTeacher(grantContract);
+//	deleteAssociatedRegimes(grantContract);
+//	deleteAssociatedMovements(grantContract);
+//	deleteAssociatedSubsidiesAndParts(grantContract);
+//	deleteAssociatedInsurance(grantContract);
     }
 
     private void deleteAssociatedOrientationTeacher(GrantContract grantContract) {
