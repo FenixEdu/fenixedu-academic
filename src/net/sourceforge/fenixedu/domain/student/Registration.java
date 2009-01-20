@@ -1827,7 +1827,7 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
-	return super.getPrecedentDegreeInformation().getSchoolLevel() == levelType ? super.getPrecedentDegreeInformation() : null;
+	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super.getPrecedentDegreeInformation() : null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
