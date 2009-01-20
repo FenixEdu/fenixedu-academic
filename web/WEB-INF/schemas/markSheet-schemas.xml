@@ -404,14 +404,14 @@
 
 <schema name="markSheet.send.mail.choose.markSheets" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean">
-	<slot name="toSubmit" key="label.blank" />		
+	<slot name="toSubmit" key="label.submit" />		
 	<slot name="curricularCourseName" key="label.curricularCourse" read-only="true"/>
 	<slot name="markSheet.responsibleTeacher.person.name" key="label.responsibleTeacher" read-only="true"/>
 </schema>
 
 <schema name="markSheet.send.mail.choose.executionCourses" bundle="ACADEMIC_OFFICE_RESOURCES"
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean">
-	<slot name="toSubmit" key="label.blank" />		
+	<slot name="toSubmit" key="label.submit" />		
 	<slot name="executionCourse.nome" key="label.executionCourse" read-only="true"/>
 </schema>
 

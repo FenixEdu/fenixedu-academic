@@ -340,7 +340,7 @@
 	<slot name="state" key="label.candidacy.individual.state" />
 	<slot name="registrationCreated" key="label.candidacy.isRegistrationCreated">
 		<property name="trueLabel" value="label.yes" />
-		<property name="falseLabel" value="label.empty" />
+		<property name="falseLabel" value="label.falseLabel" />
 		<property name="bundle" value="APPLICATION_RESOURCES" />
 	</slot>
 </schema>
