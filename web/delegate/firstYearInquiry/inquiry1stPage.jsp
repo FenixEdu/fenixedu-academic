@@ -10,12 +10,15 @@
 <table class="tstyle2 tdtop">
 	<tr>
 		<td><bean:message key="label.curricularCourse.name" bundle="INQUIRIES_RESOURCES"/>:</td>
-		<td><bean:write name="inquiryDTO" property="executionCourse.nome" /></td>
+		<td>
+			<bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${inquiryDTO.executionCourse.site.reversePath}" /></bean:define>	
+			<!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina da UC"><bean:write name="inquiryDTO" property="executionCourse.nome" /></a>	
+		</td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.curricularYear.year" bundle="INQUIRIES_RESOURCES"/>:</td>
 		<td><bean:write name="inquiryDTO" property="delegate.curricularYear.year" /></td>
-	</tr>	
+	</tr>
 </table>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
@@ -23,29 +26,51 @@
 </html:messages>
 
 <style>
-.thtop { vertical-align: top; }
+.thtop { vertical-align: top; width: 300px;}
 .biggerTextarea textarea { width: 400px; height: 100px; }
 .biggerInputText input[type="text"] { width: 400px !important; }
-.smallerInputText input[type="text"] { width: 50px !important; }
 </style>
 
 <div class="forminline dinline">
 	<div class="relative">
 		<fr:form action="/delegateInquiry.do?method=confirm">
 			<h4 class="mtop15 mbottom05"><bean:message key="title.yearDelegateInquiries.workLoadOfCU" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="inquiryDTO" property="firstBlock" />	
+			<div class="biggerInputText">
+				<fr:edit name="inquiryDTO" property="firstBlock" />
+			</div>	
 
 			<h4 class="mtop15 mbottom05"><bean:message key="title.yearDelegateInquiries.organizationAndEvaluationOfCU" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="inquiryDTO" property="secondBlock" />
+			<div class="biggerInputText">
+				<fr:edit name="inquiryDTO" property="secondBlock" />
+			</div>
+			
 			<fr:edit name="inquiryDTO" property="thirdBlock" />
-			<fr:edit name="inquiryDTO" property="fourthBlock" />
+			
+			<div class="biggerInputText">
+				<fr:edit name="inquiryDTO" property="fourthBlock" />
+			</div>
 			
 			<h4 class="mtop15 mbottom05"><bean:message key="title.yearDelegateInquiries.delegateReflexion" bundle="INQUIRIES_RESOURCES"/></h4>
-			<fr:edit name="inquiryDTO" property="fifthBlock" />
+			<fr:edit name="inquiryDTO" property="fifthBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>
 
-			<fr:edit name="inquiryDTO" property="sixthBlock" />
+			<fr:edit name="inquiryDTO" property="sixthBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>
 			
-			<fr:edit name="inquiryDTO" property="seventhBlock" />
+			<fr:edit name="inquiryDTO" property="seventhBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+				</fr:layout>
+			</fr:edit>
+
+			<h4 class="mtop15 mbottom05"><bean:message key="title.yearDelegateInquiries.reportDisclosureAuthorization" bundle="INQUIRIES_RESOURCES"/></h4>
+			<fr:edit name="inquiryDTO" property="eighthBlock" />
 
 			<fr:edit name="inquiryDTO" id="inquiryDTO" visible="false"/>
 		

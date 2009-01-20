@@ -78,7 +78,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final YearDelegateCourseInquiryDTO inquiryDTO = (YearDelegateCourseInquiryDTO) getRenderedObject("inquiryDTO");
-	if (!inquiryDTO.getFirstBlock().validate()) {
+	if (!inquiryDTO.isValid()) {
 	    request.setAttribute("inquiryDTO", inquiryDTO);
 	    RenderUtils.invalidateViewState();
 	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");

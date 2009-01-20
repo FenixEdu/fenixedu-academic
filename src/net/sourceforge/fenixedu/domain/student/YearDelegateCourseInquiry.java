@@ -18,19 +18,6 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
 	setResponseDateTime(new DateTime());
     }
 
-    @Service
-    static public YearDelegateCourseInquiry makeNew(final YearDelegateCourseInquiryDTO inquiryDTO) {
-
-	YearDelegateCourseInquiry inquiry = new YearDelegateCourseInquiry();
-	inquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
-	inquiry.setExecutionCourse(inquiryDTO.getExecutionCourse());
-	inquiry.setDelegate(inquiryDTO.getDelegate());
-
-	setAnswers(inquiryDTO, inquiry);
-
-	return inquiry;
-    }
-
     private static void setAnswers(final YearDelegateCourseInquiryDTO inquiryDTO, final YearDelegateCourseInquiry inquiry) {
 	Map<String, InquiriesQuestion> answersMap = inquiryDTO.buildAnswersMap(false);
 	inquiry.setWorkLoadClassification(answersMap.get("workLoadClassification").getValueAsInteger());
@@ -58,6 +45,19 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
 	inquiry.setSuggestedBestPractices(answersMap.get("suggestedBestPractices").getValue());
 	inquiry.setStrongAndWeakPointsOfCUTeachingProcess(answersMap.get("strongAndWeakPointsOfCUTeachingProcess").getValue());
 	inquiry.setFinalCommentsAndImproovements(answersMap.get("finalCommentsAndImproovements").getValue());
+	inquiry.setReportDisclosureAuthorization(answersMap.get("reportDisclosureAuthorization").getValue());
     }
 
+    @Service
+    public static YearDelegateCourseInquiry makeNew(final YearDelegateCourseInquiryDTO inquiryDTO) {
+
+	YearDelegateCourseInquiry inquiry = new YearDelegateCourseInquiry();
+	inquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
+	inquiry.setExecutionCourse(inquiryDTO.getExecutionCourse());
+	inquiry.setDelegate(inquiryDTO.getDelegate());
+
+	setAnswers(inquiryDTO, inquiry);
+
+	return inquiry;
+    }
 }

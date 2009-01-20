@@ -5752,6 +5752,7 @@ class student.YearDelegateCourseInquiry extends DomainObject {
 	String suggestedBestPractices;
 	String strongAndWeakPointsOfCUTeachingProcess;
 	String finalCommentsAndImproovements;   	
+	String reportDisclosureAuthorization;
 }
 
 
