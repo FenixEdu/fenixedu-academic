@@ -22,7 +22,7 @@
 				</td>
 				<td>
 					<e:labelValues id="responsePeriodTypes"	enumeration="net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType" bundle="ENUMERATION_RESOURCES" /> 
-					<html:select property="periodType">
+					<html:select property="periodType" onchange="this.form.submit()">
 						<html:options collection="responsePeriodTypes" property="value" labelProperty="label" />
 					</html:select>
 					<br/>
