@@ -147,15 +147,30 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public boolean isForEducation() {
-	Group lessonGroup = getLessonOccupationsAccessGroup();
-	Group writtenEvaluationGroup = getWrittenEvaluationOccupationsAccessGroup();
-	return (lessonGroup != null && lessonGroup.getElementsCount() > 0)
-		|| (writtenEvaluationGroup != null && writtenEvaluationGroup.getElementsCount() > 0);
+	final Group lessonGroup = getLessonOccupationsAccessGroup();
+	final Group writtenEvaluationGroup = getWrittenEvaluationOccupationsAccessGroup();
+
+	final boolean isForEducation = groupHasElements(lessonGroup) || groupHasElements(writtenEvaluationGroup);
+
+	if (isForEducation) {
+	    return true;
+	}
+
+	final Space suroundingSpace = getSuroundingSpace();
+	if (suroundingSpace.isAllocatableSpace()) {
+	    final AllocatableSpace allocatableSpace = (AllocatableSpace) suroundingSpace;
+	    return allocatableSpace.isForEducation();
+	}
+	return false;
+    }
+
+    protected boolean groupHasElements(final Group group) {
+	return group != null && group.getElementsCount() > 0;
     }
 
     public boolean isForPunctualOccupation() {
 	Group group = getGenericEventOccupationsAccessGroup();
-	return group != null && group.getElementsCount() > 0;
+	return groupHasElements(group);
     }
 
     public static AllocatableSpace findAllocatableSpaceForEducationByName(String name) {
