@@ -1168,6 +1168,27 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public boolean hasYearDelegateInquiriesToAnswer() {
+
+	if (!InquiryResponsePeriod.hasOpenPeriod(InquiryResponsePeriodType.DELEGATE)) {
+	    return false;
+	}
+
+	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.DELEGATE)
+		.getExecutionPeriod();
+
+	for (Delegate delegate : getDelegates()) {
+	    if (delegate instanceof YearDelegate) {
+		if (delegate.isActiveForExecutionYear(executionSemester.getExecutionYear())) {
+		    if (!((YearDelegate) delegate).getNotAnsweredInquiriesExecutionCourses(executionSemester).isEmpty()) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
     public boolean isGrantOwner(final ExecutionYear executionYear) {
 	for (final StudentStatute studentStatute : getStudentStatutesSet()) {
 	    if (studentStatute.isGrantOwnerStatute() && studentStatute.isValidOn(executionYear)) {

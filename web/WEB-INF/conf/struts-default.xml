@@ -170,7 +170,13 @@
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToTeachingInquiriesQuestion">
             <forward name="respondToInquiriesQuestion" path="/respondToTeachingInquiriesQuestion.jsp"/>
-        </action>		        
+        </action>		      
+
+        <action path="/respondToYearDelegateInquiriesQuestion"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToYearDelegateInquiriesQuestion">
+            <forward name="respondToYearDelegateInquiriesQuestion" path="/respondToYearDelegateInquiriesQuestion.jsp"/>
+        </action>		                
 
     </action-mappings>
 

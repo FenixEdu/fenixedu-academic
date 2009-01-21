@@ -60,6 +60,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
 	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
@@ -99,6 +101,13 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return false;
     }
 
+    private boolean isDelegateAndHasInquiriesToRespond(final IUserView userView) {
+	if (userView.hasRoleType(RoleType.DELEGATE)) {
+	    return userView.getPerson().getStudent().hasYearDelegateInquiriesToAnswer();
+	}
+	return false;
+    }
+
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
 	    throws FenixFilterException, FenixServiceException;
 
@@ -118,6 +127,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
+    }
+
+    private ActionForward handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToYearDelegateInquiriesQuestion.do?method=showQuestion");
     }
 
     private ActionForward handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(HttpServletRequest request,
