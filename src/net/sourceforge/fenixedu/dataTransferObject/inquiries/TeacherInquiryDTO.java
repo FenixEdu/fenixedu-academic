@@ -190,10 +190,11 @@ public class TeacherInquiryDTO implements Serializable {
 	this.thirdPageFifthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageFifthBlock.teacherOpenToClearDoubts", 1, 9, false));
 
-	this.thirdPageSixthBlock = new InquiriesBlock(StringUtils.EMPTY, false,
-		"header.studentInquiries.thirdPageSixthBlock.improving", "header.studentInquiries.thirdPageSixthBlock.good",
-		"header.studentInquiries.thirdPageSixthBlock.veryGood");
+	this.thirdPageSixthBlock = new InquiriesBlock(StringUtils.EMPTY, false, "header.studentInquiries.veryBad",
+		"header.studentInquiries.two", "header.studentInquiries.bad", "header.studentInquiries.four",
+		"header.studentInquiries.neitherGoodOrBad", "header.studentInquiries.six", "header.studentInquiries.good",
+		"header.studentInquiries.eight", "header.studentInquiries.veryGood");
 	this.thirdPageSixthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.thirdPageSixthBlock.teacherGlobalClassification", 1, 3, false));
+		"label.studentInquiries.thirdPageSixthBlock.teacherGlobalClassification", 1, 9, false));
     }
 }

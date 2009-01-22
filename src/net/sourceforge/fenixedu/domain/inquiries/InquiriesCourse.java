@@ -169,6 +169,10 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 		"highWorkLoadReasonCurricularProgramExtension").getValueAsBoolean());
 	inquiriesCourse.setHighWorkLoadReasonLackOfAttendanceOfLessons(answersMap.get(
 		"highWorkLoadReasonLackOfAttendanceOfLessons").getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonCuOrganizationProblems(answersMap.get("highWorkLoadReasonCuOrganizationProblems")
+		.getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonPersonalOrTeamProblems(answersMap.get("highWorkLoadReasonPersonalOrTeamProblems")
+		.getValueAsBoolean());
 	inquiriesCourse.setHighWorkLoadReasonOtherReasons(answersMap.get("highWorkLoadReasonOtherReasons").getValue());
 	inquiriesCourse.setPreviousKnowledgeEnoughToCUAttendance(answersMap.get("previousKnowledgeEnoughToCUAttendance")
 		.getValueAsInteger());
@@ -178,6 +182,12 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	inquiriesCourse.setCriticSenseAndReflexiveSpirit(answersMap.get("criticSenseAndReflexiveSpirit").getValueAsInteger());
 	inquiriesCourse.setCooperationAndComunicationCapacity(answersMap.get("cooperationAndComunicationCapacity")
 		.getValueAsInteger());
+	inquiriesCourse.setStudyMethodAttendToClasses(answersMap.get("studyMethodAttendToClasses").getValueAsBoolean());
+	inquiriesCourse.setStudyMethodSuggestedBibliography(answersMap.get("studyMethodSuggestedBibliography")
+		.getValueAsBoolean());
+	inquiriesCourse.setStudyMethodTeacherDocuments(answersMap.get("studyMethodTeacherDocuments").getValueAsBoolean());
+	inquiriesCourse.setStudyMethodStudentDocuments(answersMap.get("studyMethodStudentDocuments").getValueAsBoolean());
+	inquiriesCourse.setStudyMethodOther(answersMap.get("studyMethodOther").getValue());
 	inquiriesCourse.setPredictedProgramTeached(answersMap.get("predictedProgramTeached").getValueAsInteger());
 	inquiriesCourse.setWellStructuredOfCU(answersMap.get("wellStructuredOfCU").getValueAsInteger());
 	inquiriesCourse.setGoodGuidanceMaterial(answersMap.get("goodGuidanceMaterial").getValueAsInteger());
