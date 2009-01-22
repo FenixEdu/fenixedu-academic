@@ -37,12 +37,16 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
 
 	if (isEmployee()) {
-	    if (getEntriesToReport().isEmpty()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
-	    }
-
 	    if (getRegistration().isConcluded()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	    }
+
+	    if (getRegistration().isRegistrationConclusionProcessed()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+	    }
+
+	    if (getEntriesToReport().isEmpty()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 	}
     }
@@ -65,12 +69,16 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	if (academicServiceRequestBean.isToProcess()) {
 
-	    if (getEntriesToReport().isEmpty()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
-	    }
-
 	    if (getRegistration().isConcluded()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	    }
+
+	    if (getRegistration().isRegistrationConclusionProcessed()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+	    }
+
+	    if (getEntriesToReport().isEmpty()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 
 	    // FIXME For now, the following conditions are only valid for 5year
