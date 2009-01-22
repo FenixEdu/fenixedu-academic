@@ -80,6 +80,13 @@ public class CandidacyInformationBean implements Serializable {
 
     private String otherSchoolLevel;
 
+    private Double entryGrade;
+
+    private Integer placingOption;
+
+    public CandidacyInformationBean() {
+    }
+
     public CandidacyInformationBean(final Registration registration) {
 	setRegistration(registration);
 	setCountryOfResidence(Country.readDefault());
@@ -330,12 +337,24 @@ public class CandidacyInformationBean implements Serializable {
 	this.otherSchoolLevel = otherSchoolLevel;
     }
 
+    public Double getEntryGrade() {
+	return entryGrade;
+    }
+
+    public void setEntryGrade(Double entryGrade) {
+	this.entryGrade = entryGrade;
+    }
+
+    public Integer getPlacingOption() {
+	return placingOption;
+    }
+
+    public void setPlacingOption(Integer placingOption) {
+	this.placingOption = placingOption;
+    }
+
     public boolean isValid() {
 	return false;
-    }
-    
-    public void copyInformationToCandidacy(final Registration registration){
-		
     }
 
 }
