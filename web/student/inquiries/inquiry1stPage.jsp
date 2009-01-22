@@ -38,6 +38,12 @@
 			</fr:edit>
 			<fr:edit name="studentInquiry" property="firstPageThirdBlock" />
 			<fr:edit name="studentInquiry" property="firstPageFourthBlock" />
+			<fr:edit name="studentInquiry" property="studyMethodBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value=",aleft"/>
+				</fr:layout>		
+			</fr:edit>
+						
 			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 			<p><bean:message key="message.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
 			<fr:edit name="studentInquiry" property="firstPageFifthBlock" />
