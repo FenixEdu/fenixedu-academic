@@ -2742,6 +2742,8 @@ class DomainObject {
 		Boolean highWorkLoadReasonLackOfPreviousPreparation;
 		Boolean highWorkLoadReasonCurricularProgramExtension;
 		Boolean highWorkLoadReasonLackOfAttendanceOfLessons;
+		Boolean highWorkLoadReasonCuOrganizationProblems;
+		Boolean highWorkLoadReasonPersonalOrTeamProblems;
 		String highWorkLoadReasonOtherReasons;
 		Integer previousKnowledgeEnoughToCUAttendance;
 		Integer activityParticipation;
@@ -2749,6 +2751,11 @@ class DomainObject {
 		Integer knowledgeApplicationOfCU;
 		Integer criticSenseAndReflexiveSpirit;
 		Integer cooperationAndComunicationCapacity;
+		Boolean studyMethodAttendToClasses;
+		Boolean studyMethodSuggestedBibliography;
+		Boolean studyMethodTeacherDocuments;
+		Boolean studyMethodStudentDocuments;
+		String studyMethodOther;
 		Integer predictedProgramTeached;
 		Integer wellStructuredOfCU;
 		Integer goodGuidanceMaterial;
