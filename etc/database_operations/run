@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Enlarging justification field in the CompetencecourseInformation change request" alterJustificationColumn.sql
