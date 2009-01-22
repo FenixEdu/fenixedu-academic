@@ -41,4 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Alter Table Delegate Course Inquiry" alterTableDelegateCourseInquiry.sql
+execute "Alter Table Inquiries Course" alterTableInquiriesCourse.sql
 execute "Enlarging justification field in the CompetencecourseInformation change request" alterJustificationColumn.sql
