@@ -76,5 +76,17 @@
 	<definition name="df.layout.print" page="/layout/fenixPrint.jsp" >
 		 <put name="body" value="/commons/blank.jsp"/>		 
 	</definition>
+	
+	<definition name="df.layout.two-column.no-navigation" page="/layout/fenixLayout_2col_no_navigation.jsp" >
+		<put name="title" value="/commons/blank.jsp" type="string"/>
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/commons/blank.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+    </definition>
 		    
 </tiles-definitions>

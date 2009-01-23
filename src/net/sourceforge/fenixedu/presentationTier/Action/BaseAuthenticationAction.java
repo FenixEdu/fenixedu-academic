@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -81,9 +80,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isStudentAndHasGratuityDebtsToPay(final IUserView userView) {
-	return userView.hasRoleType(RoleType.STUDENT)
-		&& userView.getPerson().hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
-			ExecutionYear.readCurrentExecutionYear());
+	return false;
+	// return userView.hasRoleType(RoleType.STUDENT)
+	// && userView.getPerson().
+	// hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(
+	// ExecutionYear.readCurrentExecutionYear());
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {

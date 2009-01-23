@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
@@ -14,6 +16,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+
+import org.apache.commons.lang.StringUtils;
 
 public class CandidacyInformationBean implements Serializable {
 
@@ -85,13 +90,6 @@ public class CandidacyInformationBean implements Serializable {
     private Integer placingOption;
 
     public CandidacyInformationBean() {
-    }
-
-    public CandidacyInformationBean(final Registration registration) {
-	setRegistration(registration);
-	setCountryOfResidence(Country.readDefault());
-	setGrantOwnerType(GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP);
-	setDislocatedFromPermanentResidence(Boolean.FALSE);
     }
 
     public Registration getRegistration() {
@@ -174,7 +172,7 @@ public class CandidacyInformationBean implements Serializable {
     }
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
-	this.maritalStatus = maritalStatus;
+	this.maritalStatus = (maritalStatus == MaritalStatus.UNKNOWN ? null : maritalStatus);
     }
 
     public ProfessionType getProfessionType() {
@@ -353,8 +351,57 @@ public class CandidacyInformationBean implements Serializable {
 	this.placingOption = placingOption;
     }
 
+    public Set<String> validate() {
+
+	final Set<String> result = new HashSet<String>();
+
+	if (getRegistration().getRegistrationAgreement() != RegistrationAgreement.NORMAL
+		&& getRegistration().getRegistrationAgreement() != RegistrationAgreement.TIME) {
+	    return result;
+	}
+
+	if (getCountryOfResidence() == null || getGrantOwnerType() == null || getDislocatedFromPermanentResidence() == null
+		|| (getMaritalStatus() == null || getMaritalStatus() == MaritalStatus.UNKNOWN)
+		|| getProfessionalCondition() == null || getProfessionType() == null || getMotherProfessionType() == null
+		|| getMotherProfessionType() == null || getMotherProfessionalCondition() == null
+		|| getFatherProfessionalCondition() == null || getFatherProfessionType() == null
+		|| getFatherSchoolLevel() == null || getCountryWhereFinishedPrecedentDegree() == null || getInstitution() == null) {
+	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
+	}
+
+	if (getCountryOfResidence() != null) {
+
+	    if (getCountryOfResidence().isDefaultCountry() && getDistrictSubdivisionOfResidence() == null) {
+		result.add("error.CandidacyInformationBean.districtSubdivisionOfResidence.is.required.for.default.country");
+
+	    }
+
+	    if (!getCountryOfResidence().isDefaultCountry() && !getDislocatedFromPermanentResidence()) {
+		result.add("error.CandidacyInformationBean.foreign.students.must.select.dislocated.option");
+	    }
+	}
+
+	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
+		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	}
+
+	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	}
+
+	return result;
+
+    }
+
     public boolean isValid() {
-	return false;
+	return validate().isEmpty();
+    }
+
+    public void updateRegistration() {
+	getRegistration().editCandidacyInformation(this);
     }
 
 }

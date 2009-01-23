@@ -1505,4 +1505,24 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean hasAnyRegistrationWithMissingCandidacyInformation() {
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public SortedSet<Registration> getRegistrationsWithMissingCandidacyInformation() {
+	final SortedSet<Registration> result = new TreeSet<Registration>(Registration.COMPARATOR_BY_START_DATE);
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
+		result.add(registration);
+	    }
+	}
+
+	return result;
+    }
 }

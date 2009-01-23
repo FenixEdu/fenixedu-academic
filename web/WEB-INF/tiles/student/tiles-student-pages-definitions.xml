@@ -407,5 +407,21 @@
 		<put name="body" value="/student/transition/bolonha/showStudentCurricularPlan.jsp"/>
 	</definition>
 	<!-- End: Bolonha Transition Management -->
+	
+	
+	<!-- start: Edit Missing Candidacy Information -->
+	
+	<definition name="candidacy.edit.missing.candidacy.information" extends="df.layout.two-column.no-navigation">
+	  <put name="title" value="Portal do Estudante" />
+	  <put name="serviceName" value="Portal do Estudante" />	
+	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
+	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
+	  <put name="body" value="/student/candidacy/editMissingCandidacyInformation.jsp" />
+	  <put name="footer" value="/copyright.jsp" />
+	</definition>
+	
+	
+	
+	<!-- end: Edit Missing Candidacy Information -->
 
 </tiles-definitions>

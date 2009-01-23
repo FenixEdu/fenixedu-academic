@@ -350,4 +350,14 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return result;
     }
 
+    public double getDefaultEcts(final ExecutionYear executionYear) {
+	double result = 0d;
+
+	for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGroups()) {
+	    result += cycleCurriculumGroup.getDefaultEcts(executionYear);
+	}
+
+	return result;
+    }
+
 }

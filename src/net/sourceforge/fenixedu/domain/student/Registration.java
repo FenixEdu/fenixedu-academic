@@ -112,6 +112,7 @@ import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Registration extends Registration_Base {
@@ -127,7 +128,8 @@ public class Registration extends Registration_Base {
 
     static final public Comparator<Registration> COMPARATOR_BY_START_DATE = new Comparator<Registration>() {
 	public int compare(Registration o1, Registration o2) {
-	    return o1.getStartDate().compareTo(o2.getStartDate());
+	    final int comparationResult = o1.getStartDate().compareTo(o2.getStartDate());
+	    return comparationResult == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : comparationResult;
 	}
     };
 
@@ -3545,6 +3547,16 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public boolean hasMissingCandidacyInformation(final ExecutionYear executionYear) {
+
+	if (getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
+	    return getStartDate() != null && getStartDate().getYear() == executionYear.getBeginCivilYear()
+		    && !getCandidacyInformationBean().isValid();
+	}
+
+	return getStartExecutionYear() == executionYear && !getCandidacyInformationBean().isValid();
+    }
+
     public boolean isReingression(final ExecutionYear executionYear) {
 	final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
 	states.addAll(getRegistrationStates());
@@ -3587,6 +3599,7 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    @Service
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
 	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().editCandidacyInformation(bean);

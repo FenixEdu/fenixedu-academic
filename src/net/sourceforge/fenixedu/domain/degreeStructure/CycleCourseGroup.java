@@ -94,11 +94,11 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 	    return creditsLimit.getMinimumCredits();
 	}
 
-	if (getDegree().hasEctsCredits()) {
-	    return getDegree().getEctsCredits();
-	}
-
 	if (getDegreeType().hasExactlyOneCycleType()) {
+	    if (getDegree().hasEctsCredits()) {
+		return getDegree().getEctsCredits();
+	    }
+
 	    return getDegreeType().getDefaultEctsCredits();
 	}
 
