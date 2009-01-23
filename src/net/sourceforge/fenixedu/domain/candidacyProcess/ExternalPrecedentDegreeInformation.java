@@ -119,6 +119,14 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	return Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
     }
 
+    @Override
+    public Integer getConclusionYear() {
+	if (super.getConclusionYear() != null) {
+	    return super.getConclusionYear();
+	}
+	return hasConclusionDate() ? getConclusionDate().getYear() : null;
+    }
+
     private boolean hasConclusionYear() {
 	return getConclusionYear() != null;
     }
@@ -130,4 +138,5 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     private boolean hasDegreeDesignation() {
 	return getDegreeDesignation() != null && !getDegreeDesignation().isEmpty();
     }
+
 }
