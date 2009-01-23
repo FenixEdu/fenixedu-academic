@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 
 import org.joda.time.LocalDate;
 
@@ -21,6 +22,8 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     private PersonBean personBean;
 
     private LocalDate candidacyDate;
+
+    private CandidacyInformationBean candidacyInformationBean;
 
     public CandidacyProcess getCandidacyProcess() {
 	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
@@ -73,4 +76,13 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public ExecutionInterval getCandidacyExecutionInterval() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
+
+    public CandidacyInformationBean getCandidacyInformationBean() {
+	return candidacyInformationBean;
+    }
+
+    public void setCandidacyInformationBean(CandidacyInformationBean candidacyInformationBean) {
+	this.candidacyInformationBean = candidacyInformationBean;
+    }
+
 }

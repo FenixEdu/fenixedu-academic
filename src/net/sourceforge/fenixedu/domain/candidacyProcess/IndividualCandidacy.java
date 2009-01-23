@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -190,5 +191,74 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
 	return person.hasStudent() ? person.getStudent().hasActiveRegistrationFor(selectedDegree) : false;
+    }
+
+    public CandidacyInformationBean getCandidacyInformationBean() {
+	final CandidacyInformationBean bean = new CandidacyInformationBean();
+
+	bean.setRegistration(getRegistration());
+	bean.setCountryOfResidence(getCountryOfResidence());
+	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());
+	bean.setSchoolTimeDistrictSubdivisionOfResidence(getSchoolTimeDistrictSubDivisionOfResidence());
+	bean.setDislocatedFromPermanentResidence(getDislocatedFromPermanentResidence());
+	bean.setNumberOfCandidaciesToHigherSchool(getNumberOfCandidaciesToHigherSchool());
+	bean.setNumberOfFlunksOnHighSchool(getNumberOfFlunksOnHighSchool());
+
+	bean.setGrantOwnerType(getGrantOwnerType());
+	bean.setHighSchoolType(getHighSchoolType());
+	bean.setMaritalStatus(getMaritalStatus());
+	bean.setProfessionType(getProfessionType());
+	bean.setProfessionalCondition(getProfessionalCondition());
+
+	bean.setMotherSchoolLevel(getMotherSchoolLevel());
+	bean.setMotherProfessionType(getMotherProfessionType());
+	bean.setMotherProfessionalCondition(getMotherProfessionalCondition());
+
+	bean.setFatherSchoolLevel(getFatherSchoolLevel());
+	bean.setFatherProfessionType(getFatherProfessionType());
+	bean.setFatherProfessionalCondition(getFatherProfessionalCondition());
+
+	bean.setSpouseSchoolLevel(getSpouseSchoolLevel());
+	bean.setSpouseProfessionType(getSpouseProfessionType());
+	bean.setSpouseProfessionalCondition(getSpouseProfessionalCondition());
+
+	if (hasPrecedentDegreeInformation()) {
+	    getPrecedentDegreeInformation().fill(bean);
+	}
+
+	return bean;
+    }
+
+    public void editCandidacyInformation(final CandidacyInformationBean bean) {
+
+	setCountryOfResidence(bean.getCountryOfResidence());
+	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
+	setSchoolTimeDistrictSubDivisionOfResidence(bean.getSchoolTimeDistrictSubdivisionOfResidence());
+	setDislocatedFromPermanentResidence(bean.getDislocatedFromPermanentResidence());
+	setNumberOfCandidaciesToHigherSchool(bean.getNumberOfCandidaciesToHigherSchool());
+	setNumberOfFlunksOnHighSchool(bean.getNumberOfFlunksOnHighSchool());
+
+	setGrantOwnerType(bean.getGrantOwnerType());
+	setHighSchoolType(bean.getHighSchoolType());
+	setMaritalStatus(bean.getMaritalStatus());
+	setProfessionType(bean.getProfessionType());
+	setProfessionalCondition(bean.getProfessionalCondition());
+
+	setMotherSchoolLevel(bean.getMotherSchoolLevel());
+	setMotherProfessionType(bean.getMotherProfessionType());
+	setMotherProfessionalCondition(bean.getMotherProfessionalCondition());
+
+	setFatherSchoolLevel(bean.getFatherSchoolLevel());
+	setFatherProfessionType(bean.getFatherProfessionType());
+	setFatherProfessionalCondition(bean.getFatherProfessionalCondition());
+
+	setSpouseSchoolLevel(bean.getSpouseSchoolLevel());
+	setSpouseProfessionType(bean.getSpouseProfessionType());
+	setSpouseProfessionalCondition(bean.getSpouseProfessionalCondition());
+
+	if (!hasPrecedentDegreeInformation()) {
+	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
+	}
+	getPrecedentDegreeInformation().editMissingInformation(bean);
     }
 }

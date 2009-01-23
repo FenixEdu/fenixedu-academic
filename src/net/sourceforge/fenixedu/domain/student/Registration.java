@@ -57,6 +57,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -1827,7 +1828,9 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
-	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super.getPrecedentDegreeInformation() : null;
+	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
+		.getPrecedentDegreeInformation()
+		: null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
@@ -2203,7 +2206,7 @@ public class Registration extends Registration_Base {
 	return getRegistrationStates(executionSemester.getBeginDateYearMonthDay().toDateTimeAtMidnight(), executionSemester
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
-    
+
     public Set<RegistrationState> getRegistrationStates(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
 	final Set<RegistrationState> result = new HashSet<RegistrationState>();
 	populateRegistrationStates(beginDateTime, endDateTime, result);
@@ -2220,7 +2223,8 @@ public class Registration extends Registration_Base {
 		.getEndDateYearMonthDay().toDateTimeAtMidnight());
     }
 
-    public List<RegistrationState> getRegistrationStatesList(final ReadableInstant beginDateTime, final ReadableInstant endDateTime) {
+    public List<RegistrationState> getRegistrationStatesList(final ReadableInstant beginDateTime,
+	    final ReadableInstant endDateTime) {
 	final List<RegistrationState> result = new ArrayList<RegistrationState>();
 	populateRegistrationStates(beginDateTime, endDateTime, result);
 	return result;
@@ -3541,4 +3545,55 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public boolean isReingression(final ExecutionYear executionYear) {
+	final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+	states.addAll(getRegistrationStates());
+
+	Registration sourceRegistration = getSourceRegistration();
+	while (sourceRegistration != null) {
+	    states.addAll(sourceRegistration.getRegistrationStates());
+	    sourceRegistration = sourceRegistration.getSourceRegistration();
+	}
+
+	if (states.size() == 0) {
+	    return false;
+	}
+
+	RegistrationState previous = null;
+	for (final RegistrationState registrationState : states) {
+	    if (previous != null) {
+		if (registrationState.getExecutionYear() == executionYear
+			&& (registrationState.isActive() || registrationState.getStateType() == RegistrationStateType.TRANSITED)
+			&& (previous.getStateType() == RegistrationStateType.EXTERNAL_ABANDON
+				|| previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
+		    return true;
+		}
+	    }
+
+	    previous = registrationState;
+	}
+
+	return false;
+
+    }
+
+    public CandidacyInformationBean getCandidacyInformationBean() {
+	if (hasStudentCandidacy()) {
+	    return getStudentCandidacy().getCandidacyInformationBean();
+	} else if (hasIndividualCandidacy()) {
+	    return getIndividualCandidacy().getCandidacyInformationBean();
+	} else {
+	    throw new DomainException("error.Registration.no.candidacy.found");
+	}
+    }
+
+    public void editCandidacyInformation(final CandidacyInformationBean bean) {
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().editCandidacyInformation(bean);
+	} else if (hasIndividualCandidacy()) {
+	    getIndividualCandidacy().editCandidacyInformation(bean);
+	} else {
+	    throw new DomainException("error.Registration.no.candidacy.found");
+	}
+    }
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -9,14 +10,14 @@ import org.joda.time.LocalDate;
 
 public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeInformation_Base {
 
-    private ExternalPrecedentDegreeInformation() {
+    ExternalPrecedentDegreeInformation() {
 	super();
     }
 
     public ExternalPrecedentDegreeInformation(final IndividualCandidacy candidacy, final String degreeDesignation,
 	    final LocalDate conclusionDate, final Unit institution, final String conclusionGrade) {
 	this();
-	checkParameters(candidacy, degreeDesignation, institution, conclusionDate, conclusionGrade);
+	checkParameters(candidacy, degreeDesignation, institution, conclusionGrade);
 	setCandidacy(candidacy);
 	setDegreeDesignation(degreeDesignation);
 	setConclusionDate(conclusionDate);
@@ -25,7 +26,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     }
 
     private void checkParameters(final IndividualCandidacy candidacy, final String degreeDesignation, final Unit institution,
-	    final LocalDate conclusionDate, final String conclusionGrade) {
+	    final String conclusionGrade) {
 
 	if (candidacy == null) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.candidacy");
@@ -51,8 +52,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 
     @Override
     public void edit(final CandidacyPrecedentDegreeInformationBean bean) {
-	checkParameters(getCandidacy(), bean.getDegreeDesignation(), bean.getInstitution(), bean.getConclusionDate(), bean
-		.getConclusionGrade());
+	checkParameters(getCandidacy(), bean.getDegreeDesignation(), bean.getInstitution(), bean.getConclusionGrade());
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setConclusionDate(bean.getConclusionDate());
 	setInstitution(bean.getInstitution());
@@ -88,5 +88,46 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     public void editCurricularCoursesInformation(final CandidacyPrecedentDegreeInformationBean information) {
 	init(information.getNumberOfApprovedCurricularCourses(), information.getGradeSum(), information.getApprovedEcts(),
 		information.getEnroledEcts());
+    }
+
+    @Override
+    public void fill(CandidacyInformationBean bean) {
+	super.fill(bean);
+	bean.setCountryWhereFinishedPrecedentDegree(getCountry());
+    }
+
+    @Override
+    public void editMissingInformation(CandidacyInformationBean bean) {
+	super.editMissingInformation(bean);
+
+	setConclusionYear(hasConclusionYear() ? getConclusionYear() : bean.getConclusionYear());
+	setConclusionGrade(hasConclusionGrade() ? getConclusionGrade() : bean.getConclusionGrade());
+	setDegreeDesignation(hasDegreeDesignation() ? getDegreeDesignation() : bean.getDegreeDesignation());
+	setInstitution(hasInstitution() ? getInstitution() : getOrCreateInstitution(bean));
+	setCountry(hasCountry() ? getCountry() : bean.getCountryWhereFinishedPrecedentDegree());
+    }
+
+    private Unit getOrCreateInstitution(final CandidacyInformationBean bean) {
+	if (bean.getInstitution() != null) {
+	    return bean.getInstitution();
+	}
+
+	if (bean.getInstitutionName() == null || bean.getInstitutionName().isEmpty()) {
+	    throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
+	}
+
+	return Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+    }
+
+    private boolean hasConclusionYear() {
+	return getConclusionYear() != null;
+    }
+
+    private boolean hasConclusionGrade() {
+	return getConclusionGrade() != null && !getConclusionGrade().isEmpty();
+    }
+
+    private boolean hasDegreeDesignation() {
+	return getDegreeDesignation() != null && !getDegreeDesignation().isEmpty();
     }
 }

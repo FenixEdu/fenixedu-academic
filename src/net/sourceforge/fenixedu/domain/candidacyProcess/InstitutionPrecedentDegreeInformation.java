@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.LocalDate;
+import org.joda.time.base.BasePartial;
 
 public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentDegreeInformation_Base {
 
@@ -51,8 +53,15 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 
     @Override
     public LocalDate getConclusionDate() {
-	return new LocalDate(isBolonha() ? getStudentCurricularPlan().getConclusionDate(getCycleType()) : getRegistration()
-		.getConclusionDate());
+	final BasePartial date = isBolonha() ? getStudentCurricularPlan().getConclusionDate(getCycleType()) : getRegistration()
+		.getConclusionDate();
+	return date != null ? new LocalDate(date) : null;
+    }
+
+    @Override
+    protected Integer getConclusionYear() {
+	final LocalDate localDate = getConclusionDate();
+	return localDate != null ? localDate.getYear() : null;
     }
 
     @Override
@@ -111,6 +120,12 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     @Override
     public boolean isInternal() {
 	return true;
+    }
+
+    @Override
+    public void fill(CandidacyInformationBean bean) {
+	super.fill(bean);
+	bean.setCountryWhereFinishedPrecedentDegree(getInstitution().getCountry());
     }
 
 }
