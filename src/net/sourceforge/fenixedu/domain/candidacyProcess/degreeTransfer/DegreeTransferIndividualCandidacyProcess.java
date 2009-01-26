@@ -22,6 +22,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
+	activities.add(new EditCommonCandidacyInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new EditCandidacyCurricularCoursesInformation());
 	activities.add(new IntroduceCandidacyResult());
@@ -38,6 +39,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
 	new DegreeTransferIndividualCandidacy(this, bean);
+	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
     }
 
     private void checkParameters(final DegreeTransferCandidacyProcess candidacyProcess) {
@@ -167,6 +169,27 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.editPersonalCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object).getPersonBean());
+	    return process;
+	}
+    }
+
+    static private class EditCommonCandidacyInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editCommonCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
 	    return process;
 	}
     }

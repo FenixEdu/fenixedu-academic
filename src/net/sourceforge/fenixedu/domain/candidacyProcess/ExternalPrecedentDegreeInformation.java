@@ -97,7 +97,18 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     }
 
     @Override
-    public void editMissingInformation(CandidacyInformationBean bean) {
+    public void edit(final CandidacyInformationBean bean) {
+	super.edit(bean);
+
+	setConclusionYear(bean.getConclusionYear());
+	setConclusionGrade(bean.getConclusionGrade());
+	setDegreeDesignation(bean.getDegreeDesignation());
+	setInstitution(getOrCreateInstitution(bean));
+	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
+    }
+
+    @Override
+    public void editMissingInformation(final CandidacyInformationBean bean) {
 	super.editMissingInformation(bean);
 
 	setConclusionYear(hasConclusionYear() ? getConclusionYear() : bean.getConclusionYear());

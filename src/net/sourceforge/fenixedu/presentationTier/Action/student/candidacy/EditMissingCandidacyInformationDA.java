@@ -70,7 +70,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	try {
-	    candidacyInformationBean.updateRegistration();
+	    candidacyInformationBean.updateRegistrationWithMissingInformation();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 

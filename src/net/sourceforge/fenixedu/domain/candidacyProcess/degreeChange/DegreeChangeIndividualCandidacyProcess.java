@@ -22,6 +22,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
+	activities.add(new EditCommonCandidacyInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new EditCandidacyCurricularCoursesInformation());
 	activities.add(new IntroduceCandidacyResult());
@@ -38,6 +39,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
 	new DegreeChangeIndividualCandidacy(this, bean);
+	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
     }
 
     private void checkParameters(final DegreeChangeCandidacyProcess candidacyProcess) {
@@ -168,6 +170,27 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.editPersonalCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object).getPersonBean());
+	    return process;
+	}
+    }
+
+    static private class EditCommonCandidacyInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
 	    return process;
 	}
     }

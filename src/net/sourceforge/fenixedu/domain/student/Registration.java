@@ -3636,4 +3636,15 @@ public class Registration extends Registration_Base {
 	    throw new DomainException("error.Registration.no.candidacy.found");
 	}
     }
+
+    @Service
+    public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
+	if (hasStudentCandidacy()) {
+	    getStudentCandidacy().editMissingCandidacyInformation(bean);
+	} else if (hasIndividualCandidacy()) {
+	    getIndividualCandidacy().editMissingCandidacyInformation(bean);
+	} else {
+	    throw new DomainException("error.Registration.no.candidacy.found");
+	}
+    }
 }

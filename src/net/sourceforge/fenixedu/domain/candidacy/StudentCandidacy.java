@@ -275,7 +275,16 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
+	editMainCandidacyInformation(bean);
+	getPrecedentDegreeInformation().edit(bean);
+    }
 
+    public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
+	editMainCandidacyInformation(bean);
+	getPrecedentDegreeInformation().editMissingInformation(bean);
+    }
+
+    private void editMainCandidacyInformation(final CandidacyInformationBean bean) {
 	setCountryOfResidence(bean.getCountryOfResidence());
 	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
 
@@ -304,7 +313,5 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
 	setEntryGrade(bean.getEntryGrade());
 	setPlacingOption(bean.getPlacingOption());
-
-	getPrecedentDegreeInformation().editMissingInformation(bean);
     }
 }

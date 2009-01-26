@@ -100,6 +100,10 @@ public class CandidacyInformationBean implements Serializable {
 	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
     }
 
+    public boolean hasRegistration() {
+	return getRegistration() != null;
+    }
+
     public Country getCountryOfResidence() {
 	return (this.countryOfResidence != null) ? this.countryOfResidence.getObject() : null;
     }
@@ -355,7 +359,7 @@ public class CandidacyInformationBean implements Serializable {
 
 	final Set<String> result = new HashSet<String>();
 
-	if (getRegistration().getRegistrationAgreement() != RegistrationAgreement.NORMAL
+	if (hasRegistration() && getRegistration().getRegistrationAgreement() != RegistrationAgreement.NORMAL
 		&& getRegistration().getRegistrationAgreement() != RegistrationAgreement.TIME) {
 	    return result;
 	}
@@ -400,8 +404,7 @@ public class CandidacyInformationBean implements Serializable {
 	return validate().isEmpty();
     }
 
-    public void updateRegistration() {
-	getRegistration().editCandidacyInformation(this);
+    public void updateRegistrationWithMissingInformation() {
+	getRegistration().editMissingCandidacyInformation(this);
     }
-
 }

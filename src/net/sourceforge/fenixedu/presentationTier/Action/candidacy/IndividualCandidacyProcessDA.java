@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -233,10 +235,36 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return mapping.findForward("fill-personal-information");
     }
 
+    public ActionForward fillCommonCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	bean.setCandidacyInformationBean(new CandidacyInformationBean());
+	bean.copyInformationToCandidacyBean();
+	return mapping.findForward("fill-common-candidacy-information");
+    }
+
+    public ActionForward fillCommonCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("fill-common-candidacy-information");
+    }
+
     public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	return mapping.findForward("fill-candidacy-information");
+
+	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	final Set<String> messages = bean.getCandidacyInformationBean().validate();
+	if (!messages.isEmpty()) {
+	    for (final String message : messages) {
+		addActionMessage(request, message);
+	    }
+	    return mapping.findForward("fill-common-candidacy-information");
+	} else {
+	    return mapping.findForward("fill-candidacy-information");
+	}
     }
 
     public ActionForward fillCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,

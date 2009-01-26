@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
@@ -54,14 +55,36 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	deleteDomainObject();
     }
 
+    public void edit(final CandidacyInformationBean bean) {
+	setConclusionGrade(bean.getConclusionGrade());
+	setConclusionYear(bean.getConclusionYear());
+	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
+	setInstitution(bean.getInstitution());
+	setDegreeDesignation(bean.getDegreeDesignation());
+	setSchoolLevel(bean.getSchoolLevel());
+	setOtherSchoolLevel(bean.getOtherSchoolLevel());
+    }
+
     public void editMissingInformation(final CandidacyInformationBean bean) {
 	setConclusionGrade(hasConclusionGrade() ? getConclusionGrade() : bean.getConclusionGrade());
 	setConclusionYear(hasConclusionYear() ? getConclusionYear() : bean.getConclusionYear());
 	setCountry(hasCountry() ? getCountry() : bean.getCountryWhereFinishedPrecedentDegree());
-	setInstitution(hasInstitution() ? getInstitution() : bean.getInstitution());
+	setInstitution(hasInstitution() ? getInstitution() : getOrCreateInstitution(bean));
 	setDegreeDesignation(hasDegreeDesignation() ? getDegreeDesignation() : bean.getDegreeDesignation());
 	setSchoolLevel(hasSchoolLevel() ? getSchoolLevel() : bean.getSchoolLevel());
 	setOtherSchoolLevel(hasOtherSchoolLevel() ? getOtherSchoolLevel() : bean.getOtherSchoolLevel());
+    }
+
+    private Unit getOrCreateInstitution(final CandidacyInformationBean bean) {
+	if (bean.getInstitution() != null) {
+	    return bean.getInstitution();
+	}
+
+	if (bean.getInstitutionName() == null || bean.getInstitutionName().isEmpty()) {
+	    throw new DomainException("error.PrecedentDegreeInformation.invalid.institution.name");
+	}
+
+	return Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
     }
 
     private boolean hasConclusionGrade() {

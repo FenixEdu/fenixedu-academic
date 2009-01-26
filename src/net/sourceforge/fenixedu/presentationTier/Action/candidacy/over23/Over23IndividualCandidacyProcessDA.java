@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.over23;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,9 +32,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
+	@Forward(name = "fill-common-candidacy-information", path = "/candidacy/fillCommonCandidacyInformation.jsp"),
 	@Forward(name = "fill-candidacy-information", path = "/candidacy/over23/fillCandidacyInformation.jsp"),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
+	@Forward(name = "edit-common-candidacy-information", path = "/candidacy/editCommonCandidacyInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/over23/editCandidacyInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/over23/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
@@ -141,6 +145,42 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("edit-candidacy-personal-information");
+	}
+	return listProcessAllowedActivities(mapping, form, request, response);
+    }
+
+    public ActionForward prepareExecuteEditCommonCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
+	bean.setCandidacyInformationBean(getProcess(request).getCandidacyInformationBean());
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	return mapping.findForward("edit-common-candidacy-information");
+    }
+
+    public ActionForward executeEditCommonCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-common-candidacy-information");
+    }
+
+    public ActionForward executeEditCommonCandidacyInformation(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    final Set<String> messages = getIndividualCandidacyProcessBean().getCandidacyInformationBean().validate();
+	    if (!messages.isEmpty()) {
+		for (final String message : messages) {
+		    addActionMessage(request, message);
+		}
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("edit-common-candidacy-information");
+	    }
+
+	    executeActivity(getProcess(request), "EditCommonCandidacyInformation", getIndividualCandidacyProcessBean());
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-common-candidacy-information");
 	}
 	return listProcessAllowedActivities(mapping, form, request, response);
     }

@@ -85,4 +85,8 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 	this.candidacyInformationBean = candidacyInformationBean;
     }
 
+    public void copyInformationToCandidacyBean() {
+	getCandidacyInformationBean().setMaritalStatus(getPersonBean().getMaritalStatus());
+    }
+
 }

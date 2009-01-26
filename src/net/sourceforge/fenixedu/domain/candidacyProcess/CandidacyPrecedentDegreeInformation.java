@@ -66,6 +66,11 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
 	bean.setDegreeDesignation(getDegreeDesignation());
     }
 
+    public void edit(final CandidacyInformationBean bean) {
+	setSchoolLevel(bean.getSchoolLevel());
+	setOtherSchoolLevel(bean.getOtherSchoolLevel());
+    }
+
     public void editMissingInformation(final CandidacyInformationBean bean) {
 	setSchoolLevel(hasSchoolLevel() ? getSchoolLevel() : bean.getSchoolLevel());
 	setOtherSchoolLevel(hasOtherSchoolLevel() ? getOtherSchoolLevel() : bean.getOtherSchoolLevel());

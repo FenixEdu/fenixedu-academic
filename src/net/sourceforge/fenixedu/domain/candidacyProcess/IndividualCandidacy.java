@@ -230,7 +230,30 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
+	editMainCandidacyInformation(bean);
+	editPrecedentDegreeInformation(bean);
+    }
 
+    public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
+	editMainCandidacyInformation(bean);
+	editMissingPrecedentDegreeInformation(bean);
+    }
+
+    private void editPrecedentDegreeInformation(final CandidacyInformationBean bean) {
+	if (!hasPrecedentDegreeInformation()) {
+	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
+	}
+	getPrecedentDegreeInformation().edit(bean);
+    }
+
+    private void editMissingPrecedentDegreeInformation(final CandidacyInformationBean bean) {
+	if (!hasPrecedentDegreeInformation()) {
+	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
+	}
+	getPrecedentDegreeInformation().editMissingInformation(bean);
+    }
+
+    private void editMainCandidacyInformation(final CandidacyInformationBean bean) {
 	setCountryOfResidence(bean.getCountryOfResidence());
 	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
 	setSchoolTimeDistrictSubDivisionOfResidence(bean.getSchoolTimeDistrictSubdivisionOfResidence());
@@ -255,10 +278,5 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setSpouseSchoolLevel(bean.getSpouseSchoolLevel());
 	setSpouseProfessionType(bean.getSpouseProfessionType());
 	setSpouseProfessionalCondition(bean.getSpouseProfessionalCondition());
-
-	if (!hasPrecedentDegreeInformation()) {
-	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
-	}
-	getPrecedentDegreeInformation().editMissingInformation(bean);
     }
 }

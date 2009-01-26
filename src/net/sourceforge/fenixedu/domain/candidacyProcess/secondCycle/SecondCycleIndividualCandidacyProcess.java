@@ -23,6 +23,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
+	activities.add(new EditCommonCandidacyInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
@@ -38,6 +39,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
 	new SecondCycleIndividualCandidacy(this, bean);
+	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
     }
 
     private void checkParameters(final SecondCycleCandidacyProcess process) {
@@ -180,6 +182,27 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		IUserView userView, Object object) {
 	    final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
 	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    return process;
+	}
+    }
+
+    static private class EditCommonCandidacyInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
+	    process.editCommonCandidacyInformation(bean.getCandidacyInformationBean());
 	    return process;
 	}
     }

@@ -21,6 +21,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
+	activities.add(new EditCommonCandidacyInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
@@ -36,6 +37,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
 	new Over23IndividualCandidacy(this, bean);
+	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
     }
 
     private void checkParameters(final Over23CandidacyProcess process) {
@@ -153,6 +155,27 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		Object object) {
 	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
 	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    return process;
+	}
+    }
+
+    static private class EditCommonCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
+	    process.editCommonCandidacyInformation(bean.getCandidacyInformationBean());
 	    return process;
 	}
     }

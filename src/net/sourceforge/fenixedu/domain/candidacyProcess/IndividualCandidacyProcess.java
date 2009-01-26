@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -144,4 +145,13 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected void editPersonalCandidacyInformation(final PersonBean personBean) {
 	getCandidacy().editPersonalCandidacyInformation(personBean);
     }
+
+    public CandidacyInformationBean getCandidacyInformationBean() {
+	return hasCandidacy() ? getCandidacy().getCandidacyInformationBean() : null;
+    }
+
+    protected void editCommonCandidacyInformation(final CandidacyInformationBean bean) {
+	getCandidacy().editCandidacyInformation(bean);
+    }
+
 }
