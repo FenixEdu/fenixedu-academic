@@ -144,7 +144,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    throw new InvalidSpreadSheetName(bean.getSpreadsheetName(), getAllSpreadsheets(wb));
 	}
 
-	int i = 3;
+	int i = 2;
 	HSSFRow row;
 	while ((row = sheet.getRow(i)) != null) {
 	    String room = row.getCell((short) 0).getStringCellValue();
