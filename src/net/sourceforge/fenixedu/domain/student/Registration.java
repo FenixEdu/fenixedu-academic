@@ -3549,12 +3549,39 @@ public class Registration extends Registration_Base {
 
     public boolean hasMissingCandidacyInformation(final ExecutionYear executionYear) {
 
-	if (getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
-	    return getStartDate() != null && getStartDate().getYear() == executionYear.getBeginCivilYear()
-		    && !getCandidacyInformationBean().isValid();
+	if (getCandidacyInformationBean().isValid()) {
+	    return false;
 	}
 
-	return getStartExecutionYear() == executionYear && !getCandidacyInformationBean().isValid();
+	final YearMonthDay startDate = getStartDate();
+	if (startDate == null) {
+	    return false;
+	}
+
+	final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
+	if (getStartExecutionYear() == executionYear) {
+	    return true;
+	} else if (getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
+	    return startDate.getYear() == executionYear.getBeginCivilYear();
+	} else if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE
+		&& previousExecutionYear.getLastExecutionPeriod().containsDay(startDate)) {
+	    return true;
+	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    if (getLastStudentCurricularPlan().getSecondCycle() != null) {
+
+		if (getLastStudentCurricularPlan().getFirstCycle() == null) {
+		    return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
+		}
+
+		final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(this,
+			getLastStudentCurricularPlan().getFirstCycle());
+		return registrationConclusionBean.isConcluded()
+			&& previousExecutionYear.getFirstExecutionPeriod().containsDay(
+				registrationConclusionBean.getConclusionDate());
+	    }
+	}
+
+	return false;
     }
 
     public boolean isReingression(final ExecutionYear executionYear) {
