@@ -36,12 +36,8 @@
 			<html:hidden property="inquiriesRegistryID" />
 			
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="UNIT_NOT_ATTENDED" /><strong><bean:message key="label.inquiries.notAnswer.reasons.unitNotAttended" bundle="INQUIRIES_RESOURCES"/></strong></p>
-
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="LOW_ASSIDUITY" /><strong><bean:message key="label.inquiries.notAnswer.reasons.lowAssiduity" bundle="INQUIRIES_RESOURCES"/></strong></p>
-			<p class="mvert05"><html:radio property="notAnsweredJustification" value="LACK_OF_TIME" /><strong><bean:message key="label.inquiries.notAnswer.reasons.lackOfTime" bundle="INQUIRIES_RESOURCES"/></strong></p>
-			<p class="mvert05"><html:radio property="notAnsweredJustification" value="DONT_AGREE_WITH_INQUIRY" /><strong><bean:message key="label.inquiries.notAnswer.reasons.dontAgreeWithInquiry" bundle="INQUIRIES_RESOURCES"/></strong></p>
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="TECHNICAL_ERRORS" /><strong><bean:message key="label.inquiries.notAnswer.reasons.technicalErrors" bundle="INQUIRIES_RESOURCES"/></strong></p>
-			<p class="mvert05"><html:radio property="notAnsweredJustification" value="CU_NOT_TEACHED" /><strong><bean:message key="label.inquiries.notAnswer.reasons.cuNotTeached" bundle="INQUIRIES_RESOURCES"/></strong></p>
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="OTHER" /><strong><bean:message key="label.inquiries.notAnswer.reasons.other" bundle="INQUIRIES_RESOURCES"/></strong></p>
 			<p class="mtop15 mbottom05"><bean:message key="label.inquiries.notAnswer.reasons.otherJustification" bundle="INQUIRIES_RESOURCES"/>:</p>
 			<html:textarea property="notAnsweredOtherJustification" cols="60" rows="4"/>
