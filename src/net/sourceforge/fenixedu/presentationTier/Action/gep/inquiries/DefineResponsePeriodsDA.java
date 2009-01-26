@@ -46,18 +46,17 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
 	ExecutionSemester selectedExecutionPeriod = null;
 	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();
-	
+
 	for (final ExecutionSemester executionSemester : executionSemesters) {
 	    final String label = executionSemester.getName() + " " + executionSemester.getExecutionYear().getYear();
 	    executionPeriodLVBs.add(new LabelValueBean(label, executionSemester.getIdInternal().toString()));
 
-	    if (executionPeriodID == null && executionSemester.isCurrent()) {
+	    if ((executionPeriodID == null && executionSemester.isCurrent())
+		    || (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID))) {
 		selectedExecutionPeriod = executionSemester;
 		dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getIdInternal().toString());
-	    } else if (executionPeriodID != null && executionSemester.getIdInternal().equals(executionPeriodID)) {
-		selectedExecutionPeriod = executionSemester;
 		InquiryResponsePeriod inquiryResponsePeriod = selectedExecutionPeriod.getInquiryResponsePeriod(periodType);
-		if(inquiryResponsePeriod != null){
+		if (inquiryResponsePeriod != null) {
 		    request.setAttribute("inquiryResponsePeriod", inquiryResponsePeriod);
 		}
 	    }
