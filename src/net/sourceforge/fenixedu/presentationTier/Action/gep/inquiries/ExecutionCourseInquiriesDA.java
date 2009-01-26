@@ -45,4 +45,10 @@ public class ExecutionCourseInquiriesDA extends FenixDispatchAction {
 	return search(mapping, actionForm, request, response);
     }
 
+    public ActionForward unselectAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	SelectAllExecutionCoursesForInquiries.unselectAll((ExecutionCourseSearchBean) getRenderedObject());
+	return search(mapping, actionForm, request, response);
+    }
+
 }

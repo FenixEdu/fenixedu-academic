@@ -38,16 +38,22 @@
 
 	<logic:present name="executionCourses">
 		<br/>
-		<fr:form action="/executionCourseInquiries.do">
-			<fr:edit id="executionCourseSearchBean2" name="executionCourseSearchBean" schema="net.sourceforge.fenixedu.domain.executionCourse.ExecutionCourseSearchBean.selectAll" >
-				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle1"/>
-		        	<fr:property name="columnClasses" value=",,noborder"/>
-				</fr:layout>
-			</fr:edit>
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectAll"/>
-			<html:submit><bean:message key="button.selectAll"/></html:submit>
-		</fr:form>
+		<table><tr>
+			<td>
+				<fr:form action="/executionCourseInquiries.do">
+					<fr:edit id="executionCourseSearchBean2" name="executionCourseSearchBean" visible="false" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectAll"/>
+					<html:submit><bean:message key="button.selectAll"/></html:submit>
+				</fr:form>
+			</td>
+			<td>
+				<fr:form action="/executionCourseInquiries.do">
+					<fr:edit id="executionCourseSearchBean2" name="executionCourseSearchBean" visible="false" />
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="unselectAll"/>
+					<html:submit><bean:message key="button.selectNone"/></html:submit>
+				</fr:form>
+			</td>
+		</tr></table>		
 	</logic:present>
 
 </logic:present>
