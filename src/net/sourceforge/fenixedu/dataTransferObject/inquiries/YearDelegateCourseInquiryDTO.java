@@ -106,20 +106,19 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 		"header.yearDelegateInquiries.neitherAgreeOrDisagree", "header.yearDelegateInquiries.six",
 		"header.yearDelegateInquiries.agree", "header.yearDelegateInquiries.eight",
 		"header.yearDelegateInquiries.totallyAgree");
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.enoughOnlineCUInformation", 1, 9, false)
-		.setToolTip("tooltip.yearDelegateInquiries.enoughOnlineCUInformation"));
+	this.secondBlock
+		.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.enoughOnlineCUInformation", 1, 9, false));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.enoughOnlineCUInformationReasons", false)
 		.setRequired(false));
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.clearOnlineCUInformation", 1, 9, false)
-		.setToolTip("tooltip.yearDelegateInquiries.clearOnlineCUInformation"));
+	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.clearOnlineCUInformation", 1, 9, false));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.clearOnlineCUInformationReasons", false)
 		.setRequired(false));
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.explicitEvaluationMethods", 1, 9, false)
-		.setToolTip("tooltip.yearDelegateInquiries.explicitEvaluationMethods"));
+	this.secondBlock
+		.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.explicitEvaluationMethods", 1, 9, false));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.explicitEvaluationMethodsReasons", false)
 		.setRequired(false));
 	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.evaluationMethodsWellApplied", 1, 9,
-		false).setToolTip("tooltip.yearDelegateInquiries.evaluationMethodsWellApplied"));
+		false));
 	this.secondBlock
 		.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.evaluationMethodsWellAppliedReasons", false)
 			.setRequired(false));

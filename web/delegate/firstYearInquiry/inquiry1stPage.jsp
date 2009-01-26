@@ -20,6 +20,7 @@
 		<td><bean:write name="inquiryDTO" property="delegate.curricularYear.year" /></td>
 	</tr>
 </table>
+<em><bean:message key="message.yearDelegateInquiries.clickCUPageLink" bundle="INQUIRIES_RESOURCES"/></em>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
