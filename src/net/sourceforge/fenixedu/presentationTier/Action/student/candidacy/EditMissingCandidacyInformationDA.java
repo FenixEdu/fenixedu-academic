@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
 @Forwards( {
 
-@Forward(name = "editMissingCandidacyInformation", path = "candidacy.edit.missing.candidacy.information"),
+@Forward(name = "editMissingCandidacyInformation", path = "candidacy.edit.missing.candidacy.information")
 
 })
 public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
