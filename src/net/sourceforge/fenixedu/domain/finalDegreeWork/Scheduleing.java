@@ -22,6 +22,8 @@ public class Scheduleing extends Scheduleing_Base {
     public Scheduleing() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setAllowSimultaneousCoorientationAndCompanion(Boolean.FALSE);
+	setAttributionByTeachers(Boolean.FALSE);
     }
 
     public Date getEndOfProposalPeriod() {
