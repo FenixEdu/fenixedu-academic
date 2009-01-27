@@ -17,12 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public class LogOffAction extends Action {
@@ -63,7 +67,15 @@ public class LogOffAction extends Action {
 	return actionForward;
     }
 
-    private void killSession(HttpServletRequest request) {
+    private void killSession(final HttpServletRequest request) {
+	final IUserView userView = UserView.getUser();
+	if (userView != null) {
+	    final Person person = userView.getPerson();
+	    if (person != null) {
+		final User user = person.getUser();
+		user.logout();
+	    }
+	}
 	HttpSession session = request.getSession(false);
 	if (session != null) {
 	    session.invalidate();

@@ -106,6 +106,8 @@ public class Authenticate extends FenixService implements Serializable {
 
 	private transient String privateConstantForDigestCalculation;
 
+	private final DateTime userCreationDateTime = new DateTime();
+
 	private UserView(final Person person, final Set allowedRoles) {
 	    this.personRef = new DomainReference<Person>((Person) person);
 
@@ -187,6 +189,18 @@ public class Authenticate extends FenixService implements Serializable {
 	@Override
 	public boolean hasRole(String role) {
 	    return hasRoleType(RoleType.valueOf(role));
+	}
+
+	@Override
+	public DateTime getLastLogoutDateTime() {
+	    final Person person = getPerson();
+	    final User user = person.getUser();
+	    return user == null ? null : user.getLogoutDateTime();
+	}
+
+	@Override
+	public DateTime getUserCreationDateTime() {
+	    return userCreationDateTime;
 	}
     }
 

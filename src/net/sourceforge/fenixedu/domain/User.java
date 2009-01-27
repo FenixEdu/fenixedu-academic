@@ -6,6 +6,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author mrsp
  * @author shezad
@@ -72,6 +76,11 @@ public class User extends User_Base {
 	    aliass.append(loginAlias.getAlias());
 	}
 	return aliass.toString();
+    }
+
+    @Service
+    public void logout() {
+	setLogoutDateTime(new DateTime());
     }
 
 }

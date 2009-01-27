@@ -24,6 +24,8 @@ public class MockUserView implements IUserView {
 
     private transient Collection<Role> roles;
 
+    private final DateTime userCreationDateTime = new DateTime();
+
     public MockUserView(final String username, final Collection<Role> roles, final Person person) {
 	this.person = person;
 	this.username = username;
@@ -87,6 +89,16 @@ public class MockUserView implements IUserView {
     @Override
     public boolean hasRole(String role) {
 	return false;
+    }
+
+    @Override
+    public DateTime getLastLogoutDateTime() {
+	return null;
+    }
+
+    @Override
+    public DateTime getUserCreationDateTime() {
+	return userCreationDateTime;
     }
 
 }

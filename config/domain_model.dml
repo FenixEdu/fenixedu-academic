@@ -1257,6 +1257,7 @@ class DomainObject {
 		DateTime currentLoginDateTimeDateTime;
 		String currentLoginHost;
 		DateTime lastLoginDateTimeDateTime;
+		DateTime logoutDateTime;
 		String lastLoginHost;
 		String userUId;
 	}
