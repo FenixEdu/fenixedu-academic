@@ -23,6 +23,7 @@
 	<logic:equal name="candidacyInformationBean" property="registration.idInternal" value="<%= eachRegistrationId.toString() %>">
 		<i><bean:message  key="label.editing" bundle="STUDENT_RESOURCES"/></i>
 	</logic:equal>
+	<br/>
 </logic:iterate>
 
 <br/><br/>
