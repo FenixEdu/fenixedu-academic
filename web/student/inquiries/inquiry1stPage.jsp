@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<style> .bgcolorgrey { background-color: #fafafa !important; } </style>
+
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -46,7 +48,11 @@
 						
 			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 			<p><bean:message key="message.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
-			<fr:edit name="studentInquiry" property="firstPageFifthBlock" />
+			<fr:edit name="studentInquiry" property="firstPageFifthBlock" >
+				<fr:layout name="tabular-editable" >
+					<fr:property name="columnClasses" value=",bgcolorgrey,bgcolorgrey,,,,,,,,,,,,"/>
+				</fr:layout>		
+			</fr:edit>			
 			
 			<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
 		

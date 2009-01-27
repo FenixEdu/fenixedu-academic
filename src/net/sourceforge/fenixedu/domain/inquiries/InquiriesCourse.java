@@ -182,6 +182,9 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	inquiriesCourse.setCriticSenseAndReflexiveSpirit(answersMap.get("criticSenseAndReflexiveSpirit").getValueAsInteger());
 	inquiriesCourse.setCooperationAndComunicationCapacity(answersMap.get("cooperationAndComunicationCapacity")
 		.getValueAsInteger());
+	inquiriesCourse.setAutonomousLearningCapacity(answersMap.get("autonomousLearningCapacity").getValueAsInteger());
+	inquiriesCourse.setSocialAndProfessionalContextAnalysis(answersMap.get("socialAndProfessionalContextAnalysis")
+		.getValueAsInteger());
 	inquiriesCourse.setStudyMethodAttendToClasses(answersMap.get("studyMethodAttendToClasses").getValueAsBoolean());
 	inquiriesCourse.setStudyMethodSuggestedBibliography(answersMap.get("studyMethodSuggestedBibliography")
 		.getValueAsBoolean());

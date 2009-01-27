@@ -2751,6 +2751,8 @@ class DomainObject {
 		Integer knowledgeApplicationOfCU;
 		Integer criticSenseAndReflexiveSpirit;
 		Integer cooperationAndComunicationCapacity;
+		Integer autonomousLearningCapacity;
+		Integer socialAndProfessionalContextAnalysis;
 		Boolean studyMethodAttendToClasses;
 		Boolean studyMethodSuggestedBibliography;
 		Boolean studyMethodTeacherDocuments;

@@ -252,23 +252,23 @@ public class StudentInquiryDTO implements Serializable {
 	this.studyMethodBlock.addQuestion(new CheckBoxQuestion("label.studentInquiries.studyMethodStudentDocuments"));
 	this.studyMethodBlock.addQuestion(new TextBoxQuestion("label.studentInquiries.studyMethodOther", false));
 
-	this.firstPageFifthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
+	this.firstPageFifthBlock = new InquiriesBlock("header.studentInquiries.firstPageFifthBlock", true,
 		"header.studentInquiries.firstPageFifthBlock.unknown", "header.studentInquiries.firstPageFifthBlock.doesntApply",
 		"header.studentInquiries.totallyDisagree", "header.studentInquiries.two", "header.studentInquiries.disagree",
 		"header.studentInquiries.four", "header.studentInquiries.neitherAgreeOrDisagree", "header.studentInquiries.six",
 		"header.studentInquiries.agree", "header.studentInquiries.eight", "header.studentInquiries.totallyAgree");
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.knowledgeAndComprehensionOfCU", -1, 9, false)
-		.setToolTip("tooltip.studentInquiries.firstPageFifthBlock.knowledgeAndComprehensionOfCU"));
+		"label.studentInquiries.firstPageFifthBlock.knowledgeAndComprehensionOfCU", -1, 9, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.knowledgeApplicationOfCU", -1, 9, false)
-		.setToolTip("tooltip.studentInquiries.firstPageFifthBlock.knowledgeApplicationOfCU"));
+		"label.studentInquiries.firstPageFifthBlock.knowledgeApplicationOfCU", -1, 9, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.criticSenseAndReflexiveSpirit", -1, 9, false)
-		.setToolTip("tooltip.studentInquiries.firstPageFifthBlock.criticSenseAndReflexiveSpirit"));
+		"label.studentInquiries.firstPageFifthBlock.criticSenseAndReflexiveSpirit", -1, 9, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity", -1, 9, false)
-		.setToolTip("tooltip.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity"));
+		"label.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity", -1, 9, false));
+	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.firstPageFifthBlock.autonomousLearningCapacity", -1, 9, false));
+	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.firstPageFifthBlock.socialAndProfessionalContextAnalysis", -1, 9, false));
 
 	this.secondPageFirstBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", "header.studentInquiries.two",
