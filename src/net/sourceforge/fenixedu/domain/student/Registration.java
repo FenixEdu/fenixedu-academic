@@ -3567,8 +3567,9 @@ public class Registration extends Registration_Base {
 		&& previousExecutionYear.getLastExecutionPeriod().containsDay(startDate)) {
 	    return true;
 	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    if (getLastStudentCurricularPlan().getSecondCycle() != null) {
+	    final CycleCurriculumGroup secondCycle = getLastStudentCurricularPlan().getSecondCycle();
 
+	    if (secondCycle != null && !secondCycle.isExternal()) {
 		if (getLastStudentCurricularPlan().getFirstCycle() == null) {
 		    return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
 		}
@@ -3622,7 +3623,7 @@ public class Registration extends Registration_Base {
 	} else if (hasIndividualCandidacy()) {
 	    return getIndividualCandidacy().getCandidacyInformationBean();
 	} else {
-	    throw new DomainException("error.Registration.no.candidacy.found");
+	    return new CandidacyInformationBean(this);
 	}
     }
 
@@ -3633,7 +3634,9 @@ public class Registration extends Registration_Base {
 	} else if (hasIndividualCandidacy()) {
 	    getIndividualCandidacy().editCandidacyInformation(bean);
 	} else {
-	    throw new DomainException("error.Registration.no.candidacy.found");
+	    StudentCandidacy.createStudentCandidacy(
+		    getLastDegreeCurricularPlan().getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson())
+		    .editCandidacyInformation(bean);
 	}
     }
 
@@ -3644,7 +3647,9 @@ public class Registration extends Registration_Base {
 	} else if (hasIndividualCandidacy()) {
 	    getIndividualCandidacy().editMissingCandidacyInformation(bean);
 	} else {
-	    throw new DomainException("error.Registration.no.candidacy.found");
+	    StudentCandidacy.createStudentCandidacy(
+		    getLastDegreeCurricularPlan().getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson())
+		    .editCandidacyInformation(bean);
 	}
     }
 }

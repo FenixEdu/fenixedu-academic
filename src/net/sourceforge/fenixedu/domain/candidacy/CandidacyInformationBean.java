@@ -89,6 +89,10 @@ public class CandidacyInformationBean implements Serializable {
 
     private Integer placingOption;
 
+    public CandidacyInformationBean(Registration registration) {
+	setRegistration(registration);
+    }
+
     public CandidacyInformationBean() {
     }
 
@@ -369,7 +373,8 @@ public class CandidacyInformationBean implements Serializable {
 		|| getProfessionalCondition() == null || getProfessionType() == null || getMotherProfessionType() == null
 		|| getMotherProfessionType() == null || getMotherProfessionalCondition() == null
 		|| getFatherProfessionalCondition() == null || getFatherProfessionType() == null
-		|| getFatherSchoolLevel() == null || getCountryWhereFinishedPrecedentDegree() == null || getInstitution() == null) {
+		|| getFatherSchoolLevel() == null || getCountryWhereFinishedPrecedentDegree() == null
+		|| (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
 	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
 	}
 
