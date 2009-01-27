@@ -42,7 +42,7 @@
 		schema="CandidacyInformationBean.edit">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
-			<fr:property name="columnClasses" value="width250px,,tdclear tderror1"/>
+			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
 		</fr:layout>
 	</fr:edit>
