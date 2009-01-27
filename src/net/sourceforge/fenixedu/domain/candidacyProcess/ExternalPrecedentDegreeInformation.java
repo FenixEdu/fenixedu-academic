@@ -127,7 +127,8 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	    throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
 	}
 
-	return Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
+	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
     }
 
     @Override

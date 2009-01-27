@@ -84,7 +84,8 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    throw new DomainException("error.PrecedentDegreeInformation.invalid.institution.name");
 	}
 
-	return Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
+	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
     }
 
     private boolean hasConclusionGrade() {
