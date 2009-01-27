@@ -50,7 +50,7 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 
     }
 
-    private static boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
+    public static boolean checkTotalPercentageDistribution(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	Integer totalPercentage = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
 	    totalPercentage += curricularCourseInquiriesRegistryDTO.getWeeklyHoursSpentPercentage();
@@ -59,7 +59,7 @@ public class SubmitStudentSpentTimeInPeriod extends FenixService {
 	return totalPercentage == 100;
     }
 
-    private static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
+    public static boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
 	double totalDays = 0;
 	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
 	    totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();

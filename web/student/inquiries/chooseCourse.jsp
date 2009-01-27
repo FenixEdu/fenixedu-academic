@@ -74,37 +74,6 @@
 <p>Considera-se como <b>trabalho autónomo</b> o tempo dedicado por um estudante na pesquisa, estudo, elaboração individual e colectiva de trabalhos (trabalho de
 campo, resolução de problemas, estudos de caso, desenvolvimento de projectos, etc.), ou seja, todo o trabalho desenvolvido pelo aluno no âmbito das unidades
 curriculares em que se encontra inscrito no semestre fora das aulas (horas de contacto).</p>
-<b>Exemplos:</b><br/>
-<table cellpadding="10">
-<tr>
-<th valign="top">
-UC1
-</th>
-<td>
-avaliação por projectos (2) + testes (2)<br/>
-	                das 14 semanas de aulas,<br/>
-	                3 semanas foram devotadas aos projectos (4h por dia) --> 4h * 6dias * 3 semanas (=72)<br/>
-	                estudaram para os testes 3h/semana ou estudaram intensamente na semana do teste<br/>
-	                <b>Totalizando o trabalho autónomo para esta UC = 72h/14 + 3h = <span style="color: red">8,1h/semana</span></b>
-</td>
-</tr>
-<tr>
-<th valign="top">
-UC2
-</th>
-<td>
-avaliação por testes + exame<br/>
-	                estudaram para os testes 3,5h/semana ou estudaram intensamente na semana do teste.<br/>
-	                <b>Totalizando o trabalho autónomo tem-se para esta UC <span style="color: red">3,5h/semana</span>.</b>
-</td>	                
-<tr>
-<th valign="top">
-UC3
-</th>
-<td>
-.......
-</td>
-</table>
 
 <p><b>NHTA = <span style="color: red">soma trabalho autónomo para todas as UC</span></b></p>
 
@@ -129,6 +98,8 @@ UC3
 				<fr:property name="hideValidators" value="false"/>
 			</fr:layout>
 		</fr:edit>
+		
+		<html:submit onclick="this.form.method.value='simulateECTSCredits';"><bean:message key="button.simulateECTS" bundle="INQUIRIES_RESOURCES"/></html:submit>	
 		
 		<p><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p><br/>
 

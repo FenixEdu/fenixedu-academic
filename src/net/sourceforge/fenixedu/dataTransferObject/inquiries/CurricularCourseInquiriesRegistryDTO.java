@@ -24,6 +24,8 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
     private Double studyDaysSpentInExamsSeason;
 
+    private Integer autonomousWorkHoursForSimulation;
+
     public CurricularCourseInquiriesRegistryDTO(final InquiriesRegistry inquiriesRegistry) {
 	super();
 	setInquiriesRegistry(inquiriesRegistry);
@@ -65,13 +67,20 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     public Double getCalculatedECTSCredits() {
+	return calculateECTSCredits(getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
+		.getWeeklyHoursSpentInClassesSeason());
+    }
 
-	if (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null) {
+    public Double getSimulatedECTSCredits() {
+	return calculateECTSCredits(getAutonomousWorkHoursForSimulation());
+    }
+
+    public Double calculateECTSCredits(final Integer weeklyHoursSpentInClassesSeason) {
+
+	if (getWeeklyHoursSpentPercentage() == null || getStudyDaysSpentInExamsSeason() == null
+		|| weeklyHoursSpentInClassesSeason == null) {
 	    return 0d;
 	}
-
-	Integer weeklyHoursSpentInClassesSeason = getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
-		.getWeeklyHoursSpentInClassesSeason();
 
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
 	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)
@@ -87,6 +96,14 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
     private ExecutionSemester getExecutionSemester() {
 	return getInquiriesRegistry().getExecutionPeriod();
+    }
+
+    public Integer getAutonomousWorkHoursForSimulation() {
+	return autonomousWorkHoursForSimulation;
+    }
+
+    public void setAutonomousWorkHoursForSimulation(Integer autonomousWorkHoursForSimulation) {
+	this.autonomousWorkHoursForSimulation = autonomousWorkHoursForSimulation;
     }
 
 }

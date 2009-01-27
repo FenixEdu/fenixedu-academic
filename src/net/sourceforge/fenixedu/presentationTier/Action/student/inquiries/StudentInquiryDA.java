@@ -3,14 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiry;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiryNotAnswer;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SubmitStudentSpentTimeInPeriod;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.RetrieveOrCreateStudentInquiriesRegistries;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +10,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.RetrieveOrCreateStudentInquiriesRegistries;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SubmitStudentSpentTimeInPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiry;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiryNotAnswer;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
@@ -68,7 +64,8 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = lastPeriod.getExecutionPeriod();
 
 	final Student student = AccessControl.getPerson().getStudent();
-	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) RetrieveOrCreateStudentInquiriesRegistries.run(student, executionSemester);
+	final Collection<InquiriesRegistry> coursesToAnswer = (Collection<InquiriesRegistry>) RetrieveOrCreateStudentInquiriesRegistries
+		.run(student, executionSemester);
 
 	boolean isAnyInquiryToAnswer = false;
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
@@ -102,13 +99,42 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
 
 	try {
-	    SubmitStudentSpentTimeInPeriod.run(AccessControl.getPerson().getStudent(), courses,
-		    weeklySpentHours.getInteger(), executionSemester);
+	    SubmitStudentSpentTimeInPeriod.run(AccessControl.getPerson().getStudent(), courses, weeklySpentHours.getInteger(),
+		    executionSemester);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}
 
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
+    }
+
+    public ActionForward simulateECTSCredits(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
+		.getExecutionPeriod();
+
+	List<CurricularCourseInquiriesRegistryDTO> courses = (List<CurricularCourseInquiriesRegistryDTO>) getRenderedObject("hoursAndDaysByCourse");
+	VariantBean weeklySpentHours = (VariantBean) getRenderedObject("weeklySpentHours");
+
+	if (!SubmitStudentSpentTimeInPeriod.checkTotalPercentageDistribution(courses)) {
+	    addActionMessage(request, "error.weeklyHoursSpentPercentage.is.not.100.percent");
+	} else if (!SubmitStudentSpentTimeInPeriod.checkTotalStudyDaysSpentInExamsSeason(courses)) {
+	    addActionMessage(request, "error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
+	} else {
+	    RenderUtils.invalidateViewState("hoursAndDaysByCourse");
+	    for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+		curricularCourseInquiriesRegistryDTO.setAutonomousWorkHoursForSimulation(weeklySpentHours.getInteger());
+	    }
+	}
+
+	request.setAttribute("executionSemester", executionSemester);
+	request.setAttribute("courses", courses);
+	request.setAttribute("student", AccessControl.getPerson().getStudent());
+	final VariantBean wsh = new VariantBean();
+	wsh.setInteger(null);
+	request.setAttribute("weeklySpentHours", wsh);
+	return actionMapping.findForward("chooseCourse");
     }
 
     public ActionForward showJustifyNotAnswered(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -133,7 +159,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    addActionMessage(request, "error.inquiries.notAnsweredFillAtLeastOneField");
 	    return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	}
-	
+
 	if (inquiriesRegistry.getStudent().getPerson() != AccessControl.getPerson()) {
 	    // FIXME: ERROR MESSAGE
 	    return null;
@@ -141,19 +167,18 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
 	InquiryNotAnsweredJustification justification = InquiryNotAnsweredJustification.valueOf(notAnsweredJustification);
 	String notAnsweredOtherJustification = (String) form.get("notAnsweredOtherJustification");
-	
-	if(justification == InquiryNotAnsweredJustification.OTHER ){
-	    if(StringUtils.isEmpty(notAnsweredOtherJustification)){
+
+	if (justification == InquiryNotAnsweredJustification.OTHER) {
+	    if (StringUtils.isEmpty(notAnsweredOtherJustification)) {
 		addActionMessage(request, "error.inquiries.fillOtherJustification");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
-	    } else if(notAnsweredOtherJustification.length() > 200){
+	    } else if (notAnsweredOtherJustification.length() > 200) {
 		addActionMessage(request, "error.inquiries.fillOtherJustificationLengthOversized");
 		return handleDontRespondError(actionMapping, request, inquiriesRegistry);
 	    }
 	}
 
-	WriteStudentInquiryNotAnswer.run(inquiriesRegistry, justification,
-		notAnsweredOtherJustification);
+	WriteStudentInquiryNotAnswer.run(inquiriesRegistry, justification, notAnsweredOtherJustification);
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 
