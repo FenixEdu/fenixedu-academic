@@ -17,14 +17,20 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertNonAffiliatedTeacher;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorShipNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -117,75 +123,54 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("viewTeachingStaff");
     }
 
-    // Extremely likely to be unused. service invocation was being made with
-    // wrong argument types.
-    // public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping,
-    // ActionForm actionForm, HttpServletRequest request,
-    // HttpServletResponse response) throws FenixFilterException,
-    // FenixServiceException {
-    //
-    // DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-    // String nonAffiliatedTeacherName = (String)
-    // dynaActionForm.get("nonAffiliatedTeacherName");
-    // Integer nonAffiliatedTeacherID = (Integer)
-    // dynaActionForm.get("nonAffiliatedTeacherID");
-    // Integer nonAffiliatedTeacherInstitutionID = (Integer)
-    // dynaActionForm.get("nonAffiliatedTeacherInstitutionID");
-    // String nonAffiliatedTeacherInstitutionName = (String)
-    // dynaActionForm.get("nonAffiliatedTeacherInstitutionName");
-    //
-    // if (nonAffiliatedTeacherID == 0 && nonAffiliatedTeacherName.length() ==
-    // 0) {
-    // // define a teacher name!
-    //
-    // return viewTeachingStaff(mapping, actionForm, request, response);
-    // }
-    //
-    // if (nonAffiliatedTeacherInstitutionID == 0 &&
-    // nonAffiliatedTeacherInstitutionName.length() == 0) {
-    // // define an institution!
-    //
-    // return viewTeachingStaff(mapping, actionForm, request, response);
-    // }
-    //
-    // if (nonAffiliatedTeacherInstitutionID == 0) {
-    // try {
-    // Unit institution = (Unit)
-    // InsertInstitution.run(nonAffiliatedTeacherInstitutionName);
-    // nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
-    // } catch (ExistingServiceException e) {
-    // // define message error...
-    // InfoInstitution infoInstitution = (InfoInstitution)
-    // ReadInstitutionByName.run(nonAffiliatedTeacherInstitutionName);
-    // nonAffiliatedTeacherInstitutionID = infoInstitution.getIdInternal();
-    // }
-    // }
-    //
-    // if (nonAffiliatedTeacherID == 0) {
-    // // create non affiliated teacher
-    // Object[] args = { nonAffiliatedTeacherName,
-    // nonAffiliatedTeacherInstitutionID };
-    // try {
-    // NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher)
-    // ServiceUtils.executeService(
-    // "InsertNonAffiliatedTeacher", args);
-    // nonAffiliatedTeacherID = nonAffiliatedTeacher.getIdInternal();
-    // } catch (NotExistingServiceException e) {
-    // // define message error...
-    // return viewTeachingStaff(mapping, actionForm, request, response);
-    // }
-    //
-    // }
-    //
-    // Integer executionCourseID = (Integer)
-    // dynaActionForm.get("executionCourseID");
-    // request.setAttribute("executionCourseID", executionCourseID);
-    // request.setAttribute("nonAffiliatedTeacherID", nonAffiliatedTeacherID);
-    //
-    // return insertNonAffiliatedTeacher(mapping, actionForm, request,
-    // response);
-    //
-    // }
+    public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
+	Integer nonAffiliatedTeacherID = (Integer) dynaActionForm.get("nonAffiliatedTeacherID");
+	Integer nonAffiliatedTeacherInstitutionID = (Integer) dynaActionForm.get("nonAffiliatedTeacherInstitutionID");
+	String nonAffiliatedTeacherInstitutionName = (String) dynaActionForm.get("nonAffiliatedTeacherInstitutionName");
+
+	if (nonAffiliatedTeacherID == 0 && nonAffiliatedTeacherName.length() == 0) {
+	    // define a teacher name!
+	    return viewTeachingStaff(mapping, actionForm, request, response);
+	}
+
+	if (nonAffiliatedTeacherInstitutionID == 0 && nonAffiliatedTeacherInstitutionName.length() == 0) {
+	    // define an institution!
+	    return viewTeachingStaff(mapping, actionForm, request, response);
+	}
+
+	if (nonAffiliatedTeacherInstitutionID == 0) {
+	    try {
+		Unit institution = (Unit) InsertInstitution.run(nonAffiliatedTeacherInstitutionName);
+		nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
+	    } catch (ExistingServiceException e) {
+		// define message error...
+		nonAffiliatedTeacherInstitutionID = UnitUtils.readExternalInstitutionUnitByName(
+			nonAffiliatedTeacherInstitutionName).getIdInternal();
+	    }
+	}
+
+	if (nonAffiliatedTeacherID == 0) {
+	    // create non affiliated teacher
+	    try {
+		nonAffiliatedTeacherID = InsertNonAffiliatedTeacher.run(nonAffiliatedTeacherName,
+			nonAffiliatedTeacherInstitutionID).getIdInternal();
+	    } catch (NotExistingServiceException e) {
+		// define message error...
+		return viewTeachingStaff(mapping, actionForm, request, response);
+	    }
+	}
+
+	Integer executionCourseID = (Integer) dynaActionForm.get("executionCourseID");
+	request.setAttribute("executionCourseID", executionCourseID);
+	request.setAttribute("nonAffiliatedTeacherID", nonAffiliatedTeacherID);
+
+	return insertNonAffiliatedTeacher(mapping, actionForm, request, response);
+
+    }
 
     public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
@@ -203,16 +188,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 	    nonAffiliatedTeacherID = (Integer) request.getAttribute("nonAffiliatedTeacherID");
 	}
 
-	// InsertProfessorShipNonAffiliatedTeacher
-	Object[] args = { nonAffiliatedTeacherID, executionCourseID };
-
-	try {
-	    ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
-	} catch (ExistingServiceException e) {
-	    // TODO Auto-generated catch block
-	    // error message!!
-	    e.printStackTrace();
-	}
+	InsertProfessorShipNonAffiliatedTeacher.run(nonAffiliatedTeacherID, executionCourseID);
 
 	return viewTeachingStaff(mapping, actionForm, request, response);
     }

@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -16,7 +18,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class InsertNonAffiliatedTeacher extends FenixService {
 
-    public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws NotExistingServiceException {
+    @Checked("RolePredicates.GEP_PREDICATE")
+    @Service
+    public static NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID)
+	    throws NotExistingServiceException {
 	final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
 	if (institution == null) {
 	    throw new NotExistingServiceException("no.institution");
