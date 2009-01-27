@@ -3569,16 +3569,8 @@ public class Registration extends Registration_Base {
 	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    final CycleCurriculumGroup secondCycle = getLastStudentCurricularPlan().getSecondCycle();
 
-	    if (secondCycle != null && !secondCycle.isExternal()) {
-		if (getLastStudentCurricularPlan().getFirstCycle() == null) {
-		    return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
-		}
-
-		final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(this,
-			getLastStudentCurricularPlan().getFirstCycle());
-		return registrationConclusionBean.isConcluded()
-			&& previousExecutionYear.getFirstExecutionPeriod().containsDay(
-				registrationConclusionBean.getConclusionDate());
+	    if (secondCycle != null && !secondCycle.isExternal() && getLastStudentCurricularPlan().getFirstCycle() == null) {
+		return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
 	    }
 	}
 
