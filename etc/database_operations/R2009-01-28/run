@@ -41,3 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table Inquiries Course" alterTableInquiriesCourse.sql
+execute "Update stuff." updates.sql
