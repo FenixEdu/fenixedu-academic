@@ -60,6 +60,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -988,6 +989,38 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
+    int x = 0;
+
+    public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
+	    CurricularStage curricularStage, CompetenceCourse competenceCourse, CourseGroup parentCourseGroup,
+	    CurricularPeriod curricularPeriod, AcademicInterval begin, AcademicInterval end) {
+	if (competenceCourse.getCurricularCourse(this) != null) {
+	    throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
+	}
+	return reallyCreateCurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse,
+		parentCourseGroup, curricularPeriod, begin, end);
+    }
+
+    @Service
+    public CurricularCourse reallyCreateCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
+	    CurricularStage curricularStage, CompetenceCourse competenceCourse, CourseGroup parentCourseGroup,
+	    CurricularPeriod curricularPeriod, AcademicInterval begin, AcademicInterval end) {
+	x++;
+	return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse, parentCourseGroup,
+		curricularPeriod, null, null);
+    }
+
+    @Service
+    public OptionalCurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String optionalNamePt,
+	    String optionalNameEn, CurricularStage curricularStage, CurricularPeriod curricularPeriod, AcademicInterval begin,
+	    AcademicInterval end) {
+	return new OptionalCurricularCourse(parentCourseGroup, optionalNamePt, optionalNameEn, curricularStage, curricularPeriod,
+		null, null);
+    }
+
+
+    
+    
     public CurricularCourse createOptionalCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
 	    CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionSemester beginExecutionPeriod,
 	    ExecutionSemester endExecutionPeriod) {
@@ -1842,4 +1875,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	ExecutionYear year = ExecutionYear.readByAcademicInterval(academicInterval);
 	return year.getDegreeCurricularPlans();
     }
+
+    public boolean isCurrentUserScientificCommissionMember(final ExecutionYear executionYear) {
+	final Person person = AccessControl.getPerson();
+	return person != null && getDegree().isMemberOfCurrentScientificCommission(person, executionYear);
+    }
+
 }

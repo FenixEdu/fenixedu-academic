@@ -915,6 +915,17 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return false;
     }
 
+    public boolean isMemberOfCurrentScientificCommission(final Person person, final ExecutionYear executionYear) {
+	if (person != null) {
+	    for (ScientificCommission member : getScientificCommissionMembers(executionYear)) {
+		if (member.getPerson() == person) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public Collection<ScientificCommission> getCurrentScientificCommissionMembers() {
 	for (ExecutionYear ey = ExecutionYear.readCurrentExecutionYear(); ey != null; ey = ey.getPreviousExecutionYear()) {
 	    Collection<ScientificCommission> members = getScientificCommissionMembers(ey);

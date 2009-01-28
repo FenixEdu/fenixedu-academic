@@ -4,8 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:xhtml/>
 
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.domain.ScientificCommission"%><html:xhtml/>
+
+<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+<bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 
@@ -47,6 +51,8 @@
 	    <p class="mvert0"><bean:message key="ThesisPresentationState.CONFIRMED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.CONFIRMED.label"/></p>
 	    <p class="mvert0"><bean:message key="ThesisPresentationState.EVALUATED.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message key="ThesisPresentationState.EVALUATED.label"/></p>
     </div>
+
+	<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
 
     <fr:view name="theses" schema="coordinator.thesis.table">
         <fr:layout name="tabular-sortable">
@@ -99,4 +105,16 @@
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         </fr:layout>
     </fr:view>
+
+	<% } else { %>
+	    <fr:view name="theses" schema="coordinator.thesis.table">
+    	    <fr:layout name="tabular-sortable">
+        	    	<fr:property name="classes" value="tstyle1"/>
+            	<fr:property name="sortParameter" value="sortBy"/>
+            	<fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s", dcpId, executionYearId) %>"/>
+            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
+        	</fr:layout>
+    	</fr:view>
+	<% } %>
+
 </logic:notEmpty>
