@@ -1058,7 +1058,7 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<ExecutionYear> getEnrolmentsExecutionYears() {
-	final Collection<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	final Set<ExecutionYear> result = new HashSet<ExecutionYear>();
 
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
 	    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
