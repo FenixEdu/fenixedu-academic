@@ -33,7 +33,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static Unit run(Unit parentUnit, MultiLanguageString unitName, String unitCostCenter, String acronym, YearMonthDay begin,
 	    YearMonthDay end, PartyTypeEnum type, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
