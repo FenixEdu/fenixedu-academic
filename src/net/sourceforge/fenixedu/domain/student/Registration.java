@@ -3560,15 +3560,17 @@ public class Registration extends Registration_Base {
 
 	final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
 	if (getStartExecutionYear() == executionYear) {
-	    return true;
+	    return getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
+
 	} else if (getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
 	    return startDate.getYear() == executionYear.getBeginCivilYear();
+
 	} else if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE
 		&& previousExecutionYear.getLastExecutionPeriod().containsDay(startDate)) {
 	    return true;
+
 	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    final CycleCurriculumGroup secondCycle = getLastStudentCurricularPlan().getSecondCycle();
-
 	    if (secondCycle != null && !secondCycle.isExternal() && getLastStudentCurricularPlan().getFirstCycle() == null) {
 		return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
 	    }
