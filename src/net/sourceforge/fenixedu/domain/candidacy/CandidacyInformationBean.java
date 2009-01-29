@@ -370,7 +370,7 @@ public class CandidacyInformationBean implements Serializable {
 
 	if (getCountryOfResidence() == null || getGrantOwnerType() == null || getDislocatedFromPermanentResidence() == null
 		|| (getMaritalStatus() == null || getMaritalStatus() == MaritalStatus.UNKNOWN)
-		|| getProfessionalCondition() == null || getProfessionType() == null || getMotherProfessionType() == null
+		|| getProfessionalCondition() == null || getProfessionType() == null || getMotherSchoolLevel() == null
 		|| getMotherProfessionType() == null || getMotherProfessionalCondition() == null
 		|| getFatherProfessionalCondition() == null || getFatherProfessionType() == null
 		|| getFatherSchoolLevel() == null || getCountryWhereFinishedPrecedentDegree() == null
