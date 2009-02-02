@@ -12,7 +12,9 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportClosedExtraWorkMonth;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import oracle.jdbc.OracleTypes;
 
@@ -154,17 +156,18 @@ public class GiafInterface {
 	    query.append(ExportClosedExtraWorkMonth.extraNightWorkMealMovementCode);
 	    query.append(") and a.emp_num =");
 	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
-	    int requestsNumber = extraWorkRequest.getAssiduousness().getExtraWorkRequests(paymentYear, paymentMonth).size();
-	    if (requestsNumber > 1) {
+
+	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(), paymentYear,
+		    paymentMonth);
+	    if (hasMoreThanOneCostCenter) {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());
 	    }
 	    System.out.println(query.toString());
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
 	    rs = stmt.executeQuery();
-	    // resetExtraWorkRequestAmounts(extraWorkRequest);
 	    while (rs.next()) {
-		if (requestsNumber > 1) {
+		if (hasMoreThanOneCostCenter) {
 		    if (extraWorkRequest.getUnit().getCostCenterCode().intValue() != rs.getInt("emp_ccusto")) {
 			continue;
 		    }
@@ -210,15 +213,16 @@ public class GiafInterface {
 	}
     }
 
-    private void resetExtraWorkRequestAmounts(ExtraWorkRequest extraWorkRequest) {
-	extraWorkRequest.setSundayAmount(new Double(0));
-	extraWorkRequest.setSaturdayAmount(new Double(0));
-	extraWorkRequest.setHolidayAmount(new Double(0));
-	extraWorkRequest.setWorkdayFirstLevelAmount(new Double(0));
-	extraWorkRequest.setWorkdaySecondLevelAmount(new Double(0));
-	extraWorkRequest.setExtraNightFirstLevelAmount(new Double(0));
-	extraWorkRequest.setExtraNightSecondLevelAmount(new Double(0));
-	extraWorkRequest.setExtraNightMealAmount(new Double(0));
+    private boolean hasMoreThanOneCostCenter(Assiduousness assiduousness, int paymentYear, int paymentMonth) {
+	Unit unit = null;
+	for (ExtraWorkRequest extraWorkRequest : assiduousness.getExtraWorkRequests(paymentYear, paymentMonth)) {
+	    if (unit == null) {
+		unit = extraWorkRequest.getUnit();
+	    } else if (!unit.equals(extraWorkRequest.getUnit())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public double getTotalMonthAmount(Partial closedYearMonth) throws ExcepcaoPersistencia {
