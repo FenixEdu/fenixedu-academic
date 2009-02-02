@@ -153,7 +153,7 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public Integer getGiafCode(AssiduousnessStatusHistory assiduousnessStatusHistory) {
-	if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equalsIgnoreCase("Contrato a termo certo")) {
+	if (assiduousnessStatusHistory.getAssiduousnessStatus().isContractedEmployee()) {
 	    if (getGiafCodeContractedStatus() == null) {
 		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
 			.getAssiduousness().getEmployee().getEmployeeNumber().toString());

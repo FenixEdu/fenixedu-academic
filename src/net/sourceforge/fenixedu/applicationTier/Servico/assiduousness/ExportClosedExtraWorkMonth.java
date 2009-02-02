@@ -123,23 +123,21 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	StringBuilder extraWorkResult = new StringBuilder();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    state.unjustifiedDays = new ArrayList<LocalDate>();
-	    if (!isADISTEmployee(assiduousnessClosedMonth)) {
-		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
-			.getAssiduousnessStatusHistory().getAssiduousness()), state);
-		if (getWorkAbsences) {
-		    result.append(lineResult);
-		    List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
-			    .getAssiduousnessStatusHistory().getAssiduousness());
-		    if (leaveBeanList != null) {
-			for (LeaveBean leaveBean : leaveBeanList) {
-			    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
-				    endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1), state));
-			}
+	    String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
+		    .getAssiduousnessStatusHistory().getAssiduousness()), state);
+	    if (getWorkAbsences) {
+		result.append(lineResult);
+		List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
+			.getAssiduousnessStatusHistory().getAssiduousness());
+		if (leaveBeanList != null) {
+		    for (LeaveBean leaveBean : leaveBeanList) {
+			result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
+				endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1), state));
 		    }
 		}
-		if (getExtraWorkMovements) {
-		    extraWorkResult.append(getAssiduousnessExtraWork(assiduousnessClosedMonth));
-		}
+	    }
+	    if (getExtraWorkMovements) {
+		extraWorkResult.append(getAssiduousnessExtraWork(assiduousnessClosedMonth));
 	    }
 	}
 	if (endDate.getDayOfMonth() != 30 && getExtraWorkMovements) {
@@ -620,14 +618,9 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return null;
     }
 
-    private static Boolean isADISTEmployee(AssiduousnessClosedMonth assiduousnessClosedMonth) {
-	return (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousnessStatus().getDescription()
-		.equals("Contratado pela ADIST"));
-    }
-
     private static Boolean isContractedEmployee(Assiduousness assiduousness, LocalDate start, LocalDate end) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousness.getStatusBetween(start, end)) {
-	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equals("Contrato a termo certo")) {
+	    if (assiduousnessStatusHistory.getAssiduousnessStatus().isContractedEmployee()) {
 		return true;
 	    }
 	}
