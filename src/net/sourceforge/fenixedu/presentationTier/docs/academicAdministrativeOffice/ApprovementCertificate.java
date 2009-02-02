@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -100,7 +101,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
-	    if (!cycle.isConclusionProcessed()) {
+	    if (!cycle.isConclusionProcessed() || isDEARegistration()) {
 		final ApprovementCertificateRequest request = ((ApprovementCertificateRequest) getDocumentRequest());
 		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
 		ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
@@ -119,6 +120,11 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 		entries.clear();
 	    }
 	}
+    }
+
+    // TODO: remove this after DEA diplomas and certificates
+    private boolean isDEARegistration() {
+	return getRegistration().getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
     }
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,

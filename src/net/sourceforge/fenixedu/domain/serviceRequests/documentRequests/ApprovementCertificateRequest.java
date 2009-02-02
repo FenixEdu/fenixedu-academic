@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -37,18 +38,28 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
 
 	if (isEmployee()) {
-	    if (getRegistration().isConcluded()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+
+	    // TODO: remove this after DEA diplomas and certificates
+	    if (!isDEARegistration()) {
+
+		if (getRegistration().isConcluded()) {
+		    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+		}
+
+		if (getRegistration().isRegistrationConclusionProcessed()) {
+		    throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+		}
 	    }
 
-	    if (getRegistration().isRegistrationConclusionProcessed()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-	    }
-
-	    if (getEntriesToReport().isEmpty()) {
+	    if (getEntriesToReport(isDEARegistration()).isEmpty()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 	}
+    }
+
+    // TODO: remove this after DEA diplomas and certificates
+    private boolean isDEARegistration() {
+	return getRegistration().getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
     }
 
     private boolean isEmployee() {
@@ -69,15 +80,19 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	if (academicServiceRequestBean.isToProcess()) {
 
-	    if (getRegistration().isConcluded()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+	    // TODO: remove this after DEA diplomas and certificate
+	    if (!isDEARegistration()) {
+
+		if (getRegistration().isConcluded()) {
+		    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
+		}
+
+		if (getRegistration().isRegistrationConclusionProcessed()) {
+		    throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
+		}
 	    }
 
-	    if (getRegistration().isRegistrationConclusionProcessed()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-	    }
-
-	    if (getEntriesToReport().isEmpty()) {
+	    if (getEntriesToReport(isDEARegistration()).isEmpty()) {
 		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	    }
 
@@ -120,7 +135,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     private int calculateNumberOfUnits() {
-	return getEntriesToReport().size() + getExtraCurricularEntriesToReport().size() + getPropaedeuticEntriesToReport().size();
+	return getEntriesToReport(isDEARegistration()).size() + getExtraCurricularEntriesToReport().size()
+		+ getPropaedeuticEntriesToReport().size();
     }
 
     @Override
@@ -144,14 +160,14 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return !hasConcluded() || (units != null && units.intValue() == calculateNumberOfUnits());
     }
 
-    final private Collection<ICurriculumEntry> getEntriesToReport() {
+    final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
 	final HashSet<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
 	final Registration registration = getRegistration();
 	ICurriculum curriculum;
 	if (registration.isBolonha()) {
 	    for (final CycleCurriculumGroup cycle : registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops()) {
-		if (cycle.hasAnyApprovedCurriculumLines() && !cycle.isConclusionProcessed()) {
+		if (cycle.hasAnyApprovedCurriculumLines() && (useConcluded || !cycle.isConclusionProcessed())) {
 		    curriculum = cycle.getCurriculum(getFilteringDate());
 		    filterEntries(result, this, curriculum);
 		}
