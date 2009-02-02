@@ -577,6 +577,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Morada");
 	spreadsheet.setHeader("Localidade");
 	spreadsheet.setHeader("Código Postal");
+	spreadsheet.setHeader("Validade");
 
 	for (LibraryCardDTO libraryCardDTO : libraryCardSearch.getSearchResult()) {
 	    if (libraryCardDTO.getPin() != null) {
@@ -593,6 +594,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 		row.setCell(person.getAddress());
 		row.setCell(person.getParishOfResidence());
 		row.setCell(person.getPostalCode());
+		row.setCell(libraryCardDTO.getValidUntil() != null ? libraryCardDTO.getValidUntil().toString() : "");
 	    }
 	}
 	response.setContentType("application/vnd.ms-excel");
