@@ -93,13 +93,13 @@ curriculares em que se encontra inscrito no semestre fora das aulas (horas de co
 			<fr:layout name="tabular-editable" >
 				<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
 				<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
-				<fr:property name="suffixes" value=",h,%,dias,,,"/>
+				<fr:property name="suffixes" value=",h,%,dias,h,,"/>
 				<fr:property name="validatorClasses" value="error0"/>
 				<fr:property name="hideValidators" value="false"/>
 			</fr:layout>
 		</fr:edit>
 		
-		<html:submit onclick="this.form.method.value='simulateECTSCredits';"><bean:message key="button.simulateECTS" bundle="INQUIRIES_RESOURCES"/></html:submit>	
+		<html:submit onclick="this.form.method.value='simulateAWH';"><bean:message key="button.simulateAWH" bundle="INQUIRIES_RESOURCES"/></html:submit>	
 		
 		<p><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p><br/>
 

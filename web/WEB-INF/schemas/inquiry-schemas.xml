@@ -94,7 +94,7 @@
             <property name="upperBound" value="42"/>
         </validator>			
 	</slot>
-	<slot name="simulatedECTSCredits" key="label.calculatedEctsCredits" read-only="true" />
+	<slot name="simulatedSpentHours" key="label.calculatedAWH" read-only="true" />
 </schema>
 
 <schema name="teacherInquiry.selectShiftTypes"

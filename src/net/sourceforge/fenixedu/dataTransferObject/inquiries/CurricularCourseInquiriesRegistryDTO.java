@@ -98,6 +98,15 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	return getInquiriesRegistry().getExecutionPeriod();
     }
 
+    public Double getSimulatedSpentHours() {
+	if (getWeeklyHoursSpentPercentage() == null || getAutonomousWorkHoursForSimulation() == null) {
+	    return 0d;
+	}
+
+	final double result = (getWeeklyHoursSpentPercentage() / 100d) * getAutonomousWorkHoursForSimulation();
+	return new BigDecimal(result).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
     public Integer getAutonomousWorkHoursForSimulation() {
 	return autonomousWorkHoursForSimulation;
     }

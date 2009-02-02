@@ -44,20 +44,27 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
+	YearDelegate yearDelegate = null;
 	ExecutionSemester executionPeriod = openPeriod.getExecutionPeriod();
 	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
-		YearDelegate yearDelegate = (YearDelegate) delegate;
-		if (yearDelegate.isActiveForExecutionYear(executionPeriod.getExecutionYear())) {
-		    request.setAttribute("delegate", yearDelegate);
-		    request.setAttribute("executionPeriod", executionPeriod);
-		    request.setAttribute("answeredExecutionCourses", yearDelegate
-			    .getAnsweredInquiriesExecutionCourses(executionPeriod));
-		    request.setAttribute("notAnsweredExecutionCourses", yearDelegate
-			    .getNotAnsweredInquiriesExecutionCourses(executionPeriod));
-		    return actionMapping.findForward("chooseCoursesToAnswer");
+		if (delegate.isActiveForExecutionYear(executionPeriod.getExecutionYear())) {
+		    if (yearDelegate == null
+			    || delegate.getDelegateFunction().getEndDate().isAfter(
+				    yearDelegate.getDelegateFunction().getEndDate())) {
+			yearDelegate = (YearDelegate) delegate;
+		    }
 		}
 	    }
+	}
+
+	if (yearDelegate != null) {
+	    request.setAttribute("delegate", yearDelegate);
+	    request.setAttribute("executionPeriod", executionPeriod);
+	    request.setAttribute("answeredExecutionCourses", yearDelegate.getAnsweredInquiriesExecutionCourses(executionPeriod));
+	    request.setAttribute("notAnsweredExecutionCourses", yearDelegate
+		    .getNotAnsweredInquiriesExecutionCourses(executionPeriod));
+	    return actionMapping.findForward("chooseCoursesToAnswer");
 	}
 
 	return actionMapping.findForward("inquiriesClosed");

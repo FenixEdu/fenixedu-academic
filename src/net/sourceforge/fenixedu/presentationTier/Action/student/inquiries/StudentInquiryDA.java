@@ -108,7 +108,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 
-    public ActionForward simulateECTSCredits(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward simulateAWH(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.STUDENT)
