@@ -30,7 +30,9 @@ public enum RegistrationAgreement {
 
     OTHER_EXTERNAL(false, false),
 
-    MITP(false, true);
+    MITP(false, true),
+    
+    SMILE(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
