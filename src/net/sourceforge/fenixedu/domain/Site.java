@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Element;
@@ -195,6 +196,9 @@ public abstract class Site extends Site_Base {
 	long size = 0;
 
 	for (Section section : getAssociatedSections()) {
+	    for (Attachment attachment : section.getChildren(Attachment.class)) {
+		size += attachment.getFile().getSize();
+	    }
 	    for (Item item : section.getAssociatedItems()) {
 		for (FileContent file : item.getFileItems()) {
 		    size += file.getSize();
