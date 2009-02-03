@@ -170,6 +170,11 @@
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
+<schema name="EnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
 <schema name="PhotocopyRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
 		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
 </schema>
@@ -303,6 +308,12 @@
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
 </schema>
 
+<schema name="EnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
 <schema name="PhotocopyRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
 		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
 </schema>
@@ -396,6 +407,10 @@
 
 <schema name="CertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
+<schema name="EnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"

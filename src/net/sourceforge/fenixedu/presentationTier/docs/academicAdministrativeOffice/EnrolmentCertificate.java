@@ -4,9 +4,12 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
@@ -21,6 +24,27 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
 	addParameter("curricularYear", getCurricularYear());
 	addParameter("enrolmentsInfo", getEnrolmentsInfo());
+    }
+
+    @Override
+    protected EnrolmentCertificateRequest getDocumentRequest() {
+	return (EnrolmentCertificateRequest) super.getDocumentRequest();
+    }
+
+    @Override
+    protected void addPriceFields() {
+	final EnrolmentCertificateRequest request = getDocumentRequest();
+	final PostingRule postingRule = request.getEvent().getPostingRule();
+
+	if (postingRule instanceof EnrolmentCertificateRequestPR) {
+	    final EnrolmentCertificateRequestPR requestPR = (EnrolmentCertificateRequestPR) postingRule;
+	    addParameter("amountPerPage", requestPR.getAmountPerPage());
+	    addParameter("baseAmountPlusAmountForUnits", requestPR.calculateAmountToPayPlusUnits(request.getEvent()));
+	    addParameter("urgencyAmount", request.getUrgentRequest() ? requestPR.getBaseAmount() : Money.ZERO);
+	    addParameter("printPriceFields", printPriceParameters(request));
+	} else {
+	    super.addPriceFields();
+	}
     }
 
     @Override

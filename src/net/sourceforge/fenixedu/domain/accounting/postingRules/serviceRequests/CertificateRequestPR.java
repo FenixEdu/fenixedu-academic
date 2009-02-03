@@ -62,7 +62,7 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
 	return totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
     }
 
-    private Money calculateAmountToPayForPages(CertificateRequestEvent event) {
+    protected Money calculateAmountToPayForPages(CertificateRequestEvent event) {
 	return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
     }
 

@@ -178,7 +178,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return getDocumentRequest().isCertificate();
     }
 
-    final private void addPriceFields() {
+    protected void addPriceFields() {
 	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
 	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
@@ -199,7 +199,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
     }
 
-    final private boolean printPriceParameters(final CertificateRequest certificateRequest) {
+    final protected boolean printPriceParameters(final CertificateRequest certificateRequest) {
 	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && !certificateRequest
 		.isFree())
 		|| certificateRequest.hasEvent();

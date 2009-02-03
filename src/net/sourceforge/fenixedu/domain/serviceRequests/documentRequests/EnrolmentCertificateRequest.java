@@ -6,6 +6,7 @@ import java.util.HashSet;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Base {
@@ -121,6 +122,11 @@ public class EnrolmentCertificateRequest extends EnrolmentCertificateRequest_Bas
     @Override
     public boolean hasPersonalInfo() {
 	return true;
+    }
+
+    @Override
+    public CertificateRequestEvent getEvent() {
+	return (CertificateRequestEvent) super.getEvent();
     }
 
 }
