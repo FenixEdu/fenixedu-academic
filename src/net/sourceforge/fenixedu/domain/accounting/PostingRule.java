@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -326,6 +327,10 @@ public abstract class PostingRule extends PostingRule_Base {
 	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
 		this.getClass().getSimpleName() + ".formulaDescription");
     }
+    
+    protected boolean has(final EventType eventType) {
+	return getEventType().equals(eventType);
+    }
 
     abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
 
@@ -334,4 +339,13 @@ public abstract class PostingRule extends PostingRule_Base {
     abstract protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event,
 	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail);
 
+    static public Collection<PostingRule> findPostingRules(final EventType eventType) {
+	final Collection<PostingRule> result = new HashSet<PostingRule>();
+	for (final PostingRule postingRule : RootDomainObject.getInstance().getPostingRulesSet()) {
+	    if (postingRule.has(eventType)) {
+		result.add(postingRule);
+	    }
+	}
+	return result;
+    }
 }
