@@ -532,3 +532,11 @@
 	<slot name="detailed" />
 </schema>
 
+<schema name="ChangePaymentPlan" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan" bundle="APPLICATION_RESOURCES">
+	<slot name="gratuityPaymentPlan" key="label.paymentPlan" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting.paymentPlans.ChangeGratuityEventPaymentPlanProvider" />
+		<property name="format" value="${description}" />
+		<property name="sortBy" value="description" />
+	</slot>
+	<setter signature="changeGratuityPaymentPlan(gratuityPaymentPlan)" />
+</schema>

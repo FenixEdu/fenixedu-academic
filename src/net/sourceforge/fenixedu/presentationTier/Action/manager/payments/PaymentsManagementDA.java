@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCodeMappingBean;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -62,7 +63,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 	@Forward(name = "showReceipt", path = "/manager/payments/receipts/showReceipt.jsp"),
 	@Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp"),
 	@Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
-	@Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp")
+	@Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
+	@Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp")
 
 })
 public class PaymentsManagementDA extends FenixDispatchAction {
@@ -449,5 +451,11 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("viewCodes");
+    }
+    
+    public ActionForward prepareChangePaymentPlan(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("event", getEvent(request));
+	return mapping.findForward("changePaymentPlan");
     }
 }

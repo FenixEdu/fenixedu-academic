@@ -978,4 +978,8 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
+    public boolean isPaymentPlanChangeAllowed() {
+	return false;
+    }
+
 }

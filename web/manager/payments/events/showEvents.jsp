@@ -56,6 +56,12 @@
 				<fr:property name="confirmationKey(open)" value="label.payments.events.confirmOpen" />
 				<fr:property name="confirmationBundle(open)" value="ACADEMIC_OFFICE_RESOURCES"></fr:property>
 				
+				<fr:property name="linkFormat(changePaymentPlan)" value="/payments.do?method=prepareChangePaymentPlan&amp;eventId=${idInternal}" />
+				<fr:property name="key(changePaymentPlan)" value="label.change.paymentPlan" />
+				<fr:property name="bundle(changePaymentPlan)" value="APPLICATION_RESOURCES" />
+				<fr:property name="order(changePaymentPlan)" value="4" />
+				<fr:property name="visibleIf(changePaymentPlan)" value="paymentPlanChangeAllowed" />
+
 				<fr:property name="linkFormat(cancel)" value="/payments.do?method=prepareCancelEvent&amp;eventId=${idInternal}" />
 				<fr:property name="key(cancel)" value="label.cancel" />
 				<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />

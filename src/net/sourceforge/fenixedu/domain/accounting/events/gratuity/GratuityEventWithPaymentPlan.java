@@ -62,6 +62,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
+    public GratuityPaymentPlan getGratuityPaymentPlan() {
+	return (GratuityPaymentPlan) super.getGratuityPaymentPlan();
+    }
+
+    @Override
     public void setGratuityPaymentPlan(final PaymentPlan gratuityPaymentPlan) {
 	throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
     }
@@ -72,6 +77,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	    ensureServiceAgreement();
 	    super.setGratuityPaymentPlan(paymentPlan);
 	}
+    }
+
+    public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
+	setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -384,7 +393,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     @Checked("RolePredicates.MANAGER_PREDICATE")
     protected void disconnect() {
 	if (hasCustomGratuityPaymentPlan()) {
-	    ((CustomGratuityPaymentPlan) getGratuityPaymentPlan()).delete();
+	    ((CustomGratuityPaymentPlan) super.getGratuityPaymentPlan()).delete();
 	}
 	super.setGratuityPaymentPlan(null);
 	super.disconnect();
@@ -413,7 +422,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	    }
 	}
 
-	return result.add(getPayedAmountLessInstallments());
+	if (result.isPositive()) {
+	    result = result.subtract(getTotalDiscount());
+	}
+
+	return result.isPositive() ? result.add(getPayedAmountLessInstallments()) : getPayedAmountLessInstallments();
     }
 
     private Money getPayedAmountLessInstallments() {
@@ -436,4 +449,8 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
+    @Override
+    public boolean isPaymentPlanChangeAllowed() {
+	return true;
+    }
 }
