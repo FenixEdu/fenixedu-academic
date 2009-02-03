@@ -32,7 +32,15 @@
 				final InquiryResponsePeriod inquiryResponsePeriod = executionSemester.getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
 				if (inquiryResponsePeriod == null) {
 		%>
-					<bean:message key="message.teachingInquiries.noResults.msg4" bundle="INQUIRIES_RESOURCES"/>
+				<bean:message key="message.teachingInquiries.noResults.msg4b" bundle="INQUIRIES_RESOURCES"/>
+					
+				<logic:present role="STUDENT">
+					<bean:message key="message.teachingInquiries.noResults.msg4b.participate" bundle="INQUIRIES_RESOURCES"/>
+					<html:link href="<%= request.getContextPath() + "/student/studentInquiry.do?method=showCoursesToAnswer"%>">
+						<bean:message key="message.teachingInquiries.noResults.msg4b.link" bundle="INQUIRIES_RESOURCES"/>	
+					</html:link>!
+				</logic:present>					
+					
 		<%
 				} else if (!inquiryResponsePeriod.getEnd().isBeforeNow()) {
 		%>
