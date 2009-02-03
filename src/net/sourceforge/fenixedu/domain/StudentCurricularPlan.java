@@ -2694,4 +2694,26 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public boolean isEmptyDegree() {
 	return getDegreeCurricularPlan().isEmpty();
     }
+
+    public boolean hasAnyGratuityEventFor(final ExecutionYear executionYear) {
+	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
+	    if (gratuityEvent.isFor(executionYear)) {
+		return true;
+	    }
+	}
+
+	return false;
+
+    }
+
+    public boolean hasAnyGratuitySituationFor(final ExecutionYear executionYear) {
+	for (final GratuitySituation gratuitySituation : getGratuitySituations()) {
+	    if (gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }

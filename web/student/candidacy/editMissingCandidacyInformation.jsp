@@ -6,7 +6,7 @@
 
 <logic:present role="STUDENT">
 
-<h2>Preenchimento de Informação</h2>
+<h2><bean:message  key="label.fill.information" bundle="STUDENT_RESOURCES"/></h2>
 
 <div class="infoop2 mtop2">
 	<strong>
@@ -37,15 +37,30 @@
 </logic:messagesPresent>
 
 <fr:form action="/editMissingCandidacyInformation.do?method=edit">
-	<fr:edit id="candidacyInformationBean"
+
+	<fr:edit id="candidacyInformationBean" name="candidacyInformationBean" visible="false" />
+
+	<fr:edit id="candidacyInformationBean.editPersonalInformation"
 		name="candidacyInformationBean"
-		schema="CandidacyInformationBean.edit">
+		schema="CandidacyInformationBean.editPersonalInformation">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
 		</fr:layout>
 	</fr:edit>
+	
+	<br/>
+	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
+	<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation"
+		name="candidacyInformationBean"
+		schema="CandidacyInformationBean.editPrecedentDegreeInformation">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
+			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
+			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
+		</fr:layout>
+	</fr:edit>	
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
 	
