@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkAuthorizationBean;
@@ -9,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthor
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -23,11 +21,11 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	}
 	setRootDomainObject(RootDomainObject.getInstance());
 	setModifiedBy(extraWorkAuthorizationFactory.getModifiedBy());
-	setPayingUnit(getUnit(extraWorkAuthorizationFactory.getPayingCostCenterCode()));
+	setPayingUnit(extraWorkAuthorizationFactory.getPayingUnit());
 	if (getPayingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.payingUnit");
 	}
-	setWorkingUnit(getUnit(extraWorkAuthorizationFactory.getWorkingCostCenterCode()));
+	setWorkingUnit(extraWorkAuthorizationFactory.getWorkingUnit());
 	if (getWorkingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.workingUnit");
 	}
@@ -55,11 +53,11 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	    throw new DomainException("error.extraWorkAuthorization.alreadyExists");
 	}
 	setModifiedBy(extraWorkAuthorizationFactory.getModifiedBy());
-	setPayingUnit(getUnit(extraWorkAuthorizationFactory.getPayingCostCenterCode()));
+	setPayingUnit(extraWorkAuthorizationFactory.getPayingUnit());
 	if (getPayingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.payingUnit");
 	}
-	setWorkingUnit(getUnit(extraWorkAuthorizationFactory.getWorkingCostCenterCode()));
+	setWorkingUnit(extraWorkAuthorizationFactory.getWorkingUnit());
 	if (getWorkingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.workingUnit");
 	}
@@ -69,7 +67,6 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	setBeginDate(extraWorkAuthorizationFactory.getBeginDate());
 	setEndDate(extraWorkAuthorizationFactory.getEndDate());
 	setLastModifiedDate(new DateTime());
-
 	List<EmployeeExtraWorkAuthorizationBean> employeeExtraWorkAuthorizationBeansToDelete = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 	for (EmployeeExtraWorkAuthorizationBean employeeExtraWorkAuthorizationBean : extraWorkAuthorizationFactory
 		.getEmployeesExtraWorkAuthorizations()) {
@@ -139,13 +136,4 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	return false;
     }
 
-    private Unit getUnit(Integer costCenterCode) {
-	Collection<Unit> allUnits = RootDomainObject.readAllDomainObjects(Unit.class);
-	for (Unit unit : allUnits) {
-	    if (unit.getCostCenterCode() != null && unit.getCostCenterCode().equals(costCenterCode)) {
-		return unit;
-	    }
-	}
-	return null;
-    }
 }
