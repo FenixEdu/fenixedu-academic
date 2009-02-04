@@ -1179,7 +1179,7 @@ public class Student extends Student_Base {
 
 	for (Delegate delegate : getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
-		if (delegate.isActiveForExecutionYear(executionSemester.getExecutionYear())) {
+		if (delegate.isActiveForFirstExecutionYear(executionSemester.getExecutionYear())) {
 		    if (!((YearDelegate) delegate).getNotAnsweredInquiriesExecutionCourses(executionSemester).isEmpty()) {
 			return true;
 		    }

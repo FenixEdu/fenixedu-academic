@@ -48,7 +48,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	ExecutionSemester executionPeriod = openPeriod.getExecutionPeriod();
 	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
-		if (delegate.isActiveForExecutionYear(executionPeriod.getExecutionYear())) {
+		if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
 		    if (yearDelegate == null
 			    || delegate.getDelegateFunction().getEndDate().isAfter(
 				    yearDelegate.getDelegateFunction().getEndDate())) {

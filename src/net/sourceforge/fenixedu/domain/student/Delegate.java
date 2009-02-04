@@ -17,6 +17,11 @@ public class Delegate extends Delegate_Base {
 		executionYear.getEndDateYearMonthDay());
     }
 
+    public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
+	return getDelegateFunction().getBeginDate() != null
+		&& executionYear.containsDate(getDelegateFunction().getBeginDate().toDateTimeAtMidnight());
+    }
+
     protected Degree getDegree() {
 	return ((DegreeUnit) getDelegateFunction().getFunction().getUnit()).getDegree();
     }
