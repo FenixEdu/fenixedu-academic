@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 public class Diploma extends AdministrativeOfficeDocument {
 
@@ -40,7 +39,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 
 	addParameter("conclusionDate", getConclusionDate(diplomaRequest, registrationConclusionBean));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	addParameter("day", new YearMonthDay().toString(DD_MM_YYYY, getLocale()));
+	addParameter("day", getFormatedCurrentDate());
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
 	    addParameter("finalAverageDescription", StringUtils.capitalize(getEnumerationBundle().getString(
@@ -76,13 +75,33 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("birthLocale", getBirthLocale(person, true));
     }
 
-    private String getConclusionDate(final DiplomaRequest diplomaRequest,
+    private String getConclusionDate(final DiplomaRequest diplomaRequest, final RegistrationConclusionBean conclusionBean) {
+	final LocalDate result = calculateConclusionDate(diplomaRequest, conclusionBean);
+	return result.toString(getConclusionDatePattern(), getLocale());
+    }
+
+    private String getFormatedCurrentDate() {
+	final StringBuilder pattern = new StringBuilder();
+	pattern.append("dd MMMM '");
+	pattern.append(getApplicationBundle().getString("label.of"));
+	pattern.append("' yyyy");
+	return new LocalDate().toString(pattern.toString(), getLocale());
+    }
+
+    private String getConclusionDatePattern() {
+	final StringBuilder result = new StringBuilder();
+	result.append("dd '");
+	result.append(getApplicationBundle().getString("label.of"));
+	result.append("' MMMM '");
+	result.append(getApplicationBundle().getString("label.of"));
+	result.append("' yyyy");
+	return result.toString();
+    }
+
+    private LocalDate calculateConclusionDate(final DiplomaRequest diplomaRequest,
 	    final RegistrationConclusionBean registrationConclusionBean) {
-
-	final LocalDate result = diplomaRequest.hasDissertationTitle() ? registrationConclusionBean.getRegistration()
-		.getDissertationThesisDiscussedDate() : registrationConclusionBean.getConclusionDate().toLocalDate();
-
-	return result.toString(DD_MM_YYYY, getLocale());
+	return diplomaRequest.hasDissertationTitle() ? registrationConclusionBean.getRegistration()
+		.getDissertationThesisDiscussedDate() : new LocalDate(registrationConclusionBean.getConclusionDate());
     }
 
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
