@@ -879,7 +879,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		yearMonth = closedMonth.getClosedYearMonth();
 	    }
 	}
-	return new LocalDate(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()) + 1, 1);
+	return new LocalDate(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()), 1)
+		.plusMonths(1);
     }
 
     public boolean areEndDatesEqual(LocalDate endDate1, LocalDate endDate2) {
