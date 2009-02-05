@@ -5740,11 +5740,11 @@ class internship.InternshipCandidacy extends DomainObject {
 }
 
 class QueueJob extends DomainObject {
-               Boolean done;
-               Integer failedCounter;
-               DateTime requestDate;
-               DateTime jobStartTime;
-               DateTime jobEndTime;
+       Boolean done;
+       Integer failedCounter;
+       DateTime requestDate;
+       DateTime jobStartTime;
+       DateTime jobEndTime;
 }
 
 class QueueJobFile extends QueueJob {
@@ -5752,11 +5752,22 @@ class QueueJobFile extends QueueJob {
        ByteArray content;
 }
 
-class reports.EurAceQueueJobFile extends QueueJobFile {
-	String type;
-	String reportName;
-	DegreeType degreeType;
+class reports.GepReportFile extends QueueJobFile {
+	  String type;
+	  DegreeType degreeType;
 }
+
+
+class reports.EurAceReportFile extends reports.GepReportFile {}
+class reports.EctsLabelDegreeReportFile extends reports.GepReportFile {}
+class reports.EctsLabelCurricularCourseReportFile extends reports.GepReportFile {}
+class reports.StatusAndApprovalReportFile extends reports.GepReportFile {}
+class reports.EtiReportFile extends reports.GepReportFile {}
+class reports.RegistrationReportFile extends reports.GepReportFile {}
+class reports.FlunkedReportFile extends reports.GepReportFile {}
+class reports.TeachersByShiftReportFile extends reports.GepReportFile {}
+class reports.CourseLoadReportFile extends reports.GepReportFile {}
+class reports.GraduationReportFile extends reports.GepReportFile {}
 
 class student.Delegate extends DomainObject {
 	
@@ -14488,13 +14499,8 @@ relation InternshipCandidateAcademicInstitution {
     organizationalStructure.AcademicalInstitutionUnit playsRole university;
 }
 
-relation ExecutionYearEurAceJob {
-	ExecutionYear playsRole executionYear;
-	reports.EurAceQueueJobFile playsRole eurAceQueueJobFile;
-}
-
 relation QueueJobPerson {
-       User playsRole user;
+       Person playsRole person;
        QueueJob playsRole job {
                multiplicity *;
        }
@@ -14514,6 +14520,14 @@ relation QueueJobRootDomainObject {
        RootDomainObject playsRole rootDomainObject;
 }
 
+
+relation ExecutionYearGepReportFile {
+	ExecutionYear playsRole executionYear;
+	reports.GepReportFile playsRole gepReportFile{
+			multiplicity *;
+	}
+}
+	
 relation DelegatePersonFunction {
 	student.Delegate playsRole delegate;
 	organizationalStructure.PersonFunction playsRole delegateFunction;

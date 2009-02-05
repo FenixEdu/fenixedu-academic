@@ -304,6 +304,7 @@
 	      		parameter="method"  
 	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA"> 	                   
    	       <forward name="selectDegreeType" path="reports-by-degree-type"/>
+   	       <forward name="viewReports" path="view-reports"/>
 	    </action>
 
 		<action path="/alumni"

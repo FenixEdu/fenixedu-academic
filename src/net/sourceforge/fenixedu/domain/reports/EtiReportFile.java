@@ -1,0 +1,157 @@
+package net.sourceforge.fenixedu.domain.reports;
+
+import pt.ist.fenixWebFramework.services.Service;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+
+public class EtiReportFile extends EtiReportFile_Base {
+    
+    public  EtiReportFile() {
+        super();
+    }
+    
+    public String getJobName() {
+	return "Listagem para ETI";
+    }
+    
+    @Service
+    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	EtiReportFile etiReportFile = new EtiReportFile();
+	etiReportFile.setType(type);
+	etiReportFile.setDegreeType(degreeType);
+	etiReportFile.setExecutionYear(executionYear);
+	return etiReportFile;
+    }
+
+    protected String getPrefix() {
+	return "etiGrades";
+    }
+    
+    public void renderReport(Spreadsheet spreadsheet) throws Exception{
+	spreadsheet.setHeader("n�mero Aluno");
+	setDegreeHeaders(spreadsheet, "aluno");
+	spreadsheet.setHeader("semestre");
+	spreadsheet.setHeader("ano lectivo");
+	spreadsheet.setHeader("nome Disciplina");
+	setDegreeHeaders(spreadsheet, "disciplina");
+	spreadsheet.setHeader("creditos");
+	spreadsheet.setHeader("estado");
+	spreadsheet.setHeader("�poca");
+	spreadsheet.setHeader("nota");
+	spreadsheet.setHeader("�poca normal");
+	spreadsheet.setHeader("�poca especial");
+	spreadsheet.setHeader("melhoria");
+	spreadsheet.setHeader("tipo Aluno");
+	spreadsheet.setHeader("n�mero inscricoes anteriores");
+	spreadsheet.setHeader("executionCourseId");
+	spreadsheet.setHeader("dispon�vel para inqu�rito");
+
+	for (final Degree degree : Degree.readNotEmptyDegrees()) {
+	    if (checkDegreeType(getDegreeType(), degree)) {
+		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+		    if (checkExecutionYear(getExecutionYear(), degreeCurricularPlan)) {
+			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
+			    if (checkExecutionYear(getExecutionYear(), curricularCourse)) {
+
+				for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+				    if (curriculumModule.isEnrolment()) {
+					final Enrolment enrolment = (Enrolment) curriculumModule;
+					if (enrolment.getExecutionYear() == getExecutionYear()) {
+					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+					    if (curricularCourse.isAnual()) {
+						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester,
+							executionSemester);
+						if (executionSemester.getSemester().intValue() == 1) {
+						    final ExecutionSemester nextSemester = executionSemester
+							    .getNextExecutionPeriod();
+						    addEtiRow(spreadsheet, degree, curricularCourse, enrolment, nextSemester,
+							    executionSemester);
+						}
+					    } else {
+						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester,
+							executionSemester);
+					    }
+
+					}
+				    }
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private void addEtiRow(final Spreadsheet spreadsheet, final Degree degree, final CurricularCourse curricularCourse,
+	    final Enrolment enrolment, final ExecutionSemester executionSemester,
+	    final ExecutionSemester executionSemesterForPreviousEnrolmentCount) {
+	final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+	final Registration registration = studentCurricularPlan.getRegistration();
+	final Student student = registration.getStudent();
+
+	final Row row = spreadsheet.addRow();
+	row.setCell(student.getNumber().toString());
+	setDegreeCells(row, registration.getDegree());
+	row.setCell(executionSemester.getSemester().toString());
+	row.setCell(executionSemester.getExecutionYear().getYear());
+	row.setCell(curricularCourse.getName());
+	setDegreeCells(row, degree);
+	row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
+	row.setCell(enrolment.getEnrollmentState().getDescription());
+	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
+	row.setCell(enrolment.getGradeValue());
+
+	final EnrolmentEvaluation normal = enrolment.getLatestNormalEnrolmentEvaluation();
+	row.setCell(normal == null ? "" : normal.getGradeValue());
+	final EnrolmentEvaluation special = enrolment.getLatestSpecialSeasonEnrolmentEvaluation();
+	row.setCell(special == null ? "" : special.getGradeValue());
+	final EnrolmentEvaluation improvement = enrolment.getLatestImprovementEnrolmentEvaluation();
+	row.setCell(improvement == null ? "" : improvement.getGradeValue());
+
+	row.setCell(registration.getRegistrationAgreement().getName());
+	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
+	final Attends attends = enrolment.getAttendsFor(executionSemester);
+	if (attends == null) {
+	    row.setCell("");
+	} else {
+	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+	    row.setCell(executionCourse.getIdInternal());
+	    if (executionCourse.getAvailableForInquiries() != null && executionCourse.getAvailableForInquiries().booleanValue()) {
+		row.setCell("sim");
+	    } else {
+		row.setCell("n�o");
+	    }
+	}
+    }
+
+    private String countPreviousEnrolments(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
+	    final Student student) {
+	int count = 0;
+	for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+	    if (curriculumModule.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+		if (executionPeriod.compareTo(enrolment.getExecutionPeriod()) > 0) {
+		    if (enrolment.getStudentCurricularPlan().getRegistration().getStudent() == student) {
+			count++;
+		    }
+		}
+	    }
+	}
+	return Integer.toString(count);
+    }
+}

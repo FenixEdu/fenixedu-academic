@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -17,6 +19,8 @@ public class QueueJob extends QueueJob_Base {
 	setFailedCounter(new Integer(0));
 	setRootDomainObject(RootDomainObject.getInstance());
 	setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+	setDone(Boolean.FALSE);
+	setPerson(AccessControl.getPerson());
     }
 
     public void execute() throws Exception {

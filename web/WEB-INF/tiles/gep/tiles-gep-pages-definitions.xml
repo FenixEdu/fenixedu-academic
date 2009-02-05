@@ -96,5 +96,8 @@
     </definition>	
 	<definition name="alumni.showAlumniDetails" extends="definition.gep.two-column">
         <put name="body" value="/gep/alumni/alumniDetails.jsp"/>
-    </definition>	
+    </definition>
+    <definition name="view-reports" extends="definition.gep.two-column">
+        <put name="body" value="/gep/viewReports.jsp"/>
+    </definition>		
 </tiles-definitions>

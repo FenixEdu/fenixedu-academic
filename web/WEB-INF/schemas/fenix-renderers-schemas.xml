@@ -54,6 +54,7 @@
     <!ENTITY support SYSTEM "support-schemas.xml">
     <!ENTITY alumni SYSTEM "alumni-schemas.xml">
     <!ENTITY internationalRelationsOffice SYSTEM "internationalRelationsOffice-schemas.xml">
+    <!ENTITY gep SYSTEM "gep-schemas.xml">
 ]>
 
 <schemas>
@@ -741,4 +742,5 @@
     &support;
     &alumni;
     &internationalRelationsOffice;
+    &gep;
 </schemas>
