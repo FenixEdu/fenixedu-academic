@@ -1547,6 +1547,7 @@ public class CreateTestData {
     }
 
     private static class MockUserView implements IUserView {
+	private final DateTime userCreationDateTime = new DateTime();
 
 	public DateTime getExpirationDate() {
 	    return null;
@@ -1582,9 +1583,18 @@ public class CreateTestData {
 	}
 
 	@Override
-	public boolean hasRole(String arg0) {
-	    // TODO Auto-generated method stub
+	public boolean hasRole(String role) {
 	    return false;
+	}
+
+	@Override
+	public DateTime getLastLogoutDateTime() {
+	    return null;
+	}
+
+	@Override
+	public DateTime getUserCreationDateTime() {
+	    return userCreationDateTime;
 	}
     }
 
