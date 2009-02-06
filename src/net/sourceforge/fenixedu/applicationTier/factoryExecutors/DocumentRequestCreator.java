@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Declarat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import pt.ist.fenixWebFramework.services.Service;
 
 final public class DocumentRequestCreator extends DocumentRequestCreateBean implements FactoryExecutor {
 
@@ -14,6 +15,7 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
 	super(registration);
     }
 
+    @Service
     public Object execute() {
 	if (getChosenDocumentRequestType().isCertificate()) {
 	    return CertificateRequest.create(this);
