@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -26,7 +27,9 @@ public class PhoneBean extends PartyContactBean {
     @Override
     public void edit() {
 	super.edit();
-	((Phone) getContact()).setNumber(getValue());
+	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+	    ((Phone) getContact()).setNumber(getValue());
+	}
     }
 
     @Override

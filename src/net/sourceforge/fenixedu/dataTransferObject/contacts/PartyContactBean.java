@@ -145,7 +145,11 @@ public abstract class PartyContactBean implements Serializable {
 
     public void edit() {
 	PartyContact domainContact = getContact();
-	domainContact.edit(getType(), getDefaultContact().booleanValue());
+	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+	    domainContact.edit(getType(), getDefaultContact().booleanValue());
+	} else {
+	    domainContact.edit(domainContact.getType(), getDefaultContact().booleanValue());
+	}
 	domainContact.setVisibleToPublic(getVisibleToPublic());
 	domainContact.setVisibleToStudents(getVisibleToStudents());
 	domainContact.setVisibleToTeachers(getVisibleToTeachers());

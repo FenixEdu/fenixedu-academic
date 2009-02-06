@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -26,7 +27,9 @@ public class WebAddressBean extends PartyContactBean {
     @Override
     public void edit() {
 	super.edit();
-	((WebAddress) getContact()).setUrl(getValue());
+	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+	    ((WebAddress) getContact()).setUrl(getValue());
+	}
     }
 
     @Override

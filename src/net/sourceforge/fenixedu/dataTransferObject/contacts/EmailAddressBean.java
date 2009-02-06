@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class EmailAddressBean extends PartyContactBean {
@@ -26,7 +27,9 @@ public class EmailAddressBean extends PartyContactBean {
     @Override
     public void edit() {
 	super.edit();
-	((EmailAddress) getContact()).setValue(getValue());
+	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+	    ((EmailAddress) getContact()).setValue(getValue());
+	}
     }
 
     @Override
