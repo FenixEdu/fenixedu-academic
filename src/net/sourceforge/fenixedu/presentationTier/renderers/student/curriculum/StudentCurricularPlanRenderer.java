@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -678,6 +679,17 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    }
 	}
 
+	private void generateEvaluationDateIfRequired(HtmlTableRow externalEnrolmentRow, YearMonthDay evaluationDate) {
+	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
+		if (evaluationDate != null) {
+		    generateCellWithSpan(externalEnrolmentRow, evaluationDate.toString(DATE_FORMAT), applicationResources
+			    .getString("creationDate"), getCreationDateCellClass());
+		} else {
+		    generateCellWithText(externalEnrolmentRow, EMPTY_INFO, getCreationDateCellClass());
+		}
+	    }
+	}
+
 	private void generateCreatorIfRequired(HtmlTableRow enrolmentRow, String createdBy) {
 	    if (isToShowCreationInfoAndGroupApprovedCredits()) {
 		if (!StringUtils.isEmpty(createdBy)) {
@@ -761,7 +773,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    generateCellWithText(externalEnrolmentRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
 	    generateExecutionYearCell(externalEnrolmentRow, externalEnrolment);
 	    generateSemesterCell(externalEnrolmentRow, externalEnrolment);
-	    generateCreationDateIfRequired(externalEnrolmentRow, externalEnrolment.getCreationDateDateTime());
+	    generateEvaluationDateIfRequired(externalEnrolmentRow, externalEnrolment.getEvaluationDate());
 	    generateCreatorIfRequired(externalEnrolmentRow, externalEnrolment.getCreatedBy());
 	    generateSpacerCellsIfRequired(externalEnrolmentRow);
 
