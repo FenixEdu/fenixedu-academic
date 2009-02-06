@@ -254,7 +254,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.getRegistration().isTransition()) {
+	if (!studentCurricularPlan.hasRegistration() || studentCurricularPlan.getRegistration().isTransition()) {
 	    return false;
 	}
 
