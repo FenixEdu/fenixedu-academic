@@ -1,10 +1,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants"%>
 <html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="STUDENT">
+<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" scope="session" ></bean:define>
+<logic:present name="userView" property="person.student">
 
 <h2><bean:message  key="label.fill.information" bundle="STUDENT_RESOURCES"/></h2>
 
