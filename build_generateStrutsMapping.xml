@@ -7,6 +7,23 @@
 	<property name="src" location="src_tools/pt/utl/ist/struts" />
 
 	<!-- Directories for compiled code -->
+	<property name="build.home" location="web"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
+
+    <!-- Directories with libraries (JARs) -->
+    <property name="lib" location="lib" />
+
+	<path id="class.path.lib.ref">
+        <fileset dir="${lib}">
+   		    <include name="*.jar"/>
+   		</fileset>
+		<fileset dir="${build.home.webinf.libs}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Directories for compiled code -->
 
 	<target name="set-properties-copy" if="institution.project"
 			description="Determine properties to use for build properties">
@@ -26,6 +43,8 @@
 
 	<target name="compile-struts-mapping-generator" depends="set-properties">
 		<javac destdir="${build.home.webinf.classes}">
+			<compilerarg line="-processor pt.ist.fenixWebFramework.services.ServiceAnnotationProcessor,pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationProcessor" />
+			<classpath refid="class.path.lib.ref"/>
 			<src path="${src}" />
 			<include name="StrutsMappingGenerator.java"/>
 		</javac>
