@@ -62,11 +62,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     }
 
     @Override
-    public GratuityPaymentPlan getGratuityPaymentPlan() {
-	return (GratuityPaymentPlan) super.getGratuityPaymentPlan();
-    }
-
-    @Override
     public void setGratuityPaymentPlan(final PaymentPlan gratuityPaymentPlan) {
 	throw new DomainException("error.GratuityEventWithPaymentPlan.do.not.use.this.method");
     }
