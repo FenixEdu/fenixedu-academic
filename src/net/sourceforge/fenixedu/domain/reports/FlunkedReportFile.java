@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import pt.ist.fenixWebFramework.services.Service;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -11,29 +8,19 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class FlunkedReportFile extends FlunkedReportFile_Base {
-    
-    public  FlunkedReportFile() {
-        super();
+
+    FlunkedReportFile() {
+	super();
     }
-    
+
     public String getJobName() {
 	return "Listagem de prescrições";
     }
-    
+
     protected String getPrefix() {
 	return "prescricoes";
     }
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	FlunkedReportFile flunkedReportFile = new FlunkedReportFile();
-	flunkedReportFile.setType(type);
-	flunkedReportFile.setDegreeType(degreeType);
-	flunkedReportFile.setExecutionYear(executionYear);
-	return flunkedReportFile;
-    }
-    
-    
+
     public void renderReport(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("nï¿½mero aluno");
 	setDegreeHeaders(spreadsheet);
@@ -54,5 +41,5 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 	    }
 	}
     }
-    
+
 }

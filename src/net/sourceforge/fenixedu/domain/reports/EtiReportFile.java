@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import pt.ist.fenixWebFramework.services.Service;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -9,9 +8,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -19,29 +16,20 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class EtiReportFile extends EtiReportFile_Base {
-    
-    public  EtiReportFile() {
-        super();
+
+    EtiReportFile() {
+	super();
     }
-    
+
     public String getJobName() {
 	return "Listagem para ETI";
-    }
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	EtiReportFile etiReportFile = new EtiReportFile();
-	etiReportFile.setType(type);
-	etiReportFile.setDegreeType(degreeType);
-	etiReportFile.setExecutionYear(executionYear);
-	return etiReportFile;
     }
 
     protected String getPrefix() {
 	return "etiGrades";
     }
-    
-    public void renderReport(Spreadsheet spreadsheet) throws Exception{
+
+    public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("n�mero Aluno");
 	setDegreeHeaders(spreadsheet, "aluno");
 	spreadsheet.setHeader("semestre");

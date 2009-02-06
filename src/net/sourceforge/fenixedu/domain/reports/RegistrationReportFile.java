@@ -2,42 +2,28 @@ package net.sourceforge.fenixedu.domain.reports;
 
 import java.util.Collections;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class RegistrationReportFile extends RegistrationReportFile_Base {
-    
-    public  RegistrationReportFile() {
-        super();
+
+    RegistrationReportFile() {
+	super();
     }
-    
+
     public String getJobName() {
 	return "Listagem de matrí­culas";
     }
-    
+
     protected String getPrefix() {
 	return "matriculas";
     }
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	RegistrationReportFile registrationReportFile = new RegistrationReportFile();
-	registrationReportFile.setType(type);
-	registrationReportFile.setDegreeType(degreeType);
-	registrationReportFile.setExecutionYear(executionYear);
-	return registrationReportFile;
-    }
 
-    
-    public void renderReport(Spreadsheet spreadsheet) throws Exception{
+    public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("nï¿½mero aluno");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("cï¿½digo regime de ingresso na matrï¿½cula");
@@ -91,5 +77,5 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
 	}
 	row.setCell(registration.getStartExecutionYear().getYear());
     }
-    
+
 }

@@ -8,35 +8,24 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
-    
-    public  EctsLabelDegreeReportFile() {
-        super();
+
+    EctsLabelDegreeReportFile() {
+	super();
     }
 
     public String getJobName() {
 	return "Listagem para ECTS LABEL Cursos";
     }
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	EctsLabelDegreeReportFile ectsLabelDegreeReportFile = new EctsLabelDegreeReportFile();
-	ectsLabelDegreeReportFile.setType(type);
-	ectsLabelDegreeReportFile.setDegreeType(degreeType);
-	ectsLabelDegreeReportFile.setExecutionYear(executionYear);
-	return ectsLabelDegreeReportFile;
-    }
-    
+
     protected String getPrefix() {
 	return "ectsLabel_Cursos";
     }
-    
+
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 
 	createEctsLabelDegreesHeader(spreadsheet);
@@ -51,6 +40,7 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 	    }
 	}
     }
+
     private void createEctsLabelDegreesHeader(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeaders(new String[] {
 
@@ -60,7 +50,7 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
 	"Tipo Curso",
 
-	"Duraï¿½ï¿½o em anos",
+	"Duração em anos",
 
 	"Duraï¿½ï¿½o em Semanas de Estudo",
 
@@ -90,7 +80,7 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
 	});
     }
-    
+
     private String getResponsibleCoordinatorNames(final DegreeCurricularPlan degreeCurricularPlan,
 	    final ExecutionYear executionYear) {
 	final StringBuilder builder = new StringBuilder();
@@ -131,5 +121,5 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 	    row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.en)));
 	}
     }
-    
+
 }

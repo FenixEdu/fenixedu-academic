@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import pt.ist.fenixWebFramework.services.Service;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -12,29 +9,19 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
-    
-    public  TeachersByShiftReportFile() {
-        super();
+
+    TeachersByShiftReportFile() {
+	super();
     }
 
     public String getJobName() {
 	return "Listagem de docentes associados a turnos";
     }
-    
+
     protected String getPrefix() {
 	return "teachersByShift";
     }
-    
-   
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	TeachersByShiftReportFile teachersByShiftReportFile = new TeachersByShiftReportFile();
-	teachersByShiftReportFile.setType(type);
-	teachersByShiftReportFile.setDegreeType(degreeType);
-	teachersByShiftReportFile.setExecutionYear(executionYear);
-	return teachersByShiftReportFile;
-    }
-    
+
     public void renderReport(Spreadsheet spreadsheet) {
 
 	spreadsheet.setHeader("semestre");

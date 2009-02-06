@@ -9,103 +9,88 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Base {
-    
-    public  StatusAndApprovalReportFile() {
-        super();
+
+    StatusAndApprovalReportFile() {
+	super();
     }
-    
 
     public String getJobName() {
-	return "Estatuto e aprovações entre " +
-			getExecutionYear().getYear() +
-			" e " + 
-			getExecutionYearFourYearsBack(getExecutionYear()).getYear();
+	return "Estatuto e aprovações entre " + getExecutionYear().getYear() + " e "
+		+ getExecutionYearFourYearsBack(getExecutionYear()).getYear();
     }
-    
-       public static class EnrolmentAndAprovalCounter {
-   	private int enrolments = 0;
-   	private int aprovals = 0;
 
-   	public void count(final Enrolment enrolment) {
-   	    enrolments++;
-   	    if (enrolment.isApproved()) {
-   		aprovals++;
-   	    }
-   	}
+    public static class EnrolmentAndAprovalCounter {
+	private int enrolments = 0;
+	private int aprovals = 0;
 
-   	public int getEnrolments() {
-   	    return enrolments;
-   	}
+	public void count(final Enrolment enrolment) {
+	    enrolments++;
+	    if (enrolment.isApproved()) {
+		aprovals++;
+	    }
+	}
 
-   	public int getAprovals() {
-   	    return aprovals;
-   	}
-       }
+	public int getEnrolments() {
+	    return enrolments;
+	}
 
-       public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
-
-   	private final ExecutionSemester firstExecutionSemester;
-   	private final ExecutionSemester lastExecutionSemester;
-
-   	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
-   		final ExecutionSemester lastExecutionSemester) {
-   	    this.firstExecutionSemester = firstExecutionSemester;
-   	    this.lastExecutionSemester = lastExecutionSemester;
-   	}
-
-   	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
-   		final ExecutionSemester lastExecutionSemester, final Registration registration) {
-   	    this(firstExecutionSemester, lastExecutionSemester);
-   	    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
-   		if (otherRegistration.getDegree() == registration.getDegree()) {
-   		    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration.getStudentCurricularPlansSet()) {
-   			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-   			    count(enrolment);
-   			}
-   		    }
-   		}
-   	    }
-   	}
-
-   	public void count(final Enrolment enrolment) {
-   	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-   	    if (firstExecutionSemester.isBeforeOrEquals(executionSemester)
-   		    && executionSemester.isBeforeOrEquals(lastExecutionSemester)) {
-   		final EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = get(executionSemester);
-   		enrolmentAndAprovalCounter.count(enrolment);
-   	    }
-   	}
-
-   	@Override
-   	public EnrolmentAndAprovalCounter get(final Object key) {
-   	    EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = super.get(key);
-   	    if (enrolmentAndAprovalCounter == null) {
-   		enrolmentAndAprovalCounter = new EnrolmentAndAprovalCounter();
-   		put((ExecutionSemester) key, enrolmentAndAprovalCounter);
-   	    }
-   	    return enrolmentAndAprovalCounter;
-   	}
-
-       }
-   
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	StatusAndApprovalReportFile statusAndApprovalReportFile = new StatusAndApprovalReportFile();
-	statusAndApprovalReportFile.setType(type);
-	statusAndApprovalReportFile.setDegreeType(degreeType);
-	statusAndApprovalReportFile.setExecutionYear(executionYear);
-	return statusAndApprovalReportFile;
+	public int getAprovals() {
+	    return aprovals;
+	}
     }
-    
+
+    public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
+
+	private final ExecutionSemester firstExecutionSemester;
+	private final ExecutionSemester lastExecutionSemester;
+
+	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
+		final ExecutionSemester lastExecutionSemester) {
+	    this.firstExecutionSemester = firstExecutionSemester;
+	    this.lastExecutionSemester = lastExecutionSemester;
+	}
+
+	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
+		final ExecutionSemester lastExecutionSemester, final Registration registration) {
+	    this(firstExecutionSemester, lastExecutionSemester);
+	    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
+		if (otherRegistration.getDegree() == registration.getDegree()) {
+		    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration.getStudentCurricularPlansSet()) {
+			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+			    count(enrolment);
+			}
+		    }
+		}
+	    }
+	}
+
+	public void count(final Enrolment enrolment) {
+	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+	    if (firstExecutionSemester.isBeforeOrEquals(executionSemester)
+		    && executionSemester.isBeforeOrEquals(lastExecutionSemester)) {
+		final EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = get(executionSemester);
+		enrolmentAndAprovalCounter.count(enrolment);
+	    }
+	}
+
+	@Override
+	public EnrolmentAndAprovalCounter get(final Object key) {
+	    EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = super.get(key);
+	    if (enrolmentAndAprovalCounter == null) {
+		enrolmentAndAprovalCounter = new EnrolmentAndAprovalCounter();
+		put((ExecutionSemester) key, enrolmentAndAprovalCounter);
+	    }
+	    return enrolmentAndAprovalCounter;
+	}
+
+    }
+
     protected String getPrefix() {
 	return "statusAndAproval";
     }
@@ -122,7 +107,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	}
 	return executionYearFourYearsBack;
     }
-    
+
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("nï¿½mero aluno");
 	spreadsheet.setHeader("ano lectivo");

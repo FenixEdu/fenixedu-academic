@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.reports;
 import java.util.Collections;
 import java.util.List;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -23,29 +21,19 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCourseReportFile_Base {
-    
-    public  EctsLabelCurricularCourseReportFile() {
-        super();
-    }
-    
-    public String getJobName(){
-	return "Listagem para ECTS LABEL Disciplinas";
+
+    EctsLabelCurricularCourseReportFile() {
+	super();
     }
 
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	EctsLabelCurricularCourseReportFile ectsLabelCurricularCourseReportFile = new EctsLabelCurricularCourseReportFile();
-	ectsLabelCurricularCourseReportFile.setType(type);
-	ectsLabelCurricularCourseReportFile.setDegreeType(degreeType);
-	ectsLabelCurricularCourseReportFile.setExecutionYear(executionYear);
-	return ectsLabelCurricularCourseReportFile;
+    public String getJobName() {
+	return "Listagem para ECTS LABEL Disciplinas";
     }
 
     protected String getPrefix() {
 	return "ectsLabel_Disciplinas";
     }
-    
+
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 
 	createEctsLabelCurricularCoursesHeader(spreadsheet);
@@ -57,7 +45,8 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
 			    if (checkExecutionYear(getExecutionYear(), curricularCourse)
 				    && !curricularCourse.isOptionalCurricularCourse()) {
-				for (final Context context : curricularCourse.getParentContextsByExecutionYear(getExecutionYear())) {
+				for (final Context context : curricularCourse
+					.getParentContextsByExecutionYear(getExecutionYear())) {
 				    addEctsLabelContextRow(spreadsheet, context, getExecutionYear());
 				}
 			    }
@@ -67,6 +56,7 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 	    }
 	}
     }
+
     private void createEctsLabelCurricularCoursesHeader(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Tipo Curso");
 	spreadsheet.setHeader("Nome Curso");

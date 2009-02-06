@@ -4,38 +4,25 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class EurAceReportFile extends EurAceReportFile_Base {
-    
-    public  EurAceReportFile() {
-        super();
+
+    EurAceReportFile() {
+	super();
     }
 
     public String getJobName() {
 	return "Listagem para EUR-ACE";
     }
-    
+
     protected String getPrefix() {
 	return "eurAce";
-    }
-
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	EurAceReportFile eurAceReportFile = new EurAceReportFile();
-	eurAceReportFile.setType(type);
-	eurAceReportFile.setDegreeType(degreeType);
-	eurAceReportFile.setExecutionYear(executionYear);
-	return eurAceReportFile;
-		
     }
 
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
@@ -79,5 +66,5 @@ public class EurAceReportFile extends EurAceReportFile_Base {
 	    }
 	}
     }
-    
+
 }

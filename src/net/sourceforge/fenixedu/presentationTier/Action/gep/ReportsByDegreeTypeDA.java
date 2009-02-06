@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
+import net.sourceforge.fenixedu.domain.reports.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -122,7 +122,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, EurAceReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createEurAceReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -135,7 +135,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, EctsLabelCurricularCourseReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createEctsLabelCurricularCourseReportFile(format, degreeType,
+		executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -147,7 +148,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, EctsLabelDegreeReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createEctsLabelDegreeReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -159,7 +160,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, StatusAndApprovalReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createStatusAndApprovalReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -171,7 +172,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, EtiReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createEtiReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -183,7 +184,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, RegistrationReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createRegistrationReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -195,7 +196,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, FlunkedReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createFlunkedReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -207,7 +208,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, GraduationReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createGraduationReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -219,7 +220,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, TeachersByShiftReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createTeachersByShiftReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -231,7 +232,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, CourseLoadReportFile.newInstance(format, degreeType, executionYear));
+	prepareNewJobResponse(request, ReportFileFactory.createCourseLoadReportFile(format, degreeType, executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }

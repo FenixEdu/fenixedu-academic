@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -16,11 +15,11 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public abstract class GepReportFile extends GepReportFile_Base {
-    
-    public  GepReportFile() {
-        super();
+
+    public GepReportFile() {
+	super();
     }
-    
+
     public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {
 	ExecutionYear executionYearFourYearsBack = executionYear;
 	if (executionYear != null) {
@@ -33,18 +32,19 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	}
 	return executionYearFourYearsBack;
     }
-    
+
     public String getDescription() {
 	return " no formato " + getType().toUpperCase();
     }
-    
+
     public abstract String getJobName();
+
     protected abstract String getPrefix();
-    
+
     public String getFilename() {
 	return getReportName().replace(' ', '_') + "." + getType();
     }
-    
+
     private String getReportName() {
 
 	final StringBuilder result = new StringBuilder();
@@ -55,7 +55,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
 	return result.toString();
     }
-    
+
     protected void setDegreeHeaders(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("tipo curso");
 	spreadsheet.setHeader("nome curso");
@@ -73,12 +73,11 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	row.setCell(degree.getNameI18N().getContent());
 	row.setCell(degree.getSigla());
     }
-    
 
     protected boolean checkDegreeType(final DegreeType degreeType, final ConclusionProcess conclusionProcess) {
 	return degreeType == null || conclusionProcess.getDegree().getDegreeType() == degreeType;
     }
-    
+
     protected static boolean checkDegreeType(final DegreeType degreeType, final Degree degree) {
 	return degreeType == null || degree.getDegreeType() == degreeType;
     }
@@ -90,7 +89,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
     protected static boolean checkExecutionYear(ExecutionYear executionYear, final CurricularCourse curricularCourse) {
 	return executionYear == null || curricularCourse.isActive(executionYear);
     }
-    
+
     protected boolean isActive(final Degree degree) {
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 	    if (checkExecutionYear(getExecutionYear(), degreeCurricularPlan)) {
@@ -99,7 +98,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	}
 	return false;
     }
-    
+
     protected String normalize(final String text) {
 	if (!StringUtils.isEmpty(text)) {
 	    String result = "";
@@ -112,15 +111,14 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	}
 	return "";
     }
-    
+
     public abstract void renderReport(Spreadsheet spreadsheet) throws Exception;
-    
+
     public void execute() throws Exception {
 	final Spreadsheet spreadsheet = new Spreadsheet(getReportName());
-	
+
 	this.renderReport(spreadsheet);
-	
-	
+
 	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
 	if ("csv".compareTo(getType()) == 0) {
@@ -135,11 +133,9 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	 */
 	setContentType("application/txt");
 	System.out.println("Job " + getFilename() + " completed");
-	
+
     }
-    
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {return null;}
-    
+
     public String getUpperCaseType() {
 	return this.getType().toUpperCase();
     }

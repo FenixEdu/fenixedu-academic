@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
@@ -17,11 +16,9 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class GraduationReportFile extends GraduationReportFile_Base {
 
-    public GraduationReportFile() {
+    GraduationReportFile() {
 	super();
     }
 
@@ -33,15 +30,6 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	return "diplomados";
     }
     
-    
-    @Service
-    public static GepReportFile newInstance(String type, DegreeType degreeType, ExecutionYear executionYear) {
-	GraduationReportFile graduationReportFile = new GraduationReportFile();
-	graduationReportFile.setType(type);
-	graduationReportFile.setDegreeType(degreeType);
-	graduationReportFile.setExecutionYear(executionYear);
-	return graduationReportFile;
-    }
     
     public void renderReport(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("n�mero aluno");
