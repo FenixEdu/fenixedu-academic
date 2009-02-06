@@ -42,10 +42,6 @@ public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR
 	return total;
     }
 
-    public Money calculateAmountToPayPlusUnits(final CertificateRequestEvent event) {
-	return calculateAmountToPayWithUnits(event, false);
-    }
-
     @Checked("PostingRulePredicates.editPredicate")
     public EnrolmentCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage) {
 	deactivate();
