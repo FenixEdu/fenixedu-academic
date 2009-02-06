@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -34,17 +35,31 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void addPriceFields() {
 	final EnrolmentCertificateRequest request = getDocumentRequest();
-	final PostingRule postingRule = request.getEvent().getPostingRule();
+	final PostingRule postingRule = getPostingRule();
 
 	if (postingRule instanceof EnrolmentCertificateRequestPR) {
 	    final EnrolmentCertificateRequestPR requestPR = (EnrolmentCertificateRequestPR) postingRule;
 	    addParameter("amountPerPage", requestPR.getAmountPerPage());
-	    addParameter("baseAmountPlusAmountForUnits", requestPR.calculateAmountToPayPlusUnits(request.getEvent()));
+	    addParameter("baseAmountPlusAmountForUnits", calculateAmountToPayPlusUnits(request, requestPR));
 	    addParameter("urgencyAmount", request.getUrgentRequest() ? requestPR.getBaseAmount() : Money.ZERO);
 	    addParameter("printPriceFields", printPriceParameters(request));
 	} else {
 	    super.addPriceFields();
 	}
+    }
+
+    private Money calculateAmountToPayPlusUnits(final EnrolmentCertificateRequest request,
+	    final EnrolmentCertificateRequestPR requestPR) {
+	Money total = requestPR.getBaseAmount();
+	if (request.getDetailed() != null && request.getDetailed().booleanValue()) {
+	    total = total.add(getAmountForUnits(request, requestPR));
+	}
+	return total;
+
+    }
+
+    private Money getAmountForUnits(final EnrolmentCertificateRequest request, final EnrolmentCertificateRequestPR requestPR) {
+	return requestPR.getAmountPerUnit().multiply(new BigDecimal(request.getNumberOfUnits()));
     }
 
     @Override

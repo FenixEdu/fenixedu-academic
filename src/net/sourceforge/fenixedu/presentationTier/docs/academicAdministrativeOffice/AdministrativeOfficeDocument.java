@@ -193,7 +193,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("printPriceFields", printPriceParameters(certificateRequest));
     }
 
-    final private PostingRule getPostingRule() {
+    final protected PostingRule getPostingRule() {
 	final AdministrativeOfficeServiceAgreementTemplate serviceAgreementTemplate = getDocumentRequest()
 		.getAdministrativeOffice().getServiceAgreementTemplate();
 	return serviceAgreementTemplate.findPostingRuleByEventType(getDocumentRequest().getEventType());
