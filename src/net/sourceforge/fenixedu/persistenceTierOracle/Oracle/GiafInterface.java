@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
@@ -26,42 +27,38 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class GiafInterface {
 
-    // public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day)
-    // throws ExcepcaoPersistencia {
-    // PersistentSuportGiaf persistentSuportOracle =
-    // PersistentSuportGiaf.getInstance();
-    // try {
-    // CallableStatement callableStatement =
-    // persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?);
-    // END;");
-    // callableStatement.registerOutParameter(1, Types.DOUBLE);
-    // DecimalFormat f = new DecimalFormat("000000");
-    // callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
-    // callableStatement.setDate(3, new
-    // Date(day.toDateTimeAtStartOfDay().getMillis()));
-    // callableStatement.registerOutParameter(4, Types.DOUBLE);
-    // callableStatement.registerOutParameter(5, Types.VARCHAR);
-    // callableStatement.executeQuery();
-    // if (callableStatement.getString(5) == null) {
-    // return new BigDecimal(callableStatement.getDouble(4));
-    // }
-    // callableStatement.close();
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // throw new ExcepcaoPersistencia();
-    // }
-    // return null;
-    // }
-
     public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
-	BigDecimal salary = getEmployeeSalary(employee, day);
-	if (salary != null) {
-	    BigDecimal salaryInYear = salary.multiply(new BigDecimal(12));
-	    BigDecimal hoursInYear = new BigDecimal(52 * 35);
-	    return salaryInYear.divide(hoursInYear, 2, BigDecimal.ROUND_HALF_UP);
+	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
+	try {
+	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
+	    callableStatement.registerOutParameter(1, Types.DOUBLE);
+	    DecimalFormat f = new DecimalFormat("000000");
+	    callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
+	    callableStatement.setDate(3, new Date(day.toDateTimeAtStartOfDay().getMillis()));
+	    callableStatement.registerOutParameter(4, Types.DOUBLE);
+	    callableStatement.registerOutParameter(5, Types.VARCHAR);
+	    callableStatement.executeQuery();
+	    if (callableStatement.getString(5) == null) {
+		return new BigDecimal(callableStatement.getDouble(4));
+	    }
+	    callableStatement.close();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	    throw new ExcepcaoPersistencia();
 	}
 	return null;
     }
+
+    // public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day)
+    // throws ExcepcaoPersistencia {
+    // BigDecimal salary = getEmployeeSalary(employee, day);
+    // if (salary != null) {
+    // BigDecimal salaryInYear = salary.multiply(new BigDecimal(12));
+    // BigDecimal hoursInYear = new BigDecimal(52 * 35);
+    // return salaryInYear.divide(hoursInYear, 2, BigDecimal.ROUND_HALF_UP);
+    // }
+    // return null;
+    // }
 
     public BigDecimal getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	BigDecimal salary = new BigDecimal(0.0);
