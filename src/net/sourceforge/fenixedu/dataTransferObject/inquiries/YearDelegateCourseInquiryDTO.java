@@ -162,8 +162,11 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 
 	this.eighthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.yearDelegateInquiries.yes",
 		"header.yearDelegateInquiries.no");
-	this.eighthBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.reportDisclosureAuthorization", false)
-		.addChoice("YES", StringUtils.EMPTY).addChoice("NO", StringUtils.EMPTY));
+	final RadioGroupQuestion reportDisclosureAuthorizationRadio = new RadioGroupQuestion(
+		"label.yearDelegateInquiries.reportDisclosureAuthorization", false);
+	reportDisclosureAuthorizationRadio.setValue("YES");
+	this.eighthBlock.addQuestion(reportDisclosureAuthorizationRadio.addChoice("YES", StringUtils.EMPTY).addChoice("NO",
+		StringUtils.EMPTY));
     }
 
     public InquiriesBlock getFirstBlock() {
