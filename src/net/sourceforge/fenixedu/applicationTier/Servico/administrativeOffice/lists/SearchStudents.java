@@ -61,7 +61,10 @@ public class SearchStudents extends FenixService {
 		continue;
 	    }
 
-	    result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
+	    if (searchbean.getActiveEnrolments() != true
+		    || (searchbean.getActiveEnrolments() && registration.hasAnyEnrolmentsIn(executionYear))) {
+		result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
+	    }
 	}
 
 	return result;

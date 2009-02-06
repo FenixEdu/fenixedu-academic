@@ -28,6 +28,8 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
     private List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
 
     private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
+    
+    private boolean activeEnrolments = false;
 
     public Degree getDegree() {
 	return (this.degree == null) ? null : this.degree.getObject();
@@ -68,5 +70,15 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
     public void setDegreeType(DegreeType degreeType) {
 	this.degreeType = degreeType;
     }
+
+    public boolean getActiveEnrolments() {
+        return activeEnrolments;
+    }
+
+    public void setActiveEnrolments(boolean activeEnrolments) {
+        this.activeEnrolments = activeEnrolments;
+    }
+
+
 
 }
