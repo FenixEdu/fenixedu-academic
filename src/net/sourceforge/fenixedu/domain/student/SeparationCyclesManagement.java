@@ -404,7 +404,7 @@ public class SeparationCyclesManagement {
 	}
 
 	newCredits.setStudentCurricularPlan(parent.getStudentCurricularPlan());
-	newCredits.setExecutionPeriod(credits.getExecutionPeriod());
+	newCredits.setExecutionPeriod(getExecutionPeriod());
 	newCredits.setGivenCredits(credits.getGivenCredits());
 
 	for (final IEnrolment enrolment : credits.getIEnrolments()) {
