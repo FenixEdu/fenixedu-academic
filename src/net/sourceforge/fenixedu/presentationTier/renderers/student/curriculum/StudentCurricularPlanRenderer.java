@@ -538,7 +538,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    groupName.append(")</span>");
 		}
 
-		if (isToShowCreationInfoAndGroupApprovedCredits() && studentCurricularPlan.isBolonhaDegree()) {
+		if (isToShowCreationInfoAndGroupApprovedCredits() && studentCurricularPlan.isBolonhaDegree()
+			&& creditsLimit != null) {
 		    final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
 		    groupName.append(" <em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
 			    + "\"");
