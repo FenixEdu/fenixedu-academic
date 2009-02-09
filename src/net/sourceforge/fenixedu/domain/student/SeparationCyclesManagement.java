@@ -447,6 +447,14 @@ public class SeparationCyclesManagement {
 		throw new DomainException("error.invalid.newExtraCurriculumGroup");
 	    }
 	    for (final CurriculumModule curriculumModule : oldExtraCurriculumGroup.getCurriculumModulesSet()) {
+		if (curriculumModule.isCurriculumLine()) {
+		    final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		    if (!curriculumLine.hasExecutionPeriod()
+			    || curriculumLine.getExecutionPeriod().isBefore(getExecutionPeriod())) {
+			continue;
+		    }
+		}
+
 		curriculumModule.setCurriculumGroup(newExtraCurriculumGroup);
 	    }
 
