@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +63,6 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     private static final DecimalFormat employeeNumberFormat = new DecimalFormat("000000");
 
-    private static final DecimalFormat justificationCodeFormat = new DecimalFormat("000");
-
     private static final String fieldSeparator = ("\t");
 
     private static String maternityMovementCode = "508";
@@ -88,6 +87,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     public static String extraNightWorkMealMovementCode = "123";
 
+    private static Set<String> emptyCodes;
+
     @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
     @Service
     public static String run(ClosedMonth closedMonth) {
@@ -97,6 +98,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
     @Checked("RolePredicates.PERSONNEL_SECTION_PREDICATE")
     @Service
     public static String run(ClosedMonth closedMonth, Boolean getWorkAbsences, Boolean getExtraWorkMovements) {
+	emptyCodes = new HashSet<String>();
+	emptyCodes.add("0");
+	emptyCodes.add("000");
+
 	LocalDate beginDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
@@ -297,9 +302,9 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		}
 	    }
 	}
-	HashMap<Integer, Duration> pastJustificationsDurations = assiduousnessClosedMonth.getPastJustificationsDurations();
-	HashMap<Integer, Duration> closedMonthJustificationsMap = assiduousnessClosedMonth.getClosedMonthJustificationsMap();
-	for (Integer giafCode : closedMonthJustificationsMap.keySet()) {
+	HashMap<String, Duration> pastJustificationsDurations = assiduousnessClosedMonth.getPastJustificationsDurations();
+	HashMap<String, Duration> closedMonthJustificationsMap = assiduousnessClosedMonth.getClosedMonthJustificationsMap();
+	for (String giafCode : closedMonthJustificationsMap.keySet()) {
 	    Duration pastDurationToDiscount = Duration.ZERO;
 	    Duration pastDuration = pastJustificationsDurations.get(giafCode);
 	    int scheduleHours = assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
@@ -359,15 +364,15 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	StringBuilder line = new StringBuilder();
 	for (LocalDate day : daysToUnjustify) {
 	    LocalDate nextMontDate = day.plusMonths(1);
-	    Integer code = justificationMotive.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
-	    if (code != 0) {
+	    String code = justificationMotive.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	    if (!emptyCodes.contains(code)) {
 		line.append(nextMontDate.getYear()).append(fieldSeparator);
 		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 		line.append(
 			employeeNumberFormat.format(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
 				.getEmployee().getEmployeeNumber())).append(fieldSeparator);
 		line.append("F").append(fieldSeparator);
-		line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+		line.append(code).append(fieldSeparator);
 		line.append(dateFormat.print(day)).append(fieldSeparator).append(dateFormat.print(day)).append(fieldSeparator)
 			.append("100").append(fieldSeparator).append("100\r\n");
 	    }
@@ -433,10 +438,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getEndLocalDate(), false);
 	    }
-	    Integer code = leaveBean.getLeave().getJustificationMotive().getGiafCode(
+	    String code = leaveBean.getLeave().getJustificationMotive().getGiafCode(
 		    assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 
-	    if (code != 0) {
+	    if (!emptyCodes.contains(code)) {
 		if (leaveBean.getLeave().getJustificationMotive() == state.maternityJustificationMotive
 			&& endDate.getDayOfMonth() != 30 && Days.daysBetween(start, end).getDays() + 1 == endDate.getDayOfMonth()) {
 		    if (!state.maternityJustificationList.contains(leaveBean.getLeave().getAssiduousness())
@@ -453,7 +458,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 			employeeNumberFormat.format(leaveBean.getLeave().getAssiduousness().getEmployee().getEmployeeNumber()))
 			.append(fieldSeparator);
 		line.append("F").append(fieldSeparator);
-		line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+		line.append(code).append(fieldSeparator);
 		line.append(dateFormat.print(start)).append(fieldSeparator);
 		line.append(dateFormat.print(end)).append(fieldSeparator);
 		int days = Days.daysBetween(start, end).getDays() + 1;
@@ -495,16 +500,16 @@ public class ExportClosedExtraWorkMonth extends FenixService {
     }
 
     private static StringBuilder getHalfLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, Leave leave) {
-	Integer code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	String code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 	StringBuilder line = new StringBuilder();
-	if (code != 0) {
+	if (!emptyCodes.contains(code)) {
 	    LocalDate nextMontDate = assiduousnessClosedMonth.getBeginDate().plusMonths(1);
 	    line.append(nextMontDate.getYear()).append(fieldSeparator);
 	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 	    line.append(employeeNumberFormat.format(leave.getAssiduousness().getEmployee().getEmployeeNumber())).append(
 		    fieldSeparator);
 	    line.append("F").append(fieldSeparator);
-	    line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
+	    line.append(code).append(fieldSeparator);
 	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
 	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
 	    line.append("050").append(fieldSeparator).append("050\r\n");

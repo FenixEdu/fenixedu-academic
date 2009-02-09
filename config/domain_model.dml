@@ -2066,8 +2066,8 @@ class DomainObject {
 		Boolean actualWorkTime;
 		DayType dayType;
 		String description;
-		Integer giafCodeContractedStatus;
-		Integer giafCodeOtherStatus;
+		String giafCodeContractedStatus;
+		String giafCodeOtherStatus;
 		JustificationGroup justificationGroup;
 		JustificationType justificationType;
 		DateTime lastModifiedDate;

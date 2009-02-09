@@ -31,9 +31,9 @@ public class JustificationMotive extends JustificationMotive_Base {
     }//
 
     private void init(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
-	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate,
-	    Boolean inExercise, DateTime lastModifiedDate, Employee modifiedBy) {
+	    DayType dayType, JustificationGroup justificationGroup, String giafCodeOtherStatus, String giafCodeContractedStatus,
+	    Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise,
+	    DateTime lastModifiedDate, Employee modifiedBy) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAcronym(acronym);
 	setDescription(description);
@@ -53,9 +53,8 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
-	    DayType dayType, JustificationGroup justificationGroup, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate,
-	    Boolean inExercise, Employee modifiedBy) {
+	    DayType dayType, JustificationGroup justificationGroup, String giafCodeOtherStatus, String giafCodeContractedStatus,
+	    Boolean discountBonus, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -98,8 +97,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setModifiedBy(modifiedBy);
     }
 
-    public void editJustificationMotive(String acronym, String description, Boolean active, Integer giafCodeOtherStatus,
-	    Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Employee modifiedBy) {
+    public void editJustificationMotive(String acronym, String description, Boolean active, String giafCodeOtherStatus,
+	    String giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
@@ -117,7 +116,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
 	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Boolean active,
-	    Integer giafCodeOtherStatus, Integer giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations,
+	    String giafCodeOtherStatus, String giafCodeContractedStatus, Boolean discountBonus, Boolean discountA17Vacations,
 	    Boolean accumulate, Boolean inExercise, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
@@ -152,7 +151,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return false;
     }
 
-    public Integer getGiafCode(AssiduousnessStatusHistory assiduousnessStatusHistory) {
+    public String getGiafCode(AssiduousnessStatusHistory assiduousnessStatusHistory) {
 	if (assiduousnessStatusHistory.getAssiduousnessStatus().isContractedEmployee()) {
 	    if (getGiafCodeContractedStatus() == null) {
 		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
@@ -167,7 +166,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	return getGiafCodeOtherStatus();
     }
 
-    public static JustificationMotive getJustificationMotiveByGiafCode(Integer code,
+    public static JustificationMotive getJustificationMotiveByGiafCode(String code,
 	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
 	for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
 	    try {

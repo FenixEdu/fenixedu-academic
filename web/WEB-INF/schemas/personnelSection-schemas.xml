@@ -381,12 +381,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="inExercise" key="label.inExercise" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="accumulate" key="label.accumulate" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
-	</slot>
-	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
-	</slot>
+	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>

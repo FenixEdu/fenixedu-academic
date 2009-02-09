@@ -48,8 +48,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setTotalWorkedTime(totalWorkedTime);
     }
 
-    public HashMap<Integer, Duration> getPastJustificationsDurations() {
-	HashMap<Integer, Duration> pastJustificationsDurations = new HashMap<Integer, Duration>();
+    public HashMap<String, Duration> getPastJustificationsDurations() {
+	HashMap<String, Duration> pastJustificationsDurations = new HashMap<String, Duration>();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : getAssiduousnessStatusHistory().getAssiduousnessClosedMonths()) {
 	    if (assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == getClosedMonth()
 		    .getClosedYearMonth().get(DateTimeFieldType.year())
@@ -57,7 +57,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear())) {
 		for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
 		    if (closedMonthJustification.getJustificationMotive().getActive()) {
-			Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(
+			String code = closedMonthJustification.getJustificationMotive().getGiafCode(
 				assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 			Duration duration = pastJustificationsDurations.get(code);
 			if (duration == null) {
@@ -72,10 +72,10 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return pastJustificationsDurations;
     }
 
-    public HashMap<Integer, Duration> getClosedMonthJustificationsMap() {
-	HashMap<Integer, Duration> closedMonthJustificationscodesMap = new HashMap<Integer, Duration>();
+    public HashMap<String, Duration> getClosedMonthJustificationsMap() {
+	HashMap<String, Duration> closedMonthJustificationscodesMap = new HashMap<String, Duration>();
 	for (ClosedMonthJustification closedMonthJustification : getClosedMonthJustifications()) {
-	    Integer code = closedMonthJustification.getJustificationMotive().getGiafCode(getAssiduousnessStatusHistory());
+	    String code = closedMonthJustification.getJustificationMotive().getGiafCode(getAssiduousnessStatusHistory());
 	    Duration duration = closedMonthJustificationscodesMap.get(code);
 	    if (duration == null) {
 		duration = Duration.ZERO;
