@@ -68,70 +68,75 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	List<Leave> leaves = employeeAnualInfo.getEmployee().getAssiduousness().getLeaves(beginDate, endDate);
 	EmployeeMonthInfo employeeMonthInfo = employeeAnualInfo.getCurrentMonthInfo();
 	// categoria - não temos
-	AssiduousnessClosedMonth assiduousnessClosedMonth = getAssiduousnessClosedMonth(closedMonth, employeeAnualInfo
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = getAssiduousnessClosedMonths(closedMonth, employeeAnualInfo
 		.getEmployee().getAssiduousness());
-	if (assiduousnessClosedMonth != null
-		&& isActiveAndHasStatus(assiduousnessClosedMonth.getAssiduousnessStatusHistory(), assiduousnessStatus, beginDate,
-			endDate)) {
-	    AssiduousnessClosedMonth previousAssiduousnessClosedMonth = assiduousnessClosedMonth
-		    .getPreviousAssiduousnessClosedMonth();
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+	    if (isActiveAndHasStatus(assiduousnessClosedMonth.getAssiduousnessStatusHistory(), assiduousnessStatus, beginDate,
+		    endDate)) {
+		AssiduousnessClosedMonth previousAssiduousnessClosedMonth = assiduousnessClosedMonth
+			.getPreviousAssiduousnessClosedMonth();
 
-	    setUnjustifiedMiss(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
-	    setMedicalLeaves(employeeMonthInfo, leaves, beginDate, endDate);
+		setUnjustifiedMiss(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
+		setMedicalLeaves(employeeMonthInfo, leaves, beginDate, endDate);
 
-	    setArticle66(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
-	    employeeMonthInfo.setBereavementLeave(countLeaveNumberOfDays(leaves, "NOJO", beginDate, endDate));
-	    employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
-	    employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays(leaves, "LP", beginDate, endDate));
-	    employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
-	    List<JustificationMotive> justificationMotives = JustificationMotive
-		    .getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
-	    employeeMonthInfo.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, justificationMotives));
-	    employeeMonthInfo.setArticle17(getJustificationDays(leaves, beginDate, endDate, "A17", "A1306"));
-	    setAcquiredVacations(employeeMonthInfo, beginDate);
-	    employeeMonthInfo.setUsedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FER", "F1306", "FA42"));
-	    employeeMonthInfo.setUsedTransferedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FTRANS",
-		    "FT1306", "FA42T"));
-	    employeeMonthInfo.setUsedPastHourVacations(countLeaveNumberOfWorkDays(leaves, "FHEA", beginDate, endDate));
-	    employeeMonthInfo.setUsedA17Vacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FA17", "FA1306"));
-	    employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, "FEB", beginDate, endDate));
-	    employeeMonthInfo.setUsedExtraWorkVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FHE", "FH1306"));
-	    employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 FÉRIAS",
-		    "1/2 FER"));
+		setArticle66(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
+		employeeMonthInfo.setBereavementLeave(countLeaveNumberOfDays(leaves, "NOJO", beginDate, endDate));
+		employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
+		employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays(leaves, "LP", beginDate, endDate));
+		employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
+		List<JustificationMotive> justificationMotives = JustificationMotive
+			.getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
+		employeeMonthInfo
+			.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, justificationMotives));
+		employeeMonthInfo.setArticle17(getJustificationDays(leaves, beginDate, endDate, "A17", "A1306"));
+		setAcquiredVacations(employeeMonthInfo, beginDate);
+		employeeMonthInfo
+			.setUsedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FER", "F1306", "FA42"));
+		employeeMonthInfo.setUsedTransferedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FTRANS",
+			"FT1306", "FA42T"));
+		employeeMonthInfo.setUsedPastHourVacations(countLeaveNumberOfWorkDays(leaves, "FHEA", beginDate, endDate));
+		employeeMonthInfo.setUsedA17Vacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FA17", "FA1306"));
+		employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, "FEB", beginDate, endDate));
+		employeeMonthInfo.setUsedExtraWorkVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FHE",
+			"FH1306"));
+		employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 FÉRIAS",
+			"1/2 FER"));
 
-	    // TODO not supported yet, dispensas adquiridas no mes por work
-	    // extra
-	    setAcquiredDismissal(employeeAnualInfo.getEmployee().getAssiduousness());
-	    employeeMonthInfo.setUsedDismissal(countLeaveNumberOfDays(leaves, "DHE", beginDate, endDate));
-	    setVacationsInWorkDays(employeeMonthInfo, leaves, beginDate, endDate);
-	    employeeMonthInfo.setBereavementLeaveWorkDays(countLeaveNumberOfWorkDays(leaves, "NOJO", beginDate, endDate));
-	    employeeMonthInfo.setMarriageInWorkDays(countLeaveNumberOfWorkDays(leaves, "LPC", beginDate, endDate));
-	    employeeMonthInfo.setChildbirthInWorkDays(countLeaveNumberOfWorkDays(leaves, "LP", beginDate, endDate));
-	    employeeMonthInfo.setLeaveWithoutPaymentInWorkDays(countLeaveNumberOfWorkDays(leaves, "LS/V", beginDate, endDate));
-	    setArticle52(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
-	    setChildClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
-	    setRelativeClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
-	    employeeMonthInfo.setAFCT(countLeaveNumberOfDays(leaves, "AFCT", beginDate, endDate));
-	    employeeMonthInfo.setInfectumContagious(countLeaveNumberOfDays(leaves, "IFC", beginDate, endDate));
-	    employeeMonthInfo.setAccidentInServiceInLocal(countLeaveNumberOfDays(leaves, "ACINLO", beginDate, endDate));
-	    employeeMonthInfo.setAccidentInServiceInIter(countLeaveNumberOfDays(leaves, "ACINTE", beginDate, endDate));
-	    employeeMonthInfo.setBloodDonation(countLeaveNumberOfDays(leaves, "DSANG", beginDate, endDate));
-	    employeeMonthInfo.setChildbirthOrPaternity(countLeaveNumberOfDays(leaves, "PATERNID", beginDate, endDate));
-	    employeeMonthInfo.setWorkStudentExamEve(countLeaveNumberOfDays(leaves, "TEVESP", beginDate, endDate));
-	    employeeMonthInfo.setWorkStudentExamDay(countLeaveNumberOfDays(leaves, "TRAEST", beginDate, endDate));
-	    employeeMonthInfo.setFormationCoursesNotAuthorized(countLeaveNumberOfDays(leaves, "CURSO", beginDate, endDate));
-	    employeeMonthInfo.setFormationCoursesAuthorized(countLeaveNumberOfDays(leaves, "CURCD", beginDate, endDate));
-	    employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, "PRISÃO", beginDate, endDate));
-	    employeeMonthInfo.setMissForFulfilmentOfObligation(countLeaveNumberOfDays(leaves, "A62", beginDate, endDate));
-	    employeeMonthInfo.setUnionActivity(countLeaveNumberOfDays(leaves, "A.SINDIC", beginDate, endDate));
-	    employeeMonthInfo.setMissWithLostOfIncome(countLeaveNumberOfDays(leaves, "A68", beginDate, endDate));
+		// TODO not supported yet, dispensas adquiridas no mes por work
+		// extra
+		setAcquiredDismissal(employeeAnualInfo.getEmployee().getAssiduousness());
+		employeeMonthInfo.setUsedDismissal(countLeaveNumberOfDays(leaves, "DHE", beginDate, endDate));
+		setVacationsInWorkDays(employeeMonthInfo, leaves, beginDate, endDate);
+		employeeMonthInfo.setBereavementLeaveWorkDays(countLeaveNumberOfWorkDays(leaves, "NOJO", beginDate, endDate));
+		employeeMonthInfo.setMarriageInWorkDays(countLeaveNumberOfWorkDays(leaves, "LPC", beginDate, endDate));
+		employeeMonthInfo.setChildbirthInWorkDays(countLeaveNumberOfWorkDays(leaves, "LP", beginDate, endDate));
+		employeeMonthInfo
+			.setLeaveWithoutPaymentInWorkDays(countLeaveNumberOfWorkDays(leaves, "LS/V", beginDate, endDate));
+		setArticle52(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
+		setChildClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
+		setRelativeClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
+		employeeMonthInfo.setAFCT(countLeaveNumberOfDays(leaves, "AFCT", beginDate, endDate));
+		employeeMonthInfo.setInfectumContagious(countLeaveNumberOfDays(leaves, "IFC", beginDate, endDate));
+		employeeMonthInfo.setAccidentInServiceInLocal(countLeaveNumberOfDays(leaves, "ACINLO", beginDate, endDate));
+		employeeMonthInfo.setAccidentInServiceInIter(countLeaveNumberOfDays(leaves, "ACINTE", beginDate, endDate));
+		employeeMonthInfo.setBloodDonation(countLeaveNumberOfDays(leaves, "DSANG", beginDate, endDate));
+		employeeMonthInfo.setChildbirthOrPaternity(countLeaveNumberOfDays(leaves, "PATERNID", beginDate, endDate));
+		employeeMonthInfo.setWorkStudentExamEve(countLeaveNumberOfDays(leaves, "TEVESP", beginDate, endDate));
+		employeeMonthInfo.setWorkStudentExamDay(countLeaveNumberOfDays(leaves, "TRAEST", beginDate, endDate));
+		employeeMonthInfo.setFormationCoursesNotAuthorized(countLeaveNumberOfDays(leaves, "CURSO", beginDate, endDate));
+		employeeMonthInfo.setFormationCoursesAuthorized(countLeaveNumberOfDays(leaves, "CURCD", beginDate, endDate));
+		employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, "PRISÃO", beginDate, endDate));
+		employeeMonthInfo.setMissForFulfilmentOfObligation(countLeaveNumberOfDays(leaves, "A62", beginDate, endDate));
+		employeeMonthInfo.setUnionActivity(countLeaveNumberOfDays(leaves, "A.SINDIC", beginDate, endDate));
+		employeeMonthInfo.setMissWithLostOfIncome(countLeaveNumberOfDays(leaves, "A68", beginDate, endDate));
 
-	    Integer strikeDays = countLeaveNumberOfDays(leaves, "GREVE", beginDate, endDate);
-	    if (strikeDays == null) {
-		strikeDays = 0;
+		Integer strikeDays = countLeaveNumberOfDays(leaves, "GREVE", beginDate, endDate);
+		if (strikeDays == null) {
+		    strikeDays = 0;
+		}
+		Double totalStrike = countLeaveNumberOfHalfDays(leaves, "1/2GREVE") + strikeDays;
+		employeeMonthInfo.setStrike(totalStrike != 0 ? totalStrike : null);
 	    }
-	    Double totalStrike = countLeaveNumberOfHalfDays(leaves, "1/2GREVE") + strikeDays;
-	    employeeMonthInfo.setStrike(totalStrike != 0 ? totalStrike : null);
 	}
     }
 
@@ -342,13 +347,15 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	employeeMonthInfo.setArticle66(a66.doubleValue() != 0.0 ? a66.doubleValue() : null);
     }
 
-    private static AssiduousnessClosedMonth getAssiduousnessClosedMonth(ClosedMonth closedMonth, Assiduousness assiduousness) {
+    private static List<AssiduousnessClosedMonth> getAssiduousnessClosedMonths(ClosedMonth closedMonth,
+	    Assiduousness assiduousness) {
+	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    if (assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().equals(assiduousness)) {
-		return assiduousnessClosedMonth;
+		assiduousnessClosedMonths.add(assiduousnessClosedMonth);
 	    }
 	}
-	return null;
+	return assiduousnessClosedMonths;
     }
 
     private static Double countLeaveNumberOfHalfDays(List<Leave> leaves, String justificationAcronym) {
