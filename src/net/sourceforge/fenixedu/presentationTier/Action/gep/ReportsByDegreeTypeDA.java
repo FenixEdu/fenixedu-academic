@@ -37,6 +37,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public static class ReportBean implements Serializable {
 	private DegreeType degreeType;
+
 	private DomainReference<ExecutionYear> executionYearReference;
 
 	public DegreeType getDegreeType() {
@@ -79,7 +80,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     public List<QueueJob> getLatestJobs() {
-	return rootDomainObject.getQueueJob().subList(0, 5);
+	return rootDomainObject.getQueueJob().size() > 5 ? rootDomainObject.getQueueJob().subList(0, 5) : rootDomainObject
+		.getQueueJob();
     }
 
     @SuppressWarnings("unused")
@@ -283,8 +285,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     public static class FindSelectedGepReports implements Predicate {
 
 	ExecutionYear executionYear;
+
 	DegreeType degreeType;
+
 	Class reportClass;
+
 	int elements = 0;
 
 	public FindSelectedGepReports(ExecutionYear executionYear, DegreeType degreeType, Class reportClass) {
