@@ -1,0 +1,1 @@
+alter table JUSTIFICATION_MOTIVE add column GIAF_CODE_ADIST_STATUS varchar(20) default NULL;

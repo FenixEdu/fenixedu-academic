@@ -44,7 +44,14 @@ public class AssiduousnessStatus extends AssiduousnessStatus_Base {
     }
 
     public Boolean isContractedEmployee() {
-	if (getDescription().equals("Contrato a termo certo") || getDescription().equals("Contratado pela ADIST")) {
+	if (getDescription().equals("Contrato a termo certo")) {
+	    return true;
+	}
+	return false;
+    }
+
+    public Boolean isADISTEmployee() {
+	if (getDescription().equals("Contratado pela ADIST")) {
 	    return true;
 	}
 	return false;
