@@ -1124,6 +1124,11 @@ public class Registration extends Registration_Base {
 	return sortedEnrolmentsExecutionYears.isEmpty() ? null : sortedEnrolmentsExecutionYears.first();
     }
 
+    public ExecutionYear getFirstCurriculumLineExecutionYear() {
+	final SortedSet<ExecutionYear> executionYears = getSortedCurriculumLinesExecutionYears();
+	return executionYears.isEmpty() ? null : executionYears.first();
+    }
+
     final public ExecutionYear getLastEnrolmentExecutionYear() {
 	SortedSet<ExecutionYear> sorted = getSortedEnrolmentsExecutionYears();
 	if (!sorted.isEmpty()) {
