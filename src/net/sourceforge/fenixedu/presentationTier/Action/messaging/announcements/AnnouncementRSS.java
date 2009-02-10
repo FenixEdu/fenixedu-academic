@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
@@ -124,7 +126,6 @@ public class AnnouncementRSS extends RSSAction {
 	if (actionPath == null) {
 	    return null;
 	}
-
 	String result = null;
 	String scheme = request.getScheme();
 	int serverPort = request.getServerPort();
@@ -135,9 +136,10 @@ public class AnnouncementRSS extends RSSAction {
 	if (actionPath.indexOf('?') == -1) {
 	    actionPath += "?";
 	}
-
+	
 	actionPath += "&announcementId=" + announcement.getIdInternal();
-
+	actionPath += "&executionCourseID=" + ((ExecutionCourseAnnouncementBoard)announcement.getAnnouncementBoard()).getExecutionCourse().getIdInternal();
+	actionPath += "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + ((ExecutionCourseAnnouncementBoard)announcement.getAnnouncementBoard()).getExecutionCourse().getSite().getReversePath();
 	try {
 	    URL url = new URL(scheme, serverName, serverPort, context + actionPath);
 	    result = url.toString();
@@ -149,8 +151,7 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
-	return null;
-	// return "/publico/publicAnnouncements.do?method=viewAnnouncement";
+	return "/publico/announcementManagement.do?method=viewAnnouncement";
     }
 
     @Override
