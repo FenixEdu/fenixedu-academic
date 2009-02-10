@@ -118,7 +118,6 @@ public class SeparationCyclesManagement {
 	final Student student = oldStudentCurricularPlan.getRegistration().getStudent();
 	final CycleCurriculumGroup oldSecondCycle = oldStudentCurricularPlan.getSecondCycle();
 	final DegreeCurricularPlan degreeCurricularPlan = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule();
-	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 
 	final Registration newRegistration = createRegistration(student, oldStudentCurricularPlan);
 	final StudentCurricularPlan newStudentCurricularPlan = createStudentCurricularPlan(newRegistration, degreeCurricularPlan);
@@ -130,6 +129,8 @@ public class SeparationCyclesManagement {
 	tryRemoveOldSecondCycle(oldSecondCycle);
 	moveGratuityEventsInformation(oldStudentCurricularPlan, newStudentCurricularPlan);
 	createAdministrativeOfficeFeeAndInsurance(newStudentCurricularPlan);
+
+	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
 
 	return newRegistration;
     }
@@ -146,8 +147,10 @@ public class SeparationCyclesManagement {
 	}
 
 	for (final Attends attend : attends) {
-	    changeShifts(attend, oldStudentCurricularPlan, newStudentCurricularPlan);
-	    attend.setRegistration(newStudentCurricularPlan.getRegistration());
+	    if (!newStudentCurricularPlan.getRegistration().attends(attend.getExecutionCourse())) {
+		changeShifts(attend, oldStudentCurricularPlan, newStudentCurricularPlan);
+		attend.setRegistration(newStudentCurricularPlan.getRegistration());
+	    }
 	}
     }
 
@@ -219,11 +222,13 @@ public class SeparationCyclesManagement {
 	    final ExecutionSemester executionSemester) {
 
 	final Registration registration = sourceStudentCurricularPlan.getRegistration();
-	if (!registration.isConcluded()) {
+	if (!registration.hasConcluded()) {
 	    throw new DomainException("error.SeparationCyclesManagement.source.studentCurricularPlan.is.not.concluded");
 	}
 
-	final YearMonthDay stateDate = registration.getActiveState().getStateDate().toYearMonthDay();
+	final YearMonthDay conclusionDate = registration.calculateConclusionDate();
+	final YearMonthDay stateDate = conclusionDate != null ? conclusionDate.plusDays(1) : new YearMonthDay().plusDays(1);
+
 	return executionSemester.getBeginDateYearMonthDay().isBefore(stateDate) ? stateDate : executionSemester
 		.getBeginDateYearMonthDay();
     }
@@ -306,8 +311,10 @@ public class SeparationCyclesManagement {
 	enrolment.setCurriculumGroup(parent);
 
 	for (final Attends attend : enrolment.getAttends()) {
-	    changeShifts(attend, oldStudentCurricularPlan, parent.getStudentCurricularPlan());
-	    attend.setRegistration(registration);
+	    if (!registration.attends(attend.getExecutionCourse())) {
+		changeShifts(attend, oldStudentCurricularPlan, parent.getStudentCurricularPlan());
+		attend.setRegistration(registration);
+	    }
 	}
     }
 
@@ -335,7 +342,7 @@ public class SeparationCyclesManagement {
     private Dismissal createNewDismissal(final Credits credits, final CurriculumGroup parent,
 	    final CurricularCourse curricularCourse) {
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse, getExecutionYear())) {
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -353,7 +360,7 @@ public class SeparationCyclesManagement {
 	    throw new DomainException("error.OptionalDismissal.invalid.credits");
 	}
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse, getExecutionYear())) {
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -366,11 +373,10 @@ public class SeparationCyclesManagement {
 	return dismissal;
     }
 
-    private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup,
-	    final CurricularCourse curricularCourse, final ExecutionYear executionYear) {
+    private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
 
 	final CourseGroup degreeModule = curriculumGroup.getDegreeModule();
-	for (final Context context : degreeModule.getValidChildContexts(CurricularCourse.class, executionYear)) {
+	for (final Context context : degreeModule.getChildContexts(CurricularCourse.class)) {
 	    final CurricularCourse each = (CurricularCourse) context.getChildDegreeModule();
 	    if (each == curricularCourse && !curriculumGroup.hasChildDegreeModule(degreeModule)) {
 		return true;
@@ -506,7 +512,7 @@ public class SeparationCyclesManagement {
 	    return;
 	}
 	final RegistrationState state = RegistrationStateCreator.createState(oldStudentCurricularPlan.getRegistration(), null,
-		new DateTime(), RegistrationStateType.CONCLUDED);
+		new YearMonthDay().toDateTimeAtMidnight(), RegistrationStateType.CONCLUDED);
 	state.setResponsiblePerson(null);
     }
 
