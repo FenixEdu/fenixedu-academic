@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -177,6 +178,54 @@ public class JustificationMotive extends JustificationMotive_Base {
 		    .getAssiduousness().getEmployee().getEmployeeNumber().toString());
 	}
 	return getGiafCodeOtherStatus();
+    }
+
+    @Override
+    public String getGiafCodeContractedStatus() {
+	if (StringUtils.isEmpty(super.getGiafCodeContractedStatus())) {
+	    return null;
+	}
+	return super.getGiafCodeContractedStatus();
+    }
+
+    @Override
+    public void setGiafCodeContractedStatus(String giafCodeContractedStatus) {
+	if (StringUtils.isEmpty(giafCodeContractedStatus)) {
+	    super.setGiafCodeContractedStatus(null);
+	}
+	super.setGiafCodeContractedStatus(giafCodeContractedStatus);
+    }
+
+    @Override
+    public String getGiafCodeAdistStatus() {
+	if (StringUtils.isEmpty(super.getGiafCodeAdistStatus())) {
+	    return null;
+	}
+	return super.getGiafCodeAdistStatus();
+    }
+
+    @Override
+    public void setGiafCodeAdistStatus(String giafCodeAdistStatus) {
+	if (StringUtils.isEmpty(giafCodeAdistStatus)) {
+	    super.setGiafCodeAdistStatus(null);
+	}
+	super.setGiafCodeAdistStatus(giafCodeAdistStatus);
+    }
+
+    @Override
+    public String getGiafCodeOtherStatus() {
+	if (StringUtils.isEmpty(super.getGiafCodeOtherStatus())) {
+	    return null;
+	}
+	return super.getGiafCodeOtherStatus();
+    }
+
+    @Override
+    public void setGiafCodeOtherStatus(String giafCodeOtherStatus) {
+	if (StringUtils.isEmpty(giafCodeOtherStatus)) {
+	    super.setGiafCodeAdistStatus(null);
+	}
+	super.setGiafCodeOtherStatus(giafCodeOtherStatus);
     }
 
     public static JustificationMotive getJustificationMotiveByGiafCode(String code,
