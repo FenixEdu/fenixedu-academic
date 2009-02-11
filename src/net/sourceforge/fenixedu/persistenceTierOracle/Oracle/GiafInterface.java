@@ -72,7 +72,7 @@ public class GiafInterface {
 		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim ");
 	    stringBuilder
 		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > a.emp_venc_dt and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' ");
-	    //and nvl(b.tipo_alt,'@') != 'A' 
+	    // and nvl(b.tipo_alt,'@') != 'A'
 	    stringBuilder
 		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
 	    stringBuilder.append(fmt.print(day));
@@ -313,9 +313,8 @@ public class GiafInterface {
 		cs.setString(3, fieldTokens[2].trim());
 		cs.setString(4, fieldTokens[3].trim());
 
-		Integer code = new Integer(fieldTokens[4].trim());
-		DecimalFormat f = new DecimalFormat("00");
-		cs.setString(5, f.format(code));
+		String code = new String(fieldTokens[4].trim());
+		cs.setString(5, code);
 
 		String beginDateString = new Integer(fieldTokens[5].trim()).toString();
 		Calendar beginDate = Calendar.getInstance();
