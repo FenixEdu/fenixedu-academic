@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class FlunkedReportFile extends FlunkedReportFile_Base {
 
-    FlunkedReportFile() {
+    public FlunkedReportFile() {
 	super();
     }
 
@@ -22,7 +22,7 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
     }
 
     public void renderReport(Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("nï¿½mero aluno");
+	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet);
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {

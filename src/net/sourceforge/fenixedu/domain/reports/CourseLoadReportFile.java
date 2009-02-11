@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
-    CourseLoadReportFile() {
+    public CourseLoadReportFile() {
 	super();
     }
 

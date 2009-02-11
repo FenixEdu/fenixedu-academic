@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
-    TeachersByShiftReportFile() {
+    public TeachersByShiftReportFile() {
 	super();
     }
 
@@ -25,12 +25,12 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
     public void renderReport(Spreadsheet spreadsheet) {
 
 	spreadsheet.setHeader("semestre");
-	spreadsheet.setHeader("nï¿½ docente");
+	spreadsheet.setHeader("nº docente");
 	spreadsheet.setHeader("id turno");
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("id execution course");
 	spreadsheet.setHeader("% assegurada pelo docente");
-
+	
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
 	    for (TeacherService teacherService : executionSemester.getTeacherServices()) {
 		for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {

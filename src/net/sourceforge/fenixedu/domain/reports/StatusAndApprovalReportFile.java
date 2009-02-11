@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Base {
 
-    StatusAndApprovalReportFile() {
+    public StatusAndApprovalReportFile() {
 	super();
     }
 
@@ -109,13 +109,13 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
     }
 
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("nï¿½mero aluno");
+	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("ano lectivo");
 	spreadsheet.setHeader("semestre");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("estatuto");
-	spreadsheet.setHeader("nï¿½mero inscricoes");
-	spreadsheet.setHeader("nï¿½umero aprovacoes");
+	spreadsheet.setHeader("número inscricoes");
+	spreadsheet.setHeader("número aprovacoes");
 
 	final ExecutionSemester firstExecutionSemester = ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(getExecutionYear())
 		.getFirstExecutionPeriod();

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class EurAceReportFile extends EurAceReportFile_Base {
 
-    EurAceReportFile() {
+    public EurAceReportFile() {
 	super();
     }
 
@@ -28,8 +28,8 @@ public class EurAceReportFile extends EurAceReportFile_Base {
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
-	spreadsheet.setHeader("nï¿½mero do docente");
-	spreadsheet.setHeader("crï¿½ditos");
+	spreadsheet.setHeader("número do docente");
+	spreadsheet.setHeader("créditos");
 
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (checkDegreeType(getDegreeType(), degree)) {

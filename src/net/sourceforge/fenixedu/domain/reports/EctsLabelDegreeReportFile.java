@@ -14,7 +14,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
-    EctsLabelDegreeReportFile() {
+    public EctsLabelDegreeReportFile() {
 	super();
     }
 
@@ -44,39 +44,39 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
     private void createEctsLabelDegreesHeader(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeaders(new String[] {
 
-	"Nome",
+		"Nome",
 
-	"Nome Inglï¿½s",
+		"Nome Inglês",
 
-	"Tipo Curso",
+		"Tipo Curso",
 
-	"Duração em anos",
+		"Duração em anos",
 
-	"Duraï¿½ï¿½o em Semanas de Estudo",
+		"Duração em Semanas de Estudo",
 
-	"Crï¿½ditos ECTS",
+		"Créditos ECTS",
 
-	"Requisitos de Ingresso",
+		"Requisitos de Ingresso",
 
-	"Requisitos de Ingresso (inglï¿½s)",
+		"Requisitos de Ingresso (inglês)",
 
-	"Objectivos Educacionais",
+		"Objectivos Educacionais",
 
-	"Objectivos Educacionais (inglï¿½s)",
+		"Objectivos Educacionais (inglês)",
 
-	"Acesso a um nï¿½vel superior de estudos",
+		"Acesso a um nível superior de estudos",
 
-	"Acesso a um nï¿½vel superior de estudos (inglï¿½s)",
+		"Acesso a um nível superior de estudos (inglês)",
 
-	"Normas e Regulamentos",
+		"Normas e Regulamentos",
 
-	"Normas e Regulamentos (inglï¿½s)",
+		"Normas e Regulamentos (inglês)",
 
-	"Coordenador",
+		"Coordenador",
 
-	"Contactos",
+		"Contactos",
 
-	"Contactos (inglï¿½s)"
+		"Contactos (inglês)"
 
 	});
     }

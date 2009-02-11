@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class RegistrationReportFile extends RegistrationReportFile_Base {
 
-    RegistrationReportFile() {
+    public RegistrationReportFile() {
 	super();
     }
 
@@ -24,14 +24,14 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
     }
 
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("nï¿½mero aluno");
+	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet);
-	spreadsheet.setHeader("cï¿½digo regime de ingresso na matrï¿½cula");
-	spreadsheet.setHeader("regime de ingresso na matrï¿½cula");
-	spreadsheet.setHeader("ano lï¿½ctivo de inï¿½cio da matrï¿½cula");
-	spreadsheet.setHeader("cï¿½digo regime de ingresso na escola");
+	spreadsheet.setHeader("código regime de ingresso na matrícula");
+	spreadsheet.setHeader("regime de ingresso na matrícula");
+	spreadsheet.setHeader("ano léctivo de início da matrícula");
+	spreadsheet.setHeader("código regime de ingresso na escola");
 	spreadsheet.setHeader("regime de ingresso na escola");
-	spreadsheet.setHeader("ano lï¿½ctivo de ingresso na escola");
+	spreadsheet.setHeader("ano léctivo de ingresso na escola");
 	spreadsheet.setHeader("tipo de aluno");
 	spreadsheet.setHeader("ano curricular");
 

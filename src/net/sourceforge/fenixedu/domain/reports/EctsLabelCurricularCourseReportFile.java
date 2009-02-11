@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCourseReportFile_Base {
 
-    EctsLabelCurricularCourseReportFile() {
+    public EctsLabelCurricularCourseReportFile() {
 	super();
     }
 
@@ -62,24 +62,24 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 	spreadsheet.setHeader("Nome Curso");
 	spreadsheet.setHeader("Sigla Curso");
 	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("Nome Disciplina (inglï¿½s)");
-	spreadsheet.setHeader("Cï¿½digo Disciplina");
+	spreadsheet.setHeader("Nome Disciplina (inglês)");
+	spreadsheet.setHeader("Código Disciplina");
 	spreadsheet.setHeader("Ano curricular");
 	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("Duraï¿½ï¿½o");
+	spreadsheet.setHeader("Duração");
 	spreadsheet.setHeader("Tipo");
-	spreadsheet.setHeader("Crï¿½ditos ECTS");
+	spreadsheet.setHeader("Créditos ECTS");
 	spreadsheet.setHeader("Idioma");
 	spreadsheet.setHeader("Docentes");
 	spreadsheet.setHeader("Horas de contacto");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Objectivos (inglï¿½s)");
+	spreadsheet.setHeader("Objectivos (inglês)");
 	spreadsheet.setHeader("Programa");
-	spreadsheet.setHeader("Programa (inglï¿½s)");
+	spreadsheet.setHeader("Programa (inglês)");
 	spreadsheet.setHeader("Bibliografia Principal");
-	spreadsheet.setHeader("Bibliografia Secundï¿½ria (inglï¿½s)");
-	spreadsheet.setHeader("Avaliaï¿½ï¿½o");
-	spreadsheet.setHeader("Avaliaï¿½ï¿½o (inglï¿½s)");
+	spreadsheet.setHeader("Bibliografia Secundária (inglês)");
+	spreadsheet.setHeader("Avaliação");
+	spreadsheet.setHeader("Avaliação (inglês)");
 	spreadsheet.setHeader("Estimativa total de trabalho");
     }
 
@@ -133,9 +133,9 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
     private String getLanguage(final CurricularCourse curricularCourse) {
 	final DegreeType degreeType = curricularCourse.getDegreeType();
 	if (degreeType.hasExactlyOneCycleType() && degreeType.getCycleType() == CycleType.FIRST_CYCLE) {
-	    return "Portuguï¿½s";
+	    return "Português";
 	} else {
-	    return "Portuguï¿½s/Inglï¿½s";
+	    return "Português/Inglês";
 	}
     }
 

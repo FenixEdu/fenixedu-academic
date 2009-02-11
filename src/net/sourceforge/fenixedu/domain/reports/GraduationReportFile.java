@@ -18,7 +18,7 @@ import org.joda.time.LocalDate;
 
 public class GraduationReportFile extends GraduationReportFile_Base {
 
-    GraduationReportFile() {
+    public GraduationReportFile() {
 	super();
     }
 
@@ -32,21 +32,21 @@ public class GraduationReportFile extends GraduationReportFile_Base {
     
     
     public void renderReport(Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("nï¿½mero aluno");
+	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("ciclo");
-	spreadsheet.setHeader("Nota Conclusï¿½o Secundï¿½rio");
-	spreadsheet.setHeader("Nota Seriaï¿½ï¿½o");
+	spreadsheet.setHeader("Nota Conclusão Secundário");
+	spreadsheet.setHeader("Nota Seriação");
 	spreadsheet.setHeader("ano de ingresso");
-	spreadsheet.setHeader("ano lectivo conclusï¿½o");
-	spreadsheet.setHeader("data conclusï¿½o");
-	spreadsheet.setHeader("nï¿½mero de anos para conclusï¿½o");
-	spreadsheet.setHeader("mï¿½dia final");
+	spreadsheet.setHeader("ano lectivo conclusão");
+	spreadsheet.setHeader("data conclusão");
+	spreadsheet.setHeader("número de anos para conclusão");
+	spreadsheet.setHeader("média final");
 	spreadsheet.setHeader("morada");
-	spreadsheet.setHeader("cï¿½digo postal");
+	spreadsheet.setHeader("código postal");
 	spreadsheet.setHeader("cidade");
-	spreadsheet.setHeader("paï¿½s");
+	spreadsheet.setHeader("país");
 	spreadsheet.setHeader("telefone");
 	spreadsheet.setHeader("telemovel");
 	spreadsheet.setHeader("email");
