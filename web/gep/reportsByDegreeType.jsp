@@ -40,24 +40,27 @@
 <logic:present name="job">
 	<bean:define id="job" name="job" type="net.sourceforge.fenixedu.domain.reports.GepReportFile"/>
 	<p>
-		<span class="success0">
+		<div class="success0" style="width:600px;">
 		<logic:present name="reportBean" property="executionYear">
 		<logic:present name="reportBean" property="degreeType">
-			<bean:message key="label.gep.listing.confirmation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>" arg1="<%= job.getExecutionYear().getYear().toString() %>" arg2="<%= job.getDegreeType().getLocalizedName().toString() %>"/>
+			<p class="mvert05"><bean:message key="label.gep.listing.confirmation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>" arg1="<%= job.getExecutionYear().getYear().toString() %>" arg2="<%= job.getDegreeType().getLocalizedName().toString() %>"/></p>
+			<p class="mvert05"><bean:message key="label.gep.email.notice" bundle="GEP_RESOURCES" /></p>
 		</logic:present>
 		</logic:present>
 
 		<logic:notPresent name="reportBean" property="executionYear">
-			<bean:message key="label.gep.listing.confirmation.graduation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>"/>
+			<p class="mvert05"><bean:message key="label.gep.listing.confirmation.graduation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>"/></p>
+			<p class="mvert05"><bean:message key="label.gep.email.notice" bundle="GEP_RESOURCES" /></p>
 		</logic:notPresent>
 		
 		<logic:present name="reportBean" property="executionYear">
 		<logic:notPresent name="reportBean" property="degreeType">
-			<bean:message key="label.gep.listing.confirmation.graduation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>"/>
+			<p class="mvert05"><bean:message key="label.gep.listing.confirmation.graduation" bundle="GEP_RESOURCES" arg0="<%= job.getJobName().toString() %>"/></p>
+			<p class="mvert05"><bean:message key="label.gep.email.notice" bundle="GEP_RESOURCES" /></p>
 		</logic:notPresent>
 		</logic:present>
 
-		</span>
+		</div>
 	</p>
 </logic:present>
 
