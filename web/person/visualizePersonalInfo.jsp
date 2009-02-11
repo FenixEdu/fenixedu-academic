@@ -110,20 +110,6 @@
         <th><bean:message key="label.contact.visible.to.management" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
         <th></th>
     </tr>
-    <!-- <tr>
-        <td><bean:message key="label.partyContacts.Picture" /></td>
-        <td>-</td>
-        <td class="acenter">
-            <logic:equal name="person" property="availablePhoto" value="true">
-                <img src="<%=request.getContextPath()%>/images/accept.gif"/>
-            </logic:equal>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr> -->
 <bean:define id="phones" name="person" property="phones" />
 <bean:size id="size" name="phones" />
 <logic:notEmpty name="phones">

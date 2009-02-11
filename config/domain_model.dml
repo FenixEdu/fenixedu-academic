@@ -73,6 +73,7 @@ enum      net.sourceforge.fenixedu.domain.branch.BranchType                     
 enum      net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                  as PartyContactType;
 enum      net.sourceforge.fenixedu.domain.PhotoType                                                                  as PhotoType;
 enum      net.sourceforge.fenixedu.domain.PhotoState                                                                 as PhotoState;
+enum      net.sourceforge.fenixedu.domain.PhotographContentSize                                                      as PhotographContentSize;
 enum      net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                      as CurricularPeriodType;
 enum      net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                         as CurricularRuleType;
 enum      net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                                            as CurricularCourseType;
@@ -662,18 +663,16 @@ class DomainObject {
 	}
 
     class Photograph extends DomainObject {
-        ByteArray content;
-        ByteArray rawContent;
         ContentType contentType;
         PhotoType photoType;
         PhotoState state;
         DateTime submission;
         DateTime stateChange;
     }
-    
-    relation PreviousPhotograph {
-       Photograph playsRole previous;
-       Photograph playsRole next;
+
+    class PhotographContent extends DomainObject {
+    	PhotographContentSize size;
+        ByteArray content;
 	}
 
 	class File extends DomainObject {
@@ -687,12 +686,12 @@ class DomainObject {
 		Integer size;
 		DateTime uploadTime;
 	}
-
+	
     /* Documents */
     class documents.GeneratedDocument extends File {
         GeneratedDocumentType type;
     }
-
+    
     class documents.GeneratedDocumentWithoutSource extends documents.GeneratedDocument;
     
     class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
@@ -1658,7 +1657,7 @@ class DomainObject {
 				class accounting.postingRules.serviceRequests.CertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
 					Money amountPerPage;
 				}
-				
+
 					class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
 					}
 
@@ -5741,11 +5740,11 @@ class internship.InternshipCandidacy extends DomainObject {
 }
 
 class QueueJob extends DomainObject {
-       Boolean done;
-       Integer failedCounter;
-       DateTime requestDate;
-       DateTime jobStartTime;
-       DateTime jobEndTime;
+               Boolean done;
+               Integer failedCounter;
+               DateTime requestDate;
+               DateTime jobStartTime;
+               DateTime jobEndTime;
 }
 
 class QueueJobFile extends QueueJob {
@@ -5754,8 +5753,8 @@ class QueueJobFile extends QueueJob {
 }
 
 class reports.GepReportFile extends QueueJobFile {
-	  String type;
-	  DegreeType degreeType;
+	String type;
+	DegreeType degreeType;
 }
 
 
@@ -7802,6 +7801,18 @@ relation PhotoRejector {
         multiplicity *;
     }
     Person playsRole rejector;
+}
+
+relation PreviousPhotograph {
+   Photograph playsRole previous;
+   Photograph playsRole next;
+}
+
+relation PhotographContent {
+	Photograph playsRole photograph;
+	PhotographContent playsRole content {
+	    multiplicity *;
+	}
 }
 
 relation FileTagging {
@@ -12811,7 +12822,7 @@ relation ThesisEvaluationParticipantRootDomainObject {
 relation ThesisHasDissertationFile {
 	thesis.ThesisFile playsRole dissertation;
 	thesis.Thesis playsRole dissertationThesis;
-	}
+}
 
 relation ThesisHasExtendedAbstractFile {
 	thesis.ThesisFile playsRole extendedAbstract;
