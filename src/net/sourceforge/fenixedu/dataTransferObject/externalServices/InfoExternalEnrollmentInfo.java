@@ -72,7 +72,7 @@ public class InfoExternalEnrollmentInfo {
 
     public static InfoExternalEnrollmentInfo newFromOptionalEnrollment(OptionalEnrolment enrollment) {
 	InfoExternalEnrollmentInfo info = new InfoExternalEnrollmentInfo();
-	info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(enrollment.getOptionalCurricularCourse()));
+	info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(enrollment.getCurricularCourse()));
 	info.setEvaluations(InfoExternalEnrollmentInfo.buildExternalEvaluationsInfo(enrollment.getEvaluations()));
 	return info;
     }
