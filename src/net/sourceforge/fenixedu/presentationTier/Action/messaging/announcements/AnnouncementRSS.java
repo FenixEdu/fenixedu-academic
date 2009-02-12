@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -30,7 +31,7 @@ import com.sun.syndication.feed.synd.SyndContentImpl;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
- * <br>
+ *         <br>
  *         Created on Jul 20, 2006,8:42:24 AM
  * 
  */
@@ -121,7 +122,7 @@ public class AnnouncementRSS extends RSSAction {
 
     private String getEntryLink(HttpServletRequest request, Announcement announcement) throws FenixActionException {
 
-	String actionPath = getDirectAnnouncementBaseUrl(request, announcement);
+	StringBuilder actionPath = new StringBuilder(getDirectAnnouncementBaseUrl(request, announcement));
 
 	if (actionPath == null) {
 	    return null;
@@ -133,15 +134,26 @@ public class AnnouncementRSS extends RSSAction {
 	String appContext = PropertiesManager.getProperty("app.context");
 	String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 
-	if (actionPath.indexOf('?') == -1) {
-	    actionPath += "?";
+	if (actionPath.indexOf("?") == -1) {
+	    actionPath.append("?");
 	}
-	
-	actionPath += "&announcementId=" + announcement.getIdInternal();
-	actionPath += "&executionCourseID=" + ((ExecutionCourseAnnouncementBoard)announcement.getAnnouncementBoard()).getExecutionCourse().getIdInternal();
-	actionPath += "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + ((ExecutionCourseAnnouncementBoard)announcement.getAnnouncementBoard()).getExecutionCourse().getSite().getReversePath();
+
+	actionPath.append("&announcementId=");
+	actionPath.append(announcement.getIdInternal());
+	AnnouncementBoard announcementBoard = announcement.getAnnouncementBoard();
+
+	if (announcementBoard instanceof ExecutionCourseAnnouncementBoard) {
+	    ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoard = (ExecutionCourseAnnouncementBoard) announcementBoard;
+	    ExecutionCourse executionCourse = executionCourseAnnouncementBoard.getExecutionCourse();
+
+	    actionPath.append("&executionCourseID=" + executionCourse.getIdInternal());
+	    actionPath.append("&");
+	    actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	    actionPath.append("=");
+	    actionPath.append(executionCourse.getSite().getReversePath());
+	}
 	try {
-	    URL url = new URL(scheme, serverName, serverPort, context + actionPath);
+	    URL url = new URL(scheme, serverName, serverPort, context + actionPath.toString());
 	    result = url.toString();
 	} catch (MalformedURLException e) {
 	    throw new FenixActionException(e);
