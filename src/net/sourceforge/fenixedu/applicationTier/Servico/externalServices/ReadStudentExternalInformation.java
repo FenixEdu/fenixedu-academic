@@ -79,7 +79,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	Person person = Person.readPersonByUsername(username);
 
 	if (!person.getStudent().hasAnyActiveRegistration()) {
-	    throw new FenixServiceException("Não tem nenhuma matrícula activa");
+	    throw new FenixServiceException("Nï¿½o tem nenhuma matrï¿½cula activa");
 	}
 
 	if (person.getStudent().getMostSignificantDegreeType().isBolonhaType()) {
@@ -118,8 +118,12 @@ public class ReadStudentExternalInformation extends FenixService {
 		    if (curriculumLine.isEnrolment()) {
 			Enrolment enrolment = (Enrolment) curriculumLine;
 			if (enrolment.isOptional()) {
-			    addCurricularCourse(info.getDegree(), ((OptionalEnrolment) enrolment).getOptionalCurricularCourse(),
-				    cycleCurriculumGroup);
+			    if (enrolment instanceof OptionalEnrolment) {
+				addCurricularCourse(info.getDegree(), enrolment.getCurricularCourse(), cycleCurriculumGroup);
+			    } else {
+				addCurricularCourse(info.getDegree(), ((OptionalEnrolment) enrolment).getOptionalCurricularCourse(),
+					cycleCurriculumGroup);
+			    }
 			} else {
 			    addCurricularCourse(info.getDegree(), curriculumLine.getCurricularCourse(), cycleCurriculumGroup);
 			}
