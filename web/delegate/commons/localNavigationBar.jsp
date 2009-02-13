@@ -32,13 +32,16 @@
 		
 		<logic:present name="userView" property="person.student">
 			<bean:define id="student" name="userView" property="person.student" />
-			<bean:define id="degree" name="student" property="lastActiveRegistration.degree" />
-			<bean:define id="degreeId" name="degree" property="idInternal" />
-			<li>
-				<html:link page="<%= "/evaluationsForDelegates.faces?degreeID=" + degreeId%>">
-					<bean:message key="link.evaluations" bundle="DELEGATES_RESOURCES"/>
-				</html:link>
-			</li>
+
+			<logic:present name="student" property="lastActiveRegistration">
+				<bean:define id="degree" name="student" property="lastActiveRegistration.degree" />
+				<bean:define id="degreeId" name="degree" property="idInternal" />
+				<li>
+					<html:link page="<%= "/evaluationsForDelegates.faces?degreeID=" + degreeId%>">
+						<bean:message key="link.evaluations" bundle="DELEGATES_RESOURCES"/>
+					</html:link>
+					</li>
+			</logic:present>
 		</logic:present>
 
 		<li class="navheader">
