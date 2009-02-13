@@ -3633,9 +3633,10 @@ public class Registration extends Registration_Base {
 	} else if (hasIndividualCandidacy()) {
 	    getIndividualCandidacy().editCandidacyInformation(bean);
 	} else {
-	    StudentCandidacy.createStudentCandidacy(
-		    getLastDegreeCurricularPlan().getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson())
-		    .editCandidacyInformation(bean);
+	    final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(getLastDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson());
+	    studentCandidacy.setRegistration(this);
+	    studentCandidacy.editCandidacyInformation(bean);
 	}
     }
 
@@ -3646,9 +3647,10 @@ public class Registration extends Registration_Base {
 	} else if (hasIndividualCandidacy()) {
 	    getIndividualCandidacy().editMissingCandidacyInformation(bean);
 	} else {
-	    StudentCandidacy.createStudentCandidacy(
-		    getLastDegreeCurricularPlan().getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson())
-		    .editCandidacyInformation(bean);
+	    final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(getLastDegreeCurricularPlan()
+		    .getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson());
+	    studentCandidacy.setRegistration(this);
+	    studentCandidacy.editCandidacyInformation(bean);
 	}
     }
 }
