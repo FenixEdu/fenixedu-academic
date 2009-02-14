@@ -1,11 +1,27 @@
-package net.sourceforge.fenixedu.domain.reports;
+package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
+import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
+import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
+import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
+import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
+import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
+import net.sourceforge.fenixedu.domain.reports.GepReportFile;
+import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
+import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
+import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReportFileFactory {
 
+    @Service
+    public static PublicRelationsStudentListQueueJob createPublicRelationsStudentListQueueJob(ExecutionYear executionYear, DegreeType degreeType,
+	    Boolean concluded, Boolean active) {
+	return new PublicRelationsStudentListQueueJob(executionYear, degreeType, concluded, active);
+    }
+    
     @Service
     static public GepReportFile createStatusAndApprovalReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
 	final StatusAndApprovalReportFile statusAndApprovalReportFile = new StatusAndApprovalReportFile();

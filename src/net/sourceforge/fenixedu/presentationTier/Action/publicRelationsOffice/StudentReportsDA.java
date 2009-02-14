@@ -1,16 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 
-import javax.servlet.ServletOutputStream;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob;
+import net.sourceforge.fenixedu.domain.QueueJob;
+import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
 
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,24 +24,42 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentReports", module = "publicRelations")
-@Forwards( { @Forward(name = "search", path = "publicRelationsOffice-studentReportsSearch") })
+@Forwards( { @Forward(name = "search", path = "publicRelationsOffice-studentReportsSearch"),
+	@Forward(name = "viewPublicRelationsReports", path = "view-public-relations-reports") })
 public class StudentReportsDA extends FenixDispatchAction {
+
+    public List<QueueJob> getLatestJobs() {
+	return QueueJob.getAllJobsForClassOrSubClass(PublicRelationsStudentListQueueJob.class, 5);
+    }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	StudentReportPredicate studentReportPredicate = (StudentReportPredicate) getRenderedObject();
 	if (studentReportPredicate == null) {
-	    studentReportPredicate = new StudentReportPredicate();
+	    if (request.getParameter("executionYearID") != null) {
+		studentReportPredicate = setBean(request);
+		request.setAttribute("showLink", true);
+	    } else {
+		studentReportPredicate = new StudentReportPredicate();
+	    }
+	} else {
+	    if (studentReportPredicate.getExecutionYear() != null
+		    & (studentReportPredicate.getConcluded() == true || studentReportPredicate.getActive() == true)) {
+		request.setAttribute("showLink", true);
+	    }
 	}
+
+	List<QueueJob> queueJobList = getLatestJobs();
+
+	request.setAttribute("queueJobList", queueJobList);
 	request.setAttribute("studentReportPredicate", studentReportPredicate);
 	return mapping.findForward("search");
     }
 
-    public ActionForward download(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	final String executionYearIdString = request.getParameter("executionYearId");
-	final Integer executionYearId = Integer.valueOf(executionYearIdString);
-	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
+    public StudentReportPredicate setBean(HttpServletRequest request) {
+	final String executionYearIDString = request.getParameter("executionYearID");
+	final Integer executionYearID = Integer.valueOf(executionYearIDString);
+	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 
 	final String degreeTypeString = request.getParameter("degreeType");
 	final DegreeType degreeType = degreeTypeString == null ? null : DegreeType.valueOf(degreeTypeString);
@@ -48,23 +70,79 @@ public class StudentReportsDA extends FenixDispatchAction {
 	final String activeString = request.getParameter("active");
 	final boolean active = Boolean.parseBoolean(activeString);
 
-	final StudentReportPredicate studentReportPredicate = new StudentReportPredicate();
+	StudentReportPredicate studentReportPredicate = new StudentReportPredicate();
 	studentReportPredicate.setExecutionYear(executionYear);
 	studentReportPredicate.setDegreeType(degreeType);
 	studentReportPredicate.setConcluded(concluded);
 	studentReportPredicate.setActive(active);
 
-	final Spreadsheet spreadsheet = GenerateStudentReport.generateReport(studentReportPredicate);
+	return studentReportPredicate;
 
-	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=listagem.xls");
+    }
 
-	final ServletOutputStream writer = response.getOutputStream();
-	spreadsheet.exportToXLSSheet(writer);
-	writer.flush();
-	response.flushBuffer();
+    public static class FindSelectedPublicRelationsStudentList implements Predicate {
 
-	return null;
+	ExecutionYear executionYear;
+	DegreeType degreeType;
+	boolean active;
+	boolean concluded;
+
+	int elements = 0;
+
+	public FindSelectedPublicRelationsStudentList(ExecutionYear executionYear, DegreeType degreeType, boolean active,
+		boolean concluded) {
+	    this.executionYear = executionYear;
+	    this.degreeType = degreeType;
+	    this.active = active;
+	    this.concluded = concluded;
+	}
+
+	public boolean evaluate(Object object) {
+	    QueueJob queueJob = (QueueJob) object;
+	    try {
+		PublicRelationsStudentListQueueJob reportJob = (PublicRelationsStudentListQueueJob) queueJob;
+		if (this.executionYear == reportJob.getExecutionYear() && this.degreeType == reportJob.getDegreeType()
+			&& reportJob.getActive() == active && reportJob.getConcluded() == concluded && elements < 5) {
+		    elements++;
+		    return true;
+		} else {
+		    return false;
+		}
+	    } catch (ClassCastException E) {
+		return false;
+	    }
+
+	}
+    }
+
+    public ActionForward viewJobs(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	StudentReportPredicate studentReportPredicate = setBean(request);
+	Predicate predicate = new FindSelectedPublicRelationsStudentList(studentReportPredicate.getExecutionYear(),
+		studentReportPredicate.getDegreeType(), studentReportPredicate.getActive(), studentReportPredicate.getConcluded());
+	List<FindSelectedPublicRelationsStudentList> selectedJobs = (List<FindSelectedPublicRelationsStudentList>) org.apache.commons.collections.CollectionUtils
+		.select(rootDomainObject.getQueueJob(), predicate);
+
+	request.setAttribute("studentReportPredicate", studentReportPredicate);
+	request.setAttribute("queueJobList", selectedJobs);
+	return mapping.findForward("viewPublicRelationsReports");
+    }
+
+    public ActionForward requestJob(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	StudentReportPredicate studentReportPredicate = setBean(request);
+
+	PublicRelationsStudentListQueueJob job = ReportFileFactory.createPublicRelationsStudentListQueueJob(
+		studentReportPredicate.getExecutionYear(), studentReportPredicate.getDegreeType(), studentReportPredicate
+			.getConcluded(), studentReportPredicate.getActive());
+
+	List<QueueJob> queueJobList = getLatestJobs();
+
+	request.setAttribute("queueJobList", queueJobList);
+	request.setAttribute("job", job);
+	request.setAttribute("showLink", true);
+	request.setAttribute("studentReportPredicate", studentReportPredicate);
+	return mapping.findForward("search");
     }
 
 }

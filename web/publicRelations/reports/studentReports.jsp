@@ -8,9 +8,27 @@
 <em><bean:message key="label.publicRelationOffice" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="title.student.reports" bundle="APPLICATION_RESOURCES"/></h2>
 
+<logic:notEmpty name="queueJobList">
+
+	<h3 class="mtop15 mbottom05"><bean:message key="label.grp.latest.requests" bundle="APPLICATION_RESOURCES" /></h3>
+	
+	<fr:view name="queueJobList" schema="latestGRPJobs">
+    	<fr:layout name="tabular">
+    		<fr:property name="classes" value="tstyle1 mtop05" />
+    		<fr:property name="columnClasses" value=",,,acenter,,,,,," />
+			<fr:property name="link(Download)" value="/downloadQueuedJob.do?method=downloadFile"/>
+			<fr:property name="bundle(Download)" value="GRP_RESOURCES"/>
+			<fr:property name="param(Download)" value="idInternal/id"/>
+			<fr:property name="visibleIf(Download)" value="done"/>
+			<fr:property name="module(Download)" value=""/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
 <fr:edit name="studentReportPredicate"
 		 schema="student.report.predicate"
 		 type="net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport$StudentReportPredicate"
+		 action="/studentReports.do?method=search"
 		 >
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop1"/>
@@ -21,38 +39,40 @@
 <br/>
 <br/>
 
-<logic:equal name="studentReportPredicate" property="areRequiredFieldsFilledOut" value="true">
-	<h3>
-	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.report.for.criteria.prefix"/>
-	<logic:notPresent name="studentReportPredicate" property="degreeType">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.report.for.criteria.all.degree.types"/>:
-	</logic:notPresent>
-	<logic:present name="studentReportPredicate" property="degreeType">
-		<bean:define id="degreeTypeString"><bean:write name="studentReportPredicate" property="degreeType.localizedName"/></bean:define>
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.report.for.criteria.degree.type" arg0="<%= degreeTypeString %>"/>:
-	</logic:present>
-	<bean:define id="yearString" type="java.lang.String" name="studentReportPredicate" property="executionYear.year"/>
-	<ul>
-		<logic:equal name="studentReportPredicate" property="concluded" value="true">
-			<li>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.report.for.criteria.concluded" arg0="<%= yearString %>"/>
-			</li>
-		</logic:equal>
-		<logic:equal name="studentReportPredicate" property="active" value="true">
-			<li>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.report.for.criteria.active" arg0="<%= yearString %>"/>
-			</li>
-		</logic:equal>
-	</ul>
-	</h3>
+<logic:present name="job">
+	<bean:define id="job" name="job" type="net.sourceforge.fenixedu.domain.PublicRelationsStudentListQueueJob"/>
+	<div class="success0" style="width:440px;">
+		<logic:present name="job" property="degreeType">
+			<p class="mvert05"><bean:message key="label.grp.request.listing.success.with.degreetype" bundle="APPLICATION_RESOURCES" arg0="<%= job.getExecutionYear().getYear().toString() %>" arg1="<%= job.getDegreeType().getLocalizedName().toString() %>"/></p>
+			<p class="mvert05"><bean:message key="label.gep.email.notice" bundle="GEP_RESOURCES" /></p>
+		</logic:present>
 
-	<br/>
-	<br/>
+		<logic:notPresent name="job" property="degreeType">
+			<p class="mvert05"><bean:message key="label.grp.request.listing.success" bundle="APPLICATION_RESOURCES" arg0="<%= job.getExecutionYear().getYear().toString() %>"/></p>
+			<p class="mvert05"><bean:message key="label.gep.email.notice" bundle="GEP_RESOURCES" /></p>
+		</logic:notPresent>
 
-	<bean:define id="url" type="java.lang.String">/studentReports.do?method=download&amp;executionYearId=<bean:write name="studentReportPredicate" property="executionYear.idInternal"/><logic:present name="studentReportPredicate" property="degreeType">&amp;degreeType=<bean:write name="studentReportPredicate" property="degreeType"/></logic:present>&amp;concluded=<bean:write name="studentReportPredicate" property="concluded"/>&amp;active=<bean:write name="studentReportPredicate" property="active"/></bean:define>
-	<html:link action="<%= url %>">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.student.report.download"/>
+		</div>
+</logic:present>
+
+<logic:present name="showLink">
+
+<bean:define id="executionYearID" name="studentReportPredicate" property="executionYear.idInternal"/>
+<bean:define id="active" name="studentReportPredicate" property="active"/>
+<bean:define id="concluded" name="studentReportPredicate" property="concluded"/>
+<bean:define id="args" type="java.lang.String">executionYearID=<bean:write name="executionYearID"/>&amp;active=<bean:write name="active"/>&amp;concluded=<bean:write name="concluded"/></bean:define>
+<logic:notEmpty name="studentReportPredicate" property="degreeType">
+	<bean:define id="degreeType" name="studentReportPredicate" property="degreeType"/>
+	<bean:define id="args" type="java.lang.String">degreeType=<bean:write name="degreeType"/>&amp;executionYearID=<bean:write name="executionYearID"/>&amp;active=<bean:write name="active"/>&amp;concluded=<bean:write name="concluded"/></bean:define>
+</logic:notEmpty>
+<bean:define id="requestJob" type="java.lang.String">/studentReports.do?method=requestJob&amp;<bean:write name="args" filter="false"/></bean:define>
+<bean:define id="viewJobs" type="java.lang.String">/studentReports.do?method=viewJobs&amp;<bean:write name="args" filter="false"/></bean:define>
+
+	<html:link page="<%= requestJob %>">
+		<bean:message key="label.grp.request.listing" bundle="APPLICATION_RESOURCES" />
 	</html:link>
-
-</logic:equal>
-
+|
+	<html:link page="<%= viewJobs %>">
+		<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+	</html:link>
+</logic:present>

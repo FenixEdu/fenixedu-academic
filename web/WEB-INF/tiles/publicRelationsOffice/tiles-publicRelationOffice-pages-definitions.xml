@@ -54,5 +54,8 @@
 	<definition name="publicRelationsOffice-studentReportsSearch" extends="definition.publicRelationOffice.master" >
 	    <put name="body" value="/publicRelations/reports/studentReports.jsp" />
 	</definition>
+	<definition name="view-public-relations-reports" extends="definition.publicRelationOffice.master" >
+	    <put name="body" value="/publicRelations/reports/viewPublicRelationsReports.jsp" />
+	</definition>
 
 </tiles-definitions>

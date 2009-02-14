@@ -55,6 +55,7 @@
     <!ENTITY alumni SYSTEM "alumni-schemas.xml">
     <!ENTITY internationalRelationsOffice SYSTEM "internationalRelationsOffice-schemas.xml">
     <!ENTITY gep SYSTEM "gep-schemas.xml">
+    <!ENTITY grp SYSTEM "grp-schemas.xml">
 ]>
 
 <schemas>
@@ -743,4 +744,5 @@
     &alumni;
     &internationalRelationsOffice;
     &gep;
+    &grp;
 </schemas>

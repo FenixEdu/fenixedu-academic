@@ -41,3 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+
+
+execute "Add Public Relations QueueJob Tables" addPRQueueJob.sql
+

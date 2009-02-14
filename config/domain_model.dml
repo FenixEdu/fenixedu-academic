@@ -5769,6 +5769,12 @@ class reports.TeachersByShiftReportFile extends reports.GepReportFile {}
 class reports.CourseLoadReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 
+class PublicRelationsStudentListQueueJob extends QueueJobFile{
+	Boolean active;
+	Boolean concluded;
+	DegreeType degreeType;
+}
+
 class student.Delegate extends DomainObject {
 	
 }
@@ -14536,6 +14542,13 @@ relation QueueJobRootDomainObject {
 relation ExecutionYearGepReportFile {
 	ExecutionYear playsRole executionYear;
 	reports.GepReportFile playsRole gepReportFile{
+			multiplicity *;
+	}
+}
+
+relation ExecutionYearPublicRelationsStudentListQueueJob{
+	ExecutionYear playsRole executionYear;
+	PublicRelationsStudentListQueueJob playsRole publicRelationsStudentListQueueJob{
 			multiplicity *;
 	}
 }

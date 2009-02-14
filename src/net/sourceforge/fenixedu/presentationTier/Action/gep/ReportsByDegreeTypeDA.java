@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
+import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
-import net.sourceforge.fenixedu.domain.reports.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -80,8 +80,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     public List<QueueJob> getLatestJobs() {
-	return rootDomainObject.getQueueJob().size() > 5 ? rootDomainObject.getQueueJob().subList(0, 5) : rootDomainObject
-		.getQueueJob();
+	return QueueJob.getAllJobsForClassOrSubClass(GepReportFile.class, 5);
     }
 
     @SuppressWarnings("unused")
