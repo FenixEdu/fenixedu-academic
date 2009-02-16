@@ -43,4 +43,5 @@ function executeWithTempFile() {
 
 
 
+execute "Add Public Relations QueueJob Tables" addPRQueueJob.sql
 
