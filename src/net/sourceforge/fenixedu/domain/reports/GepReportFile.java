@@ -50,7 +50,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	final StringBuilder result = new StringBuilder();
 	result.append(getRequestDate().toString("yyyy_MM_dd_HH_mm")).append("_");
 	result.append(getPrefix()).append("_");
-	result.append(getDegreeType() == null ? "Todos_Cursos" : getDegreeType().getLocalizedName()).append("_");
+	result.append(getDegreeType() == null ? "Todos_Cursos" : getDegreeType().name()).append("_");
 	result.append(getExecutionYear() == null ? "Todos_Anos" : getExecutionYear().getName().replace('/', '_'));
 
 	return result.toString();
