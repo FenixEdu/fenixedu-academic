@@ -218,16 +218,18 @@ public class ReadStudentExternalInformation extends FenixService {
 
     private static void addAvailableRemainingCoursesBolonha(InfoStudentExternalInformation info,
 	    CurricularCourse curricularCourse, CycleCurriculumGroup cycleCurriculumGroup) {
-	final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
-		.newFromDomain(curricularCourse);
-	infoExternalCurricularCourseInfo.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
-	if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
-		&& cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-	    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
-		    .getCurricularYear()) + 3)
-		    + "");
+	if (!curricularCourse.isOptional()) {
+	    final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
+			.newFromDomain(curricularCourse);
+	    infoExternalCurricularCourseInfo.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
+	    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
+		    && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
+			.getCurricularYear()) + 3)
+			+ "");
+	    }
+	    info.getAvailableRemainingCourses().add(infoExternalCurricularCourseInfo);
 	}
-	info.getAvailableRemainingCourses().add(infoExternalCurricularCourseInfo);
     }
 
     private static void addExternalEnrolmentInfoBolonha(InfoStudentExternalInformation infoStudentExternalInformation,
