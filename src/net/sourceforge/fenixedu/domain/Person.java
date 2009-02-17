@@ -101,6 +101,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -2703,6 +2704,29 @@ public class Person extends Person_Base {
 	for (EmployeeContract employeeContract : contracts) {
 	    if (employeeContract.isActive(currentDate)) {
 		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isPhotoAvailableToCurrentUser() {
+	if (isPhotoPubliclyAvailable()) {
+	    return true;
+	}
+	Person requester = AccessControl.getPerson();
+	if (requester != null) {
+	    if (requester.equals(this)) {
+		return true;
+	    }
+	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
+		return true;
+	    }
+	    if (this.hasRole(RoleType.STUDENT)
+		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
+		return true;
+	    }
+	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI)) {
+		return getAvailablePhoto();
 	    }
 	}
 	return false;

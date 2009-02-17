@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
@@ -15,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -34,7 +30,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	if (person != null) {
 	    final Photograph personalPhoto = person.getPersonalPhoto();
 	    if (personalPhoto != null) {
-		if (isPhotoAvailable(personalPhoto, person)) {
+		if (person.isPhotoAvailableToCurrentUser()) {
 		    writePhoto(response, personalPhoto);
 		}
 	    }
@@ -47,30 +43,6 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	final String uuid = request.getParameter("uuid");
 	final User user = User.readUserByUserUId(uuid);
 	return user == null ? null : retrieve(request, response, user.getPerson());
-    }
-
-    private static boolean isPhotoAvailable(final Photograph personalPhoto, final Person person) {
-	if (person.isPhotoPubliclyAvailable()) {
-	    return true;
-	}
-	final IUserView userView = UserView.getUser();
-	final Person requester = userView == null ? null : userView.getPerson();
-	if (requester != null) {
-	    if (requester == person) {
-		return true;
-	    }
-	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
-		return true;
-	    }
-	    if (person.hasRole(RoleType.STUDENT)
-		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
-		return true;
-	    }
-	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI)) {
-		return person.getAvailablePhoto();
-	    }
-	}
-	return false;
     }
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
