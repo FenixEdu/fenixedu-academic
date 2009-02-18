@@ -1984,6 +1984,10 @@ public class Registration extends Registration_Base {
 	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
 
+    public boolean isDegreeAdministrativeOffice() {
+	return getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE;
+    }
+
     final public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
 	return getDegreeType().getAdministrativeOfficeType().equals(administrativeOffice.getAdministrativeOfficeType());
     }
