@@ -212,9 +212,10 @@ public class Unit extends Unit_Base {
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
 		&& (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyCreatedReceipts()
 		&& !hasAnyProtocols() && !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
-		&& !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators() && !hasAnyExtraWorkRequests()
-		&& !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts() && !hasAnyCooperation() && !hasAnyFiles()
-		&& !hasAnyPersistentGroups() && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests();
+		&& !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
+		&& !hasAnyExtraWorkRequests() && !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts()
+		&& !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups() && !hasAnyExternalCourseLoadRequests()
+		&& !hasAnyExternalProgramCertificateRequests();
     }
 
     @Override
