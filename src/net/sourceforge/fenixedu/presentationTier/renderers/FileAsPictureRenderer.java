@@ -10,10 +10,12 @@ public class FileAsPictureRenderer extends StringRenderer {
 
     private String classes;
 
+    @Override
     public String getClasses() {
 	return classes;
     }
 
+    @Override
     public void setClasses(String classes) {
 	this.classes = classes;
     }

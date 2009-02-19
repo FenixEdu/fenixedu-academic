@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -22,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
@@ -222,9 +219,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
-	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-		StoreGeneratedDocument.run(original.getReportFileName() + ".pdf", new ByteArrayInputStream(data), receipt);
-	    }
+	    ReceiptGeneratedDocument.store(receipt, original.getReportFileName() + ".pdf", data);
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
 
 	    response.setContentLength(data.length);
@@ -296,8 +291,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
 
 	try {
-	    EditReceipt.run(editReceiptBean.getReceipt(), editReceiptBean.getEmployee(),
-		    editReceiptBean.getContributorParty(), editReceiptBean.getContributorName());
+	    EditReceipt.run(editReceiptBean.getReceipt(), editReceiptBean.getEmployee(), editReceiptBean.getContributorParty(),
+		    editReceiptBean.getContributorName());
 	} catch (DomainException e) {
 	    request.setAttribute("editReceiptBean", editReceiptBean);
 	    addActionMessage(request, e.getKey(), e.getArgs());

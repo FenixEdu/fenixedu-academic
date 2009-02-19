@@ -20,7 +20,7 @@ public class DocumentSearchBean implements Serializable {
 
     private GeneratedDocumentType type;
 
-    private LocalDate uploadTime;
+    private LocalDate uploadTime = new LocalDate();
 
     public PersonBean getAddressee() {
 	return addressee;

@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -9,9 +11,7 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.IFileManager;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -32,6 +32,8 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author Pedro Santos (pmrsa)
  */
 public abstract class GeneratedDocument extends GeneratedDocument_Base {
+    protected static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
+
     private static final String ROOT_DIR_DESCRIPTION = "Generated Documents";
 
     private static final String ROOT_DIR = "GeneratedDocuments";
@@ -44,16 +46,18 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 	super();
     }
 
-    protected void init(GeneratedDocumentType type, Party addressee, Person operator, String filename, InputStream stream) {
+    protected void init(GeneratedDocumentType type, Party addressee, Person operator, String filename, byte[] content) {
 	setType(type);
 	setAddressee(addressee);
 	setOperator(operator);
-	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-	FileDescriptor fileDescriptor = fileManager.saveFile(getVirtualPath(), filename, true, operator == null ? "script"
-		: operator.getName(), getType().name(), stream);
-	init(fileDescriptor.getFilename(), fileDescriptor.getFilename(), fileDescriptor.getMimeType(), fileDescriptor
-		.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-		computePermittedGroup());
+	init(getVirtualPath(), filename, filename, createMetaData(operator, filename), content, computePermittedGroup());
+    }
+
+    @Override
+    public void delete() {
+	removeAddressee();
+	removeOperator();
+	super.delete();
     }
 
     @Override
@@ -83,5 +87,12 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 	RoleGroup adminOffice = new RoleGroup(Role.getRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
 	RoleGroup manager = new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER));
 	return new GroupUnion(adminOffice, manager);
+    }
+
+    private Collection<FileSetMetaData> createMetaData(Person operator, String filename) {
+	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
+	metaData.add(FileSetMetaData.createAuthorMeta(operator == null ? "script" : operator.getName()));
+	metaData.add(FileSetMetaData.createTitleMeta(filename));
+	return metaData;
     }
 }

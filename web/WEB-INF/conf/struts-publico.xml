@@ -1373,6 +1373,9 @@
 				<forward name="site-section-adviseLogin-AssemblySite" path="basicUnit-section-adviseLogin"/>
 		</action>
 
+	<action path="/files"
+		type="net.sourceforge.fenixedu.presentationTier.Action.publico.FileDownload" />
+
 	 <!-- =================== Find Spaces Interface  =================== -->
 	 <action path="/findSpaces"
              parameter="method"

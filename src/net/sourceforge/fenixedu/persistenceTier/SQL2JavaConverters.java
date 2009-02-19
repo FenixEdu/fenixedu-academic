@@ -53,4 +53,6 @@ public class SQL2JavaConverters {
     public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
     public static FieldConversion AcademicPeriod2SqlAcademicPeriodConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicPeriod2SqlAcademicPeriodConversion();
     public static FieldConversion JavaLocalTime2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaLocalTime2SqlStringFieldConversion();
+    public static FieldConversion VirtualPath2SqlVarcharConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.VirtualPath2SqlVarcharConversion();
+    public static FieldConversion FileSetMetaData2SqlVarcharConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.FileSetMetaData2SqlVarcharConversion();
 }

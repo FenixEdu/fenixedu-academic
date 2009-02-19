@@ -41,6 +41,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
-
-
+execute "File Local Contents" FileLocalContents.sql
+execute "File Access Point" filePublicAccess.sql

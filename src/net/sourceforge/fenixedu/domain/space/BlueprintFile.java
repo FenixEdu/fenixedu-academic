@@ -28,7 +28,8 @@ public class BlueprintFile extends BlueprintFile_Base {
 	super.setBlueprint(blueprint);
     }
 
-    private void delete() {
+    @Override
+    public void delete() {
 	super.setBlueprint(null);
 	removeRootDomainObject();
 	deleteDomainObject();

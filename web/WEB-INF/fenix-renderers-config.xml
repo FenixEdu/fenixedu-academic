@@ -103,6 +103,8 @@ Documentation:
     
 	<renderer type="java.lang.Object" layout="conditional-link" class="net.sourceforge.fenixedu.presentationTier.renderers.ConditionalObjectLinkRenderer"/>
 
+    <renderer type="net.sourceforge.fenixedu.domain.File" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.FileLinkRenderer"/>
+
     <!--@ Presents the object's slots in a flow layout. With or without labels.  -->
     <renderer type="java.lang.Object" layout="flow" class="pt.ist.fenixWebFramework.renderers.FlowRenderer">
     	<property name="labelTerminator" value=":" />

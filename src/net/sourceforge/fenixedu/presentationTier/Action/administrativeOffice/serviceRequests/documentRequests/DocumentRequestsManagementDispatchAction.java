@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
@@ -21,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -70,10 +68,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final AdministrativeOfficeDocument[] array = {};
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 
-	if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-	    StoreGeneratedDocument.run(documents.iterator().next().getReportFileName() + ".pdf", new ByteArrayInputStream(data),
-		    documentRequest);
-	}
+	DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf", data);
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()

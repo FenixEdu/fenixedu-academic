@@ -87,7 +87,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	if (searchBean.getUploadTime() != null) {
 	    Set<GeneratedDocument> dated = new HashSet<GeneratedDocument>();
 	    for (GeneratedDocument document : documents) {
-		if (document.getUploadTime().toLocalDate().equals(searchBean.getUploadTime()))
+		if (!document.getUploadTime().toLocalDate().isBefore(searchBean.getUploadTime()))
 		    dated.add(document);
 	    }
 	    documents.retainAll(dated);

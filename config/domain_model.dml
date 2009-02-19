@@ -219,6 +219,8 @@ enum      net.sourceforge.fenixedu.domain.internship.LanguageKnowledgeLevel     
 enum	  net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType	 as AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 enum 	  net.sourceforge.fenixedu.domain.JobApplicationType														 as JobApplicationType;
 enum 	  net.sourceforge.fenixedu.domain.SalaryType														 		 as SalaryType;
+valueType pt.utl.ist.fenix.tools.file.VirtualPath                                                                    as VirtualPath;
+valueType pt.utl.ist.fenix.tools.file.FileSetMetaData                                                                as FileSetMetaData;
 
 /*
 *
@@ -687,6 +689,15 @@ class DomainObject {
 		DateTime uploadTime;
 	}
 	
+    class FileLocalContent extends DomainObject {
+       VirtualPath path;
+       ByteArray content;
+    }
+    
+    class FileLocalContentMetadata extends DomainObject {
+       FileSetMetaData entry;
+    }
+    
     /* Documents */
     class documents.GeneratedDocument extends File {
         GeneratedDocumentType type;
@@ -10689,6 +10700,25 @@ relation RootDomainObjectFile {
 	File playsRole files {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectFileLocalContents {
+    RootDomainObject playsRole rootDomainObject;
+    FileLocalContent playsRole fileLocalContents {
+        multiplicity *;
+    }
+}
+
+relation FileLocalContents {
+    File playsRole file;
+    FileLocalContent playsRole localContent;
+}
+
+relation FileLocalContentMetadatas {
+    FileLocalContent playsRole content;
+    FileLocalContentMetadata playsRole metadata {
+        multiplicity *;
+    }
 }
 
 relation RootDomainObjectPhotographs {

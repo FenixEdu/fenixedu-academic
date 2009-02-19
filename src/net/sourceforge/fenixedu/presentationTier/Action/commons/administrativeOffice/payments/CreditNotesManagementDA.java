@@ -1,24 +1,20 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.documents.StoreGeneratedDocument;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ChangeCreditNoteState;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateCreditNote;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateCreditNoteBean;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteState;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.CreditNoteDocument;
@@ -93,8 +89,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 		.getMetaObject().getObject();
 
 	try {
-	    CreateCreditNote.run(getUserView(request).getPerson().getEmployee(),
-		    createCreditNoteBean);
+	    CreateCreditNote.run(getUserView(request).getPerson().getEmployee(), createCreditNoteBean);
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -120,8 +115,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 	final CreditNoteState creditNoteState = CreditNoteState.valueOf(((CreditNotesActionForm) form).getCreditNoteState());
 
 	try {
-	    ChangeCreditNoteState.run(getUserView(request).getPerson().getEmployee(), creditNote,
-		    creditNoteState);
+	    ChangeCreditNoteState.run(getUserView(request).getPerson().getEmployee(), creditNote, creditNoteState);
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -154,9 +148,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 
 	    final byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(original, duplicate);
 
-	    if (PropertiesManager.getBooleanProperty(StoreGeneratedDocument.CONFIG_DSPACE_DOCUMENT_STORE)) {
-		StoreGeneratedDocument.run(original.getReportFileName() + ".pdf", new ByteArrayInputStream(data), creditNote);
-	    }
+	    CreditNoteGeneratedDocument.store(creditNote, original.getReportFileName() + ".pdf", data);
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", original.getReportFileName()));

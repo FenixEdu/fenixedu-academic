@@ -1,18 +1,32 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import java.io.InputStream;
-
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Pedro Santos (pmrsa)
  */
 public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
-    public ReceiptGeneratedDocument(Receipt source, Party addressee, Person operator, String filename, InputStream stream) {
+    protected ReceiptGeneratedDocument(Receipt source, Party addressee, Person operator, String filename, byte[] content) {
 	super();
 	setSource(source);
-	init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, stream);
+	init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, content);
+    }
+
+    @Override
+    public void delete() {
+	removeSource();
+	super.delete();
+    }
+
+    @Service
+    public static void store(Receipt source, String filename, byte[] content) {
+	if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+	    new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
+	}
     }
 }
