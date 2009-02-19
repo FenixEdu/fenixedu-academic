@@ -116,8 +116,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniProfessionalInformationDA"
 				scope="request">
 			<forward name="innerProfessionalInformation" path="alumni.innerProfessionalInformation"/>
-			<forward name="createProfessionalInformation" path="alumni.createProfessionalInformation"/>
-			<forward name="editProfessionalInformation" path="alumni.editProfessionalInformation"/>
+			<forward name="manageProfessionalInformation" path="alumni.manageProfessionalInformation"/>
 		</action>
 
 		<action path="/alumniInquiries"
@@ -125,6 +124,8 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniInquiriesDA"
 				scope="request">
 			<forward name="showMainPage" path="alumni.inquiries.showMainPage"/>
+			<forward name="initInquiry" path="alumni.inquiries.initInquiry"/>
+			<forward name="manageProfessionalInformation" path="alumni.inquiries.manageProfessionalInformation"/>
 		</action>
 
 		<!-- FROM STUDENT ROLE -->

@@ -43,11 +43,7 @@
 		<put name="body" value="/alumni/viewAlumniProfessionalInformation.jsp" />
 	</definition>
 
-	<definition name="alumni.createProfessionalInformation" extends="alumni.masterPage">
-		<put name="body" value="/alumni/alumniManageProfessionalInformation.jsp" />
-	</definition>
-
-	<definition name="alumni.editProfessionalInformation" extends="alumni.masterPage">
+	<definition name="alumni.manageProfessionalInformation" extends="alumni.masterPage">
 		<put name="body" value="/alumni/alumniManageProfessionalInformation.jsp" />
 	</definition>
 	<!-- JOB -->
@@ -69,7 +65,15 @@
 
 	<!-- INQUIRIES -->
 	<definition name="alumni.inquiries.showMainPage" extends="alumni.masterPage">
-		<put name="body" value="/alumni/inquiries/inquiryMain.jsp" />
+		<put name="body" value="/alumni/inquiries/alumniInquiryMain.jsp" />
+	</definition>
+
+	<definition name="alumni.inquiries.initInquiry" extends="alumni.masterPage">
+		<put name="body" value="/alumni/inquiries/alumniInquiryFirstStep.jsp" />
+	</definition>
+
+	<definition name="alumni.inquiries.manageProfessionalInformation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/inquiries/alumniManageProfessionalInformation.jsp" />
 	</definition>
 	<!-- INQUIRIES -->
 

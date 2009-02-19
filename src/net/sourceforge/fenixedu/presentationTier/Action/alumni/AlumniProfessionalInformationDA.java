@@ -36,7 +36,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	request.setAttribute("jobCreateBean", new AlumniJobBean(getAlumniFromLoggedPerson(request)));
-	return mapping.findForward("createProfessionalInformation");
+	return mapping.findForward("manageProfessionalInformation");
     }
 
     public ActionForward createBusinessAreaPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -46,7 +46,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	viewStateBean.updateSchema();
 	RenderUtils.invalidateViewState("jobCreateBean");
 	request.setAttribute("jobCreateBean", viewStateBean);
-	return mapping.findForward("createProfessionalInformation");
+	return mapping.findForward("manageProfessionalInformation");
     }
 
     public ActionForward updateBusinessAreaPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -56,7 +56,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	viewStateBean.updateSchema();
 	RenderUtils.invalidateViewState("jobUpdateBean");
 	request.setAttribute("jobUpdateBean", viewStateBean);
-	return mapping.findForward("editProfessionalInformation");
+	return mapping.findForward("manageProfessionalInformation");
     }
 
     public ActionForward createProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -67,7 +67,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("jobCreateBean", getObjectFromViewState("jobCreateBean"));
-	    return mapping.findForward("createProfessionalInformation");
+	    return mapping.findForward("manageProfessionalInformation");
 	}
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);
@@ -84,18 +84,13 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	request.setAttribute("jobUpdateBean", new AlumniJobBean(getAlumniFromLoggedPerson(request), getJob(request)));
-	return mapping.findForward("editProfessionalInformation");
-    }
-
-    private Job getJob(HttpServletRequest request) {
-	return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
+	return mapping.findForward("manageProfessionalInformation");
     }
 
     public ActionForward updateProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	EditProfessionalInformation.run((AlumniJobBean) getRenderedObject());
-
 	return innerProfessionalInformation(mapping, actionForm, request, response);
     }
 
@@ -103,7 +98,7 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	request.setAttribute("jobUpdateBean", getObjectFromViewState("jobUpdateBean"));
-	return mapping.findForward("editProfessionalInformation");
+	return mapping.findForward("manageProfessionalInformation");
     }
 
     public ActionForward deleteProfessionalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -114,6 +109,10 @@ public class AlumniProfessionalInformationDA extends AlumniEntityManagementDA {
 	}
 
 	return innerProfessionalInformation(mapping, actionForm, request, response);
+    }
+    
+    protected Job getJob(HttpServletRequest request) {
+	return rootDomainObject.readJobByOID(getIntegerFromRequest(request, "jobId"));
     }
 
 }
