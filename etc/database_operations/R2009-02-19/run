@@ -44,4 +44,4 @@ function executeWithTempFile() {
 execute "Update student table." updates.sql
 
 execute "File Local Contents" FileLocalContents.sql
-execute "File Access Point" filePublicAccess.sql>>>>>>> .r40939
+execute "File Access Point" filePublicAccess.sql
