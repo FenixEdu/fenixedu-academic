@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -67,6 +68,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class Student extends Student_Base {
 
@@ -1525,4 +1527,13 @@ public class Student extends Student_Base {
 
 	return result;
     }
+
+    public void generateExportInformationPassword() {
+	setExportInformationPassword(GeneratePassword.getInstance().generatePassword(getPerson()));
+    }
+
+    public void deleteExportInformationPassword() {
+	setExportInformationPassword(null);
+    }
+
 }

@@ -4401,6 +4401,7 @@ class DomainObject {
 
 	class student.Student extends DomainObject {
 		Integer number;
+		String exportInformationPassword;
 	}
 
 	class student.StudentDataByExecutionYear extends DomainObject {

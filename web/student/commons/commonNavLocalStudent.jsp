@@ -58,4 +58,7 @@
 		</ul>
 	</li>
 
+	<li class="navheader"><bean:message key="label.information.export" bundle="STUDENT_RESOURCES"/></li>
+	<li><html:link page="/managePasswords.do?method=managePasswords" titleKey="label.information.export.manage.passwords"><bean:message key="label.information.export.manage.passwords"/></html:link></li>
+
 </ul>

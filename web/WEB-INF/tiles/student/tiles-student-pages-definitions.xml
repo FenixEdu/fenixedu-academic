@@ -424,4 +424,8 @@
 	
 	<!-- end: Edit Missing Candidacy Information -->
 
+	<definition name="df.page.manage.passwords" extends="definition.student.masterPage">
+		<put name="body" value="/student/managePasswords.jsp"/>
+	</definition>
+
 </tiles-definitions>
