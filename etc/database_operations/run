@@ -41,5 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update student table." updates.sql
+
 execute "File Local Contents" FileLocalContents.sql
-execute "File Access Point" filePublicAccess.sql
+execute "File Access Point" filePublicAccess.sql>>>>>>> .r40939
