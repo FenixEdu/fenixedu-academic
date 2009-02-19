@@ -47,14 +47,18 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public void edit(Double normalDays, Double normalWithLeavesDiscount, Double antiquityDays, Double ageDays,
-	    Double accumulatedDays, Double lowTimeVacationsDays, Double accumulatedArticle17Days, DateTime lastModifiedDate) {
+	    Double accumulatedDays, Double bonusDays, Double lowTimeVacationsDays, Double accumulatedArticle17Days,
+	    Double extraWorkDays, Double lastYearExtraWorkDays, DateTime lastModifiedDate) {
 	setNormalDays(normalDays);
 	setNormalWithLeavesDiscount(normalWithLeavesDiscount);
 	setAntiquityDays(antiquityDays);
 	setAgeDays(ageDays);
 	setAccumulatedDays(accumulatedDays);
+	setBonusDays(bonusDays);
 	setLowTimeVacationsDays(lowTimeVacationsDays);
 	setAccumulatedArticle17Days(accumulatedArticle17Days);
+	setExtraWorkDays(extraWorkDays);
+	setLastYearExtraWorkDays(lastYearExtraWorkDays);
 	setLastModifiedDate(lastModifiedDate);
     }
 
