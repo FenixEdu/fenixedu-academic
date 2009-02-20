@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPub
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -72,7 +74,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    executeService("RegisterAlumniData", new Object[] { getObjectFromViewState("alumniBean") });
+	    RegisterAlumniData.run((AlumniIdentityCheckRequestBean) getObjectFromViewState("alumniBean"));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return processRequestIdentityCheckError(mapping, actionForm, request, response);
@@ -119,8 +121,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    final Alumni alumni = (Alumni) executeService("RegisterAlumniData", new Object[] { alumniBean.getStudentNumber(),
-		    alumniBean.getDocumentIdNumber().trim(), alumniBean.getEmail() });
+	    final Alumni alumni = (Alumni) RegisterAlumniData.run(alumniBean.getStudentNumber(), alumniBean.getDocumentIdNumber()
+		    .trim(), alumniBean.getEmail());
 
 	    // development help
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
@@ -222,21 +224,20 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 		alumniBean.getJobBean().setParentBusinessArea(null);
 		request.setAttribute("childBusinessArea-validated", RESOURCES.getString("label.mandatory.field"));
 		request.setAttribute("publicAccessBean", alumniBean);
-		request.setAttribute("professionalInformationPostback", "true"); //hack
+		request.setAttribute("professionalInformationPostback", "true"); // hack
 		return mapping.findForward("alumniPublicAccessInformationInquiry");
 	    }
-	    
+
 	    if (StringUtils.isEmpty(alumniBean.getJobBean().getPosition())) {
 		request.setAttribute("position-validated", RESOURCES.getString("label.mandatory.field"));
 		request.setAttribute("publicAccessBean", alumniBean);
-		request.setAttribute("professionalInformationPostback", "true"); //hack
+		request.setAttribute("professionalInformationPostback", "true"); // hack
 		return mapping.findForward("alumniPublicAccessInformationInquiry");
 	    }
 	}
 
 	try {
-	    executeService("RegisterAlumniData", new Object[] { alumniBean,
-		    Boolean.valueOf(getFromRequest(request, "isEmployed").toString()) });
+	    RegisterAlumniData.run(alumniBean, Boolean.valueOf(getFromRequest(request, "isEmployed").toString()));
 	} catch (FenixServiceException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    return updateAlumniInformationError(mapping, actionForm, request, response);
@@ -251,7 +252,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 
 	request.setAttribute("publicAccessBean", getRenderedObject("publicAccessBean"));
 	RenderUtils.invalidateViewState("message");
-	request.setAttribute("professionalInformationPostback", "true"); //hack
+	request.setAttribute("professionalInformationPostback", "true"); // hack
 	return mapping.findForward("alumniPublicAccessInformationInquiry");
     }
 
@@ -290,7 +291,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	if (alumni.hasPastLogin()) {
 
 	    try {
-		executeService("RegisterAlumniData", new Object[] { alumni, Boolean.TRUE });
+		RegisterAlumniData.run(alumni, Boolean.TRUE);
 		request.setAttribute("loginAlias", alumni.getLoginUsername());
 		request.setAttribute("registrationResult", "true");
 	    } catch (FenixServiceException e) {
@@ -381,7 +382,7 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	AlumniPasswordBean alumniBean = (AlumniPasswordBean) getObjectFromViewState("passwordAccessBean");
 
 	try {
-	    executeService("RegisterAlumniData", new Object[] { alumniBean });
+	    RegisterAlumniData.run(alumniBean);
 	    request.setAttribute("loginAlias", alumniBean.getAlumni().getLoginUsername());
 	    request.setAttribute("registrationResult", "true");
 	} catch (DomainException e) {

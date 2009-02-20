@@ -14,14 +14,15 @@ public class Job extends Job_Base {
 	    return o2.getBeginDate().compareTo(o1.getBeginDate());
 	}
     };
-    
+
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, ContractType contractType) {
 	this(person, employerName, city, country, businessArea, position, beginDate, endDate, null, contractType, null);
     }
-    
+
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
-	    LocalDate beginDate, LocalDate endDate, JobApplicationType applicationType, ContractType contractType, SalaryType salaryType) {
+	    LocalDate beginDate, LocalDate endDate, JobApplicationType applicationType, ContractType contractType,
+	    SalaryType salaryType) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 

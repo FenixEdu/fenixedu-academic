@@ -20,10 +20,12 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class RegisterAlumniData extends AlumniNotificationService {
 
-    public Alumni run(Alumni alumni, final UUID urlRequestToken) throws FenixServiceException {
+    @Service
+    public static Alumni run(Alumni alumni, final UUID urlRequestToken) throws FenixServiceException {
 
 	if (alumni == null) {
 	    throw new FenixServiceException("alumni.uuid.update.alumni.null");
@@ -33,7 +35,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	return alumni;
     }
 
-    public Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
+    @Service
+    public static Alumni run(Alumni alumni, final Boolean registered) throws FenixServiceException {
 
 	alumni.setRegistered(registered);
 	if (registered) {
@@ -42,18 +45,21 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	return alumni;
     }
 
-    public Alumni run(final Student student) {
+    @Service
+    public static Alumni run(final Student student) {
 	return new AlumniManager().registerAlumni(student);
     }
 
-    public Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
+    @Service
+    public static Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
 
 	final Alumni alumni = new AlumniManager().registerAlumni(studentNumber, documentIdNumber, email);
 	sendPublicAccessMail(alumni, email);
 	return alumni;
     }
 
-    public void run(Alumni alumni, final String emailAddress) throws FenixServiceException {
+    @Service
+    public static void run(Alumni alumni, final String emailAddress) throws FenixServiceException {
 	try {
 	    if (!alumni.hasEmailAddress(emailAddress)) {
 		PartyContact.createEmailAddress(alumni.getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE,
@@ -64,7 +70,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	}
     }
 
-    public void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
+    @Service
+    public static void run(final AlumniPublicAccessBean alumniBean, Boolean isEmployed) throws FenixServiceException {
 	Person person = alumniBean.getAlumni().getStudent().getPerson();
 	if (person == null) {
 	    throw new FenixServiceException("alumni.partyContact.creation.person.null");
@@ -83,7 +90,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 
     }
 
-    public void run(final AlumniIdentityCheckRequestBean bean) {
+    @Service
+    public static void run(final AlumniIdentityCheckRequestBean bean) {
 
 	final Alumni alumni = new AlumniManager().checkAlumniIdentity(bean.getDocumentIdNumber(), bean.getContactEmail());
 	if (!alumni.hasAnyPendingIdentityRequests()) {
@@ -104,7 +112,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	}
     }
 
-    public void run(final AlumniPasswordBean bean) {
+    @Service
+    public static void run(final AlumniPasswordBean bean) {
 
 	bean.getAlumni().setRegistered(Boolean.TRUE);
 	if (!bean.getAlumni().hasAnyPendingIdentityRequests()) {
@@ -122,14 +131,15 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	    }
 	}
     }
-    
-    private void processAlumniJob(final AlumniPublicAccessBean alumniBean) {
+
+    private static void processAlumniJob(final AlumniPublicAccessBean alumniBean) {
 
 	if (alumniBean.getCurrentJob() == null) {
 	    final AlumniJobBean jobBean = alumniBean.getJobBean();
 	    new Job(jobBean.getAlumni().getStudent().getPerson(), jobBean.getEmployerName(), jobBean.getCity(), jobBean
 		    .getCountry(), jobBean.getChildBusinessArea(), jobBean.getPosition(), jobBean.getBeginDateAsLocalDate(),
-		    jobBean.getEndDateAsLocalDate(), jobBean.getContractType());
+		    jobBean.getEndDateAsLocalDate(), jobBean.getApplicationType(), jobBean.getContractType(), jobBean
+			    .getSalaryType());
 	} else {
 	    final AlumniJobBean jobBean = alumniBean.getJobBean();
 	    alumniBean.getCurrentJob().setEmployerName(jobBean.getEmployerName());
@@ -139,11 +149,14 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	    alumniBean.getCurrentJob().setPosition(jobBean.getPosition());
 	    alumniBean.getCurrentJob().setBeginDate(jobBean.getBeginDateAsLocalDate());
 	    alumniBean.getCurrentJob().setEndDate(jobBean.getEndDateAsLocalDate());
+	    alumniBean.getCurrentJob().setJobApplicationType(jobBean.getApplicationType());
 	    alumniBean.getCurrentJob().setContractType(jobBean.getContractType());
+	    alumniBean.getCurrentJob().setSalaryType(jobBean.getSalaryType());
+
 	}
     }
 
-    private void processAlumniAddress(final AlumniPublicAccessBean alumniBean, final Person person) {
+    private static void processAlumniAddress(final AlumniPublicAccessBean alumniBean, final Person person) {
 
 	final AlumniAddressBean addressBean = alumniBean.getAddressBean();
 	if (alumniBean.getCurrentPhysicalAddress() == null) {
@@ -162,7 +175,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
 	}
     }
 
-    private void processAlumniPhone(final AlumniPublicAccessBean alumniBean, final Person person) {
+    private static void processAlumniPhone(final AlumniPublicAccessBean alumniBean, final Person person) {
 
 	if (alumniBean.getCurrentPhone() == null) {
 	    person.addPartyContacts(new Phone(person, PartyContactType.PERSONAL, Boolean.TRUE, alumniBean.getPhone()));

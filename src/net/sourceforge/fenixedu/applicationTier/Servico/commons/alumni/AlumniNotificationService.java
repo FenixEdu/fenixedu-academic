@@ -12,7 +12,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlumniNotificationService extends FenixService {
 
-    protected void sendPublicAccessMail(final Alumni alumni, final String email) {
+    protected static void sendPublicAccessMail(final Alumni alumni, final String email) {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
@@ -27,7 +27,7 @@ public class AlumniNotificationService extends FenixService {
 	sendMail(senderName, senderEmail, email, subject, body);
     }
 
-    protected void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
+    protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
 
@@ -66,7 +66,7 @@ public class AlumniNotificationService extends FenixService {
 	sendMail(senderName, senderEmail, request.getContactEmail(), subject, body + " " + request.getComment());
     }
 
-    protected void sendRegistrationSuccessMail(final Alumni alumni) {
+    protected static void sendRegistrationSuccessMail(final Alumni alumni) {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
@@ -77,10 +77,11 @@ public class AlumniNotificationService extends FenixService {
 	final String body = MessageFormat.format(bundle.getString("alumni.public.username.login.url"), alumni.getStudent()
 		.getPerson().getFirstAndLastName(), alumni.getLoginUsername());
 
-	sendMail(senderName, senderEmail, alumni.getStudent().getPerson().getInstitutionalOrDefaultEmailAddressValue(), subject, body);
+	sendMail(senderName, senderEmail, alumni.getStudent().getPerson().getInstitutionalOrDefaultEmailAddressValue(), subject,
+		body);
     }
 
-    private Email sendMail(String senderName, String senderEmail, String recipient, String subject, String body) {
+    private static Email sendMail(String senderName, String senderEmail, String recipient, String subject, String body) {
 	return new Email(senderName, senderEmail, new String[] {}, Collections.singleton(recipient), Collections.EMPTY_LIST,
 		Collections.EMPTY_LIST, subject, body);
     }
