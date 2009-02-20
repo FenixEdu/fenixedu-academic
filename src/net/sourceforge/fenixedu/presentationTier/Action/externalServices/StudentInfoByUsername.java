@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.ReadStu
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -155,9 +156,12 @@ public class StudentInfoByUsername extends FenixAction {
 			.getProperty("externalServices.StudentInfoByUsername.externalAppPassword"))) {
 	    userView = new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
 	} else {
-	    final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-	    userView = (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager
-		    .getProperty("authenticationService"), argsAutenticacao);
+	    final User user = User.readUserByUserUId(username);
+	    if (user != null && password != null && password.equals(user.getPerson().getStudent().getExportInformationPassword())) {
+		userView = new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
+	    } else {
+		throw new Error("bad.authentication");
+	    }
 	}
 	UserView.setUser(userView);
     }
