@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
@@ -22,9 +21,7 @@ public class ExportToGIAFAndSaveFile extends FenixService {
     @Service
     public static ActionMessage run(ClosedMonth closedMonth, String fileName, ClosedMonthDocumentType closedMonthDocumentType,
 	    String file) throws FileNotFoundException {
-
-	ByteArrayInputStream inputStream = new ByteArrayInputStream(file.getBytes());
-	ClosedMonthDocument closedMonthDocument = closedMonth.addFile(inputStream, fileName, closedMonthDocumentType);
+	ClosedMonthDocument closedMonthDocument = closedMonth.addFile(file.getBytes(), fileName, closedMonthDocumentType);
 	GiafInterface giafInterface = new GiafInterface();
 	try {
 	    giafInterface.exportToGIAF(file);

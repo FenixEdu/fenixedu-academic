@@ -16,8 +16,10 @@ public class FileLocalContent extends FileLocalContent_Base {
 	super();
 	setFile(file);
 	setPath(path);
-	for (FileSetMetaData entry : metadata) {
-	    new FileLocalContentMetadata(this, entry);
+	if (metadata != null) {
+	    for (FileSetMetaData entry : metadata) {
+		new FileLocalContentMetadata(this, entry);
+	    }
 	}
 	setContent(new ByteArray(content));
 	setRootDomainObject(RootDomainObject.getInstance());

@@ -1,26 +1,18 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
-import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class ClosedMonth extends ClosedMonth_Base {
 
@@ -205,31 +197,10 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return result;
     }
 
-    public ClosedMonthDocument addFile(InputStream file, String fileName, ClosedMonthDocumentType closedMonthDocumentType)
+    public ClosedMonthDocument addFile(byte[] file, String fileName, ClosedMonthDocumentType closedMonthDocumentType)
 	    throws FileNotFoundException {
-	ClosedMonthFile closedMonthFile = writeFile(getFilePath(), file, fileName);
+	ClosedMonthFile closedMonthFile = new ClosedMonthFile(getClosedYearMonth(), fileName, file);
 	return new ClosedMonthDocument(closedMonthFile, this, closedMonthDocumentType);
-    }
-
-    private ClosedMonthFile writeFile(VirtualPath filePath, InputStream file, String fileName) throws FileNotFoundException {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
-		fileName, false, null, fileName, file);
-
-	return new ClosedMonthFile(fileName, fileName, fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(), getGroup());
-    }
-
-    private Group getGroup() {
-	List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
-	return managementGroups.iterator().next().getAssiduousnessManagers();
-    }
-
-    protected VirtualPath getFilePath() {
-	final VirtualPath filePath = new VirtualPath();
-	filePath.addNode(new VirtualPathNode("ClosedMonthFiles", "ClosedMonth Files"));
-	filePath.addNode(new VirtualPathNode("ClosedMonth" + getIdInternal(), getClosedYearMonth().get(DateTimeFieldType.year())
-		+ "-" + getClosedYearMonth().get(DateTimeFieldType.monthOfYear())));
-	return filePath;
     }
 
     public List<ClosedMonthDocument> getClosedMonthDocumentsByType(ClosedMonthDocumentType closedMonthDocumentType) {

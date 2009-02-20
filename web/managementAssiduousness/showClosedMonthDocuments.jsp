@@ -1,7 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml/>
 
 <h3><bean:message key="title.exportedFilesToGiaf" bundle="ASSIDUOUSNESS_RESOURCES"/></h3>
 <table class="tstyle1 thlight">
@@ -14,9 +15,7 @@
 	<tr>
 		<td><bean:write name="closedMonthDocument" property="formattedCreationDate"/></td>
 		<td>
-			<html:link href="<%= url %>" target="_blank">
-				<bean:write name="closedMonthDocument" property="closedMonthFile.filename"/>
-			</html:link>
+		    <fr:view name="closedMonthDocument" property="closedMonthFile" layout="link" />
 		</td>
 	</tr>
 </logic:iterate>
