@@ -213,7 +213,7 @@ public class SeparationCyclesManagement {
 
 	registration.setSourceRegistration(sourceStudentCurricularPlan.getRegistration());
 	registration.getActiveState().setResponsiblePerson(null);
-	registration.setRegistrationAgreement(RegistrationAgreement.NORMAL);
+	registration.setRegistrationAgreement(sourceStudentCurricularPlan.getRegistration().getRegistrationAgreement());
 
 	return registration;
     }
@@ -221,12 +221,11 @@ public class SeparationCyclesManagement {
     private YearMonthDay getBeginDate(final StudentCurricularPlan sourceStudentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	final Registration registration = sourceStudentCurricularPlan.getRegistration();
-	if (!registration.hasConcluded()) {
+	if (!sourceStudentCurricularPlan.getRegistration().hasConcluded()) {
 	    throw new DomainException("error.SeparationCyclesManagement.source.studentCurricularPlan.is.not.concluded");
 	}
 
-	final YearMonthDay conclusionDate = registration.calculateConclusionDate();
+	final YearMonthDay conclusionDate = sourceStudentCurricularPlan.getFirstCycle().calculateConclusionDate();
 	final YearMonthDay stateDate = conclusionDate != null ? conclusionDate.plusDays(1) : new YearMonthDay().plusDays(1);
 
 	return executionSemester.getBeginDateYearMonthDay().isBefore(stateDate) ? stateDate : executionSemester
@@ -290,7 +289,11 @@ public class SeparationCyclesManagement {
 		createSubstitutionForEnrolment((Enrolment) curriculumLine, parent);
 	    }
 	} else if (curriculumLine.isDismissal()) {
-	    createDismissal((Dismissal) curriculumLine, parent);
+	    if (curriculumLine.hasExecutionPeriod() && curriculumLine.getExecutionPeriod().isAfterOrEquals(getExecutionPeriod())) {
+		moveDismissal((Dismissal) curriculumLine, parent);
+	    } else {
+		createDismissal((Dismissal) curriculumLine, parent);
+	    }
 	} else {
 	    throw new DomainException("error.unknown.curriculumLine");
 	}
@@ -316,6 +319,13 @@ public class SeparationCyclesManagement {
 		attend.setRegistration(registration);
 	    }
 	}
+    }
+
+    private void moveDismissal(final Dismissal dismissal, final CurriculumGroup parent) {
+	if (curriculumGroupHasSimilarDismissal(parent, dismissal)) {
+	    return;
+	}
+	dismissal.setCurriculumGroup(parent);
     }
 
     private void createSubstitutionForEnrolment(final Enrolment enrolment, final CurriculumGroup parent) {
