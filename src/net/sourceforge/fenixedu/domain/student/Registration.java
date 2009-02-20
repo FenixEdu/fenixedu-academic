@@ -846,6 +846,16 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasAnyCurriculumLines(final ExecutionSemester executionSemester) {
+	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
+	    if (studentCurricularPlan.hasAnyCurriculumLines(executionSemester)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     final public Collection<Enrolment> getEnrolments(final ExecutionYear executionYear) {
 	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(executionYear);
 	return studentCurricularPlan != null ? studentCurricularPlan.getEnrolmentsByExecutionYear(executionYear)
@@ -1758,7 +1768,7 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 20; // 10
+    private static final int MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD = 10;
 
     // ;
 
