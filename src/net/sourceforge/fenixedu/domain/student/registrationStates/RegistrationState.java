@@ -135,7 +135,9 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     private void checkCurriculumLinesForStateDate(final StateBean bean) {
 	final ExecutionYear year = ExecutionYear.readByDateTime(bean.getStateDateTime());
-	if (RegistrationStateType.valueOf(bean.getNextState()).isInactive() && getRegistration().hasAnyEnrolmentsIn(year)) {
+	final RegistrationStateType nextStateType = RegistrationStateType.valueOf(bean.getNextState());
+
+	if (!nextStateType.canHaveCurriculumLinesOnCreation() && getRegistration().hasAnyEnrolmentsIn(year)) {
 	    throw new DomainException("RegisteredState.error.registration.has.enrolments.for.execution.year", year.getName());
 	}
     }
