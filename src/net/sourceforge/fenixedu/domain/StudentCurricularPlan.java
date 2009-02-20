@@ -532,6 +532,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasEnrolments(executionYear);
     }
 
+    final public boolean hasAnyCurriculumLines(final ExecutionSemester executionSemester) {
+	if (hasRoot()) {
+	    final AndPredicate<CurriculumModule> andPredicate = new AndPredicate<CurriculumModule>();
+	    andPredicate.add(new CurriculumModulePredicateByType(CurriculumLine.class));
+	    andPredicate.add(new CurriculumModulePredicateByExecutionSemester(executionSemester));
+
+	    return hasAnyCurriculumModules(andPredicate);
+	}
+
+	return hasEnrolments(executionSemester);
+    }
+
     @Override
     final public boolean hasEnrolments(final Enrolment enrolment) {
 	return hasRoot() ? getRoot().hasCurriculumModule(enrolment) : super.hasEnrolments(enrolment);
@@ -544,6 +556,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    for (final Enrolment enrolment : super.getEnrolmentsSet()) {
 		final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 		if (executionSemester.getExecutionYear() == executionYear) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    final public boolean hasEnrolments(final ExecutionSemester executionSemester) {
+	if (hasRoot()) {
+	    return getRoot().hasEnrolment(executionSemester);
+	} else {
+	    for (final Enrolment enrolment : super.getEnrolmentsSet()) {
+		if (enrolment.getExecutionPeriod() == executionSemester) {
 		    return true;
 		}
 	    }
