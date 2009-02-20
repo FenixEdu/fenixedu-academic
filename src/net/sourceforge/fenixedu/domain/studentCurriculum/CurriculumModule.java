@@ -394,6 +394,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return predicate.eval(this);
     }
 
+    public boolean hasAnyCurriculumLines() {
+	return hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class));
+    }
+
     static public class CurriculumModulePredicateByType extends Predicate<CurriculumModule> {
 
 	private Class<? extends CurriculumModule> clazz;
