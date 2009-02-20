@@ -7,18 +7,14 @@
 
 <logic:present role="MANAGER">
 
-	<h2><bean:message key="label.manager.degreeCurricularPlan"
-		bundle="MANAGER_RESOURCES" /></h2>
-		
+	<h2><bean:message key="label.manager.degreeCurricularPlan" bundle="MANAGER_RESOURCES" /></h2>
 	<br/>
 
-	<fr:view name="degreeCurricularPlans"
-		schema="DegreeCurricularPlan.view">
+	<fr:view name="degreeCurricularPlans" schema="DegreeCurricularPlan.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
 			<fr:property name="sortBy" value="degree.name=asc" />
-			<fr:property name="linkFormat(view)"
-				value="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&amp;degreeCurricularPlanId=${idInternal}" />
+			<fr:property name="linkFormat(view)" value="/postingRules.do?method=showPostGraduationDegreeCurricularPlanPostingRules&amp;degreeCurricularPlanId=${idInternal}" />
 			<fr:property name="key(view)" value="label.view" />
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 		</fr:layout>

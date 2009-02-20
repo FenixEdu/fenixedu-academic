@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+
 public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR_Base {
 
     protected StandaloneEnrolmentGratuityPR() {
@@ -166,4 +168,9 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 	return MessageFormat.format(super.getFormulaDescription(), getEctsForYear());
     }
 
+    @Checked("PostingRulePredicates.editPredicate")
+    public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear) {
+	deactivate();
+	return new StandaloneEnrolmentGratuityPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), ectsForYear);
+    }
 }

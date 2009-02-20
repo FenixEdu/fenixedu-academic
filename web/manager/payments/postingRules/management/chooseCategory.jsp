@@ -15,7 +15,7 @@
 	
 	<p>
 		<html:link
-			action="/postingRules.do?method=chooseDFADegreeCurricularPlan">
+			action="/postingRules.do?method=managePostGraduationRules">
 			<bean:message	key="label.payments.postingRules.category.postGraduate"
 				bundle="MANAGER_RESOURCES" />
 		</html:link>

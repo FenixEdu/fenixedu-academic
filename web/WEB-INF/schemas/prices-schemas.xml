@@ -513,6 +513,25 @@
 	<setter signature="edit(baseAmount,amountPerDay,maxAmount)"/>
 </schema>
 
+<schema name="StandaloneEnrolmentGratuityPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="ectsForYear" />
+</schema>
+
+<schema name="StandaloneEnrolmentGratuityPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="ectsForYear">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(ectsForYear)"/>
+</schema>
+
+<schema name="StandaloneEnrolmentGratuityPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+	<slot name="ectsForYear" />
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES">
@@ -632,8 +651,6 @@
 		<property name="sortBy" value="degree.name=ASC" />
 	</slot>
 </schema>
-
-
 
 <schema name="ClassName.view.as.label" type="java.lang.Class"
 	bundle="APPLICATION_RESOURCES">
