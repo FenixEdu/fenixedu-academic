@@ -13,7 +13,7 @@
 <div class="infoop6">
 
 <p class="mtop05">
-As inscrições em unidades curriculares e a reserva de turnos para o 2º semestre de 2008/2009 decorrerão online através do sistema Fénix a partir do dia <strong>21 de Fevereiro de 2008 pelas 15:00</strong> e <strong>até</strong> ao dia <strong>27 de Fevereiro de 2008</strong>. 
+As inscrições em unidades curriculares e a reserva de turnos para o 2º semestre de 2008/2009 decorrerão online através do sistema Fénix a partir do dia <span class="error0"><strong>21 de Fevereiro de 2008 pelas 15:00</strong> e <strong>até</strong> ao dia <strong>27 de Fevereiro de 2008</strong></span>. 
 </p>
 
 <p class="mtop05">
