@@ -1597,6 +1597,14 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Set<ExecutionCourse> getAttendingExecutionCoursesFor() {
+	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+	for (final Attends attends : getAssociatedAttendsSet()) {
+	    result.add(attends.getExecutionCourse());
+	}
+	return result;
+    }
+    
     final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
@@ -1606,7 +1614,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-
+       
     final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionYear executionYear) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
