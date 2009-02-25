@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +31,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -74,12 +77,13 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 
 		if (personFunction.getParentParty() instanceof Unit) {
 
-		    setUnitEmployeeMap(unitEmployeesMap, personFunction.getFunction().getUnit(), personFunction.getFunction()
-			    .getUnit().getAllWorkingEmployees(beginDate, endDate));
+		    setUnitEmployeeMap(unitEmployeesMap, personFunction.getFunction().getUnit(),
+			    getAllWorkingEmployeesWithActiveStatus(personFunction.getFunction().getUnit(), beginDate, endDate));
 
 		    for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(new YearMonthDay())) {
 
-			setUnitEmployeeMap(unitEmployeesMap, unit, unit.getAllWorkingEmployees(beginDate, endDate));
+			setUnitEmployeeMap(unitEmployeesMap, unit, getAllWorkingEmployeesWithActiveStatus(unit, beginDate,
+				endDate));
 		    }
 
 		} else {
@@ -94,6 +98,25 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	request.setAttribute("unitEmployeesList", unitEmployeesList);
 	request.setAttribute("unitToShow", request.getParameter("idInternal"));
 	return mapping.findForward("show-employee-list");
+    }
+
+    private List<Employee> getAllWorkingEmployeesWithActiveStatus(Unit unit, YearMonthDay begin, YearMonthDay end) {
+	List<Employee> employeeListToAdd = new ArrayList<Employee>();
+	Set<Employee> employees = new HashSet<Employee>();
+	for (Contract contract : unit.getWorkingContracts(begin, end)) {
+	    employees.add(contract.getEmployee());
+	}
+	for (Unit subUnit : unit.getSubUnits()) {
+	    employees.addAll(subUnit.getAllWorkingEmployees(begin, end));
+	}
+	for (Employee employee : employees) {
+	    if (employee.getAssiduousness() != null
+		    && employee.getAssiduousness().getLastAssiduousnessStatusBetween(begin.toLocalDate(), end.toLocalDate()) != null) {
+		employeeListToAdd.add(employee);
+	    }
+	}
+
+	return new ArrayList<Employee>(employeeListToAdd);
     }
 
     private void setUnitEmployeeMap(HashMap<Unit, UnitEmployees> unitEmployeesMap, Unit unit, List<Employee> employeeListToAdd) {
@@ -124,28 +147,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	return unitEmployee;
     }
 
-    private List<UnitEmployees> filterRepeatedUnits(List<UnitEmployees> unitEmployeesList) {
-	List<UnitEmployees> result = new ArrayList<UnitEmployees>();
-	for (UnitEmployees unitEmployees : unitEmployeesList) {
-	    if (!containsUnit(result, unitEmployees.getUnit())) {
-		result.add(unitEmployees);
-	    }
-	}
-	return result;
-    }
-
-    private boolean containsUnit(List<UnitEmployees> unitEmployeesList, Unit unit) {
-	for (UnitEmployees tempUnitEmployees : unitEmployeesList) {
-	    if (tempUnitEmployees.getUnit() == unit) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     public ActionForward showEmployeeWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = UserView.getUser();
 	final Employee employee = getEmployee(request);
 	if (employee == null) {
 	    return mapping.findForward("show-clockings");
