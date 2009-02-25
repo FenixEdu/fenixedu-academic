@@ -57,22 +57,21 @@
 		<logic:notPresent name="thesisCreationPeriodFactoryExecutor" property="executionDegree">
 			<bean:message key="label.all.executionDegrees"/>
 		</logic:notPresent>
+		
+		<bean:define id="executionYearId" name="thesisCreationPeriodFactoryExecutor" property="executionYear.idInternal" />
 
-	    <fr:form action="/scientificCouncilManageThesis.do?method=defineCreationPeriods">
-		    <fr:edit id="thesisCreationPeriodFactoryExecutor" name="thesisCreationPeriodFactoryExecutor" schema="scientificCouncil.thesis.creation.period.definition">
-	    	    <fr:layout name="tabular">
-	        	    <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
-	            	<fr:property name="columnClasses" value=",,tdclear"/>
-	        	</fr:layout>
-	    	</fr:edit>
-
-            <html:submit>
-                <bean:message key="button.submit"/>
-            </html:submit>
-            <html:cancel>
-                <bean:message key="button.cancel"/>
-            </html:cancel>
- 		</fr:form>
+	    <fr:edit id="thesisCreationPeriodFactoryExecutor" name="thesisCreationPeriodFactoryExecutor" 
+	    		schema="scientificCouncil.thesis.creation.period.definition"
+	    		action="/scientificCouncilManageThesis.do?method=defineCreationPeriods">
+    	    <fr:layout name="tabular">
+        	    <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
+            	<fr:property name="columnClasses" value=",,tdclear error0"/>
+        	</fr:layout>
+        	
+        	<fr:destination name="invalid" path="/scientificCouncilManageThesis.do?method=defineCreationPeriodsInvalid" />
+        	<fr:destination name="cancel" path="<%="/scientificCouncilManageThesis.do?method=listThesisCreationPeriods&executionYearId=" + executionYearId.toString() %>" />
+    	</fr:edit>
+    	
 	</logic:present>
 
 </logic:present>

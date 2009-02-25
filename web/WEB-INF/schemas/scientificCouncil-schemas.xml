@@ -412,17 +412,17 @@
 
 <schema name="scientificCouncil.thesis.creation.period.definition" type="net.sourceforge.fenixedu.domain.ExecutionDegree$ThesisCreationPeriodFactoryExecutor">
 	<slot name="beginThesisCreationPeriod" key="label.begin">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10"/>
 	</slot>
 	<slot name="endThesisCreationPeriod" key="label.end">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10"/>
 	</slot>
 </schema>

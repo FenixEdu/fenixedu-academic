@@ -961,6 +961,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    this.endThesisCreationPeriod = endThesisCreationPeriod;
 	}
 
+	public boolean hasExecutionYear() {
+	    return getExecutionYear() != null;
+	}
+
     }
 
     public boolean isScientificCommissionMember() {

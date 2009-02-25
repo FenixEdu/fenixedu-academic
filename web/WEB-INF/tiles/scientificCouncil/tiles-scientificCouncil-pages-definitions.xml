@@ -122,27 +122,6 @@
     <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
     </definition>
-
-    <!-- ============ Thesis =========== -->
-    <definition name="thesis-list" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/thesis/listThesis.jsp"/>
-    </definition>
-    <definition name="thesis-review-proposal" extends="scientificCouncil.masterPage">
-        	<put name="body" value="/scientificCouncil/thesis/reviewProposal.jsp"/>
-    </definition>
-    <definition name="thesis-review-thesis" extends="scientificCouncil.masterPage">
-        	<put name="body" value="/scientificCouncil/thesis/reviewThesis.jsp"/>
-    </definition>
-    <definition name="thesis-view-thesis" extends="scientificCouncil.masterPage">
-        	<put name="body" value="/scientificCouncil/thesis/viewThesis.jsp"/>
-    </definition>
-    <definition name="list-scientific-comission" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/thesis/listScientificComission.jsp"/>
-    </definition>
-    <definition name="list-thesis-creation-periods" extends="scientificCouncil.masterPage">
-        <put name="body" value="/scientificCouncil/thesis/listThesisCreationPeriods.jsp"/>
-    </definition>
-    
     
     <!-- ============  =========== -->
     <definition name="show-scientific-journal-merge-page" extends="scientificCouncil.masterPage">

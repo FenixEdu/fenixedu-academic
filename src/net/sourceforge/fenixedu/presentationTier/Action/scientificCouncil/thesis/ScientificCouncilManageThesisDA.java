@@ -46,8 +46,20 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+@Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
+@Forwards( { @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
+	@Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
+	@Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
+	@Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
+	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
+	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp")
+
+})
 public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
     @Override
@@ -59,6 +71,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	if (thesis != null) {
 	    final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
 	    request.setAttribute("thesisPresentationState", thesisPresentationState);
+	    request.setAttribute("degreeID", thesis.getDegree().getIdInternal());
+	    request.setAttribute("executionYearID", thesis.getExecutionYear().getIdInternal());
 	}
 
 	Degree degree = getDegree(request);
@@ -86,7 +100,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
 
     private Degree getDegree(HttpServletRequest request) {
-	Integer id = getId(request.getParameter("degreeID"));
+	final Integer id = getIntegerFromRequest(request, "degreeID");
 	if (id == null) {
 	    return null;
 	} else {
@@ -95,7 +109,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
 
     private ExecutionYear getExecutionYear(HttpServletRequest request) {
-	Integer id = getId(request.getParameter("executionYearID"));
+	final Integer id = getIntegerFromRequest(request, "executionYearID");
 	if (id == null) {
 	    return null;
 	} else {
@@ -140,7 +154,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 
     public Integer getIntegerParameter(final HttpServletRequest request, final String paramName) {
 	final String string = request.getParameter(paramName);
-	return string == null ? null : Integer.valueOf(string);
+	return (string == null || string.isEmpty()) ? null : Integer.valueOf(string);
     }
 
     public ActionForward listScientificComission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -154,18 +168,18 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		.readExecutionIntervalByOID(executionYearId));
 	request.setAttribute("executionYear", executionYear);
 
-	if (degree != null || executionYear != null) {
-	    final Set<ExecutionDegree> executionDegrees = new HashSet<ExecutionDegree>();
-	    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-		for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-		    if (executionDegree.getExecutionYear() == executionYear) {
-			executionDegrees.add(executionDegree);
-		    }
+	if (degree == null || executionYear == null) {
+	    return listThesis(mapping, actionForm, request, response);
+	}
+	final Set<ExecutionDegree> executionDegrees = new HashSet<ExecutionDegree>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		if (executionDegree.getExecutionYear() == executionYear) {
+		    executionDegrees.add(executionDegree);
 		}
 	    }
-	    request.setAttribute("executionDegrees", executionDegrees);
 	}
-
+	request.setAttribute("executionDegrees", executionDegrees);
 	return mapping.findForward("list-scientific-comission");
     }
 
@@ -384,6 +398,11 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
     }
 
     private ThesisCreationPeriodFactoryExecutor getThesisCreationPeriodFactoryExecutor(final HttpServletRequest request) {
+	return getThesisCreationPeriodFactoryExecutor(request, true);
+    }
+
+    private ThesisCreationPeriodFactoryExecutor getThesisCreationPeriodFactoryExecutor(final HttpServletRequest request,
+	    boolean invalidateViewState) {
 	ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = (ThesisCreationPeriodFactoryExecutor) getRenderedObject("thesisCreationPeriodFactoryExecutor");
 	if (thesisCreationPeriodFactoryExecutor == null) {
 	    thesisCreationPeriodFactoryExecutor = new ThesisCreationPeriodFactoryExecutor();
@@ -391,7 +410,11 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    final String executionYearIdString = request.getParameter("executionYearId");
 	    final ExecutionYear executionYear;
 	    if (executionYearIdString == null) {
-		executionYear = ExecutionYear.readCurrentExecutionYear();
+		if (thesisCreationPeriodFactoryExecutor.hasExecutionYear()) {
+		    executionYear = thesisCreationPeriodFactoryExecutor.getExecutionYear();
+		} else {
+		    executionYear = ExecutionYear.readCurrentExecutionYear();
+		}
 	    } else {
 		final Integer executionYearId = Integer.valueOf(executionYearIdString);
 		executionYear = rootDomainObject.readExecutionYearByOID(executionYearId);
@@ -405,7 +428,9 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		thesisCreationPeriodFactoryExecutor.setExecutionDegree(executionDegree);
 	    }
 	}
-	RenderUtils.invalidateViewState();
+	if (invalidateViewState) {
+	    RenderUtils.invalidateViewState();
+	}
 	request.setAttribute("thesisCreationPeriodFactoryExecutor", thesisCreationPeriodFactoryExecutor);
 	return thesisCreationPeriodFactoryExecutor;
     }
@@ -448,6 +473,14 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(request);
 	executeFactoryMethod(thesisCreationPeriodFactoryExecutor);
 	thesisCreationPeriodFactoryExecutor.setExecutionDegree(null);
+	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
+    }
+
+    public ActionForward defineCreationPeriodsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final ThesisCreationPeriodFactoryExecutor thesisCreationPeriodFactoryExecutor = getThesisCreationPeriodFactoryExecutor(
+		request, false);
+	request.setAttribute("prepareDefineCreationPeriods", Boolean.TRUE);
 	return forwardToListThesisCreationPeriodsPage(mapping, request, thesisCreationPeriodFactoryExecutor);
     }
 
@@ -552,7 +585,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		oasb.append("--");
 	    }
 
-	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
+		    || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
 		if (odsb.length() > 0) {
 		    odsb.append(" ");
 		}
@@ -563,7 +597,8 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	row.setCell(numbers.toString());
 	row.setCell(names.toString());
 	row.setCell(oasb.toString());
-	if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+	if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
+		|| thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
 	    row.setCell(odsb.toString());
 	}
     }

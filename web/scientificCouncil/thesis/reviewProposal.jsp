@@ -14,12 +14,14 @@
 <h2><bean:message key="title.scientificCouncil.thesis.proposal.approve" /></h2>
 
 <ul>
+    <logic:notEmpty name="degreeId"><logic:notEmpty name="executionYearId">
     <li>
 		<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<bean:write name="degreeId"/>&amp;executionYearId=<bean:write name="executionYearId"/></bean:define>
 		<html:link page="<%= url %>">
 			<bean:message key="link.list.scientific.comission"/>
 		</html:link>
     </li>
+	</logic:notEmpty></logic:notEmpty>
     <li>
         <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=listThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>">
             <bean:message key="link.scientificCouncil.thesis.list.back" />

@@ -97,7 +97,7 @@ public class Thesis extends Thesis_Base {
     private final static double CREDITS = 0.5;
 
     public static class ThesisCondition {
-	private String key;
+	private final String key;
 
 	public ThesisCondition(String key) {
 	    super();
@@ -1535,6 +1535,7 @@ public class Thesis extends Thesis_Base {
 	return getProposedDiscussed();
     }
 
+    @Override
     public void setState(final ThesisState state) {
 	if (hasFutureEnrolment()) {
 	    throw new DomainException("thesis.has.enrolment.in.future");
@@ -1582,4 +1583,7 @@ public class Thesis extends Thesis_Base {
 	// whenever necessary
     }
 
+    public ExecutionYear getExecutionYear() {
+	return getEnrolment().getExecutionYear();
+    }
 }
