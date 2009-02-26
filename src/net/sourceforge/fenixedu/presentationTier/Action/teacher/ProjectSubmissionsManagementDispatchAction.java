@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.NotifyStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -130,12 +129,11 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
 	final List<ProjectSubmission> projectSubmissions = new ArrayList<ProjectSubmission>(project
 		.getLastProjectSubmissionForEachStudentGroup());
 	Collections.sort(projectSubmissions, ProjectSubmission.COMPARATOR_BY_MOST_RECENT_SUBMISSION_DATE);
-	Integer actualSize = Math.min(projectSubmissions.size(), startIndex + pageSize);
+	Integer finishIndex = Math.min(projectSubmissions.size(), startIndex + pageSize);
 
-	final List<ProjectSubmission> subList = projectSubmissions.subList(startIndex, actualSize);
+	final List<ProjectSubmission> subList = projectSubmissions.subList(startIndex, finishIndex);
 
-	Archive archive = new DiskZipArchive(response, project.getName() + "-" + (startIndex + 1) + "-"
-		+ (startIndex + actualSize));
+	Archive archive = new DiskZipArchive(response, project.getName() + "-" + (startIndex + 1) + "-" + finishIndex);
 	Fetcher fetcher = new Fetcher(archive, request, response);
 
 	for (ProjectSubmission submission : subList) {
