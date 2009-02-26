@@ -3628,6 +3628,7 @@ class DomainObject {
 
 	class parking.ParkingGroup extends DomainObject {
 		String groupName;
+		MultiLanguageString groupDescription;
 	}
 
 	class parking.ParkingParty extends DomainObject {

@@ -57,8 +57,18 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@Mapping(path = "/parking", module = "parkingManager", formBean = "parkingForm")
+@Forwards( { @Forward(name = "searchParty", path = "/parkingManager/searchParty.jsp"),
+	@Forward(name = "showParkingPartyRequests", path = "/parkingManager/searchParty.jsp"),
+	@Forward(name = "showParkingRequests", path = "/parkingManager/showParkingRequests.jsp"),
+	@Forward(name = "editParkingParty", path = "/parkingManager/editParkingParty.jsp"),
+	@Forward(name = "showParkingHistories", path = "/parkingManager/showParkingHistories.jsp"),
+	@Forward(name = "showParkingRequest", path = "/parkingManager/showParkingRequest.jsp") })
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
 

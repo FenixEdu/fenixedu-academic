@@ -364,6 +364,7 @@
 <schema name="show.parkingParty.cardValidPeriod" type="net.sourceforge.fenixedu.domain.parking.ParkingParty">
 	<slot name="cardStartDate" key="label.cardStartDate" layout="null-as-label" bundle="PARKING_RESOURCES"/>
 	<slot name="cardEndDate" key="label.cardEndDate" layout="null-as-label" bundle="PARKING_RESOURCES"/>
+	<slot name="parkingGroup.groupDescription" key="label.group" layout="null-as-label" bundle="PARKING_RESOURCES"/>
 </schema>
 
 

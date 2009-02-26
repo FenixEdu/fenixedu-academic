@@ -3,21 +3,6 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="parkingManagerIndex" extends="definition.parkingManager.masterPage">
-	</definition>
-	<definition name="show-parking-requests" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/showParkingRequests.jsp" />
-	</definition>
-	<definition name="show-parking-request" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/showParkingRequest.jsp" />
-	</definition>
-	<definition name="search-party" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/searchParty.jsp" />
-	</definition>
-	<definition name="show-party-parking-requests" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/searchParty.jsp" />
-	</definition>
-	<definition name="edit-parking-party" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/editParkingParty.jsp" />
 	</definition>	
 	<definition name="df.search.external.person.before.create" extends="definition.parkingManager.masterPage" >
 		<put name="body" value="/parkingManager/searchForExternalPersonBeforeCreate.jsp" />
@@ -39,8 +24,5 @@
 	</definition>
 	<definition name="show-parking-details" extends="definition.parkingManager.masterPage">
 		<put name="body" value="/parkingManager/showParkingDetails.jsp" />
-	</definition>		
-	<definition name="show-parking-histories" extends="definition.parkingManager.masterPage">
-		<put name="body" value="/parkingManager/showParkingHistories.jsp" />
 	</definition>
 </tiles-definitions>
