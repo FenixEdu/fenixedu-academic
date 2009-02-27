@@ -38,7 +38,13 @@ public enum GeneratedDocumentType {
 
     PROGRAM_CERTIFICATE,
 
-    EXTERNAL_PROGRAM_CERTIFICATE;
+    EXTERNAL_PROGRAM_CERTIFICATE,
+    
+    LIBRARY_MISSING_CARDS,
+
+    LIBRARY_MISSING_LETTERS,
+
+    LIBRARY_MISSING_LETTERS_STUDENTS;
 
     public static GeneratedDocumentType determineType(DocumentRequestType documentRequestType) {
 	return valueOf(documentRequestType.name());

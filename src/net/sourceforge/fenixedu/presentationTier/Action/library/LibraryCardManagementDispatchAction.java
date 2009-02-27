@@ -1,19 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListLettersAsEmited;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardLetterAsEmited;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListAsEmited;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.library.EditLibraryCard;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardAsEmited;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.library.CreateLibraryCard;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -26,13 +15,24 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.CreateLibraryCard;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.EditLibraryCard;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardAsEmited;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardLetterAsEmited;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListAsEmited;
+import net.sourceforge.fenixedu.applicationTier.Servico.library.MarkLibraryCardListLettersAsEmited;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardSearch;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
+import net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument;
+import net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -285,30 +285,51 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("show-details");
     }
+    
+    private void generateMissingCardsDocuments(HttpServletRequest request) {
+	Person operator = AccessControl.getPerson();
+	List<LibraryMissingCardsDocument> docs = new ArrayList<LibraryMissingCardsDocument>();
+	Collections.sort(docs, LibraryMissingCardsDocument.COMPARATOR_BY_UPLOAD_TIME);
+	for (GeneratedDocument doc : operator.getProcessedDocument()) {
+	    if (doc instanceof LibraryMissingCardsDocument) {
+		docs.add((LibraryMissingCardsDocument) doc);
+		if (docs.size() == 5)
+		    break;
+	    }
+	}
+	
+	if (!docs.isEmpty())
+	    request.setAttribute("libraryMissingCards", docs);
+    }
 
     public ActionForward prepareGenerateMissingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-
+	
+	generateMissingCardsDocuments(request);
 	return mapping.findForward("generate-missing-cards");
     }
 
     public ActionForward generateMissingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 
-	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
+	List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
+	List<LibraryCard> cardList = new ArrayList<LibraryCard>();
+	
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
 	    if (libraryCard.getCardEmitionDate() == null) {
-		cardList.add(new LibraryCardDTO(libraryCard));
+		cardDTOList.add(new LibraryCardDTO(libraryCard));
+		cardList.add(libraryCard);
 	    }
 	}
 
-	if (!cardList.isEmpty()) {
+	if (!cardDTOList.isEmpty()) {
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray("net.sourceforge.fenixedu.domain.library.LibrabryCard", null,
-		    bundle, cardList);
+		    bundle, cardDTOList);
 
-	    MarkLibraryCardListAsEmited.run(cardList);
-
+	    MarkLibraryCardListAsEmited.run(cardDTOList);
+	    LibraryMissingCardsDocument.store(cardList, AccessControl.getPerson(), data);
+	    
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=cartoes.pdf");
 	    response.setContentLength(data.length);
@@ -321,6 +342,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return null;
 	} else {
 	    request.setAttribute("nothingMissing", "nothingMissing");
+	    generateMissingCardsDocuments(request);
 	    return mapping.findForward("generate-missing-cards");
 	}
     }
@@ -356,16 +378,34 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
+    private void generateMissingLettersDocuments(GeneratedDocumentType type, HttpServletRequest request) {
+	Person operator = AccessControl.getPerson();
+	List<LibraryMissingLettersDocument> docs = new ArrayList<LibraryMissingLettersDocument>();
+	Collections.sort(docs, LibraryMissingLettersDocument.COMPARATOR_BY_UPLOAD_TIME);
+	for (GeneratedDocument doc : operator.getProcessedDocument()) {
+	    if (doc instanceof LibraryMissingLettersDocument
+		    && ((LibraryMissingLettersDocument) doc).getType().equals(type)) {
+		docs.add((LibraryMissingLettersDocument) doc);
+		if (docs.size() == 5)
+		    break;
+	    }
+	}
+	if (!docs.isEmpty())
+	    request.setAttribute("libraryMissingLetters", docs);
+    }
+
     public ActionForward prepareGenerateMissingLetters(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-
+	
+	generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS, request);
 	return mapping.findForward("generate-missing-letters");
     }
 
     public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException, FenixFilterException,
 	    FenixServiceException {
-
+	
+	generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS, request);
 	return mapping.findForward("generate-missing-letters-for-students");
     }
 
@@ -373,31 +413,35 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 
 	String result = request.getParameter("students");
-	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
+	List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
+	List<LibraryCard> cardList = new ArrayList<LibraryCard>();
+	
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
 	    if (libraryCard.getLetterGenerationDate() == null) {
 		if (result.equalsIgnoreCase("no")
 			&& (libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE) || libraryCard
 				.getPartyClassification().equals(PartyClassification.TEACHER))) {
-		    cardList.add(new LibraryCardDTO(libraryCard));
-		} else if (result.equalsIgnoreCase("yes")
+		    cardDTOList.add(new LibraryCardDTO(libraryCard));
+		    cardList.add(libraryCard);
+		} else if (result.equalsIgnoreCase("yes") 
 			&& !libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE)
 			&& !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
-		    cardList.add(new LibraryCardDTO(libraryCard));
+		    cardDTOList.add(new LibraryCardDTO(libraryCard));
+		    cardList.add(libraryCard);
 		}
 	    }
 	}
 
-	if (!cardList.isEmpty()) {
+	if (!cardDTOList.isEmpty()) {
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	    String reportID = "net.sourceforge.fenixedu.domain.library.LibrabryCard.letter";
 	    if (result.equalsIgnoreCase("yes")) {
 		reportID += "ForStudents";
 	    }
-	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray(reportID, null, bundle, cardList);
+	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray(reportID, null, bundle, cardDTOList);
 
-	    MarkLibraryCardListLettersAsEmited.run(cardList);
-
+	    MarkLibraryCardListLettersAsEmited.run(cardDTOList);
+	    LibraryMissingLettersDocument.store(cardList, AccessControl.getPerson(), data, result.equalsIgnoreCase("yes"));
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=cartas.pdf");
 	    response.setContentLength(data.length);
@@ -411,7 +455,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	} else {
 	    request.setAttribute("nothingMissing", "nothingMissing");
 	    if (result.equalsIgnoreCase("yes")) {
+		generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS, request);
 		return mapping.findForward("generate-missing-letters-for-students");
+	    } else if (result.equalsIgnoreCase("no")) {
+		generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS, request);
 	    }
 	    return mapping.findForward("generate-missing-letters");
 	}
@@ -567,16 +614,16 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	libraryCardSearch.doSearch();
 	Spreadsheet spreadsheet = new Spreadsheet("Utilizadores_Biblioteca");
 	spreadsheet.setHeader("Categoria");
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("Nï¿½mero");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Unidade");
 	spreadsheet.setHeader("Telefone");
-	spreadsheet.setHeader("Telemóvel");
+	spreadsheet.setHeader("Telemï¿½vel");
 	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Pin");
 	spreadsheet.setHeader("Morada");
 	spreadsheet.setHeader("Localidade");
-	spreadsheet.setHeader("Código Postal");
+	spreadsheet.setHeader("Cï¿½digo Postal");
 	spreadsheet.setHeader("Validade");
 
 	for (LibraryCardDTO libraryCardDTO : libraryCardSearch.getSearchResult()) {

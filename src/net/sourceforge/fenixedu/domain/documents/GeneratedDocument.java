@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.documents;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -95,4 +96,13 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 	metaData.add(FileSetMetaData.createTitleMeta(filename));
 	return metaData;
     }
+    
+    public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
+
+	@Override
+	public int compare(GeneratedDocument o1, GeneratedDocument o2) {
+	    return o1.getUploadTime().compareTo(o2.getUploadTime());
+	}
+
+    };
 }

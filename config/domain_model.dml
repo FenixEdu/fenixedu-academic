@@ -723,7 +723,10 @@ class DomainObject {
 		    class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
 		    	Integer year;
 		    }
-
+	class documents.LibraryMissingCardsDocument extends documents.GeneratedDocument;
+	class documents.LibraryMissingLettersDocument extends documents.GeneratedDocument;
+	
+	
 		class FileContent extends File {
 		}
 
@@ -6333,6 +6336,7 @@ relation BelongsTo {
 }
 
 /* Documents */
+
 relation DocumentOperator {
     Person playsRole operator;
     documents.GeneratedDocument playsRole processedDocument {
@@ -6366,6 +6370,24 @@ relation DocumentRequestDocuments {
     documents.DocumentRequestGeneratedDocument playsRole document {
         multiplicity *;
     }
+}
+
+relation LibraryMissingCardsDocuments { 
+  library.LibraryCard playsRole source {
+    multiplicity *;
+  }
+  documents.LibraryMissingCardsDocument playsRole document {
+  	multiplicity *;
+  }
+}
+
+relation LibraryMissingLettersDocuments { 
+  library.LibraryCard playsRole source {
+    multiplicity *;
+  }
+  documents.LibraryMissingLettersDocument playsRole letters {
+  	multiplicity *;
+  }
 }
 
 relation BlueprintBlueprintFile {

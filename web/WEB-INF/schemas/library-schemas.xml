@@ -225,6 +225,8 @@
     </slot>	
 </schema>
 
+
+
 <schema name="library.card.generate.date" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
 	<slot name="validUntil" key="label.card.date">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
@@ -397,4 +399,10 @@
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
+</schema>
+
+<!--  Used in generateMissingLetters.jsp and generateMissingCards.jsp -->
+<schema name="library.missingdocument.list" type="net.sourceforge.fenixedu.domain.documents.GeneratedDocument" bundle="LIBRARY_RESOURCES">
+	<slot name="uploadTime" key="label.missingcardsdocument.uploadtime"/>
+	<slot name="this" layout="link" key="label.missingcardsdocument.filename"/>
 </schema>
