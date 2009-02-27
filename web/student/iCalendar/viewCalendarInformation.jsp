@@ -15,14 +15,14 @@
 </div>
 <bean:message key="label.calendar.info" bundle="MESSAGING_RESOURCES" />
 <logic:notPresent name="expirationDate">
-	<p><a href="/ciapl/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar
+	<p><a href="/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar
 	chave</strong></a></p>
 </logic:notPresent>
 
 <logic:present name="expirationDate">
 	<bean:define id="classURL" name="classURL" />
 	<bean:define id="examsURL" name="examsURL" />
-		<p><a href="/ciapl/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar nova
+		<p><a href="/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar nova
 		chave</strong></a></p>
 	A sua chave é válida até <b><bean:write name="expirationDate" /></b>
 	<logic:equal name="stillValid" value="false">
