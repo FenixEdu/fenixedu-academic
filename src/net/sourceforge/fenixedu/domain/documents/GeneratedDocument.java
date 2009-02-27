@@ -96,7 +96,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 	metaData.add(FileSetMetaData.createTitleMeta(filename));
 	return metaData;
     }
-    
+
     public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
 
 	@Override

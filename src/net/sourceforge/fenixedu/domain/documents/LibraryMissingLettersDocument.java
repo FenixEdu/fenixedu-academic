@@ -11,11 +11,11 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument_Base {
-    
-    public  LibraryMissingLettersDocument() {
-        super();
+
+    public LibraryMissingLettersDocument() {
+	super();
     }
-    
+
     public LibraryMissingLettersDocument(List<LibraryCard> source, Person operator, String filename, byte[] content,
 	    boolean forStudents) {
 	super();
@@ -24,7 +24,7 @@ public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument
 	init(
 		forStudents ? GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS
 			: GeneratedDocumentType.LIBRARY_MISSING_LETTERS, operator, operator, filename, content);
-	
+
     }
 
     @Service
@@ -35,5 +35,5 @@ public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument
 		    forStudents);
 	}
     }
-    
+
 }

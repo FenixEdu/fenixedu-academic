@@ -208,7 +208,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("create-card");
 	}
 
-	LibraryCard libraryCard = (LibraryCard) CreateLibraryCard.run(libraryCardDTO);
+	LibraryCard libraryCard = CreateLibraryCard.run(libraryCardDTO);
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
 	return mapping.findForward("show-details");
@@ -277,7 +277,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-card");
 	}
 
-	LibraryCard libraryCard = (LibraryCard) EditLibraryCard.run(libraryCardDTO);
+	LibraryCard libraryCard = EditLibraryCard.run(libraryCardDTO);
 
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCardDTO.getPerson().getPartyClassification()));
@@ -285,7 +285,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("show-details");
     }
-    
+
     private void generateMissingCardsDocuments(HttpServletRequest request) {
 	Person operator = AccessControl.getPerson();
 	List<LibraryMissingCardsDocument> docs = new ArrayList<LibraryMissingCardsDocument>();
@@ -297,14 +297,14 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 		    break;
 	    }
 	}
-	
+
 	if (!docs.isEmpty())
 	    request.setAttribute("libraryMissingCards", docs);
     }
 
     public ActionForward prepareGenerateMissingCards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	
+
 	generateMissingCardsDocuments(request);
 	return mapping.findForward("generate-missing-cards");
     }
@@ -314,7 +314,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
 	List<LibraryCard> cardList = new ArrayList<LibraryCard>();
-	
+
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
 	    if (libraryCard.getCardEmitionDate() == null) {
 		cardDTOList.add(new LibraryCardDTO(libraryCard));
@@ -329,7 +329,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	    MarkLibraryCardListAsEmited.run(cardDTOList);
 	    LibraryMissingCardsDocument.store(cardList, AccessControl.getPerson(), data);
-	    
+
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=cartoes.pdf");
 	    response.setContentLength(data.length);
@@ -383,8 +383,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	List<LibraryMissingLettersDocument> docs = new ArrayList<LibraryMissingLettersDocument>();
 	Collections.sort(docs, LibraryMissingLettersDocument.COMPARATOR_BY_UPLOAD_TIME);
 	for (GeneratedDocument doc : operator.getProcessedDocument()) {
-	    if (doc instanceof LibraryMissingLettersDocument
-		    && ((LibraryMissingLettersDocument) doc).getType().equals(type)) {
+	    if (doc instanceof LibraryMissingLettersDocument && ((LibraryMissingLettersDocument) doc).getType().equals(type)) {
 		docs.add((LibraryMissingLettersDocument) doc);
 		if (docs.size() == 5)
 		    break;
@@ -396,7 +395,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareGenerateMissingLetters(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	
+
 	generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS, request);
 	return mapping.findForward("generate-missing-letters");
     }
@@ -404,7 +403,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareGenerateMissingLettersForStudents(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws JRException, IOException, FenixFilterException,
 	    FenixServiceException {
-	
+
 	generateMissingLettersDocuments(GeneratedDocumentType.LIBRARY_MISSING_LETTERS_STUDENTS, request);
 	return mapping.findForward("generate-missing-letters-for-students");
     }
@@ -415,7 +414,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	String result = request.getParameter("students");
 	List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
 	List<LibraryCard> cardList = new ArrayList<LibraryCard>();
-	
+
 	for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
 	    if (libraryCard.getLetterGenerationDate() == null) {
 		if (result.equalsIgnoreCase("no")
@@ -423,7 +422,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 				.getPartyClassification().equals(PartyClassification.TEACHER))) {
 		    cardDTOList.add(new LibraryCardDTO(libraryCard));
 		    cardList.add(libraryCard);
-		} else if (result.equalsIgnoreCase("yes") 
+		} else if (result.equalsIgnoreCase("yes")
 			&& !libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE)
 			&& !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
 		    cardDTOList.add(new LibraryCardDTO(libraryCard));
@@ -540,13 +539,13 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	ExternalContract externalContract = null;
 	if (externalPersonBean.getUnit() == null) {
 
-	    externalContract = (ExternalContract) InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean
-		    .getUnitName(), externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
+	    externalContract = InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnitName(),
+		    externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean.getEmail());
 	}
 	if (externalPersonBean.getUnit() != null) {
 
-	    externalContract = (ExternalContract) InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean
-		    .getUnit().getIdInternal(), externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean
+	    externalContract = InsertExternalPerson.run(externalPersonBean.getName(), externalPersonBean.getUnit()
+		    .getIdInternal(), externalPersonBean.getPhone(), externalPersonBean.getMobile(), externalPersonBean
 		    .getEmail());
 	}
 
@@ -614,16 +613,16 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	libraryCardSearch.doSearch();
 	Spreadsheet spreadsheet = new Spreadsheet("Utilizadores_Biblioteca");
 	spreadsheet.setHeader("Categoria");
-	spreadsheet.setHeader("Nï¿½mero");
+	spreadsheet.setHeader("Número");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Unidade");
 	spreadsheet.setHeader("Telefone");
-	spreadsheet.setHeader("Telemï¿½vel");
+	spreadsheet.setHeader("Telemóvel");
 	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Pin");
 	spreadsheet.setHeader("Morada");
 	spreadsheet.setHeader("Localidade");
-	spreadsheet.setHeader("Cï¿½digo Postal");
+	spreadsheet.setHeader("Código Postal");
 	spreadsheet.setHeader("Validade");
 
 	for (LibraryCardDTO libraryCardDTO : libraryCardSearch.getSearchResult()) {
