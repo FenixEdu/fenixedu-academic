@@ -94,6 +94,16 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	    }
 	}
 	
+	for(WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester.getPreviousExecutionPeriod())){
+	    allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
+	}
+	
+	for(Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester.getPreviousExecutionPeriod())){
+	    for(Project project : attends.getExecutionCourse().getAssociatedProjects()){
+		allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+	    }
+	} 
+	
 	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
 	EventBean event = new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30),
 		false, "Portal Fénix", url,
