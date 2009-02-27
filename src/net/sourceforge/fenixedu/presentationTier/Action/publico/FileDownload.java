@@ -26,6 +26,8 @@ public class FileDownload extends FenixAction {
 	    try {
 		response.setContentType(file.getMimeType());
 		final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+		response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
+		response.setContentLength(file.getSize());
 		dos.write(file.getContents());
 		dos.close();
 	    } catch (IOException e) {
