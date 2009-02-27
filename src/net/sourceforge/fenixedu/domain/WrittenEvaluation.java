@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
+import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -800,4 +802,58 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
     }
 
+    protected List<EventBean> getAllEvents(String description, Registration registration, String scheme, String serverName,
+	    int serverPort) {
+	List<EventBean> result = new ArrayList<EventBean>();
+	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort);
+
+	String courseName = "";
+	ExecutionCourse executionCourse = null;
+	if (this.getAttendingExecutionCoursesFor(registration).size() > 1) {
+	    for (Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator(); it.hasNext(); executionCourse = it
+		    .next()) {
+		if (it.hasNext()) {
+		    courseName += executionCourse.getSigla() + "; ";
+		} else {
+		    courseName += executionCourse.getSigla();
+		}
+	    }
+	} else {
+	    courseName = this.getAttendingExecutionCoursesFor(registration).get(0).getNome();
+	    executionCourse = this.getAttendingExecutionCoursesFor(registration).get(0);
+	}
+
+	if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
+	    DateTime enrollmentBegin = this.getEnrollmentBeginDayDateYearMonthDay().toDateTime(
+		    new TimeOfDay(this.getEnrollmentBeginTimeDateHourMinuteSecond().getChronology()));
+	    DateTime enrollmentEnd = this.getEnrollmentEndDayDateYearMonthDay().toDateTime(
+		    new TimeOfDay(this.getEnrollmentEndTimeDateHourMinuteSecond().getChronology()));
+
+	    result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
+		    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
+
+	    result.add(new EventBean("Fim das inscrições para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
+		    enrollmentEnd, false, "Sistema Fénix", url + "/privado", null));
+	}
+
+	String room = "";
+
+	if (registration.getRoomFor(this) != null) {
+	    room = registration.getRoomFor(this).getName();
+	} else {
+	    for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupations()) {
+		if (!room.isEmpty()){
+		    room += "; ";
+		}
+		room += weSpaceOcupation.getRoom().getName();
+	    }
+	}
+
+	result.add(new EventBean(description + " : " + courseName, this.getBeginningDateTime(), this.getEndDateTime(), false,
+		room, url + executionCourse.getSite().getReversePath(), null));
+
+	return result;
+    }
+
+    public abstract List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort);
 }

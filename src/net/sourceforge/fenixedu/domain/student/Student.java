@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.crypto.KeyGenerator;
+
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -1533,6 +1535,6 @@ public class Student extends Student_Base {
 
     public void deleteExportInformationPassword() {
 	setExportInformationPassword(null);
-    }
+    }    
 
 }

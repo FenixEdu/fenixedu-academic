@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
@@ -243,6 +244,22 @@ public class Project extends Project_Base {
 	    }
 	}
 
+	return result;
+    }
+    
+    public List<EventBean> getAllEvents(ExecutionCourse executionCourse,String scheme, String serverName, int serverPort){
+	List<EventBean> result = new ArrayList<EventBean>();
+	result.add(new EventBean("Inicio " + this.getName() + " : " + executionCourse.getNome(),
+		this.getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1),false, null,null,this.getDescription()));
+	if (this.getOnlineSubmissionsAllowed()){
+	    String url =  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) +  "/privado";
+	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(),
+		    this.getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(),false, "Sistema Fenix",
+		    url,this.getDescription()));	    
+	}else{
+	    result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(),
+		    this.getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(),false, null,null,this.getDescription()));
+	}
 	return result;
     }
 

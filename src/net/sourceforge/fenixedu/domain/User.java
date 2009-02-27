@@ -3,8 +3,12 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
 import net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
@@ -81,6 +85,18 @@ public class User extends User_Base {
     @Service
     public void logout() {
 	setLogoutDateTime(new DateTime());
+    }
+    
+    @Service
+    public void generateNewKey() throws Exception{
+	KeyGenerator kgen = KeyGenerator.getInstance("AES");
+	kgen.init(128);	
+	SecretKey skey = kgen.generateKey();
+	byte[] raw = skey.getEncoded();
+	
+	setPrivateKey(new ByteArray(raw));
+	setPrivateKeyCreation(new DateTime());
+	setPrivateKeyValidity(getPrivateKeyCreation().plusYears(1));
     }
 
 }

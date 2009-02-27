@@ -15,17 +15,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import net.fortuna.ical4j.model.property.Location;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
@@ -939,5 +945,62 @@ public class Lesson extends Lesson_Base {
 
     public AcademicInterval getAcademicInterval() {
 	return getExecutionPeriod().getAcademicInterval();
+    }
+
+    public List<EventBean> getAllLessonsEvents(String scheme, String serverName, int serverPort) {
+	HashMap<DateTime, LessonInstance> hashmap = new HashMap<DateTime, LessonInstance>();
+	ArrayList<EventBean> result = new ArrayList<EventBean>();
+	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(getLessonEndDay())) {
+	    hashmap.put(lessonInstance.getBeginDateTime(), lessonInstance);
+	}
+
+	for (YearMonthDay aDay : getAllLessonDates()) {
+	    DateTime beginDate = new DateTime(aDay.getYear(), aDay.getMonthOfYear(), aDay.getDayOfMonth(),
+		    getBeginHourMinuteSecond().getHour(), getBeginHourMinuteSecond().getMinuteOfHour(),
+		    getBeginHourMinuteSecond().getSecondOfMinute(), 0);
+
+	    LessonInstance lessonInstance = hashmap.get(beginDate);
+	    EventBean bean;
+	    String location = null;
+	    
+	    String url =  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) +  getExecutionCourse().getSite().getReversePath();
+	    
+	    if (lessonInstance != null) {
+		
+		if (lessonInstance.getLessonInstanceSpaceOccupation() != null) {
+		    location = lessonInstance.getLessonInstanceSpaceOccupation().getRoom().getName();
+		}
+		String summary = null;
+		if (lessonInstance.getSummary() != null){
+		    summary = lessonInstance.getSummary().getSummaryText().toString();
+		    Pattern p = Pattern.compile("<[a-zA-Z0-9\\/]*[^>]*>");
+		    Matcher matcher = p.matcher(summary);
+		    summary = matcher.replaceAll("");
+		    
+		    p = Pattern.compile("\\s(\\s)*");
+		    matcher = p.matcher(summary);
+		    summary = matcher.replaceAll(" ");
+		}
+		
+		bean = new EventBean(getShift().getExecutionCourse().getNome() + " : "
+			+ getShift().getShiftTypesCapitalizedPrettyPrint(), lessonInstance.getBeginDateTime(), lessonInstance
+			.getEndDateTime(), false, location, url+ "/sumarios", summary);
+	    } else {
+		if (getLessonSpaceOccupation() != null){
+		    location = getLessonSpaceOccupation().getRoom().getName();
+		}
+		DateTime endDate = new DateTime(aDay.getYear(), aDay.getMonthOfYear(), aDay.getDayOfMonth(),
+			getEndHourMinuteSecond().getHour(), getEndHourMinuteSecond().getMinuteOfHour(), getEndHourMinuteSecond()
+				.getSecondOfMinute(), 0);
+
+		bean = new EventBean(getShift().getExecutionCourse().getNome() + " : "
+			+ getShift().getShiftTypesCapitalizedPrettyPrint(), beginDate, endDate, false, location,
+			url, null);
+	    }
+
+	    result.add(bean);
+	}
+
+	return result;
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 public abstract class Evaluation extends Evaluation_Base {
@@ -56,4 +57,5 @@ public abstract class Evaluation extends Evaluation_Base {
     public boolean isFinal() {
 	return false;
     }
+    
 }

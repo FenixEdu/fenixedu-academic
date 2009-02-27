@@ -1282,6 +1282,10 @@ class DomainObject {
 		DateTime logoutDateTime;
 		String lastLoginHost;
 		String userUId;
+		
+		ByteArray privateKey;	
+		DateTime privateKeyCreation;
+		DateTime privateKeyValidity;
 	}
 
 	class WrittenEvaluationEnrolment extends DomainObject {

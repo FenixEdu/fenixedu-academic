@@ -65,9 +65,15 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.protocols"  />
 		</html:link>
 	</li>
-	
-	
-	
+
+<logic:present role="STUDENT">
+	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.title.sync"  /></li>
+	<li>
+		<html:link page="/ICalTimeTable.do?method=prepare" titleKey="label.title.sync">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.title.calendar"/>
+		</html:link>
+	</li>
+</logic:present>	
 	<%--
 	<li>
 		<html:link page="/searchResearchers.do?method=search"><bean:message key="researcher.experts" bundle="RESEARCHER_RESOURCES"/></html:link>

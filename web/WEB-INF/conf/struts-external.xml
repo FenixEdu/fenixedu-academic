@@ -160,5 +160,5 @@
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
   </plug-in>
-
+<plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />	
 </struts-config>

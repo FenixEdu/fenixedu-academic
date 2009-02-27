@@ -477,6 +477,8 @@
         <forward name="Success" path="shift-enrolment-options"/>
       </action>
       
+
+      	
       <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ShiftEnrollmentAction"
               path="/shiftEnrollment"
               input="/viewShiftsList.do"

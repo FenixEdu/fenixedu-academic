@@ -22,9 +22,13 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
 import org.apache.commons.lang.StringUtils;
@@ -395,6 +399,19 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final String parameter = request.getParameter(name);
 	final Long oid = parameter != null ? Long.valueOf(parameter) : (Long) request.getAttribute(name);
 	return oid == null ? null : (T) Transaction.getObjectForOID(oid.longValue());
+    }
+    
+    public ActionForward redirect(String url, HttpServletRequest request){
+	StringBuilder stringBuilder = new StringBuilder( url);
+	stringBuilder.append("&");
+	stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	stringBuilder.append("=");
+	final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(request);
+	String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
+	stringBuilder.append(currentContextPath);
+
+	return new FenixActionForward(request,new ActionForward(stringBuilder.toString(), true));
+	
     }
 
 }

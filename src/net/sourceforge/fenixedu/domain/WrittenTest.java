@@ -16,10 +16,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -243,6 +247,11 @@ public class WrittenTest extends WrittenTest_Base {
 	}
 	builder.append(")");
 	return builder.toString();
+    }
+    
+    public List<EventBean>  getAllEvents(Registration registration,
+	    String scheme, String serverName, int serverPort){
+	return getAllEvents(this.getDescription(), registration,scheme,serverName,serverPort);
     }
 
 }

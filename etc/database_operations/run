@@ -41,6 +41,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Private Key to User" addPrivateKeySlotToUser.sql
 execute "Add a Group Description to the ParkingGroup Table" addGroupDescriptionParking.sql
 execute "Include data in ParkingGroup Table (Group Description Column)" parkingGroupDescriptionData.sql IST
 execute "Add Library Cards and Letters Document Table" addLibraryMissingDocumentsTables.sql

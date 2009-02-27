@@ -364,6 +364,20 @@ public class Shift extends Shift_Base {
 	}
 	return builder.toString();
     }
+    
+    public String getShiftTypesCapitalizedPrettyPrint() {
+	StringBuilder builder = new StringBuilder();
+	int index = 0;
+	SortedSet<ShiftType> sortedTypes = getSortedTypes();
+	for (ShiftType shiftType : sortedTypes) {
+	    builder.append(shiftType.getFullNameTipoAula());
+	    index++;
+	    if (index < sortedTypes.size()) {
+		builder.append(", ");
+	    }
+	}
+	return builder.toString();
+    }
 
     public String getShiftTypesCodePrettyPrint() {
 	StringBuilder builder = new StringBuilder();
