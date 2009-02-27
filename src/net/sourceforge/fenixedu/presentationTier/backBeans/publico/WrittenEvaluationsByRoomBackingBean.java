@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 public class WrittenEvaluationsByRoomBackingBean extends
 	net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
@@ -56,6 +57,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
 	final Map<String, String> linkParameters = new HashMap<String, String>();
 	linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
 	linkParameters.put("method", "firstPage");
+	linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
 	return linkParameters;
     }
 }
