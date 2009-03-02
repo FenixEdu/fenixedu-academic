@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.activation.MimetypesFileTypeMap;
+
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -34,6 +36,7 @@ public abstract class File extends File_Base {
 	setFilename(FileUtils.getFilenameOnly(filename));
 	setDisplayName(FileUtils.getFilenameOnly(displayName));
 	new FileLocalContent(this, path, metadata, content);
+	setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
 	setSize(content.length);
 	setPermittedGroup(group);
 	setUploadTime(new DateTime());
