@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.messaging.RegistrationsBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -39,29 +40,26 @@ import org.w3c.tools.codec.Base64Encoder;
 
 import com.sun.faces.util.Base64;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/ICalTimeTable", module = "messaging")
 @Forwards( { @Forward(name = "viewOptions", path = "icalendar-view-options"),
-	@Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
+	     @Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
 public class ICalStudentTimeTable extends FenixDispatchAction {
 
-    private Registration getRegistration(final HttpServletRequest request) {
-	Integer registrationId = Integer.valueOf(request.getParameter("registrationId"));
-	return rootDomainObject.readRegistrationByOID(registrationId);
-    }
-
-    private Registration getRegistration(final ActionForm form, final HttpServletRequest request) {
-	Integer registrationId = null;
-	if (form != null) {
-	    registrationId = (Integer) ((DynaActionForm) form).get("registrationId");
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	if (getRenderedObject("bean") == null){
+	    Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationId")));
+	    
+	    return forwardToShow(registration, mapping, request);    
+	}else{
+	    return forwardToShow(((RegistrationsBean) getRenderedObject("bean")).getSelected(), mapping, request);
 	}
-	if (registrationId == null && !StringUtils.isEmpty(request.getParameter("registrationId"))) {
-	    registrationId = Integer.valueOf(request.getParameter("registrationId"));
-	}
-	return rootDomainObject.readRegistrationByOID(registrationId);
+	
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -71,39 +69,15 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 	if (registrations.size() == 1) {
 	    return forwardToShow(registrations.get(0), mapping, request);
 	} else {
-	    request.setAttribute("registrations", registrations);
+	    RegistrationsBean bean = new RegistrationsBean();
+	    bean.setRegistrations(registrations);
+	    request.setAttribute("bean", bean);
 	    return mapping.findForward("chooseRegistration");
 	}
     }
 
-    public static String calculatePayload(String to, Registration reg, User user) throws Exception {
-
-	Cipher cipher = Cipher.getInstance("AES");
-
-	SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getBytes(), "AES");
-	cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-
-	byte[] encrypted = cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
-		+ user.getPrivateKeyCreation().toString() + "##" + reg.getIdInternal() + "##"+ user.getPrivateKeyValidity().toString() + "##"
-		+ "## This is for " + to + " calendar").getBytes());
-
-	return DigestUtils.shaHex(encrypted);
-    }
-
-    private String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {
-	String scheme = request.getScheme();
-	String serverName = request.getServerName();
-	int serverPort = request.getServerPort();
-	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
-		+ request.getContextPath();
-	url += "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
-		+ "&registrationID=" + registration.getIdInternal() + "&payload="
-		+ calculatePayload(to, registration, AccessControl.getPerson().getUser());
-	return url;
-    }
-
-    public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward generateKey(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    	throws Exception{
 	try {
 	    AccessControl.getPerson().getUser().generateNewKey();
 	} catch (Exception E) {
@@ -134,41 +108,30 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 	return mapping.findForward("viewOptions");
     }
 
-    public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	return forwardToShow(getRegistration(actionForm, request), mapping, request);
+    public static String calculatePayload(String to, Registration reg, User user) throws Exception {
+
+	Cipher cipher = Cipher.getInstance("AES");
+
+	SecretKeySpec skeySpec = new SecretKeySpec(user.getPrivateKey().getBytes(), "AES");
+	cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+
+	byte[] encrypted = cipher.doFinal(("This is for " + to + " calendar ##" + "1.6180339##Sistema Fenix##"
+		+ user.getPrivateKeyCreation().toString() + "##" + reg.getIdInternal() + "##"
+		+ user.getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar").getBytes());
+
+	return DigestUtils.shaHex(encrypted);
     }
 
-    public ActionForward getStudentClassTimeTable(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    final HttpServletResponse httpServletResponse) throws IOException {
-	Registration registration = getRegistration(request);
-	ExecutionSemester currentExecutionSemester = null;
-	List<EventBean> allEvents = new ArrayList<EventBean>();
+    private String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {
 	String scheme = request.getScheme();
 	String serverName = request.getServerName();
 	int serverPort = request.getServerPort();
-
-	for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-	    for (Lesson lesson : shift.getAssociatedLessons()) {
-		allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
-	    }
-	    if (currentExecutionSemester == null) {
-		currentExecutionSemester = shift.getExecutionPeriod();
-	    }
-	}
-
-	for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
-	    for (Lesson lesson : shift.getAssociatedLessons()) {
-		allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
-	    }
-	}
-
-	Calendar calendar = CalendarFactory.createCalendar(allEvents);
-	httpServletResponse.setContentType("text/calendar");
-	final OutputStream outputStream = httpServletResponse.getOutputStream();
-	outputStream.write(calendar.toString().getBytes());
-	outputStream.close();
-
-	return null;
+	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
+		+ request.getContextPath();
+	url += "/external/iCalendarSync.do?method=" + to + "&user=" + AccessControl.getPerson().getUser().getUserUId() + ""
+		+ "&registrationID=" + registration.getIdInternal() + "&payload="
+		+ calculatePayload(to, registration, AccessControl.getPerson().getUser());
+	return url;
     }
+
 }

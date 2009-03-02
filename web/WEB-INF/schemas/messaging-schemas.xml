@@ -446,4 +446,9 @@
 		<slot name="totalTimeSpent"/>
 </schema>
 
-
+<schema name="registration.selection" type="net.sourceforge.fenixedu.dataTransferObject.messaging.RegistrationsBean" bundle="MESSAGING_RESOURCES">
+	<slot name="selected" layout="menu-select" key="label.studentCurricularPlan">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RegistrationProvider"/>
+		<property name="format" value="${degreeNameWithDegreeCurricularPlanName}" />
+	</slot>
+</schema>

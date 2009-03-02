@@ -15,15 +15,15 @@
 </div>
 <bean:message key="label.calendar.info" bundle="MESSAGING_RESOURCES" />
 <logic:notPresent name="expirationDate">
-	<p><a href="/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar
-	chave</strong></a></p>
+	<p><strong><html:link page="<%= "/ICalTimeTable.do?method=generateKey&registrationId=" + String.valueOf(registrationId) %>" bundle="MESSAGING_RESOURCES" titleKey="label.key.firsttime"><bean:message key="label.key.firsttime" bundle="MESSAGING_RESOURCES"/></html:link></strong></p>
 </logic:notPresent>
 
 <logic:present name="expirationDate">
 	<bean:define id="classURL" name="classURL" />
 	<bean:define id="examsURL" name="examsURL" />
-		<p><a href="/messaging/ICalTimeTable.do?method=generateKey&registrationId=<%= registrationId.toString() %>"><strong>Gerar nova
-		chave</strong></a></p>
+
+	
+		<p><strong><html:link page="<%= "/ICalTimeTable.do?method=generateKey&registrationId=" + String.valueOf(registrationId) %>" bundle="MESSAGING_RESOURCES"  titleKey="label.key.new"><bean:message key="label.key.new" bundle="MESSAGING_RESOURCES"/></html:link></strong></p>
 	A sua chave é válida até <b><bean:write name="expirationDate" /></b>
 	<logic:equal name="stillValid" value="false">
 		<p class="mbottom05"><em class="highlight5">A chave perdeu a

@@ -3,6 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +53,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 public class ICalendarSyncPoint extends FenixDispatchAction {
 
     private Calendar getClassCalendar(Registration registration, DateTime validity, HttpServletRequest request) {
-	ExecutionSemester currentExecutionSemester = null;
+	ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 	List<EventBean> allEvents = new ArrayList<EventBean>();
 	String scheme = request.getScheme();
 	String serverName = request.getServerName();
@@ -56,9 +62,6 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
 	    for (Lesson lesson : shift.getAssociatedLessons()) {
 		allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
-	    }
-	    if (currentExecutionSemester == null) {
-		currentExecutionSemester = shift.getExecutionPeriod();
 	    }
 	}
 
@@ -77,6 +80,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	return CalendarFactory.createCalendar(allEvents);
 
     }
+
     private Calendar getExamsCalendar(Registration registration, DateTime validity, HttpServletRequest request) {
 	ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 	List<EventBean> allEvents = new ArrayList<EventBean>();
@@ -84,26 +88,27 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	String serverName = request.getServerName();
 	int serverPort = request.getServerPort();
 
-	for(WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)){
+	for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
 	    allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
 	}
-	
-	for(Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)){
-	    for(Project project : attends.getExecutionCourse().getAssociatedProjects()){
+
+	for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)) {
+	    for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
 		allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
 	    }
 	}
-	
-	for(WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester.getPreviousExecutionPeriod())){
+
+	for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester
+		.getPreviousExecutionPeriod())) {
 	    allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
 	}
-	
-	for(Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester.getPreviousExecutionPeriod())){
-	    for(Project project : attends.getExecutionCourse().getAssociatedProjects()){
+
+	for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester.getPreviousExecutionPeriod())) {
+	    for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
 		allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
 	    }
-	} 
-	
+	}
+
 	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
 	EventBean event = new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30),
 		false, "Portal Fénix", url,
@@ -114,8 +119,6 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	return CalendarFactory.createCalendar(allEvents);
 
     }
-    
-
 
     public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    final HttpServletResponse httpServletResponse) throws Exception {
@@ -129,25 +132,27 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	User user = User.readUserByUserUId(userId);
 	Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
 
-	final OutputStream outputStream = httpServletResponse.getOutputStream();
-
-	if (payload.equals(ICalStudentTimeTable.calculatePayload("syncClasses", registration, user))) {
-	    if (user.getPrivateKeyValidity().isBeforeNow()) {
-		throw new DocumentException("private.key.validity.expired");
-	    } else {
-		if (user.getPerson().hasRole(RoleType.STUDENT)) {
-		    Calendar calendar = getClassCalendar(registration,user.getPrivateKeyValidity(), request);
-		    outputStream.write(calendar.toString().getBytes());
+	if (user.getPrivateKeyValidity() != null) {
+	    if (payload.equals(ICalStudentTimeTable.calculatePayload("syncClasses", registration, user))) {
+		if (user.getPrivateKeyValidity().isBeforeNow()) {
+		    throw new DocumentException("private.key.validity.expired");
 		} else {
-		    throw new DocumentException("user.is.not.student");
+		    if (user.getPerson().hasRole(RoleType.STUDENT)) {
+			encodeAndTransmitResponse(httpServletResponse, getClassCalendar(registration, user
+				.getPrivateKeyValidity(), request));
+		    } else {
+			throw new DocumentException("user.is.not.student");
+		    }
 		}
+	    } else {
+		throw new DocumentException("payload.checksum.doesnt.match");
 	    }
 	} else {
-	    throw new DocumentException("payload.checksum.doesnt.match");
+	    throw new DocumentException("key.not.found");
 	}
 	return null;
     }
-    
+
     public ActionForward syncExams(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    final HttpServletResponse httpServletResponse) throws Exception {
 	String userId = request.getParameter("user");
@@ -157,28 +162,36 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	if (userId == null || payload == null || regId == null) {
 	    throw new DocumentException("error.expecting.parameter.not.found");
 	}
+
 	User user = User.readUserByUserUId(userId);
 	Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
 
-	final OutputStream outputStream = httpServletResponse.getOutputStream();
-
-	if (payload.equals(ICalStudentTimeTable.calculatePayload("syncExams", registration, user))) {
-	    if (user.getPrivateKeyValidity().isBeforeNow()) {
-		throw new DocumentException("private.key.validity.expired");
-	    } else {
-		if (user.getPerson().hasRole(RoleType.STUDENT)) {
-		    Calendar calendar = getExamsCalendar(registration,user.getPrivateKeyValidity(), request);
-		    outputStream.write(calendar.toString().getBytes());
+	if (user.getPrivateKeyValidity() != null) {
+	    if (payload.equals(ICalStudentTimeTable.calculatePayload("syncExams", registration, user))) {
+		if (user.getPrivateKeyValidity().isBeforeNow()) {
+		    throw new DocumentException("private.key.validity.expired");
 		} else {
-		    throw new DocumentException("user.is.not.student");
+		    if (user.getPerson().hasRole(RoleType.STUDENT)) {
+			encodeAndTransmitResponse(httpServletResponse, getExamsCalendar(registration, user
+				.getPrivateKeyValidity(), request));
+		    } else {
+			throw new DocumentException("user.is.not.student");
+		    }
 		}
+	    } else {
+		throw new DocumentException("payload.checksum.doesnt.match");
 	    }
 	} else {
-	    throw new DocumentException("payload.checksum.doesnt.match");
+	    throw new DocumentException("key.not.found");
 	}
 	return null;
     }
 
-    
-    
+    private void encodeAndTransmitResponse(HttpServletResponse httpServletResponse, Calendar calendar) throws Exception {
+	httpServletResponse.setHeader("Content-Type", "text/calendar; charset=utf-8");
+
+	final OutputStream outputStream = httpServletResponse.getOutputStream();
+	outputStream.write(calendar.toString().getBytes("UTF-8"));
+	outputStream.close();
+    }
 }
