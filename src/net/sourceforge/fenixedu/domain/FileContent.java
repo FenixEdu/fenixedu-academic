@@ -17,14 +17,17 @@ public class FileContent extends FileContent_Base {
     public FileContent(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
 	    String checksumAlgorithm, Integer size, String externalStorageIdentification, Group permittedGroup) {
 	this(attachment);
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
+	init(filename, processDisplayName(displayName), mimeType, checksum, checksumAlgorithm, size,
+		externalStorageIdentification, permittedGroup);
     }
 
     public FileContent(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
 	    Integer size, String externalStorageIdentification, Group permittedGroup) {
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
+	init(filename, processDisplayName(displayName), mimeType, checksum, checksumAlgorithm, size,
+		externalStorageIdentification, permittedGroup);
     }
 
+    @Override
     public void delete() {
 	Attachment attachment = getAttachment();
 	if (attachment != null) {
@@ -55,4 +58,12 @@ public class FileContent extends FileContent_Base {
 	return getAttachment().getSite();
     }
 
+    private String processDisplayName(String name) {
+	return name.replace('\\', '-').replace('/', '-');
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+	super.setDisplayName(processDisplayName(displayName));
+    }
 }

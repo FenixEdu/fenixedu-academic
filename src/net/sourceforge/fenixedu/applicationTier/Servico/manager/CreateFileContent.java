@@ -38,9 +38,9 @@ public class CreateFileContent extends FileContentService {
 
 	checkSiteQuota(site, fileDescriptor.getSize());
 
-	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
-		.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
+		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
+			.getUniqueId(), permittedGroup);
 
 	container.addFile(fileContent);
     }
