@@ -1500,20 +1500,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private List<ExecutionCourse> readExecutionCourses() throws FenixFilterException, FenixServiceException {
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(this.getSelectedExecutionDegreeID());
-	// final Object args[] = {
-	// executionDegree.getDegreeCurricularPlan().getIdInternal(),
-	// this.getExecutionPeriodID(),
-	// this.getSelectedCurricularYearID() };
-	// List<ExecutionCourse> executionCourses = new
-	// ArrayList<ExecutionCourse>(
-	// (List<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
-	// "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear"
-	// , args));
 	final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	executionCourses.addAll(ExecutionCourse.filterByAcademicIntervalAndDegreeCurricularPlanAndCurricularYearAndName(
-		getAcademicIntervalFromParameter(getAcademicInterval()), getExecutionDegree().getDegreeCurricularPlan(),
+		getAcademicIntervalFromParameter(getAcademicInterval()), executionDegree.getDegreeCurricularPlan(),
 		rootDomainObject.readCurricularYearByOID(curricularYearID), "%"));
-
 	Collections.sort(executionCourses, new BeanComparator("sigla"));
 	return executionCourses;
     }
