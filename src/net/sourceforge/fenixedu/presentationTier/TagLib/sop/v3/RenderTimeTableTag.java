@@ -55,8 +55,6 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private String endTime = "";
 
-    private final Integer startTimeTableHour = new Integer(8);
-
     private Integer endTimeTableHour = new Integer(24);
 
     private final Integer slotSizeMinutes = new Integer(30);
@@ -65,7 +63,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
     private ColorPicker colorPicker;
 
-    // Nome do atributo que contém a lista de aulas.
+    // Nome do atributo que contï¿½m a lista de aulas.
     private String name;
 
     // Mensagens de erro.
@@ -96,9 +94,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
 	setLessonSlotRendererAndColorPicker();
 
+	Integer startTimeTableHour = new Integer(8);
+
 	List infoLessonList = null;
 	try {
 	    infoLessonList = (ArrayList) pageContext.findAttribute(name);
+	    if (hasLessonBefore8(infoLessonList)) {
+		startTimeTableHour = new Integer(0);
+	    }
 	} catch (ClassCastException e) {
 	    e.printStackTrace();
 	    infoLessonList = null;
@@ -106,13 +109,13 @@ public final class RenderTimeTableTag extends TagSupport {
 	if (infoLessonList == null)
 	    throw new JspException(messages.getMessage("gerarHorario.listaAulas.naoExiste", name));
 
-	// Gera o horário a partir da lista de aulas.
+	// Gera o horï¿½rio a partir da lista de aulas.
 	Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
 	JspWriter writer = pageContext.getOut();
-	TimeTable timeTable = generateTimeTable(infoLessonList, locale, pageContext);
+	TimeTable timeTable = generateTimeTable(infoLessonList, locale, pageContext, startTimeTableHour);
 
 	TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer, this.slotSizeMinutes,
-		this.startTimeTableHour, this.endTimeTableHour, colorPicker);
+		startTimeTableHour, this.endTimeTableHour, colorPicker);
 
 	try {
 	    writer.print(renderer.render(locale, pageContext, getDefinedWidth()));
@@ -123,17 +126,27 @@ public final class RenderTimeTableTag extends TagSupport {
 	return (SKIP_BODY);
     }
 
+    private boolean hasLessonBefore8(final List<InfoShowOccupation> infoLessonList) {
+	for (final InfoShowOccupation infoShowOccupation : infoLessonList) {
+	    if (infoShowOccupation.getInicio().get(Calendar.HOUR_OF_DAY) < 8) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     /**
      * Method generateTimeTable.
+     * @param startTimeTableHour 
      * 
      * @param listaAulas
      * @return TimeTable
      */
-    private TimeTable generateTimeTable(List lessonList, Locale locale, PageContext pageContext) {
+    private TimeTable generateTimeTable(List lessonList, Locale locale, PageContext pageContext, Integer startTimeTableHour) {
 
 	Calendar calendar = Calendar.getInstance();
 
-	calendar.set(Calendar.HOUR_OF_DAY, this.startTimeTableHour.intValue());
+	calendar.set(Calendar.HOUR_OF_DAY, startTimeTableHour.intValue());
 	calendar.set(Calendar.MINUTE, 0);
 
 	Integer numberOfDays = new Integer(6);
