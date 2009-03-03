@@ -802,6 +802,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
     }
 
+    // couldn't find a smarter way to conver ymdhms to DateTiem
+    private DateTime convertTimes(YearMonthDay yearMonthDay, HourMinuteSecond hourMinuteSecond) {
+	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), hourMinuteSecond
+		.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
+    }
+
     protected List<EventBean> getAllEvents(String description, Registration registration, String scheme, String serverName,
 	    int serverPort) {
 	List<EventBean> result = new ArrayList<EventBean>();
@@ -824,10 +830,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
 	if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
-	    DateTime enrollmentBegin = this.getEnrollmentBeginDayDateYearMonthDay().toDateTime(
-		    new TimeOfDay(this.getEnrollmentBeginTimeDateHourMinuteSecond().getChronology()));
-	    DateTime enrollmentEnd = this.getEnrollmentEndDayDateYearMonthDay().toDateTime(
-		    new TimeOfDay(this.getEnrollmentEndTimeDateHourMinuteSecond().getChronology()));
+	    DateTime enrollmentBegin = convertTimes(this.getEnrollmentBeginDayDateYearMonthDay(),
+		    this.getEnrollmentBeginTimeDateHourMinuteSecond());
+	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(),
+		    this.getEnrollmentEndTimeDateHourMinuteSecond());
 
 	    result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
 		    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
