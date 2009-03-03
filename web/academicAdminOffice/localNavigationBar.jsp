@@ -2,9 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="org.joda.time.YearMonthDay"%>
-
-<html:xhtml/>
+<%@page import="org.joda.time.LocalDate"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
@@ -30,7 +28,7 @@
 		    if (serviceRequestYear == null) {
 				serviceRequestYear = (String) request.getAttribute("serviceRequestYear");
 				if (serviceRequestYear == null) {
-					serviceRequestYear = String.valueOf(new YearMonthDay().year().get());
+					serviceRequestYear = String.valueOf(new LocalDate().getYear());
 				}
 		    }
 		%>
@@ -75,12 +73,10 @@
 		<li><html:link page="/caseHandlingDegreeTransferCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeTransfer" bundle="APPLICATION_RESOURCES"/></html:link></li>
  		<li><html:link page="/caseHandlingStandaloneCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.standalone" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</ul>
-	
-	<%--
+
 	<ul>
 		<li class="navheader"><bean:message key="label.documents" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/generatedDocuments.do?method=prepareSearchPerson"><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
-	--%>
 
 </logic:present>
