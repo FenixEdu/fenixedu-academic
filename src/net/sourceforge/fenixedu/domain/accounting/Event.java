@@ -348,7 +348,7 @@ public abstract class Event extends Event_Base {
 		    "error.accounting.Event.cannot.calculate.max.deductable.amount.for.legal.taxes.on.invalid.events");
 	}
 
-	if (isOpen()) {
+	if (isOpen() || !hasEventCloseDate()) {
 	    return calculatePayedAmountByPersonFor(civilYear);
 	}
 
