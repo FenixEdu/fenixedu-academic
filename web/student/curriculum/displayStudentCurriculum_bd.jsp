@@ -198,7 +198,7 @@
 			</p>
 		</div>
 
-			<fr:edit name="studentCurricularPlan" nested="true">
+		<fr:edit name="studentCurricularPlan" nested="true">
 			<fr:layout>
 					<fr:property name="organizedBy" value="<%=organizedBy.toString()%>" />
 					<fr:property name="enrolmentStateFilter" value="<%=enrolmentStateFilterType.toString()%>" />
