@@ -1,14 +1,21 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
@@ -110,6 +117,24 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     @Override
     public Boolean getInitialAnnouncementsApprovedState() {
 	return true;
+    }
+
+    public String getSite() {
+	return null;
+    }
+
+    public String getSiteParamForAnnouncementBoard(Announcement announcement) {
+	String base = super.getSiteParamForAnnouncementBoard(announcement);
+
+	StringBuffer actionPath = new StringBuffer();
+	ExecutionCourse executionCourse = this.getExecutionCourse();
+
+	actionPath.append("&executionCourseID=" + executionCourse.getIdInternal());
+	actionPath.append("&");
+	actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	actionPath.append("=");
+	actionPath.append(executionCourse.getSite().getReversePath());
+	return base + actionPath.toString();
     }
 
 }

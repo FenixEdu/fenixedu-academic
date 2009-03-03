@@ -121,13 +121,13 @@ public class AnnouncementRSS extends RSSAction {
     }
 
     private String getEntryLink(HttpServletRequest request, Announcement announcement) throws FenixActionException {
+	return getBaseUrl(request, announcement) + announcement.getAnnouncementBoard().getSiteParamForAnnouncementBoard(announcement);
+    }
+
+    public String getBaseUrl(HttpServletRequest request, Announcement announcement) {
 
 	StringBuilder actionPath = new StringBuilder(getDirectAnnouncementBaseUrl(request, announcement));
 
-	if (actionPath == null) {
-	    return null;
-	}
-	String result = null;
 	String scheme = request.getScheme();
 	int serverPort = request.getServerPort();
 	String serverName = request.getServerName();
@@ -138,30 +138,9 @@ public class AnnouncementRSS extends RSSAction {
 	    actionPath.append("?");
 	}
 
-	actionPath.append("&announcementId=");
-	actionPath.append(announcement.getIdInternal());
-	AnnouncementBoard announcementBoard = announcement.getAnnouncementBoard();
-
-	if (announcementBoard instanceof ExecutionCourseAnnouncementBoard) {
-	    ExecutionCourseAnnouncementBoard executionCourseAnnouncementBoard = (ExecutionCourseAnnouncementBoard) announcementBoard;
-	    ExecutionCourse executionCourse = executionCourseAnnouncementBoard.getExecutionCourse();
-
-	    actionPath.append("&executionCourseID=" + executionCourse.getIdInternal());
-	    actionPath.append("&");
-	    actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-	    actionPath.append("=");
-	    actionPath.append(executionCourse.getSite().getReversePath());
-	}
-	try {
-	    URL url = new URL(scheme, serverName, serverPort, context + actionPath.toString());
-	    result = url.toString();
-	} catch (MalformedURLException e) {
-	    throw new FenixActionException(e);
-	}
-
-	return result;
+	return  scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443)? "" : ":"+serverPort) + context +  actionPath.toString();
     }
-
+    
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {
 	return "/publico/announcementManagement.do?method=viewAnnouncement";
     }

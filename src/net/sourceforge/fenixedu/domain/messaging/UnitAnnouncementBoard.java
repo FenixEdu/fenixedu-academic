@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
 
@@ -46,9 +47,21 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
     public Unit getUnit() {
 	return getParty();
     }
-
+    
     @Override
     public Boolean getInitialAnnouncementsApprovedState() {
 	return isCurrentUserApprover();
+    }
+    
+    public String getSiteParamForAnnouncementBoard(Announcement announcement){
+	String base = super.getSiteParamForAnnouncementBoard(announcement);
+	
+	StringBuffer actionPath = new StringBuffer();
+	actionPath.append("&");
+	actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	actionPath.append("=");
+	actionPath.append(this.getUnit().getSite().getReversePath());
+
+	return base + actionPath.toString();
     }
 }

@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -419,6 +421,16 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public Boolean getInitialAnnouncementsApprovedState() {
 	return false;
+    }
+    
+    public String getSiteParamForAnnouncementBoard(Announcement announcement){
+	
+	StringBuffer actionPath = new StringBuffer();
+	actionPath.append("&announcementId=");
+	actionPath.append(announcement.getIdInternal());
+	AnnouncementBoard announcementBoard = announcement.getAnnouncementBoard();
+
+	return actionPath.toString();
     }
 
 }
