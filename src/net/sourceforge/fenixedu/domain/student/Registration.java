@@ -2314,6 +2314,10 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
+    final public boolean hasStateType(final ExecutionSemester executionSemester, final RegistrationStateType registrationStateType) {
+	return getRegistrationStatesTypes(executionSemester).contains(registrationStateType);
+    }
+    
     final public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
 	return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
     }
