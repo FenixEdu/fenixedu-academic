@@ -57,7 +57,12 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 	    
 	    return forwardToShow(registration, mapping, request);    
 	}else{
-	    return forwardToShow(((RegistrationsBean) getRenderedObject("bean")).getSelected(), mapping, request);
+	    if (((RegistrationsBean) getRenderedObject("bean")).getSelected() != null){
+		return forwardToShow(((RegistrationsBean) getRenderedObject("bean")).getSelected(), mapping, request);
+	    }else{
+		return prepare(mapping, form, request, response);
+	    }
+	    
 	}
 	
     }
