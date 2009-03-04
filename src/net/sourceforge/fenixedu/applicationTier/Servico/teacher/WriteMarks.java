@@ -13,7 +13,9 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -66,7 +68,8 @@ public class WriteMarks {
 
 	final List<Attends> activeAttends = new ArrayList<Attends>(2);
 	for (final Attends attend : executionCourse.getAttends()) {
-	    if (attend.getRegistration().getNumber().equals(studentNumber) && isActive(attend)) {
+	    if (attend.getRegistration().getNumber().equals(studentNumber)
+		    && (isActive(attend) || belongsToActiveExternalCycle(attend))) {
 		activeAttends.add(attend);
 	    }
 	}
@@ -82,6 +85,17 @@ public class WriteMarks {
 	}
 
 	return null;
+    }
+
+    private static boolean belongsToActiveExternalCycle(final Attends attend) {
+	if (attend.hasEnrolment()) {
+	    final CycleCurriculumGroup cycle = attend.getEnrolment().getParentCycleCurriculumGroup();
+	    if (cycle != null && cycle.isExternal()) {
+		final Student student = attend.getRegistration().getStudent();
+		return student.getActiveRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()) != null;
+	    }
+	}
+	return false;
     }
 
     private static boolean isActive(final Attends attends) {
