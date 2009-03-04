@@ -288,4 +288,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return getDegreeModule().getDefaultEcts(executionYear);
     }
 
+    @Override
+    public CycleCurriculumGroup getParentCycleCurriculumGroup() {
+        return this;
+    }
 }
