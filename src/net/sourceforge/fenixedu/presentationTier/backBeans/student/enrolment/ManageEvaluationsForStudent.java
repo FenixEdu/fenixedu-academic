@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -59,7 +60,12 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
 	this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
 
 	final String evaluationType = getEvaluationTypeString();
-	for (final Registration registration : getStudent().getStudent().getActiveRegistrationsIn(getExecutionPeriod())) {
+	for (final Registration registration : getStudent().getStudent().getRegistrations()) {
+	    
+	    if (!registration.hasStateType(getExecutionPeriod(), RegistrationStateType.REGISTERED)) {
+		continue;
+	    }
+	    
 	    for (final WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(getExecutionPeriod())) {
 		if (writtenEvaluation instanceof Exam) {
 		    final Exam exam = (Exam) writtenEvaluation;
