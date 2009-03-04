@@ -41,3 +41,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop old Photograph Contents" dropOldPhotographContent.sql
