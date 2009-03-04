@@ -162,7 +162,6 @@ public class SeparationCyclesManagement {
 
 	for (final Attends attend : attends) {
 	    if (!newStudentCurricularPlan.getRegistration().attends(attend.getExecutionCourse())) {
-		changeShifts(attend, oldStudentCurricularPlan, newStudentCurricularPlan);
 		attend.setRegistration(newStudentCurricularPlan.getRegistration());
 	    }
 	}
@@ -329,7 +328,6 @@ public class SeparationCyclesManagement {
 
 	for (final Attends attend : enrolment.getAttends()) {
 	    if (!registration.attends(attend.getExecutionCourse())) {
-		changeShifts(attend, oldStudentCurricularPlan, parent.getStudentCurricularPlan());
 		attend.setRegistration(registration);
 	    }
 	}
