@@ -367,37 +367,7 @@
 	</definition>
 	
 	<!-- End: Bolonha Student Enrolment -->
-	
-    <definition name="thesis-notFound" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/notFound.jsp"/>
-    </definition>
-    <definition name="thesis-showState" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/showState.jsp"/>
-    </definition>
-    <definition name="thesis-showUnavailable" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/showUnavailable.jsp"/>
-    </definition>
-    <definition name="thesis-submit" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/submit.jsp"/>
-    </definition>
-    <definition name="thesis-edit-abstract" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/editAbstract.jsp"/>
-    </definition>
-    <definition name="thesis-edit-keywords" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/editKeywords.jsp"/>
-    </definition>
-    <definition name="thesis-declaration" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/declaration.jsp"/>
-    </definition>
-    <definition name="thesis-declaration-view" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/viewDeclaration.jsp"/>
-    </definition>
-    <definition name="thesis-upload-dissertation" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/uploadDissertation.jsp"/>
-    </definition>
-    <definition name="thesis-upload-abstract" extends="definition.student.masterPage">
-        <put name="body" value="/student/thesis/uploadAbstract.jsp"/>
-    </definition>
+
     
     <!-- Begin: Bolonha Transition Management -->
 	<definition name="transition.bolonha.chooseRegistration" extends="definition.student.masterPage">

@@ -19,8 +19,22 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+@Mapping(path = "/thesisSubmission", module = "student")
+@Forwards( { @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp"),
+	@Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp"),
+	@Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp"),
+	@Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp"),
+	@Forward(name = "thesis-edit-abstract", path = "/student/thesis/editAbstract.jsp"),
+	@Forward(name = "thesis-edit-keywords", path = "/student/thesis/editKeywords.jsp"),
+	@Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp"),
+	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
+	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
+	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp") })
 public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public Student getStudent(HttpServletRequest request) {
