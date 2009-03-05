@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 <%@page import="pt.ist.fenixWebFramework.security.UserView"%>
 <html:xhtml/>
@@ -162,14 +163,12 @@
         <bean:message key="label.site.title"/>
     </li>
     <li>
-        <bean:define id="unitId" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.idInternal"/>
-        <html:link page="<%= "/department/departmentSite.do?method=presentation&amp;selectedDepartmentUnitID=" + unitId %>" module="/publico" target="_blank">
+        <bean:define id="site" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.site"/>
+        <app:contentLink name="site">
             <bean:message key="link.site.department.view"/>
-        </html:link>
+        </app:contentLink>
     </li>
     
-    <bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
-    <bean:define id="site" name="person" property="employee.currentDepartmentWorkingPlace.departmentUnit.site" type="net.sourceforge.fenixedu.domain.UnitSite"/>
     <bean:define id="siteId" name="site" property="idInternal"/>
     
     <li>
