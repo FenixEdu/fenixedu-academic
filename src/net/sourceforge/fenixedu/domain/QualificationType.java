@@ -88,4 +88,9 @@ public enum QualificationType {
 	}
 	return types;
     }
+
+    public String getQualifiedName() {
+	return QualificationType.class.getSimpleName() + "." + name();
+    }
+
 }

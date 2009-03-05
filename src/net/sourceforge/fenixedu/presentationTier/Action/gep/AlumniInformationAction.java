@@ -115,7 +115,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 		"AREA_NEGOCIO", "POSICAO", "DATA_INICIO", "DATA_FIM", "TIPO_CONTRATO", "FORMA_COLOCACAO", "REMUN_MENSAL_BRUTA" });
 
 	final Spreadsheet formationData = new Spreadsheet("ALUMNI_FORMATION_DATA");
-	formationData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
+	formationData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
 		"AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS" });
 
 	String alumniName;
@@ -225,13 +225,13 @@ public class AlumniInformationAction extends FenixDispatchAction {
     }
 
     private void addFormationDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Formation formation) {
-	// "NOME", "NUMERO_ALUNO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
-	// "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS",
-	// "NUMERO_HORAS"
+	// "NOME", "NUMERO_ALUNO", "TIPO", "GRAU", "INSTITUICAO", "COD_AREA_EDUCATIVA",
+	// "AREA_EDUCATIVA", "INICIO", "CONCLUSAO", "CREDITOS_ECTS", "NUMERO_HORAS"
 	final Row row = sheet.addRow();
 	row.setCell(alumniName);
 	row.setCell(studentNumber);
 	row.setCell(eBundle.getString(formation.getFormationType().getQualifiedName()));
+	row.setCell(eBundle.getString(formation.getType().getQualifiedName()));
 	row.setCell(formation.getInstitution().getUnitName().getName());
 	row.setCell(formation.getEducationArea().getCode());
 	row.setCell(formation.getEducationArea().getDescription().replace(';', '|'));
