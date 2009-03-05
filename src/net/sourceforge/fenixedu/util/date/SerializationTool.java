@@ -25,24 +25,4 @@ public class SerializationTool {
 	}
 	return null;
     }
-
-    public static Object localDateSerialize(final LocalDate localDate) {
-	if (localDate != null) {
-	    final String dateString = String.format("%d-%02d-%02d", localDate.getYear(), localDate.getMonthOfYear(), localDate
-		    .getDayOfMonth());
-	    return dateString.length() != 10 ? null : dateString;
-	}
-	return null;
-    }
-
-    public static LocalDate localDateDeserialize(String string) {
-	if (!StringUtils.isEmpty(string)) {
-	    int year = Integer.parseInt(string.substring(0, 4));
-	    int month = Integer.parseInt(string.substring(5, 7));
-	    int day = Integer.parseInt(string.substring(8, 10));
-	    return year == 0 || month == 0 || day == 0 ? null : new LocalDate(year, month, day);
-	}
-	return null;
-    }
-
 }

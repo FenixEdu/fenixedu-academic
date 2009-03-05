@@ -12,58 +12,45 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProtocolAction implements Serializable {
 
-    private EnumSet<ProtocolActionType> procotolActionTypes;
+    private final EnumSet<ProtocolActionType> protocolActionTypes;
 
-    private String otherTypes;
+    private final String otherTypes;
 
-    public ProtocolAction(List<ProtocolActionType> procotolActionTypes, String otherTypes) {
+    public ProtocolAction(List<ProtocolActionType> protocolActionTypes, String otherTypes) {
 	EnumSet<ProtocolActionType> actionTypes = EnumSet.noneOf(ProtocolActionType.class);
-	for (ProtocolActionType actionType : procotolActionTypes) {
+	for (ProtocolActionType actionType : protocolActionTypes) {
 	    actionTypes.add(actionType);
 	}
-	setProcotolActionTypes(actionTypes);
-	setOtherTypes(otherTypes);
+	this.protocolActionTypes = actionTypes;
+	this.otherTypes = otherTypes;
     }
 
-    public ProtocolAction(EnumSet<ProtocolActionType> protocolsActionsTypes, String otherTypes) {
-	setProcotolActionTypes(protocolsActionsTypes);
-	setOtherTypes(otherTypes);
+    public ProtocolAction(EnumSet<ProtocolActionType> protocolActionTypes, String otherTypes) {
+	this.protocolActionTypes = protocolActionTypes;
+	this.otherTypes = otherTypes;
     }
 
     public String getOtherTypes() {
 	return otherTypes;
     }
 
-    public void setOtherTypes(String otherTypes) {
-	this.otherTypes = otherTypes;
-    }
-
-    public EnumSet<ProtocolActionType> getProcotolActionTypes() {
-	return procotolActionTypes;
-    }
-
-    public void setProcotolActionTypes(EnumSet<ProtocolActionType> procotolActionTypes) {
-	this.procotolActionTypes = procotolActionTypes;
+    public EnumSet<ProtocolActionType> getProtocolActionTypes() {
+	return protocolActionTypes;
     }
 
     public boolean contains(List<ProtocolActionType> protocolActionTypes) {
-	for (ProtocolActionType protocolActionType : protocolActionTypes) {
-	    if (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(protocolActionType)) {
-		return false;
-	    }
-	}
-	return true;
+        return getProtocolActionTypes().containsAll(protocolActionTypes);
     }
 
     public boolean contains(ProtocolActionType protocolActionType) {
-	return (getProcotolActionTypes() == null || !getProcotolActionTypes().contains(protocolActionType)) ? false : true;
+	return getProtocolActionTypes().contains(protocolActionType);
     }
 
     public String getText() {
 	StringBuilder stringBuilder = new StringBuilder();
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-	if (getProcotolActionTypes() != null) {
-	    Iterator<ProtocolActionType> iterator = getProcotolActionTypes().iterator();
+	if (getProtocolActionTypes() != null) {
+	    Iterator<ProtocolActionType> iterator = getProtocolActionTypes().iterator();
 	    while (iterator.hasNext()) {
 		ProtocolActionType protocolActionType = iterator.next();
 		stringBuilder.append(resourceBundle.getString(protocolActionType.name()));
@@ -79,5 +66,36 @@ public class ProtocolAction implements Serializable {
 	    stringBuilder.append(getOtherTypes());
 	}
 	return stringBuilder.toString();
+    }
+
+
+    private static final String protocolActionTypeSeparator = ",";
+    private static final String protocolActionStringSeparator = ";";
+
+    public String toString() {
+        StringBuilder dest = new StringBuilder();
+        for (ProtocolActionType protocolActionType : getProtocolActionTypes()) {
+            if (dest.length() != 0) {
+                dest.append(protocolActionTypeSeparator);
+            }
+            dest.append(protocolActionType.name());
+        }
+
+        dest.append(protocolActionStringSeparator);
+        if (!StringUtils.isEmpty(getOtherTypes())) {
+            dest.append(getOtherTypes());
+        }
+        return dest.toString();
+    }
+
+    public static ProtocolAction fromString(String extRep) {
+        String[] tokens = extRep.split(protocolActionStringSeparator, 2);
+        EnumSet<ProtocolActionType> protocolsActionsTypes = EnumSet.noneOf(ProtocolActionType.class);
+        for (String enumTokens : tokens[0].split(protocolActionTypeSeparator)) {
+            if (!StringUtils.isEmpty(enumTokens)) {
+                protocolsActionsTypes.add(ProtocolActionType.valueOf(enumTokens));
+            }
+        }
+        return new ProtocolAction(protocolsActionsTypes, tokens[1].length() != 0 ? tokens[1] : null);
     }
 }

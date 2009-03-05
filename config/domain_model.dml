@@ -3,20 +3,16 @@
  * 
  */
 
-package net.sourceforge.fenixedu.domain;
-
-
 /*
-*
-* External classes declarations
-*
-* The following declarations allow the DmlCompiler to recognize the classes in
-* the relations definitions. Remove each declaration once the corresponding 
-* class definition is included.
-* 
-*/
+ * The Fenix domain classes are all in the
+ * net.sourceforge.fenixedu.domain package or some sub-package of
+ * this package.
+ * 
+ * Note that this package declaration applies only to the
+ * entity-types.  Value types are not affected by this.
+ */
 
-// NONE
+package net.sourceforge.fenixedu.domain;
 
 
 /*
@@ -177,59 +173,346 @@ enum pt.utl.ist.fenix.tools.util.i18n.Language                                  
  * Value types that need special externalization
  */
 
-valueType java.math.BigDecimal                                                                                       as BigDecimal;
-valueType java.util.UUID                                                                                             as UUID;
-valueType net.sourceforge.fenixedu.domain.Grade                                                                      as Grade;
-valueType net.sourceforge.fenixedu.domain.accessControl.Group                                                        as Group;
-valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                                     as WorkWeek;
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList                                             as PartialList;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences                                    as BibliographicReferences;
-valueType net.sourceforge.fenixedu.domain.organizationalStructure.ResearchFunctionType                               as ResearchFunctionType;
-valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction                                              as ProtocolAction;
-valueType net.sourceforge.fenixedu.domain.tests.TestsGrade                                                           as TestsGrade;
-valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer                                               as ConcreteAnswer;
-valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate                                                 as Predicate;
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval                                    as AcademicInterval;
-valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod                                      as AcademicPeriod;
-valueType net.sourceforge.fenixedu.domain.util.EmailAddressList                                                      as EmailAddressList;
-valueType net.sourceforge.fenixedu.util.ByteArray                                                                    as ByteArray;
-valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                                               as CurricularCourseExecutionScope;
-valueType net.sourceforge.fenixedu.util.DiaSemana                                                                    as DiaSemana;
-valueType net.sourceforge.fenixedu.util.EnrolmentAction                                                              as EnrolmentAction;
-valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                                     as EnrolmentEvaluationState;
-valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                                                     as EnrolmentGroupPolicyType;
-valueType net.sourceforge.fenixedu.util.EntryPhase                                                                   as EntryPhase;
-valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                                                as FinalDegreeWorkProposalStatus;
-valueType net.sourceforge.fenixedu.util.HourMinuteSecond                                                             as HourMinuteSecond;
-valueType net.sourceforge.fenixedu.util.MarkType                                                                     as MarkType;
-valueType net.sourceforge.fenixedu.util.Money                                                                        as Money;
-valueType net.sourceforge.fenixedu.util.OldPublicationType                                                           as OldPublicationType;
-valueType net.sourceforge.fenixedu.util.OrientationType                                                              as OrientationType;
-valueType net.sourceforge.fenixedu.util.PeriodState                                                                  as PeriodState;
-valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                                     as PeriodToApplyRestriction;
-valueType net.sourceforge.fenixedu.util.ProposalState                                                                as ProposalState;
-valueType net.sourceforge.fenixedu.util.ProviderRegimeType                                                           as ProviderRegimeType;
-valueType net.sourceforge.fenixedu.util.PublicationArea                                                              as PublicationArea;
-valueType net.sourceforge.fenixedu.util.PublicationType                                                              as PublicationType;
-valueType net.sourceforge.fenixedu.util.Season                                                                       as Season;
-valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                                              as SecretaryEnrolmentStudentReason;
-valueType net.sourceforge.fenixedu.util.SituationName                                                                as SituationName;
-valueType net.sourceforge.fenixedu.util.State                                                                        as State;
-valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability                                                 as CorrectionAvailability;
-valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula                                                      as CorrectionFormula;
-valueType net.sourceforge.fenixedu.util.tests.Response                                                               as Response;
-valueType net.sourceforge.fenixedu.util.tests.TestType                                                               as TestType;
-valueType org.joda.time.DateTime                                                                                     as DateTime;
-valueType org.joda.time.Duration                                                                                     as Duration;
-valueType org.joda.time.LocalDate                                                                                    as LocalDate;
-valueType org.joda.time.LocalTime                                                                                    as LocalTime;
-valueType org.joda.time.Partial                                                                                      as Partial;
-valueType org.joda.time.Period                                                                                       as Period;
-valueType org.joda.time.TimeOfDay                                                                                    as TimeOfDay;
-valueType org.joda.time.YearMonthDay                                                                                 as YearMonthDay;
-valueType pt.utl.ist.fenix.tools.file.FileSetMetaData                                                                as FileSetMetaData;
-valueType pt.utl.ist.fenix.tools.file.VirtualPath                                                                    as VirtualPath;
-valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString                                                       as MultiLanguageString;
+valueType java.math.BigDecimal as BigDecimal {
+    externalizeWith {
+        String toString();
+    }
+}
+
+valueType java.util.UUID as UUID {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith fromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.Grade as Grade {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.accessControl.Group as Group {
+    externalizeWith {
+        String getExpression();
+    }
+
+    internalizeWith fromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek as WorkWeek {
+    externalizeWith {
+        String net.sourceforge.fenixedu.domain.assiduousness.Externalization.externalizeWorkWeek();
+    }
+
+    internalizeWith net.sourceforge.fenixedu.domain.assiduousness.Externalization.internalizeWorkWeek();
+}
+
+valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList as PartialList {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
+    externalizeWith {
+        String net.sourceforge.fenixedu.domain.degreeStructure.Externalization.externalizeBibliographicReferences();
+    }
+
+    internalizeWith net.sourceforge.fenixedu.domain.degreeStructure.Externalization.internalizeBibliographicReferences();
+}
+
+valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction as ProtocolAction {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith fromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.tests.TestsGrade as TestsGrade {
+    externalizeWith {
+        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+    }
+
+    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+}
+
+valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer as ConcreteAnswer {
+    externalizeWith {
+        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+    }
+
+    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+}
+
+valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate as Predicate {
+    externalizeWith {
+        bytearray pt.ist.fenixframework.Externalization.externalizeSerializableGZiped();
+    }
+
+    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializableGZiped();
+}
+
+valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
+    externalizeWith {
+        String getRepresentationInStringFormat();
+    }
+
+    internalizeWith getAcademicIntervalFromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod as AcademicPeriod {
+    externalizeWith {
+        String getRepresentationInStringFormat();
+    }
+
+    internalizeWith getAcademicPeriodFromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressList {
+    externalizeWith {
+        String toString();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.ByteArray as ByteArray {
+    externalizeWith {
+        bytearray getBytes();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope {
+    externalizeWith {
+        Integer getType();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana {
+    externalizeWith {
+        Integer getDiaSemana();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.EnrolmentAction as EnrolmentAction {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEvaluationState {
+    externalizeWith {
+        Integer getState();
+    }
+
+    internalizeWith valueOf();
+}
+
+valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType {
+    externalizeWith {
+        Integer getType();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase {
+    externalizeWith {
+        Integer getEntryPhase();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus {
+    externalizeWith {
+        Integer getStatus();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.HourMinuteSecond as HourMinuteSecond {
+    externalizeWith {
+        LocalTime toLocalTime();
+    }
+
+    internalizeWith fromLocalTime();
+}
+
+valueType net.sourceforge.fenixedu.util.MarkType as MarkType {
+    externalizeWith {
+        Integer getType();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.Money as Money {
+    externalizeWith {
+        String toString();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.OldPublicationType as OldPublicationType {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.OrientationType as OrientationType {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
+    externalizeWith {
+        String getStateCode();
+    }
+
+    internalizeWith valueOf();
+}
+
+valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction as PeriodToApplyRestriction {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
+    externalizeWith {
+        Integer getState();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.ProviderRegimeType as ProviderRegimeType {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.PublicationArea as PublicationArea {
+    externalizeWith {
+        String getName();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.PublicationType as PublicationType {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.Season as Season {
+    externalizeWith {
+        Integer getseason();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason as SecretaryEnrolmentStudentReason {
+    externalizeWith {
+        int getValue();
+    }
+
+    internalizeWith getEnum();
+}
+
+valueType net.sourceforge.fenixedu.util.SituationName as SituationName {
+    externalizeWith {
+        Integer getSituationName();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.State as State {
+    externalizeWith {
+        Integer getState();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.tests.CorrectionAvailability as CorrectionAvailability {
+    externalizeWith {
+        Integer getAvailability();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.tests.CorrectionFormula as CorrectionFormula {
+    externalizeWith {
+        Integer getFormula();
+    }
+}
+
+valueType net.sourceforge.fenixedu.util.tests.Response as Response {
+    externalizeWith {
+        String net.sourceforge.fenixedu.util.tests.ResponseExternalization.externalize();
+    }
+
+    internalizeWith net.sourceforge.fenixedu.util.tests.ResponseExternalization.internalize();
+}
+
+valueType net.sourceforge.fenixedu.util.tests.TestType as TestType {
+    externalizeWith {
+        Integer getType();
+    }
+}
+
+valueType org.joda.time.Duration as Duration {
+    externalizeWith {
+        long getMillis();
+    }
+}
+
+valueType org.joda.time.Period as Period {
+    externalizeWith {
+        bytearray pt.ist.fenixframework.Externalization.externalizeSerializable();
+    }
+
+    internalizeWith pt.ist.fenixframework.Externalization.internalizeSerializable();
+}
+
+valueType org.joda.time.YearMonthDay as YearMonthDay {
+    externalizeWith {
+        String net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDaySerialize();
+    }
+
+    internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDayDeserialize();
+}
+
+valueType pt.utl.ist.fenix.tools.file.FileSetMetaData as FileSetMetaData {
+    externalizeWith {
+        String toXMLString();
+    }
+
+    internalizeWith buildFromXMLString();
+}
+
+valueType pt.utl.ist.fenix.tools.file.VirtualPath as VirtualPath {
+    externalizeWith {
+        String toXMLString();
+    }
+
+    internalizeWith buildFromXMLString();
+}
+
+valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageString {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
+}
+
 
 /*
 *

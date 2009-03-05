@@ -130,7 +130,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	setProtocolHistories(protocol.getProtocolHistories());
 	setProtocolAction(protocol.getProtocolAction());
 	setOtherActionTypes(protocol.getProtocolAction().getOtherTypes());
-	setActionTypes(protocol.getProtocolAction().getProcotolActionTypes());
+	setActionTypes(protocol.getProtocolAction().getProtocolActionTypes());
 	setScientificAreas(protocol.getScientificAreas());
 	setResponsiblesList(protocol.getResponsibles());
 	setResponsibleFunctions(protocol.getResponsibleFunctions());
@@ -168,10 +168,10 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	}
     }
 
-    private void setActionTypes(EnumSet<ProtocolActionType> procotolActionTypes) {
-	if (procotolActionTypes != null) {
+    private void setActionTypes(EnumSet<ProtocolActionType> protocolActionTypes) {
+	if (protocolActionTypes != null) {
 	    ArrayList<ProtocolActionType> actionsTypesList = new ArrayList<ProtocolActionType>();
-	    for (ProtocolActionType actionType : procotolActionTypes) {
+	    for (ProtocolActionType actionType : protocolActionTypes) {
 		actionsTypesList.add(actionType);
 	    }
 	    setActionTypes(actionsTypesList);

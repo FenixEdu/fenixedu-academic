@@ -33,12 +33,14 @@
 	<property name="dml.fenix.sqltypes" value="${config}/dataTypesJDBCTypes.properties"/>
 	<property name="dml.fenix.typeconverters" value="${config}/dataTypeConversors.properties"/>
 
-	  <path id="classpath.analysis">
-	    <pathelement path="${build.home.temp.classes}"/>
-	    <fileset dir="${lib}">
-	      <include name="**/*.jar"/>
-	    </fileset>
-	  </path>
+        <import file="dml-generate.xml"/>
+
+        <path id="classpath.analysis">
+          <pathelement path="${build.home.temp.classes}"/>
+          <fileset dir="${lib}">
+            <include name="**/*.jar"/>
+          </fileset>
+        </path>
 
 	<path id="class.path.lib.ref">
         <fileset dir="${lib}">
@@ -53,21 +55,9 @@
 	                description="Generate java code from a DML file">
 		<echo message="Processing ${dml.definition.file.completed} ..."/>
 		<delete dir="${src_gen}"/>
-		<mkdir dir="${src_gen}"/>
-		<java classname="dml.DmlCompiler" fork="true">
-                        <jvmarg value="-Ddml.fenix.sqltypes=${dml.fenix.sqltypes}"/>
-                        <jvmarg value="-Ddml.fenix.typeconverters=${dml.fenix.typeconverters}"/>
-			<arg value="-f"/>
-			<arg value="-d"/>
-			<arg value="${src}"/>
-			<arg value="-db"/>
-			<arg value="${src_gen}"/>
-<!--			<arg value="-gf"/>-->
-			<arg value="-generator"/>
-			<arg value="dml.FenixCodeGeneratorReadFromRsIntReader"/>
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath refid="class.path.lib.ref"/>
-		</java>
+                <dml-compile dml="${dml.definition.file.completed}" java-sources="${src}" java-gen="${src_gen}">
+                  <classpath refid="class.path.lib.ref"/>
+		</dml-compile>
 		<echo level="info" message="Processing of ${dml.definition.file.completed} finished."/>
 	</target>
 
@@ -211,29 +201,6 @@
 		</java>
     </target>	
 		
-	<target name="checkConversors"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.CheckOJBConversors" fork="true">
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
-	
-	<target name="checkConversors-debug"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.CheckOJBConversors" fork="true"
-			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
-		>
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
 	
     <target name="generateDeprecatedDateGettersAndSetters" >
 		<java classname="pt.utl.ist.fenix.tools.codeGenerator.DeprecatedDatesGettersAndSettersGenerator" fork="true">

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.persistenceTier.Conversores.Group2StringConverter;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -142,7 +141,7 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 	    expression = new String(encodeHex);
 	}
 
-	Group groupToAddOrRemove = (Group) new Group2StringConverter().sqlToJava(expression);
+	Group groupToAddOrRemove = Group.fromString(expression);
 
 	Set<Person> elementsToAddOrRemove = groupToAddOrRemove.getElements();
 	Group existentGroup = null, newGroupUnion = null;

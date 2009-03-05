@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.persistenceTier.Conversores.Group2StringConverter;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -677,7 +676,7 @@ public abstract class Space extends Space_Base {
 	    expression = new String(encodeHex);
 	}
 
-	Group groupToAddOrRemove = (Group) new Group2StringConverter().sqlToJava(expression);
+	Group groupToAddOrRemove = Group.fromString(expression);
 
 	Set<Person> elementsToAddOrRemove = null;
 	Group existentGroup = null, newGroupUnion = null;

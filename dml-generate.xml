@@ -1,0 +1,24 @@
+<project>
+  <macrodef name="dml-compile"
+            description="Generates the domain model from a source DML Language file">
+    <attribute name="dml" description="DML source file" />
+    <attribute name="java-sources" description="Directory of domain objects" />
+    <attribute name="java-gen" description="Directory of the generated base domain objects" />
+    <element name="elements" implicit="true" />
+    <sequential>
+      <mkdir dir="@{java-gen}" />
+      <java classname="dml.DmlCompiler" fork="true">
+        <arg value="-d" />
+        <arg value="@{java-sources}" />
+        <arg value="-db" />
+        <arg value="@{java-gen}" />
+        <arg value="-domainModelClass" />
+        <arg value="pt.ist.fenixframework.pstm.dml.FenixDomainModel" />
+        <arg value="-generator" />
+        <arg value="pt.ist.fenixframework.pstm.dml.FenixCodeGenerator" />
+        <arg value="@{dml}" />
+        <elements />
+      </java>
+    </sequential>
+  </macrodef>
+</project>

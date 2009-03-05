@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
@@ -156,4 +157,9 @@ public abstract class Group implements Serializable, IGroup {
      *         expression
      */
     protected abstract Argument[] getExpressionArguments();
+
+
+    public static Group fromString(String expr) {
+        return ((expr == null) || expr.length() == 0) ? null : (new ExpressionGroup(expr).getGroup());
+    }
 }

@@ -70,7 +70,7 @@ public abstract class ClassFilesVisitor {
             is = new FileInputStream(classFile);
             ClassReader cr = new ClassReader(is);
             ClassVisitor cv = makeNewClassVisitor();
-            cr.accept(cv, false);
+            cr.accept(cv, 0);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Error("Error processing class file: " + e);

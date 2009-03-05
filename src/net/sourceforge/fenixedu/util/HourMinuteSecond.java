@@ -17,6 +17,7 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 import org.joda.time.ReadablePartial;
 import org.joda.time.ReadablePeriod;
 import org.joda.time.TimeOfDay;
@@ -814,6 +815,27 @@ public final class HourMinuteSecond extends BasePartial implements ReadableParti
     public Interval toInterval(DateTimeZone zone) {
 	zone = DateTimeUtils.getZone(zone);
 	return toDateMidnight(zone).toInterval();
+    }
+
+
+    // -----------------------------------------------------------------------
+    /**
+     * Converts this object to a LocalTime.
+     * 
+     * @return the LocalTime instance
+     */
+    public LocalTime toLocalTime() {
+	return new LocalTime(getHour(), getMinuteOfHour(), getSecondOfMinute());
+    }
+
+    /**
+     * Constructs a HourMinuteSecond from a LocalTime, using exactly
+     * the same fields, but ignoring the millis.
+     * 
+     * @return the created HourMinuteSecond
+     */
+    public static HourMinuteSecond fromLocalTime(LocalTime time) {
+        return new HourMinuteSecond(time.getHourOfDay(), time.getMinuteOfHour(), time.getSecondOfMinute());
     }
 
     // -----------------------------------------------------------------------

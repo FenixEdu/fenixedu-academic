@@ -146,8 +146,8 @@ public class ExportGrantsAction extends FenixDispatchAction {
 				    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
 				    : "", 14);
 	    int totalDays = Days.daysBetween(
-		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateBeginInsuranceYearMonthDay(),
-		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateEndInsuranceYearMonthDay()).getDays();
+		    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay(),
+		    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay()).getDays();
 	    spreadsheet.addCell(totalDays, 15);
 	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 16);
 	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()

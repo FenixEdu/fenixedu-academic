@@ -19,10 +19,7 @@ public class PeriodState extends FenixUtil {
     public static final String OPEN_CODE = "O";
     public static final String NOT_OPEN_CODE = "NO";
 
-    private String stateCode;
-
-    public PeriodState() {
-    }
+    private final String stateCode;
 
     public PeriodState(String stateCode) {
 	this.stateCode = stateCode;
@@ -60,8 +57,19 @@ public class PeriodState extends FenixUtil {
 	return result;
     }
 
-    public void setStateCode(String string) {
-	stateCode = string;
-    }
+    public static PeriodState valueOf(String code) {
+        if (code == null) {
+            return null;
+        } else if (code.equals(PeriodState.CURRENT_CODE)) {
+            return PeriodState.CURRENT;
+        } else if (code.equals(PeriodState.OPEN_CODE)) {
+            return PeriodState.OPEN;
+        } else if (code.equals(PeriodState.NOT_OPEN_CODE)) {
+            return PeriodState.NOT_OPEN;
+        } else if (code.equals(PeriodState.CLOSED_CODE)) {
+            return PeriodState.CLOSED;
+        }
 
+        return null;
+    }
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import dml.DmlCompiler;
 import dml.DomainModel;
 
+import pt.ist.fenixframework.pstm.DML;
+
+
 public class DomainModelInfo {
     private DomainModel domainModel = null;
 
@@ -14,7 +17,7 @@ public class DomainModelInfo {
 
     public DomainModelInfo(String[] dmlFiles) {
         try {
-            this.domainModel = DmlCompiler.getFenixDomainModel(dmlFiles);
+            this.domainModel = DML.getDomainModel(dmlFiles);
         } catch (antlr.ANTLRException ae) {
             System.err.println("Error parsing the DML files, leaving the domain empty");
         }

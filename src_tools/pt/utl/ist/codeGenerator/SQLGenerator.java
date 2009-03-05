@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import pt.ist.fenixWebFramework.repository.database.DatabaseDescriptorFactory;
-import pt.ist.fenixWebFramework.repository.database.SqlTable;
+import pt.ist.fenixframework.pstm.repository.database.DatabaseDescriptorFactory;
+import pt.ist.fenixframework.pstm.repository.database.SqlTable;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.pstm.MetadataManager;
 

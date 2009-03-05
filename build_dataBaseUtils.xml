@@ -93,6 +93,7 @@
 			<arg value="${db.alias}"/>
 			<arg value="${db.user}"/>
 			<arg value="${db.pass}"/>
+			<arg value="latin1"/>
 		</java>
     </target>
 
