@@ -327,11 +327,11 @@ function check(e,v){
 					</logic:notEmpty>
 					
 					<logic:notEmpty name="personalInfo" property="teacher" >
-						<logic:notEmpty  name="personalInfo" property="teacher.category" >
+						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
-								<bean:define id="categoryCode" name="personalInfo" property="teacher.category.code"/>
-								<bean:define id="categoryName" name="personalInfo" property="teacher.category.longName"/>
+								<bean:define id="categoryCode" name="personalInfo" property="teacher.currentCategory.code"/>
+								<bean:define id="categoryName" name="personalInfo" property="teacher.currentCategory.longName"/>
 								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 							</tr>
 						</logic:notEmpty>

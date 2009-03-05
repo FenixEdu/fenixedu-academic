@@ -215,6 +215,11 @@ public class Teacher extends Teacher_Base {
 	TeacherProfessionalSituation regimen = getLastLegalRegimenWithoutSpecialSituations();
 	return (regimen != null) ? regimen.getCategory() : null;
     }
+    
+    public Category getCurrentCategory() {
+	TeacherProfessionalSituation regimen = getCurrentLegalRegimenWithoutSpecialSitutions();
+	return (regimen != null) ? regimen.getCategory() : null;
+    }
 
     public TeacherProfessionalSituation getCurrentLegalRegimenWithoutSpecialSitutions() {
 	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations();
