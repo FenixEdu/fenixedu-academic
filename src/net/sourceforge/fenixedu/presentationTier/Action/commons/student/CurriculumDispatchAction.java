@@ -14,8 +14,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -94,13 +97,17 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	Registration registration = null;
 
 	final Integer degreeCurricularPlanId = (Integer) actionForm.get("degreeCurricularPlanID");
-	if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
-	    DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
-	    registration = getStudent(actionForm).readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
-	} else {
-	    final List<Registration> registrations = getStudent(actionForm).getRegistrations();
-	    if (!registrations.isEmpty()) {
-		registration = registrations.iterator().next();
+	Student student = getStudent(actionForm);
+	if (student != null) {
+	    if (degreeCurricularPlanId != null && degreeCurricularPlanId > 0) {
+		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+			.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+		registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
+	    } else {
+		final List<Registration> registrations = student.getRegistrations();
+		if (!registrations.isEmpty()) {
+		    registration = registrations.iterator().next();
+		}
 	    }
 	}
 
@@ -114,7 +121,21 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
     private Student getStudent(DynaActionForm form) {
 	final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
-	return Student.readStudentByNumber(studentNumber);
+	Student student = Student.readStudentByNumber(studentNumber);
+	if (student != null) {
+	    Teacher teacher = AccessControl.getPerson().getTeacher();
+	    for (Tutorship tutorship : student.getTutorships()) {
+		if (tutorship.getTeacher().equals(teacher))
+		    return student;
+	    }
+	    for (Coordinator coordinator : AccessControl.getPerson().getCoordinators()) {
+		DegreeCurricularPlan dcp = coordinator.getExecutionDegree().getDegreeCurricularPlan();
+		for (Registration registration : student.getRegistrations()) {
+		    registration.getStudentCurricularPlan(dcp);
+		}
+	    }
+	}
+	return null;
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
@@ -276,8 +297,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 	try {
 
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadStudentCurricularPlan.run(Integer
-		    .valueOf(studentCurricularPlanID));
+	    infoStudentCurricularPlan = ReadStudentCurricularPlan.run(Integer.valueOf(studentCurricularPlanID));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);
 	}

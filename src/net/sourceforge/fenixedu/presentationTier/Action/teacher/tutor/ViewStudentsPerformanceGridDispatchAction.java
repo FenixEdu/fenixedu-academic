@@ -73,30 +73,32 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	final Person person = getLoggedPerson(request);
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) request.getAttribute("performanceGridFiltersBean");
 
-	final List<Tutorship> tutorships;
-	if (bean.getActiveTutorships()) {
+	if (bean != null) {
+	    final List<Tutorship> tutorships;
+	    if (bean.getActiveTutorships()) {
 
-	    tutorships = person.getTeacher().getActiveTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
-		    bean.getDegree());
-	} else {
-	    tutorships = person.getTeacher().getPastTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
-		    bean.getDegree());
+		tutorships = person.getTeacher().getActiveTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
+			bean.getDegree());
+	    } else {
+		tutorships = person.getTeacher().getPastTutorshipsByStudentsEntryYearAndDegree(bean.getStudentsEntryYear(),
+			bean.getDegree());
+	    }
+
+	    if (tutorships != null && !tutorships.isEmpty()) {
+
+		Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+
+		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, bean
+			.getStudentsEntryYear(), bean.getCurrentMonitoringYear());
+		getStatisticsAndPutInTheRequest(request, performanceGridTable);
+
+		request.setAttribute("performanceGridFiltersBean", bean);
+		request.setAttribute("performanceGridTable", performanceGridTable);
+		request.setAttribute("totalStudents", tutorships.size());
+	    }
+
+	    request.setAttribute("monitoringYear", bean.getCurrentMonitoringYear());
 	}
-
-	if (tutorships != null && !tutorships.isEmpty()) {
-
-	    Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-
-	    PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, bean
-		    .getStudentsEntryYear(), bean.getCurrentMonitoringYear());
-	    getStatisticsAndPutInTheRequest(request, performanceGridTable);
-
-	    request.setAttribute("performanceGridFiltersBean", bean);
-	    request.setAttribute("performanceGridTable", performanceGridTable);
-	    request.setAttribute("totalStudents", tutorships.size());
-	}
-
-	request.setAttribute("monitoringYear", bean.getCurrentMonitoringYear());
 	request.setAttribute("tutor", person);
 	return mapping.findForward("viewStudentsPerformanceGrid");
     }
