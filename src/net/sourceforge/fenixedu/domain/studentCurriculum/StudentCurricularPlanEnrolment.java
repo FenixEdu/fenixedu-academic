@@ -94,6 +94,9 @@ abstract public class StudentCurricularPlanEnrolment {
 		throw new DomainException(
 			"error.StudentCurricularPlan.students.can.only.perform.curricular.course.enrollment.inside.established.periods");
 	    }
+	} else if (!isResponsiblePersonManager() && !getRegistration().hasActiveLastState(getExecutionSemester())) {
+	    throw new DomainException("error.StudentCurricularPlan.registration.is.not.active.for.semester", getExecutionSemester()
+		    .getQualifiedName());
 	}
     }
 
