@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -362,7 +361,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private static final int ENROLLMENT_EVALUATION_TYPE_NEXT_COLUMN_SPAN = 3;
 
-	private static final int GRADE_NEXT_COLUMN_SPAN = 4;
+	private static final int GRADE_NEXT_COLUMN_SPAN = 3;
 
 	private StudentCurricularPlan studentCurricularPlan;
 
@@ -860,19 +859,22 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		addTabsToRow(enrolmentRow, level);
 		enrolmentRow.setClasses(getEnrolmentRowClass());
 
-		generateCellWithText(enrolmentRow, evaluation.getEnrolmentEvaluationType().getDescription(),
-			getEnrolmentTypeCellClass(), MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
+		generateCellWithText(enrolmentRow, evaluation.getEnrolmentEvaluationType().getDescription(), getLabelCellClass(),
+			MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - level);
 		generateCellWithText(enrolmentRow, "", getEnrolmentTypeCellClass(), ENROLLMENT_EVALUATION_TYPE_NEXT_COLUMN_SPAN);
 
 		final Grade grade = evaluation.getGrade();
 		generateCellWithText(enrolmentRow, grade.isEmpty() ? EMPTY_INFO : grade.getValue(), getGradeCellClass());
 
 		generateCellWithText(enrolmentRow, "", getEctsCreditsCellClass(), GRADE_NEXT_COLUMN_SPAN);
-		
-		if(evaluation.getExecutionPeriod() != null) {
-			generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getSemester().toString() + " "
-				+ applicationResources.getString("label.semester.short"), getEnrolmentSemesterCellClass());		    
+
+		if (evaluation.getExecutionPeriod() != null) {
+		    generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getExecutionYear().getYear(),
+			    getEnrolmentExecutionYearCellClass());
+		    generateCellWithText(enrolmentRow, evaluation.getExecutionPeriod().getSemester().toString() + " "
+			    + applicationResources.getString("label.semester.short"), getEnrolmentSemesterCellClass());
 		} else {
+		    generateCellWithText(enrolmentRow, EMPTY_INFO, getEnrolmentSemesterCellClass());
 		    generateCellWithText(enrolmentRow, EMPTY_INFO, getEnrolmentSemesterCellClass());
 		}
 
