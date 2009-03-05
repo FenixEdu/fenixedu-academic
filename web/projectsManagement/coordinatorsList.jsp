@@ -27,6 +27,12 @@
 <br />
 <logic:present name="coordinatorsList">
 	<logic:notEmpty name="coordinatorsList">
+		<bean:define id="code" value="" />
+		<logic:present name="it" scope="request">
+			<logic:equal name="it" value="true">
+				<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+			</logic:equal>
+		</logic:present>
 		<table>
 			<tr>
 				<th class="listClasses-header"><bean:message key="label.mecanographicNumber" /></th>
@@ -35,10 +41,10 @@
 			<logic:iterate id="coordinator" name="coordinatorsList">
 				<bean:define id="coordinatorCode" name="coordinator" property="code" />
 				<tr>
-					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;coordinatorCode="+coordinatorCode%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;coordinatorCode="+coordinatorCode+code%>">
 						<bean:write name="coordinator" property="code" />
 					</html:link></td>
-					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;coordinatorCode="+coordinatorCode%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;coordinatorCode="+coordinatorCode+code%>">
 						<bean:write name="coordinator" property="description" />
 					</html:link></td>
 				</tr>

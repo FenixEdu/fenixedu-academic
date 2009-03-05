@@ -47,8 +47,10 @@ public class ReadSummaryReport extends FenixService {
 		    projectCodes.add(keyProject);
 		}
 	    }
-	    lines = new PersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode,
-		    projectCodes, it);
+	    if (projectCodes.size() != 0) {
+		lines = new PersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode,
+			projectCodes, it);
+	    }
 
 	}
 	if (lines != null) {
