@@ -358,13 +358,13 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
  
     <!--@ The default layout for a collection. -->
-    <renderer type="java.util.Collection" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer"/>
+    <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.presentationTier.renderers.CollectionRenderer"/>
     
     <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
           the table columns as well as the table header. The table can also be extended with control links to the right. 
           Control links are link that are parameterized with values from the object beeing presented in each row.
           Check the renderer documentation for more details.  -->
-    <renderer type="java.util.Collection" layout="tabular" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.presentationTier.renderers.CollectionRenderer">
         	<property name="groupLinks" value="true"/>
         	<property name="linkGroupSeparator" value=", "/>
     </renderer>
