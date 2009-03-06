@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.joda.time.YearMonthDay;
 
@@ -16,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
@@ -193,8 +195,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 
     /**
      * Indicates the url for each person's homepage. The url can have the form
-     * <code>/path/%s/subpath</code> where <code>%s</code> will be replaced by
-     * the person's system's username.
+     * <code>/path/%s/subpath</code> where <code>%s</code> will be replaced
+     * by the person's system's username.
      * 
      * @property
      */
@@ -462,7 +464,7 @@ public class UnitStructureRenderer extends OutputRenderer {
 	HtmlComponent name = generatePersonName(person);
 
 	if (person.isHomePageAvailable()) {
-	    HtmlLink link = new HtmlLink();
+	    HtmlLink link = new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    link.setUrl(String.format(getHomepageLocation(), person.getIstUsername()));
 	    link.setModuleRelative(false);
 	    link.setIndented(false);
