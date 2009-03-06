@@ -4,155 +4,29 @@
 
 package net.sourceforge.fenixedu.presentationTier.Action.grant.contract;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantPaymentEntity;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadPaymentEntityByNumberAndClass;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
-import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
  * @author Pica
  */
 public class EditGrantProjectAction extends FenixDispatchAction {
-    /*
-     * Fills the form with the correspondent data
-     */
+
     public ActionForward prepareEditGrantProjectForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	Integer idGrantProject = null;
-	if (verifyParameterInRequest(request, "idGrantProject")) {
-	    idGrantProject = new Integer(request.getParameter("idGrantProject"));
-	}
-
-	if (idGrantProject != null) { // Edit
-	    try {
-		DynaValidatorForm grantProjectForm = (DynaValidatorForm) form;
-		IUserView userView = UserView.getUser();
-
-		// Read the grant project
-		Object[] args = { idGrantProject };
-		InfoGrantProject infoGrantProject = (InfoGrantProject) ServiceUtils
-			.executeService("ReadGrantPaymentEntity", args);
-
-		// Populate the form
-		setFormGrantProject(grantProjectForm, infoGrantProject);
-	    } catch (FenixServiceException e) {
-		return setError(request, mapping, "errors.grant.project.read", null, null);
-	    }
+	Integer idGrantProject = getIntegerFromRequest(request, "idGrantProject");
+	if (idGrantProject != null) {
+	    GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(idGrantProject);
+	    request.setAttribute("grantProject", grantProject);
 	}
 	return mapping.findForward("edit-grant-project");
-    }
-
-    /*
-     * Edit Grant Project
-     */
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	InfoGrantProject infoGrantProject = new InfoGrantProject();
-	try {
-	    IUserView userView = UserView.getUser();
-
-	    DynaValidatorForm editGrantProjectForm = (DynaValidatorForm) form;
-	    infoGrantProject = populateInfoFromForm(editGrantProjectForm);
-
-	    // Check if teacher exists
-	    InfoTeacher infoTeacher = null;
-	    if (infoGrantProject.getInfoResponsibleTeacher() != null) {
-
-		infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(infoGrantProject.getInfoResponsibleTeacher()
-			.getTeacherNumber());
-	    }
-
-	    if (infoTeacher == null) {
-		return setError(request, mapping, "errors.grant.paymententity.unknownTeacher", null, editGrantProjectForm
-			.get("responsibleTeacherNumber"));
-	    }
-
-	    infoGrantProject.setInfoResponsibleTeacher(infoTeacher);
-
-	    // Check if grant cost center exists
-	    InfoGrantCostCenter infoGrantCostCenter = null;
-	    if (infoGrantProject.getInfoGrantCostCenter() != null) {
-
-		infoGrantCostCenter = (InfoGrantCostCenter) ReadPaymentEntityByNumberAndClass.run(infoGrantProject.getInfoGrantCostCenter().getNumber(),
-			GrantCostCenter.class.getName());
-	    }
-
-	    if (infoGrantCostCenter == null) {
-		return setError(request, mapping, "errors.grant.paymententity.unknownCostCenter", null, editGrantProjectForm
-			.get("grantCostCenterNumber"));
-	    }
-
-	    infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
-
-	    // Edit-Create the project
-
-	    EditGrantPaymentEntity.run(infoGrantProject);
-
-	    return mapping.findForward("manage-grant-project");
-	} catch (ExistingServiceException e) {
-	    return setError(request, mapping, "errors.grant.project.duplicateEntry", null, infoGrantProject.getNumber());
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	    return setError(request, mapping, "errors.grant.project.bd.create", null, null);
-	}
-    }
-
-    /*
-     * Populates form from InfoProject
-     */
-    private void setFormGrantProject(DynaValidatorForm form, InfoGrantProject infoGrantProject) throws Exception {
-	form.set("idInternal", infoGrantProject.getIdInternal());
-	form.set("designation", infoGrantProject.getDesignation());
-	form.set("number", infoGrantProject.getNumber());
-	if (infoGrantProject.getInfoResponsibleTeacher() != null)
-	    form.set("responsibleTeacherNumber", infoGrantProject.getInfoResponsibleTeacher().getTeacherNumber().toString());
-	if (infoGrantProject.getInfoGrantCostCenter() != null)
-	    form.set("grantCostCenterNumber", infoGrantProject.getInfoGrantCostCenter().getNumber());
-    }
-
-    /*
-     * Populates Info from Form
-     */
-    private InfoGrantProject populateInfoFromForm(DynaValidatorForm editGrantProjectForm) throws Exception {
-	InfoGrantProject infoGrantProject = new InfoGrantProject();
-	infoGrantProject.setIdInternal((Integer) editGrantProjectForm.get("idInternal"));
-	infoGrantProject.setDesignation((String) editGrantProjectForm.get("designation"));
-	infoGrantProject.setNumber((String) editGrantProjectForm.get("number"));
-
-	// Copy the teacher Number
-	InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantProjectForm
-		.get("responsibleTeacherNumber"))));
-	infoGrantProject.setInfoResponsibleTeacher(infoTeacher);
-
-	// Copy the cost center Number
-	InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-	infoGrantCostCenter.setNumber((String) editGrantProjectForm.get("grantCostCenterNumber"));
-	infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
-
-	return infoGrantProject;
     }
 }

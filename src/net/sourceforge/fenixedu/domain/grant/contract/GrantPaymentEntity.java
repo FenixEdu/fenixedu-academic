@@ -38,4 +38,11 @@ public abstract class GrantPaymentEntity extends GrantPaymentEntity_Base {
 	return grantPaymentEntities;
     }
 
+    public boolean isGrantProject() {
+	return false;
+    }
+
+    public boolean isCostCenter() {
+	return false;
+    }
 }

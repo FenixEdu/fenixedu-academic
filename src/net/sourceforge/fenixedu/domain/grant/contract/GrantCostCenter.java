@@ -24,4 +24,9 @@ public class GrantCostCenter extends GrantCostCenter_Base {
 	}
 	return null;
     }
+
+    @Override
+    public boolean isCostCenter() {
+	return true;
+    }
 }

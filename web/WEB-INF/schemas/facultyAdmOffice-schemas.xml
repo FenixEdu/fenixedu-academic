@@ -122,3 +122,46 @@
 	<slot name="firstName" key="label.list.grant.owner.first.name"/>
 	<slot name="lastName" key="label.list.grant.owner.last.name"/>
 </schema>
+
+<schema name="show.grantProject" type="net.sourceforge.fenixedu.domain.grant.contract.GrantProject">
+	<slot name="number" key="label.grant.project.number"/>
+	<slot name="designation" key="label.grant.project.designation"/>
+	<slot name="responsibleTeacher" key="label.grant.project.responsibleTeacher.number" schema="show.responsibleTeacher" layout="values"/>
+	<slot name="grantCostCenter" key="label.grant.project.grantCostCenter.number" schema="show.grantCostCenter" layout="values"/>
+</schema>
+
+<schema name="show.responsibleTeacher" type="net.sourceforge.fenixedu.domain.Teacher">
+	<slot name="teacherNumber" key="label.grant.project.number"/>
+</schema>
+
+<schema name="show.grantCostCenter" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter">
+	<slot name="number" key="label.grant.project.number"/>
+</schema>
+
+<schema name="edit.grantProject" type="net.sourceforge.fenixedu.domain.grant.contract.GrantProject"
+constructor="number,designation,responsibleTeacher,grantCostCenter">
+	<slot name="number" key="label.grant.project.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="designation" key="label.grant.project.designation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="responsibleTeacher" layout="autoComplete" key="label.grant.project.responsibleTeacher.number">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<slot name="grantCostCenter" key="label.grant.project.grantCostCenter.number" layout="autoComplete">
+		<property name="size" value="80"/>
+		<property name="labelField" value="designation"/>
+		<property name="format" value="${designation}"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=designation"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"/>
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>	
+	<setter signature="editGrantProject(number,designation,responsibleTeacher,grantCostCenter)"/>
+</schema>
