@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.servlets.filters.CASFilter;
+import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
@@ -294,33 +294,18 @@ public class Authenticate extends FenixService implements Serializable {
 	RegisterUserLoginThread.runThread(user, remoteHost);
     }
 
-    public static CASReceipt getCASReceipt(final String casTicket, final String requestURL) throws ExcepcaoAutenticacao {
-	CASReceipt receipt = null;
+    public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL)
+    		throws UnsupportedEncodingException, CASAuthenticationException {
+	final String casValidateUrl = FenixWebFramework.getConfig().getCasConfig(serverName).getCasValidateUrl();
+	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), "UTF-8");
 
-	try {
-	    final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
-	    final String casServiceUrl = URLEncoder.encode(CASFilter.getServiceUrl(requestURL), URL_ENCODING);
+	ProxyTicketValidator pv = new ProxyTicketValidator();
+	pv.setCasValidateUrl(casValidateUrl);
+	pv.setServiceTicket(casTicket);
+	pv.setService(casServiceUrl);
+	pv.setRenew(false);
 
-	    ProxyTicketValidator pv = new ProxyTicketValidator();
-	    pv.setCasValidateUrl(casValidateUrl);
-	    pv.setServiceTicket(casTicket);
-	    pv.setService(casServiceUrl);
-	    pv.setRenew(false);
-
-	    receipt = CASReceipt.getReceipt(pv);
-
-	} catch (UnsupportedEncodingException e) {
-	    throw new RuntimeException(e);
-	} catch (CASAuthenticationException e) {
-	    e.printStackTrace();
-	    throw new ExcepcaoAutenticacao("bad.authentication", e);
-	}
-
-	if (receipt == null) {
-	    throw new ExcepcaoAutenticacao("bad.authentication");
-	}
-
-	return receipt;
+	return CASReceipt.getReceipt(pv);
     }
 
     protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {

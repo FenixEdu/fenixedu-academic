@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -18,6 +20,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
@@ -37,7 +40,14 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
 	if (userView == null) {
 	    final String casTicket = (String) request.getParameter("ticket");
 	    final String requestURL = request.getRequestURL().toString();
-	    final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
+	    CASReceipt receipt;
+	    try {
+		receipt = Authenticate.getCASReceipt(request.getServerName(), casTicket, requestURL);
+	    } catch (UnsupportedEncodingException e) {
+		throw new ExcepcaoAutenticacao(e);
+	    } catch (CASAuthenticationException e) {
+		throw new ExcepcaoAutenticacao(e);
+	    }
 	    final Object authenticationArgs[] = { receipt, requestURL, remoteHostName };
 
 	    try {

@@ -304,12 +304,11 @@ host.control.name.net.sourceforge.fenixedu.webServices.PersonManagement=
 #----------------------------------------------
 # CAS configuration
 #----------------------------------------------
-cas.enabled=false
-cas.loginUrl=https://localhost:8443/cas/login
-cas.validateUrl=https://localhost:8443/cas/serviceValidate
-cas.logoutUrl=https://localhost:8443/cas/logout
-cas.serviceUrl.localhost=https://localhost:8443/ciapl/loginCAS.do
-cas.serviceUrl.<cidhcp000>=https://<cidhcp000>.ist.utl.pt:8443/ciapl/loginCAS.do
+localhost.cas.enabled=false
+localhost.cas.loginUrl=https://localhost:8443/cas/login
+localhost.cas.validateUrl=https://localhost:8443/cas/serviceValidate
+localhost.cas.logoutUrl=https://localhost:8443/cas/logout
+localhost.cas.serviceUrl=https://localhost:8443/ciapl/loginCAS.do
 
 validateExpirationDate=false
 

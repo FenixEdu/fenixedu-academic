@@ -5,9 +5,13 @@
 package net.sourceforge.fenixedu._development;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import pt.ist.fenixWebFramework.Config;
+import pt.ist.fenixWebFramework.Config.CasConfig;
 
 /**
  * @author Luis Cruz
@@ -43,6 +47,24 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
     }
 
     public static Config getFenixFrameworkConfig(final String domainModel) {
+	final Map<String, CasConfig> casConfigMap = new HashMap<String, CasConfig>();
+	for (final Object key : properties.keySet()) {
+	    final String property = (String) key;
+	    int i = property.indexOf(".cas.enable");
+	    if (i >= 0) {
+		final String hostname = property.substring(0, i);
+		if (getBooleanProperty(property)) {
+		    final String casLoginUrl = getProperty(hostname + ".cas.loginUrl");
+		    final String casLogoutUrl = getProperty(hostname + ".cas.logoutUrl");
+		    final String casValidateUrl = getProperty(hostname + ".cas.ValidateUrl");
+		    final String serviceUrl = getProperty(hostname + ".cas.serviceUrl");
+
+		    final CasConfig casConfig = new CasConfig(casLoginUrl, casLogoutUrl, casValidateUrl, serviceUrl);
+		    casConfigMap.put(hostname, casConfig);
+		}
+	    }
+	}
+
 	return new Config() {
 	    {
 		domainModelPath = domainModel;
@@ -77,8 +99,7 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 		rmiStreamBytesMax = getProperty("rmi.stream.bytes.max");
 		rmiStreamBytesBlock = getProperty("rmi.stream.bytes.block");
 
-		casEnabled = Boolean.valueOf(getProperty("cas.enabled"));
-		casLoginUrl = getProperty("cas.loginUrl");
+		casConfigByHost = Collections.unmodifiableMap(casConfigMap);
 
 		exceptionHandlerClassname = "net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler";
 	    }
