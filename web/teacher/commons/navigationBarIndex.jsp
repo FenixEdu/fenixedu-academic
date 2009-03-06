@@ -26,10 +26,19 @@
 				page="<%= "/viewStudentsPerformanceGrid.do?method=prepare"%>">
 				<bean:message key="link.teacher.tutorship.students.performanceGrid" />
 			</html:link></li>
+
+			<%--
+			This was removed because because in the "view tutorships" functionality there are already
+			links to the curriculums of the students, and since this one is limited to curriculums of
+			tutored students it becomes redundant. If you see this in a couple of months remove it,
+			it means no one complained about it's disappearance.
+			
 			<li><html:link
 				page="<%= "/viewStudentCurriculum.do?method=prepareView"%>">
 				<bean:message key="link.teacher.tutorship.students.viewCurriculum" />
 			</html:link></li>
+			--%>
+
 			<li><html:link
 				page="<%= "/sendMailToTutoredStudents.do?method=prepare"%>">
 				<bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" />
