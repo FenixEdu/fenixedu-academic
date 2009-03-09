@@ -21,6 +21,7 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
     private List<DomainReference<CurriculumModule>> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
+    private Boolean hasUpdateRegistrationAccess = Boolean.TRUE;
 
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
@@ -103,4 +104,13 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
     }
+
+    public Boolean getHasUpdateRegistrationAccess() {
+        return hasUpdateRegistrationAccess;
+    }
+
+    public void setHasUpdateRegistrationAccess(Boolean hasUpdateRegistrationAccess) {
+        this.hasUpdateRegistrationAccess = hasUpdateRegistrationAccess;
+    }
+    
 }

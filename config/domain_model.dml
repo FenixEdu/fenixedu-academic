@@ -168,6 +168,7 @@ enum net.sourceforge.fenixedu.util.RegimeType                                   
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
 enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
+enum net.sourceforge.fenixedu.domain.accessControl.PermissionType                                                         as PermissionType;
 
 /*
  * Value types that need special externalization
@@ -512,7 +513,6 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
 
     internalizeWith importFromString();
 }
-
 
 /*
 *
@@ -6124,6 +6124,13 @@ class student.YearDelegateCourseInquiry extends DomainObject {
 }
 
 
+class accessControl.AdministrativeOfficePermissionGroup extends DomainObject {
+}
+
+class accessControl.AdministrativeOfficePermission extends DomainObject {
+	PermissionType permissionType;
+	Group permissionMembersGroup;
+}
 
 /*
  * Relations definitions
@@ -14939,6 +14946,32 @@ relation YearDelegateCourseInquiryExecutionCourse {
 relation YearDelegateCourseInquiryRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	student.YearDelegateCourseInquiry playsRole yearDelegateCourseInquiries {
+		multiplicity *;
+	}
+}
+
+relation AdministrativeOfficePermissionGroupRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
+		multiplicity *;
+	}
+}
+
+relation AdministrativeOfficePermissionRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	accessControl.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
+		multiplicity *;
+	}
+}
+
+relation CampusAdministrativeOfficePermissionGroup {
+	space.Campus playsRole campus;
+	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
+}
+
+relation AdministrativeOfficePermissionGroupPermission {
+	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
+	accessControl.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
 		multiplicity *;
 	}
 }

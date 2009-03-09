@@ -1820,3 +1820,26 @@
 	<slot name="filename" />
    	<slot name="size"/>
 </schema>
+
+<schema name="academicAdminOffice.show.permissions" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionViewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="permissionType.localizedName" key="label.permission" />
+	<slot name="members" key="label.elements" layout="list">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="academicAdminOffice.show.permissions.member" />
+	</slot>	
+</schema>
+
+<schema name="academicAdminOffice.show.permissions.member" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$Member" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="person.name"/>
+</schema>
+
+<schema name="PermissionMemberBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionMemberBean"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="selected" />
+	<slot name="person.name" read-only="true"/>
+</schema>
+
+<schema name="academicAdminOffice.show.permissionsTypes" type="net.sourceforge.fenixedu.domain.accessControl.PermissionType" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="localizedName" key="label.name" />
+</schema>
+

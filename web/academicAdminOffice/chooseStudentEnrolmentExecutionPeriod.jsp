@@ -4,6 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean" %>
+<%@page import="net.sourceforge.fenixedu.predicates.RegistrationPredicates" %>
+
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -15,6 +20,9 @@
 </html:messages>
 
 <p class="mtop15 mbottom025"><strong><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
+
+
+<logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="true">
 
 <fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
 	<fr:edit id="studentEnrolment"
@@ -127,9 +135,16 @@
 			<em><bean:message key="label.no.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/>.</em>
 		</p>
 	</logic:empty>	
-
-
+	
 </logic:present>
+
+</logic:equal>
+
+<logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="false">
+	<p class="mtop15">
+		<em><bean:message key="error.not.authorized" bundle="APPLICATION_RESOURCES"/></em>
+	</p>
+</logic:equal>
 
 <fr:form action="/studentEnrolments.do?method=backViewRegistration">
 	<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
