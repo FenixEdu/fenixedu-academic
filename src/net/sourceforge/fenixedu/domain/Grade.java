@@ -37,6 +37,9 @@ public class Grade implements Serializable, Comparable<Grade> {
     }
 
     public int compareTo(final Grade otherGrade) {
+	if (otherGrade == null) {
+	    return 1;
+	}
 	final boolean isApproved = isApproved();
 	final boolean isApprovedOther = otherGrade.isApproved();
 	if (isApproved && isApprovedOther) {
