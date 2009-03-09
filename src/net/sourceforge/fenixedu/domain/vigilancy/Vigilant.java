@@ -80,7 +80,7 @@ public class Vigilant extends Vigilant_Base {
 
     protected Vigilant() {
 	super();
-	this.setStartPoints(0);
+	this.setStartPoints(new BigDecimal(0));
 	this.setPointsWeight(new BigDecimal(1));
 	setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -99,7 +99,7 @@ public class Vigilant extends Vigilant_Base {
     }
 
     public double getPoints() {
-	double points = this.getStartPoints();
+	double points = this.getStartPoints().doubleValue();
 	BigDecimal weight = this.getPointsWeight();
 
 	List<Vigilancy> vigilancies = getVigilancies();
@@ -112,7 +112,7 @@ public class Vigilant extends Vigilant_Base {
     }
 
     public double getEstimatedPoints() {
-	double totalPoints = getStartPoints();
+	double totalPoints = getStartPoints().doubleValue();
 	BigDecimal weight = getPointsWeight();
 
 	for (Vigilancy vigilancy : getActiveVigilancies()) {

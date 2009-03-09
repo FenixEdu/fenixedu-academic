@@ -5484,7 +5484,7 @@ class DomainObject {
 
 	class vigilancy.Vigilant extends DomainObject {
 		BigDecimal pointsWeight;
-		Integer startPoints;
+		BigDecimal startPoints;
 	}
 
 	class vigilancy.VigilantBound extends DomainObject {
