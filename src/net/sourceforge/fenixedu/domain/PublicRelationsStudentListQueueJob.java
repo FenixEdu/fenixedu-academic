@@ -2,13 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.ByteArrayOutputStream;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentListQueueJob_Base {
     
@@ -29,7 +27,7 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
 	return "listagem_" + getRequestDate().toString("yyyy_MM_dd_HH_mm") + ".xls";
     }
 
-    public void execute() throws Exception {
+    public QueueJobResult execute() throws Exception {
 	Language.setLocale(Language.getDefaultLocale());
 	final ExecutionYear executionYear = getExecutionYear();
 	final DegreeType degreeType = getDegreeType();
@@ -44,10 +42,12 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
 
 	final Spreadsheet spreadsheet = GenerateStudentReport.generateReport(studentReportPredicate);
 
-	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+	final QueueJobResult queueJobResult = new QueueJobResult();
+	queueJobResult.setContentType("application/vnd.ms-excel");
+	final ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 	spreadsheet.exportToXLSSheet(byteArrayOS);
-	setContentType("application/vnd.ms-excel");
-	setContent(new ByteArray(byteArrayOS.toByteArray()));
-
+	queueJobResult.setContent(byteArrayOS.toByteArray());
+	return queueJobResult;
     }
+
 }

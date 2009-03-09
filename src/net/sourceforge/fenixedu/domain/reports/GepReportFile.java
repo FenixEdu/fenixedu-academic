@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
-import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -114,7 +114,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     public abstract void renderReport(Spreadsheet spreadsheet) throws Exception;
 
-    public void execute() throws Exception {
+    public QueueJobResult execute() throws Exception {
 	final Spreadsheet spreadsheet = new Spreadsheet(getReportName());
 
 	this.renderReport(spreadsheet);
@@ -126,14 +126,14 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	} else {
 	    spreadsheet.exportToXLSSheet(byteArrayOS);
 	}
-	setContent(new ByteArray(byteArrayOS.toByteArray()));
-	/*
-	 * MimetypesFileTypeMap mft = new MimetypesFileTypeMap();
-	 * setContentType(mft.getContentType(getFilename()));
-	 */
-	setContentType("application/txt");
+
+	final QueueJobResult queueJobResult = new QueueJobResult();
+	queueJobResult.setContentType("application/txt");
+	queueJobResult.setContent(byteArrayOS.toByteArray());
+
 	System.out.println("Job " + getFilename() + " completed");
 
+	return queueJobResult;
     }
 
     public String getUpperCaseType() {

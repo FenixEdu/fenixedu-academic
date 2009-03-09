@@ -2,22 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA.FindSelectedGepReports;
 
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-public class QueueJob extends QueueJob_Base {
-
-    @Service
-    public static void newInstance() {
-	new QueueJob();
-    }
+public abstract class QueueJob extends QueueJob_Base {
 
     public QueueJob() {
 	super();
@@ -29,8 +19,7 @@ public class QueueJob extends QueueJob_Base {
 	setPerson(AccessControl.getPerson());
     }
 
-    public void execute() throws Exception {
-    }
+    public abstract QueueJobResult execute() throws Exception;
 
     public String getDescription() {
 	return "Tarefa";
