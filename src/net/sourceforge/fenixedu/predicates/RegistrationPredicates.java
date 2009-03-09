@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AdministrativeOfficePermission;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -15,6 +13,21 @@ public class RegistrationPredicates {
 	public boolean evaluate(final Registration registration) {
 	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
 	};
+    };
+    
+    public static final AccessControlPredicate<Registration> updateRegistration = new AccessControlPredicate<Registration>() {
+
+	@Override
+	public boolean evaluate(Registration registration) {
+//	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || !registration.hasConcluded()) {
+//		return true;
+//	    }
+//
+//	    return getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
+//		    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+	    
+	    return true;
+	}
     };
 
     public static final AccessControlPredicate<Registration> EDIT_MISSING_CANDIDACY_INFORMATION = new AccessControlPredicate<Registration>() {
