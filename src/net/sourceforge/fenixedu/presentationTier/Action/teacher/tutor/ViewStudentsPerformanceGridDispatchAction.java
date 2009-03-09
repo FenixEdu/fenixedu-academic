@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.StudentsPerforma
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipEntryExecutionYearProvider;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.teacher.TutorshipMonitoringExecutionYearProvider;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -32,20 +31,19 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	generateStudentsPerformanceBean(request);
-	request.setAttribute("tutor", getLoggedPerson(request));
+	Person person = getLoggedPerson(request);
+	generateStudentsPerformanceBean(request, person);
+	request.setAttribute("tutor", person);
 	RenderUtils.invalidateViewState();
-	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response);
+	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
     }
 
-    private void generateStudentsPerformanceBean(HttpServletRequest request) {
-
-	if (getRenderedObject(null) != null) {
-	    request.setAttribute("performanceGridFiltersBean", getRenderedObject(null));
+    protected void generateStudentsPerformanceBean(HttpServletRequest request, Person person) {
+	if (getRenderedObject("performanceGridFiltersBean") != null) {
+	    request.setAttribute("performanceGridFiltersBean", getRenderedObject("performanceGridFiltersBean"));
 	    return;
 	}
 
-	Person person = getLoggedPerson(request);
 	if (!person.getTeacher().hasAnyTutorships()) {
 	    return;
 	}
@@ -57,8 +55,8 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	request.setAttribute("performanceGridFiltersBean", bean);
     }
 
-    private StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request) {
-	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(getLoggedPerson(request));
+    protected StudentsPerformanceInfoBean generateStudentsPerformanceBeanFromRequest(HttpServletRequest request, Person person) {
+	StudentsPerformanceInfoBean bean = StudentsPerformanceInfoBean.create(person);
 	bean.setDegree(rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeOID")));
 	bean.setStudentsEntryYear(rootDomainObject.readExecutionYearByOID(getIntegerFromRequest(request, "entryYearOID")));
 	bean.setCurrentMonitoringYear(rootDomainObject
@@ -68,9 +66,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
     }
 
     protected ActionForward prepareStudentsPerformanceGrid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	final Person person = getLoggedPerson(request);
+	    HttpServletRequest request, HttpServletResponse response, Person person) throws Exception {
 	StudentsPerformanceInfoBean bean = (StudentsPerformanceInfoBean) request.getAttribute("performanceGridFiltersBean");
 
 	if (bean != null) {
@@ -106,7 +102,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
     public ActionForward prepareAllStudentsStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	StudentsPerformanceInfoBean bean = generateStudentsPerformanceBeanFromRequest(request);
+	StudentsPerformanceInfoBean bean = generateStudentsPerformanceBeanFromRequest(request, getLoggedPerson(request));
 	if (!bean.getTutorships().isEmpty()) {
 
 	    List<DegreeCurricularPlan> plans = new ArrayList<DegreeCurricularPlan>(bean.getDegree().getDegreeCurricularPlans());
@@ -121,15 +117,7 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 	    request.setAttribute("entryYear", bean.getStudentsEntryYear());
 	    request.setAttribute("totalEntryStudents", students.size());
 	}
-	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response);
-    }
-
-    protected Object getRenderedObject(String id) {
-	if (StringUtils.isEmpty(id)) {
-	    return (RenderUtils.getViewState() == null ? null : RenderUtils.getViewState().getMetaObject().getObject());
-	} else {
-	    return (RenderUtils.getViewState(id) == null ? null : RenderUtils.getViewState().getMetaObject().getObject());
-	}
+	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, getLoggedPerson(request));
     }
 
     private Degree getFilteredDegree(StudentsPerformanceInfoBean bean) {

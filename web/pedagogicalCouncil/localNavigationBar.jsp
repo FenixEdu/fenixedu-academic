@@ -117,6 +117,9 @@
 		<li>
 			<html:link page="/tutorTutorship.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
+        <li>
+            <html:link page="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialperformance" bundle="APPLICATION_RESOURCES"/></html:link>
+        </li>
 		<li>
 			<html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
@@ -135,6 +138,9 @@
         </li>
         <li>
             <html:link page="/tutorTutorship.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
+        </li>
+        <li>
+            <html:link page="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialperformance" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
         <li>
             <html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
