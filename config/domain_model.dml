@@ -5712,9 +5712,6 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 		String style;
 	}
 
-		class DegreeSite extends Site {
-		}
-
 		
 		class ExecutionCourseSite extends Site {
 			Boolean dynamicMailDistribution;
@@ -5737,6 +5734,9 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			Boolean showIntroduction;
 			MultiLanguageString sideBanner;
 			String googleAnalyticsCode;
+		}
+		
+		class DegreeSite extends UnitSite {
 		}
 
 			class DepartmentSite extends UnitSite {

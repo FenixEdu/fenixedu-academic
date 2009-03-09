@@ -428,7 +428,6 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 	StringBuffer actionPath = new StringBuffer();
 	actionPath.append("&announcementId=");
 	actionPath.append(announcement.getIdInternal());
-	AnnouncementBoard announcementBoard = announcement.getAnnouncementBoard();
 
 	return actionPath.toString();
     }

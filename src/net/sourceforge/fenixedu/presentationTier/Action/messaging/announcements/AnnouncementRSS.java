@@ -13,15 +13,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;

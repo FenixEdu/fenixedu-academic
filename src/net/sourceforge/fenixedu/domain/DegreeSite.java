@@ -46,5 +46,4 @@ public class DegreeSite extends DegreeSite_Base {
 	// unable to optimize because we cannot track changes to name correctly.
 	// don't call super.setNormalizedName() !
     }
-
 }
