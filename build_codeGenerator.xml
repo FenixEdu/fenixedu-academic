@@ -143,28 +143,6 @@
 		</java>
     </target>
 
-    <target name="fixColumnsNames"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true">
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
-
-	<target name="fixColumnsNames-debug"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true"
-			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
-		>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
-	
     <target name="changeVarcharColumnsToLongvarcharColumns"
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.ChangeVarcharColumnsToLongvarcharColumns" fork="true">
@@ -174,31 +152,6 @@
 			</classpath>
 		</java>
     </target>
-				
-	<target name="changeDMLDateTypes"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.CheckAndFixDMLDateTypes" fork="true">
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
-	
-	<target name="changeDMLDateTypes-debug"
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.CheckAndFixDMLDateTypes" fork="true"
-			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"			
-		>
-			<arg value="${dml.definition.file.completed}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>	
-		
 	
     <target name="generateDeprecatedDateGettersAndSetters" >
 		<java classname="pt.utl.ist.fenix.tools.codeGenerator.DeprecatedDatesGettersAndSettersGenerator" fork="true">
