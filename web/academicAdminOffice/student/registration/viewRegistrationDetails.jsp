@@ -45,91 +45,123 @@
 			</html:messages>
 		</ul>
 	</logic:messagesPresent>
-	
-	
-	
-	<%-- Registration Details --%>
+
+
+
+
+
+
 	<logic:present name="registration" property="ingression">
-	<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<fr:view name="registration" schema="student.registrationDetail" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight"/>
-			<fr:property name="rowClasses" value=",,,,,,,,"/>
-		</fr:layout>
-	</fr:view>
+		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:present>
+	
 	<logic:notPresent name="registration" property="ingression">
-	<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-	<fr:view name="registration" schema="student.registrationsWithStartData" >
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
-			<fr:property name="rowClasses" value=",,,,,,,"/>
-		</fr:layout>
-	</fr:view>
+		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
 	
-	<p class="mtop0">
-		<span>
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/registration.do?method=prepareViewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-				<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-		<span class="pleft1">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				<bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-		<span class="pleft1">
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-					<bean:message key="link.student.manageIngressionAndAgreement" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-		</span>
-		<span class="pleft1">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/manageRegistrationStartDates.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				<bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>		
-		<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
-			<span class="pleft1">	
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
-					<bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-			</span>
-		</logic:equal>
-		<logic:equal name="registration" property="registrationAgreement.normal" value="false">
-			<span class="pleft1">	
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-					<bean:message key="link.student.manageExternalRegistrationData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-			</span>	
-		</logic:equal>
-		<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
-			<span class="pleft1">	
-				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-					<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-				</html:link>
-			</span>	
-		</logic:equal>
-		<span class="pleft1">	
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/registration.do?method=showRegimes" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				<bean:message key="student.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-		<span class="pleft1">	
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-				<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-	</p>
+
+
+
+<table>
+	<tr>
+		<td>
+		
+			<%-- Registration Details --%>
+			<logic:present name="registration" property="ingression">
+			<fr:view name="registration" schema="student.registrationDetail" >
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight"/>
+					<fr:property name="rowClasses" value=",,,,,,,,"/>
+				</fr:layout>
+			</fr:view>
+			</logic:present>
+			<logic:notPresent name="registration" property="ingression">
+			<fr:view name="registration" schema="student.registrationsWithStartData" >
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thright thlight mtop0"/>
+					<fr:property name="rowClasses" value=",,,,,,,"/>
+				</fr:layout>
+			</fr:view>
+			</logic:notPresent>
+		
+		</td>
+		
+		<td style="vertical-align: top; padding-top: 1em;">
+			
+			<p class="mtop0 pleft1 asd">
+				<span class="dblock pbottom03">
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/registration.do?method=prepareViewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+						<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+				<span class="dblock pbottom03">
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/manageRegistrationState.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+						<bean:message key="link.student.manageRegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+				<span class="dblock pbottom03">
+						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+						<html:link page="/manageIngression.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+							<bean:message key="link.student.manageIngressionAndAgreement" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						</html:link>
+				</span>
+				<span class="dblock pbottom03">
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/manageRegistrationStartDates.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+						<bean:message key="link.student.manageRegistrationStartDates" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>		
+				<logic:equal name="registration" property="degreeType.name" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA">
+					<span class="dblock pbottom03">	
+						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+						<html:link page="/manageEnrolmentModel.do?method=prepare" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+							<bean:message key="link.student.manageEnrolmentModel" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						</html:link>
+					</span>
+				</logic:equal>
+				<logic:equal name="registration" property="registrationAgreement.normal" value="false">
+					<span class="dblock pbottom03">	
+						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+						<html:link page="/manageExternalRegistrationData.do?method=prepare" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+							<bean:message key="link.student.manageExternalRegistrationData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						</html:link>
+					</span>	
+				</logic:equal>
+				<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
+					<span class="dblock pbottom03">	
+						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+						<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+							<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+						</html:link>
+					</span>	
+				</logic:equal>
+				<span class="dblock pbottom03">	
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/registration.do?method=showRegimes" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+						<bean:message key="student.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+				<span class="dblock pbottom03">	
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+						<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+				<span class="dblock pbottom03">	
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/editCandidacyInformation.do?method=prepareEdit" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+						<bean:message key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>
+			</p>
+		
+		</td>
+	</tr>
+</table>
+	
+	
 	
 	
 	

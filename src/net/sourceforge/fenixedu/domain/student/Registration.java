@@ -101,6 +101,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -1604,7 +1605,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-    
+
     final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
@@ -1614,7 +1615,7 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
-       
+
     final public List<ExecutionCourse> getAttendingExecutionCoursesFor(final ExecutionYear executionYear) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
@@ -3652,7 +3653,12 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public int getNumberEnroledCurricularCoursesInCurrentYear() {
+	return getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(ExecutionYear.readCurrentExecutionYear()).size();
+    }
+
     @Service
+    @Checked("RegistrationPredicates.EDIT_CANDIDACY_INFORMATION")
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
 	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().editCandidacyInformation(bean);
@@ -3667,6 +3673,7 @@ public class Registration extends Registration_Base {
     }
 
     @Service
+    @Checked("RegistrationPredicates.EDIT_MISSING_CANDIDACY_INFORMATION")
     public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
 	if (hasStudentCandidacy()) {
 	    getStudentCandidacy().editMissingCandidacyInformation(bean);

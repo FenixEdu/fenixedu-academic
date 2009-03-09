@@ -17,8 +17,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-
-import org.apache.commons.lang.StringUtils;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 public class CandidacyInformationBean implements Serializable {
 
@@ -411,5 +410,9 @@ public class CandidacyInformationBean implements Serializable {
 
     public void updateRegistrationWithMissingInformation() {
 	getRegistration().editMissingCandidacyInformation(this);
+    }
+
+    public void updateRegistrationInformation() {
+	getRegistration().editCandidacyInformation(this);
     }
 }

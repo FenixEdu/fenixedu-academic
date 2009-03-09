@@ -17,23 +17,35 @@ public class RegistrationPredicates {
 	};
     };
 
-    public static final AccessControlPredicate<Registration> updateRegistration = new AccessControlPredicate<Registration>() {
+    public static final AccessControlPredicate<Registration> EDIT_MISSING_CANDIDACY_INFORMATION = new AccessControlPredicate<Registration>() {
+	public boolean evaluate(final Registration registration) {
+	    if (AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+		return true;
+	    }
 
-	@Override
-	public boolean evaluate(Registration registration) {
-//	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || !registration.hasConcluded()) {
-//		return true;
-//	    }
-//
-//	    return getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
-//		    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
-	    
-	    return true;
-	}
+	    if (AccessControl.getPerson().hasStudent()) {
+		return registration.getStudent() == AccessControl.getPerson().getStudent();
+	    }
+
+	    return false;
+
+	};
     };
 
-    private static final AdministrativeOfficePermission getPermissionByType(Person person, PermissionType type) {
+    public static final AccessControlPredicate<Registration> EDIT_CANDIDACY_INFORMATION = new AccessControlPredicate<Registration>() {
+	public boolean evaluate(final Registration registration) {
+	    if (AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+		return true;
+	    }
+
+	    return false;
+
+	};
+    };
+    
+     private static final AdministrativeOfficePermission getPermissionByType(Person person, PermissionType type) {
 	Campus campus = person.getEmployee().getCurrentWorkingPlace().getCampus();
 	return campus.getAdministrativeOfficePermissionByType(type);
     }
+
 }

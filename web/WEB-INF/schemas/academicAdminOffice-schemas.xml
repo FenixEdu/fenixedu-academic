@@ -454,6 +454,7 @@
 	<slot name="degreeNameWithDescription" key="label.degree" />
 	<slot name="activeStateType" key="label.currentState" />
 	<slot name="registrationAgreement" key="label.registrationAgreement" />	
+	<slot name="numberEnroledCurricularCoursesInCurrentYear" key="label.numberEnroledCurricularCoursesInCurrentYear" />
 </schema>
 
 <schema name="student.registrationsWithStartData" extends="student.registrationsToList"
