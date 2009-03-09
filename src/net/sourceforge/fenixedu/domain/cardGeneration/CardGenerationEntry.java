@@ -56,7 +56,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(" ");
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
-	stringBuilder.append("00");
+	stringBuilder.append(getNumberOfCards(studentCurricularPlan));
 
 	stringBuilder.append("00");
 
@@ -79,6 +79,17 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("\r\n");
 
 	setLine(stringBuilder.toString());
+    }
+
+    private String getNumberOfCards(final StudentCurricularPlan studentCurricularPlan) {
+	final Person person = studentCurricularPlan.getPerson();
+	final int numberOfCards;
+	if (getPerson() == null) {
+	    numberOfCards = person.getCardGenerationEntriesCount();
+	} else {
+	    numberOfCards = person.getCardGenerationEntriesCount() - 1;
+	}
+	return numberOfCards > 9 ? Integer.toString(numberOfCards) : "0" + numberOfCards;
     }
 
     @Override
@@ -120,7 +131,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (StringUtils.isEmpty(ministryCode)) {
 	    throw new Error("Unkown degree type: " + degreeType.getName());
 	}
-	return Integer.valueOf(ministryCode);
+	return Integer.parseInt(ministryCode);
     }
 
     protected String fillLeftString(final String uppered, final char c, final int fillTo) {

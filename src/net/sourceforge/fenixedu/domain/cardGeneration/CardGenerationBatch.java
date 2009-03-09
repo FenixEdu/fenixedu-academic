@@ -87,12 +87,14 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 		final DegreeType maxDegreeType = findMaxDegreeType(studentCurricularPlans);
 		for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 		    final DegreeType degreeType = studentCurricularPlan.getDegreeType();
-		    if (degreeType.compareTo(maxDegreeType) >= 0) {
-			// System.out.println("Using: " + degreeType +
+		    if (!degreeType.isEmpty()) {
+			if (degreeType.compareTo(maxDegreeType) >= 0) {
+			    // System.out.println("Using: " + degreeType +
 			// " same as " + maxDegreeType);
-			createCardGenerationEntry(person, studentCurricularPlan);
-		    } else {
-			System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);
+			    createCardGenerationEntry(person, studentCurricularPlan);
+			} else {
+			    System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);
+			}
 		    }
 		}
 	    }
