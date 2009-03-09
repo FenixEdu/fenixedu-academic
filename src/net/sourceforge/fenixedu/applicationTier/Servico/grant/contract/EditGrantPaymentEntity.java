@@ -9,10 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
-import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -41,31 +39,4 @@ public class EditGrantPaymentEntity extends FenixService {
 	}
     }
 
-    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
-    @Service
-    public static void run(InfoGrantProject infoObject) throws FenixServiceException {
-	GrantProject grantProject = (GrantProject) rootDomainObject.readGrantPaymentEntityByOID(infoObject.getIdInternal());
-	if (grantProject == null) {
-	    grantProject = new GrantProject();
-	}
-	grantProject.setDesignation(infoObject.getDesignation());
-	grantProject.setNumber(infoObject.getNumber());
-	// Grant Cost Center
-	if (infoObject.getInfoGrantCostCenter() != null) {
-	    final GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject.readGrantPaymentEntityByOID(infoObject
-		    .getInfoGrantCostCenter().getIdInternal());
-	    if (grantCostCenter == null)
-		throw new GrantOrientationTeacherNotFoundException();
-	    grantProject.setGrantCostCenter(grantCostCenter);
-
-	}
-
-	// ResponsibleTeacher
-	if (infoObject.getInfoResponsibleTeacher() != null) {
-	    Teacher teacher = Teacher.readByNumber(infoObject.getInfoResponsibleTeacher().getTeacherNumber());
-	    if (teacher == null)
-		throw new GrantOrientationTeacherNotFoundException();
-	    grantProject.setResponsibleTeacher(teacher);
-	}
-    }
 }
