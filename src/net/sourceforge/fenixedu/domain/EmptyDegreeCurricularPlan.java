@@ -175,11 +175,6 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     }
 
     @Override
-    public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
-	return null;
-    }
-
-    @Override
     public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {
 	return null;
     }
