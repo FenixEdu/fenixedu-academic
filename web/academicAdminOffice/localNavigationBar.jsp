@@ -4,6 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.joda.time.LocalDate"%><html:xhtml/>
 
+<%@page import="net.sourceforge.fenixedu.predicates.PermissionPredicates" %>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
+
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 
@@ -78,10 +81,16 @@
 		<li class="navheader"><bean:message key="label.documents" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/generatedDocuments.do?method=prepareSearchPerson"><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
-<%--	
+	
+	<%
+		if(PermissionPredicates.managePermissionMembersGroup.evaluate(null)) {
+	%>
 	<ul>
 		<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/permissionManagement.do?method=showPermissions"><bean:message key="label.manage.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
---%>	
+	<% 
+		}
+	%>
+	
 </logic:present>

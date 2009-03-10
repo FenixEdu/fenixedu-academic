@@ -12,7 +12,11 @@
 	<em><bean:message
 		key="label.academicAdminOffice.permissions.management"
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-
+	
+	<br/>
+	<bean:message key="campus" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<bean:write name="workingCampus" property="name"/>
+	
 	<fr:view name="permissions"
 		schema="academicAdminOffice.show.permissions" >
 		<fr:layout name="tabular">

@@ -21,15 +21,25 @@ public class RegistrationPredicates {
 
 	@Override
 	public boolean evaluate(Registration registration) {
-	    // if (AccessControl.getPerson().hasRole(RoleType.MANAGER) ||
-	    // !registration.hasConcluded()) {
-	    // return true;
-	    // }
-	    //
-	    // return getPermissionByType(AccessControl.getPerson(),
-	    // PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
-	    // .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+//	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || !registration.hasConcluded()) {
+//		return true;
+//	    }
+//
+//	    return getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
+//		    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
 
+	     return true;
+	}
+    };
+
+    public static final AccessControlPredicate<Registration> manageConclusionProcess = new AccessControlPredicate<Registration>() {
+
+	@Override
+	public boolean evaluate(Registration c) {
+//	    return AccessControl.getPerson().hasRole(RoleType.MANAGER)
+//		    || getPermissionByType(AccessControl.getPerson(), PermissionType.MANAGE_CONCLUSION)
+//			    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+	    
 	    return true;
 	}
     };

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -198,8 +199,12 @@ public class StudentDA extends FenixDispatchAction {
 		return mapping.findForward("chooseCycleForRegistrationConclusion");
 	    }
 	}
-
-	request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
+	
+	
+	RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
+	registrationConclusionBean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.manageConclusionProcess.evaluate(registration));
+	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	
 	return mapping.findForward("registrationConclusion");
     }
 

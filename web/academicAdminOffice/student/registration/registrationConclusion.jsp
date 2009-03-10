@@ -23,6 +23,8 @@
 			</html:link>
 		</li>
 	</ul>
+
+	<logic:equal name="registrationConclusionBean" property="hasAccessToRegistrationConclusionProcess" value="true">
 	
 	<div style="float: right;">
 		<bean:define id="personID" name="registrationConclusionBean" property="registration.student.person.idInternal"/>
@@ -265,6 +267,14 @@
 			</p>
 		
 		</fr:form>
+	</logic:equal>
+
+	</logic:equal>
+	
+	<logic:equal name="registrationConclusionBean" property="hasAccessToRegistrationConclusionProcess" value="false">
+		<p class="mtop15">
+			<em><bean:message key="error.not.authorized" bundle="APPLICATION_RESOURCES"/></em>
+		</p>
 	</logic:equal>
 
 </logic:present>

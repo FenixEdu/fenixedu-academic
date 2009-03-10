@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -49,10 +52,14 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	    }
 	}
 
-	AccessControl.getPerson().getEmployee().getCurrentWorkingPlace();
+	Collections.sort(permissionMembers, new BeanComparator("person.name"));
+	
+	Campus workingCampus = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getCampus();
 
 	request.setAttribute("permissionMembers", permissionMembers);
 	request.setAttribute("permission", permission);
+	request.setAttribute("workingCampus", workingCampus);
+	
 	return mapping.findForward("editPermissionMembersGroup");
     }
 
@@ -81,6 +88,8 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("permissions", permissions);
+	request.setAttribute("workingCampus", workingCampus);
+	
 	return mapping.findForward("showAcademicAdminOfficePermissions");
     }
 
@@ -160,16 +169,17 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	}
 
 	public PermissionViewBean(final PermissionType type, final List<Member> members) {
-	    this.type = type;
-	    this.members = members;
+	    setPermissionType(type);
+	    setMembers(members);
 	}
 
 	public PermissionViewBean(final PermissionType type, final Group permissionMembersGroup) {
 	    this.type = type;
-	    this.members = new ArrayList<Member>();
-
+	    List<Member> members = new ArrayList<Member>();
+	    setMembers(members);
+	    
 	    for (Person person : permissionMembersGroup.getElements()) {
-		this.members.add(new Member(person));
+		members.add(new Member(person));
 	    }
 	}
 
@@ -187,12 +197,13 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
 	public void setMembers(final List<Member> members) {
 	    this.members = members;
+	    Collections.sort(this.members, new BeanComparator("person.name"));
 	}
     }
 
     public static class PermissionMemberBean implements java.io.Serializable {
 	/**
-	 * 
+	 * c
 	 */
 	private static final long serialVersionUID = 1L;
 

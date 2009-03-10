@@ -26,6 +26,8 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private DomainReference<Registration> registration;
 
     private DomainReference<CycleCurriculumGroup> cycleCurriculumGroup;
+    
+    private Boolean hasAccessToRegistrationConclusionProcess = Boolean.TRUE;
 
     public RegistrationConclusionBean(Registration registration) {
 	this(registration, null);
@@ -234,6 +236,14 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public DateTime getConclusionProcessLastModificationDateTime() {
 	return isByCycle() ? getCycleCurriculumGroup().getConclusionProcessLastModificationDateTime() : getRegistration()
 		.getConclusionProcessLastModificationDateTime();
+    }
+
+    public Boolean getHasAccessToRegistrationConclusionProcess() {
+        return hasAccessToRegistrationConclusionProcess;
+    }
+
+    public void setHasAccessToRegistrationConclusionProcess(Boolean hasAccessToRegistrationConclusionProcess) {
+        this.hasAccessToRegistrationConclusionProcess = hasAccessToRegistrationConclusionProcess;
     }
 
 }
