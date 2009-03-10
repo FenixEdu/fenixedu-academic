@@ -2,22 +2,27 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gr
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.GradesToSubmitSendMail;
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitExecutionCourseSendMailBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSendMailBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetToConfirmSendMailBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmit;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirm;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
+import net.sourceforge.fenixedu.domain.util.email.EmailBean;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -80,44 +85,32 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
     public ActionForward prepareMarkSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-	bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
-	request.setAttribute("bean", bean);
-	return mapping.findForward("prepareMarkSheetsToConfirmSendMail");
-    }
-
-    public ActionForward markSheetsToConfirmSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-
-	MarkSheetsToConfirmSendMail.run(bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(), bean
-		.getSubject(), bean.getMessage());
-	resetMail(bean);
-	return searchSendMail(mapping, actionForm, request, response);
+	Group teachersGroup = new TeachersWithMarkSheetsToConfirm(bean.getExecutionPeriod(), bean.getDegree(), bean
+		.getDegreeCurricularPlan());
+	String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.markSheets.to.confirm.send.mail");
+	Recipient recipient = Recipient.createNewRecipient(message, teachersGroup);
+	EmailBean emailBean = new EmailBean();
+	// Nucleo de Graduacao
+	UnitBasedSender graduationUnitSender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSenderIterator().next();
+	// emailBean.setReplyTos(Collections.singletonList());
+	emailBean.setRecipients(Collections.singletonList(recipient));
+	emailBean.setSender(graduationUnitSender);
+	request.setAttribute("emailBean", emailBean);
+	return mapping.findForward("sendEmail");
     }
 
     public ActionForward prepareGradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState("sendMailBean").getMetaObject().getObject();
-	bean.setFrom(getResources(request, "GLOBAL_RESOURCES").getMessage("degreeAdminOffice.mail"));
-	request.setAttribute("bean", bean);
-	return mapping.findForward("prepareGradesToSubmitSendMail");
+	Group teachersGroup = new TeachersWithGradesToSubmit(bean.getExecutionPeriod(), bean.getDegree(), bean
+		.getDegreeCurricularPlan());
+	String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.grades.to.submit.send.mail");
+	Recipient recipient = Recipient.createNewRecipient(message, teachersGroup);
+	EmailBean emailBean = new EmailBean();
+	UnitBasedSender graduationUnitSender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSenderIterator().next();
+	emailBean.setRecipients(Collections.singletonList(recipient));
+	emailBean.setSender(graduationUnitSender);
+	request.setAttribute("emailBean", emailBean);
+	return mapping.findForward("sendEmail");
     }
-
-    public ActionForward gradesToSubmitSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	MarkSheetSendMailBean bean = (MarkSheetSendMailBean) RenderUtils.getViewState().getMetaObject().getObject();
-
-	GradesToSubmitSendMail.run(bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
-		bean.getSubject(), bean.getMessage());
-	resetMail(bean);
-	return searchSendMail(mapping, actionForm, request, response);
-    }
-
-    private void resetMail(MarkSheetSendMailBean bean) {
-	bean.setCc(null);
-	bean.setSubject(null);
-	bean.setMessage(null);
-	bean.setFrom(null);
-    }
-
 }

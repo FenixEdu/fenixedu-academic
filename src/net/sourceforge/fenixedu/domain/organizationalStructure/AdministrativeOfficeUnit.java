@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -73,5 +75,18 @@ public class AdministrativeOfficeUnit extends AdministrativeOfficeUnit_Base {
 	    throw new DomainException("error.unit.cannot.be.deleted");
 	}
 	super.delete();
+    }
+
+    public static Unit getGraduationUnit() {
+	final Set<Party> parties = PartyType.getPartiesSet(PartyTypeEnum.ADMINISTRATIVE_OFFICE_UNIT);
+	for (Party p : parties) {
+	    AdministrativeOfficeUnit aou = (AdministrativeOfficeUnit) p;
+	    // nucleo de graduacao
+	    for (Party u : aou.getChildParties(Unit.class)) {
+		if ("NG".equals(((Unit) u).getAcronym()))
+		    return (Unit) u;
+	    }
+	}
+	return null;
     }
 }

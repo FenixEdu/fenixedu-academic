@@ -52,6 +52,8 @@ import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmit;
+import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirm;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
@@ -75,7 +77,7 @@ public class GroupBuilderRegistry {
 
     private static final GroupBuilderRegistry instance = new GroupBuilderRegistry();
 
-    private Map<String, Pair<Class, GroupBuilder>> builders;
+    private final Map<String, Pair<Class, GroupBuilder>> builders;
 
     private GroupBuilderRegistry() {
 	this.builders = new Hashtable<String, Pair<Class, GroupBuilder>>();
@@ -211,7 +213,9 @@ public class GroupBuilderRegistry {
 	register("delegates", DelegatesGroup.class, new DelegatesGroup.Builder());
 	register("studentsByDegreeAndCurricularYear", StudentsByDegreeAndCurricularYear.class,
 		new StudentsByDegreeAndCurricularYear.Builder());
-
+	register("teachersWithMarkSheetsToConfirm", TeachersWithMarkSheetsToConfirm.class,
+		new TeachersWithMarkSheetsToConfirm.Builder());
+	register("teachersWithGradesToSubmit", TeachersWithGradesToSubmit.class, new TeachersWithGradesToSubmit.Builder());
 	registerGroupsWithNoArguments();
     }
 

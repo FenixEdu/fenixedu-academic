@@ -530,6 +530,7 @@
 	     		<forward name="searchSendMail" path="show.markSheetSendMail.searchSendMail"/>
 	     		<forward name="prepareMarkSheetsToConfirmSendMail" path="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail"/>
 	     		<forward name="prepareGradesToSubmitSendMail" path="show.markSheetSendMail.prepareGradesToSubmitSendMail"/>
+	     		<forward name="sendEmail" path="/messaging/newEmail.jsp" />
 	     		
 	</action>
 	
