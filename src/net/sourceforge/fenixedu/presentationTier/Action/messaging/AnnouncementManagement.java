@@ -42,8 +42,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         May 30, 2006, 12:21:56 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on May 30, 2006, 12:21:56 PM
  * 
  */
 public abstract class AnnouncementManagement extends FenixDispatchAction {
@@ -265,11 +265,11 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return mapping.findForward("listAnnouncementBoards");
     }
 
-    private Integer getSelectedArchiveMonth(HttpServletRequest request) {
+    protected Integer getSelectedArchiveMonth(HttpServletRequest request) {
 	return Integer.valueOf(request.getParameter("selectedMonth"));
     }
 
-    private Integer getSelectedArchiveYear(HttpServletRequest request) {
+    protected Integer getSelectedArchiveYear(HttpServletRequest request) {
 	return Integer.valueOf(request.getParameter("selectedYear"));
     }
 

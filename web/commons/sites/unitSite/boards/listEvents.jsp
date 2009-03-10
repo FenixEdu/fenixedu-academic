@@ -12,7 +12,7 @@
 
 <h2 class="mtop15"><bean:message key="label.messaging.events.title" bundle="MESSAGING_RESOURCES"/></h2>
 
-<bean:define id="action" name="announcementActionVariable" toScope="request"/>
+<bean:define id="action" name="eventActionVariable" toScope="request"/>
 <bean:define id="context" name="extraParameters"/>
 
 <logic:present name="archiveDate">
