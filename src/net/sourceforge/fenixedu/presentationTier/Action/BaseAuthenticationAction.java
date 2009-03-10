@@ -34,12 +34,6 @@ import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
-    protected static final boolean useCASAuthentication;
-
-    static {
-	useCASAuthentication = PropertiesManager.getBooleanProperty("cas.enabled");
-    }
-
     public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	try {

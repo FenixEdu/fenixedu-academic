@@ -19,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixWebFramework.security.UserView;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -31,7 +33,9 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
 	    throws FenixFilterException, FenixServiceException {
 
-	if (!useCASAuthentication) {
+	final String serverName = request.getServerName();
+	final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+	if (casConfig == null || !casConfig.isCasEnabled()) {
 	    throw new ExcepcaoAutenticacao("errors.noAuthorization");
 	}
 
