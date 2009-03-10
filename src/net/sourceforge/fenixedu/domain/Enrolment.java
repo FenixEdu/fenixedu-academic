@@ -758,7 +758,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public Integer getFinalGrade() {
 	final Grade grade = getGrade();
-	return grade.isEmpty() || !grade.isNumeric() ? null : Integer.valueOf(grade.getValue());
+	return (grade == null || grade.isEmpty() || !grade.isNumeric()) ? null : Integer.valueOf(grade.getValue());
     }
 
     public GradeScale getGradeScale() {
