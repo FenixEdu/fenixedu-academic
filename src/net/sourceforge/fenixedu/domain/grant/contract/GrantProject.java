@@ -22,11 +22,13 @@ public class GrantProject extends GrantProject_Base {
 		throw new DomainException("message.grant.project.alreadyExistsNumber");
 	    }
 	}
-	setRootDomainObject(RootDomainObject.getInstance());
 	init(number, designation, responsibleTeacher, grantCostCenter);
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     protected void init(String number, String designation, Teacher responsibleTeacher, GrantCostCenter grantCostCenter) {
+	check(responsibleTeacher, "message.grant.paymentEntity.emptyTeacher");
+	check(grantCostCenter, "message.grant.paymentEntity.emptyCostCenter");
 	setNumber(number);
 	setDesignation(designation);
 	setResponsibleTeacher(responsibleTeacher);

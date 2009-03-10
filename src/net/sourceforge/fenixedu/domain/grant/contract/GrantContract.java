@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
@@ -29,7 +31,9 @@ public class GrantContract extends GrantContract_Base {
 
     public void delete() {
 	removeGrantCostCenter();
-	getGrantInsurance().delete();
+	if (hasGrantInsurance()) {
+	    getGrantInsurance().delete();
+	}
 	removeGrantOwner();
 	removeGrantType();
 	for (; hasAnyGrantOrientationTeachers(); getGrantOrientationTeachers().get(0).delete())

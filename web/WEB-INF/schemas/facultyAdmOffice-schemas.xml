@@ -126,15 +126,15 @@
 <schema name="show.grantProject" type="net.sourceforge.fenixedu.domain.grant.contract.GrantProject">
 	<slot name="number" key="label.grant.project.number"/>
 	<slot name="designation" key="label.grant.project.designation"/>
-	<slot name="responsibleTeacher" key="label.grant.project.responsibleTeacher.number" schema="show.responsibleTeacher" layout="values"/>
-	<slot name="grantCostCenter" key="label.grant.project.grantCostCenter.number" schema="show.grantCostCenter" layout="values"/>
+	<slot name="responsibleTeacher" key="label.grant.part.responsibleTeacher" schema="show.responsibleTeacher" layout="values"/>
+	<slot name="grantCostCenter" key="label.grant.paymententity.costcenter" schema="show.grantCostCenterNumber" layout="values"/>
 </schema>
 
 <schema name="show.responsibleTeacher" type="net.sourceforge.fenixedu.domain.Teacher">
 	<slot name="teacherNumber" key="label.grant.project.number"/>
 </schema>
 
-<schema name="show.grantCostCenter" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter">
+<schema name="show.grantCostCenterNumber" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter">
 	<slot name="number" key="label.grant.project.number"/>
 </schema>
 
@@ -142,7 +142,7 @@
 constructor="number,designation,responsibleTeacher,grantCostCenter">
 	<slot name="number" key="label.grant.project.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="designation" key="label.grant.project.designation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="responsibleTeacher" layout="autoComplete" key="label.grant.project.responsibleTeacher.number">
+	<slot name="responsibleTeacher" layout="autoComplete" key="label.grant.part.responsibleTeacher">
 		<property name="size" value="80"/>
 		<property name="labelField" value="person.name"/>
 		<property name="format" value="${person.name}"/>
@@ -153,7 +153,7 @@ constructor="number,designation,responsibleTeacher,grantCostCenter">
 		<property name="minChars" value="3"/>
 		<property name="errorStyleClass" value="error0"/>
 	</slot>
-	<slot name="grantCostCenter" key="label.grant.project.grantCostCenter.number" layout="autoComplete">
+	<slot name="grantCostCenter" key="label.grant.paymententity.costcenter" layout="autoComplete">
 		<property name="size" value="80"/>
 		<property name="labelField" value="designation"/>
 		<property name="format" value="${designation}"/>
@@ -164,4 +164,49 @@ constructor="number,designation,responsibleTeacher,grantCostCenter">
 		<property name="errorStyleClass" value="error0"/>
 	</slot>	
 	<setter signature="editGrantProject(number,designation,responsibleTeacher,grantCostCenter)"/>
+</schema>
+
+<schema name="show.grantCostCenter" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter">
+	<slot name="number" key="label.grant.project.number"/>
+	<slot name="designation" key="label.grant.project.designation"/>
+	<slot name="responsibleTeacher" key="label.grant.part.responsibleTeacher" schema="show.responsibleTeacher" layout="values"/>
+</schema>
+
+<schema name="edit.grantCostCenter" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter"
+constructor="number,designation,responsibleTeacher">
+	<slot name="number" key="label.grant.project.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="designation" key="label.grant.project.designation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="responsibleTeacher" layout="autoComplete" key="label.grant.part.responsibleTeacher">
+		<property name="size" value="80"/>
+		<property name="labelField" value="person.name"/>
+		<property name="format" value="${person.name}"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchObjects"/>
+		<property name="serviceArgs" value="slot=person.name"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.Teacher"/>	
+		<property name="minChars" value="3"/>
+		<property name="errorStyleClass" value="error0"/>
+	</slot>
+	<setter signature="editGrantCostCenter(number,designation,responsibleTeacher)"/>
+</schema>
+
+<schema name="show.grantType" type="net.sourceforge.fenixedu.domain.grant.contract.GrantType">
+	<slot name="sigla" key="label.grant.type.sigla"/>
+	<slot name="name" key="label.grant.type.name"/>
+	<slot name="minPeriodDays" key="label.grant.type.minPeriodDays"/>
+	<slot name="maxPeriodDays" key="label.grant.type.maxPeriodDays"/>
+	<slot name="source" key="label.grant.type.source"/>
+	<slot name="state" key="label.grant.type.state"/>
+</schema>
+
+<schema name="edit.grantType" type="net.sourceforge.fenixedu.domain.grant.contract.GrantType"
+constructor="sigla, name, minPeriodDays, maxPeriodDays, indicativeValue, source, validUntil">
+	<slot name="sigla" key="label.grant.type.sigla" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="name" key="label.grant.type.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="minPeriodDays" key="label.grant.type.minPeriodDays" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+	<slot name="maxPeriodDays" key="label.grant.type.maxPeriodDays" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+	<slot name="indicativeValue" key="label.grant.type.indicativeValue"/>
+	<slot name="source" key="label.grant.type.source"/>
+	<slot name="validUntil" key="label.grant.type.state"/>
+	<setter signature="editGrantType(sigla, name, minPeriodDays, maxPeriodDays, indicativeValue, source, validUntil)"/>
 </schema>

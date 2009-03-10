@@ -4,6 +4,10 @@
 package net.sourceforge.fenixedu.domain.grant.contract;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author pica
@@ -11,9 +15,22 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
  */
 public class GrantCostCenter extends GrantCostCenter_Base {
 
-    public GrantCostCenter() {
-	super();
+    public GrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
+	for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+	    if (grantPaymentEntity.isCostCenter() && !((GrantCostCenter) grantPaymentEntity).equals(this)
+		    && grantPaymentEntity.getNumber().equalsIgnoreCase(number)) {
+		throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
+	    }
+	}
+	init(number, designation, responsibleTeacher);
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    protected void init(String number, String designation, Teacher responsibleTeacher) {
+	check(responsibleTeacher, "message.grant.paymentEntity.emptyTeacher");
+	setNumber(number);
+	setDesignation(designation);
+	setResponsibleTeacher(responsibleTeacher);
     }
 
     public static GrantCostCenter readGrantCostCenterByNumber(String number) {
@@ -28,5 +45,17 @@ public class GrantCostCenter extends GrantCostCenter_Base {
     @Override
     public boolean isCostCenter() {
 	return true;
+    }
+
+    @Checked("RolePredicates.GRANT_OWNER_MANAGER_PREDICATE")
+    @Service
+    public void editGrantCostCenter(String number, String designation, Teacher responsibleTeacher) {
+	for (final GrantPaymentEntity grantPaymentEntity : RootDomainObject.getInstance().getGrantPaymentEntitys()) {
+	    if (grantPaymentEntity.isCostCenter() && grantPaymentEntity.getNumber().equalsIgnoreCase(number)
+		    && !((GrantCostCenter) grantPaymentEntity).equals(this)) {
+		throw new DomainException("errors.grant.costcenter.duplicateEntry", number);
+	    }
+	}
+	init(number, designation, responsibleTeacher);
     }
 }

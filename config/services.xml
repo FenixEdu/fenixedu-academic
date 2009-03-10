@@ -1688,15 +1688,6 @@
     </service>
 
     <service>
-        <name>EditGrantType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.EditGrantType</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>EditGrouping</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditGrouping</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2977,15 +2968,6 @@
     <service>
         <name>ReadGrantPaymentEntity</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantPaymentEntity</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadGrantType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadGrantType</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="GrantOwnerManagerAuthorization"/>

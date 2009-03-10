@@ -42,3 +42,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table GrantType" alterTableGrantType.sql

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <em><bean:message key="label.facultyAdmOffice.portal.name"/></em>
 <h2><bean:message key="label.grant.costcenter.information"/></h2>
@@ -22,7 +23,7 @@
 
 <logic:messagesNotPresent>
 
-<logic:present name="infoGrantCostCenterList">
+<logic:present name="grantCenterList">
 	<%-- Create a new Grant CostCenter --%>
 	<p>
 		<bean:message key="message.grant.costcenter.creation"/>:
@@ -32,48 +33,21 @@
 	</p>
 
 
-    <table class="tstyle4">
-    <%-- Table with grant type description rows --%>
-    <tr>
-        <th>
-            <bean:message key="label.grant.costcenter.number"/>
-        </th>
-        <th>
-            <bean:message key="label.grant.costcenter.designation"/>
-        </th>
-        <th>
-            <bean:message key="label.grant.costcenter.responsibleTeacher.number"/>
-        </th>
-        <th></th>
-    </tr>   
-    <%-- Table with result of search --%>
-    <logic:iterate id="infoGrantCostCenter" name="infoGrantCostCenterList">
-        <tr>
-            <td>
-	            <bean:write name="infoGrantCostCenter" property="number"/>
-            </td>
-            <td>
-	            <bean:write name="infoGrantCostCenter" property="designation"/>
-            </td>
-            <td class="acenter">
-               	<logic:present name="infoGrantCostCenter" property="infoResponsibleTeacher">
-		            <bean:write name="infoGrantCostCenter" property="infoResponsibleTeacher.teacherNumber"/>
-		        </logic:present>
-            </td>
-            <td>
-		            <%-- Edit a Grant CostCenter --%>
-                    <bean:define id="idGrantCostCenter" name="infoGrantCostCenter" property="idInternal"/>
-                    <html:link page='<%= "/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm&amp;idGrantCostCenter=" + idGrantCostCenter.toString() %>' > 
-                        <bean:message key="link.edit" />
-                    </html:link>        
-            </td>       
-        </tr>
-    </logic:iterate>
-    </table>
+	<fr:view name="grantCenterList" schema="show.grantCostCenter">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 printborder" />
+			<fr:property name="columnClasses" value="acenter" />
+			<fr:property name="headerClasses" value="acenter" />
+            <fr:property name="link(edit)" value="/editGrantCostCenter.do?method=prepareEditGrantCostCenterForm" />
+			<fr:property name="key(edit)" value="link.edit" />
+			<fr:property name="param(edit)" value="idInternal/idGrantCostCenter" />
+		</fr:layout>
+	</fr:view> 
+
 </logic:present>
     
 <%-- If there are no grant cost centers --%>
-<logic:notPresent name="infoGrantCostCenterList">
+<logic:notPresent name="grantCenterList">
     <p><bean:message key="message.grant.costcenter.nonExistentGrantTypes" /></p>
 </logic:notPresent>
     

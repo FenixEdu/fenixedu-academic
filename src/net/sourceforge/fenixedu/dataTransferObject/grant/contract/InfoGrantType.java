@@ -8,6 +8,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 
+import org.joda.time.LocalDate;
+
 /**
  * @author Barbosa
  * @author Pica
@@ -139,7 +141,9 @@ public class InfoGrantType extends InfoObject {
 	    setMaxPeriodDays(grantType.getMaxPeriodDays());
 	    setIndicativeValue(grantType.getIndicativeValue());
 	    setSource(grantType.getSource());
-	    setState(grantType.getState());
+	    if (grantType.getValidUntil() != null) {
+		setState(new Date(grantType.getValidUntil().toDateMidnight().getMillis()));
+	    }
 	}
     }
 
@@ -165,7 +169,9 @@ public class InfoGrantType extends InfoObject {
 	grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
 	grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
 	grantType.setSource(infoGrantType.getSource());
-	grantType.setState(infoGrantType.getState());
+	if (infoGrantType.getState() != null) {
+	    grantType.setValidUntil(new LocalDate(infoGrantType.getState()));
+	}
     }
 
 }

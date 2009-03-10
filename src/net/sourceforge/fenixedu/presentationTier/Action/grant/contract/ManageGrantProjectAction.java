@@ -26,7 +26,6 @@ public class ManageGrantProjectAction extends FenixDispatchAction {
 
     public ActionForward prepareManageGrantProject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	List<GrantProject> grantProjectList = new ArrayList<GrantProject>();
 	for (final GrantPaymentEntity grantPaymentEntity : rootDomainObject.getGrantPaymentEntitys()) {
 	    if (grantPaymentEntity.isGrantProject()) {
@@ -34,7 +33,6 @@ public class ManageGrantProjectAction extends FenixDispatchAction {
 	    }
 	}
 	request.setAttribute("grantProjectList", grantProjectList);
-
 	return mapping.findForward("manage-grant-project");
 
     }
