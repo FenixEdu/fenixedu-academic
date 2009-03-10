@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -45,5 +46,9 @@ public class DegreeSite extends DegreeSite_Base {
     public void setNormalizedName(final MultiLanguageString normalizedName) {
 	// unable to optimize because we cannot track changes to name correctly.
 	// don't call super.setNormalizedName() !
+    }
+
+    public Unit getUnit() {
+	return getDegree().getUnit();
     }
 }
