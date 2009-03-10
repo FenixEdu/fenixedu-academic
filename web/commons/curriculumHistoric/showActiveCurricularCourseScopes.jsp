@@ -58,9 +58,8 @@
 				</td>
 				<td style="text-align:left">
 					<bean:define id="curricularCourseCode" name="degreeModuleScope" property="curricularCourse.idInternal"/>
-                    <bean:define id="currentYear" name="degreeModuleScope" property="curricularYear"/>
 					<bean:define id="currentSemester" name="degreeModuleScope" property="curricularSemester"/>
-					<html:link page="<%="/showCurriculumHistoric.do?method=showCurriculumHistoric&amp;curricularCourseCode=" + curricularCourseCode + "&amp;year=" + pageContext.findAttribute("currentYear").toString() + "&amp;semester=" + pageContext.findAttribute("currentSemester").toString() + "&amp;academicInterval=" + ((AcademicInterval)request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>">
+					<html:link page="<%="/showCurriculumHistoric.do?method=showCurriculumHistoric&amp;curricularCourseCode=" + curricularCourseCode + "&amp;semester=" + pageContext.findAttribute("currentSemester").toString() + "&amp;academicInterval=" + ((AcademicInterval)request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>">
 						<bean:write name="degreeModuleScope" property="curricularCourse.name"/>
 					</html:link>
 				</td>

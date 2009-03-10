@@ -29,7 +29,6 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
 	final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
 	final Integer semester = getIntegerFromRequest(request, "semester");
-	final Integer year = getIntegerFromRequest(request, "year");
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
 		.getParameter("academicInterval"));
 
