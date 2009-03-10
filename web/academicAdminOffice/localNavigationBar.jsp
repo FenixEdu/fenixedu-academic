@@ -85,10 +85,12 @@
 	<%
 		if(PermissionPredicates.managePermissionMembersGroup.evaluate(null)) {
 	%>
+	<%-- 
 	<ul>
 		<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/permissionManagement.do?method=showPermissions"><bean:message key="label.manage.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
+	--%>
 	<% 
 		}
 	%>
