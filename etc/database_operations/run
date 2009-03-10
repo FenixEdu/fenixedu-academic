@@ -16,6 +16,7 @@ echo Using host=$DB_HOST
 echo Using database: $DB
 echo Using user $USER:
 echo Institution: $INSTITUTION
+echo Password: PASSWORD
 
 function execute() {
 	if [ -z $3 ] 
