@@ -87,7 +87,7 @@
 	                                    </fr:view>
 	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
 					<bean:define id="displayName" name="file" property="displayName"/>
-                    <a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
+                    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
                     </p>
 			</logic:iterate>
 			</div>
