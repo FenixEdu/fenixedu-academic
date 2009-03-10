@@ -16,13 +16,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixWebFramework.Config.CasConfig;
+
 public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
     @Override
     protected IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
 	    throws FenixFilterException, FenixServiceException {
 
-	if (useCASAuthentication) {
+	final String serverName = request.getServerName();
+	final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+	if (casConfig != null && casConfig.isCasEnabled()) {
 	    throw new ExcepcaoAutenticacao("errors.noAuthorization");
 	}
 
