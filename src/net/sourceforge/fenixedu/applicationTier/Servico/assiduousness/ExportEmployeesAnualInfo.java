@@ -82,7 +82,9 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		setArticle66(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
 		employeeMonthInfo.setBereavementLeave(countLeaveNumberOfDays(leaves, "NOJO", beginDate, endDate));
 		employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
-		employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays(leaves, "LP", beginDate, endDate));
+		Integer countLeaveNumberOfDays = countLeaveNumberOfDays(leaves, "LP", beginDate, endDate)
+			+ countLeaveNumberOfDays(leaves, "LP25%", beginDate, endDate);
+		employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays);
 		employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
 		List<JustificationMotive> justificationMotives = JustificationMotive
 			.getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
@@ -109,7 +111,9 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		setVacationsInWorkDays(employeeMonthInfo, leaves, beginDate, endDate);
 		employeeMonthInfo.setBereavementLeaveWorkDays(countLeaveNumberOfWorkDays(leaves, "NOJO", beginDate, endDate));
 		employeeMonthInfo.setMarriageInWorkDays(countLeaveNumberOfWorkDays(leaves, "LPC", beginDate, endDate));
-		employeeMonthInfo.setChildbirthInWorkDays(countLeaveNumberOfWorkDays(leaves, "LP", beginDate, endDate));
+		Integer countLeaveNumberOfWorkDays = countLeaveNumberOfWorkDays(leaves, "LP", beginDate, endDate)
+			+ countLeaveNumberOfWorkDays(leaves, "LP25%", beginDate, endDate);
+		employeeMonthInfo.setChildbirthInWorkDays(countLeaveNumberOfWorkDays);
 		employeeMonthInfo
 			.setLeaveWithoutPaymentInWorkDays(countLeaveNumberOfWorkDays(leaves, "LS/V", beginDate, endDate));
 		setArticle52(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
