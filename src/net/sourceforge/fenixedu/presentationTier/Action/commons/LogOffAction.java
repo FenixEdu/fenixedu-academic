@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 
@@ -47,7 +45,7 @@ public class LogOffAction extends Action {
 		killSession(request);
 		result = mapping.findForward("showBlankPage");
 	    } else {
-		result = getCasLogoutActionForward();
+		result = getCasLogoutActionForward(casConfig);
 	    }
 	} else {
 	    killSession(request);
@@ -58,11 +56,11 @@ public class LogOffAction extends Action {
 	return result;
     }
 
-    private ActionForward getCasLogoutActionForward() {
+    private ActionForward getCasLogoutActionForward(CasConfig casConfig) {
 	ActionForward actionForward = new ActionForward();
 
 	actionForward.setRedirect(true);
-	actionForward.setPath(PropertiesManager.getProperty("cas.logoutUrl"));
+	actionForward.setPath(casConfig.getCasLogoutUrl());
 
 	return actionForward;
     }
