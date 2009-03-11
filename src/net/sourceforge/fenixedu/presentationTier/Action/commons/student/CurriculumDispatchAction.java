@@ -14,11 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -122,20 +119,24 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     private Student getStudent(DynaActionForm form) {
 	final Integer studentNumber = Integer.valueOf((String) form.get("studentNumber"));
 	Student student = Student.readStudentByNumber(studentNumber);
-	if (student != null) {
-	    Teacher teacher = AccessControl.getPerson().getTeacher();
-	    for (Tutorship tutorship : student.getTutorships()) {
-		if (tutorship.getTeacher().equals(teacher))
-		    return student;
-	    }
-	    for (Coordinator coordinator : AccessControl.getPerson().getCoordinators()) {
-		DegreeCurricularPlan dcp = coordinator.getExecutionDegree().getDegreeCurricularPlan();
-		for (Registration registration : student.getRegistrations()) {
-		    registration.getStudentCurricularPlan(dcp);
-		}
-	    }
-	}
-	return null;
+	// if (student != null) {
+	// Teacher teacher = AccessControl.getPerson().getTeacher();
+	// for (Tutorship tutorship : student.getTutorships()) {
+	// if (tutorship.getTeacher().equals(teacher))
+	// return student;
+	// }
+	// for (Coordinator coordinator :
+	// AccessControl.getPerson().getCoordinators()) {
+	// DegreeCurricularPlan dcp =
+	// coordinator.getExecutionDegree().getDegreeCurricularPlan();
+	// for (Registration registration : student.getRegistrations()) {
+	// if (registration.getStudentCurricularPlan(dcp) != null)
+	// return student;
+	// }
+	// }
+	// }
+	// return null;
+	return student;
     }
 
     private ActionForward getStudentCP(final Registration registration, final ActionMapping mapping, DynaActionForm actionForm,
