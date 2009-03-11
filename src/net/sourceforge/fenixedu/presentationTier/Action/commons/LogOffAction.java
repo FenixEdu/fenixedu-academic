@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 
@@ -26,23 +27,22 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public class LogOffAction extends Action {
-
-    private static final boolean useCASAuthentication;
-
-    static {
-	useCASAuthentication = Boolean.valueOf(PropertiesManager.getProperty("cas.enabled"));
-    }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
 	ActionForward result = null;
 
-	if (useCASAuthentication) {
+	final String serverName = request.getServerName();
+	final CasConfig casConfig = FenixWebFramework.getConfig().getCasConfig(serverName);
+
+	if (casConfig != null && casConfig.isCasEnabled()) {
 	    if (request.getParameter("logoutFromCAS") != null && request.getParameter("logoutFromCAS").equals("true")) {
 		killSession(request);
 		result = mapping.findForward("showBlankPage");
