@@ -62,4 +62,15 @@ public class Sender extends Sender_Base {
 	return senders;
     }
 
+    public static boolean userHasRecipients() {
+	Set<Recipient> recipients = new TreeSet<Recipient>(Recipient.COMPARATOR_BY_NAME);
+	Set<Sender> senders = getAvailableSenders();
+	if (senders != null && !senders.isEmpty()) {
+	    for (final Sender sender : senders) {
+		if (!sender.getRecipientsSet().isEmpty())
+		    return true;
+	    }
+	}
+	return false;
+    }
 }
