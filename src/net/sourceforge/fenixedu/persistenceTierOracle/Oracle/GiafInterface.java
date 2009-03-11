@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
+import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import oracle.jdbc.OracleTypes;
@@ -359,7 +360,8 @@ public class GiafInterface {
 			    + lineTokens[line].trim());
 		    cs.close();
 		    persistentSuportOracle.cancelTransaction();
-		    throw new SQLException();
+		    throw new InvalidGiafCodeException("errors.exportToGiafException", new Integer(line + 1).toString(), cs
+			    .getString(12), lineTokens[line].trim());
 		}
 	    } finally {
 		if (cs != null) {

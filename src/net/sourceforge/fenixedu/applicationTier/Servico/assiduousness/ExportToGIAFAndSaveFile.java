@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
+import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 
@@ -33,6 +34,10 @@ public class ExportToGIAFAndSaveFile extends FenixService {
 	    closedMonthDocument.delete();
 	    e.printStackTrace();
 	    return new ActionMessage("error.connectionError");
+	} catch (InvalidGiafCodeException e) {
+	    closedMonthDocument.delete();
+	    e.printStackTrace();
+	    return new ActionMessage(e.getMessage(), e.getArgs());
 	} catch (Exception e) {
 	    closedMonthDocument.delete();
 	}
