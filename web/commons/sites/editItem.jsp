@@ -63,21 +63,7 @@
         
 		
 		<%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
-        <script type="text/javascript">
-            function hasTinyMCE() {
-                return tinyMCE.settings != null;
-            }
-            
-            function insertLink(url, name) {
-                if (hasTinyMCE()) {
-                    tinyMCE.execCommand('mceInsertContent', false, '<a href="' + url + '">' + name + '</a>');
-                }
-            }
-    
-            if (hasTinyMCE()) {
-                switchGlobal();
-            }
-        </script>
+        <script type="text/javascript" src='<%= request.getContextPath() + "/javaScript/tinyMCEHook.js"%>'></script>
         <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
  
     </logic:notEmpty>

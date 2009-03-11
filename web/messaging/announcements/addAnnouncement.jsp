@@ -115,21 +115,7 @@
 	</logic:notEmpty>
 </table>
 
-<script type="text/javascript">
-            function hasTinyMCE() {
-                return tinyMCE.configs.length > 0;
-            }
-            
-            function insertLink(url, name) {
-                if (hasTinyMCE()) {
-                    tinyMCE.execCommand('mceInsertContent', false, '<a href="' + url + '">' + name + '</a> ');
-                }
-            }
-    
-            if (hasTinyMCE()) {
-                switchGlobal();
-            }
-            </script>
+<script type="text/javascript" src='<%= request.getContextPath() + "/javaScript/tinyMCEHook.js"%>'></script>
             
 <p class="mtop2 mbottom025"><strong><bean:message key="label.optionalFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
