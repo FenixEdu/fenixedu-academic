@@ -40,4 +40,10 @@
     <logic:present name="showingEvents">
     	<bean:message key="label.messaging.events.title" bundle="MESSAGING_RESOURCES"/>
     </logic:present>
+
+	<bean:define id="announcementActionVariable" value="/department/announcements.do" toScope="request"/>
+	<bean:define id="eventActionVariable" value="/department/events.do" toScope="request"/>
+	<bean:define id="announcementRSSActionVariable" value="/department/announcementsRSS.do" toScope="request"/>
+	<bean:define id="eventRSSActionVariable" value="/department/eventsRSS.do" toScope="request"/>
+
 </div>
