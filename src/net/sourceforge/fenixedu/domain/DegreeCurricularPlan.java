@@ -792,7 +792,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CurricularCourse getCurricularCourseByCode(String code) {
 	for (CurricularCourse curricularCourse : getCurricularCourses()) {
-	    if (curricularCourse.getCode().equals(code))
+	    if (curricularCourse.getCode() != null && curricularCourse.getCode().equals(code))
 		return curricularCourse;
 	}
 	return null;
