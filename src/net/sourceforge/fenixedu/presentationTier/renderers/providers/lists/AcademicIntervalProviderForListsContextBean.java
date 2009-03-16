@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.ExecutionDegreeListBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.AcademicIntervalConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -27,6 +28,6 @@ public class AcademicIntervalProviderForListsContextBean implements DataProvider
     }
 
     public Converter getConverter() {
-	return null;
+	return new AcademicIntervalConverter();
     }
 }
