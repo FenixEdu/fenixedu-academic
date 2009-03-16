@@ -19,11 +19,11 @@
 	
 	<fr:view name="permissions"
 		schema="academicAdminOffice.show.permissions" >
-		<fr:layout name="tabular">
+		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight mtop15" />
 			<fr:property name="columnClasses" value="acenter width12em, width30em, thlight" />
 			<fr:property name="checkable" value="false" />
-			<fr:property name="linkFormat(visualizar)"
+			<fr:property name="linkFormat(Editar)"
 				value="/permissionManagement.do?method=prepareEditMembers&permissionTypeName=${permissionType.name}" />
 		</fr:layout>
 	</fr:view>

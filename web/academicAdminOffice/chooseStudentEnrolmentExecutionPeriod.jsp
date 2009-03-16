@@ -19,10 +19,10 @@
 	</p>
 </html:messages>
 
+<logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="true">
+
 <p class="mtop15 mbottom025"><strong><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 
-
-<logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="true">
 
 <fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
 	<fr:edit id="studentEnrolment"
