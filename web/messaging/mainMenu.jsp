@@ -71,7 +71,7 @@
 <logic:present role="STUDENT">
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.title.sync"  /></li>
 	<li>
-		<html:link page="/ICalTimeTable.do?method=prepare" titleKey="label.title.sync">
+		<html:link page="/ICalTimeTable.do?method=prepare" bundle="MESSAGING_RESOURCES" titleKey="label.title.sync">
 			<bean:message bundle="MESSAGING_RESOURCES" key="label.title.calendar"/>
 		</html:link>
 	</li>
