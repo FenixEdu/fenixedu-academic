@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="org.joda.time.LocalDate"%><html:xhtml/>
+<%@page import="org.joda.time.LocalDate"%>
+<%@page import="pt.ist.fenixWebFramework.security.UserView"%><html:xhtml/>
 
 <%@page import="net.sourceforge.fenixedu.predicates.PermissionPredicates" %>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
@@ -82,17 +83,12 @@
 		<li><html:link page="/generatedDocuments.do?method=prepareSearchPerson"><bean:message key="label.documents.anualIRS" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 	</ul>
 	
-	<%
-		if(PermissionPredicates.managePermissionMembersGroup.evaluate(null)) {
-	%>
-	<%-- 
-	<ul>
-		<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-		<li><html:link page="/permissionManagement.do?method=showPermissions"><bean:message key="label.manage.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
-	</ul>
-	--%>
-	<% 
-		}
-	%>
+	
+	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
+		<ul>
+			<li class="navheader"><bean:message key="label.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
+			<li><html:link page="/permissionManagement.do?method=showPermissions"><bean:message key="label.manage.permissions" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
+		</ul>
+	</logic:equal>
 	
 </logic:present>

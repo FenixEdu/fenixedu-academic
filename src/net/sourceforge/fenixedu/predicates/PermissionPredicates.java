@@ -23,8 +23,7 @@ public class PermissionPredicates {
 	}
 
     };
-    
-    
+
     public static final AccessControlPredicate<AdministrativeOfficePermission> managePermissionMembersGroup = new AccessControlPredicate<AdministrativeOfficePermission>() {
 
 	@Override
@@ -32,7 +31,7 @@ public class PermissionPredicates {
 	    Person person = AccessControl.getPerson();
 
 	    return (person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) && person.isAdministrativeOfficeEmployee() && person
-		    .getEmployee().getCurrentWorkingPlace().getActiveUnitCoordinator() == person)
+		    .getEmployee().isUnitCoordinator())
 		    || person.hasRole(RoleType.MANAGER);
 	}
 

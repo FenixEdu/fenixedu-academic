@@ -364,5 +364,9 @@ public class Employee extends Employee_Base {
 	final Assiduousness assiduousness = getAssiduousness();
 	return assiduousness == null ? false : assiduousness.worksAt(campus);
     }
+    
+    public boolean isUnitCoordinator(){
+	return getCurrentWorkingPlace().getActiveUnitCoordinator() == getPerson();
+    }
 
 }
