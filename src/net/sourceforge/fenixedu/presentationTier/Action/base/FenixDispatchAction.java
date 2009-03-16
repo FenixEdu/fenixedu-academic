@@ -394,11 +394,18 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	saveErrors(request, messages);
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     protected <T extends DomainObject> T getDomainObjectByOID(final HttpServletRequest request, final String name) {
 	final String parameter = request.getParameter(name);
 	final Long oid = parameter != null ? Long.valueOf(parameter) : (Long) request.getAttribute(name);
 	return oid == null ? null : (T) Transaction.getObjectForOID(oid.longValue());
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected <T extends DomainObject> T getDomainObject(final HttpServletRequest request, final String name) {
+	final String parameter = request.getParameter(name);
+	return (T) DomainObject.fromExternalId(parameter != null ? parameter : (String)request.getAttribute(name));
     }
     
     public ActionForward redirect(String url, HttpServletRequest request){
