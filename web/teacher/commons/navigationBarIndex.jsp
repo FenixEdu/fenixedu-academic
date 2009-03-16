@@ -1,6 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
 <html:xhtml />
 
 <ul>
@@ -14,8 +16,7 @@
 	</html:link> 
 	<logic:present name="tutor">
 		<ul>
-			<li><html:link href="http://gep.ist.utl.pt/html/tutorado"
-				target="_blank">
+			<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
 				<bean:message key="link.teacher.tutorship.gepTutorshipPage" />
 			</html:link></li>
 			<li><html:link

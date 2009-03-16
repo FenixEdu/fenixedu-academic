@@ -1,9 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
+<html:xhtml />
 
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.student.tutorship.tutorshipInfoTitle" bundle="APPLICATION_RESOURCES"/></h2>
@@ -16,10 +18,9 @@
 
 <ul class="mbottom15">
 	<li>
-		<html:link href="http://gep.ist.utl.pt/html/tutorado"
-			target="_blank">
-			<bean:message key="link.teacher.tutorship.gepTutorshipPage" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
+	    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+            <bean:message key="link.teacher.tutorship.gepTutorshipPage" bundle="APPLICATION_RESOURCES"/>
+	    </html:link>
 	</li>
 </ul>
 

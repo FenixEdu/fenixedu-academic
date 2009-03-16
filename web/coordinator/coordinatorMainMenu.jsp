@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
+
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
@@ -8,6 +8,9 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
+<html:xhtml/>
 
 <bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
@@ -201,9 +204,9 @@
 				<bean:message key="label.coordinator.degreeSite.tutorship"/>
 			</li>
 			<li>
-				<html:link href="http://gep.ist.utl.pt/html/tutorado" target="_blank">
-					<bean:message key="link.coordinator.gepTutorshipPage" />
-				</html:link>
+				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+                    <bean:message key="link.coordinator.gepTutorshipPage" />
+	            </html:link>
 			</li>
 			<li>
 				<html:link page="<%= "/createTutorship.do?method=prepareCreateTutorships&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
