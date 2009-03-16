@@ -25,8 +25,12 @@ public class RegistrationPredicates {
 		return true;
 	    }
 
-	    return getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
-		    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+	    AdministrativeOfficePermission permission = getPermissionByType(AccessControl.getPerson(),
+		    PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION);
+
+	    return permission != null
+		    && getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
+			    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
 	}
     };
 
@@ -34,9 +38,14 @@ public class RegistrationPredicates {
 
 	@Override
 	public boolean evaluate(Registration c) {
+	    AdministrativeOfficePermission permission = getPermissionByType(AccessControl.getPerson(),
+		    PermissionType.MANAGE_CONCLUSION);
+
+	    if (permission == null)
+		return false;
+
 	    return AccessControl.getPerson().hasRole(RoleType.MANAGER)
-		    || getPermissionByType(AccessControl.getPerson(), PermissionType.MANAGE_CONCLUSION)
-			    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+		    || permission.getPermissionMembersGroup().isMember(AccessControl.getPerson());
 	}
     };
 
