@@ -56,9 +56,10 @@
 		<li class="navheader"><bean:message key="label.institutions" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/externalUnits.do?method=prepareSearch"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 
-	
+		<%-- Not used 
 		<li class="navheader"><bean:message key="label.notNeedToEnrol" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/notNeedToEnrolEnrolments.do?method=prepare"><bean:message key="link.notNeedToEnrol.enrolment" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+		--%>
 	</ul>
 	
 	<ul>
