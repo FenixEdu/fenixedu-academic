@@ -8,7 +8,7 @@
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
-<fr:view name="student" property="registrations" schema="student.registrationsToList" >
+<fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
 		<fr:property name="sortBy" value="startDate=desc"/>	
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>

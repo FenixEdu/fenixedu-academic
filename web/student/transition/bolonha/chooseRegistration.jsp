@@ -18,7 +18,7 @@
 
 	<logic:notEmpty name="registrations">
 		<fr:view name="registrations"
-			schema="student.registrationsToList">
+			schema="student.registrationDetail.short">
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025"/>

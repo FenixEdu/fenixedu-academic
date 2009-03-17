@@ -23,7 +23,7 @@
 
 	<logic:notEmpty name="toEnrol">
 	    <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="APPLICATION_RESOURCES"/></h3>
-		<fr:view name="toEnrol" schema="student.registrationsToList" >
+		<fr:view name="toEnrol" schema="student.registrationDetail.short" >
 			<fr:layout name="tabular">
 				<fr:property name="sortBy" value="startDate=desc"/>			
 				<fr:property name="classes" value="tstyle4 thlight mtop025"/>
