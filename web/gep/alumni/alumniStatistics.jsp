@@ -5,29 +5,35 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<!-- gep/alumni/alumniStatistics.jsp -->
+
 <h2><bean:message key="title.alumni.statistics" bundle="GEP_RESOURCES" /></h2>
 
 
 <table class="tstyle2">
 	<tr>
-		<td class="aleft"><bean:message key="label.alumni.total.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aleft"><bean:message key="label.alumni.total.alumni.fenix" bundle="GEP_RESOURCES" /></td>
 		<td class="aright"><bean:write name="statistics1" /></td>
 	</tr>
 	<tr>
-		<td class="aleft"><bean:message key="label.alumni.new.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aleft"><bean:message key="label.alumni.total.alumni" bundle="GEP_RESOURCES" /></td>
 		<td class="aright"><bean:write name="statistics2" /></td>
 	</tr>
 	<tr>
-		<td class="aleft"><bean:message key="label.alumni.registered.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aleft"><bean:message key="label.alumni.new.alumni" bundle="GEP_RESOURCES" /></td>
 		<td class="aright"><bean:write name="statistics3" /></td>
 	</tr>
 	<tr>
-		<td class="aleft"><bean:message key="label.alumni.job.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aleft"><bean:message key="label.alumni.registered.alumni" bundle="GEP_RESOURCES" /></td>
 		<td class="aright"><bean:write name="statistics4" /></td>
 	</tr>
 	<tr>
-		<td class="aleft"><bean:message key="label.alumni.formation.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aleft"><bean:message key="label.alumni.job.alumni" bundle="GEP_RESOURCES" /></td>
 		<td class="aright"><bean:write name="statistics5" /></td>
+	</tr>
+	<tr>
+		<td class="aleft"><bean:message key="label.alumni.formation.alumni" bundle="GEP_RESOURCES" /></td>
+		<td class="aright"><bean:write name="statistics6" /></td>
 	</tr>
 </table>
 

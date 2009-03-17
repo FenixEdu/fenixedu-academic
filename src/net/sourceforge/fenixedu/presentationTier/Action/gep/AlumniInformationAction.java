@@ -16,8 +16,10 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -65,11 +67,12 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    }
 	}
 
-	request.setAttribute("statistics1", totalAlumniCount);
-	request.setAttribute("statistics2", newAlumniCount);
-	request.setAttribute("statistics3", registeredAlumniCount);
-	request.setAttribute("statistics4", jobCount);
-	request.setAttribute("statistics5", formationCount);
+	request.setAttribute("statistics1", Person.readPersonsByRoleType(RoleType.ALUMNI).size());
+	request.setAttribute("statistics2", totalAlumniCount);
+	request.setAttribute("statistics3", newAlumniCount);
+	request.setAttribute("statistics4", registeredAlumniCount);
+	request.setAttribute("statistics5", jobCount);
+	request.setAttribute("statistics6", formationCount);
 	return mapping.findForward("alumni.showAlumniStatistics");
     }
 
