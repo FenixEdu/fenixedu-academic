@@ -4,35 +4,21 @@ import java.io.Serializable;
 
 public class TestsGrade implements Serializable {
 
-    double value;
+    private final double value;
 
-    double scale;
-
-    public TestsGrade() {
-	super();
-    }
+    private final double scale;
 
     public TestsGrade(double value, double scale) {
-	this();
-
-	this.setValue(value);
-	this.setScale(scale);
+	this.value = value;
+	this.scale = scale;
     }
 
     public double getScale() {
 	return scale;
     }
 
-    private void setScale(double scale) {
-	this.scale = scale;
-    }
-
     public double getValue() {
 	return value;
-    }
-
-    private void setValue(double value) {
-	this.value = value;
     }
 
     public double getPercentage() {

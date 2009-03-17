@@ -17,17 +17,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
 
 public class StudentsByDegreeAndCurricularYear extends LeafGroup {
 
-    private DomainReference<Degree> degree;
+    private final DomainReference<Degree> degree;
 
-    private DomainReference<CurricularYear> curricularYear;
+    private final DomainReference<CurricularYear> curricularYear;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private final DomainReference<ExecutionYear> executionYear;
 
     public StudentsByDegreeAndCurricularYear(final Degree degree, final CurricularYear curricularYear,
 	    final ExecutionYear executionYear) {
-	setDegree(degree);
-	setExecutionYear(executionYear);
-	setCurricularYear(curricularYear);
+	this.degree = new DomainReference<Degree>(degree);
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
     }
 
     @Override
@@ -49,24 +49,12 @@ public class StudentsByDegreeAndCurricularYear extends LeafGroup {
 	return (degree != null ? degree.getObject() : null);
     }
 
-    public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
-    }
-
     public CurricularYear getCurricularYear() {
 	return (curricularYear != null ? curricularYear.getObject() : null);
     }
 
-    public void setCurricularYear(CurricularYear curricularYear) {
-	this.curricularYear = new DomainReference<CurricularYear>(curricularYear);
-    }
-
     public ExecutionYear getExecutionYear() {
 	return (executionYear != null ? executionYear.getObject() : null);
-    }
-
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
     }
 
     public static class Builder implements GroupBuilder {

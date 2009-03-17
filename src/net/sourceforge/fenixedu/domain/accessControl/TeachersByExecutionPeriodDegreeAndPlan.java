@@ -11,15 +11,15 @@ public abstract class TeachersByExecutionPeriodDegreeAndPlan extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<ExecutionSemester> executionPeriod;
-    private DomainReference<Degree> degree;
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+    private final DomainReference<ExecutionSemester> executionPeriod;
+    private final DomainReference<Degree> degree;
+    private final DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
 
     public TeachersByExecutionPeriodDegreeAndPlan(ExecutionSemester executionPeriod, Degree degree, DegreeCurricularPlan plan) {
 	super();
-	setDegree(degree);
-	setExecutionPeriod(executionPeriod);
-	setDegreeCurricularPlan(plan);
+	this.degree = new DomainReference<Degree>(degree);
+	this.executionPeriod = new DomainReference<ExecutionSemester>(executionPeriod);
+	this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(plan);
     }
 
     public ExecutionSemester getExecutionPeriod() {
@@ -32,18 +32,6 @@ public abstract class TeachersByExecutionPeriodDegreeAndPlan extends LeafGroup {
 
     public DegreeCurricularPlan getDegreeCurricularPlan() {
 	return degreeCurricularPlan == null ? null : degreeCurricularPlan.getObject();
-    }
-
-    public void setExecutionPeriod(ExecutionSemester executionPeriod) {
-	this.executionPeriod = new DomainReference<ExecutionSemester>(executionPeriod);
-    }
-
-    public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
-    }
-
-    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	this.degreeCurricularPlan = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
     }
 
     @Override

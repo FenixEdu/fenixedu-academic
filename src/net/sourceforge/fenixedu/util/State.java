@@ -28,11 +28,7 @@ public class State extends FenixUtil {
 
     public static final String ACTIVE_STRING = "Activa";
 
-    private Integer state;
-
-    /** Creates a new instance of State */
-    public State() {
-    }
+    private final Integer state;
 
     public State(int validation) {
 	this.state = new Integer(validation);
@@ -45,10 +41,13 @@ public class State extends FenixUtil {
     public State(String validation) {
 	if (validation.equals(State.ACTIVE_STRING))
 	    this.state = new Integer(State.ACTIVE);
-	if (validation.equals(State.INACTIVE_STRING))
+	else if (validation.equals(State.INACTIVE_STRING))
 	    this.state = new Integer(State.INACTIVE);
+	else
+	    throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof State) {
 	    State aux = (State) o;
@@ -66,6 +65,7 @@ public class State extends FenixUtil {
 	return result;
     }
 
+    @Override
     public String toString() {
 	if (state.intValue() == State.ACTIVE)
 	    return State.ACTIVE_STRING;
@@ -81,16 +81,6 @@ public class State extends FenixUtil {
      */
     public Integer getState() {
 	return state;
-    }
-
-    /**
-     * Sets the state.
-     * 
-     * @param state
-     *            The state to set
-     */
-    public void setState(Integer candidateSituationValidation) {
-	this.state = candidateSituationValidation;
     }
 
 }

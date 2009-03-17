@@ -18,7 +18,7 @@ public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGrou
      */
     private static final long serialVersionUID = 1L;
 
-    private GroupUnion union;
+    private final GroupUnion union;
 
     public ExecutionCourseTeachersAndStudentsGroup(ExecutionCourse executionCourse) {
 	super(executionCourse);

@@ -45,31 +45,62 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     };
 
-    private Integer academicCalendarIdInternal;
-    private Integer entryIdInternal;
-    private String entryClassName;
+    private final Integer academicCalendarIdInternal;
+    private final Integer entryIdInternal;
+    private final String entryClassName;
 
     private transient AcademicCalendarEntry academicCalendarEntry;
     private transient AcademicCalendarRootEntry academicCalendarRootEntry;
     private transient AcademicChronology academicChronology;
 
     public AcademicInterval(Integer entryIdInternal, String entryClassName, Integer academicCalendarIdInternal) {
-	setEntryIdInternal(entryIdInternal);
-	setEntryClassName(entryClassName);
-	setAcademicCalendarIdInternal(academicCalendarIdInternal);
+	if (entryIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
+	}
+	this.entryIdInternal = entryIdInternal;
+	if (entryClassName == null || StringUtils.isEmpty(entryClassName)) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.class");
+	}
+	this.entryClassName = entryClassName;
+	if (academicCalendarIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
+	}
+	this.academicCalendarIdInternal = academicCalendarIdInternal;
     }
 
     private AcademicInterval(Integer entryIdInternal, Integer academicCalendarIdInternal) {
-	setEntryIdInternal(entryIdInternal);
+	if (entryIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
+	}
+	this.entryIdInternal = entryIdInternal;
 	AcademicCalendarEntry entry = getAcademicCalendarEntryIntervalWithoutClassNameCheck();
-	setEntryClassName(entry.getClass().getName());
-	setAcademicCalendarIdInternal(academicCalendarIdInternal);
+	String clazz = entry.getClass().getName();
+	if (clazz == null || StringUtils.isEmpty(clazz)) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.class");
+	}
+	this.entryClassName = clazz;
+	if (academicCalendarIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
+	}
+	this.academicCalendarIdInternal = academicCalendarIdInternal;
     }
 
     public AcademicInterval(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
-	setEntryIdInternal(entry.getIdInternal());
-	setEntryClassName(entry.getClass().getName());
-	setAcademicCalendarIdInternal(rootEntry.getIdInternal());
+	Integer entryIdInternal = entry.getIdInternal();
+	if (entryIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
+	}
+	this.entryIdInternal = entryIdInternal;
+	String clazz = entry.getClass().getName();
+	if (clazz == null || StringUtils.isEmpty(clazz)) {
+	    throw new DomainException("error.AcademicInterval.empty.entry.class");
+	}
+	this.entryClassName = clazz;
+	Integer academicCalendarIdInternal = rootEntry.getIdInternal();
+	if (academicCalendarIdInternal == null) {
+	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
+	}
+	this.academicCalendarIdInternal = academicCalendarIdInternal;
 	academicCalendarEntry = entry;
 	academicCalendarRootEntry = rootEntry;
     }
@@ -165,33 +196,12 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return entryIdInternal;
     }
 
-    public void setEntryIdInternal(Integer entryIdInternal) {
-	if (entryIdInternal == null) {
-	    throw new DomainException("error.AcademicInterval.empty.entry.idInternal");
-	}
-	this.entryIdInternal = entryIdInternal;
-    }
-
     public String getEntryClassName() {
 	return entryClassName;
     }
 
-    public void setEntryClassName(String clazz) {
-	if (clazz == null || StringUtils.isEmpty(clazz)) {
-	    throw new DomainException("error.AcademicInterval.empty.entry.class");
-	}
-	this.entryClassName = clazz;
-    }
-
     public Integer getAcademicCalendarIdInternal() {
 	return academicCalendarIdInternal;
-    }
-
-    public void setAcademicCalendarIdInternal(Integer academicCalendarIdInternal) {
-	if (academicCalendarIdInternal == null) {
-	    throw new DomainException("error.AcademicInterval.empty.academic.chronology.idInternal");
-	}
-	this.academicCalendarIdInternal = academicCalendarIdInternal;
     }
 
     public String getRepresentationInStringFormat() {

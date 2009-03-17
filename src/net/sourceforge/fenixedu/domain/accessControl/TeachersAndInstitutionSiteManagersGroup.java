@@ -19,7 +19,7 @@ public class TeachersAndInstitutionSiteManagersGroup extends LeafGroup {
      * Serial version id.
      */
     private static final long serialVersionUID = 1L;
-    private IGroup group;
+    private final IGroup group;
 
     public TeachersAndInstitutionSiteManagersGroup() {
 	super();

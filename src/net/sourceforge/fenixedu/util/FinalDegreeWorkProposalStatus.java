@@ -27,10 +27,7 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
 
     public static final String PUBLISHED_STRING = "Publicado";
 
-    private Integer status;
-
-    public FinalDegreeWorkProposalStatus() {
-    }
+    private final Integer status;
 
     public FinalDegreeWorkProposalStatus(int status) {
 	this.status = new Integer(status);
@@ -40,6 +37,7 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
 	this.status = status;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean resultado = false;
 	if (obj instanceof FinalDegreeWorkProposalStatus) {
@@ -54,13 +52,6 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
      */
     public Integer getStatus() {
 	return status;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setStatus(Integer status) {
-	this.status = status;
     }
 
     public String getKey() {

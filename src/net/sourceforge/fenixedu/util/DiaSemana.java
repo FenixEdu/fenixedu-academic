@@ -29,35 +29,25 @@ public class DiaSemana extends FenixUtil {
 
     public static final int SABADO = 7;
 
-    private Integer _diaSemana;
-
-    public DiaSemana() {
-    }
+    private final Integer diaSemana;
 
     public DiaSemana(int diaSemana) {
-	this._diaSemana = new Integer(diaSemana);
+	this.diaSemana = new Integer(diaSemana);
     }
 
     public DiaSemana(Integer diaSemana) {
-	this._diaSemana = diaSemana;
+	this.diaSemana = diaSemana;
     }
 
     public Integer getDiaSemana() {
-	return this._diaSemana;
-    }
-
-    public void setDiaSemana(int diaSemana) {
-	this._diaSemana = new Integer(diaSemana);
-    }
-
-    public void setDiaSemana(Integer diaSemana) {
-	this._diaSemana = diaSemana;
+	return this.diaSemana;
     }
 
     public String getDiaSemanaString() {
 	return toString();
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean resultado = false;
 	if (obj instanceof DiaSemana) {
@@ -67,8 +57,9 @@ public class DiaSemana extends FenixUtil {
 	return resultado;
     }
 
+    @Override
     public String toString() {
-	int diaSemana = this._diaSemana.intValue();
+	int diaSemana = this.diaSemana.intValue();
 	switch (diaSemana) {
 	case SEGUNDA_FEIRA:
 	    return new DateTime().withDayOfWeek(1).toString("E");

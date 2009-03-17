@@ -12,8 +12,8 @@ public final class GroupDifference extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private IGroup includeGroup;
-    private IGroup excludeGroup;
+    private final IGroup includeGroup;
+    private final IGroup excludeGroup;
 
     public GroupDifference(IGroup includeGroup, IGroup excludeGroup) {
 	super(includeGroup, excludeGroup);

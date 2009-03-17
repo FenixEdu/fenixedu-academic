@@ -30,7 +30,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 
     private static final long serialVersionUID = 1L;
 
-    private String expression;
+    private final String expression;
 
     private transient GroupContext context;
     private transient Group group;
@@ -58,6 +58,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
     /**
      * @return the original expression passed in the construction of the group
      */
+    @Override
     public String getExpression() {
 	return this.expression;
     }

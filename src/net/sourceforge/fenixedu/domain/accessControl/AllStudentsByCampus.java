@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AllStudentsByCampus extends Group {
 
-    private DomainReference<Campus> campus;
+    private final DomainReference<Campus> campus;
 
     public AllStudentsByCampus(Campus campus) {
 	this.campus = new DomainReference<Campus>(campus);

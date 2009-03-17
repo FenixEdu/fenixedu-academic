@@ -37,10 +37,7 @@ public class MarkType extends FenixUtil {
 
     public static final Object[] AP_MARKS = { GradeScale.AP };
 
-    private Integer type;
-
-    public MarkType() {
-    }
+    private final Integer type;
 
     public MarkType(int type) {
 	this.type = new Integer(type);
@@ -57,13 +54,7 @@ public class MarkType extends FenixUtil {
 	return type;
     }
 
-    /**
-     * @param type
-     */
-    public void setType(Integer type) {
-	this.type = type;
-    }
-
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof MarkType) {
 	    MarkType aux = (MarkType) o;

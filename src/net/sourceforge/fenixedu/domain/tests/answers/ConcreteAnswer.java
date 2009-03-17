@@ -10,17 +10,13 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 public class ConcreteAnswer implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public Object answer;
+    public final Object answer;
 
     public ConcreteAnswer(Object answer) {
-	super();
-
 	this.answer = answer;
     }
 
     public ConcreteAnswer(List<? extends DomainObject> answer) {
-	super();
-
 	this.answer = CollectionUtils.toReferences(answer);
     }
 

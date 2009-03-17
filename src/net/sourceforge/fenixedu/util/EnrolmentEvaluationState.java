@@ -30,9 +30,9 @@ public class EnrolmentEvaluationState extends FenixUtil {
 
     public static final EnrolmentEvaluationState ANNULED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.ANNULED, 0);
 
-    private Integer state;
+    private final Integer state;
 
-    private int weight;
+    private final int weight;
 
     private EnrolmentEvaluationState(int state, int weight) {
 	this.state = new Integer(state);
@@ -70,17 +70,7 @@ public class EnrolmentEvaluationState extends FenixUtil {
 	return weight;
     }
 
-    /**
-     * Setter for property state.
-     * 
-     * @param state
-     *            New value of property state.
-     * 
-     */
-    public void setState(Integer state) {
-	this.state = state;
-    }
-
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof EnrolmentEvaluationState) {
 	    EnrolmentEvaluationState aux = (EnrolmentEvaluationState) o;
@@ -90,6 +80,7 @@ public class EnrolmentEvaluationState extends FenixUtil {
 
     }
 
+    @Override
     public String toString() {
 
 	int value = this.state.intValue();

@@ -39,6 +39,7 @@ public class DynamicGroup extends Group implements GroupContextProvider {
     /**
      * @return the original group's name in the expression
      */
+    @Override
     public String getName() {
 	return this.name;
     }
@@ -108,6 +109,7 @@ public class DynamicGroup extends Group implements GroupContextProvider {
 	return GroupBuilderRegistry.getGroupBuilder(getName());
     }
 
+    @Override
     public String getExpression() {
 	return toString();
     }

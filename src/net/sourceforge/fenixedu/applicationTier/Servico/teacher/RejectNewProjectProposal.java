@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
  * @author joaosa & rmalo
@@ -45,7 +46,7 @@ public class RejectNewProjectProposal extends FenixService {
 
 	final Person receiverPerson = Teacher.readTeacherByUsername(rejectorUserName).getPerson();
 	groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
-	groupPropertiesExecutionCourse.getProposalState().setState(3);
+	groupPropertiesExecutionCourse.setProposalState(new ProposalState(ProposalState.EM_ESPERA));
 
 	List group = new ArrayList();
 

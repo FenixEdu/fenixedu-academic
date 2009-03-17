@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilderRegistry;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
@@ -55,7 +55,7 @@ public abstract class Group implements Serializable, IGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private Date creationDate;
+    private final Date creationDate;
 
     protected Group() {
 	super();
@@ -69,9 +69,9 @@ public abstract class Group implements Serializable, IGroup {
     public abstract java.util.Set<Person> getElements();
 
     /**
-     * Provides a standard implementation to <code>count()</code><br/> It
-     * accesses the elements set and invokes the <code>size()</code> method. If
-     * any group subclassing this class can provide a more efficient way of
+     * Provides a standard implementation to <code>count()</code><br/>
+     * It accesses the elements set and invokes the <code>size()</code> method.
+     * If any group subclassing this class can provide a more efficient way of
      * calculating its size, then override this method
      */
     public int getElementsCount() {
@@ -79,11 +79,11 @@ public abstract class Group implements Serializable, IGroup {
     }
 
     /**
-     * Provides a standard implementation to <code>isMember()</code><br/> It
-     * accesses the elements set and invokes the <code>contains()</code> method.
-     * If any group subclassing this class can provide a more efficient way of
-     * calculating wether the person is member of the group, then override this
-     * method
+     * Provides a standard implementation to <code>isMember()</code><br/>
+     * It accesses the elements set and invokes the <code>contains()</code>
+     * method. If any group subclassing this class can provide a more efficient
+     * way of calculating wether the person is member of the group, then
+     * override this method
      */
     public boolean isMember(Person person) {
 	return (person == null) ? false : getElements().contains(person);
@@ -158,8 +158,7 @@ public abstract class Group implements Serializable, IGroup {
      */
     protected abstract Argument[] getExpressionArguments();
 
-
     public static Group fromString(String expr) {
-        return ((expr == null) || expr.length() == 0) ? null : (new ExpressionGroup(expr).getGroup());
+	return ((expr == null) || expr.length() == 0) ? null : (new ExpressionGroup(expr).getGroup());
     }
 }

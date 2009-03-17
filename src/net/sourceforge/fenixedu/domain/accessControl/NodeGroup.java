@@ -13,7 +13,7 @@ public abstract class NodeGroup extends Group {
 
     private static final long serialVersionUID = 1L;
 
-    private List<IGroup> children;
+    private final List<IGroup> children;
 
     protected NodeGroup() {
 	super();
@@ -58,6 +58,7 @@ public abstract class NodeGroup extends Group {
 	return this.children.hashCode();
     }
 
+    @Override
     public String getExpression() {
 	StringBuilder builder = new StringBuilder();
 

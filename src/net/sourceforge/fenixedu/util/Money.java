@@ -12,7 +12,7 @@ public class Money implements Comparable<Money>, Serializable {
 
     public static final Money ZERO = new Money(0);
 
-    private BigDecimal amount;
+    private final BigDecimal amount;
 
     public Money(long amount) {
 	this.amount = round(BigDecimal.valueOf(amount));
@@ -79,7 +79,7 @@ public class Money implements Comparable<Money>, Serializable {
     public Money multiply(BigDecimal amount) {
 	return new Money(this.amount.multiply(amount));
     }
-    
+
     public Money multiply(final int value) {
 	return multiply(BigDecimal.valueOf(value));
     }

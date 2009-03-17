@@ -14,10 +14,7 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 
     public static final int INDIVIDUAL = 2;
 
-    private Integer type;
-
-    public EnrolmentGroupPolicyType() {
-    }
+    private final Integer type;
 
     public EnrolmentGroupPolicyType(int type) {
 	this.type = new Integer(type);
@@ -29,10 +26,6 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 
     public java.lang.Integer getType() {
 	return type;
-    }
-
-    public void setType(Integer type) {
-	this.type = type;
     }
 
     public String getTypeFullName() {
@@ -54,6 +47,7 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 	return stringValue;
     }
 
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof EnrolmentGroupPolicyType) {
 	    EnrolmentGroupPolicyType aux = (EnrolmentGroupPolicyType) o;
@@ -63,6 +57,7 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
 
     }
 
+    @Override
     public String toString() {
 
 	int value = this.type.intValue();

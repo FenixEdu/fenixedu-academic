@@ -22,16 +22,18 @@ public class DelegatesGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Degree> degree;
+    private final DomainReference<Degree> degree;
 
-    private FunctionType functionType;
+    private final FunctionType functionType;
 
     public DelegatesGroup(FunctionType functionType) {
-	setFunctionType(functionType);
+	this.functionType = functionType;
+	this.degree = null;
     }
 
     public DelegatesGroup(Degree degree) {
-	setDegree(degree);
+	this.functionType = null;
+	this.degree = new DomainReference<Degree>(degree);
     }
 
     @Override
@@ -85,20 +87,12 @@ public class DelegatesGroup extends LeafGroup {
 	return (degree != null ? degree.getObject() : null);
     }
 
-    public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
-    }
-
     public boolean hasDegree() {
 	return (getDegree() != null ? true : false);
     }
 
     public FunctionType getFunctionType() {
 	return functionType;
-    }
-
-    public void setFunctionType(FunctionType functionType) {
-	this.functionType = functionType;
     }
 
     public static class Builder implements GroupBuilder {

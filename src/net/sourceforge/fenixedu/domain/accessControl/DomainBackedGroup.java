@@ -8,7 +8,7 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<T> reference;
+    private final DomainReference<T> reference;
 
     public DomainBackedGroup(T object) {
 	super();

@@ -28,14 +28,10 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
 	academicPeriods.put(TRIMESTER.getRepresentationInStringFormat(), TRIMESTER);
     }
 
-    private String name;
+    private final String name;
 
     protected AcademicPeriod(final int period, final String name) {
 	super(period);
-	setName(name);
-    }
-
-    private void setName(final String name) {
 	this.name = name;
     }
 

@@ -26,10 +26,7 @@ public class CorrectionAvailability extends FenixUtil {
 
     public static final String AFTER_CLOSING_STRING = "Depois do fecho";
 
-    private Integer availability;
-
-    public CorrectionAvailability() {
-    }
+    private final Integer availability;
 
     public CorrectionAvailability(int availability) {
 	this.availability = new Integer(availability);
@@ -47,15 +44,7 @@ public class CorrectionAvailability extends FenixUtil {
 	return availability;
     }
 
-    public void setAvailability(int availability) {
-	this.availability = new Integer(availability);
-    }
-
-    public void setAvailability(Integer availability) {
-	this.availability = availability;
-    }
-
-    public List<LabelValueBean> getAllAvailabilities() {
+    public static List<LabelValueBean> getAllAvailabilities() {
 	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(NEVER_STRING, new Integer(NEVER).toString()));
 	result.add(new LabelValueBean(ALWAYS_STRING, new Integer(ALWAYS).toString()));
@@ -83,6 +72,7 @@ public class CorrectionAvailability extends FenixUtil {
 	return null;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean result = false;
 	if (obj instanceof CorrectionAvailability) {

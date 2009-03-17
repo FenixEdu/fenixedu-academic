@@ -14,10 +14,7 @@ public class ProposalState extends FenixUtil {
     public static final int EM_ESPERA = 3;
     public static final int REJEITADO = 4;
 
-    private Integer state;
-
-    public ProposalState() {
-    }
+    private final Integer state;
 
     public ProposalState(int proposal_state) {
 	this.state = new Integer(proposal_state);
@@ -31,14 +28,7 @@ public class ProposalState extends FenixUtil {
 	return this.state;
     }
 
-    public void setState(int state) {
-	this.state = new Integer(state);
-    }
-
-    public void setState(Integer state) {
-	this.state = state;
-    }
-
+    @Override
     public boolean equals(Object obj) {
 	boolean resultado = false;
 	if (obj instanceof ProposalState) {
@@ -48,6 +38,7 @@ public class ProposalState extends FenixUtil {
 	return resultado;
     }
 
+    @Override
     public String toString() {
 	int value = this.state.intValue();
 	switch (value) {

@@ -27,10 +27,7 @@ public class CorrectionFormula extends FenixUtil {
 
     public static final String IMS_STRING = "Utilizar cotações indicadas no ficheiro.";
 
-    private Integer formula;
-
-    public CorrectionFormula() {
-    }
+    private final Integer formula;
 
     public CorrectionFormula(int formula) {
 	this.formula = new Integer(formula);
@@ -42,10 +39,6 @@ public class CorrectionFormula extends FenixUtil {
 
     public Integer getFormula() {
 	return formula;
-    }
-
-    public void setFormula(Integer formula) {
-	this.formula = formula;
     }
 
     public static List<LabelValueBean> getFormulas() {

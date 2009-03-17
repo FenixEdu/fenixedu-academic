@@ -24,7 +24,7 @@ public class WorkWeek implements Serializable {
     public static final WorkWeek WORK_WEEK = new WorkWeek(EnumSet.range(WeekDay.MONDAY, WeekDay.SUNDAY));
 
     // set containing the week days
-    private EnumSet<WeekDay> days;
+    private final EnumSet<WeekDay> days;
 
     public WorkWeek(EnumSet<WeekDay> newDays) {
 	EnumSet<WeekDay> myDays = EnumSet.noneOf(WeekDay.class);

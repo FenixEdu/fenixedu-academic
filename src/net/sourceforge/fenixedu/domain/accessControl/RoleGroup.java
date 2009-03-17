@@ -23,7 +23,7 @@ public class RoleGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private RoleType roleType;
+    private final RoleType roleType;
 
     public RoleGroup(RoleType roleType) {
 	super();
@@ -58,9 +58,9 @@ public class RoleGroup extends LeafGroup {
     /**
      * The host may have restriction on the roles available so checking if a
      * <tt>UserView</tt> is allowed or checking directly is a person is member
-     * of this groups has different behaviours. The <tt>UserView</tt> as all
-     * the person roles that are allowed in the current host while the person
-     * has all the roles assigned to it.
+     * of this groups has different behaviours. The <tt>UserView</tt> as all the
+     * person roles that are allowed in the current host while the person has
+     * all the roles assigned to it.
      * 
      * <p>
      * This method checks if the <tt>UserView</tt> contains the same role as

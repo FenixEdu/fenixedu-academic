@@ -17,10 +17,7 @@ public class CurricularCourseExecutionScope extends FenixUtil {
     public static final CurricularCourseExecutionScope ANUAL_OBJ = new CurricularCourseExecutionScope(
 	    CurricularCourseExecutionScope.ANUAL);
 
-    private Integer type;
-
-    public CurricularCourseExecutionScope() {
-    }
+    private final Integer type;
 
     public CurricularCourseExecutionScope(int state) {
 	this.type = new Integer(state);
@@ -34,10 +31,7 @@ public class CurricularCourseExecutionScope extends FenixUtil {
 	return type;
     }
 
-    public void setType(Integer state) {
-	this.type = state;
-    }
-
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof CurricularCourseExecutionScope) {
 	    CurricularCourseExecutionScope aux = (CurricularCourseExecutionScope) o;
@@ -47,6 +41,7 @@ public class CurricularCourseExecutionScope extends FenixUtil {
 
     }
 
+    @Override
     public String toString() {
 
 	int value = this.type.intValue();

@@ -13,8 +13,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class RoleByCampusGroup extends Group {
 
-    private RoleType roleType;
-    private DomainReference<Campus> campus;
+    private final RoleType roleType;
+    private final DomainReference<Campus> campus;
 
     public RoleByCampusGroup(RoleType type, Campus campus) {
 	this.roleType = type;

@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<CurricularCourse> curricularCourseReference;
+    private final DomainReference<CurricularCourse> curricularCourseReference;
 
-    private DomainReference<ExecutionSemester> executionPeriodReference;
+    private final DomainReference<ExecutionSemester> executionPeriodReference;
 
     public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
 	this.curricularCourseReference = new DomainReference<CurricularCourse>(curricularCourse);

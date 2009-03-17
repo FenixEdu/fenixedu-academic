@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class StudentsFromDegreeTypeGroup extends Group {
 
-    private DegreeType degreeType;
+    private final DegreeType degreeType;
 
     public StudentsFromDegreeTypeGroup(DegreeType degreeType) {
 	this.degreeType = degreeType;

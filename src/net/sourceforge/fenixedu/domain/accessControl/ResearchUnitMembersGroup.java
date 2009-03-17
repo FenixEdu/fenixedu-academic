@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
-    private Class classType;
+    private final Class classType;
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 	this.classType = type;
     }
 
+    @Override
     public String getName() {
 	return RenderUtils.getResourceString("MESSAGING_RESOURCES", "label." + classType.getSimpleName());
     }

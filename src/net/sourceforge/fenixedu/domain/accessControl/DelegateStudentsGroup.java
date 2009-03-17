@@ -18,26 +18,30 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Degree> degree;
+    private final FunctionType functionType;
 
-    private FunctionType functionType;
+    private final DomainReference<Student> student;
 
-    private DomainReference<Student> student;
+    private final DomainReference<Person> person;
 
-    private DomainReference<Person> person;
-
-    private DomainReference<ExecutionYear> executionYear;
+    private final DomainReference<ExecutionYear> executionYear;
 
     public DelegateStudentsGroup(PersonFunction delegateFunction, FunctionType functionType) {
-	setSender(delegateFunction.getPerson());
-	setFunctionType(functionType);
-	setExecutionYear(ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
+	Person person = delegateFunction.getPerson();
+	if (person.hasStudent()) {
+	    this.student = new DomainReference<Student>(person.getStudent());
+	    this.person = null;
+	} else {
+	    this.student = null;
+	    this.person = new DomainReference<Person>(person);
+	}
+	this.functionType = functionType;
+	this.executionYear = new DomainReference<ExecutionYear>(ExecutionYear.getExecutionYearByDate(delegateFunction
+		.getBeginDate()));
     }
 
     public DelegateStudentsGroup(PersonFunction delegateFunction) {
-	setSender(delegateFunction.getPerson());
-	setFunctionType(delegateFunction.getFunction().getFunctionType());
-	setExecutionYear(ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
+	this(delegateFunction, delegateFunction.getFunction().getFunctionType());
     }
 
     @Override
@@ -87,56 +91,20 @@ public class DelegateStudentsGroup extends LeafGroup {
 		    + getFunctionType().getName() + ".coordinator");
     }
 
-    public Degree getDegree() {
-	return (degree != null ? degree.getObject() : null);
-    }
-
-    public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
-    }
-
-    public boolean hasDegree() {
-	return (getDegree() != null ? true : false);
-    }
-
     public FunctionType getFunctionType() {
 	return functionType;
-    }
-
-    public void setFunctionType(FunctionType functionType) {
-	this.functionType = functionType;
     }
 
     public Student getStudent() {
 	return (student != null ? student.getObject() : null);
     }
 
-    public void setStudent(Student student) {
-	this.student = new DomainReference<Student>(student);
-    }
-
     public ExecutionYear getExecutionYear() {
 	return (executionYear != null ? executionYear.getObject() : null);
     }
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-    }
-
     public Person getPerson() {
 	return (person != null ? person.getObject() : null);
-    }
-
-    public void setPerson(Person person) {
-	this.person = new DomainReference<Person>(person);
-    }
-
-    private void setSender(Person person) {
-	if (person.hasStudent()) {
-	    setStudent(person.getStudent());
-	} else {
-	    setPerson(person);
-	}
     }
 
     private Person getSender() {

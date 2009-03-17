@@ -19,16 +19,19 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<CurricularCourse> curricularCourse;
+    private final DomainReference<CurricularCourse> curricularCourse;
 
-    private DomainReference<ExecutionYear> executionYear;
+    private final DomainReference<ExecutionYear> executionYear;
 
-    private List<DomainReference<Person>> enrolledStudents;
+    private final List<DomainReference<Person>> enrolledStudents;
 
     public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
-	setCurricularCourse(curricularCourse);
-	setExecutionYear(executionYear);
-	setEnrolledStudents();
+	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
+	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	this.enrolledStudents = new ArrayList<DomainReference<Person>>();
+	for (Student student : getStudentsEnrolledIn(getCurricularCourse(), getExecutionYear())) {
+	    this.enrolledStudents.add(new DomainReference<Person>(student.getPerson()));
+	}
     }
 
     @Override
@@ -67,16 +70,8 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 	return (executionYear != null ? executionYear.getObject() : null);
     }
 
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
-    }
-
     public CurricularCourse getCurricularCourse() {
 	return (curricularCourse != null ? curricularCourse.getObject() : null);
-    }
-
-    public void setCurricularCourse(CurricularCourse curricularCourse) {
-	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
     }
 
     private int getNumberOfEnrolledStudents() {
@@ -84,13 +79,6 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 	    return this.enrolledStudents.size();
 	} else {
 	    return 0;
-	}
-    }
-
-    private void setEnrolledStudents() {
-	this.enrolledStudents = new ArrayList<DomainReference<Person>>();
-	for (Student student : getStudentsEnrolledIn(getCurricularCourse(), getExecutionYear())) {
-	    this.enrolledStudents.add(new DomainReference<Person>(student.getPerson()));
 	}
     }
 

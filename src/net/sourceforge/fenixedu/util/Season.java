@@ -33,10 +33,7 @@ public class Season extends FenixUtil {
     public static final Season SEASON2_OBJ = new Season(SEASON2);
     public static final Season SPECIAL_SEASON_OBJ = new Season(SPECIAL_SEASON);
 
-    private Integer season;
-
-    public Season() {
-    }
+    private final Integer season;
 
     public Season(int season) {
 	this.season = new Integer(season);
@@ -47,14 +44,17 @@ public class Season extends FenixUtil {
     }
 
     public Season(String season) {
-	if (season.equals(Season.SEASON1_STRING))
+	if (season.equals(Season.SEASON1_STRING)) {
 	    this.season = Integer.valueOf(Season.SEASON1);
-	if (season.equals(Season.SEASON2_STRING))
+	} else if (season.equals(Season.SEASON2_STRING)) {
 	    this.season = Integer.valueOf(Season.SEASON2);
-	if (season.equals(Season.SPECIAL_SEASON_STRING))
+	} else if (season.equals(Season.SPECIAL_SEASON_STRING)) {
 	    this.season = Integer.valueOf(Season.SPECIAL_SEASON);
+	} else
+	    throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof Season) {
 	    Season aux = (Season) o;
@@ -72,6 +72,7 @@ public class Season extends FenixUtil {
 	return result;
     }
 
+    @Override
     public String toString() {
 	if (season.intValue() == Season.SEASON1)
 	    return Season.SEASON1_STRING;
@@ -88,10 +89,6 @@ public class Season extends FenixUtil {
 
     public java.lang.Integer getSeason() {
 	return season;
-    }
-
-    public void setSeason(java.lang.Integer season) {
-	this.season = season;
     }
 
     public LabelFormatter getDescription() {

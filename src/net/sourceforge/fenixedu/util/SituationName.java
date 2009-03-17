@@ -154,11 +154,7 @@ public class SituationName extends FenixUtil {
 
     public static final String PENDENT_CONDICIONAL_CURRICULAR_STRING = "Pendente Condicional - Apreciação Curricular";
 
-    private Integer situationName;
-
-    /** Creates a new instance of SituationName */
-    public SituationName() {
-    }
+    private final Integer situationName;
 
     public SituationName(int nomeSituacao) {
 	this.situationName = new Integer(nomeSituacao);
@@ -168,6 +164,7 @@ public class SituationName extends FenixUtil {
 	this.situationName = nomeSituacao;
     }
 
+    @Override
     public boolean equals(Object o) {
 	if (o instanceof SituationName) {
 	    SituationName aux = (SituationName) o;
@@ -191,51 +188,53 @@ public class SituationName extends FenixUtil {
     public SituationName(String nomeSituacao) {
 	if (nomeSituacao.equals(SituationName.PENDENTE_STRING))
 	    this.situationName = new Integer(SituationName.PENDENTE);
-	if (nomeSituacao.equals(SituationName.ADMITIDO_STRING))
+	else if (nomeSituacao.equals(SituationName.ADMITIDO_STRING))
 	    this.situationName = new Integer(SituationName.ADMITIDO);
-	if (nomeSituacao.equals(SituationName.SUPLENTE_STRING))
+	else if (nomeSituacao.equals(SituationName.SUPLENTE_STRING))
 	    this.situationName = new Integer(SituationName.SUPLENTE);
-	if (nomeSituacao.equals(SituationName.NAO_ACEITE_STRING))
+	else if (nomeSituacao.equals(SituationName.NAO_ACEITE_STRING))
 	    this.situationName = new Integer(SituationName.NAO_ACEITE);
-	if (nomeSituacao.equals(SituationName.DESISTIU_STRING))
+	else if (nomeSituacao.equals(SituationName.DESISTIU_STRING))
 	    this.situationName = new Integer(SituationName.DESISTIU);
-	if (nomeSituacao.equals(SituationName.SUPRA_NUMERARIO_STRING))
+	else if (nomeSituacao.equals(SituationName.SUPRA_NUMERARIO_STRING))
 	    this.situationName = new Integer(SituationName.SUPRA_NUMERARIO);
-	if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING))
+	else if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING))
 	    this.situationName = new Integer(SituationName.EXTRAORDINARIO);
-	if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING))
+	else if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING))
 	    this.situationName = new Integer(SituationName.DOCENTE_ENSINO_SUPERIOR);
-	if (nomeSituacao.equals(SituationName.PRE_CANDIDATO_STRING))
+	else if (nomeSituacao.equals(SituationName.PRE_CANDIDATO_STRING))
 	    this.situationName = new Integer(SituationName.PRE_CANDIDATO);
-	if (nomeSituacao.equals(SituationName.FALTA_CERTIFICADO_STRING))
+	else if (nomeSituacao.equals(SituationName.FALTA_CERTIFICADO_STRING))
 	    this.situationName = new Integer(SituationName.FALTA_CERTIFICADO);
-	if (nomeSituacao.equals(SituationName.PENDENTE_COM_DADOS_STRING))
+	else if (nomeSituacao.equals(SituationName.PENDENTE_COM_DADOS_STRING))
 	    this.situationName = new Integer(SituationName.PENDENT_COM_DADOS);
-	if (nomeSituacao.equals(SituationName.PENDENTE_CONFIRMADO_STRING))
+	else if (nomeSituacao.equals(SituationName.PENDENTE_CONFIRMADO_STRING))
 	    this.situationName = new Integer(SituationName.PENDENT_CONFIRMADO);
-	if (nomeSituacao.equals(SituationName.ANNULLED_STRING))
+	else if (nomeSituacao.equals(SituationName.ANNULLED_STRING))
 	    this.situationName = new Integer(SituationName.ANNULLED);
-	if (nomeSituacao.equals(SituationName.ADMITED_SPECIALIZATION_STRING))
+	else if (nomeSituacao.equals(SituationName.ADMITED_SPECIALIZATION_STRING))
 	    this.situationName = new Integer(SituationName.ADMITED_SPECIALIZATION);
-	if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
+	else if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
 	    this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_CURRICULAR);
-	if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
+	else if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
 	    this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_FINALIST);
-	if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING))
+	else if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING))
 	    this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_OTHER);
-	if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
+	else if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
 	    this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
-	if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
+	else if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
 	    this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
-	if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
+	else if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
 	    this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
-	if (nomeSituacao.equals(SituationName.ENROLLED_STRING))
+	else if (nomeSituacao.equals(SituationName.ENROLLED_STRING))
 	    this.situationName = new Integer(SituationName.ENROLLED);
-	if (nomeSituacao.equals(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING))
+	else if (nomeSituacao.equals(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING))
 	    this.situationName = new Integer(SituationName.PENDENT_CONDICIONAL_CURRICULAR);
-
+	else
+	    throw new UnsupportedOperationException();
     }
 
+    @Override
     public String toString() {
 	if (situationName.intValue() == SituationName.PENDENTE)
 	    return SituationName.PENDENTE_STRING;
@@ -332,16 +331,7 @@ public class SituationName extends FenixUtil {
 	return situationName;
     }
 
-    /**
-     * Sets the situationName.
-     * 
-     * @param situationName
-     *            The situationName to set
-     */
-    public void setSituationName(Integer nomeSituacao) {
-	this.situationName = nomeSituacao;
-    }
-
+    @Override
     public int hashCode() {
 	return getSituationName().hashCode();
     }

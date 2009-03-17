@@ -26,10 +26,7 @@ public class TestType extends FenixUtil {
 
     public static final String INQUIRY_STRING = "Inquérito";
 
-    private Integer type;
-
-    public TestType() {
-    }
+    private final Integer type;
 
     public TestType(int type) {
 	this.type = new Integer(type);
@@ -47,15 +44,7 @@ public class TestType extends FenixUtil {
 	return type;
     }
 
-    public void setType(int type) {
-	this.type = new Integer(type);
-    }
-
-    public void setType(Integer type) {
-	this.type = type;
-    }
-
-    public List<LabelValueBean> getAllTypes() {
+    public static List<LabelValueBean> getAllTypes() {
 	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 	result.add(new LabelValueBean(EVALUATION_STRING, new Integer(EVALUATION).toString()));
 	result.add(new LabelValueBean(STUDY_STRING, new Integer(STUDY).toString()));
@@ -84,6 +73,7 @@ public class TestType extends FenixUtil {
 	return null;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean resultado = false;
 	if (obj instanceof TestType) {

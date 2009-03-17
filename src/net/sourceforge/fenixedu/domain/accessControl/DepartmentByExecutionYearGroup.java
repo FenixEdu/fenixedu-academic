@@ -11,12 +11,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
-    private DomainReference<ExecutionYear> executionYearReference;
+    private final DomainReference<ExecutionYear> executionYearReference;
 
-    private DomainReference<Department> departmentReference;
-
-    private String executionYear;
-    private String department;
+    private final DomainReference<Department> departmentReference;
 
     public DepartmentByExecutionYearGroup(ExecutionYear executionYear, Department department) {
 	this.executionYearReference = new DomainReference<ExecutionYear>(executionYear);
@@ -24,24 +21,14 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
     }
 
     public DepartmentByExecutionYearGroup(String executionYearName, String departmentName) {
-
-	this.executionYear = executionYearName;
-	this.department = departmentName;
-
+	this(ExecutionYear.readExecutionYearByName(executionYearName), Department.readByName(departmentName));
     }
 
     public Department getDepartment() {
-	if (this.departmentReference == null) {
-	    departmentReference = new DomainReference<Department>(Department.readByName(this.department));
-	}
 	return this.departmentReference.getObject();
     }
 
     public ExecutionYear getExecutionYear() {
-	if (this.executionYearReference == null) {
-	    this.executionYearReference = new DomainReference<ExecutionYear>(ExecutionYear
-		    .readExecutionYearByName(this.executionYear));
-	}
 	return this.executionYearReference.getObject();
     }
 

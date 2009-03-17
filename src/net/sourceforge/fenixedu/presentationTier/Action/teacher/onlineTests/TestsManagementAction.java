@@ -394,22 +394,22 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    }
 
 	    try {
-		img = (String) ReadStudentTestQuestionImage.run(studentCode, testCode, exerciseCode, imgCode, feedbackCode,
-			itemIndex, path);
+		img = ReadStudentTestQuestionImage.run(studentCode, testCode, exerciseCode, imgCode, feedbackCode, itemIndex,
+			path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
 	} else if (optionShuffle != null) {
 
 	    try {
-		img = (String) ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, path);
+		img = ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
 	} else {
 
 	    try {
-		img = (String) ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, itemIndex, path);
+		img = ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, itemIndex, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
@@ -507,9 +507,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	}
 	request.setAttribute("objectCode", objectCode);
 	if (test.getTestQuestions().size() >= 1) {
-	    List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
+	    List<LabelValueBean> testTypeList = TestType.getAllTypes();
 	    request.setAttribute("testTypeList", testTypeList);
-	    List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	    List<LabelValueBean> correctionAvailabilityList = CorrectionAvailability.getAllAvailabilities();
 	    request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	    if ((((DynaActionForm) form).get("testType")).equals(""))
 		((DynaActionForm) form).set("testType", "1");
@@ -683,9 +683,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	if (distributedTest == null) {
 	    throw new FenixActionException();
 	}
-	final List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
+	final List<LabelValueBean> testTypeList = TestType.getAllTypes();
 	request.setAttribute("testTypeList", testTypeList);
-	final List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	final List<LabelValueBean> correctionAvailabilityList = CorrectionAvailability.getAllAvailabilities();
 	request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	((DynaActionForm) form).set("distributedTestCode", distributedTest.getIdInternal());
 	((DynaActionForm) form).set("title", distributedTest.getTitle());
@@ -889,7 +889,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	double classification = 0;
 
 	for (int i = 0; i < studentTestQuestionList.size(); i++) {
-	    StudentTestQuestion studentTestQuestion = (StudentTestQuestion) studentTestQuestionList.get(i);
+	    StudentTestQuestion studentTestQuestion = studentTestQuestionList.get(i);
 
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getType().intValue() == QuestionType.STR) {
 		ResponseSTR responseSTR = new ResponseSTR();
@@ -1245,9 +1245,9 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 	if (test.getTestQuestions().size() >= 1) {
-	    List<LabelValueBean> testTypeList = (new TestType()).getAllTypes();
+	    List<LabelValueBean> testTypeList = TestType.getAllTypes();
 	    request.setAttribute("testTypeList", testTypeList);
-	    List<LabelValueBean> correctionAvailabilityList = (new CorrectionAvailability()).getAllAvailabilities();
+	    List<LabelValueBean> correctionAvailabilityList = CorrectionAvailability.getAllAvailabilities();
 	    request.setAttribute("correctionAvailabilityList", correctionAvailabilityList);
 	    if ((((DynaActionForm) form).get("testType")).equals(""))
 		((DynaActionForm) form).set("testType", "1");

@@ -22,10 +22,7 @@ public class EntryPhase implements Serializable, Comparable<EntryPhase> {
 
     public static final EntryPhase SECOND_PHASE_OBJ = new EntryPhase(EntryPhase.SECOND_PHASE);
 
-    private Integer entryPhase;
-
-    public EntryPhase() {
-    }
+    private final Integer entryPhase;
 
     public EntryPhase(int entryPhase) {
 	this.entryPhase = new Integer(entryPhase);
@@ -36,20 +33,19 @@ public class EntryPhase implements Serializable, Comparable<EntryPhase> {
     }
 
     public EntryPhase(String entryPhase) {
-	if (entryPhase.equals(EntryPhase.FIRST_PHASE_STRING))
+	if (entryPhase.equals(EntryPhase.FIRST_PHASE_STRING)) {
 	    this.entryPhase = new Integer(EntryPhase.FIRST_PHASE);
-	if (entryPhase.equals(EntryPhase.SECOND_PHASE_STRING))
+	} else if (entryPhase.equals(EntryPhase.SECOND_PHASE_STRING)) {
 	    this.entryPhase = new Integer(EntryPhase.SECOND_PHASE);
+	} else
+	    throw new UnsupportedOperationException();
     }
 
     public Integer getEntryPhase() {
 	return entryPhase;
     }
 
-    public void setEntryPhase(Integer entryPhase) {
-	this.entryPhase = entryPhase;
-    }
-
+    @Override
     public String toString() {
 	switch (entryPhase.intValue()) {
 	case FIRST_PHASE:

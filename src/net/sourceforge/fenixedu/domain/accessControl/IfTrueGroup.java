@@ -23,7 +23,7 @@ public class IfTrueGroup extends LeafGroup {
      */
     private static final long serialVersionUID = 1L;
 
-    private boolean flag;
+    private final boolean flag;
 
     public IfTrueGroup(boolean flag) {
 	super();

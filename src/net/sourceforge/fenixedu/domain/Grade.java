@@ -15,12 +15,13 @@ public class Grade implements Serializable, Comparable<Grade> {
 
     private static Map<String, Grade> gradeMap = new HashMap<String, Grade>();
 
-    private String value;
+    private final String value;
 
-    private GradeScale gradeScale;
+    private final GradeScale gradeScale;
 
     protected Grade() {
-
+	value = null;
+	gradeScale = null;
     }
 
     protected Grade(String value, GradeScale gradeScale) {
@@ -32,8 +33,8 @@ public class Grade implements Serializable, Comparable<Grade> {
 	    throw new DomainException("error.grade.invalid.grade");
 	}
 
-	setValue(value);
-	setGradeScale(gradeScale);
+	this.value = value.trim().toUpperCase();
+	this.gradeScale = gradeScale;
     }
 
     public int compareTo(final Grade otherGrade) {
@@ -69,16 +70,8 @@ public class Grade implements Serializable, Comparable<Grade> {
 	return value;
     }
 
-    private void setValue(String value) {
-	this.value = value.trim().toUpperCase();
-    }
-
     public GradeScale getGradeScale() {
 	return gradeScale;
-    }
-
-    private void setGradeScale(GradeScale gradeScale) {
-	this.gradeScale = gradeScale;
     }
 
     public static Grade createGrade(String value, GradeScale gradeScale) {
