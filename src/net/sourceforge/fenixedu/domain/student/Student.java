@@ -929,15 +929,7 @@ public class Student extends Student_Base {
 
     public Registration getMostRecentRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
 	final List<Registration> registrations = getRegistrationsFor(degreeCurricularPlan);
-	Collections.sort(registrations, Registration.COMPARATOR_BY_START_DATE);
-
-	Registration result = null;
-	for (final Registration registration : registrations) {
-	    if (result == null || registration.getStartDate().isAfter(result.getStartDate())) {
-		result = registration;
-	    }
-	}
-	return result;
+	return registrations.isEmpty() ? null : Collections.max(registrations, Registration.COMPARATOR_BY_START_DATE);
     }
 
     public List<Registration> getRegistrationsFor(final Degree degree) {
@@ -1535,6 +1527,6 @@ public class Student extends Student_Base {
 
     public void deleteExportInformationPassword() {
 	setExportInformationPassword(null);
-    }    
+    }
 
 }
