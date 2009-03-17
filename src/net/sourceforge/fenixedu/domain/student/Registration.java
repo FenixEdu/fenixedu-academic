@@ -101,7 +101,6 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -2318,7 +2317,7 @@ public class Registration extends Registration_Base {
     final public boolean hasStateType(final ExecutionSemester executionSemester, final RegistrationStateType registrationStateType) {
 	return getRegistrationStatesTypes(executionSemester).contains(registrationStateType);
     }
-    
+
     final public boolean hasStateType(final ExecutionYear executionYear, final RegistrationStateType registrationStateType) {
 	return getRegistrationStatesTypes(executionYear).contains(registrationStateType);
     }
@@ -3654,7 +3653,7 @@ public class Registration extends Registration_Base {
     }
 
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
-	return getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(ExecutionYear.readCurrentExecutionYear()).size();
+	return getLastStudentCurricularPlan().countEnrolments(ExecutionYear.readCurrentExecutionYear());
     }
 
     @Service
