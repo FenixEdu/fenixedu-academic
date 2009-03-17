@@ -42,3 +42,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Grades to remove nulls" updateGradeNullObjects.sql
