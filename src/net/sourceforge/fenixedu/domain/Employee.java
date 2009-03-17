@@ -287,13 +287,8 @@ public class Employee extends Employee_Base {
     }
 
     public Campus getCurrentCampus() {
-	Unit currentWorkingPlace = getCurrentWorkingPlace();
-
-	if (currentWorkingPlace != null) {
-	    return currentWorkingPlace.getCampus();
-	}
-
-	return null;
+	final Unit unit = getCurrentWorkingPlace();
+	return (unit != null) ? unit.getCampus() : null;
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
@@ -364,8 +359,8 @@ public class Employee extends Employee_Base {
 	final Assiduousness assiduousness = getAssiduousness();
 	return assiduousness == null ? false : assiduousness.worksAt(campus);
     }
-    
-    public boolean isUnitCoordinator(){
+
+    public boolean isUnitCoordinator() {
 	return getCurrentWorkingPlace().getActiveUnitCoordinator() == getPerson();
     }
 
