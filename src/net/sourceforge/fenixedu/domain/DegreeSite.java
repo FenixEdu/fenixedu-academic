@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSite extends DegreeSite_Base {
@@ -47,4 +48,19 @@ public class DegreeSite extends DegreeSite_Base {
 	// unable to optimize because we cannot track changes to name correctly.
 	// don't call super.setNormalizedName() !
     }
+    
+    public Unit getUnit() {
+	Unit unit = super.getUnit();
+	if (unit == null) {
+	    unit = getDegree().getUnit();
+	    updateUnit(unit);
+	}
+	return unit;
+    }
+    
+    @Service
+    private void updateUnit(Unit unit) {
+	setUnit(unit);
+    }
+    
 }
