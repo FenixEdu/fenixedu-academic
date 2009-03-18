@@ -268,7 +268,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public EnrollmentState getEnrollmentStateByGrade() {
-	return (hasGrade() ?  getGrade().getEnrolmentState() : null);
+	return getGrade().getEnrolmentState();
     }
 
     public GradeScale getGradeScale() {
@@ -568,7 +568,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean hasGrade() {
-	return getGrade() != null && !getGrade().isEmpty();
+	return !getGrade().isEmpty();
     }
 
     final public boolean hasExamDateYearMonthDay() {
