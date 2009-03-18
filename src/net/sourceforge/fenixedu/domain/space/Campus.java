@@ -6,9 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.AdministrativeOfficePermission;
-import net.sourceforge.fenixedu.domain.accessControl.AdministrativeOfficePermissionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -112,14 +112,13 @@ public class Campus extends Campus_Base {
 		.getPermissionByType(permissionType) : null;
     }
 
-    @Checked("PermissionPredicates.createPermissionMembersGroup")
     @Service
-    public void createAdministrativeOfficePermission(PermissionType permissionType) {
-	if (this.getAdministrativeOfficePermissionGroup() == null) {
+    @Checked("PermissionPredicates.createPermissionMembersGroup")
+    public void createAdministrativeOfficePermission(final PermissionType permissionType) {
+	if (!hasAdministrativeOfficePermissionGroup()) {
 	    new AdministrativeOfficePermissionGroup(this);
 	}
-
-	this.getAdministrativeOfficePermissionGroup().createPermissionForType(permissionType);
+	getAdministrativeOfficePermissionGroup().createPermissionForType(permissionType);
     }
 
     static public String getUniversityCode(final Campus campus) {

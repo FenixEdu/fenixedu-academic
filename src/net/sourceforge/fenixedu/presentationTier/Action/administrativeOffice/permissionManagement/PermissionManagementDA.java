@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -79,6 +79,7 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
     public ActionForward showPermissions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	
 	Campus workingCampus = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getCampus();
 	List<PermissionType> permissionTypes = PermissionType.getAdministrativeOfficePermissionTypes();
 
@@ -95,7 +96,6 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
     private PermissionViewBean createPermissionViewBean(PermissionType type, Campus workingCampus) {
 	AdministrativeOfficePermission permission = workingCampus.getAdministrativeOfficePermissionByType(type);
-
 	if (permission == null) {
 	    return new PermissionViewBean(type, new ArrayList<Member>());
 	}

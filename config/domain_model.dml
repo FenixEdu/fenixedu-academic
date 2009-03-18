@@ -6124,10 +6124,10 @@ class student.YearDelegateCourseInquiry extends DomainObject {
 }
 
 
-class accessControl.AdministrativeOfficePermissionGroup extends DomainObject {
+class accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup extends DomainObject {
 }
 
-class accessControl.AdministrativeOfficePermission extends DomainObject {
+class accessControl.academicAdminOffice.AdministrativeOfficePermission extends DomainObject {
 	PermissionType permissionType;
 	Group permissionMembersGroup;
 }
@@ -14952,26 +14952,26 @@ relation YearDelegateCourseInquiryRootDomainObject {
 
 relation AdministrativeOfficePermissionGroupRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
-	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
+	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
 		multiplicity *;
 	}
 }
 
 relation AdministrativeOfficePermissionRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
-	accessControl.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
+	accessControl.academicAdminOffice.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
 		multiplicity *;
 	}
 }
 
 relation CampusAdministrativeOfficePermissionGroup {
 	space.Campus playsRole campus;
-	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
+	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
 }
 
 relation AdministrativeOfficePermissionGroupPermission {
-	accessControl.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
-	accessControl.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
+	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
+	accessControl.academicAdminOffice.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
 		multiplicity *;
 	}
 }

@@ -1,27 +1,30 @@
-package net.sourceforge.fenixedu.domain.accessControl;
+package net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class AdministrativeOfficePermission extends AdministrativeOfficePermission_Base {
-    
-    public  AdministrativeOfficePermission() {
+
+    private AdministrativeOfficePermission() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public  AdministrativeOfficePermission(PermissionType type, AdministrativeOfficePermissionGroup group) {
+    AdministrativeOfficePermission(final PermissionType type, final AdministrativeOfficePermissionGroup group) {
 	this();
 	setPermissionType(type);
 	setAdministrativeOfficePermissionGroup(group);
 	setPermissionMembersGroup(new FixedSetGroup());
     }
-    
+
     @Service
     @Checked("PermissionPredicates.managePermissionMembersGroup")
-    public void setNewGroup(Group newGroup) {
+    public void setNewGroup(final Group newGroup) {
 	this.setPermissionMembersGroup(newGroup);
     }
-    
+
 }

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -75,8 +75,8 @@ public class RegistrationPredicates {
 	};
     };
 
-    private static final AdministrativeOfficePermission getPermissionByType(Person person, PermissionType type) {
-	Campus campus = person.getEmployee().getCurrentWorkingPlace().getCampus();
+    static private final AdministrativeOfficePermission getPermissionByType(final Person person, final PermissionType type) {
+	final Campus campus = person.getEmployee().getCurrentCampus();
 	return campus.getAdministrativeOfficePermissionByType(type);
     }
 
