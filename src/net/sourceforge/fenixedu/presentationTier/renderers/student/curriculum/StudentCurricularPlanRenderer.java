@@ -864,7 +864,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		generateCellWithText(enrolmentRow, "", getEnrolmentTypeCellClass(), ENROLLMENT_EVALUATION_TYPE_NEXT_COLUMN_SPAN);
 
 		final Grade grade = evaluation.getGrade();
-		generateCellWithText(enrolmentRow, (grade == null || grade.isEmpty()) ? EMPTY_INFO : grade.getValue(), getGradeCellClass());
+		generateCellWithText(enrolmentRow, grade.isEmpty() ? EMPTY_INFO : grade.getValue(), getGradeCellClass());
 
 		generateCellWithText(enrolmentRow, "", getEctsCreditsCellClass(), GRADE_NEXT_COLUMN_SPAN);
 
