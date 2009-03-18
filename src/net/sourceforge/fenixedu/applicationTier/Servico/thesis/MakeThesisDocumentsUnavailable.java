@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import pt.ist.fenixWebFramework.services.Service;
@@ -22,6 +23,12 @@ public class MakeThesisDocumentsUnavailable extends FenixService {
 	PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
 
 	thesisFile.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student));
+
+	final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
+	if (publication != null) {
+	    final ResearchResultDocumentFile researchResultDocumentFile = publication.getResultDocumentFilesIterator().next();
+	    researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
+	}
     }
 
 }
