@@ -11,12 +11,13 @@ DB=$1
 USER=$2
 DB_HOST=$3
 INSTITUTION=$4
+PASSWORD=$5
 
 echo Using host=$DB_HOST
 echo Using database: $DB
 echo Using user $USER:
 echo Institution: $INSTITUTION
-echo Password: PASSWORD
+echo Password: $PASSWORD
 
 function execute() {
 	if [ -z $3 ] 
@@ -42,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Column KEYWORDS_EN to table RESEARCHER" changeResearcherTableAndValues.sql

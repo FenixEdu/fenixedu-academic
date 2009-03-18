@@ -50,22 +50,51 @@
 			
 		</fr:edit>
 			
-		<p class="mtop15"><strong><bean:message key="label.keywords" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+		<p class="mtop15"><strong><bean:message key="label.keywords.portuguese" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 		<table>
 		<tr>
 		<td>
-		<fr:edit id="keywords" name="researcher" slot="keywords">
+		<fr:edit id="keywordsPt" name="researcher" slot="keywordsPt">
 			<fr:layout name="longText">
 				<fr:property name="rows" value="2"/>
 				<fr:property name="columns" value="60"/>
 				<fr:property name="classes" value="dinline"/>
 			</fr:layout>
+	        <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
+	        	<fr:property name="min" value="0"/>
+	            <fr:property name="max" value="512"/>
+	        </fr:validator>			
 			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		</fr:edit>
 		</td>
 		<td>
-		<fr:hasMessages for="keywords">
-			<p class="mtop15"><span class="error0 mbottom0"><fr:message for="keywords" show="message"/></span></p>
+		<fr:hasMessages for="keywordsPt">
+			<p class="mtop15"><span class="error0 mbottom0"><fr:message for="keywordsPt" show="message"/></span></p>
+		</fr:hasMessages>
+		</td>
+		</tr>
+		</table>
+
+		<p class="mtop15"><strong><bean:message key="label.keywords.english" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+		<table>
+		<tr>
+		<td>
+		<fr:edit id="keywordsEn" name="researcher" slot="keywordsEn">
+			<fr:layout name="longText">
+				<fr:property name="rows" value="2"/>
+				<fr:property name="columns" value="60"/>
+				<fr:property name="classes" value="dinline"/>
+			</fr:layout>
+	        <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
+	        	<fr:property name="min" value="0"/>
+	            <fr:property name="max" value="512"/>
+	        </fr:validator>			
+			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		</fr:edit>
+		</td>
+		<td>
+		<fr:hasMessages for="keywordsEn">
+			<p class="mtop15"><span class="error0 mbottom0"><fr:message for="keywordsEn" show="message"/></span></p>
 		</fr:hasMessages>
 		</td>
 		</tr>

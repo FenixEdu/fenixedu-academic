@@ -4202,7 +4202,8 @@ class DomainObject {
 		Boolean allowsContactByStudents;
 		Boolean allowsContactByMedia;
 		Boolean allowsContactByOtherResearchers;
-		String keywords;
+		String keywordsPt;
+		String keywordsEn;
 	}
 
 	class research.result.ResearchResult extends DomainObject {

@@ -40,7 +40,8 @@
 					-
 				</logic:empty>
 				</p>
-				<p class="mtop0 mbottom05"><bean:message key="label.keywords" bundle="RESEARCHER_RESOURCES"/>: <fr:view name="researcher" property="keywords"/></p>
+				<p class="mtop0 mbottom05"><bean:message key="label.keywords.portuguese" bundle="RESEARCHER_RESOURCES"/>: <fr:view name="researcher" property="keywordsPt"/></p>
+				<p class="mtop0 mbottom05"><bean:message key="label.keywords.english" bundle="RESEARCHER_RESOURCES"/>: <fr:view name="researcher" property="keywordsEn"/></p>
 			</td>
 		</tr>	
 	</table>

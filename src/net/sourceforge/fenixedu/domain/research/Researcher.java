@@ -50,11 +50,18 @@ public class Researcher extends Researcher_Base {
 
     public boolean hasKeyword(String keyword) {
 	String trimmedKeyword = keyword.trim();
-	for (String reseacherKeyword : getKeywords().split(",")) {
+	for (String reseacherKeyword : getKeywordsPt().split(",")) {
 	    if (trimmedKeyword.equalsIgnoreCase(reseacherKeyword.trim())) {
 		return true;
 	    }
 	}
+
+	for (String reseacherKeyword : getKeywordsEn().split(",")) {
+	    if (trimmedKeyword.equalsIgnoreCase(reseacherKeyword.trim())) {
+		return true;
+	    }
+	}
+	
 	return false;
     }
 
