@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecutionYearGroup {
 
+    /**
+         * 
+         */
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DepartmentEmployeesByExecutionYearGroup(ExecutionYear executionYear, Department department) {
@@ -18,6 +21,7 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
 
     public DepartmentEmployeesByExecutionYearGroup(String executionYear, String department) {
 	super(executionYear, department);
+
     }
 
     @Override
