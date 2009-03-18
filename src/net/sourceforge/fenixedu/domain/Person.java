@@ -2467,7 +2467,7 @@ public class Person extends Person_Base {
 		}
 	    }
 	    if ((employee && !teacher && !researcher)) {
-		mainRoles.add(0, "Funcionário");
+		mainRoles.add(0, "Funcionï¿½rio");
 	    }
 	}
 	return mainRoles;
@@ -2676,6 +2676,40 @@ public class Person extends Person_Base {
 	    }
 	}
 	return new ArrayList<ResearchUnit>(baseUnits);
+    }
+
+    // FIXME Anil : This method is identical to getWorkingResearchUnits.
+    public Set<Unit> getAssociatedResearchOrDepartmentUnits() {
+	Set<Unit> units = new HashSet<Unit>();
+	Set<Accountability> parentAccountabilities = new HashSet<Accountability>();
+
+	parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT));
+	parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT));
+
+	YearMonthDay currentDate = new YearMonthDay();
+	for (Accountability accountability : parentAccountabilities) {
+	    if (accountability.isActive(currentDate)
+		    && (((Unit) accountability.getParentParty()).isResearchUnit() || ((Unit) accountability.getParentParty())
+			    .isDepartmentUnit())) {
+		units.add((ResearchUnit) accountability.getParentParty());
+	    }
+	}
+
+	return units;
+    }
+    
+    // FIXME Anil : This method is identical to getWorkingResearchUnitNames
+    public String getAssociatedResearchOrDepartmentUnitsNames() {
+	String names = "";
+	Set<Unit> units = getAssociatedResearchOrDepartmentUnits();
+	int length = units.size();
+	for (Unit unit : units) {
+	    names += unit.getName();
+	    if (--length > 0) {
+		names += ", ";
+	    }
+	}
+	return names;
     }
 
     public String getWorkingResearchUnitNames() {

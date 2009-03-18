@@ -21,7 +21,7 @@
 			</td> 
 			<td>
 				<p class="mtop0 mbottom05"><strong><fr:view name="researcher" property="person" layout="values" schema="person.name.with.link"/></strong></p>
-				<p class="mtop0 mbottom05"><fr:view name="researcher" property="person.employee.currentDepartmentWorkingPlace.realName"/></p>
+				<p class="mtop0 mbottom05"><fr:view name="researcher" property="person.associatedResearchOrDepartmentUnitsNames"/></p>
 				<p class="mtop0 mbottom05"><bean:message key="label.allows.contact.from" bundle="RESEARCHER_RESOURCES"/>: <fr:view name="researcher" layout="researcher-allowed-contacts"/></p>
 				<logic:iterate id="contact" name="researcher" property="availableContacts"> 
 					<p class="mtop0 mbottom05"><fr:view name="contact" property="class">
