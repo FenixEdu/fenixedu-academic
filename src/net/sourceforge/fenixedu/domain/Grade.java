@@ -69,6 +69,10 @@ public class Grade implements Serializable, Comparable<Grade> {
     public String getValue() {
 	return value;
     }
+    
+    public Integer getIntegerValue() {
+	return isNumeric() ? Integer.valueOf(getValue()) : null;
+    }
 
     public GradeScale getGradeScale() {
 	return gradeScale;

@@ -16,6 +16,11 @@ public class EmptyGrade extends Grade {
     public String getValue() {
 	return null;
     }
+    
+    @Override
+    public Integer getIntegerValue() {
+        return null;
+    }
 
     @Override
     public GradeScale getGradeScale() {
