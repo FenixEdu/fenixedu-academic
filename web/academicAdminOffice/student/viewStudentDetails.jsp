@@ -4,6 +4,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
+<div style="float: right;">
+	<bean:define id="personID" name="student" property="person.idInternal"/>
+	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+</div>
+
+
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
@@ -25,10 +31,6 @@
 		      		<fr:property name="rowClasses" value="tdhl1,,,,"/>
 				</fr:layout>
 			</fr:view>
-		</td>
-		<td>
-			<bean:define id="personID" name="student" property="person.idInternal"/>
-			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
 		</td>
 	</tr>
 </table>

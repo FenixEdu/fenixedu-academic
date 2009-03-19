@@ -7,6 +7,11 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+	<div style="float: right;">
+		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	</div>
+
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="label.visualizeRegistration" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
@@ -18,10 +23,7 @@
 		</li>
 	</ul>
 	
-	<div style="float: right;">
-		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
-		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-	</div>
+
 	
 	<p class="mvert2">
 		<span class="showpersonid">
@@ -56,7 +58,7 @@
 	</logic:present>
 	
 	<logic:notPresent name="registration" property="ingression">
-		<h3 class="mbottom05"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
 	
 
