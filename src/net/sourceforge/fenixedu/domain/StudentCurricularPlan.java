@@ -1780,10 +1780,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    final public ImprovementOfApprovedEnrolmentEvent getNotPayedImprovementOfApprovedEnrolmentEvent() {
-	return getPerson().getNotPayedImprovementOfApprovedEnrolmentEvent();
-    }
-
     final public MasterDegreeProofVersion readActiveMasterDegreeProofVersion() {
 	MasterDegreeThesis masterDegreeThesis = this.getMasterDegreeThesis();
 	if (masterDegreeThesis != null) {
@@ -1954,14 +1950,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (isToPayImprovementOfApprovedEnrolments()) {
-	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = getNotPayedImprovementOfApprovedEnrolmentEvent();
-	    if (improvementOfApprovedEnrolmentEvent == null) {
-		new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
-	    } else {
-		for (final EnrolmentEvaluation enrolmentEvaluation : created) {
-		    improvementOfApprovedEnrolmentEvent.addImprovementEnrolmentEvaluations(enrolmentEvaluation);
-		}
-	    }
+	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
 	}
     }
 

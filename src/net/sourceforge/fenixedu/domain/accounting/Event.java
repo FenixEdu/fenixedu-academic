@@ -777,7 +777,7 @@ public abstract class Event extends Event_Base {
 	}
 
 	while (!getExemptions().isEmpty()) {
-	    getExemptions().get(0).delete();
+	    getExemptions().get(0).delete(false);
 	}
 
 	super.setPerson(null);

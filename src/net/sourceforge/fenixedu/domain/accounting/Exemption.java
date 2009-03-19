@@ -68,12 +68,18 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     public void delete() {
+	delete(true);
+    }
+
+    public void delete(final boolean recalculateEventState) {
 	removeRootDomainObject();
 	removeEmployee();
 	getExemptionJustification().delete();
 	final Event event = getEvent();
 	removeEvent();
-	event.recalculateState(new DateTime());
+	if (recalculateEventState) {
+	    event.recalculateState(new DateTime());
+	}
 
 	super.deleteDomainObject();
     }

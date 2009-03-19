@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -1944,16 +1943,6 @@ public class Person extends Person_Base {
 	}
 
 	return result;
-    }
-
-    public ImprovementOfApprovedEnrolmentEvent getNotPayedImprovementOfApprovedEnrolmentEvent() {
-	for (final Event event : getEventsByEventType(EventType.IMPROVEMENT_OF_APPROVED_ENROLMENT)) {
-	    if (!event.isPayed()) {
-		return (ImprovementOfApprovedEnrolmentEvent) event;
-	    }
-	}
-
-	return null;
     }
 
     public Set<GratuityEvent> getGratuityEvents() {
