@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Column KEYWORDS_EN to table RESEARCHER" changeResearcherTableAndValues.sql
