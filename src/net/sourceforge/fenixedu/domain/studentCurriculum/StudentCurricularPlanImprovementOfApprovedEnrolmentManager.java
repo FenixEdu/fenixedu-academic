@@ -26,12 +26,17 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     @Override
     protected void assertEnrolmentPreConditions() {
+	if (isResponsiblePersonManager()) {
+	    return;
+	}
 
-	if (!isResponsiblePersonManager() && !hasRegistrationInValidState()) {
+	if (!hasRegistrationInValidState()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
-	super.assertEnrolmentPreConditions();
+	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+	}
     }
 
     private boolean hasRegistrationInValidState() {
