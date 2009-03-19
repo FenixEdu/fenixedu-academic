@@ -39,7 +39,7 @@
 
 
 
-		<p class="mbottom05"><strong><bean:message key="label.available.contacts" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+		<p class="mtop15 mbottom05"><strong><bean:message key="label.available.contacts" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 		<fr:edit id="contacts" name="researcher" slot="availableContacts">
 			<fr:layout name="option-select">
 				<fr:property name="classes" value="nobullet noindent liststyle5"/>
@@ -50,12 +50,14 @@
 			
 		</fr:edit>
 			
+		<div class="infoop2"><p><bean:message key="label.keywords.help" bundle="RESEARCHER_RESOURCES"/></p></div>
+
 		<p class="mtop15"><strong><bean:message key="label.keywords.portuguese" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 		<table>
 		<tr>
 		<td>
-		<fr:edit id="keywordsPt" name="researcher" slot="keywordsPt">
-			<fr:layout name="longText">
+		<fr:edit id="keywordsPt" name="researcher" slot="keywordsPt" >
+			<fr:layout name="longText" >
 				<fr:property name="rows" value="2"/>
 				<fr:property name="columns" value="60"/>
 				<fr:property name="classes" value="dinline"/>
@@ -63,6 +65,9 @@
 	        <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
 	        	<fr:property name="min" value="0"/>
 	            <fr:property name="max" value="512"/>
+	            <fr:property name="message" value="error.keywords.maxlength.exceeded"/>
+	            <fr:property name="key" value="true"/>
+	            <fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
 	        </fr:validator>			
 			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		</fr:edit>
@@ -75,7 +80,7 @@
 		</tr>
 		</table>
 
-		<p class="mtop15"><strong><bean:message key="label.keywords.english" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
+		<p class="mtop1"><strong><bean:message key="label.keywords.english" bundle="RESEARCHER_RESOURCES"/>:</strong></p>
 		<table>
 		<tr>
 		<td>
@@ -88,6 +93,9 @@
 	        <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.StringLengthValidator">
 	        	<fr:property name="min" value="0"/>
 	            <fr:property name="max" value="512"/>
+	            <fr:property name="message" value="error.keywords.maxlength.exceeded"/>
+	            <fr:property name="key" value="true"/>
+	            <fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
 	        </fr:validator>			
 			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		</fr:edit>

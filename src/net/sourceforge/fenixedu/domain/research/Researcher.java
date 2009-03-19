@@ -82,4 +82,32 @@ public class Researcher extends Researcher_Base {
 	    addAvailableContacts(contact);
 	}
     }
+    
+    private String normalizeKeywords(String keywordList) {
+	String[] keys = keywordList.split(",");
+	
+	StringBuilder sb = new StringBuilder();
+	for(String key : keys) {
+	    String[] dtd = key.split(" ");
+	    
+	    for(String eee : dtd) {
+		if(eee.trim().length() > 0) {
+		    sb.append(eee).append(",");
+		}
+	    }
+	}
+	
+	return sb.substring(0, sb.length() - 1);
+    }
+    
+    @Override
+    public void setKeywordsEn(String keywordsEn) {
+	super.setKeywordsEn(normalizeKeywords(keywordsEn));
+    }
+
+    @Override
+    public void setKeywordsPt(String keywordsPt) {
+	super.setKeywordsPt(normalizeKeywords(keywordsPt));
+    }
+    
 }
