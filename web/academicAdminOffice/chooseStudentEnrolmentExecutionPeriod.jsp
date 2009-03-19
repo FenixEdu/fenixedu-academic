@@ -14,8 +14,9 @@
 	</p>
 </html:messages>
 
+<%-- 
 <logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="true">
-
+--%>
 	<p class="mtop15 mbottom025"><strong><bean:message key="label.student.enrolment.chooseExecutionPeriod" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 	
 	<fr:form action="/studentEnrolments.do?method=showDegreeModulesToEnrol">
@@ -131,6 +132,7 @@
 		</logic:empty>	
 		
 	</logic:present>
+<%--
 </logic:equal>
 
 <logic:equal name="studentEnrolmentBean" property="hasUpdateRegistrationAccess" value="false">
@@ -138,7 +140,7 @@
 		<em><bean:message key="error.not.authorized" bundle="APPLICATION_RESOURCES"/></em>
 	</p>
 </logic:equal>
-
+--%>
 <fr:form action="/studentEnrolments.do?method=backViewRegistration">
 	<fr:edit id="studentEnrolment-back" name="studentEnrolmentBean" visible="false" />
 	<html:cancel><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
