@@ -826,7 +826,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public CurriculumLine getLastApprovement() {
 	final SortedSet<CurriculumLine> curriculumLines = new TreeSet<CurriculumLine>(
 		CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
-	curriculumLines.addAll(getApprovedCurriculumLines());
+
+	if (hasRoot()) {
+	    for (final CurriculumGroup group : getRoot().getChildCurriculumGroups()) {
+		if (!group.isNoCourseGroupCurriculumGroup()) {
+		    group.addApprovedCurriculumLines(curriculumLines);
+		}
+	    }
+	} else {
+	    curriculumLines.addAll(getAprovedEnrolments());
+	}
 
 	return curriculumLines.isEmpty() ? null : curriculumLines.last();
     }
