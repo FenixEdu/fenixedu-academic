@@ -43,6 +43,10 @@ public class RegistrationPredicates {
 		return true;
 	    }
 
+	    if (!AccessControl.getPerson().isAdministrativeOfficeEmployee()) {
+		return false;
+	    }
+
 	    final AdministrativeOfficePermission permission = getPermissionByType(PermissionType.MANAGE_CONCLUSION);
 	    if (permission == null || !permission.isAppliable(registration)) {
 		return true;
