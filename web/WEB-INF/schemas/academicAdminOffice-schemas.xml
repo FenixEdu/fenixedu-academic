@@ -1833,6 +1833,7 @@
 <schema name="academicAdminOffice.show.permissions.member" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$Member" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="person" layout="format">
 		<property name="format" value="${name} (F${employee.employeeNumber})" />
+		<property name="classes" value="nowrap" />
 	</slot>
 </schema>
 
@@ -1841,6 +1842,7 @@
 	<slot name="selected" />
 	<slot name="person" read-only="true" layout="format">
 		<property name="format" value="${name} (F${employee.employeeNumber})" />
+		<property name="classes" value="nowrap" />
 	</slot>
 </schema>
 

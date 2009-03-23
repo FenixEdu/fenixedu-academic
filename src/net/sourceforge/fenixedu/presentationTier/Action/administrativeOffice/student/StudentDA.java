@@ -199,12 +199,11 @@ public class StudentDA extends FenixDispatchAction {
 		return mapping.findForward("chooseCycleForRegistrationConclusion");
 	    }
 	}
-	
-	
-	RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-//	registrationConclusionBean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.manageConclusionProcess.evaluate(registration));
-	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
-	
+
+	final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
+	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.MANAGE_CONCLUSION_PROCESS.evaluate(registration));
+	request.setAttribute("registrationConclusionBean", bean);
+
 	return mapping.findForward("registrationConclusion");
     }
 

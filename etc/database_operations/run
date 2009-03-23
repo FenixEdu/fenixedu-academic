@@ -43,5 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add new columns to administrative office permissions tables" alterAdministrativeOfficePermissionsTables.sql
 execute "Set default values to RESEACHER columns" setResearcherDefaultValues.sql
+execute "Add new columns to administrative office permissions tables" alterAdministrativeOfficePermissionsTables.sql
+execute "Create administrative office permissions" createAdministrativeOfficePermissions.sql

@@ -2077,7 +2077,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean getCanCreateMarkSheet() {
-	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation());
+	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation(null));
     }
 
     public Collection<MarkSheet> getMarkSheetsByPeriod(ExecutionSemester executionSemester) {

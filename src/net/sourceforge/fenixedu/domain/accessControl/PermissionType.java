@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -26,6 +27,41 @@ public enum PermissionType {
 	    };
 	}
 
+    },
+
+    
+    MANAGE_MARKSHEETS() {
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
+	}
+    },
+
+    RECTIFICATION_MARKSHEETS() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
+	}
+    },
+    
+
+    DISSERTATION_MARKSHEETS() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
+	}
     };
 
     // UPDATE_REGISTRATION_WITH_CONCLUSION() {

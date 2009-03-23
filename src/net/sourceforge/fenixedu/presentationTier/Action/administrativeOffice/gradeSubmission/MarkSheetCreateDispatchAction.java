@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -135,9 +136,11 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	    ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
 	    return viewMarkSheet(mapping, actionForm, request, response);
 
-	} catch (NotAuthorizedFilterException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
-	} catch (DomainException e) {
+	} catch (final NotAuthorizedFilterException e) {
+	    addMessage(request, actionMessages, "error.not.authorized.to.create.dissertation.marksheet");
+	} catch (final IllegalDataAccessException e) {
+	    addMessage(request, actionMessages, "error.not.authorized.to.create.dissertation.marksheet");
+	} catch (final DomainException e) {
 	    addMessage(request, actionMessages, e.getMessage(), e.getArgs());
 	}
 

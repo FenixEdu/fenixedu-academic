@@ -1,33 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice;
 
-import java.util.HashSet;
-import java.util.Set;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 
 public class CreateMarkSheetAuthorizationFilter extends MarkSheetAuthorizationFilter {
 
     @Override
-    public Set<String> getAuthorizedEmployees() {
-	Set<String> authorizedEmployees = new HashSet<String>();
-	authorizedEmployees.add("1272");
-	authorizedEmployees.add("2339");
-	authorizedEmployees.add("1268");
-	authorizedEmployees.add("2675");
-	authorizedEmployees.add("2232");
-	authorizedEmployees.add("4065");
-	authorizedEmployees.add("4280");
-	authorizedEmployees.add("3978");
-
-	authorizedEmployees.add("3068");
-	authorizedEmployees.add("2973");
-
-	authorizedEmployees.add("3890");
-
-	// TAGUS
-	authorizedEmployees.add("3821");
-	authorizedEmployees.add("3303");
-	authorizedEmployees.add("3896");
-
-	return authorizedEmployees;
+    public boolean isAuthorized(final Employee employee) {
+	final AdministrativeOfficePermission permission = MarkSheetPredicates.getManageMarksheetsPermission(employee);
+	return permission != null && permission.isMember(employee.getPerson());
     }
 
 }

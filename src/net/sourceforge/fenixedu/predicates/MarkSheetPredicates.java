@@ -1,37 +1,19 @@
 package net.sourceforge.fenixedu.predicates;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class MarkSheetPredicates {
 
-    public static final Set<String> rectificationEmployees = new HashSet<String>();
-    public static final Set<String> dissertationEmployees = new HashSet<String>();
-
-    static {
-	rectificationEmployees.add("1272");
-	rectificationEmployees.add("1268");
-	rectificationEmployees.add("2675");
-	rectificationEmployees.add("3978");
-	rectificationEmployees.add("3068");
-	rectificationEmployees.add("2973");
-	rectificationEmployees.add("3821");
-
-	dissertationEmployees.add("3978");
-	dissertationEmployees.add("3821");
-
-    }
-
     public static final AccessControlPredicate<MarkSheet> confirmPredicate = new AccessControlPredicate<MarkSheet>() {
 
 	public boolean evaluate(final MarkSheet markSheet) {
-	    return hasAcademinAdminOfficeRole()
-		    && (!markSheet.isRectification() || (markSheet.isRectification() && checkRectification()));
+	    return hasAcademinAdminOfficeRole() && (!markSheet.isRectification() || checkRectification(markSheet));
 	}
 
     };
@@ -41,9 +23,8 @@ public class MarkSheetPredicates {
 	public boolean evaluate(final MarkSheet markSheet) {
 	    return hasScientificCouncilRole()
 		    || hasTeacherRole()
-		    || (hasAcademinAdminOfficeRole()
-			    && (!markSheet.isRectification() || (markSheet.isRectification() && checkRectification())) && (!markSheet
-			    .isDissertation() || (markSheet.isDissertation() && checkDissertation())));
+		    || (hasAcademinAdminOfficeRole() && (!markSheet.isRectification() || checkRectification(markSheet)) && (!markSheet
+			    .isDissertation() || checkDissertation(markSheet)));
 	}
 
     };
@@ -51,10 +32,9 @@ public class MarkSheetPredicates {
     public static final AccessControlPredicate<MarkSheet> rectifyPredicate = new AccessControlPredicate<MarkSheet>() {
 
 	public boolean evaluate(MarkSheet markSheet) {
-	    return hasAcademinAdminOfficeRole() && checkRectification()
-		    && (!markSheet.isDissertation() || (markSheet.isDissertation() && checkDissertation()));
+	    return hasAcademinAdminOfficeRole() && checkRectification(markSheet)
+		    && (!markSheet.isDissertation() || checkDissertation(markSheet));
 	}
-
     };
 
     private static boolean hasAcademinAdminOfficeRole() {
@@ -69,22 +49,36 @@ public class MarkSheetPredicates {
 	return RolePredicates.TEACHER_PREDICATE.evaluate(null);
     }
 
-    public static boolean checkRectification() {
-	Employee employee = AccessControl.getPerson().getEmployee();
+    private static boolean checkPermission(final MarkSheet markSheet, final AdministrativeOfficePermission permission) {
+	final Employee employee = AccessControl.getPerson().getEmployee();
 	if (employee != null) {
-	    return rectificationEmployees.contains(employee.getEmployeeNumber().toString());
+	    return permission != null && (!permission.isAppliable(markSheet) || permission.isMember(employee.getPerson()));
 	} else {
 	    return false;
 	}
     }
 
-    public static boolean checkDissertation() {
-	Employee employee = AccessControl.getPerson().getEmployee();
-	if (employee != null) {
-	    return dissertationEmployees.contains(employee.getEmployeeNumber().toString());
-	} else {
-	    return false;
-	}
+    static public boolean checkRectification(final MarkSheet markSheet) {
+	return checkPermission(markSheet, getRectificationPermission(AccessControl.getPerson().getEmployee()));
+    }
+
+    static public boolean checkDissertation(final MarkSheet markSheet) {
+	return checkPermission(markSheet, getDissertationPermission(AccessControl.getPerson().getEmployee()));
+    }
+
+    static public AdministrativeOfficePermission getManageMarksheetsPermission(final Employee employee) {
+	final AdministrativeOffice office = employee.getAdministrativeOffice();
+	return office.getPermission(PermissionType.MANAGE_MARKSHEETS, employee.getCurrentCampus());
+    }
+
+    static public AdministrativeOfficePermission getRectificationPermission(final Employee employee) {
+	final AdministrativeOffice office = employee.getAdministrativeOffice();
+	return office.getPermission(PermissionType.RECTIFICATION_MARKSHEETS, employee.getCurrentCampus());
+    }
+
+    static public AdministrativeOfficePermission getDissertationPermission(final Employee employee) {
+	final AdministrativeOffice office = employee.getAdministrativeOffice();
+	return office.getPermission(PermissionType.DISSERTATION_MARKSHEETS, employee.getCurrentCampus());
     }
 
 }
