@@ -7,10 +7,10 @@
  * The Fenix domain classes are all in the
  * net.sourceforge.fenixedu.domain package or some sub-package of
  * this package.
- * 
+*
  * Note that this package declaration applies only to the
  * entity-types.  Value types are not affected by this.
- */
+*/
 
 package net.sourceforge.fenixedu.domain;
 
@@ -513,6 +513,7 @@ valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageS
 
     internalizeWith importFromString();
 }
+
 
 /*
 *
@@ -3137,32 +3138,62 @@ class DomainObject {
 		Integer teacherNumberSuitableForCUOperation;
 		Integer establishedScheduleSuitable;
 		String establishedScheduleNotSuitableReason;
+		Integer availableInfrastructureSuitable;
+		String availableInfrastructureSuitableReason;
+		
 		Integer studentsReadyForFollowingCU;
 		Integer evaluationMethodSuitableForCUTeachingTypeAndObjective;
 		Integer disturbingEventsInClasses;
+		Boolean disturbingEventsInClassesReasonInfrastructure;
+		Boolean disturbingEventsInClassesReasonLowAssiduity;
+		Boolean disturbingEventsInClassesReasonIndiscipline;
+		Boolean disturbingEventsInClassesReasonIntermediateEvaluations;
 		String disturbingEventsInClassesDescription;
-		Integer semesterStartAverageStudentNumberInTheorical;
-		Integer semesterMiddleAverageStudentNumberInTheorical;
-		Integer semesterEndAverageStudentNumberInTheorical;
-		Integer semesterStartAverageStudentNumberInProblems;
-		Integer semesterMiddleAverageStudentNumberInProblems;
-		Integer semesterEndAverageStudentNumberInProblems;
-		Integer semesterStartAverageStudentNumberInLabs;
-		Integer semesterMiddleAverageStudentNumberInLabs;
-		Integer semesterEndAverageStudentNumberInLabs;
-		Integer semesterStartAverageStudentNumberInSeminary;
-		Integer semesterMiddleAverageStudentNumberInSeminary;
-		Integer semesterEndAverageStudentNumberInSeminary;
-		Integer semesterStartAverageStudentNumberInProject;
-		Integer semesterMiddleAverageStudentNumberInProject;
-		Integer semesterEndAverageStudentNumberInProject;
+
+		String semesterStartAverageStudentNumberInTheorical;
+		String semesterMiddleAverageStudentNumberInTheorical;
+		String semesterEndAverageStudentNumberInTheorical;
+		String semesterStartAverageStudentNumberInProblems;
+		String semesterMiddleAverageStudentNumberInProblems;
+		String semesterEndAverageStudentNumberInProblems;
+		String semesterStartAverageStudentNumberInLabs;
+		String semesterMiddleAverageStudentNumberInLabs;
+		String semesterEndAverageStudentNumberInLabs;
+		String semesterStartAverageStudentNumberInSeminary;
+		String semesterMiddleAverageStudentNumberInSeminary;
+		String semesterEndAverageStudentNumberInSeminary;
+		String semesterStartAverageStudentNumberInProject;
+		String semesterMiddleAverageStudentNumberInProject;
+		String semesterEndAverageStudentNumberInProject;
+		String semesterStartActiveAndInteressedStudentsRatioInTheorical;
+		String semesterMiddleActiveAndInteressedStudentsRatioInTheorica;
+		String semesterEndActiveAndInteressedStudentsRatioInTheorical;
+		String semesterStartActiveAndInteressedStudentsRatioInProblems;
+		String semesterMiddleActiveAndInteressedStudentsRatioInProblems;
+		String semesterEndActiveAndInteressedStudentsRatioInProblems;
+		String semesterStartActiveAndInteressedStudentsRatioInLabs;
+		String semesterMiddleActiveAndInteressedStudentsRatioInLabs;
+		String semesterEndActiveAndInteressedStudentsRatioInLabs;
+		String semesterStartActiveAndInteressedStudentsRatioInSeminary;
+		String semesterMiddleActiveAndInteressedStudentsRatioInSeminary;
+		String semesterEndActiveAndInteressedStudentsRatioInSeminary;
+		String semesterStartActiveAndInteressedStudentsRatioInProject;
+		String semesterMiddleActiveAndInteressedStudentsRatioInProject;
+		String semesterEndActiveAndInteressedStudentsRatioInProject;
+		
 		String activeAndInteressedStudentsRatio;
+		Integer clarificationOfDoubtsOutsideClasses;
+		Integer autonomousWork;	
 		Integer studentsPerformance;
 		Integer classesAndOtherActivitiesFrequency;
 		Integer classesAndOtherActivitiesPonctuality;
 		Integer globalQualityOfTeachingInCU;
 		Integer pedagogicalActivitiesDeveloped;
 		String relativePedagogicalInitiatives;
+		String generalCommentToCUOperation;
+		
+		Boolean reportDisclosureToAcademicComunity;
+		Boolean resultsDisclosureToAcademicComunity;
 		
 		Integer numberOfExams;
 		Integer numberOfTests;
@@ -3179,15 +3210,24 @@ class DomainObject {
 		Integer comprehensionApplicationOfCU;
 		Integer criticalSenseAndReflexiveSpirit;
 		Integer cooperationAndCommunicationCapacity;
+		Integer increaseAutonoumousLearningCapacity;
+		Integer socialAndProfessionalContextAnalysis;
+		
 		Integer globalClassificationOfThisCU;
 		String weakPointsOfCUTeachingProcess;
 		String strongPointsOfCUTeachingProcess;
 		String finalCommentsAndImproovements;
 		String negativeResultsResolutionAndImproovementPlanOfAction;
 		
+		Boolean responsibleTeacherReportDisclosureToAcademicComunity;
+		
 	}
 	
 	class inquiries.StudentInquiriesTeachingResult extends DomainObject {
+		String headers;
+		String rawValues;
+		DateTime uploadDateTime;
+		
 		ShiftType shiftType;
 		Integer numberOfAnswers;
 		Boolean unsatisfactoryResultsAssiduity;
@@ -3326,6 +3366,10 @@ class DomainObject {
 	}	
 
 	class inquiries.StudentInquiriesCourseResult extends DomainObject {
+		String headers;
+		String rawValues;
+		DateTime uploadDateTime;
+			
 		Integer numberOfEnrolled;
 		Double evaluatedRatio;
 		Double approvedRatio;
@@ -5713,6 +5757,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 		String style;
 	}
 
+
 		
 		class ExecutionCourseSite extends Site {
 			Boolean dynamicMailDistribution;
@@ -5736,7 +5781,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			MultiLanguageString sideBanner;
 			String googleAnalyticsCode;
 		}
-		
+
 		class DegreeSite extends UnitSite {
 		}
 
@@ -14950,7 +14995,6 @@ relation YearDelegateCourseInquiryRootDomainObject {
 		multiplicity *;
 	}
 }
-
 relation AdministrativeOfficePermissionGroupRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
