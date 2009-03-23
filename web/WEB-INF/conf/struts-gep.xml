@@ -347,11 +347,16 @@
         <set-property property="pathnames" 
             value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gep.xml"/>
     </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-pages-definitions.xml" 
-            />
+    
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
+		<set-property property="definitions-config" 
+	        value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-pages-definitions.xml"/>
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.gep.two-column" />
     </plug-in>
+    
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />    
+    
 </struts-config>
