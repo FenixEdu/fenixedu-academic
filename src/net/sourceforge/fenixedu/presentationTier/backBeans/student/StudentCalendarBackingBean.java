@@ -74,8 +74,10 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	    executionSemesters = new TreeSet<ExecutionSemester>(
 		    ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
-	    for (final Attends attends : registration.getAssociatedAttends()) {
-		executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
+	    if (registration != null) {
+		for (final Attends attends : registration.getAssociatedAttends()) {
+		    executionSemesters.add(attends.getExecutionCourse().getExecutionPeriod());
+		}
 	    }
 	}
 	return executionSemesters;
@@ -89,10 +91,12 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	    final Registration registration = getStudent();
 
 	    executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
-	    for (final Attends attends : registration.getAssociatedAttends()) {
-		final ExecutionCourse executionCourse = attends.getExecutionCourse();
-		if (executionCourse.getExecutionPeriod() == executionSemester) {
-		    executionCourses.add(executionCourse);
+	    if (registration != null) {
+		for (final Attends attends : registration.getAssociatedAttends()) {
+		    final ExecutionCourse executionCourse = attends.getExecutionCourse();
+		    if (executionCourse.getExecutionPeriod() == executionSemester) {
+			executionCourses.add(executionCourse);
+		    }
 		}
 	    }
 	}
@@ -152,7 +156,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     public Date getCalendarStartDate() {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final String evaluationTypeClassname = getEvaluationTypeClassname();
-	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
+	final Registration registration = getStudent();
+	final StudentCurricularPlan studentCurricularPlan = registration == null ? null : registration.getActiveStudentCurricularPlan();
 	final DegreeCurricularPlan degreeCurricularPlan = (studentCurricularPlan != null) ? studentCurricularPlan
 		.getDegreeCurricularPlan() : null;
 	final ExecutionDegree executionDegree = findExecutinDegree(degreeCurricularPlan, executionSemester);
