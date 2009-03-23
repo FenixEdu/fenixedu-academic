@@ -79,6 +79,8 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	    getContext().getViewState().setMetaObject(metaObject);
 
+	    HtmlTableRow questionRow = null;
+
 	    for (MetaSlot metaSlot : metaObject.getAllSlots()) {
 
 		InquiriesQuestion inquiriesQuestion = (InquiriesQuestion) metaSlot.getMetaObject().getObject();
@@ -87,11 +89,13 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    createHeaderRow(inquiriesQuestion.getHeader(), mainTable, block);
 		}
 
-		final HtmlTableRow questionRow = mainTable.createRow();
-		final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
-		labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel())
-			+ getQuestionRequiredIndication(inquiriesQuestion) + getQuestionToolTip(inquiriesQuestion), false));
-		labelCell.addClass("width300px brightccc");
+		if (inquiriesQuestion.getNewRow()) {
+		    questionRow = mainTable.createRow();
+		    final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
+		    labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel())
+			    + getQuestionRequiredIndication(inquiriesQuestion) + getQuestionToolTip(inquiriesQuestion), false));
+		    labelCell.addClass("width300px brightccc");
+		}
 
 		PresentationContext newContext = getContext().createSubContext(metaSlot);
 		newContext.setSchema(metaSlot.getSchema() != null ? metaSlot.getSchema().getName() : null);
@@ -111,7 +115,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    cell.setColspan(scaleHeadersCount);
+		    cell.setColspan(textBoxQuestion.getAutofit() ? scaleHeadersCount : 1);
 		    cell.setBody(formComponent);
 		    cell.setClasses("aleft");
 
@@ -142,9 +146,9 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    //cell.setColspan(block.getHeader().getScaleHeadersCount());
+		    // cell.setColspan(block.getHeader().getScaleHeadersCount());
 		    cell.setBody(formComponent);
-		    if (scaleHeadersCount > 1) {
+		    if (scaleHeadersCount > 1 && inquiriesQuestion.getAutofit()) {
 			questionRow.createCell().setColspan(scaleHeadersCount - 1);
 		    }
 

@@ -123,9 +123,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	if (!teachingInquiry.getFirstPageFirstBlock().validate()
 		|| !teachingInquiry.getFirstPageSecondBlockFirstPart().validate()
 		|| !teachingInquiry.getFirstPageSecondBlockSecondPart().validate()
-		|| !teachingInquiry.getFirstPageSecondBlockThirdPart().validate()
 		|| !teachingInquiry.getFirstPageSecondBlockFourthPart().validate()
-		|| !teachingInquiry.getFirstPageThirdBlock().validate()) {
+		|| !teachingInquiry.getFirstPageThirdBlock().validate() || !teachingInquiry.getFirstPageFourthBlock().validate()) {
 
 	    addActionMessage(request, "error.inquiries.fillAllFields");
 	    return actionMapping.findForward("showInquiry1stPage");
@@ -164,7 +163,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
 	}
 
-	return actionMapping.findForward("confirmSubmission");
+//	return actionMapping.findForward("confirmSubmission");
+	//FIXME: Just to try!
+	return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
     }
 
     private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {
