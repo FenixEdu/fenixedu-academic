@@ -1478,7 +1478,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    actionErrors.add("errors.invalid.delete.not.empty.studentGroup", error);
 	    saveErrors(request, actionErrors);
 	    return viewStudentGroupInformation(mapping, form, request, response);
-
+	} catch (DomainException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("errors.invalid.delete.not.empty.studentGroup");
+	    actionErrors.add("errors.invalid.delete.not.empty.studentGroup", error);
+	    saveErrors(request, actionErrors);
+	    return viewStudentGroupInformation(mapping, form, request, response);
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
 	    throw new FenixActionException(e.getMessage());
