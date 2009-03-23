@@ -70,7 +70,6 @@ public class TeachingInquiryDTO implements Serializable {
 	retrieveAnswersFromBlock(answers, firstPageFirstBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageSecondBlockFirstPart, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageSecondBlockSecondPart, fullLabels);
-	retrieveAnswersFromBlock(answers, firstPageSecondBlockThirdPart, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageSecondBlockFourthPart, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageThirdBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, secondPageFourthBlock, fullLabels);
