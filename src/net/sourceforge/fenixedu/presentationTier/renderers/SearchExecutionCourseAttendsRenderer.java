@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
@@ -262,7 +263,8 @@ public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 		final StudentAttendsStateType stateType = attends.getAttendsStateType();
 		row.createCell(stateType != null ? enumerationResources.getString(stateType.getQualifiedName()) : "--");
 		row.createCell(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName());
-		row.createCell(attends.getRegistration().getLastRegistrationState(attends.getExecutionYear()).getStateType().getDescription());
+		final RegistrationState registrationState = attends.getRegistration().getLastRegistrationState(attends.getExecutionYear());
+		row.createCell(registrationState == null ? "" : registrationState.getStateType().getDescription());
 		row.createCell(attends.getRegistration().getStudent().getPerson().getFirstAndLastName());
 
 		for (Grouping grouping : groupings) {
