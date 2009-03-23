@@ -2442,7 +2442,7 @@ public class Person extends Person_Base {
 
 	    for (final Role personRole : roles) {
 
-		mainRoles.add(bundle.get(personRole.getRoleType().toString()));
+		mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
 		if (personRole.getRoleType() == RoleType.TEACHER) {
 		    teacher = true;
 		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
@@ -2452,7 +2452,7 @@ public class Person extends Person_Base {
 		}
 	    }
 	    if ((employee && !teacher && !researcher)) {
-		mainRoles.add(0, bundle.get(RoleType.EMPLOYEE.toString()));
+		mainRoles.add(0, bundle.getString(RoleType.EMPLOYEE.toString()));
 	    }
 	}
 	return mainRoles;
