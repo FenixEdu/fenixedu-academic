@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -188,23 +189,30 @@ public class StudentDA extends FenixDispatchAction {
 	final Registration registration = getRegistration(request);
 
 	if (registration.isBolonha()) {
+	    
 	    if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() > 1) {
 		request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration));
 		return mapping.findForward("chooseCycleForRegistrationConclusion");
-	    } else if (registration.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().size() == 1) {
-		request.setAttribute("registrationConclusionBean", new RegistrationConclusionBean(registration, registration
-			.getLastStudentCurricularPlan().getInternalCycleCurriculumGrops().iterator().next()));
+		
+	    } else if (registration.getInternalCycleCurriculumGrops().size() == 1) {
+		final RegistrationConclusionBean bean = buildRegistrationConclusionBean(registration);
+		bean.setCycleCurriculumGroup(registration.getInternalCycleCurriculumGrops().iterator().next());
+		request.setAttribute("registrationConclusionBean", bean);
 		return mapping.findForward("registrationConclusion");
+		
 	    } else {
 		return mapping.findForward("chooseCycleForRegistrationConclusion");
 	    }
 	}
 
+	request.setAttribute("registrationConclusionBean", buildRegistrationConclusionBean(registration));
+	return mapping.findForward("registrationConclusion");
+    }
+
+    private RegistrationConclusionBean buildRegistrationConclusionBean(final Registration registration) {
 	final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
 	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.MANAGE_CONCLUSION_PROCESS.evaluate(registration));
-	request.setAttribute("registrationConclusionBean", bean);
-
-	return mapping.findForward("registrationConclusion");
+	return bean;
     }
 
     public ActionForward prepareRegistrationConclusionProcessInvalid(ActionMapping mapping, ActionForm form,
@@ -226,10 +234,14 @@ public class StudentDA extends FenixDispatchAction {
 
 	try {
 	    executeService("RegistrationConclusionProcess", new Object[] { registrationConclusionBean });
-	} catch (DomainException e) {
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage("illegal.access", request, "error.not.authorized.to.registration.conclusion.process");
+	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
+	    return mapping.findForward("registrationConclusion");
+
+	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
-
 	    return mapping.findForward("registrationConclusion");
 	}
 

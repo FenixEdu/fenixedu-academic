@@ -2664,7 +2664,7 @@ public class Registration extends Registration_Base {
 	return concludedCycles.isEmpty() ? null : concludedCycles.last();
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.apply.to.bolonha");
@@ -2682,7 +2682,7 @@ public class Registration extends Registration_Base {
 	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
 	    final String notes) {
 	if (!isRegistrationConclusionProcessed()) {
@@ -2695,7 +2695,7 @@ public class Registration extends Registration_Base {
 	getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude(final CycleCurriculumGroup cycleCurriculumGroup) {
 	if (!isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.apply.to.preBolonha");
@@ -3684,5 +3684,9 @@ public class Registration extends Registration_Base {
 	    studentCandidacy.setRegistration(this);
 	    studentCandidacy.editCandidacyInformation(bean);
 	}
+    }
+
+    public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
+	return getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
     }
 }

@@ -3,14 +3,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:xhtml/>
+
+<%@page import="org.apache.struts.action.ActionMessages"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
-	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
+		<p>
+			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+		</p>
+	</html:messages>
+	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="illegal.access">
 		<p>
 			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 		</p>
@@ -273,7 +279,7 @@
 	
 	<logic:equal name="registrationConclusionBean" property="hasAccessToRegistrationConclusionProcess" value="false">
 		<p class="mtop15">
-			<em><bean:message key="error.not.authorized.to.registration.conclusion.process" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+			<em class="error0"><bean:message key="error.not.authorized.to.registration.conclusion.process" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		</p>
 	</logic:equal>
 

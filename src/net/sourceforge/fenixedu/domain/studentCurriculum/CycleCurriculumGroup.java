@@ -155,7 +155,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return false;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
 	if (isConclusionProcessed()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup().getName());
@@ -290,6 +290,6 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     @Override
     public CycleCurriculumGroup getParentCycleCurriculumGroup() {
-        return this;
+	return this;
     }
 }
