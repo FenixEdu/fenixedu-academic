@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,12 +16,7 @@ public class IndexTeacherAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
-
 	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(getUserView(request).getPerson().getTeacher());
-
-	// TODO: see why this needs to be in session
-	getSession(request).setAttribute(SessionConstants.INFO_TEACHER, infoTeacher);
-
 	request.setAttribute("infoTeacher", infoTeacher);
 	return mapping.findForward("success");
     }
