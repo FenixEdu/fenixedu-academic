@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -102,6 +103,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -2436,28 +2438,21 @@ public class Person extends Person_Base {
 	    List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
 	    Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
 
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
+
 	    for (final Role personRole : roles) {
 
+		mainRoles.add(bundle.get(personRole.getRoleType().toString()));
 		if (personRole.getRoleType() == RoleType.TEACHER) {
-		    mainRoles.add("Docente");
 		    teacher = true;
-
-		} else if (personRole.getRoleType() == RoleType.STUDENT) {
-		    mainRoles.add("Aluno");
-
-		} else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
-		    mainRoles.add("Bolseiro");
+		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
+		    researcher = true;
 		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
 		    employee = true;
-		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
-		    mainRoles.add("Investigador");
-		    researcher = true;
-		} else if (personRole.getRoleType() == RoleType.ALUMNI) {
-		    mainRoles.add("Alumni");
 		}
 	    }
 	    if ((employee && !teacher && !researcher)) {
-		mainRoles.add(0, "Funcion�rio");
+		mainRoles.add(0, bundle.get(RoleType.EMPLOYEE.toString()));
 	    }
 	}
 	return mainRoles;
