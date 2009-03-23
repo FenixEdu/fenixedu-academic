@@ -39,11 +39,9 @@
 				<fr:edit name="teachingInquiry" property="firstPageSecondBlockFirstPart" />
 			</div>
 			
-			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.semesterAverageStudentNumber" bundle="INQUIRIES_RESOURCES"/></h4>
 			<div class="smallerInputText">
 				<fr:edit name="teachingInquiry" property="firstPageSecondBlockSecondPart" />
 			</div>
-			<fr:edit name="teachingInquiry" property="firstPageSecondBlockThirdPart" />
 			
 			<fr:edit name="teachingInquiry" property="firstPageSecondBlockFourthPart" />
 
@@ -53,6 +51,8 @@
 					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
 				</fr:layout>		
 			</fr:edit>			
+            
+            <fr:edit name="teachingInquiry" property="firstPageFourthBlock" />
 
 			<fr:edit name="teachingInquiry" id="teachingInquiry" visible="false"/>
 		

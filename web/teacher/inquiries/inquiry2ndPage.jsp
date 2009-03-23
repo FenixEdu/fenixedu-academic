@@ -13,7 +13,7 @@
 
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.teachingInquiries.UCResponsible" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <table class="tstyle2 tdtop">
 	<tr>
