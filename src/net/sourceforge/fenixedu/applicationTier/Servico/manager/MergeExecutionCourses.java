@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -284,7 +285,14 @@ public class MergeExecutionCourses extends FenixService {
 	final Map<String, Attends> alreadyAttendingDestination = new HashMap<String, Attends>();
 	while (associatedAttendsFromDestination.hasNext()) {
 	    Attends attend = associatedAttendsFromDestination.next();
-	    alreadyAttendingDestination.put(attend.getRegistration().getNumber().toString(), attend);
+	    Registration registration = attend.getRegistration();
+	    if (registration == null) {
+		// !!! Yup it's true this actually happens!!!
+		attend.delete();
+	    } else {
+		Integer number = registration.getNumber();
+		alreadyAttendingDestination.put(number.toString(), attend);
+	    }
 	}
 	final List<Attends> associatedAttendsFromSource = new ArrayList<Attends>();
 	associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
