@@ -90,6 +90,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -2686,7 +2687,7 @@ public class Person extends Person_Base {
 
 	return units;
     }
-    
+
     // FIXME Anil : This method is identical to getWorkingResearchUnitNames
     public String getAssociatedResearchOrDepartmentUnitsNames() {
 	String names = "";
@@ -2944,6 +2945,10 @@ public class Person extends Person_Base {
 
     public AdministrativeOffice getEmployeeAdministrativeOffice() {
 	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
+    }
+
+    public Campus getEmployeeCampus() {
+	return hasEmployee() ? getEmployee().getCurrentCampus() : null;
     }
 
     public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {
