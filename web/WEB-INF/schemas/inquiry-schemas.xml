@@ -103,3 +103,19 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftTypesProvider" />
 	</slot>
 </schema>
+
+<schema name="studentInquiry.uploadTeachingResults"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean" bundle="INQUIRIES_RESOURCES">
+	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="keyExecutionDegreeHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionDegreeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="keyTeacherHeader" key="label.studentInquiry.uploadTeachingResults.keyTeacherHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="shiftTypeHeader" key="label.studentInquiry.uploadTeachingResults.shiftTypeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="studentInquiry.uploadCourseResults"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean" bundle="INQUIRIES_RESOURCES">
+	<slot name="file" key="label.studentInquiry.uploadTeachingResults.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="keyExecutionCourseHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionCourseHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="keyExecutionDegreeHeader" key="label.studentInquiry.uploadTeachingResults.keyExecutionDegreeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
