@@ -17,8 +17,4 @@ public class CheckBoxQuestion extends InquiriesQuestion {
 	super(label, header);
     }
 
-    public Boolean getValueAsBoolean() {
-	return getValue() != null && (Boolean.valueOf(getValue()) || getValue().equalsIgnoreCase("on"));
-    }
-
 }

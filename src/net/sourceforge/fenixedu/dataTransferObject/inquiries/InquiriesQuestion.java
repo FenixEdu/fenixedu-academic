@@ -27,6 +27,10 @@ public abstract class InquiriesQuestion implements Serializable {
 
     private Boolean showRequiredMark = true;
 
+    private Boolean newRow = true;
+
+    private Boolean autofit = true;
+
     public InquiriesQuestion(final String label) {
 	super();
 	this.label = label;
@@ -42,7 +46,7 @@ public abstract class InquiriesQuestion implements Serializable {
     }
 
     public Boolean getValueAsBoolean() {
-	throw new DomainException("Value not convertible do Boolean");
+	return getValue() != null && (Boolean.valueOf(getValue()) || getValue().equalsIgnoreCase("on"));
     }
 
     public Integer getValueAsInteger() {
@@ -106,6 +110,24 @@ public abstract class InquiriesQuestion implements Serializable {
 
     public InquiriesQuestion setShowRequiredMark(Boolean showRequiredMark) {
 	this.showRequiredMark = showRequiredMark;
+	return this;
+    }
+
+    public Boolean getNewRow() {
+	return newRow;
+    }
+
+    public InquiriesQuestion setNewRow(Boolean newRow) {
+	this.newRow = newRow;
+	return this;
+    }
+
+    public Boolean getAutofit() {
+	return autofit;
+    }
+
+    public InquiriesQuestion setAutofit(Boolean autofit) {
+	this.autofit = autofit;
 	return this;
     }
 

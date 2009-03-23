@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -2072,4 +2073,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree
 		.getDegreeCurricularPlan(), curricularYear, name);
     }
+
+    public StudentInquiriesCourseResult getStudentInquiriesCourseResult(ExecutionDegree executionDegree) {
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : getStudentInquiriesCourseResults()) {
+	    if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {
+		return studentInquiriesCourseResult;
+	    }
+	}
+	return null;
+    }
+    
 }

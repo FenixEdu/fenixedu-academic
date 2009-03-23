@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
@@ -74,14 +75,22 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean canBeDeleted() {
-	if (hasAnyAssociatedSummaries()) throw new DomainException("error.remove.professorship");
-	if (hasAnyAssociatedShiftProfessorship()) throw new DomainException("error.remove.professorship");
-	if (hasAnySupportLessons()) throw new DomainException("error.remove.professorship");
-	if (hasAnyDegreeTeachingServices()) throw new DomainException("error.remove.professorship");
-	if (hasAnyTeacherMasterDegreeServices()) throw new DomainException("error.remove.professorship");
-	if (hasTeachingInquiry()) throw new DomainException("error.remove.professorship");
-	if (hasAnyStudentInquiriesTeachingResults()) throw new DomainException("error.remove.professorship");
-	if (hasAnyAssociatedShiftProfessorship()) throw new DomainException("error.remove.professorship");
+	if (hasAnyAssociatedSummaries())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyAssociatedShiftProfessorship())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnySupportLessons())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyDegreeTeachingServices())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyTeacherMasterDegreeServices())
+	    throw new DomainException("error.remove.professorship");
+	if (hasTeachingInquiry())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyStudentInquiriesTeachingResults())
+	    throw new DomainException("error.remove.professorship");
+	if (hasAnyAssociatedShiftProfessorship())
+	    throw new DomainException("error.remove.professorship");
 	return true;
     }
 
@@ -182,7 +191,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	supportLessons.addAll(getSupportLessonsSet());
 	return supportLessons;
     }
-    
+
     public boolean hasTeachingInquiriesToAnswer() {
 	final ExecutionCourse executionCourse = this.getExecutionCourse();
 	final InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
@@ -192,6 +201,16 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    return false;
 	}
 	return true;
+    }
+
+    public StudentInquiriesTeachingResult getStudentInquiriesTeachingResult(final ExecutionDegree executionDegree,
+	    final ShiftType shiftType) {
+	for (StudentInquiriesTeachingResult result : getStudentInquiriesTeachingResults()) {
+	    if (result.getExecutionDegree() == executionDegree && result.getShiftType() == shiftType) {
+		return result;
+	    }
+	}
+	return null;
     }
 
 }

@@ -2,14 +2,100 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
 
     public StudentInquiriesTeachingResult() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    @Service
+    public static void importResults(String headers, String values, String executionDegreeHeader, String executionCourseHeader,
+	    String teacherHeader, String shiftTypeHeader) {
+
+	String[] headersSplitted = headers.split("\t");
+
+	int executionCourseHeaderIndex = getHeaderIndex(executionCourseHeader, headersSplitted);
+	int executionDegreeHeaderIndex = getHeaderIndex(executionDegreeHeader, headersSplitted);
+	int teacherHeaderIndex = getHeaderIndex(teacherHeader, headersSplitted);
+	int shiftTypeHeaderIndex = getHeaderIndex(shiftTypeHeader, headersSplitted);
+
+	for (String row : values.split("\n")) {
+	    String[] columns = row.split("\t");
+
+	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
+		    Integer.valueOf(columns[executionCourseHeaderIndex]));
+	    if (executionCourse == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
+			columns[executionCourseHeaderIndex]);
+	    }
+
+	     ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
+//	    Degree degree = Degree.readBySigla(columns[executionDegreeHeaderIndex]);
+//	    if (degree == null) {
+//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
+//			columns[executionDegreeHeaderIndex]);
+//	    }
+//
+//	    List<ExecutionDegree> executionDegrees = degree.getExecutionDegreesForExecutionYear(executionCourse
+//		    .getExecutionYear());
+//	    if (executionDegrees.size() > 1) {
+//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
+//			columns[executionDegreeHeaderIndex]);
+//	    }
+//	    ExecutionDegree executionDegree = executionDegrees.iterator().next();
+
+	     Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(Integer.valueOf(columns[teacherHeaderIndex]));
+//	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(columns[teacherHeaderIndex]));
+	    if (teacher == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.teacherNotFound",
+			columns[teacherHeaderIndex]);
+	    }
+
+	    Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+
+	    final ShiftType shiftType = ShiftType.valueOf(columns[shiftTypeHeaderIndex]);
+	    StudentInquiriesTeachingResult studentInquiriesTeachingResult = professorship.getStudentInquiriesTeachingResult(
+		    executionDegree, shiftType);
+
+	    if (studentInquiriesTeachingResult == null) {
+		studentInquiriesTeachingResult = new StudentInquiriesTeachingResult();
+		studentInquiriesTeachingResult.setShiftType(shiftType);
+		studentInquiriesTeachingResult.setExecutionDegree(executionDegree);
+		studentInquiriesTeachingResult.setProfessorship(professorship);
+	    }
+
+	    studentInquiriesTeachingResult.setRawValues(row);
+	    studentInquiriesTeachingResult.setHeaders(headers);
+	    studentInquiriesTeachingResult.setUploadDateTime(new DateTime());
+
+	}
+
+    }
+
+    private static int getHeaderIndex(String headerToFind, String[] headersSplitted) {
+	for (int i = 0; i < headersSplitted.length; i++) {
+	    if (headerToFind.equals(headersSplitted[i])) {
+		return i;
+	    }
+	}
+	throw new DomainException("error.StudentInquiriesTeachingResult.headerNotFound", headerToFind);
     }
 
     public boolean isUnsatisfactory() {
@@ -50,9 +136,9 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
     private Double getValueForPresentation(Double value) {
 	// TODO: ugly hack, refactor
-	if(value == null){
+	if (value == null) {
 	    return new Double(0);
-	}	
+	}
 	BigDecimal round = new BigDecimal(value);
 	round.setScale(2, RoundingMode.HALF_EVEN);
 	return round.doubleValue();

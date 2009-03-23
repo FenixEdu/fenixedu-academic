@@ -23,7 +23,7 @@ public class TextBoxQuestion extends InquiriesQuestion {
     }
 
     public Boolean isTextArea() {
-	return textArea;
+	return textArea != null && textArea;
     }
 
     @Override
@@ -45,6 +45,7 @@ public class TextBoxQuestion extends InquiriesQuestion {
 	    }
 	}
 	super.setValue(value);
+	return;
     }
 
     public boolean isInteger() {
