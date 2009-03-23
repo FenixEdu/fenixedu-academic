@@ -493,4 +493,13 @@ public class Shift extends Shift_Base {
 		RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils
 			.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome()));
     }
+
+    public boolean hasAnyStudentsInAssociatedStudentGroups() {
+	for (final StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
+	    if (studentGroup.getAttendsCount() > 0) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
