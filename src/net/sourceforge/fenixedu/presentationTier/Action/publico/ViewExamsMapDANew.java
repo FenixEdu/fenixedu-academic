@@ -8,7 +8,9 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +19,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -65,12 +70,14 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
 	// SessionConstants.EXECUTION_DEGREE, infoDegreeCurricularPlan
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-	if (infoExecutionDegree == null) {
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
+	infoExecutionDegree = infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
+	if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {
 	    request.setAttribute("infoDegreeCurricularPlan", "");
 	} else {
-	    request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+	    request.setAttribute("infoDegreeCurricularPlan", new InfoDegreeCurricularPlan(degreeCurricularPlan));
 	}
+	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
 	// indice
 	Integer indice = getFromRequest("indice", request);
@@ -98,6 +105,12 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 	}
 
 	return mapping.findForward("viewExamsMap");
+    }
+
+    private InfoExecutionDegree findLatestInfoExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
+	final Set<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegreesSet();
+	final ExecutionDegree executionDegree = Collections.max(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR);
+	return new InfoExecutionDegree(executionDegree);
     }
 
 }
