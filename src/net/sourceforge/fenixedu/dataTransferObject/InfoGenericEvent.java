@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GenericEvent;
+import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
+import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -47,15 +49,18 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
 
     public Integer getIdInternal() {
-	return getGenericEvent().getIdInternal();
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getIdInternal();
     }
 
     public String getTitle() {
-	return getGenericEvent().getTitle().getContent(Language.getLanguage());
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getTitle().getContent(Language.getLanguage());
     }
 
     public String getDescription() {
-	return getGenericEvent().getDescription().getContent(Language.getLanguage());
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getDescription().getContent(Language.getLanguage());
     }
 
     @Override
@@ -75,8 +80,9 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
-	return (getGenericEvent().getGenericEventSpaceOccupations().isEmpty()) ? null : InfoRoomOccupation
-		.newInfoFromDomain(getGenericEvent().getGenericEventSpaceOccupations().get(0));
+	final GenericEvent genericEvent = getGenericEvent();
+	return (genericEvent == null || genericEvent.getGenericEventSpaceOccupations().isEmpty()) ?
+		null : InfoRoomOccupation.newInfoFromDomain(genericEvent.getGenericEventSpaceOccupations().get(0));
     }
 
     @Override
@@ -90,15 +96,22 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
 
     public String getGanttDiagramEventIdentifier() {
-	return getGenericEvent().getPunctualRoomsOccupationRequest().getIdInternal().toString();
+	final GenericEvent genericEvent = getGenericEvent();
+	final PunctualRoomsOccupationRequest punctualRoomsOccupationRequest = genericEvent == null ?
+		null : getGenericEvent().getPunctualRoomsOccupationRequest();
+	return punctualRoomsOccupationRequest == null ? null : punctualRoomsOccupationRequest.getIdInternal().toString();
     }
 
     public MultiLanguageString getGanttDiagramEventName() {
-	return getGenericEvent().getPunctualRoomsOccupationRequest().getFirstComment().getSubject();
+	final GenericEvent genericEvent = getGenericEvent();
+	final PunctualRoomsOccupationComment punctualRoomsOccupationComment = genericEvent == null ?
+		null : getGenericEvent().getPunctualRoomsOccupationRequest().getFirstComment();
+	return punctualRoomsOccupationComment == null ? null : punctualRoomsOccupationComment.getSubject();
     }
 
     public String getGanttDiagramEventObservations() {
-	return getGenericEvent().getGanttDiagramEventObservations();
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getGanttDiagramEventObservations();
     }
 
     public int getGanttDiagramEventOffset() {
@@ -106,10 +119,12 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     }
 
     public String getGanttDiagramEventPeriod() {
-	return getGenericEvent().getGanttDiagramEventPeriod();
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getGanttDiagramEventPeriod();
     }
 
     public List<Interval> getGanttDiagramEventSortedIntervals() {
-	return getGenericEvent().getGanttDiagramEventSortedIntervals();
+	final GenericEvent genericEvent = getGenericEvent();
+	return genericEvent == null ? null : genericEvent.getGanttDiagramEventSortedIntervals();
     }
 }
