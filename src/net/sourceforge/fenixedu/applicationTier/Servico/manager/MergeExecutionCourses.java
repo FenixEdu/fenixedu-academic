@@ -115,12 +115,26 @@ public class MergeExecutionCourses extends FenixService {
 	copyForuns(executionCourseFrom, executionCourseTo);
 	copyBoard(executionCourseFrom, executionCourseTo);
 	copyInquiries(executionCourseFrom, executionCourseTo);
+	copyDistributedTestStuff(executionCourseFrom, executionCourseTo);
 
 	executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
 	executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
 
 	executionCourseFrom.delete();
+    }
+
+    private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+	for (final Metadata metadata : executionCourseFrom.getMetadatasSet()) {
+	    metadata.setExecutionCourse(executionCourseTo);
+	}
+	List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom.getClass(),
+		executionCourseFrom.getIdInternal());
+	for (final DistributedTest distributedTest : distributedTests) {
+	    final TestScope testScope = distributedTest.getTestScope();
+	    testScope.setDomainObject(executionCourseTo);
+	    testScope.setKeyClass(executionCourseTo.getIdInternal());
+	}
     }
 
     private void copyInquiries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
@@ -163,18 +177,9 @@ public class MergeExecutionCourses extends FenixService {
     }
 
     private boolean isMergeAllowed(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
-
-	boolean distributedTestAuthorization = false;
-
-	List<Metadata> metadatas = executionCourseFrom.getMetadatas();
-	List<DistributedTest> distributedTests = TestScope.readDistributedTestsByTestScope(executionCourseFrom.getClass(),
-		executionCourseFrom.getIdInternal());
-	distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
-		&& (distributedTests == null || distributedTests.isEmpty());
-
 	return executionCourseTo != null && executionCourseFrom != null
 		&& executionCourseFrom.getExecutionPeriod().equals(executionCourseTo.getExecutionPeriod())
-		&& executionCourseFrom != executionCourseTo && distributedTestAuthorization;
+		&& executionCourseFrom != executionCourseTo;
     }
 
     private void copySummaries(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
