@@ -4,27 +4,21 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<h2><bean:message key="label.academicAdminOffice.permissions.management" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+	
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<h3 class="mtop15 mbottom025"><bean:message key="label.academicAdminOffice"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	
-	<br/>
-	<em><bean:message
-		key="label.academicAdminOffice.permissions.management"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	
-	<br/>
-	<bean:message key="campus" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	<bean:write name="workingCampus" property="name"/>
-	
-	<fr:view name="permissions"
-		schema="academicAdminOffice.show.permissions" >
+
+	<fr:view name="permissions" schema="academicAdminOffice.show.permissions" >
 		<fr:layout name="tabular" >
+
 			<fr:property name="classes" value="tstyle4 thlight mtop15" />
 			<fr:property name="columnClasses" value="acenter width12em, width30em, thlight" />
 			<fr:property name="checkable" value="false" />
-			<fr:property name="linkFormat(Editar)"
-				value="/permissionManagement.do?method=prepareEditMembers&permissionTypeName=${permissionType.name}" />
+
+			<fr:property name="linkFormat(edit)" value="/permissionManagement.do?method=prepareEditMembers&permissionTypeName=${permissionType.name}" />
+			<fr:property name="key(edit)" value="label.edit" />
+			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES" />
 		</fr:layout>
 	</fr:view>
 

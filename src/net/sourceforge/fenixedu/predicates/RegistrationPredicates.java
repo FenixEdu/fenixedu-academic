@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
@@ -22,30 +21,34 @@ public class RegistrationPredicates {
 	@Override
 	public boolean evaluate(Registration registration) {
 	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || !registration.hasConcluded()) {
-		return true;
 	    }
+	    return true;
 
-	    AdministrativeOfficePermission permission = getPermissionByType(AccessControl.getPerson(),
-		    PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION);
-
-	    return permission != null
-		    && getPermissionByType(AccessControl.getPerson(), PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
-			    .getPermissionMembersGroup().isMember(AccessControl.getPerson());
+	    // AdministrativeOfficePermission permission =
+	    // getPermissionByType(AccessControl.getPerson(),
+	    // PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION);
+	    //
+	    // return permission != null
+	    // && getPermissionByType(AccessControl.getPerson(),
+	    // PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
+	    // .getPermissionMembersGroup().isMember(AccessControl.getPerson());
 	}
     };
 
-    public static final AccessControlPredicate<Registration> manageConclusionProcess = new AccessControlPredicate<Registration>() {
+    public static final AccessControlPredicate<Registration> MANAGE_CONCLUSION_PROCESS = new AccessControlPredicate<Registration>() {
 
 	@Override
-	public boolean evaluate(Registration c) {
-	    AdministrativeOfficePermission permission = getPermissionByType(AccessControl.getPerson(),
-		    PermissionType.MANAGE_CONCLUSION);
+	public boolean evaluate(final Registration registration) {
+	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER)) {
+		return true;
+	    }
 
-	    if (permission == null)
-		return false;
+	    final AdministrativeOfficePermission permission = getPermissionByType(PermissionType.MANAGE_CONCLUSION);
+	    if (permission == null || !permission.isAppliable(registration)) {
+		return true;
+	    }
 
-	    return AccessControl.getPerson().hasRole(RoleType.MANAGER)
-		    || permission.getPermissionMembersGroup().isMember(AccessControl.getPerson());
+	    return permission.isMember(AccessControl.getPerson());
 	}
     };
 
@@ -75,9 +78,9 @@ public class RegistrationPredicates {
 	};
     };
 
-    static private final AdministrativeOfficePermission getPermissionByType(final Person person, final PermissionType type) {
-	final Campus campus = person.getEmployee().getCurrentCampus();
-	return campus.getAdministrativeOfficePermissionByType(type);
+    static private final AdministrativeOfficePermission getPermissionByType(final PermissionType type) {
+	final Person person = AccessControl.getPerson();
+	return person.getEmployeeAdministrativeOffice().getPermission(type, person.getEmployeeCampus());
     }
 
 }

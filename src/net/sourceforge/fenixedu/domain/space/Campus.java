@@ -1,24 +1,17 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
-import net.sourceforge.fenixedu.predicates.PermissionPredicates;
 
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class Campus extends Campus_Base {
 
@@ -97,28 +90,6 @@ public class Campus extends Campus_Base {
     public Integer getNormalCapacity() {
 	// Necessary for Renderers
 	return null;
-    }
-
-    public List<AdministrativeOfficePermission> getAdministrativeOfficePermissions() {
-	if (this.getAdministrativeOfficePermissionGroup() != null) {
-	    return this.getAdministrativeOfficePermissionGroup().getAdministrativeOfficePermissions();
-	}
-
-	return new ArrayList<AdministrativeOfficePermission>();
-    }
-
-    public AdministrativeOfficePermission getAdministrativeOfficePermissionByType(PermissionType permissionType) {
-	return this.getAdministrativeOfficePermissionGroup() != null ? this.getAdministrativeOfficePermissionGroup()
-		.getPermissionByType(permissionType) : null;
-    }
-
-    @Service
-    @Checked("PermissionPredicates.createPermissionMembersGroup")
-    public void createAdministrativeOfficePermission(final PermissionType permissionType) {
-	if (!hasAdministrativeOfficePermissionGroup()) {
-	    new AdministrativeOfficePermissionGroup(this);
-	}
-	getAdministrativeOfficePermissionGroup().createPermissionForType(permissionType);
     }
 
     static public String getUniversityCode(final Campus campus) {

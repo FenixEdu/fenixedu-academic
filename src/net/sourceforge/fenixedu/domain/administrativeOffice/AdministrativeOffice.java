@@ -12,6 +12,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
@@ -23,6 +26,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.LocalDate;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class AdministrativeOffice extends AdministrativeOffice_Base {
 
@@ -263,4 +269,42 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
     public boolean isDegree() {
 	return getAdministrativeOfficeType().equals(AdministrativeOfficeType.DEGREE);
     }
+
+    private AdministrativeOfficePermissionGroup getAdministrativeOfficePermissionGroup(final Campus campus) {
+	for (final AdministrativeOfficePermissionGroup group : getAdministrativeOfficePermissionGroupsSet()) {
+	    if (group.hasCampus(campus)) {
+		return group;
+	    }
+	}
+	return null;
+    }
+
+    private boolean hasAdministrativeOfficePermissionGroup(final Campus campus) {
+	return getAdministrativeOfficePermissionGroup(campus) != null;
+    }
+
+    public List<AdministrativeOfficePermission> getPermissions(final Campus campus) {
+	return hasAdministrativeOfficePermissionGroup(campus) ? getAdministrativeOfficePermissionGroup(campus)
+		.getAdministrativeOfficePermissions() : Collections.EMPTY_LIST;
+    }
+
+    public AdministrativeOfficePermission getPermission(final PermissionType permissionType, final Campus campus) {
+	return hasAdministrativeOfficePermissionGroup(campus) ? getAdministrativeOfficePermissionGroup(campus).getPermission(
+		permissionType) : null;
+    }
+
+    @Service
+    @Checked("PermissionPredicates.CREATE_PERMISSION_MEMBERS_GROUP")
+    public void createAdministrativeOfficePermission(final PermissionType permissionType, final Campus campus) {
+	if (!hasAdministrativeOfficePermissionGroup(campus)) {
+	    new AdministrativeOfficePermissionGroup(this, campus);
+	}
+	getAdministrativeOfficePermissionGroup(campus).createPermissionForType(permissionType);
+    }
+
+    public boolean hasPermission(final PermissionType permissionType, final Campus campus) {
+	return hasAdministrativeOfficePermissionGroup(campus)
+		&& getAdministrativeOfficePermissionGroup(campus).hasPermission(permissionType);
+    }
+
 }

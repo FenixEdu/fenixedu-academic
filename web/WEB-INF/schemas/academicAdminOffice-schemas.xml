@@ -1831,13 +1831,17 @@
 </schema>
 
 <schema name="academicAdminOffice.show.permissions.member" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$Member" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="person.name"/>
+	<slot name="person" layout="format">
+		<property name="format" value="${name} (F${employee.employeeNumber})" />
+	</slot>
 </schema>
 
 <schema name="PermissionMemberBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionMemberBean"
 	bundle="APPLICATION_RESOURCES">
 	<slot name="selected" />
-	<slot name="person.name" read-only="true"/>
+	<slot name="person" read-only="true" layout="format">
+		<property name="format" value="${name} (F${employee.employeeNumber})" />
+	</slot>
 </schema>
 
 <schema name="academicAdminOffice.show.permissionsTypes" type="net.sourceforge.fenixedu.domain.accessControl.PermissionType" bundle="ACADEMIC_OFFICE_RESOURCES">

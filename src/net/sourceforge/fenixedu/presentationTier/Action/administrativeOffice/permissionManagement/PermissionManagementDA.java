@@ -10,19 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,92 +33,71 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "editPermissionMembersGroup", path = "/academicAdminOffice/permissions/editPermissionMembersGroup.jsp") })
 public class PermissionManagementDA extends FenixDispatchAction {
 
+    public ActionForward showPermissions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Campus campus = employee.getCurrentCampus();
+	final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice();
+
+	final List<PermissionViewBean> permissions = new ArrayList<PermissionViewBean>();
+	for (final PermissionType type : PermissionType.getSortedPermissionTypes(administrativeOffice)) {
+	    permissions.add(PermissionViewBean.create(type, administrativeOffice, campus));
+	}
+
+	request.setAttribute("permissions", permissions);
+	return mapping.findForward("showAcademicAdminOfficePermissions");
+    }
+
     public ActionForward prepareEditMembers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Person user = AccessControl.getPerson();
+	final Person person = AccessControl.getPerson();
+	final AdministrativeOfficePermission permission = getOrCreatePermission(request);
 
-	AdministrativeOfficePermission permission = getSelectedPermission(request);
-	List<PermissionMemberBean> permissionMembers = new ArrayList<PermissionMemberBean>();
-
-	if (user.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
-	    for (Employee employee : user.getEmployee().getCurrentWorkingPlace().getAllWorkingEmployees()) {
-		permissionMembers.add(new PermissionMemberBean(isPersonMemberPermissionGroup(permission, employee.getPerson()),
-			employee.getPerson()));
-	    }
+	final List<PermissionMemberBean> permissionMembers = new ArrayList<PermissionMemberBean>();
+	for (final Employee employee : person.getEmployee().getCurrentWorkingPlace().getAllWorkingEmployees()) {
+	    permissionMembers.add(new PermissionMemberBean(permission, employee.getPerson()));
 	}
 
-	Collections.sort(permissionMembers, new BeanComparator("person.name"));
-	
-	Campus workingCampus = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getCampus();
+	Collections.sort(permissionMembers);
 
-	request.setAttribute("permissionMembers", permissionMembers);
 	request.setAttribute("permission", permission);
-	request.setAttribute("workingCampus", workingCampus);
-	
+	request.setAttribute("permissionMembers", permissionMembers);
+
 	return mapping.findForward("editPermissionMembersGroup");
     }
 
     public ActionForward editMembers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException {
 
-	List<Person> persons = new ArrayList<Person>();
-	for (PermissionMemberBean permissionBean : getPermissionMemberListFromViewState()) {
+	final List<Person> persons = new ArrayList<Person>();
+	for (final PermissionMemberBean permissionBean : getPermissionMemberListFromViewState()) {
 	    if (permissionBean.getSelected()) {
 		persons.add(permissionBean.getPerson());
 	    }
 	}
 
-	getSelectedPermissionById(request).setNewGroup(new FixedSetGroup(persons));
+	getPermission(request).setNewGroup(persons);
 	return showPermissions(mapping, actionForm, request, response);
     }
 
-    public ActionForward showPermissions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	
-	Campus workingCampus = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getCampus();
-	List<PermissionType> permissionTypes = PermissionType.getAdministrativeOfficePermissionTypes();
+    private AdministrativeOfficePermission getPermission(final HttpServletRequest request) {
+	return getDomainObject(request, "permissionId");
+    }
 
-	List<PermissionViewBean> permissions = new ArrayList<PermissionViewBean>();
-	for (PermissionType type : permissionTypes) {
-	    permissions.add(createPermissionViewBean(type, workingCampus));
+    private AdministrativeOfficePermission getOrCreatePermission(HttpServletRequest request) {
+	final PermissionType permissionType = PermissionType.valueOf((String) getFromRequest(request, "permissionTypeName"));
+
+	final Employee employee = AccessControl.getPerson().getEmployee();
+	final Campus campus = employee.getCurrentCampus();
+	final AdministrativeOffice administrativeOffice = employee.getAdministrativeOffice();
+
+	if (!administrativeOffice.hasPermission(permissionType, campus)) {
+	    administrativeOffice.createAdministrativeOfficePermission(permissionType, campus);
 	}
 
-	request.setAttribute("permissions", permissions);
-	request.setAttribute("workingCampus", workingCampus);
-	
-	return mapping.findForward("showAcademicAdminOfficePermissions");
-    }
-
-    private PermissionViewBean createPermissionViewBean(PermissionType type, Campus workingCampus) {
-	AdministrativeOfficePermission permission = workingCampus.getAdministrativeOfficePermissionByType(type);
-	if (permission == null) {
-	    return new PermissionViewBean(type, new ArrayList<Member>());
-	}
-
-	return new PermissionViewBean(type, permission.getPermissionMembersGroup());
-    }
-
-    private Boolean isPersonMemberPermissionGroup(AdministrativeOfficePermission permission, Person person) {
-	return permission.getPermissionMembersGroup().isMember(person);
-    }
-    
-    private AdministrativeOfficePermission getSelectedPermissionById(HttpServletRequest request) {
-	return (AdministrativeOfficePermission) RootDomainObject.readDomainObjectByOID(AdministrativeOfficePermission.class,
-		getIntegerFromRequest(request, "permissionId"));
-    }
-    
-    private AdministrativeOfficePermission getSelectedPermission(HttpServletRequest request) {
-	String permissionTypeName = (String) getFromRequest(request, "permissionTypeName");
-	PermissionType permissionType = PermissionType.valueOf(permissionTypeName);
-	Campus workingCampus = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getCampus();
-	AdministrativeOfficePermission permission = workingCampus.getAdministrativeOfficePermissionByType(permissionType);
-	
-	if(permission == null) {
-	    workingCampus.createAdministrativeOfficePermission(permissionType);
-	}
-	
-	return workingCampus.getAdministrativeOfficePermissionByType(permissionType);
+	return administrativeOffice.getPermission(permissionType, campus);
     }
 
     @SuppressWarnings("unchecked")
@@ -130,17 +105,11 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	return (List<PermissionMemberBean>) getRenderedObject("permissionMembers");
     }
 
-    public static class Member implements java.io.Serializable {
-	/**
-	 * 
-	 */
+    public static class Member implements java.io.Serializable, Comparable<Member> {
+
 	private static final long serialVersionUID = 1L;
 
 	private DomainReference<Person> person;
-
-	public Member() {
-
-	}
 
 	public Member(final Person person) {
 	    this.person = new DomainReference<Person>(person);
@@ -153,32 +122,30 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	public void setPerson(final Person person) {
 	    this.person = person != null ? new DomainReference<Person>(person) : null;
 	}
+
+	@Override
+	public int compareTo(final Member o) {
+	    return Person.COMPARATOR_BY_NAME_AND_ID.compare(getPerson(), o.getPerson());
+	}
     }
 
     public static class PermissionViewBean implements java.io.Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private PermissionType type;
 	private List<Member> members;
 
-	public PermissionViewBean() {
-
-	}
-
-	public PermissionViewBean(final PermissionType type, final List<Member> members) {
+	private PermissionViewBean(final PermissionType type, final List<Member> members) {
 	    setPermissionType(type);
 	    setMembers(members);
 	}
 
-	public PermissionViewBean(final PermissionType type, final Group permissionMembersGroup) {
-	    this.type = type;
-	    List<Member> members = new ArrayList<Member>();
-	    setMembers(members);
-	    
-	    for (Person person : permissionMembersGroup.getElements()) {
+	private PermissionViewBean(final PermissionType type, final Group permissionMembersGroup) {
+	    setPermissionType(type);
+	    setMembers(new ArrayList<Member>());
+
+	    for (final Person person : permissionMembersGroup.getElements()) {
 		members.add(new Member(person));
 	    }
 	}
@@ -197,24 +164,27 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
 	public void setMembers(final List<Member> members) {
 	    this.members = members;
-	    Collections.sort(this.members, new BeanComparator("person.name"));
+	    Collections.sort(this.members);
+	}
+
+	static private PermissionViewBean create(final PermissionType type, final AdministrativeOffice office, final Campus campus) {
+	    final AdministrativeOfficePermission permission = office.getPermission(type, campus);
+	    if (permission != null) {
+		return new PermissionViewBean(type, permission.getPermissionMembersGroup());
+	    } else {
+		return new PermissionViewBean(type, new ArrayList<Member>());
+	    }
 	}
     }
 
-    public static class PermissionMemberBean implements java.io.Serializable {
-	/**
-	 * c
-	 */
+    public static class PermissionMemberBean implements java.io.Serializable, Comparable<PermissionMemberBean> {
 	private static final long serialVersionUID = 1L;
 
 	private Boolean selected;
 	private DomainReference<Person> person;
 
-	public PermissionMemberBean() {
-	}
-
-	public PermissionMemberBean(final Boolean selected, final Person person) {
-	    setSelected(selected);
+	public PermissionMemberBean(final AdministrativeOfficePermission permission, final Person person) {
+	    setSelected(permission.isMember(person));
 	    setPerson(person);
 	}
 
@@ -232,6 +202,11 @@ public class PermissionManagementDA extends FenixDispatchAction {
 
 	public void setPerson(Person person) {
 	    this.person = person != null ? new DomainReference<Person>(person) : null;
+	}
+
+	@Override
+	public int compareTo(final PermissionMemberBean o) {
+	    return Person.COMPARATOR_BY_NAME_AND_ID.compare(getPerson(), o.getPerson());
 	}
     }
 }

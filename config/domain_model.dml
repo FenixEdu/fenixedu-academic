@@ -14965,9 +14965,18 @@ relation AdministrativeOfficePermissionRootDomainObject {
 	}
 }
 
+relation AdministrativeOfficeAdministrativeOfficePermissionGroup {
+	administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
+		multiplicity *;
+	}
+}
+
 relation CampusAdministrativeOfficePermissionGroup {
 	space.Campus playsRole campus;
-	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
+	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
+		multiplicity *;
+	}
 }
 
 relation AdministrativeOfficePermissionGroupPermission {

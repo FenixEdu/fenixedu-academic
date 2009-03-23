@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -16,29 +17,31 @@ public enum PermissionType {
     MANAGE_CONCLUSION() {
 
 	@Override
-	protected Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
-	    Set<AdministrativeOfficeType> administrativeOfficeTypeSet = new HashSet<AdministrativeOfficeType>();
-	    administrativeOfficeTypeSet.add(AdministrativeOfficeType.DEGREE);
-	    return administrativeOfficeTypeSet;
-	}
-
-    },
-
-    UPDATE_REGISTRATION_WITH_CONCLUSION() {
-
-	@Override
-	protected Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
-	    Set<AdministrativeOfficeType> administrativeOfficeTypeSet = new HashSet<AdministrativeOfficeType>();
-	    administrativeOfficeTypeSet.add(AdministrativeOfficeType.DEGREE);
-	    return administrativeOfficeTypeSet;
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
 	}
 
     };
-    
-    private static final List<PermissionType> administratriveOfficePermissions = Arrays.asList(MANAGE_CONCLUSION, UPDATE_REGISTRATION_WITH_CONCLUSION);
-    
-    
-    abstract protected Set<AdministrativeOfficeType> administrativeOfficeTypeContexts();
+
+    // UPDATE_REGISTRATION_WITH_CONCLUSION() {
+    //
+    // @Override
+    // public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+    // return Collections.singleton(AdministrativeOfficeType.DEGREE);
+    // }
+    //
+    // };
+
+    abstract public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts();
+
+    public boolean isFor(final AdministrativeOfficeType officeType) {
+	return administrativeOfficeTypeContexts().contains(officeType);
+    }
 
     protected String localizedName(Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(qualifiedName());
@@ -55,13 +58,31 @@ public enum PermissionType {
     public String getLocalizedName() {
 	return localizedName();
     }
-    
+
     public String getName() {
 	return name();
     }
-    
-    public static List<PermissionType> getAdministrativeOfficePermissionTypes() {
-	return administratriveOfficePermissions;
+
+    static public Collection<PermissionType> getPermissionTypes(final AdministrativeOfficeType officeType) {
+	return filterPermissionTypes(officeType, new HashSet<PermissionType>());
     }
-    
+
+    private static Collection<PermissionType> filterPermissionTypes(final AdministrativeOfficeType officeType,
+	    final Collection<PermissionType> result) {
+	for (final PermissionType permissionType : values()) {
+	    if (permissionType.isFor(officeType)) {
+		result.add(permissionType);
+	    }
+	}
+	return result;
+    }
+
+    static public Collection<PermissionType> getPermissionTypes(final AdministrativeOffice administrativeOffice) {
+	return getPermissionTypes(administrativeOffice.getAdministrativeOfficeType());
+    }
+
+    static public Collection<PermissionType> getSortedPermissionTypes(final AdministrativeOffice administrativeOffice) {
+	return filterPermissionTypes(administrativeOffice.getAdministrativeOfficeType(), new TreeSet<PermissionType>());
+    }
+
 }
