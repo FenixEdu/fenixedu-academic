@@ -202,7 +202,7 @@ public class StudentDA extends FenixDispatchAction {
 	
 	
 	RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
-	registrationConclusionBean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.manageConclusionProcess.evaluate(registration));
+//	registrationConclusionBean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.manageConclusionProcess.evaluate(registration));
 	request.setAttribute("registrationConclusionBean", registrationConclusionBean);
 	
 	return mapping.findForward("registrationConclusion");
