@@ -2438,17 +2438,26 @@ public class Person extends Person_Base {
 	    List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
 	    Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
 
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
 
 	    for (final Role personRole : roles) {
 
-		mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
 		if (personRole.getRoleType() == RoleType.TEACHER) {
+		    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
 		    teacher = true;
-		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
-		    researcher = true;
+
+		} else if (personRole.getRoleType() == RoleType.STUDENT) {
+		    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+
+		} else if (personRole.getRoleType() == RoleType.GRANT_OWNER) {
+		    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
 		} else if (!teacher && personRole.getRoleType() == RoleType.EMPLOYEE) {
 		    employee = true;
+		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
+		    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
+		    researcher = true;
+		} else if (personRole.getRoleType() == RoleType.ALUMNI) {
+		    mainRoles.add(bundle.getString(personRole.getRoleType().toString()));
 		}
 	    }
 	    if ((employee && !teacher && !researcher)) {
