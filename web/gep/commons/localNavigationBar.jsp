@@ -65,6 +65,12 @@
 		</html:link>				
 	</li>
 	<li>
+		<html:link page="/uploadStudentInquiriesResults.do?method=prepare">
+			<bean:message key="link.inquiries.studentInquiry.uploadResults" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>				
+	</li>	
+	
+	<li>
 		<html:link page="/createClassificationsForStudents.do?method=prepare">
 			<bean:message key="button.createClassifications" bundle="INQUIRIES_RESOURCES" />
 		</html:link>
