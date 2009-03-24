@@ -163,9 +163,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
 	}
 
-//	return actionMapping.findForward("confirmSubmission");
-	//FIXME: Just to try!
-	return forwardTo3rdPage(actionMapping, request, inquiriesCourseResults);
+	return actionMapping.findForward("confirmSubmission");
     }
 
     private boolean checkIfAnyUnsatisfactoryResult(Collection<StudentInquiriesCourseResultBean> inquiriesCourseResults) {

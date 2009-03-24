@@ -36,8 +36,6 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	teachingInquiry.setEvaluationMethodSuitableForCUTeachingTypeAndObjective(answersMap.get(
 		"evaluationMethodSuitableForCUTeachingTypeAndObjective").getValueAsInteger());
 	teachingInquiry.setDisturbingEventsInClasses(answersMap.get("disturbingEventsInClasses").getValueAsInteger());
-	teachingInquiry.setDisturbingEventsInClassesReasonInfrastructure(answersMap.get(
-		"disturbingEventsInClassesReasonInfrastructure").getValueAsBoolean());
 	teachingInquiry.setDisturbingEventsInClassesReasonLowAssiduity(answersMap.get(
 		"disturbingEventsInClassesReasonLowAssiduity").getValueAsBoolean());
 	teachingInquiry.setDisturbingEventsInClassesReasonIndiscipline(answersMap.get(
@@ -164,6 +162,13 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 		"responsibleTeacherReportDisclosureToAcademicComunity").getValueAsBoolean());
     }
 
+    public void delete() {
+	removeProfessorship();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+
+    }
+
     @Service
     static public TeachingInquiry makeNew(final TeachingInquiryDTO inquiryDTO) {
 
@@ -174,12 +179,5 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	setAnswers(inquiryDTO, teachingInquiry);
 
 	return teachingInquiry;
-    }
-
-    public void delete() {
-	removeProfessorship();
-	removeRootDomainObject();
-	super.deleteDomainObject();
-
     }
 }

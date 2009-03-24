@@ -72,7 +72,7 @@ public class TeachingInquiryDTO implements Serializable {
 	retrieveAnswersFromBlock(answers, firstPageSecondBlockSecondPart, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageSecondBlockFourthPart, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageThirdBlock, fullLabels);
-	retrieveAnswersFromBlock(answers, firstPageFourthBlock, fullLabels);	
+	retrieveAnswersFromBlock(answers, firstPageFourthBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, secondPageFourthBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, secondPageFifthBlockFirstPart, fullLabels);
 	retrieveAnswersFromBlock(answers, secondPageFifthBlockSecondPart, fullLabels);
@@ -132,17 +132,14 @@ public class TeachingInquiryDTO implements Serializable {
 	QuestionHeader disturbingEventsInClassesHeader = new QuestionHeader(
 		"label.teachingInquiries.disturbingEventsInClassesReasons");
 	this.firstPageSecondBlockFirstPart.addQuestion(new CheckBoxQuestion(
-		"label.teachingInquiries.disturbingEventsInClassesReasonInfrastructure", disturbingEventsInClassesHeader)
-		.setRequired(false).setToolTip("label.teachingInquiries.disturbingEventsInClassesReasonInfrastructure.tooltip"));
-	this.firstPageSecondBlockFirstPart.addQuestion(new CheckBoxQuestion(
-		"label.teachingInquiries.disturbingEventsInClassesReasonLowAssiduity").setRequired(false).setToolTip(
-		"label.teachingInquiries.disturbingEventsInClassesReasonLowAssiduity.tooltip"));
+		"label.teachingInquiries.disturbingEventsInClassesReasonLowAssiduity", disturbingEventsInClassesHeader)
+		.setRequired(false).setToolTip("label.teachingInquiries.disturbingEventsInClassesReasonLowAssiduity.tooltip"));
 	this.firstPageSecondBlockFirstPart.addQuestion(new CheckBoxQuestion(
 		"label.teachingInquiries.disturbingEventsInClassesReasonIndiscipline").setRequired(false).setToolTip(
 		"label.teachingInquiries.disturbingEventsInClassesReasonIndiscipline.tooltip"));
 	this.firstPageSecondBlockFirstPart.addQuestion(new CheckBoxQuestion(
-		"label.teachingInquiries.disturbingEventsInClassesReasonIntermediateEvaluations").setRequired(false)
-		.setToolTip("label.teachingInquiries.disturbingEventsInClassesReasonIntermediateEvaluations.tooltip"));
+		"label.teachingInquiries.disturbingEventsInClassesReasonIntermediateEvaluations").setRequired(false).setToolTip(
+		"label.teachingInquiries.disturbingEventsInClassesReasonIntermediateEvaluations.tooltip"));
 
 	this.firstPageSecondBlockFirstPart.addQuestion(new TextBoxQuestion(
 		"label.teachingInquiries.disturbingEventsInClassesDescription", false).setRequired(false));
@@ -150,10 +147,11 @@ public class TeachingInquiryDTO implements Serializable {
 	// this.firstPageSecondBlockSecondPart = new InquiriesBlock(
 	// "title.teachingInquiries.semesterAverageStudentNumberInTheorical",
 	// true, StringUtils.EMPTY);
-	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.semesterAverageStudentNumber", true,
+	this.firstPageSecondBlockSecondPart = new InquiriesBlock("title.teachingInquiries.semesterAverageStudentNumber", false,
 		"label.teachingInquiries.semesterStartAverageStudentNumber", StringUtils.EMPTY,
 		"label.teachingInquiries.semesterMiddleAverageStudentNumber", StringUtils.EMPTY,
 		"label.teachingInquiries.semesterEndAverageStudentNumber", StringUtils.EMPTY);
+	this.firstPageSecondBlockSecondPart.getHeader().setToolTip("tooltip.teachingInquiries.semesterAverageStudentNumber");
 
 	QuestionHeader firstPageSecondBlockSecondPartSubHeader = new QuestionHeader(StringUtils.EMPTY,
 		"header.teachingInquiries.semesterAverageStudentNumber",
@@ -289,7 +287,7 @@ public class TeachingInquiryDTO implements Serializable {
 	this.firstPageThirdBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.relativePedagogicalInitiatives", true)
 		.setRequired(false).setShowRequiredMark(false));
 	this.firstPageThirdBlock.addQuestion(new TextBoxQuestion("label.teachingInquiries.generalCommentToCUOperation", true)
-		.setShowRequiredMark(false));
+		.setRequired(false).setShowRequiredMark(false));
 
 	this.firstPageFourthBlock = new InquiriesBlock("title.teachingInquiries.reportDisclosureToAcademicComunity", true,
 		"label.true", "label.false");

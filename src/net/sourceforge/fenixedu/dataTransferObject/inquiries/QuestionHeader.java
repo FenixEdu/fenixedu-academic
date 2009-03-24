@@ -15,6 +15,8 @@ public class QuestionHeader implements Serializable {
 
     private String[] scaleHeaders;
 
+    private String toolTip;
+
     public QuestionHeader(String title) {
 	this.title = title;
     }
@@ -38,6 +40,15 @@ public class QuestionHeader implements Serializable {
 
     public int getScaleHeadersCount() {
 	return scaleHeaders != null ? scaleHeaders.length : 1;
+    }
+
+    public String getToolTip() {
+	return toolTip;
+    }
+
+    public QuestionHeader setToolTip(String toolTip) {
+	this.toolTip = toolTip;
+	return this;
     }
 
 }

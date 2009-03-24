@@ -93,7 +93,8 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    questionRow = mainTable.createRow();
 		    final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
 		    labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel())
-			    + getQuestionRequiredIndication(inquiriesQuestion) + getQuestionToolTip(inquiriesQuestion), false));
+			    + getQuestionRequiredIndication(inquiriesQuestion)
+			    + getQuestionToolTip(inquiriesQuestion.getToolTip()), false));
 		    labelCell.addClass("width300px brightccc");
 		}
 
@@ -189,6 +190,11 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    + getResource(inquiriesQuestion.getToolTip()) + "</span></a>" : StringUtils.EMPTY);
 	}
 
+	private String getQuestionToolTip(final String tooltip) {
+	    return (!StringUtils.isEmpty(tooltip) ? "<a href=\"#\" class=\"help\"> [?] <span>" + getResource(tooltip)
+		    + "</span></a>" : StringUtils.EMPTY);
+	}
+
 	private String getQuestionRequiredIndication(final InquiriesQuestion inquiriesQuestion) {
 	    return inquiriesQuestion.getRequired() && inquiriesQuestion.getShowRequiredMark() ? "<span class=\"required\"> *</span>"
 		    : StringUtils.EMPTY;
@@ -206,7 +212,9 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-	    firstHeaderCell.setBody(new HtmlText(getResource(header.getTitle()), false));
+	    firstHeaderCell
+		    .setBody(new HtmlText(getResource(header.getTitle()) + getQuestionToolTip(header.getToolTip()), false));
+
 	    firstHeaderCell.addClass("width300px");
 
 	    if (header.hasScaleHeaders()) {
