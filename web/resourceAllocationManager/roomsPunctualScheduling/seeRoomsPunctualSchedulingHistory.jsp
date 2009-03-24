@@ -102,14 +102,9 @@
 							</logic:notEmpty>							
 						</logic:notEmpty>							
 						<td class="padded" title="<%= tdTile %>">
-							<logic:equal name="event" property="active" value="true">
-								<html:link page="<%= genericEventURL %>">
-									<fr:view name="event" property="title"/>
-								</html:link>
-							</logic:equal>
-							<logic:equal name="event" property="active" value="false">
+							<html:link page="<%= genericEventURL %>">
 								<fr:view name="event" property="title"/>
-							</logic:equal>
+							</html:link>
 						</td>
 						<td class="padded smalltxt"><bean:write name="event" property="ganttDiagramEventPeriod"/></td>  
 						<td class="padded smalltxt"><bean:write name="event" property="ganttDiagramEventObservations"/></td> 
