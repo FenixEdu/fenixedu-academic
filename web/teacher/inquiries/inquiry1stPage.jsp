@@ -48,7 +48,7 @@
 			<h4 class="mtop15 mbottom05"><bean:message key="title.teachingInquiries.autoEvaluation" bundle="INQUIRIES_RESOURCES"/></h4>
 			<fr:edit name="teachingInquiry" property="firstPageThirdBlock" >
 				<fr:layout name="tabular-editable" >
-					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,"/>
+					<fr:property name="columnClasses" value="thtop,biggerTextarea,,,,,,,,,,,,,,,"/>
 				</fr:layout>		
 			</fr:edit>			
             

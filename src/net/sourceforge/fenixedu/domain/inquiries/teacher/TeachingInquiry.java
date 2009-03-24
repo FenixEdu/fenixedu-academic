@@ -170,9 +170,10 @@ public class TeachingInquiry extends TeachingInquiry_Base {
     }
 
     @Service
-    static public TeachingInquiry makeNew(final TeachingInquiryDTO inquiryDTO) {
+    static public TeachingInquiry saveAnswers(final TeachingInquiryDTO inquiryDTO) {
 
-	TeachingInquiry teachingInquiry = new TeachingInquiry();
+	TeachingInquiry teachingInquiry = inquiryDTO.getProfessorship().hasTeachingInquiry() ? inquiryDTO.getProfessorship()
+		.getTeachingInquiry() : new TeachingInquiry();
 	teachingInquiry.setProfessorship(inquiryDTO.getProfessorship());
 	teachingInquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
 

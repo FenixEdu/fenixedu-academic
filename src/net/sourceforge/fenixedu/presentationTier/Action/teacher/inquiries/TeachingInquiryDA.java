@@ -226,7 +226,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
-	TeachingInquiry.makeNew(teachingInquiryDTO);
+	TeachingInquiry.saveAnswers(teachingInquiryDTO);
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
 	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getTeacher()
 		.getExecutionCoursesWithTeachingInquiriesToAnswer());

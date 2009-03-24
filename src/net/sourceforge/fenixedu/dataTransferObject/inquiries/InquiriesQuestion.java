@@ -57,6 +57,11 @@ public abstract class InquiriesQuestion implements Serializable {
 	this.value = value;
     }
 
+    public InquiriesQuestion setInitialValue(final Object value) {
+	setValue(value != null ? value.toString() : null);
+	return this;
+    }
+
     public String getLabel() {
 	return label;
     }
