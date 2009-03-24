@@ -82,10 +82,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
-	// if (userView.hasRoleType(RoleType.TEACHER)) {
-	// return
-	// userView.getPerson().getTeacher().hasTeachingInquiriesToAnswer();
-	// }
+	 if (userView.hasRoleType(RoleType.TEACHER)) {
+	    return userView.getPerson().getTeacher().hasTeachingInquiriesToAnswer();
+	}
 	return false;
     }
 
