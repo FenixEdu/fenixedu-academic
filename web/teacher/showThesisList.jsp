@@ -8,6 +8,9 @@
 
 <h2><bean:message bundle="APPLICATION_RESOURCES" key="label.thesis.document.confirmation"/></h2>
 
+<div class="info">
+	<p class="mvert0"><bean:message bundle="APPLICATION_RESOURCES" key="message.only.presented.thesis.with.orientator.defined"/></p>
+</div>
 
 	<div class="color888">
 	    <p class="mvert0"><bean:message key="ThesisPresentationState.UNEXISTING.simple" bundle="ENUMERATION_RESOURCES"/> - <bean:message bundle="APPLICATION_RESOURCES" key="ThesisPresentationState.UNEXISTING.label"/></p>
