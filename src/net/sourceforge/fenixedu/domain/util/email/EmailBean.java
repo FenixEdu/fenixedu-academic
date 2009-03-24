@@ -8,7 +8,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EmailBean implements Serializable {
@@ -110,6 +112,35 @@ public class EmailBean implements Serializable {
 
     public void setMessage(String message) {
 	this.message = message;
+    }
+
+    public String validate() {
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+
+	String bccs = getBccs();
+	if (getRecipients().isEmpty()) {
+	    return resourceBundle.getString("error.email.validation.no.recipients");
+	}
+
+	if (!StringUtils.isEmpty(bccs)) {
+	    String[] emails = bccs.split(",");
+	    for (String email : emails) {
+		if (!email.matches(EMail.W3C_EMAIL_SINTAX_VALIDATOR)) {
+		    StringBuilder builder = new StringBuilder(resourceBundle.getString("error.email.validation.bcc.invalid"));
+		    builder.append(email);
+		    return builder.toString();
+		}
+	    }
+	}
+	if (StringUtils.isEmpty(getSubject())) {
+	    return resourceBundle.getString("error.email.validation.subject.empty");
+	}
+
+	if (StringUtils.isEmpty(getMessage())) {
+	    return resourceBundle.getString("error.email.validation.message.empty");
+	}
+
+	return null;
     }
 
     @Service

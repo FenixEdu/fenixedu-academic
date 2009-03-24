@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -10,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -26,12 +28,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/emails", module = "messaging")
 @Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
 	@Forward(name = "view.sent.emails", path = "/messaging/viewSentEmails.jsp"),
-	@Forward(name = "view.email", path = "/messaging/viewEmail.jsp") })
+	@Forward(name = "view.email", path = "/messaging/viewEmail.jsp"), @Forward(name = "cancel", path = "/index.do") })
 public class EmailsDA extends FenixDispatchAction {
+    public static final ActionForward FORWARD_TO_NEW_EMAIL = new ActionForward("emails", "/emails.do?method=forwardToNewEmail",
+	    false, "/messaging");
+
+    public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("cancel");
+    }
+
+    public ActionForward forwardToNewEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("new.email");
+    }
 
     public ActionForward newEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	EmailBean emailBean = (EmailBean) getRenderedObject();
+	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
 	if (emailBean == null) {
 	    emailBean = new EmailBean();
 	    final Set<Sender> availableSenders = Sender.getAvailableSenders();
@@ -41,13 +55,19 @@ public class EmailsDA extends FenixDispatchAction {
 	}
 	RenderUtils.invalidateViewState();
 	request.setAttribute("emailBean", emailBean);
-	return mapping.findForward("new.email");
+	return forwardToNewEmail(mapping, actionForm, request, response);
     }
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	EmailBean emailBean = (EmailBean) getRenderedObject();
+	EmailBean emailBean = (EmailBean) getRenderedObject("emailBean");
 	RenderUtils.invalidateViewState();
+	String validate = emailBean.validate();
+	if (validate != null) {
+	    request.setAttribute("errorMessage", validate);
+	    request.setAttribute("emailBean", emailBean);
+	    return mapping.findForward("new.email");
+	}
 	final Message message = emailBean.send();
 	request.setAttribute("created", Boolean.TRUE);
 	return viewEmail(mapping, request, message);
@@ -110,6 +130,14 @@ public class EmailsDA extends FenixDispatchAction {
 	    message.safeDelete();
 	    return viewSentEmails(mapping, request, sender);
 	}
+    }
+
+    public static ActionForward sendEmail(HttpServletRequest request, Sender sender, Recipient recipient) {
+	EmailBean emailBean = new EmailBean();
+	emailBean.setRecipients(Collections.singletonList(recipient));
+	emailBean.setSender(sender);
+	request.setAttribute("emailBean", emailBean);
+	return FORWARD_TO_NEW_EMAIL;
     }
 
 }

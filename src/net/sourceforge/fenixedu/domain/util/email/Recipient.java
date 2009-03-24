@@ -19,7 +19,7 @@ public class Recipient extends Recipient_Base {
 	    final int c = r1.getToName().compareTo(r2.getToName());
 	    return c == 0 ? COMPARATOR_BY_ID.compare(r1, r2) : c;
 	}
-	
+
     };
 
     public Recipient() {

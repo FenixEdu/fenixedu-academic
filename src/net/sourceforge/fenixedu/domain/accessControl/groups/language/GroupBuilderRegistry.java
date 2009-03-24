@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentStudentsByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsiblesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
@@ -177,6 +178,8 @@ public class GroupBuilderRegistry {
 	register("studentGroupStudents", StudentGroupStudentsGroup.class, new StudentGroupStudentsGroup.Builder());
 	register("executionCourseStudents", ExecutionCourseStudentsGroup.class, new ExecutionCourseStudentsGroup.Builder());
 	register("executionCourseTeachers", ExecutionCourseTeachersGroup.class, new ExecutionCourseTeachersGroup.Builder());
+	register("executionCourseResponsibleTeachers", ExecutionCourseResponsibleTeachersGroup.class,
+		new ExecutionCourseResponsibleTeachersGroup.Builder());
 	register("executionCourseTeachersAndStudents", ExecutionCourseTeachersAndStudentsGroup.class,
 		new ExecutionCourseTeachersAndStudentsGroup.Builder());
 	register("degreeStudents", DegreeStudentsGroup.class, new DegreeStudentsGroup.Builder());

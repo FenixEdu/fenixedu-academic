@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -8,7 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class Sender extends Sender_Base {
 
@@ -63,7 +67,6 @@ public class Sender extends Sender_Base {
     }
 
     public static boolean userHasRecipients() {
-	Set<Recipient> recipients = new TreeSet<Recipient>(Recipient.COMPARATOR_BY_NAME);
 	Set<Sender> senders = getAvailableSenders();
 	if (senders != null && !senders.isEmpty()) {
 	    for (final Sender sender : senders) {
@@ -73,4 +76,23 @@ public class Sender extends Sender_Base {
 	}
 	return false;
     }
+
+    @Service
+    public List<ReplyTo> getConcreteReplyTos() {
+	List<ReplyTo> replyTos = new ArrayList<ReplyTo>();
+	for (ReplyTo replyTo : getReplyTos()) {
+	    if (replyTo instanceof CurrentUserReplyTo) {
+		if (AccessControl.getPerson().getReplyTo() == null) {
+		    ReplyTo concreteReplyTo = new PersonReplyTo(AccessControl.getPerson());
+		    replyTos.add(concreteReplyTo);
+		} else {
+		    replyTos.add(AccessControl.getPerson().getReplyTo());
+		}
+	    } else {
+		replyTos.add(replyTo);
+	    }
+	}
+	return replyTos;
+    }
+
 }

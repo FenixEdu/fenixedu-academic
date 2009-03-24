@@ -6,13 +6,12 @@
 <html:xhtml/>
 
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
-<br/>
 
 <logic:present name="sender">
 
 	<fr:view name="sender" schema="net.sourceforge.fenixedu.domain.util.email.Sender.info">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1"/>
+			<fr:property name="classes" value="tstyle1 thlight thleft thtop ulmvert0 ulindent075"/>
 			<fr:property name="rowClasses" value=",tdbold"/>
 		</fr:layout>
 	</fr:view>
@@ -30,7 +29,7 @@
 	</logic:empty>
 	<fr:view name="sender" property="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 mtop05"/>
+			<fr:property name="classes" value="tstyle2 thlight"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
 			<fr:property name="link(view)" value="/emails.do?method=viewEmail"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
@@ -47,7 +46,7 @@
 
 	<fr:view name="senders" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 mtop05"/>
+			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
 			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>

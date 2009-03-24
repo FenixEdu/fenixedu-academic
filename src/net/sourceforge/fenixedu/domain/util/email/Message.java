@@ -21,8 +21,8 @@ public class Message extends Message_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Message(final Sender sender, final Collection<ReplyTo> replyTos, final Collection<Recipient> recipients, final String subject, final String body,
-	    final String bccs) {
+    public Message(final Sender sender, final Collection<ReplyTo> replyTos, final Collection<Recipient> recipients,
+	    final String subject, final String body, final String bccs) {
 	super();
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	setRootDomainObject(rootDomainObject);
@@ -111,8 +111,8 @@ public class Message extends Message_Base {
 
     public void dispatch() {
 	final Sender sender = getSender();
-	new Email(sender.getFromName(), sender.getFromAddress(), new String[0], Collections.EMPTY_SET, Collections.EMPTY_SET,
-		getDestinationEmailAddresses(), getSubject(), getBody());
+	new Email(sender.getFromName(), sender.getFromAddress(), getReplyToAddresses(), Collections.EMPTY_SET,
+		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
     }

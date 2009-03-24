@@ -16,7 +16,7 @@ public class EmailReplyTosProvider implements DataProvider {
 	final Sender sender = emailBean.getSender();
 	final Set<ReplyTo> replyTos = new TreeSet<ReplyTo>(ReplyTo.COMPARATOR_BY_ADDRESS);
 	if (sender != null) {
-	    replyTos.addAll(sender.getReplyTosSet());
+	    replyTos.addAll(sender.getConcreteReplyTos());
 	}
 	return replyTos;
     }

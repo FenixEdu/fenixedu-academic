@@ -10,18 +10,18 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeachersGroup {
+public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCourseTeachersGroup {
 
     private static final long serialVersionUID = 1L;
 
-    public ExecutionCourseTeachersGroup(ExecutionCourse executionCourse) {
+    public ExecutionCourseResponsibleTeachersGroup(ExecutionCourse executionCourse) {
 	super(executionCourse);
     }
 
     @Override
     public String getName() {
 	return RenderUtils.getResourceString("SITE_RESOURCES",
-		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
+		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
 		new Object[] { getExecutionCourse().getNome() });
     }
 
@@ -34,7 +34,7 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 
 	public Group build(Object[] arguments) {
 	    try {
-		return new ExecutionCourseTeachersGroup((ExecutionCourse) arguments[0]);
+		return new ExecutionCourseResponsibleTeachersGroup((ExecutionCourse) arguments[0]);
 	    } catch (ClassCastException e) {
 		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
 			arguments[0].toString());
@@ -53,7 +53,7 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 
     @Override
     public Collection<Professorship> getProfessorships() {
-	return getExecutionCourse().getProfessorships();
+	return getExecutionCourse().responsibleFors();
     }
 
 }

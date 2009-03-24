@@ -364,7 +364,7 @@ public class Shift extends Shift_Base {
 	}
 	return builder.toString();
     }
-    
+
     public String getShiftTypesCapitalizedPrettyPrint() {
 	StringBuilder builder = new StringBuilder();
 	int index = 0;
@@ -493,7 +493,7 @@ public class Shift extends Shift_Base {
 		RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils
 			.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome()));
     }
-
+    
     public boolean hasAnyStudentsInAssociatedStudentGroups() {
 	for (final StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
 	    if (studentGroup.getAttendsCount() > 0) {
@@ -501,5 +501,31 @@ public class Shift extends Shift_Base {
 	    }
 	}
 	return false;
+    }
+
+
+    public String getPresentationName() {
+	StringBuilder stringBuilder = new StringBuilder(this.getNome());
+	if (this.hasAnyAssociatedLessons()) {
+	    stringBuilder.append(" ( ");
+
+	    for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
+		Lesson lesson = iterator.next();
+		stringBuilder.append(lesson.getDiaSemana().toString());
+		stringBuilder.append(" ");
+		stringBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
+		stringBuilder.append(" - ");
+		stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
+		if (lesson.hasSala()) {
+		    stringBuilder.append(" - ");
+		    stringBuilder.append(lesson.getSala().getIdentification());
+		}
+		if (iterator.hasNext()) {
+		    stringBuilder.append(" ; ");
+		}
+	    }
+	    stringBuilder.append(" ) ");
+	}
+	return stringBuilder.toString();
     }
 }

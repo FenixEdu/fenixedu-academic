@@ -1909,6 +1909,7 @@
    	<message-resources parameter="resources.WebsiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ContentResources" key="CONTENT_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 

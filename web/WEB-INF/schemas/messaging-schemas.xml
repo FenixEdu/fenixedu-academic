@@ -359,10 +359,10 @@
         <property name="sortBy" value="toName"/>
     </slot>
 	<slot name="bccs" bundle="MESSAGING_RESOURCES" key="label.receiversOfCopy">
-		<property name="size" value="70" />
+		<property name="size" value="50" />
 	</slot>
 	<slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject">
-		<property name="size" value="70" />
+		<property name="size" value="50" />
 	</slot>
 	<slot name="message" bundle="MANAGER_RESOURCES" key="label.email.message" layout="longText">
 		<property name="columns" value="80"/>

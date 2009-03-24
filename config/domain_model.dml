@@ -5484,17 +5484,29 @@ class DomainObject {
 	}
 
 	class util.email.ReplyTo extends DomainObject {
+	}
+	
+	class util.email.ConcreteReplyTo extends util.email.ReplyTo {
 		String replyToAddress;
 	}
-
+	
+	class util.email.PersonReplyTo extends util.email.ReplyTo { }
+	
+	class util.email.ExecutionCourseReplyTo extends util.email.ReplyTo { }
+	
+	class util.email.CurrentUserReplyTo extends util.email.ReplyTo { }
+	
 	class util.email.Sender extends DomainObject {
 		String fromName;
 		String fromAddress;
 		Group members;
 	}
 
-		class util.email.UnitBasedSender extends util.email.Sender {
-		}
+	class util.email.UnitBasedSender extends util.email.Sender {
+	}
+	
+	class util.email.ExecutionCourseSender extends util.email.Sender {
+	}
 
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
@@ -7903,6 +7915,11 @@ relation ExecutionCourseSummary {
 		multiplicity *;
 	}
 	ExecutionCourse playsRole executionCourse;
+}
+
+relation ExecutionCourseSender {
+	ExecutionCourse playsRole course;
+	util.email.Sender playsRole sender;
 }
 
 relation ExecutionDegreeCampus {
@@ -14780,6 +14797,11 @@ relation UtilEmailSenderUtilEmailRecipient {
 	util.email.Recipient playsRole recipients {
 		multiplicity *;
 	}
+}
+
+relation PersonUtilEmailReplyTo {
+	Person playsRole person;
+	util.email.PersonReplyTo playsRole replyTo;
 }
 
 relation RootDomainObjectPendingUtilEmailMessage {

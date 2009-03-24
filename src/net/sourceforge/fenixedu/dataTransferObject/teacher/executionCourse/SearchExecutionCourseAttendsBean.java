@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
 
@@ -26,8 +32,16 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     private Collection<WorkingStudentSelectionType> workingStudentTypes;
     private Collection<DomainReference<DegreeCurricularPlan>> degreeCurricularPlans;
     private Collection<DomainReference<Shift>> shifts;
-    private transient Collection<Attends> attendsResult;
+    private Collection<DomainReference<Attends>> attendsResult;
     private transient Map<Integer, Integer> enrolmentsNumberMap;
+
+    public String getEnumerationResourcesString(String name) {
+	return ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(name);
+    }
+
+    public String getApplicationResourcesString(String name) {
+	return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+    }
 
     public SearchExecutionCourseAttendsBean(ExecutionCourse executionCourse) {
 	setExecutionCourse(executionCourse);
@@ -36,6 +50,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 	setWorkingStudentTypes(Arrays.asList(WorkingStudentSelectionType.values()));
 	setShifts(getExecutionCourse().getAssociatedShifts());
 	setDegreeCurricularPlans(getExecutionCourse().getAttendsDegreeCurricularPlans());
+	attendsResult = new ArrayList<DomainReference<Attends>>();
     }
 
     public ExecutionCourse getExecutionCourse() {
@@ -110,11 +125,19 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     }
 
     public Collection<Attends> getAttendsResult() {
-	return attendsResult;
+	Collection<Attends> attends = new ArrayList<Attends>();
+	for (DomainReference<Attends> attendRef : attendsResult) {
+	    attends.add(attendRef.getObject());
+	}
+	return attends;
     }
 
-    public void setAttendsResult(Collection<Attends> attendsResult) {
-	this.attendsResult = attendsResult;
+    public void setAttendsResult(Collection<Attends> atts) {
+	ArrayList<DomainReference<Attends>> results = new ArrayList<DomainReference<Attends>>();
+	for (Attends attend : atts) {
+	    results.add(new DomainReference<Attends>(attend));
+	}
+	this.attendsResult = results;
     }
 
     public Map<Integer, Integer> getEnrolmentsNumberMap() {
@@ -187,5 +210,45 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 	}
 
 	return new AndPredicate<Attends>(filters);
+    }
+
+    public Group getAttendsGroup() {
+	List<Person> persons = new ArrayList<Person>();
+	for (Attends attends : getAttendsResult()) {
+	    persons.add(attends.getRegistration().getStudent().getPerson());
+	}
+	return new FixedSetGroup(persons);
+    }
+
+    public String getLabel() {
+
+	String attendTypeValues = "", degreeNameValues = "", shiftsValues = "", workingStudentsValues = "";
+
+	for (StudentAttendsStateType attendType : attendsStates) {
+	    attendTypeValues += getEnumerationResourcesString(attendType.getQualifiedName()) + ", ";
+	}
+	attendTypeValues = attendTypeValues.substring(0, attendTypeValues.length() - 2);
+
+	for (DomainReference<DegreeCurricularPlan> degree : degreeCurricularPlans) {
+	    degreeNameValues += degree.getObject().getName() + ", ";
+	}
+	degreeNameValues = degreeNameValues.substring(0, degreeNameValues.length() - 2);
+
+	for (DomainReference<Shift> shift : shifts) {
+	    shiftsValues += shift.getObject().getPresentationName() + ", ";
+	}
+	shiftsValues = shiftsValues.substring(0, shiftsValues.length() - 2);
+
+	for (WorkingStudentSelectionType workingStudent : workingStudentTypes) {
+	    workingStudentsValues += getEnumerationResourcesString(workingStudent.getQualifiedName()) + ", ";
+	}
+
+	workingStudentsValues = workingStudentsValues.substring(0, workingStudentsValues.length() - 2);
+
+	return String.format("%s : %s \n%s : %s \n%s : %s \n%s", getApplicationResourcesString("label.selectStudents"),
+		attendTypeValues, getApplicationResourcesString("label.attends.courses"), degreeNameValues,
+		getApplicationResourcesString("label.selectShift"), shiftsValues,
+		workingStudentsValues);
+
     }
 }
