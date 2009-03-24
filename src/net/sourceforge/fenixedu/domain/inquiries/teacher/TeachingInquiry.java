@@ -18,18 +18,6 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	setResponseDateTime(new DateTime());
     }
 
-    @Service
-    static public TeachingInquiry makeNew(final TeachingInquiryDTO inquiryDTO) {
-
-	TeachingInquiry teachingInquiry = new TeachingInquiry();
-	teachingInquiry.setProfessorship(inquiryDTO.getProfessorship());
-	teachingInquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
-
-	setAnswers(inquiryDTO, teachingInquiry);
-
-	return teachingInquiry;
-    }
-
     private static void setAnswers(final TeachingInquiryDTO inquiryDTO, final TeachingInquiry teachingInquiry) {
 	Map<String, InquiriesQuestion> answersMap = inquiryDTO.buildAnswersMap(false);
 
@@ -129,8 +117,6 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	teachingInquiry.setResultsDisclosureToAcademicComunity(answersMap.get("resultsDisclosureToAcademicComunity")
 		.getValueAsBoolean());
 
-	teachingInquiry.setActiveAndInteressedStudentsRatio(answersMap.get("activeAndInteressedStudentsRatio").getValue());
-
 	teachingInquiry.setClarificationOfDoubtsOutsideClasses(answersMap.get("clarificationOfDoubtsOutsideClasses")
 		.getValueAsInteger());
 	teachingInquiry.setAutonomousWork(answersMap.get("autonomousWork").getValueAsInteger());
@@ -165,17 +151,29 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 	teachingInquiry.setIncreaseAutonoumousLearningCapacity(answersMap.get("increaseAutonoumousLearningCapacity")
 		.getValueAsInteger());
 	teachingInquiry.setSocialAndProfessionalContextAnalysis(answersMap.get("socialAndProfessionalContextAnalysis")
-		.getValueAsInteger());	
-	
+		.getValueAsInteger());
+
 	teachingInquiry.setGlobalClassificationOfThisCU(answersMap.get("globalClassificationOfThisCU").getValueAsInteger());
 	teachingInquiry.setWeakPointsOfCUTeachingProcess(answersMap.get("weakPointsOfCUTeachingProcess").getValue());
 	teachingInquiry.setStrongPointsOfCUTeachingProcess(answersMap.get("strongPointsOfCUTeachingProcess").getValue());
 	teachingInquiry.setFinalCommentsAndImproovements(answersMap.get("finalCommentsAndImproovements").getValue());
 	teachingInquiry.setNegativeResultsResolutionAndImproovementPlanOfAction(answersMap.get(
 		"negativeResultsResolutionAndImproovementPlanOfAction").getValue());
-	
+
 	teachingInquiry.setResponsibleTeacherReportDisclosureToAcademicComunity(answersMap.get(
 		"responsibleTeacherReportDisclosureToAcademicComunity").getValueAsBoolean());
+    }
+
+    @Service
+    static public TeachingInquiry makeNew(final TeachingInquiryDTO inquiryDTO) {
+
+	TeachingInquiry teachingInquiry = new TeachingInquiry();
+	teachingInquiry.setProfessorship(inquiryDTO.getProfessorship());
+	teachingInquiry.setAnswerDuration(inquiryDTO.getAnswerDuration());
+
+	setAnswers(inquiryDTO, teachingInquiry);
+
+	return teachingInquiry;
     }
 
     public void delete() {
