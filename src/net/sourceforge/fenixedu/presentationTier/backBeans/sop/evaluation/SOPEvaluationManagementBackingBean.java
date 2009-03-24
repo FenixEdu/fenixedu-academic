@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
@@ -108,6 +109,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN academicInterval
     public String getAcademicInterval() {
+	hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat();
 	if (this.academicInterval == null && this.academicIntervalHidden.getValue() != null
 		&& !this.academicIntervalHidden.getValue().equals("")) {
 	    this.academicInterval = this.academicIntervalHidden.getValue().toString();
@@ -121,6 +123,23 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    // this.academicInterval = getAcademicIntervalOID();
 	}
 	return academicInterval;
+    }
+
+    private void hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat() {
+	AcademicInterval academicInterval = null;
+	if (getRequestAttribute(SessionConstants.ACADEMIC_INTERVAL) != null) {
+	    String academicIntervalStr = (String) getRequestAttribute(SessionConstants.ACADEMIC_INTERVAL);
+	    academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
+	} else if (getRequestParameter(SessionConstants.ACADEMIC_INTERVAL) != null) {
+	    String academicIntervalStr = getRequestParameter(SessionConstants.ACADEMIC_INTERVAL);
+	    if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
+		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
+	    }
+	}
+	if (academicInterval == null) {
+	    academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
+	}
+	setRequestAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
     }
 
     public String getAcademicIntervalEscapeFriendly() {

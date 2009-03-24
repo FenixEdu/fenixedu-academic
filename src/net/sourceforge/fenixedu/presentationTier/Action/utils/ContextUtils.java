@@ -627,8 +627,11 @@ public class ContextUtils {
 		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
 	    } else if (request.getParameter(SessionConstants.ACADEMIC_INTERVAL) != null) {
 		String academicIntervalStr = request.getParameter(SessionConstants.ACADEMIC_INTERVAL);
-		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
-	    } else {
+		if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
+		    academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
+		}
+	    }
+	    if (academicInterval == null) {
 		academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
 	    }
 	    if (request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID) != null) {
@@ -657,8 +660,7 @@ public class ContextUtils {
 	    context.setCourseName(courseName);
 	}
 	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, context);
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, context.getAcademicInterval()
-		.getResumedRepresentationInStringFormat());
+	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, context.getAcademicInterval().getResumedRepresentationInStringFormat());
 	request.setAttribute(SessionConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
 	request.setAttribute(SessionConstants.CURRICULAR_YEAR, new InfoCurricularYear(context.getCurricularYear()));
     }
