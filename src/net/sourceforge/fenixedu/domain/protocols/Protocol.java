@@ -361,6 +361,10 @@ public class Protocol extends Protocol_Base {
 		.getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.TECHNICAL_COOPERATION.toString()), spreadsheet
 		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.POST_GRADUATION.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
+	spreadsheet.addHeader(resourceBundle.getString(ProtocolActionType.DOUBLE_DEGREE.toString()), spreadsheet
+		.getExcelStyle().getVerticalHeaderStyle(), 500);
 	spreadsheet.addHeader(bundle.getString("label.protocol.otherActionTypes"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.observations"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.protocol.units"), 10000);
@@ -397,6 +401,10 @@ public class Protocol extends Protocol_Base {
 	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.DOCUMENTATION) ? "X" : "", spreadsheet
 		.getExcelStyle().getStringStyle());
 	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.TECHNICAL_COOPERATION) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.POST_GRADUATION) ? "X" : "", spreadsheet
+		.getExcelStyle().getStringStyle());
+	spreadsheet.addCell(getProtocolAction().contains(ProtocolActionType.DOUBLE_DEGREE) ? "X" : "", spreadsheet
 		.getExcelStyle().getStringStyle());
 	spreadsheet.addCell(getProtocolAction().getOtherTypes(), true);
 	spreadsheet.addCell(getObservations(), true);
