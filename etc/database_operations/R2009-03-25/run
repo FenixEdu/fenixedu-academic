@@ -43,3 +43,9 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Set default values to RESEACHER columns" setResearcherDefaultValues.sql
+execute "Add new columns to administrative office permissions tables" alterAdministrativeOfficePermissionsTables.sql
+execute "Create administrative office permissions" createAdministrativeOfficePermissions.sql
+execute "Alter Student Inquiries Results Tables" alterInquiriesResults.sql
+execute "Alter Docencia Emails Structure" changeEmailsDocenciaStructure.sql
+execute "Update Reply Tos Concrete Class" updateReplyToConcreteClass.sql 
