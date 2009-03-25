@@ -48,8 +48,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 
 	try {
 	    final String[] splittedResults = readFile(resultsBean);
-	    StudentInquiriesCourseResult.importResults(splittedResults[0], splittedResults[1], resultsBean
-		    .getKeyExecutionDegreeHeader(), resultsBean.getKeyExecutionCourseHeader());
+	    StudentInquiriesCourseResult.importResults(splittedResults[0], splittedResults[1], resultsBean);
 	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
@@ -72,9 +71,7 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 
 	try {
 	    final String[] splittedResults = readFile(resultsBean);
-	    StudentInquiriesTeachingResult.importResults(splittedResults[0], splittedResults[1], resultsBean
-		    .getKeyExecutionDegreeHeader(), resultsBean.getKeyExecutionCourseHeader(), resultsBean.getKeyTeacherHeader(),
-		    resultsBean.getShiftTypeHeader());
+	    StudentInquiriesTeachingResult.importResults(splittedResults[0], splittedResults[1], resultsBean);
 	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());

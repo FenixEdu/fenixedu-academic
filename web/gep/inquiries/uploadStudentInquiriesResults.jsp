@@ -15,7 +15,7 @@
 
 <fr:edit id="uploadCourseFileBean" name="uploadCourseFileBean" schema="studentInquiry.uploadCourseResults" action="/uploadStudentInquiriesResults.do?method=submitCourseFile" >
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle1 thlight mtop05"/>
+            <fr:property name="classes" value="tstyle1 thlight mtop05 thleft"/>
         </fr:layout>
 </fr:edit>
 
@@ -25,6 +25,6 @@
 
 <fr:edit id="uploadTeachingFileBean" name="uploadTeachingFileBean" schema="studentInquiry.uploadTeachingResults" action="/uploadStudentInquiriesResults.do?method=submitTeachingFile" >
         <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle1 thlight mtop05"/>
+            <fr:property name="classes" value="tstyle1 thlight mtop05 thleft"/>
         </fr:layout>
 </fr:edit>

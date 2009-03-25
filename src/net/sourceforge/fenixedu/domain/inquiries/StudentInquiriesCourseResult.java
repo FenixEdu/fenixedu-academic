@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -22,39 +22,33 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
     }
 
     @Service
-    public static void importResults(String headers, String values, String executionDegreeHeader, String executionCourseHeader) {
+    public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
 
 	String[] headersSplitted = headers.split("\t");
 
-	int executionCourseHeaderIndex = getHeaderIndex(executionCourseHeader, headersSplitted);
-	int executionDegreeHeaderIndex = getHeaderIndex(executionDegreeHeader, headersSplitted);
+	int executionCourseHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionCourseHeader(), headersSplitted);
+	int executionDegreeHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionDegreeHeader(), headersSplitted);
+	int unsatisfactoryResultsCUEvaluationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUEvaluationHeader(),
+		headersSplitted);
+	int unsatisfactoryResultsCUOrganizationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUOrganizationHeader(),
+		headersSplitted);
 
 	for (String row : values.split("\n")) {
 	    String[] columns = row.split("\t");
 
 	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
 		    Integer.valueOf(columns[executionCourseHeaderIndex]));
-
 	    if (executionCourse == null) {
 		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
 			columns[executionCourseHeaderIndex]);
 	    }
 
-	     ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
 		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
-//	    Degree degree = Degree.readBySigla(columns[executionDegreeHeaderIndex]);
-//	    if (degree == null) {
-//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
-//			columns[executionDegreeHeaderIndex]);
-//	    }
-//
-//	    List<ExecutionDegree> executionDegrees = degree.getExecutionDegreesForExecutionYear(executionCourse
-//		    .getExecutionYear());
-//	    if (executionDegrees.size() > 1) {
-//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
-//			columns[executionDegreeHeaderIndex]);
-//	    }
-//	    ExecutionDegree executionDegree = executionDegrees.iterator().next();
+	    if (executionDegree == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
+			columns[executionDegreeHeaderIndex]);
+	    }
 
 	    StudentInquiriesCourseResult studentInquiriesCourseResult = executionCourse
 		    .getStudentInquiriesCourseResult(executionDegree);
@@ -68,6 +62,10 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    studentInquiriesCourseResult.setRawValues(row);
 	    studentInquiriesCourseResult.setHeaders(headers);
 	    studentInquiriesCourseResult.setUploadDateTime(new DateTime());
+	    studentInquiriesCourseResult
+		    .setUnsatisfactoryResultsCUEvaluation(fieldToBoolean(columns[unsatisfactoryResultsCUEvaluationIndex]));
+	    studentInquiriesCourseResult
+		    .setUnsatisfactoryResultsCUOrganization(fieldToBoolean(columns[unsatisfactoryResultsCUOrganizationIndex]));
 
 	}
 
@@ -80,6 +78,10 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    }
 	}
 	throw new DomainException("error.StudentInquiriesCourseResult.headerNotFound", headerToFind);
+    }
+
+    private static Boolean fieldToBoolean(String field) {
+	return !StringUtils.isEmpty(field) && (field.equalsIgnoreCase("true") || field.equals("1"));
     }
 
     public boolean isUnsatisfactory() {

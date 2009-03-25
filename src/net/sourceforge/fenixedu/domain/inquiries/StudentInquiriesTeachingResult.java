@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -25,15 +25,26 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
 
     @Service
-    public static void importResults(String headers, String values, String executionDegreeHeader, String executionCourseHeader,
-	    String teacherHeader, String shiftTypeHeader) {
+    public static void importResults(String headers, String values, UploadStudentInquiriesTeachingResultsBean resultsBean) {
 
 	String[] headersSplitted = headers.split("\t");
 
-	int executionCourseHeaderIndex = getHeaderIndex(executionCourseHeader, headersSplitted);
-	int executionDegreeHeaderIndex = getHeaderIndex(executionDegreeHeader, headersSplitted);
-	int teacherHeaderIndex = getHeaderIndex(teacherHeader, headersSplitted);
-	int shiftTypeHeaderIndex = getHeaderIndex(shiftTypeHeader, headersSplitted);
+	int executionCourseHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionCourseHeader(), headersSplitted);
+	int executionDegreeHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionDegreeHeader(), headersSplitted);
+	int teacherHeaderIndex = getHeaderIndex(resultsBean.getKeyTeacherHeader(), headersSplitted);
+	int shiftTypeHeaderIndex = getHeaderIndex(resultsBean.getShiftTypeHeader(), headersSplitted);
+
+	int unsatisfactoryResultsAssiduityIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAssiduityHeader(),
+		headersSplitted);
+	int unsatisfactoryResultsAuditableIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAuditableHeader(),
+		headersSplitted);
+	int unsatisfactoryResultsPedagogicalCapacityIndex = getHeaderIndex(resultsBean
+		.getUnsatisfactoryResultsPedagogicalCapacityHeader(), headersSplitted);
+	int unsatisfactoryResultsPresencialLearningIndex = getHeaderIndex(resultsBean
+		.getUnsatisfactoryResultsPresencialLearningHeader(), headersSplitted);
+	int unsatisfactoryResultsStudentInteractionIndex = getHeaderIndex(resultsBean
+		.getUnsatisfactoryResultsStudentInteractionHeader(), headersSplitted);
+	int internalDegreeDisclosureIndex = getHeaderIndex(resultsBean.getInternalDegreeDisclosureHeader(), headersSplitted);
 
 	for (String row : values.split("\n")) {
 	    String[] columns = row.split("\t");
@@ -45,27 +56,16 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 			columns[executionCourseHeaderIndex]);
 	    }
 
-	     ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
 		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
-//	    Degree degree = Degree.readBySigla(columns[executionDegreeHeaderIndex]);
-//	    if (degree == null) {
-//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
-//			columns[executionDegreeHeaderIndex]);
-//	    }
-//
-//	    List<ExecutionDegree> executionDegrees = degree.getExecutionDegreesForExecutionYear(executionCourse
-//		    .getExecutionYear());
-//	    if (executionDegrees.size() > 1) {
-//		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
-//			columns[executionDegreeHeaderIndex]);
-//	    }
-//	    ExecutionDegree executionDegree = executionDegrees.iterator().next();
+	    if (executionDegree == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
+			columns[executionDegreeHeaderIndex]);
+	    }
 
-	     Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(Integer.valueOf(columns[teacherHeaderIndex]));
-//	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(columns[teacherHeaderIndex]));
+	    Teacher teacher = RootDomainObject.getInstance().readTeacherByOID(Integer.valueOf(columns[teacherHeaderIndex]));
 	    if (teacher == null) {
-		throw new DomainException("error.StudentInquiriesCourseResult.teacherNotFound",
-			columns[teacherHeaderIndex]);
+		throw new DomainException("error.StudentInquiriesCourseResult.teacherNotFound", columns[teacherHeaderIndex]);
 	    }
 
 	    Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
@@ -85,6 +85,18 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    studentInquiriesTeachingResult.setHeaders(headers);
 	    studentInquiriesTeachingResult.setUploadDateTime(new DateTime());
 
+	    studentInquiriesTeachingResult
+		    .setUnsatisfactoryResultsAssiduity(fieldToBoolean(columns[unsatisfactoryResultsAssiduityIndex]));
+	    studentInquiriesTeachingResult
+		    .setUnsatisfactoryResultsAuditable(fieldToBoolean(columns[unsatisfactoryResultsAuditableIndex]));
+	    studentInquiriesTeachingResult
+		    .setUnsatisfactoryResultsPedagogicalCapacity(fieldToBoolean(columns[unsatisfactoryResultsPedagogicalCapacityIndex]));
+	    studentInquiriesTeachingResult
+		    .setUnsatisfactoryResultsPresencialLearning(fieldToBoolean(columns[unsatisfactoryResultsPresencialLearningIndex]));
+	    studentInquiriesTeachingResult
+		    .setUnsatisfactoryResultsStudentInteraction(fieldToBoolean(columns[unsatisfactoryResultsStudentInteractionIndex]));
+	    studentInquiriesTeachingResult.setInternalDegreeDisclosure(fieldToBoolean(columns[internalDegreeDisclosureIndex]));
+
 	}
 
     }
@@ -96,6 +108,10 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    }
 	}
 	throw new DomainException("error.StudentInquiriesTeachingResult.headerNotFound", headerToFind);
+    }
+
+    private static Boolean fieldToBoolean(String field) {
+	return !StringUtils.isEmpty(field) && (field.equalsIgnoreCase("true") || field.equals("1"));
     }
 
     public boolean isUnsatisfactory() {
