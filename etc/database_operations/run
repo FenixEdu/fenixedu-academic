@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add administrative office permissions tables" alterAdministrativeOfficePemissionTables.sql

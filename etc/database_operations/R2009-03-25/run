@@ -49,3 +49,6 @@ execute "Create administrative office permissions" createAdministrativeOfficePer
 execute "Alter Student Inquiries Results Tables" alterInquiriesResults.sql
 execute "Alter Docencia Emails Structure" changeEmailsDocenciaStructure.sql
 execute "Update Reply Tos Concrete Class" updateReplyToConcreteClass.sql 
+
+execute "Add administrative office permissions tables" alterAdministrativeOfficePemissionTables.sql
+
