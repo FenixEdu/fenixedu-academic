@@ -21,6 +21,14 @@
     <implementationClass>net.sourceforge.fenixedu.webServices.AlumniManagement</implementationClass>    
   </service>
 
+  <service>
+    <name>SearchResearcher</name>
+    <namespace>SearchResearcher</namespace>
+    <serviceClass>net.sourceforge.fenixedu.webServices.ISearchResearcher</serviceClass>
+    <implementationClass>net.sourceforge.fenixedu.webServices.SearchResearcher</implementationClass>    
+  </service>
+
+
 	 <service>
 	    <name>SendMail</name>
 	    <namespace>SendMail</namespace>
