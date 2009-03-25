@@ -72,7 +72,7 @@
 			</html:link>
 		</li>
 
-		<bean:define id="sendMailLink">/sendMailToWorkGroupStudents.do?method=start&amp;studentGroupCode=<bean:write name="groupingOID"/>&amp;objectCode=<bean:write name="objectCode"/></bean:define>
+		<bean:define id="sendMailLink">/sendMailToWorkGroupStudents.do?method=sendGroupingEmail&amp;groupingCode=<bean:write name="groupingOID"/>&amp;objectCode=<bean:write name="objectCode"/></bean:define>
 		<li>
 			<html:link page="<%= sendMailLink %>">
 				<bean:message key="link.sendEmailToAllStudents"/><br/><br/>

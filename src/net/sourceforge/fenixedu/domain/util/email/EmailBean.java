@@ -118,7 +118,7 @@ public class EmailBean implements Serializable {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
 	String bccs = getBccs();
-	if (getRecipients().isEmpty()) {
+	if (getRecipients().isEmpty() && StringUtils.isEmpty(bccs)) {
 	    return resourceBundle.getString("error.email.validation.no.recipients");
 	}
 
@@ -132,6 +132,7 @@ public class EmailBean implements Serializable {
 		}
 	    }
 	}
+
 	if (StringUtils.isEmpty(getSubject())) {
 	    return resourceBundle.getString("error.email.validation.subject.empty");
 	}

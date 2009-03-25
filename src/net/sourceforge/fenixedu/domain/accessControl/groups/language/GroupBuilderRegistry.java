@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndS
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
 import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
@@ -219,6 +220,7 @@ public class GroupBuilderRegistry {
 	register("teachersWithMarkSheetsToConfirm", TeachersWithMarkSheetsToConfirm.class,
 		new TeachersWithMarkSheetsToConfirm.Builder());
 	register("teachersWithGradesToSubmit", TeachersWithGradesToSubmit.class, new TeachersWithGradesToSubmit.Builder());
+	register("groupingGroup", GroupingGroup.class, new GroupingGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 

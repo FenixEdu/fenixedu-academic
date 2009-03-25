@@ -232,7 +232,7 @@
 		
 	<bean:define id="nrOfElements" name="component" property="nrOfElements"/>
 				 			 		
-	<bean:define id="sendMailLink" type="java.lang.String">/sendMailToWorkGroupStudents.do?method=start&amp;objectCode=<%= pageContext.findAttribute("objectCode").toString() %>&amp;groupPropertiesCode=<%= groupPropertiesCode.toString() %>&amp;studentGroupCode=<%= studentGroupCode.toString() %></bean:define>
+	<bean:define id="sendMailLink" type="java.lang.String">/sendMailToWorkGroupStudents.do?method=sendEmail&amp;objectCode=<%= pageContext.findAttribute("objectCode").toString() %>&amp;groupPropertiesCode=<%= groupPropertiesCode.toString() %>&amp;studentGroupCode=<%= studentGroupCode.toString() %></bean:define>
 	<ul class="mtop05">
 		<li>
 		   <html:link page="<%= sendMailLink %>">

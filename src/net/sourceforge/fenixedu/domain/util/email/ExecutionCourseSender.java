@@ -34,7 +34,8 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
     @Service
     public static ExecutionCourseSender newInstance(ExecutionCourse ec) {
-	return new ExecutionCourseSender(ec);
+	ExecutionCourseSender sender = (ExecutionCourseSender) ec.getSender();
+	return sender == null ? new ExecutionCourseSender(ec) : sender;
     }
 
 }

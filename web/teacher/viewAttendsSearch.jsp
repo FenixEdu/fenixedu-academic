@@ -24,7 +24,7 @@
 		<bean:size id="size" name="searchBean" property="attendsResult"/>
 		<h3> <bean:write name="size"/> Aluno(s) </h3>
 	
-		<fr:form target="_blank" id="sendMailForm" action="/searchECAttends.do?method=sendEmail&contentContextPath_PATH=/comunicacao/comunicacao">
+		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail&contentContextPath_PATH=/comunicacao/comunicacao">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
 			<!-- HAS_CONTEXT --><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>

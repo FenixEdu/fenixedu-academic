@@ -21,8 +21,11 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	Integer objectCode = Integer.valueOf(request.getParameter("objectCode"));
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(objectCode);
+	// Integer objectCode =
+	// Integer.valueOf(request.getParameter("objectCode"));
+	ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+	// ExecutionCourse executionCourse =
+	// rootDomainObject.readExecutionCourseByOID(objectCode);
 	SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean = new SearchExecutionCourseAttendsBean(executionCourse);
 	executionCourse.searchAttends(searchExecutionCourseAttendsBean);
 	request.setAttribute("searchBean", searchExecutionCourseAttendsBean);
@@ -37,10 +40,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 	ExecutionCourse executionCourse = bean.getExecutionCourse();
 	Group studentsGroup = bean.getAttendsGroup();
 	Recipient recipient = Recipient.createNewRecipient(bean.getLabel(), studentsGroup);
-	Sender sender = executionCourse.getSender();
-	if (sender == null) {
-	    sender = ExecutionCourseSender.newInstance(executionCourse);
-	}
+	Sender sender = ExecutionCourseSender.newInstance(executionCourse);
 	return EmailsDA.sendEmail(request, sender, recipient);
     }
 
