@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils"%>
 
 <html>
     <body>
@@ -25,7 +24,7 @@
 			              <td>
 			                <table border="0" width="100%" height="100%">
 			                  <tr valign="top" align="left"> 
-			                    <td>&nbsp;<b><%= UnitUtils.readInstitutionUnit().getName() %></b><br/>
+			                    <td>&nbsp;<b><bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/></b><br/>
 				                    &nbsp;<b>Curso: <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
 				                    &nbsp;<b>Ano Lectivo: <bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/><br/>
 			                      <hr size="1">

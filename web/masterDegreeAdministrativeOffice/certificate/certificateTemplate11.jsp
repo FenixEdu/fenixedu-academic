@@ -10,7 +10,7 @@
 
 <div style="text-align: center !important;">
 	<h2 class='diploma_posGrad'>DIPLOMA</h2>
-	<h3 class='diploma_posGrad'>O Instituto Superior Técnico certifica que</h3>
+	<h3 class='diploma_posGrad'>O <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/> certifica que</h3>
 	<p class="diplomado">
 		<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
 	</p>
@@ -21,6 +21,6 @@
 
 	<div class="dipl_signature">    	
 		<h4  class='diploma_posGrad'><bean:write name="<%= SessionConstants.DATE %>" /></h4>
-		<h4 class='diploma_posGrad'>O Presidente do Instituto Superior Técnico</h4>
+		<h4 class='diploma_posGrad'>O Presidente do <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/></h4>
 	</div>
 </div>

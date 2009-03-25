@@ -30,7 +30,7 @@
               <td>
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
-                    <td>&nbsp;<b>INSTITUTO SUPERIOR TÉCNICO</b><br/>
+                    <td>&nbsp;<b><bean:message key="institution.nameUpperCase" bundle="GLOBAL_RESOURCES"/></b><br/>
                       &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
                       <hr size="1">
                     </td>

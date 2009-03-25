@@ -11,7 +11,7 @@
 
 		<logic:notPresent name="<%= SessionConstants.DIPLOMA%>">
 	
-	  		<p>O COORDENADOR DO NÚCLEO DE PÓS-GRADUAÇÃO E FORMAÇÃO CONTÍNUA DO INSTITUTO SUPERIOR TÉCNICO DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do(a) interessado(a), que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
+	  		<p>O COORDENADOR DO NÚCLEO DE PÓS-GRADUAÇÃO E FORMAÇÃO CONTÍNUA DO <bean:message key="institution.nameUpperCase" bundle="GLOBAL_RESOURCES"/> DA UNIVERSIDADE TÉCNICA DE LISBOA CERTIFICA, a requerimento do(a) interessado(a), que do seu processo individual organizado e arquivado nesta secretaria, consta que:<br />
 			<%--Certificate --%>			
 			<jsp:include page="./certificateTemplate1.jsp" flush="true" />
 				<logic:present name="<%= SessionConstants.MATRICULA%>">

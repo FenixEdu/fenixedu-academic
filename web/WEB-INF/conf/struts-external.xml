@@ -146,6 +146,7 @@
   <!-- ========== Controller Configuration ================================ -->
   
    <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
+   <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
    <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false" />
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
 
