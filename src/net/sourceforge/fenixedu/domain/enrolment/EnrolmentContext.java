@@ -141,6 +141,10 @@ public class EnrolmentContext {
 	return getCurricularRuleLevel() == CurricularRuleLevel.STANDALONE_ENROLMENT;
     }
 
+    public boolean isEnrolmentWithoutRules() {
+	return getCurricularRuleLevel() == CurricularRuleLevel.ENROLMENT_NO_RULES;
+    }
+
     @SuppressWarnings("unchecked")
     static public EnrolmentContext createForVerifyWithRules(final Person person,
 	    final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester) {

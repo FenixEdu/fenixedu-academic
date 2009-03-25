@@ -18,9 +18,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -677,18 +675,13 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
 		final StudentCurricularPlan studentCurricularPlan, int depth) {
 
-	    if (studentCurricularPlan.hasConcludedAnyInternalCycle() && !hasManagerOrAcademicOfficeRole()) {
+	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
 		return;
 	    }
 
 	    for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
 		generateCycleCourseGroupToEnrol(container, cycleType, depth + getWidthDecreasePerLevel());
 	    }
-	}
-
-	private boolean hasManagerOrAcademicOfficeRole() {
-	    return AccessControl.getPerson().hasRole(RoleType.MANAGER)
-		    || AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	}
 
 	private void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {

@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -17,10 +17,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -98,15 +100,19 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	final CurricularCourse curricularCourse = getOptionalCurricularCourse(request);
 
 	try {
-	    CreateExtraEnrolment.run(studentCurricularPlan, executionPeriod,
-		    curricularCourse, groupType);
+	    CreateExtraEnrolment.run(studentCurricularPlan, executionPeriod, curricularCourse, groupType);
 
-	} catch (EnrollmentDomainException ex) {
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage("error", request, "error.notAuthorized");
+	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
+	    return mapping.findForward("chooseExtraEnrolment");
+
+	} catch (final EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
 	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
 
-	} catch (DomainException e) {
+	} catch (final DomainException e) {
 	    addActionMessage("error", request, e.getMessage(), e.getArgs());
 	    setExtraEnrolmentInformation(request, studentCurricularPlan, executionPeriod);
 	    return mapping.findForward("chooseExtraEnrolment");
@@ -139,7 +145,15 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	final ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	try {
-	    ExecuteFactoryMethod.run(new Enrolment.DeleteEnrolmentExecutor(enrolment));
+	    studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(Collections
+		    .<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType(), AccessControl.getPerson());
+
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage("error", request, "error.notAuthorized");
+
+	} catch (EnrollmentDomainException ex) {
+	    addRuleResultMessagesToActionMessages("e", request, ex.getFalseResult());
+
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	}
@@ -172,4 +186,5 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 
     abstract protected String getActionName();
 
+    abstract protected NoCourseGroupCurriculumGroupType getGroupType();
 }

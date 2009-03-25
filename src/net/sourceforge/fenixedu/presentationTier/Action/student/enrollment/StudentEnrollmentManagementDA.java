@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -250,8 +251,12 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 		    cycleEnrolmentBean.getExecutionPeriod());
 
 	    request.setAttribute("registration", registration);
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage(request, "error.NotAuthorized");
+	    request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+	    return mapping.findForward("showAffinityToEnrol");
 
-	} catch (DomainException e) {
+	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
 	    return mapping.findForward("showAffinityToEnrol");

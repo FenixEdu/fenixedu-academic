@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentPropaeudeuticEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -25,6 +26,11 @@ public class StudentPropaeudeuticEnrolmensDA extends NoCourseGroupCurriculumGrou
     @Override
     protected String getActionName() {
 	return "studentPropaeudeuticEnrolments";
+    }
+
+    @Override
+    protected NoCourseGroupCurriculumGroupType getGroupType() {
+	return NoCourseGroupCurriculumGroupType.PROPAEDEUTICS;
     }
 
 }

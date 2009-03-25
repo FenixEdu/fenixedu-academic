@@ -10,29 +10,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class RegistrationPredicates {
 
-    public static final AccessControlPredicate<Registration> transitToBolonha = new AccessControlPredicate<Registration>() {
+    public static final AccessControlPredicate<Registration> TRANSIT_TO_BOLONHA = new AccessControlPredicate<Registration>() {
 	public boolean evaluate(final Registration registration) {
 	    return AccessControl.getPerson().hasRole(RoleType.MANAGER);
 	};
-    };
-
-    public static final AccessControlPredicate<Registration> updateRegistration = new AccessControlPredicate<Registration>() {
-
-	@Override
-	public boolean evaluate(Registration registration) {
-	    if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || !registration.hasConcluded()) {
-	    }
-	    return true;
-
-	    // AdministrativeOfficePermission permission =
-	    // getPermissionByType(AccessControl.getPerson(),
-	    // PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION);
-	    //
-	    // return permission != null
-	    // && getPermissionByType(AccessControl.getPerson(),
-	    // PermissionType.UPDATE_REGISTRATION_WITH_CONCLUSION)
-	    // .getPermissionMembersGroup().isMember(AccessControl.getPerson());
-	}
     };
 
     public static final AccessControlPredicate<Registration> MANAGE_CONCLUSION_PROCESS = new AccessControlPredicate<Registration>() {
@@ -73,12 +54,7 @@ public class RegistrationPredicates {
 
     public static final AccessControlPredicate<Registration> EDIT_CANDIDACY_INFORMATION = new AccessControlPredicate<Registration>() {
 	public boolean evaluate(final Registration registration) {
-	    if (AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
-		return true;
-	    }
-
-	    return false;
-
+	    return AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	};
     };
 

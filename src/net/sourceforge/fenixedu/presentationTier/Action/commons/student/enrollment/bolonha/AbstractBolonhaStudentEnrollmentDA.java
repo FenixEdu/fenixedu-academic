@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -202,7 +203,15 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	try {
 	    EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean);
-	} catch (DomainException e) {
+
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage(request, "error.NotAuthorized");
+
+	    request.setAttribute("withRules", request.getParameter("withRules"));
+	    request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+	    return mapping.findForward("chooseCycleCourseGroupToEnrol");
+
+	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 
 	    request.setAttribute("withRules", request.getParameter("withRules"));

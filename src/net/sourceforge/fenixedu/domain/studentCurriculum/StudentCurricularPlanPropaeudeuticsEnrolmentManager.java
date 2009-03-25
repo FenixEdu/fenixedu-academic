@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -24,9 +25,21 @@ public class StudentCurricularPlanPropaeudeuticsEnrolmentManager extends Student
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	if (!(isResponsiblePersonManager() || isResponsiblePersonAcademicAdminOffice())) {
+	if (isResponsiblePersonManager()) {
+	    return;
+	}
+
+	if (!isResponsiblePersonAcademicAdminOffice()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
+
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
+	if (permission != null && permission.isAppliable(getRegistration())) {
+	    if (!permission.isMember(getResponsiblePerson())) {
+		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
+	    }
+	}
+
 	checkEnrolingDegreeModules();
     }
 
@@ -87,7 +100,10 @@ public class StudentCurricularPlanPropaeudeuticsEnrolmentManager extends Student
 
     @Override
     protected void unEnrol() {
-	// nothing to be done
+	for (final CurriculumModule curriculumModule : enrolmentContext.getToRemove()) {
+	    if (curriculumModule.isLeaf()) {
+		curriculumModule.delete();
+	    }
+	}
     }
-
 }

@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
@@ -20,10 +21,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
-import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolment;
 
 public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurricularPlanEnrolment {
 
@@ -33,12 +30,23 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	if (!(isResponsiblePersonManager() || isResponsiblePersonAcademicAdminOffice())) {
+	if (isResponsiblePersonManager()) {
+	    return;
+	}
+
+	if (!isResponsiblePersonAcademicAdminOffice()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
 
 	if (getRegistration().isPartialRegime(getExecutionYear())) {
 	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
+	}
+
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
+	if (permission != null && permission.isAppliable(getRegistration())) {
+	    if (!permission.isMember(getResponsiblePerson())) {
+		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
+	    }
 	}
 
 	checkEnrolingDegreeModules();

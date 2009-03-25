@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -2030,7 +2032,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBolonhaDegree() ? getRoot().getDegreeModulesToEvaluate(executionSemester) : Collections.EMPTY_SET;
     }
 
-    @Checked("StudentCurricularPlanPredicates.enrol")
+    @Checked("StudentCurricularPlanPredicates.ENROL")
     final public RuleResult enrol(final Person responsiblePerson, final ExecutionSemester executionSemester,
 	    final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
 	    final CurricularRuleLevel curricularRuleLevel) {
@@ -2047,7 +2049,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return enrol(responsiblePerson, executionSemester, Collections.EMPTY_SET, Collections.EMPTY_LIST, curricularRuleLevel);
     }
 
-    @Checked("StudentCurricularPlanPredicates.enrolInAffinityCycle")
+    @Checked("StudentCurricularPlanPredicates.ENROL_IN_AFFINITY_CYCLE")
     public void enrolInAffinityCycle(final CycleCourseGroup cycleCourseGroup, final ExecutionSemester executionSemester) {
 	if (getDegreeCurricularPlan().getRoot().hasDegreeModule(cycleCourseGroup)) {
 	    new CycleCurriculumGroup(getRoot(), cycleCourseGroup, executionSemester);
@@ -2245,9 +2247,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		cycleType);
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Credits createNewCreditsDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionSemester executionSemester) {
+
+	checkPermission(courseGroup, curriculumGroup, dismissals);
+
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
 	    if (dismissals != null) {
@@ -2285,9 +2291,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    Grade givenGrade, ExecutionSemester executionSemester) {
+
+	checkPermission(courseGroup, curriculumGroup, dismissals);
+
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
 	    if (dismissals != null) {
@@ -2304,9 +2314,45 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
+    private void checkPermission(final CourseGroup courseGroup, final CurriculumGroup curriculumGroup,
+	    final Collection<SelectedCurricularCourse> dismissals) {
+
+	final Person person = AccessControl.getPerson();
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
+
+	if (permission != null) {
+	    if (courseGroup != null) {
+		final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
+		if (group != null && permission.isAppliable(group.getParentCycleCurriculumGroup())
+			&& !permission.isMember(person)) {
+		    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+		}
+	    } else if (curriculumGroup != null) {
+		if (permission.isAppliable(curriculumGroup.getParentCycleCurriculumGroup()) && !permission.isMember(person)) {
+		    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+		}
+	    } else {
+		for (final SelectedCurricularCourse selected : dismissals) {
+		    if (permission.isAppliable(selected.getCurriculumGroup().getParentCycleCurriculumGroup())
+			    && !permission.isMember(person)) {
+			throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+		    }
+		}
+	    }
+
+	    if (permission.isAppliable(this) && !permission.isMember(person)) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+	    }
+	}
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Equivalence createNewSubstitutionDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionSemester executionSemester) {
+
+	checkPermission(courseGroup, curriculumGroup, dismissals);
+
 	if (courseGroup != null) {
 	    Collection<CurricularCourse> noEnrolCurricularCourse = new ArrayList<CurricularCourse>();
 	    if (dismissals != null) {
@@ -2320,11 +2366,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	} else {
 	    return new Substitution(this, dismissals, enrolments, executionSemester);
 	}
-    }
-
-    final public Substitution createSubstitution(final Collection<SelectedCurricularCourse> dismissals,
-	    final Collection<IEnrolment> enrolments, ExecutionSemester executionSemester) {
-	return new Substitution(this, dismissals, enrolments, executionSemester);
     }
 
     final public Set<DegreeModule> getAllDegreeModules() {
@@ -2463,24 +2504,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return hasRegistration() && getRegistration().getLastStudentCurricularPlan() == this;
     }
 
-    @Checked("StudentCurricularPlanPredicates.moveCurriculumLines")
+    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES")
     public void moveCurriculumLines(final Person responsiblePerson, final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	boolean runRules = false;
 
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsiblePerson);
+
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
-	    final CurriculumGroup curriculumGroup = curriculumLineLocationBean.getCurriculumGroup();
+	    final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
 	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
 
-	    if (curriculumLine.getCurriculumGroup() != curriculumGroup) {
-		if (!responsiblePerson.hasRole(RoleType.MANAGER) && !curriculumGroup.canAdd(curriculumLine)) {
+	    if (curriculumLine.getCurriculumGroup() != destination) {
+
+		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
+
+		if (!responsiblePerson.hasRole(RoleType.MANAGER) && !destination.canAdd(curriculumLine)) {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
-			    curriculumLine.getFullPath(), curriculumGroup.getFullPath());
+			    curriculumLine.getFullPath(), destination.getFullPath());
 		}
-		if (!curriculumGroup.isExtraCurriculum()) {
+		if (!destination.isExtraCurriculum()) {
 		    runRules = true;
 		}
 	    }
-	    curriculumLine.setCurriculumGroup(curriculumGroup);
+
+	    curriculumLine.setCurriculumGroup(destination);
 	    if (!curriculumLine.hasCreatedBy()) {
 		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
 	    }
@@ -2493,6 +2540,27 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionSemester),
 		    executionSemester);
 	}
+    }
+
+    private void checkPermission(final Person responsiblePerson, final AdministrativeOfficePermission permission,
+	    final CurriculumLineLocationBean bean) {
+
+	if (permission != null && permission.isAppliable(bean.getCurriculumGroup().getParentCycleCurriculumGroup())) {
+	    if (!permission.isMember(responsiblePerson)) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
+	    }
+	}
+
+	if (permission != null && permission.isAppliable(bean.getCurriculumLine().getParentCycleCurriculumGroup())) {
+	    if (!permission.isMember(responsiblePerson)) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
+	    }
+	}
+    }
+
+    private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
+	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+		person.getEmployeeCampus());
     }
 
     @SuppressWarnings("unchecked")
@@ -2666,6 +2734,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public OptionalEnrolment convertEnrolmentToOptionalEnrolment(final Enrolment enrolment,
 	    final CurriculumGroup curriculumGroup, final OptionalCurricularCourse curricularCourse) {
 
+	final Person person = AccessControl.getPerson();
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
+	if (permission != null && permission.isAppliable(enrolment.getParentCycleCurriculumGroup())) {
+	    if (!permission.isMember(person)) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
+	    }
+	}
+
 	if (!hasEnrolments(enrolment)) {
 	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
 	}
@@ -2697,6 +2773,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Enrolment convertOptionalEnrolmentToEnrolment(final OptionalEnrolment enrolment, final CurriculumGroup curriculumGroup) {
+
+	final Person person = AccessControl.getPerson();
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
+	if (permission != null && permission.isAppliable(enrolment.getParentCycleCurriculumGroup())) {
+	    if (!permission.isMember(person)) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
+	    }
+	}
+
 	if (!hasEnrolments(enrolment)) {
 	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
 	}

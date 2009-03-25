@@ -6190,6 +6190,12 @@ class accessControl.academicAdminOffice.AdministrativeOfficePermission extends D
 	Group permissionMembersGroup;
 }
 
+	class accessControl.academicAdminOffice.GenericAdministrativeOfficePermission extends accessControl.academicAdminOffice.AdministrativeOfficePermission {
+	}
+
+	class accessControl.academicAdminOffice.UpdateRegistrationAfterConclusionPermission extends accessControl.academicAdminOffice.AdministrativeOfficePermission {
+	}
+
 /*
  * Relations definitions
  * 

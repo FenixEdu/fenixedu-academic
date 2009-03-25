@@ -10,15 +10,14 @@ import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AdministrativeOfficePermission extends AdministrativeOfficePermission_Base {
+abstract public class AdministrativeOfficePermission extends AdministrativeOfficePermission_Base {
 
-    private AdministrativeOfficePermission() {
+    protected AdministrativeOfficePermission() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    AdministrativeOfficePermission(final AdministrativeOfficePermissionGroup group, final PermissionType type) {
-	this();
+    protected void init(final AdministrativeOfficePermissionGroup group, final PermissionType type) {
 	setAdministrativeOfficePermissionGroup(group);
 	setPermissionType(type);
 	setPermissionMembersGroup(new FixedSetGroup());
@@ -37,14 +36,17 @@ public class AdministrativeOfficePermission extends AdministrativeOfficePermissi
     public boolean isMember(final Person person) {
 	return getPermissionMembersGroup().isMember(person);
     }
-    
+
     public boolean isAppliable(final DomainObject obj) {
 	return true;
     }
-    
-    final public boolean isAppliable(final Person person, final DomainObject obj) {
-	return isMember(person) && isAppliable(obj);
+
+    static AdministrativeOfficePermission create(final AdministrativeOfficePermissionGroup group, final PermissionType type) {
+	switch (type) {
+	case UPDATE_REGISTRATION_AFTER_CONCLUSION:
+	    return new UpdateRegistrationAfterConclusionPermission(group, type);
+	default:
+	    return new GenericAdministrativeOfficePermission(group, type);
+	}
     }
-
-
 }

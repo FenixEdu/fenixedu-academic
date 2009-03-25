@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
+import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -22,13 +22,12 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException {
 
 	final Integer scpID = Integer.valueOf(getIntegerFromRequest(request, "scpID"));
-	final StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
+	final StudentCurricularPlan plan = rootDomainObject.readStudentCurricularPlanByOID(scpID);
 	StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
-	if (studentCurricularPlan != null) {
-	    studentEnrolmentBean.setStudentCurricularPlan(studentCurricularPlan);
+	if (plan != null) {
+	    studentEnrolmentBean.setStudentCurricularPlan(plan);
 	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
-	    studentEnrolmentBean.setHasUpdateRegistrationAccess(RegistrationPredicates.updateRegistration
-		    .evaluate(studentCurricularPlan.getRegistration()));
+	    studentEnrolmentBean.canEnrolWithoutRules(StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(plan));
 	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();

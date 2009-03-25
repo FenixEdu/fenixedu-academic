@@ -21,7 +21,7 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
     private List<DomainReference<CurriculumModule>> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
-    private Boolean hasUpdateRegistrationAccess = Boolean.TRUE;
+    private boolean canEnrolWithoutRules = false;
 
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
@@ -105,12 +105,12 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 	return getExecutionPeriod().getExecutionYear();
     }
 
-    public Boolean getHasUpdateRegistrationAccess() {
-        return hasUpdateRegistrationAccess;
+    public boolean getCanEnrolWithoutRules() {
+	return canEnrolWithoutRules;
     }
 
-    public void setHasUpdateRegistrationAccess(Boolean hasUpdateRegistrationAccess) {
-        this.hasUpdateRegistrationAccess = hasUpdateRegistrationAccess;
+    public void canEnrolWithoutRules(boolean value) {
+	canEnrolWithoutRules = value;
     }
-    
+
 }

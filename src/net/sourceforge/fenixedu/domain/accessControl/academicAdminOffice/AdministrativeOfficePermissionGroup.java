@@ -24,7 +24,7 @@ public class AdministrativeOfficePermissionGroup extends AdministrativeOfficePer
 	    throw new DomainException("error.AdministrativeOfficePermissionGroup.already.has.permission.with.type",
 		    permissionType.getLocalizedName());
 	}
-	new AdministrativeOfficePermission(this, permissionType);
+	AdministrativeOfficePermission.create(this, permissionType);
     }
 
     public boolean hasPermission(final PermissionType permissionType) {

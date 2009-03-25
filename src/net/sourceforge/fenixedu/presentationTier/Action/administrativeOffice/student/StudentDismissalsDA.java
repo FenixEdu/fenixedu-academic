@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -212,12 +213,15 @@ public class StudentDismissalsDA extends FenixDispatchAction {
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
+	final String[] creditsIDs = ((DynaActionForm) form).getStrings("creditsToDelete");
 	final StudentCurricularPlan studentCurricularPlan = getSCP(request);
 
 	try {
 	    executeService("DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
-	} catch (DomainException e) {
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage(request, "error.notAuthorized");
+	    
+	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 

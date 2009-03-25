@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DismissalCurriculumModuleWrapper;
@@ -80,15 +79,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	if (curriculumGroup != null) {
 	    return curriculumGroup;
 	}
-	return getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
-    }
-
-    static private NoCourseGroupCurriculumGroup getOrCreateExtraCurricularCurriculumGroup(
-	    final StudentCurricularPlan studentCurricularPlan) {
-	final NoCourseGroupCurriculumGroup result = studentCurricularPlan
-		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
-	return (result == null) ? studentCurricularPlan
-		.createNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR) : result;
+	throw new DomainException("error.studentCurricularPlan.doesnot.have.courseGroup", courseGroup.getName());
     }
 
     static protected Dismissal createNewDismissal(final Credits credits, final StudentCurricularPlan studentCurricularPlan,
@@ -100,26 +91,6 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    final StudentCurricularPlan studentCurricularPlan, CurriculumGroup curriculumGroup,
 	    final OptionalCurricularCourse optionalCurricularCourse, final Double ectsCredits) {
 	return new OptionalDismissal(credits, curriculumGroup, optionalCurricularCourse, ectsCredits);
-    }
-
-    static protected OptionalDismissal createNewOptionalDismissal(final Credits credits,
-	    final StudentCurricularPlan studentCurricularPlan, final OptionalCurricularCourse optionalCurricularCourse,
-	    final Double ectsCredits) {
-	return new OptionalDismissal(credits, findCurriculumGroupForCurricularCourse(studentCurricularPlan,
-		optionalCurricularCourse), optionalCurricularCourse, ectsCredits);
-    }
-
-    static private CurriculumGroup findCurriculumGroupForCurricularCourse(final StudentCurricularPlan studentCurricularPlan,
-	    final CurricularCourse curricularCourse) {
-	final Set<CurriculumGroup> curriculumGroups = new HashSet<CurriculumGroup>(curricularCourse.getParentContextsCount());
-	for (final Context context : curricularCourse.getParentContexts()) {
-	    final CurriculumGroup curriculumGroup = studentCurricularPlan.findCurriculumGroupFor(context.getParentCourseGroup());
-	    if (curriculumGroup != null && !curriculumGroup.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
-		curriculumGroups.add(curriculumGroup);
-	    }
-	}
-	return curriculumGroups.size() == 1 ? curriculumGroups.iterator().next()
-		: getOrCreateExtraCurricularCurriculumGroup(studentCurricularPlan);
     }
 
     @Override

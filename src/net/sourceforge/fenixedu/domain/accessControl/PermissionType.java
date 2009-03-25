@@ -29,7 +29,32 @@ public enum PermissionType {
 
     },
 
-    
+    UPDATE_REGISTRATION_AFTER_CONCLUSION() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
+	}
+
+    },
+
+    ENROLMENT_WITHOUT_RULES() {
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
+	}
+    },
+
     MANAGE_MARKSHEETS() {
 	@Override
 	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
@@ -54,7 +79,6 @@ public enum PermissionType {
 	    };
 	}
     },
-    
 
     DISSERTATION_MARKSHEETS() {
 
@@ -63,15 +87,6 @@ public enum PermissionType {
 	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
 	}
     };
-
-    // UPDATE_REGISTRATION_WITH_CONCLUSION() {
-    //
-    // @Override
-    // public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
-    // return Collections.singleton(AdministrativeOfficeType.DEGREE);
-    // }
-    //
-    // };
 
     abstract public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts();
 

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class Credits extends Credits_Base {
 
@@ -188,6 +189,7 @@ public class Credits extends Credits_Base {
 	return null;
     }
 
+    @Checked("CreditsPredicates.DELETE")
     final public void delete() {
 	removeStudentCurricularPlan();
 	removeRootDomainObject();

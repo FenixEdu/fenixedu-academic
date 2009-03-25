@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
@@ -36,6 +37,11 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+	}
+
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
+	if (permission != null) {
+	    checkPermission(permission);
 	}
     }
 
@@ -110,6 +116,16 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 	    getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson().getEmployee(),
 		    getExecutionSemester());
 	}
+    }
+
+    @Override
+    protected boolean isEnrolingInCycle(CycleCurriculumGroup cycle) {
+	for (final IDegreeModuleToEvaluate dmte : enrolmentContext.getDegreeModulesToEvaluate()) {
+	    if (dmte.isEnroled() && cycle.hasCurriculumModule(dmte.getCurriculumGroup())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

@@ -3402,7 +3402,7 @@ public class Registration extends Registration_Base {
 
     }
 
-    @Checked("RegistrationPredicates.transitToBolonha")
+    @Checked("RegistrationPredicates.TRANSIT_TO_BOLONHA")
     public void transitToBolonha(final Person person, final DateTime when) {
 
 	if (!isActive()) {

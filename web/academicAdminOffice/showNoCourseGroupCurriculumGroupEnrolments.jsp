@@ -10,10 +10,15 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
+</html:messages>
+<html:messages id="error" message="true" bundle="APPLICATION_RESOURCES" property="enrolmentError" >
+	<br/>
+	<span class="error"><!-- Error messages go here --><bean:write name="error" /></span>
+	<br/>
 </html:messages>
 
 <fr:form action='<%= "/" + actionName + ".do" %>'>
