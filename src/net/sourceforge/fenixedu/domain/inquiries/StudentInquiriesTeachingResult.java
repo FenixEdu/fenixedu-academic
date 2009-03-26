@@ -36,8 +36,6 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
 	int unsatisfactoryResultsAssiduityIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAssiduityHeader(),
 		headersSplitted);
-	int unsatisfactoryResultsAuditableIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsAuditableHeader(),
-		headersSplitted);
 	int unsatisfactoryResultsPedagogicalCapacityIndex = getHeaderIndex(resultsBean
 		.getUnsatisfactoryResultsPedagogicalCapacityHeader(), headersSplitted);
 	int unsatisfactoryResultsPresencialLearningIndex = getHeaderIndex(resultsBean
@@ -69,6 +67,10 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    }
 
 	    Professorship professorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
+	    if (professorship == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.professorshipNotFound",
+			columns[teacherHeaderIndex], columns[executionCourseHeaderIndex]);
+	    }
 
 	    final ShiftType shiftType = ShiftType.valueOf(columns[shiftTypeHeaderIndex]);
 	    StudentInquiriesTeachingResult studentInquiriesTeachingResult = professorship.getStudentInquiriesTeachingResult(
@@ -88,8 +90,6 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
 	    studentInquiriesTeachingResult
 		    .setUnsatisfactoryResultsAssiduity(fieldToBoolean(columns[unsatisfactoryResultsAssiduityIndex]));
-	    studentInquiriesTeachingResult
-		    .setUnsatisfactoryResultsAuditable(fieldToBoolean(columns[unsatisfactoryResultsAuditableIndex]));
 	    studentInquiriesTeachingResult
 		    .setUnsatisfactoryResultsPedagogicalCapacity(fieldToBoolean(columns[unsatisfactoryResultsPedagogicalCapacityIndex]));
 	    studentInquiriesTeachingResult
@@ -116,9 +116,8 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
 
     public boolean isUnsatisfactory() {
-	return getUnsatisfactoryResultsAssiduity() || getUnsatisfactoryResultsAuditable()
-		|| getUnsatisfactoryResultsPedagogicalCapacity() || getUnsatisfactoryResultsPresencialLearning()
-		|| getUnsatisfactoryResultsStudentInteraction();
+	return getUnsatisfactoryResultsAssiduity() || getUnsatisfactoryResultsPedagogicalCapacity()
+		|| getUnsatisfactoryResultsPresencialLearning() || getUnsatisfactoryResultsStudentInteraction();
     }
 
     @Override
