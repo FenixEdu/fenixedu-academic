@@ -92,10 +92,10 @@ public class Researcher extends Researcher_Base {
 	    
 	    for(String eee : dtd) {
 		if(eee.trim().length() > 0) {
-		    sb.append(eee).append(" ");
+		    sb.append(eee.trim()).append(" ");
 		}
 	    }
-	    
+	    sb.deleteCharAt(sb.length() - 1);
 	    sb.append(",");
 	}
 	
