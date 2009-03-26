@@ -56,7 +56,7 @@ public class PermissionManagementDA extends FenixDispatchAction {
 	final AdministrativeOfficePermission permission = getOrCreatePermission(request);
 
 	final List<PermissionMemberBean> permissionMembers = new ArrayList<PermissionMemberBean>();
-	for (final Employee employee : person.getEmployee().getCurrentWorkingPlace().getAllWorkingEmployees()) {
+	for (final Employee employee : person.getEmployee().getCurrentWorkingPlace().getAllCurrentActiveWorkingEmployees()) {
 	    permissionMembers.add(new PermissionMemberBean(permission, employee.getPerson()));
 	}
 
