@@ -53,7 +53,9 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	setContentType(contentType);
 	setPhotoType(photoType);
 	new PhotographContent(this, PhotographContentSize.DOC_SIZE, compressed);
-	new PhotographContent(this, PhotographContentSize.RAW, content);
+	if (content != null) {
+	    new PhotographContent(this, PhotographContentSize.RAW, content);
+	}
     }
 
     public Photograph(ContentType contentType, ByteArray content, PhotoType photoType) {
