@@ -2559,8 +2559,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
-	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-		person.getEmployeeCampus());
+	final AdministrativeOffice office = person.getEmployeeAdministrativeOffice();
+	return office != null ? office.getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION, person
+		.getEmployeeCampus()) : null;
     }
 
     @SuppressWarnings("unchecked")
