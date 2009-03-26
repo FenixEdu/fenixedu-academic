@@ -154,6 +154,7 @@
 			<li class="navheader">
 				<bean:message key="link.coordinator.student"/>
 			</li>
+			<%--
 			<li>
 				<bean:define id="link21">/sendMail.do?method=prepare&students=true&degreeCurricularPlanID=
 		      		</bean:define>
@@ -162,7 +163,8 @@
 		 				</bean:define> 	
 				<html:link page="<%= pageContext.findAttribute("listStudentsForCoordinator").toString() %>">
 				<bean:message key="link.sendEmailToAllStudents" /></html:link>
-			</li>			
+			</li>
+			--%>			
 			<li><span>Listagens</span>
 				<ul>
 					<li>
@@ -236,14 +238,15 @@
 				<html:link page="<%= "/students.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;executionDegreeId=" + executionDegreeID %>">
 				    <bean:message key="list.students"/>
 				</html:link>			
-			</li>			
-			<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
+			</li>
+						
+			<%--<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 				<li>
 					<html:link page="<%= "/sendMail.do?method=prepare&amp;students=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="sendMail.students"/>
 					</html:link>			
 				</li>
-			</logic:equal>
+			</logic:equal>--%>
 				<li>
 					<html:link page="<%= "/weeklyWorkLoad.do?method=prepare&amp;page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    <bean:message key="link.weekly.work.load"/>
