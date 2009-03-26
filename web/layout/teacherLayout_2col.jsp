@@ -41,10 +41,6 @@
 		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</h1>
 
-	<%--
-	<tiles:getAsString name="serviceName" />
-	--%>
-
 	<tiles:insert page="/commons/headerButtons.jsp" />
 	<p id="user">
 		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />

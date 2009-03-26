@@ -25,7 +25,7 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 
-<title><tiles:getAsString name="title" ignore="true" /></title>
+<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></title>
 <%-- TITLE --%>
 </head>
 
