@@ -113,7 +113,6 @@
 	<slot name="keyTeacherHeader" key="label.studentInquiry.uploadTeachingResults.keyTeacherHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="shiftTypeHeader" key="label.studentInquiry.uploadTeachingResults.shiftTypeHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
 	<slot name="unsatisfactoryResultsAssiduityHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsAssiduityHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="unsatisfactoryResultsAuditableHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsAuditableHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsPedagogicalCapacityHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsPedagogicalCapacityHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsPresencialLearningHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsPresencialLearningHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsStudentInteractionHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsStudentInteractionHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
