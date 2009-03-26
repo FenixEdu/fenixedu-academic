@@ -133,7 +133,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	} else if (getRequestParameter(SessionConstants.ACADEMIC_INTERVAL) != null) {
 	    String academicIntervalStr = getRequestParameter(SessionConstants.ACADEMIC_INTERVAL);
 	    if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
-		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
+		final String academicIntervalStrArg = academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-", "_") : academicIntervalStr;
+		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStrArg);
 	    }
 	}
 	if (academicInterval == null) {
@@ -143,7 +144,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public String getAcademicIntervalEscapeFriendly() {
-	return getAcademicInterval().replaceAll(":", "-");
+	return getAcademicInterval().replaceAll("_", "-");
     }
 
     public void setAcademicInterval(String academicInterval) {

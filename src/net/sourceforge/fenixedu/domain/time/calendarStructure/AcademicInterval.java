@@ -21,7 +21,9 @@ import org.joda.time.base.AbstractInterval;
 
 public class AcademicInterval extends AbstractInterval implements Serializable {
 
-    private static final String RESUMED_SEPARATOR = ":";
+    private static final String RESUMED_SEPARATOR = "_";
+
+    private static final String FULL_SEPARATOR = ":";
 
     private static final String NAME_SEPARATOR = " - ";
 
@@ -205,12 +207,12 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public String getRepresentationInStringFormat() {
-	return getEntryClassName() + RESUMED_SEPARATOR + getEntryIdInternal() + RESUMED_SEPARATOR
+	return getEntryClassName() + FULL_SEPARATOR + getEntryIdInternal() + FULL_SEPARATOR
 		+ getAcademicCalendarIdInternal();
     }
 
     public static AcademicInterval getAcademicIntervalFromString(String representationInStringFormat) {
-	String[] split = representationInStringFormat.split(RESUMED_SEPARATOR);
+	String[] split = representationInStringFormat.split(FULL_SEPARATOR);
 	String entryClassName = split[0];
 	Integer entryIdInternal = Integer.valueOf(split[1]);
 	Integer academicCalendarIdInternal = Integer.valueOf(split[2]);
