@@ -84,6 +84,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    studentInquiriesTeachingResult.setRawValues(row);
 	    studentInquiriesTeachingResult.setHeaders(headers);
 	    studentInquiriesTeachingResult.setUploadDateTime(new DateTime());
+	    studentInquiriesTeachingResult.setResultsDate(resultsBean.getResultsDate());
 
 	    studentInquiriesTeachingResult
 		    .setUnsatisfactoryResultsAssiduity(fieldToBoolean(columns[unsatisfactoryResultsAssiduityIndex]));

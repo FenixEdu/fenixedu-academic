@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.InputStream;
 
+import org.joda.time.LocalDate;
+
 abstract public class UploadStudentInquiriesResultsBean {
 
     protected transient InputStream file;
@@ -9,6 +11,8 @@ abstract public class UploadStudentInquiriesResultsBean {
     protected String keyExecutionCourseHeader;
 
     protected String keyExecutionDegreeHeader;
+
+    protected LocalDate resultsDate;
 
     public UploadStudentInquiriesResultsBean() {
 	super();
@@ -36,6 +40,14 @@ abstract public class UploadStudentInquiriesResultsBean {
 
     public void setKeyExecutionDegreeHeader(String keyExecutionDegreeHeader) {
 	this.keyExecutionDegreeHeader = keyExecutionDegreeHeader;
+    }
+
+    public LocalDate getResultsDate() {
+	return resultsDate;
+    }
+
+    public void setResultsDate(LocalDate resultsDate) {
+	this.resultsDate = resultsDate;
     }
 
 }

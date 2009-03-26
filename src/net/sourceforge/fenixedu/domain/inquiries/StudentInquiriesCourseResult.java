@@ -62,6 +62,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    studentInquiriesCourseResult.setRawValues(row);
 	    studentInquiriesCourseResult.setHeaders(headers);
 	    studentInquiriesCourseResult.setUploadDateTime(new DateTime());
+	    studentInquiriesCourseResult.setResultsDate(resultsBean.getResultsDate());
 	    studentInquiriesCourseResult
 		    .setUnsatisfactoryResultsCUEvaluation(fieldToBoolean(columns[unsatisfactoryResultsCUEvaluationIndex]));
 	    studentInquiriesCourseResult

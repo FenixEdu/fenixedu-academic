@@ -3227,6 +3227,7 @@ class DomainObject {
 		String headers;
 		String rawValues;
 		DateTime uploadDateTime;
+		LocalDate resultsDate;
 		
 		ShiftType shiftType;
 		Integer numberOfAnswers;
@@ -3369,6 +3370,7 @@ class DomainObject {
 		String headers;
 		String rawValues;
 		DateTime uploadDateTime;
+		LocalDate resultsDate;
 			
 		Integer numberOfEnrolled;
 		Double evaluatedRatio;
@@ -5489,7 +5491,7 @@ class DomainObject {
 	class util.email.ConcreteReplyTo extends util.email.ReplyTo {
 		String replyToAddress;
 	}
-	
+
 	class util.email.PersonReplyTo extends util.email.ReplyTo { }
 	
 	class util.email.ExecutionCourseReplyTo extends util.email.ReplyTo { }
@@ -5502,9 +5504,9 @@ class DomainObject {
 		Group members;
 	}
 
-	class util.email.UnitBasedSender extends util.email.Sender {
-	}
-	
+		class util.email.UnitBasedSender extends util.email.Sender {
+		}
+
 	class util.email.ExecutionCourseSender extends util.email.Sender {
 	}
 
