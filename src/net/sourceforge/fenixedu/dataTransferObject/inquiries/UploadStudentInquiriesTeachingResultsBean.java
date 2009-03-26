@@ -17,8 +17,6 @@ public class UploadStudentInquiriesTeachingResultsBean extends UploadStudentInqu
 
     private String unsatisfactoryResultsAssiduityHeader;
 
-    private String unsatisfactoryResultsAuditableHeader;
-
     private String unsatisfactoryResultsPedagogicalCapacityHeader;
 
     private String unsatisfactoryResultsPresencialLearningHeader;
@@ -49,14 +47,6 @@ public class UploadStudentInquiriesTeachingResultsBean extends UploadStudentInqu
 
     public void setUnsatisfactoryResultsAssiduityHeader(String unsatisfactoryResultsAssiduityHeader) {
 	this.unsatisfactoryResultsAssiduityHeader = unsatisfactoryResultsAssiduityHeader;
-    }
-
-    public String getUnsatisfactoryResultsAuditableHeader() {
-	return unsatisfactoryResultsAuditableHeader;
-    }
-
-    public void setUnsatisfactoryResultsAuditableHeader(String unsatisfactoryResultsAuditableHeader) {
-	this.unsatisfactoryResultsAuditableHeader = unsatisfactoryResultsAuditableHeader;
     }
 
     public String getUnsatisfactoryResultsPedagogicalCapacityHeader() {
