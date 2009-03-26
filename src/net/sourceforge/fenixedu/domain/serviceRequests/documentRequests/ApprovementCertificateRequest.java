@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
+import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -204,10 +206,35 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
-	reportApprovedCurriculumLines(result, getRegistration().getExtraCurricularCurriculumLines());
+	reportApprovedCurriculumLines(result, calculateExtraCurriculumLines());
 	reportExternalGroups(result);
 
 	return result;
+    }
+
+    private Collection<CurriculumLine> calculateExtraCurriculumLines() {
+	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+
+	for (final CurriculumLine line : getRegistration().getExtraCurricularCurriculumLines()) {
+	    if (line.isEnrolment()) {
+		if (!isSourceOfAnyCreditsInCurriculum((Enrolment) line)) {
+		    result.add(line);
+		}
+	    } else {
+		result.add(line);
+	    }
+	}
+
+	return result;
+    }
+
+    private boolean isSourceOfAnyCreditsInCurriculum(final Enrolment enrolment) {
+	for (final InternalEnrolmentWrapper enrolmentWrapper : enrolment.getEnrolmentWrappers()) {
+	    if (enrolmentWrapper.getCredits().hasAnyDismissalInCurriculum()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {

@@ -240,4 +240,13 @@ public class Credits extends Credits_Base {
 	return Collections.emptyList();
     }
 
+    public boolean hasAnyDismissalInCurriculum() {
+	for (final Dismissal dismissal : getDismissalsSet()) {
+	    if (!dismissal.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
