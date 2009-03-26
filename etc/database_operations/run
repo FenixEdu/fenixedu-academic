@@ -44,4 +44,3 @@ function executeWithTempFile() {
 }
 
 
-execute "Add Sender to Degree" EmailCoordinatorSender.sql
