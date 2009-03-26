@@ -473,17 +473,6 @@
 
 	  </action>
 	  	  		
- 		<action path="/sendMail"
-            type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.SendEmail"
-            parameter="method"
-            scope="request">
-            
-            <forward name="compose-mail" path="sendMail"/>
-            <forward name="success" path="sendMail"/>
-            <forward name="problem" path="sendMail"/>
-        </action>
-        
-
  	  <!-- Action for the Coordinator to List the Students by CurricularCourse -->
 	  <action path="/listStudentsByCourse"
 		      parameter="method"

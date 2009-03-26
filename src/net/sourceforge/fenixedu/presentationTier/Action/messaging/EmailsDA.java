@@ -132,9 +132,14 @@ public class EmailsDA extends FenixDispatchAction {
 	}
     }
 
+    public static ActionForward sendEmail(HttpServletRequest request, Sender sender) {
+	return sendEmail(request, sender, null);
+    }
+
     public static ActionForward sendEmail(HttpServletRequest request, Sender sender, Recipient recipient) {
 	EmailBean emailBean = new EmailBean();
-	emailBean.setRecipients(Collections.singletonList(recipient));
+	if (recipient != null)
+	    emailBean.setRecipients(Collections.singletonList(recipient));
 	emailBean.setSender(sender);
 	request.setAttribute("emailBean", emailBean);
 	return FORWARD_TO_NEW_EMAIL;

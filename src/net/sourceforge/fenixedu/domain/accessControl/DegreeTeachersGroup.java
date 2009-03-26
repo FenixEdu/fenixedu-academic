@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreeTeachersGroup extends DegreeGroup {
 
@@ -22,6 +23,12 @@ public class DegreeTeachersGroup extends DegreeGroup {
 
     public DegreeTeachersGroup(Degree degree) {
 	super(degree);
+    }
+
+    @Override
+    public String getName() {
+	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
+		getObject().getName());
     }
 
     @Override

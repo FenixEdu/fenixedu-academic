@@ -5509,6 +5509,9 @@ class DomainObject {
 
 	class util.email.ExecutionCourseSender extends util.email.Sender {
 	}
+	
+	class util.email.CoordinatorSender extends util.email.Sender {
+	}
 
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
@@ -7927,7 +7930,12 @@ relation ExecutionCourseSummary {
 
 relation ExecutionCourseSender {
 	ExecutionCourse playsRole course;
-	util.email.Sender playsRole sender;
+	util.email.ExecutionCourseSender playsRole sender;
+}
+
+relation CoordinatorSender {
+	Degree playsRole degree;
+	util.email.CoordinatorSender playsRole sender;
 }
 
 relation ExecutionDegreeCampus {

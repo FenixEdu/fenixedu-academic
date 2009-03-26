@@ -12,7 +12,7 @@ public class PersonReplyTo extends PersonReplyTo_Base {
 
     @Override
     public String getReplyToAddress() {
-	return getPerson().getDefaultEmailAddress().getValue();
+	return getPerson().getEmail();
     }
 
 }

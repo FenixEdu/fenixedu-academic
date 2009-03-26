@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DegreeAllCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
@@ -221,6 +222,7 @@ public class GroupBuilderRegistry {
 		new TeachersWithMarkSheetsToConfirm.Builder());
 	register("teachersWithGradesToSubmit", TeachersWithGradesToSubmit.class, new TeachersWithGradesToSubmit.Builder());
 	register("groupingGroup", GroupingGroup.class, new GroupingGroup.Builder());
+	register("degreeAllCoordinatorsGroup", DegreeAllCoordinatorsGroup.class, new DegreeAllCoordinatorsGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 

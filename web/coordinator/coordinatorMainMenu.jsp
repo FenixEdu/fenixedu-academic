@@ -68,7 +68,7 @@
 		</li>
 		</logic:equal>
         <li>
-            <html:link page="<%="/sendMail.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+            <!-- HAS_CONTEXT --><html:link page="<%="/sendEmail.do?method=sendEmail&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
                 <bean:message key="link.coordinator.sendMail" />
             </html:link>
         </li>
@@ -252,11 +252,6 @@
 		</logic:notEqual>
         
         		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
-        		<li> 
-        			<html:link page="<%= "/sendDegreeMail.do?method=send&degreeId=" + degree.getIdInternal() %>">
-        				 <bean:message key="link.coordinator.sendMail"/>
-        			</html:link>
-        		</li>
         </logic:present>
         <%-- end of isCoordinator logic --%>
         

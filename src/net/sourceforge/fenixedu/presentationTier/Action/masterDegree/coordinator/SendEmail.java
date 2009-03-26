@@ -1,27 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
+import net.sourceforge.fenixedu.domain.util.email.CoordinatorSender;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class SendEmail extends SimpleMailSenderAction {
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-    public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+@Mapping(module = "coordinator", path = "/sendEmail")
+public class SendEmail extends FenixDispatchAction {
+
+    private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
 	String parameter = request.getParameter("degreeCurricularPlanID");
 
 	if (parameter == null) {
@@ -36,49 +35,10 @@ public class SendEmail extends SimpleMailSenderAction {
 	}
     }
 
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	if (degreeCurricularPlan != null) {
-	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-	}
-
-	return super.execute(mapping, actionForm, request, response);
+    public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Degree degree = getDegreeCurricularPlan(request).getDegree();
+	Sender sender = CoordinatorSender.newInstance(degree);
+	return EmailsDA.sendEmail(request, sender);
     }
-
-    @Override
-    protected MailBean createMailBean(HttpServletRequest request) {
-	MailBean mailBean = super.createMailBean(request);
-
-	boolean studentsPreselected = request.getParameter("students") != null;
-	if (studentsPreselected) {
-	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    if (degreeCurricularPlan != null) {
-		Degree degree = degreeCurricularPlan.getDegree();
-
-		mailBean.addReceiversGroup(new DegreeStudentsGroup(degree));
-	    }
-	}
-
-	return mailBean;
-    }
-
-    @Override
-    protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
-	List<IGroup> groups = super.getPossibleReceivers(request);
-
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	if (degreeCurricularPlan == null) {
-	    return groups;
-	}
-
-	Degree degree = degreeCurricularPlan.getDegree();
-	groups.add(new CurrentDegreeCoordinatorsGroup(degree));
-	groups.add(new DegreeTeachersGroup(degree));
-	groups.add(new DegreeStudentsGroup(degree));
-
-	return groups;
-    }
-
 }
