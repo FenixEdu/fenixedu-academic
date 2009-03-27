@@ -732,4 +732,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	return valuesMap;
     }
 
+    @Override
+    public Boolean getInternalDisclosure() {
+	if (super.getInternalDisclosure() != null) {
+	    return super.getInternalDisclosure();
+	}
+	return fieldToBoolean(getValuesMap().get("Repres_div_interna"));
+    }
+
 }
