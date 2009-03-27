@@ -25,6 +25,8 @@ public enum DocumentRequestType {
 
     IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
+    GENERIC_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+
     DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
     PHOTOCOPY(false, false),
@@ -48,7 +50,7 @@ public enum DocumentRequestType {
 	    PROGRAM_CERTIFICATE, EXTERNAL_PROGRAM_CERTIFICATE);
 
     static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
-	    IRS_DECLARATION);
+	    IRS_DECLARATION, GENERIC_DECLARATION);
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {

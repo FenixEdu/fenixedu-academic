@@ -11,7 +11,7 @@
 <ul class="mtop2 list5">
 	<li>
 		<html:link page="/students.do?method=visualizeStudent" paramId="studentID" paramName="registration" paramProperty="student.idInternal">
-			<bean:message key="link.student.backToSudentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			<bean:message key="link.student.backToStudentDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>

@@ -209,6 +209,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setPurpose(DocumentPurposeType chosenDocumentPurposeType, String otherPurpose) {
 
+	otherPurpose = otherPurpose.trim();
 	if (chosenDocumentPurposeType != null && chosenDocumentPurposeType.equals(DocumentPurposeType.OTHER)
 		&& (otherPurpose == null || otherPurpose.length() == 0)) {
 	    throw new DomainException("DocumentRequestCreateBean.error.other.purpose.required");
@@ -235,7 +236,7 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     final public boolean getHasAdditionalInformation() {
-	return getChosenDocumentRequestType().getHasAdditionalInformation();
+	return getChosenDocumentRequestType() == null ? false : getChosenDocumentRequestType().getHasAdditionalInformation();
     }
 
     final public boolean getHasCycleTypeDependency() {

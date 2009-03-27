@@ -1,17 +1,12 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import java.util.Set;
-
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DeclarationRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 abstract public class DeclarationRequest extends DeclarationRequest_Base {
-
-    private static final int MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR = 4;
 
     protected DeclarationRequest() {
 	super();
@@ -34,6 +29,8 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 	    return new EnrolmentDeclarationRequest(bean);
 	case IRS_DECLARATION:
 	    return new IRSDeclarationRequest(bean);
+	case GENERIC_DECLARATION:
+	    return new GenericDeclarationRequest(bean);
 	}
 
 	return null;
@@ -89,17 +86,10 @@ abstract public class DeclarationRequest extends DeclarationRequest_Base {
 	if (getDocumentPurposeType() == DocumentPurposeType.PPRE) {
 	    return false;
 	}
-
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	final Set<DocumentRequest> schoolRegistrationDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		currentExecutionYear, DocumentRequestType.SCHOOL_REGISTRATION_DECLARATION, false);
-
-	final Set<DocumentRequest> enrolmentDeclarations = getRegistration().getSucessfullyFinishedDocumentRequestsBy(
-		currentExecutionYear, DocumentRequestType.ENROLMENT_DECLARATION, false);
-
-	return super.isFree()
-		|| ((schoolRegistrationDeclarations.size() + enrolmentDeclarations.size()) < MAX_FREE_DECLARATIONS_PER_EXECUTION_YEAR);
+	return super.isFree() || hasFreeDeclarationRequests();
     }
+
+    abstract protected boolean hasFreeDeclarationRequests();
 
     @Override
     public boolean isPayedUponCreation() {

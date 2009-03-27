@@ -153,18 +153,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		"DocumentRequestCreateBean.chooseDocumentRequestType");
     }
 
-    public ActionForward prepareCreateDocumentRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
-
-	setAdditionalInformationSchemaName(request, requestCreateBean);
-	request.setAttribute("documentRequestCreateBean", requestCreateBean);
-
-	return mapping.findForward("createDocumentRequests");
-
-    }
-
     public ActionForward prepareCreateDocumentRequestQuick(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareCreateDocumentRequest(mapping, form, request, response,
@@ -180,7 +168,19 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	return mapping.findForward("createDocumentRequests");
     }
 
-    public ActionForward documentRequestTypeChoosedPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward documentRequestTypeInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
+
+	setAdditionalInformationSchemaName(request, requestCreateBean);
+	request.setAttribute("documentRequestCreateBean", requestCreateBean);
+
+	return mapping.findForward("createDocumentRequests");
+
+    }
+
+    public ActionForward documentRequestTypeChosenPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return createDocumentRequestPostback(mapping, request);
     }

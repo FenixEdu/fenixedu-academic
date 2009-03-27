@@ -4587,6 +4587,9 @@ class DomainObject {
 	
 					class serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
 					}
+					
+					class serviceRequests.documentRequests.GenericDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
+					}
 	
 				class serviceRequests.documentRequests.DiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
 					CycleType requestedCycle;

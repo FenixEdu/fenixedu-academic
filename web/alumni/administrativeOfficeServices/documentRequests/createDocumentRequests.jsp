@@ -60,8 +60,9 @@
 		
 	<p class="mbottom025"><strong><bean:message key="message.document.to.request" bundle="ACADEMIC_OFFICE_RESOURCES"/>:</strong></p>
 	
-		<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
-			<fr:destination name="documentRequestTypeChoosedPostBack" path="/documentRequest.do?method=documentRequestTypeChoosedPostBack"/>	
+		<fr:edit id="documentRequestTypeEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+			<fr:destination name="documentRequestTypeChosenPostBack" path="/documentRequest.do?method=documentRequestTypeChosenPostBack"/>	
+			<fr:destination name="invalid" path="/documentRequest.do?method=documentRequestTypeInvalid"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thright thlight mtop025 mbottom0 thmiddle"/>
 				<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>
@@ -70,17 +71,18 @@
 		
 		<logic:present name="additionalInformationSchemaName">
 			<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
-			<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+			<fr:edit id="additionalInformationEdit" name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>
-				</fr:layout>	
+				</fr:layout>
+				<fr:destination name="invalid" path="/documentRequest.do?method=documentRequestTypeInvalid"/>
 			</fr:edit>			
 		</logic:present>
 		
 		<logic:notEmpty name="documentRequestCreateBean" property="chosenDocumentRequestType">
 		
-			<fr:edit name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+			<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 					<fr:property name="columnClasses" value="width14em,width35em,tdclear tderror1"/>

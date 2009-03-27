@@ -62,4 +62,9 @@ public class IRSDeclarationRequest extends IRSDeclarationRequest_Base {
 	return null;
     }
 
+    @Override
+    protected boolean hasFreeDeclarationRequests() {
+	return false;
+    }
+
 }

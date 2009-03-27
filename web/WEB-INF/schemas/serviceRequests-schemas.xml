@@ -193,6 +193,10 @@
 <schema name="EnrolmentDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
+<schema name="GenericDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.GenericDeclarationRequest"  extends="DeclarationRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
+</schema>
+
 
 
 <schema name="DocumentRequestEditBean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestEditBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -206,7 +210,7 @@
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider" />
 		<property name="eachLayout" value=""/>
-		<property name="destination" value="documentRequestTypeChoosedPostBack"/>
+		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
 </schema>
 
@@ -215,7 +219,7 @@
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestQuickTypeProvider" />
 		<property name="eachLayout" value=""/>
-		<property name="destination" value="documentRequestTypeChoosedPostBack"/>
+		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
 </schema>
 
@@ -440,7 +444,10 @@
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="year" key="label.year"/>
+	<slot name="year" key="label.year">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation.view"
@@ -520,7 +527,7 @@
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeForStudentTypeProvider" />
 		<property name="eachLayout" value=""/>
-		<property name="destination" value="documentRequestTypeChoosedPostBack"/>
+		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
 </schema>
 

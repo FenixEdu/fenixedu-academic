@@ -111,7 +111,18 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("createDocumentRequests");
     }
 
-    public ActionForward documentRequestTypeChoosedPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward documentRequestTypeInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
+		.getMetaObject().getObject();
+
+	setAdditionalInformationSchemaName(request, requestCreateBean);
+	request.setAttribute("documentRequestCreateBean", requestCreateBean);
+	return mapping.findForward("createDocumentRequests");
+    }
+
+    public ActionForward documentRequestTypeChosenPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) RenderUtils.getViewState()
@@ -124,7 +135,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
     }
 
     private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
-	if (requestCreateBean.getChosenDocumentRequestType().getHasAdditionalInformation()) {
+	if (requestCreateBean.getHasAdditionalInformation()) {
 	    request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
 		    + requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
 	}
