@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,14 +11,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.CreateUnavailablePeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteUnavailablePeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.EditUnavailablePeriod;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -27,18 +31,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class UnavailablePeriodManagement extends FenixDispatchAction {
 
-    private Vigilant getVigilantForCurrentYear(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
-	Person person = getLoggedPerson(request);
-	Vigilant vigilant = person.getCurrentVigilant();
-	return vigilant;
-    }
-
     public ActionForward addUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	Vigilant vigilant = getVigilantForCurrentYear(request);
+	String vid = request.getParameter("vid");
+	VigilantWrapper vigilantWrapper = DomainObject.fromExternalId(vid);
+	String gid = request.getParameter("gid");
+	VigilantGroup group = DomainObject.fromExternalId(gid);
+
 	UnavailablePeriodBean bean = new UnavailablePeriodBean();
-	bean.setVigilant(vigilant);
+	bean.setVigilantWrapper(group.getVigilantWrapperFor(vigilantWrapper.getPerson()));
+	bean.setSelectedVigilantGroup(group);
 
 	request.setAttribute("bean", bean);
 	return mapping.findForward("addUnavailablePeriod");
@@ -50,19 +53,20 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState("createUnavailablePeriod")
 		.getMetaObject().getObject();
-	Vigilant vigilant = periodBean.getVigilant();
+	VigilantWrapper vigilantWrapper = periodBean.getVigilantWrapper();
 
 	try {
 
-	    CreateUnavailablePeriod.run(vigilant, periodBean.getBeginDate(), periodBean.getEndDate(), periodBean
-		    .getJustification());
+	    CreateUnavailablePeriod.run(vigilantWrapper.getPerson(), periodBean.getBeginDate(), periodBean.getEndDate(),
+		    periodBean.getJustification());
 	} catch (DomainException e) {
 	    request.setAttribute("bean", periodBean);
 	    addActionMessage(request, e.getMessage());
 	    return mapping.findForward("addUnavailablePeriod");
 	}
 
-	putRequestVigilantManagementCompliant(request, vigilant);
+	putRequestVigilantManagementCompliant(request, vigilantWrapper);
+
 	return mapping.findForward("addedUnavailablePeriod");
 
     }
@@ -75,7 +79,12 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
     public ActionForward deleteUnavailablePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Vigilant vigilant = getVigilantForCurrentYear(request);
+	String id = request.getParameter("oid");
+	Integer idInternal = Integer.valueOf(id);
+	UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class,
+		idInternal);
+
+	VigilantWrapper vigilant = unavailablePeriod.getPerson().getVigilantWrappers().get(0);
 	deletePeriod(request);
 	putRequestVigilantManagementCompliant(request, vigilant);
 	return mapping.findForward("deleteUnavailablePeriod");
@@ -85,9 +94,9 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
-	Vigilant vigilant = periodBean.getVigilant();
+	VigilantWrapper vigilant = periodBean.getVigilantWrapper();
 	try {
-	    applyChangesToUnavailablePeriod(request, periodBean.getIdInternal(), periodBean.getBeginDate(), periodBean
+	    applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(), periodBean
 		    .getEndDate(), periodBean.getJustification());
 	} catch (DomainException e) {
 	    request.setAttribute("bean", periodBean);
@@ -103,7 +112,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	UnavailablePeriodBean periodBean = (UnavailablePeriodBean) RenderUtils.getViewState().getMetaObject().getObject();
 	try {
-	    applyChangesToUnavailablePeriod(request, periodBean.getIdInternal(), periodBean.getBeginDate(), periodBean
+	    applyChangesToUnavailablePeriod(request, periodBean.getUnavailablePeriod(), periodBean.getBeginDate(), periodBean
 		    .getEndDate(), periodBean.getJustification());
 	} catch (DomainException e) {
 	    String gid = request.getParameter("gid");
@@ -198,8 +207,8 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 
 	try {
 
-	    CreateUnavailablePeriod.run(bean.getVigilant(), bean.getBeginDate(), bean.getEndDate(), bean.getJustification(), bean
-		    .getSelectedVigilantGroup());
+	    CreateUnavailablePeriod.run(bean.getVigilantWrapper().getPerson(), bean.getBeginDate(), bean.getEndDate(), bean
+		    .getJustification());
 	} catch (DomainException e) {
 	    String gid = request.getParameter("gid");
 	    request.setAttribute("gid", gid);
@@ -228,11 +237,11 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 	UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject.readDomainObjectByOID(UnavailablePeriod.class,
 		idInternal);
 	UnavailablePeriodBean bean = new UnavailablePeriodBean();
-	bean.setIdInternal(idInternal);
+	bean.setUnavailablePeriod(unavailablePeriod);
 	bean.setBeginDate(unavailablePeriod.getBeginDate());
 	bean.setEndDate(unavailablePeriod.getEndDate());
 	bean.setJustification(unavailablePeriod.getJustification());
-	bean.setVigilant(unavailablePeriod.getVigilant());
+	bean.setVigilantWrapper(unavailablePeriod.getPerson().getVigilantWrappers().get(0));
 
 	request.setAttribute("bean", bean);
     }
@@ -242,7 +251,6 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 	Integer idInternal = Integer.valueOf(id);
 
 	try {
-
 	    DeleteUnavailablePeriodByOID.run(idInternal);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -253,28 +261,33 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
 	request.setAttribute("unavailablePeriods", group.getUnavailablePeriodsOfVigilantsInGroup());
     }
 
-    private void applyChangesToUnavailablePeriod(HttpServletRequest request, Integer idInternal, DateTime begin, DateTime end,
-	    String justification) throws Exception {
+    private void applyChangesToUnavailablePeriod(HttpServletRequest request, UnavailablePeriod unavailablePeriod, DateTime begin,
+	    DateTime end, String justification) throws Exception {
 
-	EditUnavailablePeriod.run(idInternal, begin, end, justification);
+	EditUnavailablePeriod.run(unavailablePeriod, begin, end, justification);
     }
 
-    private void putRequestVigilantManagementCompliant(HttpServletRequest request, Vigilant vigilant) {
+    private void putRequestVigilantManagementCompliant(HttpServletRequest request, VigilantWrapper vigilantWrapper) {
 	VigilantBean bean = new VigilantBean();
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	bean.setExecutionYear(executionYear);
 
-	VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilant);
+	VigilantGroup group = getGroupInRequestOrFirstGroupFromVigilant(request, vigilantWrapper);
 	bean.setSelectedVigilantGroup(group);
-	bean.setVigilantGroups(vigilant.getVigilantGroups());
+	List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+	List<VigilantWrapper> vigilantWrappersFromPerson = vigilantWrapper.getPerson().getVigilantWrappers();
+	for (VigilantWrapper vigilantWrapperFromPerson : vigilantWrappersFromPerson) {
+	    groups.add(vigilantWrapperFromPerson.getVigilantGroup());
+	}
+	bean.setVigilantGroups(groups);
 	bean.setShowUnavailables(true);
 	request.setAttribute("bean", bean);
-	request.setAttribute("vigilant", vigilant);
+	request.setAttribute("vigilant", vigilantWrapper);
     }
 
-    private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, Vigilant vigilant) {
+    private VigilantGroup getGroupInRequestOrFirstGroupFromVigilant(HttpServletRequest request, VigilantWrapper vigilant) {
 	String groupId = request.getParameter("gid");
-	return (groupId == null) ? vigilant.getVigilantGroups().get(0) : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
+	return (groupId == null) ? vigilant.getVigilantGroup() : (VigilantGroup) RootDomainObject.readDomainObjectByOID(
 		VigilantGroup.class, Integer.valueOf(groupId));
     }
 

@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
-import org.joda.time.DateTime;
-
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+
+import org.joda.time.DateTime;
 
 public class OwnCourseVigilancy extends OwnCourseVigilancy_Base {
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -14,7 +14,7 @@ public class TeachersInAGivenConvoke implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
 	ConvokeBean bean = (ConvokeBean) source;
-	List<Vigilant> teachersForAGivenCourse = bean.getTeachersForAGivenCourse();
+	List<VigilantWrapper> teachersForAGivenCourse = bean.getTeachersForAGivenCourse();
 	WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
 
 	if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {

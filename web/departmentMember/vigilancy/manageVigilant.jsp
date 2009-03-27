@@ -16,12 +16,18 @@
 			<logic:equal name="bean" property="executionYear.current"
 				value="true">
 				<logic:equal name="vigilant"
-					property="allowedToSpecifyUnavailablePeriod" value="true">
-					<li><html:link
-						page="/vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriod">
-						<bean:message bundle="VIGILANCY_RESOURCES"
-							key="label.vigilancy.addUnavailablePeriod" />
-					</html:link></li>
+					property="person.allowedToSpecifyUnavailablePeriod" value="true">
+					<bean:define id="externalId" name="vigilant" property="externalId" />
+					<logic:present name="bean" property="selectedVigilantGroup.externalId">
+						<bean:define id="groupId" name="bean" property="selectedVigilantGroup.externalId"/>
+							
+						<li><html:link
+							page="<%= "/vigilancy/unavailablePeriodManagement.do?method=addUnavailablePeriod&vid=" + externalId + "&gid=" + groupId.toString()%>">
+							<bean:message bundle="VIGILANCY_RESOURCES"
+								key="label.vigilancy.addUnavailablePeriod" />
+						</html:link>
+					</logic:present>
+					</li>
 				</logic:equal>
 			</logic:equal>
 		</logic:present>
@@ -80,10 +86,10 @@
 	</div>
 </logic:present>
 
-<logic:present name="vigilant">
+<logic:present name="bean">
 	<p class="mbottom05"><strong><bean:message
 		key="vigilancy.yourGroups" bundle="VIGILANCY_RESOURCES" /></strong>: <fr:view
-		name="vigilant" property="vigilantGroups">
+		name="bean" property="vigilantGroups">
 		<fr:layout name="flowLayout">
 			<fr:property name="eachLayout" value="values" />
 			<fr:property name="eachSchema" value="presentVigilantGroupName" />
@@ -99,9 +105,9 @@
 			bundle="VIGILANCY_RESOURCES" /></em></p>
 	</logic:empty>
 
-	<logic:notEmpty name="vigilant" property="activeOtherCourseVigilancies">
+	<logic:present name="bean" property="activeOtherCourseVigilancies">
 		<logic:equal name="bean" property="executionYear.current" value="true">
-			<fr:view name="vigilant" property="activeOtherCourseVigilancies"
+			<fr:view name="bean" property="activeOtherCourseVigilancies"
 				schema="present.convokes" layout="tabular">
 				<fr:layout>
 					<fr:property name="classes" value="tstyle1 mtop05" />
@@ -123,7 +129,7 @@
 				</fr:layout>
 			</fr:view>
 		</logic:equal>
-	</logic:notEmpty>
+	</logic:present>
 
 	<logic:equal name="bean" property="showUnavailables" value="true">
 		<p class="mbottom05"><strong><bean:message
@@ -137,7 +143,7 @@
 		</logic:messagesPresent>
 		<logic:notEmpty name="vigilant" property="unavailablePeriods">
 			<logic:equal name="vigilant"
-				property="allowedToSpecifyUnavailablePeriod" value="true">
+				property="person.allowedToSpecifyUnavailablePeriod" value="true">
 				<fr:view name="vigilant" property="unavailablePeriods"
 					schema="unavailableShow">
 					<fr:layout name="tabular">
@@ -157,7 +163,7 @@
 			</logic:equal>
 
 			<logic:equal name="vigilant"
-				property="allowedToSpecifyUnavailablePeriod" value="false">
+				property="person.allowedToSpecifyUnavailablePeriod" value="false">
 
 				<fr:view name="vigilant" property="unavailablePeriods"
 					schema="unavailableShow">
@@ -178,14 +184,14 @@
 	<logic:equal name="bean" property="showIncompatibilities" value="true">
 		<p class="mbottom05"><strong><bean:message
 			key="vigilancy.myIncompatibility" bundle="VIGILANCY_RESOURCES" /></strong>:</p>
-		<logic:notEmpty name="vigilant" property="incompatiblePerson">
-			<fr:view name="vigilant" property="incompatiblePerson.name">
+		<logic:notEmpty name="vigilant" property="person.incompatibleVigilant">
+			<fr:view name="vigilant" property="incompatiblePersonName">
 				<fr:layout>
 					<fr:property name="classes" value="mtop05" />
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
-		<logic:empty name="vigilant" property="incompatiblePerson">
+		<logic:empty name="vigilant" property="person.incompatibleVigilant">
 			<p class="mtop05"><em><bean:message
 				bundle="VIGILANCY_RESOURCES"
 				key="label.vigilancy.youHaveNoIncompatibilities" /></em></p>

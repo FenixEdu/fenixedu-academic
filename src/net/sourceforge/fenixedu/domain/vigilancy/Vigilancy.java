@@ -29,20 +29,20 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public static final Comparator<Vigilancy> COMPARATOR_BY_VIGILANT_CATEGORY = new Comparator<Vigilancy>() {
 	public int compare(Vigilancy o1, Vigilancy o2) {
-	    return Vigilant.CATEGORY_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
+	    return VigilantWrapper.CATEGORY_COMPARATOR.compare(o1.getVigilantWrapper(), o2.getVigilantWrapper());
 	}
     };
 
     public static final Comparator<Vigilancy> COMPARATOR_BY_VIGILANT_USERNAME = new Comparator<Vigilancy>() {
 	public int compare(Vigilancy o1, Vigilancy o2) {
-	    return Vigilant.USERNAME_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
+	    return VigilantWrapper.USERNAME_COMPARATOR.compare(o1.getVigilantWrapper(), o2.getVigilantWrapper());
 	}
     };
 
     public static final Comparator<Vigilancy> COMPARATOR_BY_VIGILANT_SORT_CRITERIA = new Comparator<Vigilancy>() {
 
 	public int compare(Vigilancy o1, Vigilancy o2) {
-	    return Vigilant.SORT_CRITERIA_COMPARATOR.compare(o1.getVigilant(), o2.getVigilant());
+	    return VigilantWrapper.SORT_CRITERIA_COMPARATOR.compare(o1.getVigilantWrapper(), o2.getVigilantWrapper());
 	}
 
     };
@@ -208,7 +208,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     protected boolean isSelfAccessing() {
 	Person person = AccessControl.getPerson();
-	return this.getVigilant().equals(person.getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear()));
+	return this.getVigilantWrapper().getPerson().equals(person);
     }
 
     protected boolean canBeChangedByUser() {

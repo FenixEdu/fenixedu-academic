@@ -8,8 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.joda.time.DateTime;
 
@@ -21,20 +21,21 @@ public class UnavailablePeriodBean implements Serializable {
 
     private String justification;
 
-    private DomainReference<Vigilant> vigilant;
+    private DomainReference<VigilantWrapper> vigilantWrapper;
 
     private DomainReference<ExamCoordinator> coordinator;
 
-    private List<DomainReference<UnavailablePeriod>> unavailablePeriods = new ArrayList<DomainReference<UnavailablePeriod>>();;
+    private final List<DomainReference<UnavailablePeriod>> unavailablePeriods = new ArrayList<DomainReference<UnavailablePeriod>>();
 
     private DomainReference<VigilantGroup> selectedVigilantGroup;
 
-    private Integer idInternal;
+    private DomainReference<UnavailablePeriod> unavailablePeriod;
 
     public UnavailablePeriodBean() {
-	setVigilant(null);
+	setVigilantWrapper(null);
 	setCoordinator(null);
 	setSelectedVigilantGroup(null);
+	setUnavailablePeriod(null);
     }
 
     public DateTime getBeginDate() {
@@ -61,12 +62,12 @@ public class UnavailablePeriodBean implements Serializable {
 	this.justification = justification;
     }
 
-    public Vigilant getVigilant() {
-	return (this.vigilant != null) ? this.vigilant.getObject() : null;
+    public VigilantWrapper getVigilantWrapper() {
+	return (this.vigilantWrapper != null) ? this.vigilantWrapper.getObject() : null;
     }
 
-    public void setVigilant(Vigilant vigilant) {
-	this.vigilant = (vigilant != null) ? new DomainReference<Vigilant>(vigilant) : null;
+    public void setVigilantWrapper(VigilantWrapper vigilantWrapper) {
+	this.vigilantWrapper = (vigilantWrapper != null) ? new DomainReference<VigilantWrapper>(vigilantWrapper) : null;
     }
 
     public ExamCoordinator getCoordinator() {
@@ -78,11 +79,7 @@ public class UnavailablePeriodBean implements Serializable {
     }
 
     public Integer getIdInternal() {
-	return idInternal;
-    }
-
-    public void setIdInternal(Integer idInternal) {
-	this.idInternal = idInternal;
+	return getUnavailablePeriod() != null ? getUnavailablePeriod().getIdInternal() : null;
     }
 
     public Collection getUnavailablePeriods() {
@@ -108,5 +105,13 @@ public class UnavailablePeriodBean implements Serializable {
 
     public void setSelectedVigilantGroup(VigilantGroup group) {
 	this.selectedVigilantGroup = new DomainReference<VigilantGroup>(group);
+    }
+
+    public UnavailablePeriod getUnavailablePeriod() {
+	return this.unavailablePeriod.getObject();
+    }
+
+    public void setUnavailablePeriod(UnavailablePeriod period) {
+	this.unavailablePeriod = new DomainReference<UnavailablePeriod>(period);
     }
 }

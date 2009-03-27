@@ -202,30 +202,30 @@
 		<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
 		
 		<tr class="<%= vigilancy.isOtherCourseVigilancy() ? (!vigilancy.isActive() ? "color888" : "") : "color007b4d"%>">
-			<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/>
 			</td>
-			<td><fr:view name="vigilancy" property="vigilant.person.username"/>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.username"/>
 			</td>
-			<td><fr:view name="vigilancy" property="vigilant.person.name"/>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/>
 			</td>
 			<logic:equal name="bean" property="showUnavailables" value="true">
-				<td><fr:view name="vigilancy" property="vigilant.unavailablePeriodsAsString"/>
+				<td><fr:view name="vigilancy" property="vigilantWrapper.unavailablePeriodsAsString"/>
 				</td>
 			</logic:equal>
 			<logic:equal name="bean" property="showIncompatibilities" value="true">
-				<td><fr:view name="vigilancy" property="vigilant.incompatiblePersonName" type="java.lang.String"/>
+				<td><fr:view name="vigilancy" property="vigilantWrapper.person.incompatibleVigilant.name" type="java.lang.String"/>
 				</td>
 			</logic:equal>
 			<logic:equal name="bean" property="showBoundsJustification" value="true">
-				<td><fr:view name="vigilancy" property="vigilant.boundsAsString"/>
+				<td><fr:view name="vigilancy" property="vigilantWrapper.boundsAsString"/>
 				</td>
 			</logic:equal>
 			<logic:equal name="bean" property="showStartPoints" value="true">
-				<td><fr:view name="vigilancy" property="vigilant.startPoints"/>
+				<td><fr:view name="vigilancy" property="vigilantWrapper.startPoints"/>
 				</td>
 			</logic:equal>
 			<td>
-			<fr:view name="vigilancy" property="vigilant.points"/>
+			<fr:view name="vigilancy" property="vigilantWrapper.points"/>
 			</td>
 			<logic:equal name="bean" property="showAllVigilancyInfo" value="true">
 				<td><fr:view name="vigilancy" property="writtenEvaluation.dayDateYearMonthDay"/>

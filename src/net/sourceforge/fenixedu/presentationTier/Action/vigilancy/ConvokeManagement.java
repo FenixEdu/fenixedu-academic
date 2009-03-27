@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +25,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -204,7 +206,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("confirmConvokes").getMetaObject().getObject();
-	List<Vigilant> vigilantSugestion = bean.getVigilants();
+	List<VigilantWrapper> vigilantSugestion = bean.getVigilants();
 	WrittenEvaluation writtenEvaluation = bean.getWrittenEvaluation();
 
 	try {
@@ -227,7 +229,7 @@ public class ConvokeManagement extends FenixDispatchAction {
 
 	ConvokeBean beanWithUnavailables = (ConvokeBean) RenderUtils.getViewState("selectVigilantsThatAreUnavailable")
 		.getMetaObject().getObject();
-	List<Vigilant> teachers, vigilants, unavailables;
+	List<VigilantWrapper> teachers, vigilants, unavailables;
 
 	teachers = beanWithTeachers.getSelectedTeachers();
 	vigilants = beanWithVigilants.getVigilants();
@@ -330,17 +332,20 @@ public class ConvokeManagement extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
-	List<Vigilant> vigilants = bean.getTeachersForAGivenCourse();
+	List<VigilantWrapper> vigilants = bean.getTeachersForAGivenCourse();
 	vigilants.addAll(bean.getVigilants());
-	List<Vigilant> incompatibleVigilants = new ArrayList<Vigilant>();
-	for (Vigilant vigilant : vigilants) {
-	    if (vigilant.hasIncompatiblePerson()) {
-		incompatibleVigilants.add(vigilant.getIncompatibleVigilant());
-	    }
+	Set<Person> persons = new HashSet<Person>();
+	for (VigilantWrapper wrapper : vigilants) {
+	    persons.add(wrapper.getPerson());
 	}
-	vigilants.retainAll(incompatibleVigilants);
-	if (!vigilants.isEmpty()) {
-	    request.setAttribute("incompatibleVigilants", vigilants);
+
+	List<Person> incompatibleVigilants = new ArrayList<Person>();
+	for (VigilantWrapper vigilant : vigilants) {
+	    incompatibleVigilants.add(vigilant.getPerson());
+	}
+	persons.retainAll(incompatibleVigilants);
+	if (!persons.isEmpty()) {
+	    request.setAttribute("incompatibleVigilants", persons);
 	}
 	request.setAttribute("bean", bean);
 	return mapping.findForward("prepareGenerateConvokes");

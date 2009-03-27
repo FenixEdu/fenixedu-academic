@@ -3,24 +3,25 @@ package net.sourceforge.fenixedu.domain.vigilancy.strategies;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class StrategySugestion {
 
-    private List<Vigilant> vigilantsThatAreTeachers;
+    private List<VigilantWrapper> vigilantsThatAreTeachers;
 
-    private List<Vigilant> sugestedVigilants;
+    private List<VigilantWrapper> sugestedVigilants;
 
     private List<UnavailableInformation> unavailableVigilants;
 
-    public StrategySugestion(List<Vigilant> teachers, List<Vigilant> sugestion, List<UnavailableInformation> unvailables) {
+    public StrategySugestion(List<VigilantWrapper> teachers, List<VigilantWrapper> sugestion,
+	    List<UnavailableInformation> unvailables) {
 	this.vigilantsThatAreTeachers = teachers;
 	this.sugestedVigilants = sugestion;
 	this.unavailableVigilants = unvailables;
 
     }
 
-    public List<Vigilant> getVigilantSugestion() {
+    public List<VigilantWrapper> getVigilantSugestion() {
 	return sugestedVigilants;
     }
 
@@ -28,15 +29,15 @@ public class StrategySugestion {
 	return unavailableVigilants;
     }
 
-    public List<Vigilant> getUnavailableVigilants() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getUnavailableVigilants() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (UnavailableInformation information : unavailableVigilants) {
 	    vigilants.add(information.getVigilant());
 	}
 	return vigilants;
     }
 
-    public List<Vigilant> getVigilantsThatAreTeachersSugestion() {
+    public List<VigilantWrapper> getVigilantsThatAreTeachersSugestion() {
 	return vigilantsThatAreTeachers;
     }
 

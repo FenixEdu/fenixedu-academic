@@ -25,7 +25,7 @@
 			</html:link>
 		</li>
 		
-		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilants">
+		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">
 			<li>
 				<html:link page="/vigilancy/vigilantManagement.do?method=prepareMap">
 					<bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/>

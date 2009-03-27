@@ -48,7 +48,7 @@
 <strong><bean:message key="label.vigilancy.manageExternalVigilants" bundle="VIGILANCY_RESOURCES"/></strong>:
 <fr:edit id="externalBounds" name="externalBounds">
 <fr:layout name="vigilantsInGroup-render">
-	<fr:property name="personSchema" value="presentExternalPersonWithCatAndNumber"/>
+	<fr:property name="personSchema" value="presentPersonWithCatAndNumber"/>
 	<fr:property name="classes" value="tstyle1"/>
 
 </fr:layout>
@@ -65,7 +65,6 @@
 
 
 <p class="mtop3 mbottom05"><strong><bean:message key="label.vigilancy.externalPersonToGroup" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
-
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true" bundle="VIGILANCY_RESOURCES">
 		<p class="mtop1 mvert05">

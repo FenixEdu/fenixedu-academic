@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailableTypes;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class UnavailableInformation implements Serializable {
 
-    private DomainReference<Vigilant> vigilant;
+    private DomainReference<VigilantWrapper> vigilant;
     private UnavailableTypes unavailableReason;
 
-    UnavailableInformation(Vigilant vigilant, UnavailableTypes unavailableReason) {
-	this.vigilant = new DomainReference<Vigilant>(vigilant);
+    UnavailableInformation(VigilantWrapper vigilant, UnavailableTypes unavailableReason) {
+	this.vigilant = new DomainReference<VigilantWrapper>(vigilant);
 	this.unavailableReason = unavailableReason;
     }
 
-    public Vigilant getVigilant() {
+    public VigilantWrapper getVigilant() {
 	return this.vigilant.getObject();
     }
 

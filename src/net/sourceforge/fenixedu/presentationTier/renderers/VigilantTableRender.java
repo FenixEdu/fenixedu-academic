@@ -9,8 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -252,7 +252,7 @@ public class VigilantTableRender extends OutputRenderer {
 
     private Schema getVigilantSchema() {
 
-	Schema schema = new Schema(Vigilant.class);
+	Schema schema = new Schema(VigilantWrapper.class);
 
 	schema.addSlotDescription(getSlot("teacherCategoryCode", "label.vigilancy.category.header"));
 	schema.addSlotDescription(getSlot("person.username", "label.vigilancy.username"));
@@ -275,7 +275,7 @@ public class VigilantTableRender extends OutputRenderer {
 	    schema.addSlotDescription(getSlot("incompatiblePersonName", "label.vigilancy.displayIncompatibleInformation"));
 	}
 	if (isShowBoundsJustification()) {
-	    schema.addSlotDescription(getSlot("boundsAsString", "label.vigilancy.boundsJustification"));
+	    schema.addSlotDescription(getSlot("justificationforNotConvokable", "label.vigilancy.boundsJustification"));
 	}
 
 	return schema;
@@ -308,11 +308,11 @@ public class VigilantTableRender extends OutputRenderer {
     @Override
     protected Layout getLayout(Object object, Class type) {
 	ComparatorChain chain = new ComparatorChain();
-	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+	chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+	chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
 
 	this.group = (VigilantGroup) object;
-	List<Vigilant> vigilants = new ArrayList<Vigilant>(this.group.getVigilants());
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>(this.group.getVigilantWrappers());
 
 	Collections.sort(vigilants, chain);
 
@@ -321,7 +321,7 @@ public class VigilantTableRender extends OutputRenderer {
 
     private class VigilantTableRenderLayout extends TabularLayout {
 
-	private ArrayList<Vigilant> vigilants;
+	private ArrayList<VigilantWrapper> vigilants;
 
 	private ArrayList<MetaObject> objects;
 
@@ -339,16 +339,16 @@ public class VigilantTableRender extends OutputRenderer {
 
 	private MetaObject convokeMetaObjectCache = null;
 
-	public VigilantTableRenderLayout(Collection<Vigilant> vigilants) {
+	public VigilantTableRenderLayout(Collection<VigilantWrapper> vigilants) {
 	    this.objects = new ArrayList<MetaObject>();
 	    this.vigilantSchema = getVigilantSchema();
 	    this.convokeSchema = translateSchema(getConvokeSchema());
 
-	    for (Vigilant vigilant : vigilants) {
+	    for (VigilantWrapper vigilant : vigilants) {
 		this.objects.add(MetaObjectFactory.createObject(vigilant, vigilantSchema));
 	    }
 
-	    this.vigilants = new ArrayList<Vigilant>(vigilants);
+	    this.vigilants = new ArrayList<VigilantWrapper>(vigilants);
 	}
 
 	@Override
@@ -404,7 +404,7 @@ public class VigilantTableRender extends OutputRenderer {
 	    return columnIndex % getNumberOfConvokeSlots();
 	}
 
-	private List<Vigilancy> getConvokes(Vigilant vigilant) {
+	private List<Vigilancy> getConvokes(VigilantWrapper vigilant) {
 	    List<Vigilancy> vigilancies;
 	    if (showNotActiveConvokes) {
 		if (showOwnVigilancies) {
@@ -424,7 +424,7 @@ public class VigilantTableRender extends OutputRenderer {
 	}
 
 	private MetaObject getConvokeMetaObjectToPutInTable(MetaObject vigilantMetaObject, int index) {
-	    Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
+	    VigilantWrapper vigilant = (VigilantWrapper) vigilantMetaObject.getObject();
 
 	    List<Vigilancy> convokes = getConvokes(vigilant);
 	    int size = convokes.size();
@@ -444,7 +444,7 @@ public class VigilantTableRender extends OutputRenderer {
 	private MetaObject getConvokeMetaObject(MetaObject vigilantMetaObject) {
 
 	    if (convokeMetaObjectCache == null) {
-		List<Vigilancy> convokes = ((Vigilant) getVigilantWithConvokes().getObject()).getVigilancies();
+		List<Vigilancy> convokes = ((VigilantWrapper) getVigilantWithConvokes().getObject()).getVigilancies();
 		Vigilancy oneConvoke = convokes.get(0);
 
 		convokeMetaObjectCache = MetaObjectFactory.createObject(oneConvoke, this.convokeSchema);
@@ -491,7 +491,7 @@ public class VigilantTableRender extends OutputRenderer {
 		return vigilantWithConvokesMetaObjectCache;
 	    } else {
 		for (MetaObject vigilantMetaObject : this.objects) {
-		    Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
+		    VigilantWrapper vigilant = (VigilantWrapper) vigilantMetaObject.getObject();
 		    if (!getConvokes(vigilant).isEmpty())
 			return vigilantWithConvokesMetaObjectCache = vigilantMetaObject;
 		}
@@ -513,7 +513,7 @@ public class VigilantTableRender extends OutputRenderer {
 	    if (numberOfConvokeSlotCache != null) {
 		return numberOfConvokeSlotCache;
 	    } else {
-		Vigilant vigilant = (Vigilant) this.getVigilantWithConvokes().getObject();
+		VigilantWrapper vigilant = (VigilantWrapper) this.getVigilantWithConvokes().getObject();
 		List<Vigilancy> convokes = getConvokes(vigilant);
 		if (convokes.isEmpty()) {
 		    return numberOfConvokeSlotCache = 0;
@@ -539,7 +539,7 @@ public class VigilantTableRender extends OutputRenderer {
 		int convokesSlots = getNumberOfConvokeSlots();
 
 		for (MetaObject vigilantMetaObject : this.objects) {
-		    Vigilant vigilant = (Vigilant) vigilantMetaObject.getObject();
+		    VigilantWrapper vigilant = (VigilantWrapper) vigilantMetaObject.getObject();
 
 		    columns = Math.max(columns, vigilantMetaObject.getSlots().size() + convokesSlots
 			    * getConvokes(vigilant).size());
@@ -599,21 +599,21 @@ public class VigilantTableRender extends OutputRenderer {
 	    MetaObject metavigilant = getVigilantForRow(rowIndex);
 
 	    if (!isInformationColumn(columnIndex, metavigilant)) {
-	    	
-	    	int index = getConvokeIndex(metavigilant, columnIndex);
-	    	MetaObject convoke = getConvokeMetaObjectToPutInTable(metavigilant, index);
 
-	    	if (convoke != null) {
-	    		Vigilancy v = (Vigilancy) convoke.getObject();
+		int index = getConvokeIndex(metavigilant, columnIndex);
+		MetaObject convoke = getConvokeMetaObjectToPutInTable(metavigilant, index);
 
-	    		if (v.getStatus() == AttendingStatus.NOT_ATTENDED && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
-	    			cell.setClasses(getWarningClass());
-	    		}
+		if (convoke != null) {
+		    Vigilancy v = (Vigilancy) convoke.getObject();
 
-	    		if (!v.getWrittenEvaluation().getVigilantsReport() && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
-	    			cell.setClasses(getWarningClass());
-	    		}
-	    	}
+		    if (v.getStatus() == AttendingStatus.NOT_ATTENDED && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
+			cell.setClasses(getWarningClass());
+		    }
+
+		    if (!v.getWrittenEvaluation().getVigilantsReport() && v.getWrittenEvaluation().getEndDateTime().isBeforeNow()) {
+			cell.setClasses(getWarningClass());
+		    }
+		}
 	    }
 	}
 

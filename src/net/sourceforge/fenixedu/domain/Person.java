@@ -100,8 +100,10 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -114,6 +116,7 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -631,6 +634,38 @@ public class Person extends Person_Base {
     public Boolean getIsExamCoordinatorInCurrentYear() {
 	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	return (examCoordinator == null) ? false : true;
+    }
+
+    public List<VigilantGroup> getVigilantGroupsForExecutionYear(ExecutionYear executionYear) {
+	List<VigilantGroup> groups = new ArrayList<VigilantGroup>();
+	for (VigilantWrapper wrapper : getVigilantWrappers()) {
+	    VigilantGroup group = wrapper.getVigilantGroup();
+	    if (group.getExecutionYear().equals(executionYear)) {
+		groups.add(group);
+	    }
+	}
+	return groups;
+    }
+
+    public boolean isAllowedToSpecifyUnavailablePeriod() {
+	DateTime currentDate = new DateTime();
+	List<VigilantGroup> groupsForYear = getVigilantGroupsForExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	for (VigilantGroup group : groupsForYear) {
+	    if (group.canSpecifyUnavailablePeriodIn(currentDate)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public List<Vigilancy> getVigilanciesForYear(ExecutionYear executionYear) {
+	List<Vigilancy> vigilancies = new ArrayList<Vigilancy>();
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+	    if (vigilantWrapper.getExecutionYear().equals(executionYear)) {
+		vigilancies.addAll(vigilantWrapper.getVigilancies());
+	    }
+	}
+	return vigilancies;
     }
 
     public Vigilant getVigilantForGivenExecutionYear(ExecutionYear executionYear) {

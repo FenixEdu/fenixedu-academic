@@ -5572,6 +5572,13 @@ class DomainObject {
 		Integer pointsForTeacher;
 		String rulesLink;
 	}
+	
+	class vigilancy.VigilantWrapper extends DomainObject {
+		BigDecimal pointsWeight;
+		BigDecimal startPoints;
+		Boolean convokable;
+		String justification;
+	}
 
 class personnelSection.payrollSection.bonus.AnualBonusInstallment extends DomainObject {
 	Integer year;
@@ -7009,6 +7016,46 @@ relation ConvokingVigilant {
 	vigilancy.Vigilancy playsRole vigilancies {
 		multiplicity *;
 	}
+}
+
+relation ConvokingVigilantWrapper {
+	vigilancy.VigilantWrapper playsRole vigilantWrapper;
+	vigilancy.Vigilancy playsRole vigilancies {
+		multiplicity *;
+	}
+}
+
+relation VigilantGroupVigilantWrapper {
+	vigilancy.VigilantGroup playsRole vigilantGroup;
+	vigilancy.VigilantWrapper playsRole vigilantWrappers {
+		multiplicity *;
+	}
+}
+
+relation VigilantWrapperPerson {
+	vigilancy.VigilantWrapper playsRole vigilantWrappers {
+		multiplicity *;
+	}
+	Person playsRole person;
+}
+
+relation PersonIsUnavailable {
+	Person playsRole person;
+	vigilancy.UnavailablePeriod playsRole unavailablePeriods {
+		multiplicity *;
+	}
+}
+
+relation VigilantWrapperRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	vigilancy.VigilantWrapper playsRole vigilantWrappers {
+		multiplicity *;
+	}
+}
+
+relation PersonIncompatibleVigilant {
+	Person playsRole person;
+	Person playsRole incompatibleVigilant;
 }
 
 relation CooperationUnit {

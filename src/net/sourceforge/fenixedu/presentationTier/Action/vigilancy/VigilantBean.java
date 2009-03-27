@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 public class VigilantBean implements Serializable {
@@ -34,6 +35,8 @@ public class VigilantBean implements Serializable {
     private boolean showPointsWeight = Boolean.FALSE;
 
     private boolean showOwnVigilancies = Boolean.FALSE;
+
+    public List<DomainReference<Vigilancy>> activeOtherCourseVigilancies;
 
     private final HashMap<String, String> schemas = new HashMap<String, String>();
 
@@ -249,6 +252,21 @@ public class VigilantBean implements Serializable {
 
     public void setShowOwnVigilancies(boolean showOwnVigilancies) {
 	this.showOwnVigilancies = showOwnVigilancies;
+    }
+
+    public void setActiveOtherCourseVigilancies(List<Vigilancy> activeOtherCourseVigilancies) {
+	this.activeOtherCourseVigilancies = new ArrayList<DomainReference<Vigilancy>>();
+	for (Vigilancy activeOtherCourseVigilancy : activeOtherCourseVigilancies) {
+	    this.activeOtherCourseVigilancies.add(new DomainReference<Vigilancy>(activeOtherCourseVigilancy));
+	}
+    }
+
+    public List<Vigilancy> getActiveOtherCourseVigilancies() {
+	List<Vigilancy> activeOtherCourseVigilancies = new ArrayList<Vigilancy>();
+	for (DomainReference<Vigilancy> activeOtherCourseVigilancy : this.activeOtherCourseVigilancies) {
+	    activeOtherCourseVigilancies.add(activeOtherCourseVigilancy.getObject());
+	}
+	return activeOtherCourseVigilancies;
     }
 
 }

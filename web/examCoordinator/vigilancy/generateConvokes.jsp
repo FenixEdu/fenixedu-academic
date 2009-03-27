@@ -95,7 +95,7 @@
 <fr:view name="incompatibleVigilants">
 	<fr:layout>
 		<fr:property name="eachLayout" value="values"/>
-		<fr:property name="eachSchema" value="presentVigilantName"/>
+		<fr:property name="eachSchema" value="presentPersonName"/>
 		<fr:property name="classes" value="error1 list2"/>
 	</fr:layout>
 </fr:view> 

@@ -552,7 +552,6 @@
 			parameter="method"
 			scope="request">
 			<forward name="displayConvokeMap" path="display-convoke-map"/>			
-			<forward name="prepareEditIncompatiblePerson" path="prepare-incompatible-person"/>
 			<forward name="showReport" path="show-Report"/>
 		</action>
 		<action path="/vigilancy/unavailablePeriodManagement" 

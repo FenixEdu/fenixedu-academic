@@ -134,7 +134,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRo
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -1479,7 +1478,7 @@ public class CreateTestData {
 
 	final YearMonthDay yearMonthDay = writtenEvaluation.getDayDateYearMonthDay();
 	writtenEvaluation.setDayDateYearMonthDay(new YearMonthDay().plusDays(1));
-	final Vigilancy vigilancy = new OtherCourseVigilancy(writtenEvaluation);
+	final Vigilancy vigilancy = null;
 	writtenEvaluation.setDayDateYearMonthDay(yearMonthDay);
 	for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 	    final Vigilant vigilant = professorship.getTeacher().getPerson().getVigilantForGivenExecutionYear(

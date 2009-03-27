@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailableTypes;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 
@@ -22,10 +22,10 @@ public class ConvokeByPoints extends Strategy {
 	super();
     }
 
-    public StrategySugestion sugest(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation) {
+    public StrategySugestion sugest(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
 
-	List<Vigilant> teachersSugestion = new ArrayList<Vigilant>();
-	List<Vigilant> vigilantSugestion = new ArrayList<Vigilant>();
+	List<VigilantWrapper> teachersSugestion = new ArrayList<VigilantWrapper>();
+	List<VigilantWrapper> vigilantSugestion = new ArrayList<VigilantWrapper>();
 	Set<Person> incompatiblePersons = new HashSet<Person>();
 	List<UnavailableInformation> unavailableVigilants = new ArrayList<UnavailableInformation>();
 
@@ -35,10 +35,10 @@ public class ConvokeByPoints extends Strategy {
 
 	final List<ExecutionCourse> executionCourses = writtenEvaluation.getAssociatedExecutionCourses();
 
-	for (Vigilant vigilant : vigilants) {
+	for (VigilantWrapper vigilant : vigilants) {
 
 	    if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
-		    && !incompatiblePersons.contains(vigilant.getIncompatiblePerson())) {
+		    && !incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
 		Teacher teacher = vigilant.getTeacher();
 		if (teacher != null && teacher.teachesAny(executionCourses)) {
 		    teachersSugestion.add(vigilant);
@@ -50,7 +50,7 @@ public class ConvokeByPoints extends Strategy {
 	    } else {
 		if (!vigilantIsAlreadyConvokedForThisExam(vigilant, writtenEvaluation)) {
 		    UnavailableTypes reason;
-		    if (incompatiblePersons.contains(vigilant.getIncompatiblePerson())) {
+		    if (incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
 			reason = UnavailableTypes.INCOMPATIBLE_PERSON;
 		    } else {
 			reason = vigilant.getWhyIsUnavailabeFor(writtenEvaluation);
@@ -62,17 +62,17 @@ public class ConvokeByPoints extends Strategy {
 	}
 
 	ComparatorChain comparator = new ComparatorChain();
-	comparator.addComparator(Vigilant.ESTIMATED_POINTS_COMPARATOR);
+	comparator.addComparator(VigilantWrapper.ESTIMATED_POINTS_COMPARATOR);
 	// comparator.addComparator(new ConvokeComparator());
-	comparator.addComparator(Vigilant.CATEGORY_COMPARATOR);
-	comparator.addComparator(Vigilant.USERNAME_COMPARATOR);
+	comparator.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+	comparator.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
 
 	Collections.sort(vigilantSugestion, comparator);
 	Collections.sort(teachersSugestion, comparator);
 	return new StrategySugestion(teachersSugestion, vigilantSugestion, unavailableVigilants);
     }
 
-    private boolean vigilantIsAlreadyConvokedForThisExam(Vigilant vigilant, WrittenEvaluation writtenEvaluation) {
+    private boolean vigilantIsAlreadyConvokedForThisExam(VigilantWrapper vigilant, WrittenEvaluation writtenEvaluation) {
 	List<Vigilancy> convokes = vigilant.getVigilancies();
 	for (Vigilancy convoke : convokes) {
 	    if (convoke.getWrittenEvaluation().equals(writtenEvaluation) && convoke.isActive())
@@ -85,7 +85,7 @@ public class ConvokeByPoints extends Strategy {
 	List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
 	List<Person> people = new ArrayList<Person>();
 	for (Vigilancy convoke : convokes) {
-	    Vigilant vigilant = convoke.getVigilant();
+	    VigilantWrapper vigilant = convoke.getVigilantWrapper();
 	    people.add(vigilant.getPerson());
 	}
 	return people;

@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.joda.time.DateTime;
 
@@ -26,7 +26,7 @@ public class ChangeConvokeActive extends FenixService {
 
     private static void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
 
-	Vigilant vigilant = convoke.getVigilant();
+	VigilantWrapper vigilant = convoke.getVigilantWrapper();
 	String emailTo = vigilant.getEmail();
 	final ArrayList<String> tos = new ArrayList<String>();
 	tos.add(emailTo);

@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.joda.time.DateTime;
 
@@ -21,13 +21,13 @@ import pt.ist.fenixWebFramework.services.Service;
 public class CreateConvokes extends FenixService {
 
     @Service
-    public static void run(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
+    public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
 	    ExamCoordinator coordinator, String emailMessage) {
 	group.convokeVigilants(vigilants, writtenEvaluation);
 	if (emailMessage.length() != 0) {
 	    Person person = coordinator.getPerson();
 	    final Set<String> tos = new HashSet<String>();
-	    for (Vigilant vigilant : vigilants) {
+	    for (VigilantWrapper vigilant : vigilants) {
 		String emailTo = vigilant.getEmail();
 		tos.add(emailTo);
 	    }

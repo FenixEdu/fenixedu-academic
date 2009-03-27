@@ -11,7 +11,7 @@
 <strong><bean:message key="label.vigilancy.vigilantGroup" bundle="VIGILANCY_RESOURCES"/></strong>: <em><fr:view name="group" property="name"/></em>
 
 
-<fr:edit name="bounds" schema="editConvokableStatus">
+<fr:edit name="vigilantWrappers" schema="editConvokableStatus">
 	<fr:layout name="tabular-editable">
 		<fr:property name="classes" value="tstyle5"/>
 

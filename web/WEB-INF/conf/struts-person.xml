@@ -270,7 +270,6 @@
 				parameter="method"
 				scope="request">
 				<forward name="displayConvokeMap" path="display-convoke-map"/>			
-				<forward name="prepareEditIncompatiblePerson" path="prepare-incompatible-person"/>
 		</action>
 		<action path="/vigilancy/unavailablePeriodManagement" 
 				type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodManagement"

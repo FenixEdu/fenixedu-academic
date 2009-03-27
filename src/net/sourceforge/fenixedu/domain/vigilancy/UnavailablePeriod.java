@@ -27,17 +27,18 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 	this.setJustification(justification);
     }
 
-    public UnavailablePeriod(DateTime beginDate, DateTime endDate, String justification, Vigilant vigilant) {
+    public UnavailablePeriod(DateTime beginDate, DateTime endDate, String justification, Person person) {
 	this();
-	this.setVigilant(vigilant);
+	this.setPerson(person);
 	this.setBeginDate(beginDate);
 	this.setEndDate(endDate);
 	this.setJustification(justification);
     }
 
+    @Override
     public void setBeginDate(DateTime begin) {
 	DateTime currentTime = new DateTime();
-	if ((isExamCoordinatorRequesting(this.getVigilant()) || begin.isAfter(currentTime))
+	if ((isExamCoordinatorRequesting(this.getPerson()) || begin.isAfter(currentTime))
 		&& (this.getEndDate() == null || this.getEndDate().isAfter(begin))) {
 	    super.setBeginDate(begin);
 	} else {
@@ -45,6 +46,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 	}
     }
 
+    @Override
     public void setEndDate(DateTime end) {
 	if (this.getBeginDate() == null || this.getBeginDate().isBefore(end)) {
 	    super.setEndDate(end);
@@ -65,15 +67,17 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     private void doActualDelete() {
 	removeRootDomainObject();
-	this.getVigilant().removeUnavailablePeriods(this);
+	this.getPerson().removeUnavailablePeriods(this);
+	removePerson();
+	removeVigilant();
 	super.deleteDomainObject();
     }
 
     public void delete() {
-	if (isExamCoordinatorRequesting(this.getVigilant())) {
+	if (isExamCoordinatorRequesting(this.getPerson())) {
 	    this.doActualDelete();
 	} else {
-	    if (this.canChangeUnavailablePeriodFor(this.getVigilant())) {
+	    if (this.canChangeUnavailablePeriodFor(this.getPerson())) {
 		this.doActualDelete();
 	    }
 	}
@@ -87,33 +91,24 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     public void edit(DateTime begin, DateTime end, String justification) {
 
-	if (isExamCoordinatorRequesting(this.getVigilant())) {
+	if (isExamCoordinatorRequesting(this.getPerson())) {
 	    this.doActualEdit(begin, end, justification);
 	} else {
-	    if (this.canChangeUnavailablePeriodFor(this.getVigilant())) {
+	    if (this.canChangeUnavailablePeriodFor(this.getPerson())) {
 		this.doActualEdit(begin, end, justification);
 	    }
 	}
     }
 
-    @Override
-    public void setVigilant(Vigilant vigilant) {
-	if (isExamCoordinatorRequesting(vigilant) || canChangeUnavailablePeriodFor(vigilant)) {
-	    super.setVigilant(vigilant);
-	} else {
-	    throw new DomainException("vigilancy.error.cannotAddUnavailablePeriodDueToExistingConvoke");
-	}
-    }
-
-    private boolean canChangeUnavailablePeriodFor(Vigilant vigilant) {
-	if (vigilant != null) {
-	    if (!vigilant.isAllowedToSpecifyUnavailablePeriod()) {
+    private boolean canChangeUnavailablePeriodFor(Person person) {
+	if (person != null) {
+	    if (!person.isAllowedToSpecifyUnavailablePeriod()) {
 		throw new DomainException("vigilancy.error.outOutPeriodToSpecifyUnavailablePeriods");
 	    }
 	    if (this.getEndDate() != null && this.getEndDate().isBeforeNow()) {
 		throw new DomainException("vigilancy.error.cannotEditClosedUnavailablePeriod");
 	    }
-	    List<Vigilancy> convokes = vigilant.getVigilancies();
+	    List<Vigilancy> convokes = person.getVigilanciesForYear(ExecutionYear.readCurrentExecutionYear());
 	    for (Vigilancy convoke : convokes) {
 		WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
 		DateTime begin = writtenEvaluation.getBeginningDateTime();
@@ -127,17 +122,18 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 	return false;
     }
 
-    private boolean isExamCoordinatorRequesting(Vigilant vigilant) {
+    private boolean isExamCoordinatorRequesting(Person person) {
 
 	IUserView userview = AccessControl.getUserView();
 
 	if (userview != null) {
-	    Person person = userview.getPerson();
+	    Person loggedPerson = userview.getPerson();
 	    ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	    List<VigilantGroup> vigilantGroups = vigilant.getVigilantGroups();
 
-	    if (person != null) {
-		ExamCoordinator coordinator = person.getExamCoordinatorForGivenExecutionYear(executionYear);
+	    List<VigilantGroup> vigilantGroups = person.getVigilantGroupsForExecutionYear(executionYear);
+
+	    if (loggedPerson != null) {
+		ExamCoordinator coordinator = loggedPerson.getExamCoordinatorForGivenExecutionYear(executionYear);
 		if (coordinator == null) {
 		    return false;
 		} else {

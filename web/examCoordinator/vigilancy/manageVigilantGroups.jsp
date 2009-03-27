@@ -175,8 +175,8 @@
 <logic:equal name="bean" property="showVigilantColumn" value="true">
 	<td>
 		<p class="mvert05"><strong><bean:message key="label.vigilancy.vigilants" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
-		<logic:notEmpty name="group" property="vigilantsThatCanBeConvoked">
-		<fr:view name="group" property="vigilantsThatCanBeConvoked">
+		<logic:notEmpty name="group" property="vigilantWrappersThatCanBeConvoked">
+		<fr:view name="group" property="vigilantWrappersThatCanBeConvoked">
 		<fr:layout>
 		<fr:property name="eachSchema" value="presentVigilantName"/>
 		<fr:property name="sortBy" value="person.name"/>
@@ -185,9 +185,9 @@
 		</fr:layout>
 		</fr:view>
 		</logic:notEmpty>
-		<logic:notEmpty name="group" property="vigilantsThatCantBeConvoked">
+		<logic:notEmpty name="group" property="vigilantWrappersThatCantBeConvoked">
 		<p class="mvert05"><strong><bean:message key="label.vigilancy.vigilantsThatCantBeConvoked" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
-		<fr:view name="group" property="vigilantsThatCantBeConvoked">
+		<fr:view name="group" property="vigilantWrappersThatCantBeConvoked">
 		<fr:layout>
 		<fr:property name="eachSchema" value="presentVigilantName"/>
 		<fr:property name="sortBy" value="person.name"/>
@@ -263,12 +263,18 @@
 	<th><bean:message key="label.vigilancy.convokable" bundle="VIGILANCY_RESOURCES"/></th>
 	<th><bean:message key="label.vigilancy.notConvokable" bundle="VIGILANCY_RESOURCES"/></th>	
 </tr>
-<logic:iterate id="vigilant" name="bean" property="vigilantsForGroupsInBean">
+<logic:present name="vigilantWrapperBeans">
+<logic:iterate id="vigilantWrapperBean" name="vigilantWrapperBeans">
 <tr>
-	<td><fr:view name="vigilant" property="teacherCategoryCode"/></td>
-	<td><fr:view name="vigilant" property="person.username"/></td>
-	<td><fr:view name="vigilant" property="person.name"/></td>
-	<td><fr:view name="vigilant" property="vigilantsGroupsWhereCanBeConvoked">
+	<td><logic:notEmpty name="vigilantWrapperBean" property="person.teacher">
+			<logic:notEmpty name="vigilantWrapperBean" property="person.teacher.category">
+				<fr:view name="vigilantWrapperBean" property="person.teacher.category.code"/>
+			</logic:notEmpty>
+		</logic:notEmpty>
+	</td>
+	<td><fr:view name="vigilantWrapperBean" property="person.username"/></td>
+	<td><fr:view name="vigilantWrapperBean" property="person.name"/></td>
+	<td><fr:view name="vigilantWrapperBean" property="convokableForGroups">
 		<fr:layout name="flowLayout">
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="presentVigilantGroupName"/>
@@ -277,7 +283,7 @@
 	</fr:view>
 	</td>
 	<td>
-	<fr:view name="vigilant" property="vigilantsGroupsWhereCannotBeConvoked">
+	<fr:view name="vigilantWrapperBean" property="notConvokableForGroups">
 			<fr:layout name="flowLayout">
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="presentVigilantGroupName"/>
@@ -287,6 +293,7 @@
 	</td>
 </tr>
 </logic:iterate>
+</logic:present>
 </table>
 
 </logic:equal>

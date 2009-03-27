@@ -32,8 +32,16 @@ public class VigilantGroup extends VigilantGroup_Base {
 	for (Vigilant v : this.getVigilantsThatCanBeConvoked()) {
 	    sumOfPoints += v.getPoints();
 	}
-	return ((this.getVigilantsThatCanBeConvoked().isEmpty()) ? 0 : sumOfPoints
-		/ (double) this.getVigilantsThatCanBeConvoked().size());
+	return ((this.getVigilantsThatCanBeConvoked().isEmpty()) ? 0 : sumOfPoints / this.getVigilantsThatCanBeConvoked().size());
+    }
+
+    public VigilantWrapper hasPerson(Person person) {
+	for (VigilantWrapper vigilantWrapper : getVigilantWrappers()) {
+	    if (vigilantWrapper.getPerson().equals(person)) {
+		return vigilantWrapper;
+	    }
+	}
+	return null;
     }
 
     public StrategySugestion sugestVigilantsToConvoke(WrittenEvaluation writtenEvaluation) {
@@ -41,26 +49,26 @@ public class VigilantGroup extends VigilantGroup_Base {
 	String strategyName = this.getConvokeStrategy();
 	StrategyFactory factory = StrategyFactory.getInstance();
 	Strategy strategy = factory.getStrategy(strategyName);
-	List<Vigilant> possibleVigilants = new ArrayList<Vigilant>(this.getVigilantsThatCanBeConvoked());
+	List<VigilantWrapper> possibleVigilants = new ArrayList<VigilantWrapper>(this.getVigilantWrappersThatCanBeConvoked());
 	possibleVigilants.addAll(findTeachersThatAreInGroupFor(writtenEvaluation.getAssociatedExecutionCourses()));
 	return (strategy != null) ? strategy.sugest(possibleVigilants, writtenEvaluation) : null;
 
     }
 
-    private List<Vigilant> findTeachersThatAreInGroupFor(List<ExecutionCourse> executionCourses) {
-	List<Vigilant> teachers = new ArrayList<Vigilant>();
-	for (Vigilant vigilant : this.getVigilantsThatCantBeConvoked()) {
-	    Teacher teacher = vigilant.getTeacher();
+    private List<VigilantWrapper> findTeachersThatAreInGroupFor(List<ExecutionCourse> executionCourses) {
+	List<VigilantWrapper> teachers = new ArrayList<VigilantWrapper>();
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappersThatCantBeConvoked()) {
+	    Teacher teacher = vigilantWrapper.getTeacher();
 	    if (teacher != null && teacher.teachesAny(executionCourses, this.getExecutionYear())) {
-		teachers.add(vigilant);
+		teachers.add(vigilantWrapper);
 	    }
 	}
 	return teachers;
     }
 
-    public void convokeVigilants(List<Vigilant> vigilants, WrittenEvaluation writtenEvaluation) {
+    public void convokeVigilants(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation) {
 
-	for (Vigilant vigilant : vigilants) {
+	for (VigilantWrapper vigilant : vigilants) {
 	    if (!vigilant.hasBeenConvokedForEvaluation(writtenEvaluation)) {
 		Teacher teacher = vigilant.getTeacher();
 		if (teacher != null && teacher.teachesAny(writtenEvaluation.getAssociatedExecutionCourses())) {
@@ -133,6 +141,26 @@ public class VigilantGroup extends VigilantGroup_Base {
 	return vigilants;
     }
 
+    public List<VigilantWrapper> getVigilantWrappersThatCanBeConvoked() {
+	ArrayList<VigilantWrapper> vigilantWrappersThatCanBeConvoked = new ArrayList<VigilantWrapper>();
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+	    if (vigilantWrapper.getConvokable()) {
+		vigilantWrappersThatCanBeConvoked.add(vigilantWrapper);
+	    }
+	}
+	return vigilantWrappersThatCanBeConvoked;
+    }
+
+    public List<VigilantWrapper> getVigilantWrappersThatCantBeConvoked() {
+	ArrayList<VigilantWrapper> vigilantWrappersThatCantBeConvoked = new ArrayList<VigilantWrapper>();
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+	    if (!vigilantWrapper.getConvokable()) {
+		vigilantWrappersThatCantBeConvoked.add(vigilantWrapper);
+	    }
+	}
+	return vigilantWrappersThatCantBeConvoked;
+    }
+
     public List<Vigilant> getVigilantsThatCanBeConvoked() {
 	return this.getVigilantsWithACertainBound(Boolean.TRUE);
     }
@@ -165,9 +193,9 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<Person> getPersons() {
 	List<Person> persons = new ArrayList<Person>();
-	List<Vigilant> vigilants = this.getVigilants();
-	for (Vigilant vigilant : vigilants) {
-	    persons.add(vigilant.getPerson());
+	List<VigilantWrapper> vigilantWrappers = this.getVigilantWrappers();
+	for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
+	    persons.add(vigilantWrapper.getPerson());
 	}
 
 	return persons;
@@ -213,6 +241,16 @@ public class VigilantGroup extends VigilantGroup_Base {
 	return vigilantConvokes;
     }
 
+    public List<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
+	List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
+	for (Vigilancy convoke : this.getVigilancies()) {
+	    if (vigilantWrapper == convoke.getVigilantWrapper()) {
+		vigilantConvokes.add(convoke);
+	    }
+	}
+	return vigilantConvokes;
+    }
+
     public List<Vigilant> removeGivenVigilantsFromGroup(List<Vigilant> vigilants) {
 
 	List<Vigilant> vigilantsUnableToRemove = new ArrayList<Vigilant>();
@@ -231,8 +269,8 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public List<UnavailablePeriod> getUnavailablePeriodsOfVigilantsInGroup() {
 	List<UnavailablePeriod> unavailablePeriods = new ArrayList<UnavailablePeriod>();
-	for (Vigilant vigilant : this.getVigilants()) {
-	    unavailablePeriods.addAll(vigilant.getUnavailablePeriods());
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+	    unavailablePeriods.addAll(vigilantWrapper.getPerson().getUnavailablePeriods());
 	}
 	return unavailablePeriods;
     }
@@ -254,6 +292,17 @@ public class VigilantGroup extends VigilantGroup_Base {
 	    }
 	}
 	return vigilants;
+    }
+
+    public List<VigilantWrapper> getVigilantWrappersWithIncompatiblePerson() {
+	List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
+	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
+	    Person incompatiblePerson = vigilantWrapper.getPerson().getIncompatibleVigilant();
+	    if (incompatiblePerson != null && !vigilantWrappers.contains(incompatiblePerson.getVigilantWrappers())) {
+		vigilantWrappers.add(vigilantWrapper);
+	    }
+	}
+	return vigilantWrappers;
     }
 
     @Override
@@ -307,13 +356,22 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     @Service
-	public void copyPointsFromVigilantGroup(VigilantGroup previousGroup) {
-    	this.setPointsForTeacher(previousGroup.getPointsForTeacher());
-    	this.setPointsForConvoked(previousGroup.getPointsForConvoked());
-    	this.setPointsForDisconvoked(previousGroup.getPointsForDisconvoked());
-    	this.setPointsForDismissed(previousGroup.getPointsForDismissed());
-    	this.setPointsForDismissedTeacher(previousGroup.getPointsForDismissedTeacher());
-    	this.setPointsForMissing(previousGroup.getPointsForMissing());
-    	this.setPointsForMissingTeacher(previousGroup.getPointsForMissingTeacher());
+    public void copyPointsFromVigilantGroup(VigilantGroup previousGroup) {
+	this.setPointsForTeacher(previousGroup.getPointsForTeacher());
+	this.setPointsForConvoked(previousGroup.getPointsForConvoked());
+	this.setPointsForDisconvoked(previousGroup.getPointsForDisconvoked());
+	this.setPointsForDismissed(previousGroup.getPointsForDismissed());
+	this.setPointsForDismissedTeacher(previousGroup.getPointsForDismissedTeacher());
+	this.setPointsForMissing(previousGroup.getPointsForMissing());
+	this.setPointsForMissingTeacher(previousGroup.getPointsForMissingTeacher());
+    }
+
+    public VigilantWrapper getVigilantWrapperFor(Person person) {
+	for (VigilantWrapper wrapper : getVigilantWrappers()) {
+	    if (wrapper.getPerson() == person) {
+		return wrapper;
+	    }
 	}
+	return null;
+    }
 }

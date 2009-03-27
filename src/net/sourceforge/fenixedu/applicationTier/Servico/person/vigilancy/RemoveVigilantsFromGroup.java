@@ -7,35 +7,32 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveVigilantsFromGroup extends FenixService {
 
-    @Service
-    public static List<Vigilant> run(Map<VigilantGroup, List<Vigilant>> vigilantsToRemove) {
+	@Service
+	public static List<VigilantWrapper> run(
+			Map<VigilantGroup, List<VigilantWrapper>> vigilantsToRemove) {
 
-	List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
+		List<VigilantWrapper> unableToRemove = new ArrayList<VigilantWrapper>();
 
-	Set<VigilantGroup> groups = vigilantsToRemove.keySet();
-	for (VigilantGroup group : groups) {
-	    List<Vigilant> vigilants = vigilantsToRemove.get(group);
-	    for (Vigilant vigilant : vigilants) {
-		if (vigilant.getVigilantGroupsCount() == 1) {
-		    try {
-			vigilant.delete();
-		    } catch (DomainException e) {
-			unableToRemove.add(vigilant);
-		    }
-		} else {
-		    group.removeVigilants(vigilant);
+		Set<VigilantGroup> groups = vigilantsToRemove.keySet();
+
+		for (VigilantGroup group : groups) {
+			List<VigilantWrapper> vigilantWrappers = vigilantsToRemove
+					.get(group);
+
+			for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
+				try {
+					vigilantWrapper.delete();
+				} catch (DomainException e) {
+					unableToRemove.add(vigilantWrapper);
+				}
+			}
 		}
-	    }
+		return unableToRemove;
 	}
-
-	return unableToRemove;
-
-    }
-
 }

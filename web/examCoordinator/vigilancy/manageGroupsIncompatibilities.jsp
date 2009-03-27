@@ -21,19 +21,19 @@
 <logic:present name="bean" property="selectedVigilantGroup">
 <bean:define id="vigilantGroup" name="bean" property="selectedVigilantGroup" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup"/>
 
-<logic:empty name="vigilants"> 
+<logic:empty name="vigilantWrappers"> 
 	<bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.noIncompatibilitiesToManage"/> 
 </logic:empty>
 
-<logic:notEmpty name="vigilants">
+<logic:notEmpty name="vigilantWrappers">
 <ul>
-	<logic:iterate id="vigilantIterator" name="vigilants">
-	<bean:define id="vigilant" name="vigilantIterator" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant"/>
+	<logic:iterate id="vigilantWrapperIterator" name="vigilantWrappers">
+	<bean:define id="vigilantWrapper" name="vigilantWrapperIterator" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper"/>
 		<li>
-			<fr:view name="vigilant" property="person.name"/> 
+			<fr:view name="vigilantWrapper" property="person.name"/> 
 			<span class="greytxt2"><bean:message key="label.vigilancy.incompatibleWith" bundle="VIGILANCY_RESOURCES"/> </span>
-			<fr:view name="vigilant" property="incompatiblePerson.name"/> 
-			<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilant.getIdInternal() + "&gid=" + vigilantGroup.getIdInternal() %>">
+			<fr:view name="vigilantWrapper" property="person.incompatibleVigilant.name"/> 
+			<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteIncompatibility&oid=" + vigilantWrapper.getIdInternal() + "&gid=" + vigilantGroup.getIdInternal() %>">
 				<bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/>
 			</a>
 		</li>

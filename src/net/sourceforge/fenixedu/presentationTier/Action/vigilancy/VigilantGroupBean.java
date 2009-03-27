@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
@@ -29,7 +30,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private DomainReference<Department> selectedDepartment;
 
-    private DomainReference<Vigilant> selectedVigilant;
+    private DomainReference<VigilantWrapper> selectedVigilantWrapper;
 
     private List<DomainReference<Employee>> employees = new ArrayList<DomainReference<Employee>>();
 
@@ -55,7 +56,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     private boolean showCoordinators = Boolean.TRUE;
 
-    private List<DomainReference<Vigilant>> vigilants = new ArrayList<DomainReference<Vigilant>>();
+    private List<DomainReference<VigilantWrapper>> vigilants = new ArrayList<DomainReference<VigilantWrapper>>();
 
     private String username = "";
 
@@ -117,7 +118,7 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 	setExamCoordinator(null);
 	setSelectedDepartment(null);
 	setSelectedUnit(null);
-	setSelectedVigilant(null);
+	setSelectedVigilantWrapper(null);
     }
 
     public DateTime getBeginFirstUnavailablePeriod() {
@@ -160,12 +161,12 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 	ConvokeStrategy = convokeStrategy;
     }
 
-    public Vigilant getSelectedVigilant() {
-	return this.selectedVigilant.getObject();
+    public VigilantWrapper getSelectedVigilantWrapper() {
+	return this.selectedVigilantWrapper.getObject();
     }
 
-    public void setSelectedVigilant(Vigilant vigilant) {
-	this.selectedVigilant = new DomainReference<Vigilant>(vigilant);
+    public void setSelectedVigilantWrapper(VigilantWrapper vigilantWrapper) {
+	this.selectedVigilantWrapper = new DomainReference<VigilantWrapper>(vigilantWrapper);
     }
 
     public Person getPerson() {
@@ -236,30 +237,30 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 	this.name = name;
     }
 
-    public List getVigilants() {
-	List vigilants = new ArrayList<Vigilant>();
-	for (DomainReference<Vigilant> vigilant : this.vigilants) {
+    public List<VigilantWrapper> getVigilants() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
+	for (DomainReference<VigilantWrapper> vigilant : this.vigilants) {
 	    if (vigilant != null)
 		vigilants.add(vigilant.getObject());
 	}
 	return vigilants;
     }
 
-    public void setVigilants(List<Vigilant> vigilants) {
-	this.vigilants = new ArrayList<DomainReference<Vigilant>>();
-	for (Vigilant vigilant : vigilants) {
+    public void setVigilants(List<VigilantWrapper> vigilants) {
+	this.vigilants = new ArrayList<DomainReference<VigilantWrapper>>();
+	for (VigilantWrapper vigilant : vigilants) {
 	    if (vigilant != null) {
 		this.vigilants.add(new DomainReference(vigilant));
 	    }
 	}
     }
 
-    public List<Vigilant> getVigilantsWithIncompatiblePerson() {
-	List<Vigilant> vigilants = this.getVigilants();
-	List<Vigilant> vigilantsWithIncompatiblePerson = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getVigilantsWithIncompatiblePerson() {
+	List<VigilantWrapper> vigilants = this.getVigilants();
+	List<VigilantWrapper> vigilantsWithIncompatiblePerson = new ArrayList<VigilantWrapper>();
 
-	for (Vigilant vigilant : vigilants) {
-	    if (vigilant.hasIncompatiblePerson()) {
+	for (VigilantWrapper vigilant : vigilants) {
+	    if (vigilant.getPerson().hasIncompatibleVigilant()) {
 		vigilantsWithIncompatiblePerson.add(vigilant);
 	    }
 	}
@@ -308,6 +309,21 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
 	Collections.sort(vigilantsList, chain);
 	return vigilantsList;
+    }
+
+    public List<VigilantWrapper> getVigilantWrappersForGroupsInBean() {
+	Set<VigilantWrapper> vigilantWrappers = new HashSet<VigilantWrapper>();
+	List<VigilantGroup> groups = this.getVigilantGroups();
+	for (VigilantGroup group : groups) {
+	    vigilantWrappers.addAll(group.getVigilantWrappers());
+	}
+	ComparatorChain chain = new ComparatorChain();
+	chain.addComparator(VigilantWrapper.POINTS_COMPARATOR);
+	chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+	chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+	List<VigilantWrapper> vigilantWrappersList = new ArrayList<VigilantWrapper>(vigilantWrappers);
+	Collections.sort(vigilantWrappersList, chain);
+	return vigilantWrappersList;
     }
 
     public String getEmailPrefix() {

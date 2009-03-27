@@ -6,8 +6,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.ConvokeBean;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
@@ -23,7 +23,7 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
 
 	VigilantGroupBean bean = (VigilantGroupBean) source;
 	VigilantGroup vigilantGroup = bean.getSelectedVigilantGroup();
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 
 	if (source instanceof ConvokeBean) {
 	    ConvokeBean convokeBean = (ConvokeBean) bean;
@@ -35,10 +35,10 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
 		}
 	    }
 	} else {
-	    vigilants.addAll(vigilantGroup.getVigilants());
+	    vigilants.addAll(vigilantGroup.getVigilantWrappers());
 	    ComparatorChain chain = new ComparatorChain();
-	    chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-	    chain.addComparator(Vigilant.USERNAME_COMPARATOR);
+	    chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+	    chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
 	    Collections.sort(vigilants, chain);
 	}
 
