@@ -3,11 +3,8 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -411,27 +408,6 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 	    return teacher.getCategory().getWeight() <= 3;
 	}
 	return false;
-    }
-
-    public List<VigilantGroup> getVisibleVigilantGroups() {
-
-	Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
-	groups.add(getVigilantGroup());
-
-	Employee employee = this.getPerson().getEmployee();
-	if (employee != null) {
-	    ExecutionYear executionYear = getVigilantGroup().getExecutionYear();
-	    Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
-		    executionYear.getEndDateYearMonthDay());
-	    groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
-
-	} else {
-	    for (VigilantWrapper vigilantWrapper : this.getPerson().getVigilantWrappers()) {
-		groups.add(vigilantWrapper.getVigilantGroup());
-	    }
-	}
-
-	return new ArrayList<VigilantGroup>(groups);
     }
 
     @Override

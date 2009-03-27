@@ -70,7 +70,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	bean.setExecutionYear(executionYear);
 	bean.setSelectedVigilantGroup(group);
 
-	bean.setVigilantGroups(vigilancy.getVigilantWrapper().getVisibleVigilantGroups());
+	bean.setVigilantGroups(vigilancy.getVigilantWrapper().getPerson().getVisibleVigilantGroups(executionYear));
 
 	List<Vigilancy> activeOtherCourseVigilancies = new ArrayList<Vigilancy>();
 	List<VigilantWrapper> vigilantWrappers = vigilancy.getVigilantWrapper().getPerson().getVigilantWrappers();
@@ -105,6 +105,7 @@ public class VigilantManagement extends FenixDispatchAction {
 
 	VigilantWrapper vigilant = vigilantWrappers.get(0);
 	if (selectedVigilantGroup != null) {
+	    System.out.println(selectedVigilantGroup.getName());
 	    for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
 		if (vigilantWrapper.getVigilantGroup().equals(selectedVigilantGroup)) {
 		    vigilant = vigilantWrapper;
@@ -117,7 +118,7 @@ public class VigilantManagement extends FenixDispatchAction {
 	}
 
 	if (vigilant != null) {
-	    List<VigilantGroup> groups = vigilant.getVisibleVigilantGroups();
+	    List<VigilantGroup> groups = vigilant.getPerson().getVisibleVigilantGroups(executionYear);
 
 	    bean.setVigilantGroups(groups);
 	    if (groups.size() == 1) {

@@ -105,7 +105,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -634,6 +633,37 @@ public class Person extends Person_Base {
     public Boolean getIsExamCoordinatorInCurrentYear() {
 	ExamCoordinator examCoordinator = this.getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	return (examCoordinator == null) ? false : true;
+    }
+
+    public List<VigilantGroup> getVisibleVigilantGroups(ExecutionYear executionYear) {
+
+	Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
+
+	Employee employee = this.getPerson().getEmployee();
+	if (employee != null) {
+	    Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
+		    executionYear.getEndDateYearMonthDay());
+	    groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
+
+	} else {
+	    for (VigilantWrapper vigilantWrapper : this.getPerson().getVigilantWrapperForExecutionYear(executionYear)) {
+		groups.add(vigilantWrapper.getVigilantGroup());
+	    }
+	}
+
+	return new ArrayList<VigilantGroup>(groups);
+    }
+
+    public List<VigilantWrapper> getVigilantWrapperForExecutionYear(ExecutionYear executionYear) {
+	List<VigilantWrapper> wrappers = new ArrayList<VigilantWrapper>();
+	for (VigilantWrapper wrapper : getVigilantWrappers()) {
+
+	    if (wrapper.getExecutionYear() == executionYear) {
+		wrappers.add(wrapper);
+	    }
+	}
+
+	return wrappers;
     }
 
     public List<VigilantGroup> getVigilantGroupsForExecutionYear(ExecutionYear executionYear) {
