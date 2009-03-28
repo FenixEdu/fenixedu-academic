@@ -13,7 +13,9 @@
 </schema>
 
 <schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">
-	<slot name="category.code" key="label.vigilancy.category"/>
+	<slot name="category" layout="null-as-label" key="label.vigilancy.category">
+		<property name="format" value="${code}"/>
+	</slot>
 </schema>
 
 <schema name="presentVigilantName" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">
