@@ -25,7 +25,7 @@ public enum DocumentRequestType {
 
     IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
-    GENERIC_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    GENERIC_DECLARATION(false, true, AdministrativeOfficeType.DEGREE),
 
     DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
