@@ -47,6 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
 	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission"),
 	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
+	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
 	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
 	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false) })
 public class TeachingInquiryDA extends FenixDispatchAction {
@@ -65,7 +66,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("inquiryUnavailable");
 	}
 
-	request.setAttribute("hasTeachingInquiriesToAnswer", professorship.hasTeachingInquiriesToAnswer());
+	request.setAttribute("professorship", professorship);
 	request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 
@@ -257,7 +258,15 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", courseResult);
-	return actionMapping.findForward("showCourseInquiryResult");
+	return actionMapping.findForward(getCourseInquiryResultTemplate(courseResult));
+    }
+
+    private static String getCourseInquiryResultTemplate(final StudentInquiriesCourseResult courseResult) {
+	final ExecutionSemester executionPeriod = courseResult.getExecutionCourse().getExecutionPeriod();
+	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
+	    return "showCourseInquiryResult";
+	}
+	return "showCourseInquiryResult_v2";
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
@@ -273,7 +282,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	return actionMapping.findForward(getTeachingInquiryResultTemplate(teachingResult));
     }
 
-    public static String getTeachingInquiryResultTemplate(final StudentInquiriesTeachingResult teachingResult) {
+    private static String getTeachingInquiryResultTemplate(final StudentInquiriesTeachingResult teachingResult) {
 	final ExecutionSemester executionPeriod = teachingResult.getProfessorship().getExecutionCourse().getExecutionPeriod();
 	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
 	    return "showTeachingInquiryResult";
