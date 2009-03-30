@@ -21,7 +21,7 @@ public class AccountingEventsManager {
 
     private final List<DegreeType> acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent = Arrays
 	    .asList(new DegreeType[] { DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
-		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.EMPTY });
 
     private final List<DegreeType> acceptedDegreeTypesForGratuityEvent = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
 	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
