@@ -38,7 +38,7 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
 	setExtraWorkDays(extraWorkDays);
 	setLastYearExtraWorkDays(lastYearExtraWorkDays);
 	setLastModifiedDate(lastModifiedDate);
-	setEfectiveWorkDays(0);
+	setNoWorkDaysAndArticles();
     }
 
     public Double getTotalDays() {
@@ -104,72 +104,102 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     public void calculateArticles17And18() {
-	if (isInExercise()) {
+	LocalDate thisYearBeginDate = new LocalDate(getYear(), 1, 1);
+	LocalDate thisYearEndDate = new LocalDate(getYear(), 12, 31);
+	if (getAssiduousness().isStatusActive(thisYearBeginDate, thisYearEndDate)) {
 	    LocalDate beginDate = new LocalDate((getYear() - 1), 1, 1);
 	    LocalDate endDate = new LocalDate((getYear() - 1), 12, 31);
-	    AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(
-		    beginDate, endDate);
-	    Duration totalWorkedTime = Duration.ZERO;
-	    if (assiduousnessStatusHistory == null || assiduousnessStatusHistory.getAssiduousnessClosedMonths().size() == 0) {
-		setEfectiveWorkDays(0);
-	    } else {
-		for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory
-			.getAssiduousnessClosedMonths()) {
-		    if (assiduousnessClosedMonth.getClosedMonth() != null
-			    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == (getYear() - 1)) {
-			totalWorkedTime = totalWorkedTime.plus(assiduousnessClosedMonth.getTotalWorkedTime());
-		    }
+	    List<AssiduousnessStatusHistory> assiduousnessStatusHistories = getAssiduousness().getStatusBetween(beginDate,
+		    endDate);
+	    if (hasAnyAssiduousnessStatusHistoryBefore(assiduousnessStatusHistories, thisYearBeginDate.minusMonths(6))) {
+		int efectiveWorkDays = 0;
+		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
+		    efectiveWorkDays = efectiveWorkDays
+			    + calculateEfectiveWorkDays(beginDate, endDate, assiduousnessStatusHistory);
 		}
-		if (!totalWorkedTime.equals(Duration.ZERO)) {
-		    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
-		    int efectiveWorkDays = Math.round((float) (totalWorkedTime.getMillis() * Math.pow(averageWorkPeriodDuration
-			    .getMillis(), -1)));
-		    setEfectiveWorkDays(efectiveWorkDays);
-		} else {
-		    setEfectiveWorkDays(0);
+		setEfectiveWorkDays(efectiveWorkDays);
+		setEfectiveWorkYear(getYear() - 1);
+		if (efectiveWorkDays != 0) {
+		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(getYear());
+		    int maxDays = Math.round((float) (getEfectiveWorkDays() * new Double(0.08)));
+		    setArticlesValues(exemptionDaysQuantity, maxDays);
+		}
+	    } else {
+		// menos de 6 meses de contrato
+
+		assiduousnessStatusHistories = getAssiduousness().getStatusBetween(thisYearBeginDate, thisYearEndDate);
+		int efectiveWorkDays = 0;
+		LocalDate begin = thisYearBeginDate;
+		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
+		    if (assiduousnessStatusHistory.getBeginDate().isAfter(thisYearBeginDate)) {
+			begin = assiduousnessStatusHistory.getBeginDate();
+		    }
+		    efectiveWorkDays = efectiveWorkDays
+			    + calculateEfectiveWorkDays(thisYearBeginDate, thisYearEndDate, assiduousnessStatusHistory);
+		}
+		setEfectiveWorkDays(0);
+		setEfectiveWorkYear(getYear());
+		if (efectiveWorkDays != 0) {
+		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantityByDate(begin);
+		    int maxDays = (int) (efectiveWorkDays / 22 * 1.5);
+		    setArticlesValues(exemptionDaysQuantity, maxDays);
 		}
 	    }
 	} else {
-	    setEfectiveWorkDays(0);
+	    setNoWorkDaysAndArticles();
 	}
     }
 
-    private boolean isInExercise() {
-	LocalDate beginDate = new LocalDate(getYear(), 1, 1);
-	List<AssiduousnessStatusHistory> statusList = getAssiduousness().getStatusBetween(beginDate, beginDate);
-	if (statusList.size() == 0 || statusList.get(0).getAssiduousnessStatus().getState() != AssiduousnessState.ACTIVE) {
-	    return false;
-	}
-	for (Leave leave : getAssiduousness().getLeaves(beginDate)) {
-	    if (!leave.getJustificationMotive().getInExercise()) {
-		return false;
+    private boolean hasAnyAssiduousnessStatusHistoryBefore(List<AssiduousnessStatusHistory> assiduousnessStatusHistories,
+	    LocalDate date) {
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
+	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE
+		    && assiduousnessStatusHistory.getBeginDate().isBefore(date)) {
+		return true;
 	    }
 	}
-	return true;
+	return false;
     }
 
-    public Integer getArt17And18MaximumLimitDays() {
-	if (isInExercise()) {
-	    return Math.max(Math.round((float) (getEfectiveWorkDays() * new Double(0.08))), AssiduousnessExemption
-		    .getAssiduousnessExemptionDaysQuantity(getYear()));
+    private void setArticlesValues(int exemptionDaysQuantity, int maxDays) {
+	setArt17And18MaximumLimitDays(Math.max(maxDays, exemptionDaysQuantity));
+	setNumberOfArt18(Math.min(exemptionDaysQuantity, getArt17And18MaximumLimitDays()));
+	setArt17And18LimitDays(Math.min((getNumberOfArt18() + ART_17_MAXIMUM), getArt17And18MaximumLimitDays()));
+	setNumberOfArt17(Math.max((getArt17And18LimitDays() - getNumberOfArt18()), 0));
+    }
+
+    private int calculateEfectiveWorkDays(LocalDate beginDate, LocalDate endDate,
+	    AssiduousnessStatusHistory assiduousnessStatusHistory) {
+	Duration totalWorkedTime = getTotalWorkedTime(assiduousnessStatusHistory, beginDate.getYear());
+	int efectiveWorkDays = 0;
+	if (!totalWorkedTime.equals(Duration.ZERO)) {
+	    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
+	    efectiveWorkDays = Math.round((float) (totalWorkedTime.getMillis() * Math.pow(averageWorkPeriodDuration.getMillis(),
+		    -1)));
+	} else {
+	    setNoWorkDaysAndArticles();
 	}
-	return 0;
+	return efectiveWorkDays;
     }
 
-    public Integer getNumberOfArt17() {
-	return Math.max((getArt17And18LimitDays() - getNumberOfArt18()), 0);
-    }
-
-    public Integer getNumberOfArt18() {
-	if (isInExercise()) {
-	    return Math.min(AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(getYear()),
-		    getArt17And18MaximumLimitDays());
+    private Duration getTotalWorkedTime(AssiduousnessStatusHistory assiduousnessStatusHistory, int year) {
+	Duration totalWorkedTime = Duration.ZERO;
+	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory.getAssiduousnessClosedMonths()) {
+	    if (assiduousnessClosedMonth.getClosedMonth() != null
+		    && assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()) == year) {
+		totalWorkedTime = totalWorkedTime.plus(assiduousnessClosedMonth.getTotalWorkedTime());
+	    }
 	}
-	return 0;
+	return totalWorkedTime;
     }
 
-    public Integer getArt17And18LimitDays() {
-	return Math.min((getNumberOfArt18() + ART_17_MAXIMUM), getArt17And18MaximumLimitDays());
+    private void setNoWorkDaysAndArticles() {
+	setEfectiveWorkDays(0);
+	setEfectiveWorkYear(getYear());
+	setArt17And18MaximumLimitDays(0);
+	setNumberOfArt18(0);
+	setArt17And18LimitDays(0);
+	setNumberOfArt17(0);
     }
 
     public void delete() {

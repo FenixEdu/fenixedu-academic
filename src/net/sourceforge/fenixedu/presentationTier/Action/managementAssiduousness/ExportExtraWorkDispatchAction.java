@@ -68,7 +68,7 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	    saveMessages(request, actionMessages);
 	    return chooseYearMonth(mapping, actionForm, request, response);
 	}
-	List<ExtraWorkRequest> extraWorkRequests = getExtraWorkRequests(yearMonth);
+	List<ExtraWorkRequest> extraWorkRequests = getAprovedExtraWorkRequests(yearMonth);
 	if (extraWorkRequests == null || extraWorkRequests.size() == 0) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add("message", new ActionMessage("message.noPaymentRequests"));
@@ -152,10 +152,10 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	return result;
     }
 
-    private List<ExtraWorkRequest> getExtraWorkRequests(YearMonth yearMonth) {
+    private List<ExtraWorkRequest> getAprovedExtraWorkRequests(YearMonth yearMonth) {
 	List<ExtraWorkRequest> extraWorkRequests = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest extraWorkRequest : rootDomainObject.getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPartialPayingDate().equals(yearMonth.getPartial())) {
+	    if (extraWorkRequest.getPartialPayingDate().equals(yearMonth.getPartial()) && extraWorkRequest.getApproved()) {
 		extraWorkRequests.add(extraWorkRequest);
 	    }
 	}

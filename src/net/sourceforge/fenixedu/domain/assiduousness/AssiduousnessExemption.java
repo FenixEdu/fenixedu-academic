@@ -5,6 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Partial;
+
 public class AssiduousnessExemption extends AssiduousnessExemption_Base {
 
     public AssiduousnessExemption(Integer year, String description) {
@@ -22,6 +25,26 @@ public class AssiduousnessExemption extends AssiduousnessExemption_Base {
 	    }
 	}
 	return numberOfDays;
+    }
+
+    public static int getAssiduousnessExemptionDaysQuantityByDate(LocalDate date) {
+	int numberOfDays = 0;
+	for (AssiduousnessExemption assiduousnessExemption : RootDomainObject.getInstance().getAssiduousnessExemptions()) {
+	    if (assiduousnessExemption.getYear().equals(date.getYear()) && assiduousnessExemption.hasAnyShiftAfterDate(date)) {
+		numberOfDays += assiduousnessExemption.getNumberOfDays();
+	    }
+	}
+	return numberOfDays;
+    }
+
+    private boolean hasAnyShiftAfterDate(LocalDate date) {
+	for (AssiduousnessExemptionShift assiduousnessExemptionShift : getAssiduousnessExemptionShifts()) {
+	    Partial firstShiftDate = assiduousnessExemptionShift.getPartialShift().getSortedPartials().get(0);
+	    if (firstShiftDate.isAfter(date)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private int getNumberOfDays() {

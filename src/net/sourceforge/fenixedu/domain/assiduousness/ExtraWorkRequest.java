@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -14,6 +15,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
+import org.joda.time.Period;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -188,14 +190,13 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 		.add(nightExtraWorkFirstLevelAmount).add(nightExtraWorkSecondLevelAmount).add(extraNightMealAmount).doubleValue());
     }
 
-    private YearMonth getPaymentYearMonth() {
-	YearMonth yearMonth = new YearMonth(getPartialPayingDate());
-	yearMonth.addMonth();
-	return yearMonth;
+    public Partial getRealPaymentPartialDate() {
+	Partial paymentDate = getPartialPayingDate();
+	return paymentDate.plus(Period.months(1));
     }
 
     public Integer getPaymentYear() {
-	return getPaymentYearMonth().getYear();
+	return getRealPaymentPartialDate().get(DateTimeFieldType.year());
     }
 
     public Double getWorkdayAmount() {
@@ -229,16 +230,12 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
     public Integer getTotalWeekDaysHoursPayedInYear() {
 	int result = 0;
-	YearMonth yearMonth = getPaymentYearMonth();
-	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPaymentYear().equals(yearMonth.getYear())
-		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()) {
-		if (extraWorkRequest.getWorkdayHours() != null) {
-		    result = result + extraWorkRequest.getWorkdayHours();
-		}
-		if (extraWorkRequest.getExtraNightHours() != null) {
-		    result = result + extraWorkRequest.getExtraNightHours();
-		}
+	for (ExtraWorkRequest extraWorkRequest : getYearRequests()) {
+	    if (extraWorkRequest.getWorkdayHours() != null) {
+		result = result + extraWorkRequest.getWorkdayHours();
+	    }
+	    if (extraWorkRequest.getExtraNightHours() != null) {
+		result = result + extraWorkRequest.getExtraNightHours();
 	    }
 	}
 	return result;
@@ -246,16 +243,12 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
     public BigDecimal getTotalWeekDaysAmountPayedInYear() {
 	BigDecimal result = new BigDecimal(0);
-	YearMonth yearMonth = getPaymentYearMonth();
-	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPaymentYear().equals(yearMonth.getYear())
-		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()) {
-		if (extraWorkRequest.getWorkdayAmount() != null) {
-		    result = result.add(new BigDecimal(extraWorkRequest.getWorkdayAmount()));
-		}
-		if (extraWorkRequest.getExtraNightWorkAmount() != null) {
-		    result = result.add(new BigDecimal(extraWorkRequest.getExtraNightWorkAmount()));
-		}
+	for (ExtraWorkRequest extraWorkRequest : getYearRequests()) {
+	    if (extraWorkRequest.getWorkdayAmount() != null) {
+		result = result.add(new BigDecimal(extraWorkRequest.getWorkdayAmount()));
+	    }
+	    if (extraWorkRequest.getExtraNightWorkAmount() != null) {
+		result = result.add(new BigDecimal(extraWorkRequest.getExtraNightWorkAmount()));
 	    }
 	}
 	return result;
@@ -263,19 +256,29 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 
     public Integer getTotalVacationsDaysInYear() {
 	int result = 0;
-	YearMonth yearMonth = getPaymentYearMonth();
-	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPaymentYear().equals(yearMonth.getYear())
-		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()) {
-		if (extraWorkRequest.getNormalVacationsDays() != null) {
-		    result = result + extraWorkRequest.getNormalVacationsDays();
-		}
-		if (extraWorkRequest.getNightVacationsAmount() != null) {
-		    result = result + extraWorkRequest.getNightVacationsDays();
-		}
+	for (ExtraWorkRequest extraWorkRequest : getYearRequests()) {
+	    if (extraWorkRequest.getNormalVacationsDays() != null) {
+		result = result + extraWorkRequest.getNormalVacationsDays();
+	    }
+	    if (extraWorkRequest.getNightVacationsAmount() != null) {
+		result = result + extraWorkRequest.getNightVacationsDays();
 	    }
 	}
 	return result;
+    }
+
+    private List<ExtraWorkRequest> getYearRequests() {
+	Partial paymentDate = getRealPaymentPartialDate();
+	List<ExtraWorkRequest> requests = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
+	    Partial requestPaymentDate = extraWorkRequest.getRealPaymentPartialDate();
+	    if (requestPaymentDate.get(DateTimeFieldType.year()) == paymentDate.get(DateTimeFieldType.year())
+		    && requestPaymentDate.get(DateTimeFieldType.monthOfYear()) <= paymentDate
+			    .get(DateTimeFieldType.monthOfYear())) {
+		requests.add(extraWorkRequest);
+	    }
+	}
+	return requests;
     }
 
 }

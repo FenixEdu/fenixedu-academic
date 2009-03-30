@@ -156,8 +156,8 @@ public class GiafInterface {
 	    query.append(") and a.emp_num =");
 	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
 
-	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(), paymentYear,
-		    paymentMonth);
+	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(), extraWorkRequest
+		    .getHoursDoneInPartialDate());
 	    if (hasMoreThanOneCostCenter) {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());
@@ -212,9 +212,9 @@ public class GiafInterface {
 	}
     }
 
-    private boolean hasMoreThanOneCostCenter(Assiduousness assiduousness, int paymentYear, int paymentMonth) {
+    private boolean hasMoreThanOneCostCenter(Assiduousness assiduousness, Partial paymentPartialDate) {
 	Unit unit = null;
-	for (ExtraWorkRequest extraWorkRequest : assiduousness.getExtraWorkRequests(paymentYear, paymentMonth)) {
+	for (ExtraWorkRequest extraWorkRequest : assiduousness.getExtraWorkRequests(paymentPartialDate)) {
 	    if (unit == null) {
 		unit = extraWorkRequest.getUnit();
 	    } else if (!unit.equals(extraWorkRequest.getUnit())) {

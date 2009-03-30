@@ -10,26 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
-import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.Duration;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -47,13 +41,17 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("choose-year-month");
     }
 
-    public ActionForward calculateA17AndA18(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward calculateA17AndA18(ActionMapping mapping, ActionForm actionFoautrm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 
 	response.setContentType("text/plain");
-	response.setHeader("Content-disposition", "attachment; filename=a17a18.xls");
+	StringBuilder fileName = new StringBuilder();
+	fileName.append("a17a18_");
+	fileName.append(assiduousnessExportChoices.getYearMonth().getYear());
+	fileName.append(".xls");
+	response.setHeader("Content-disposition", "attachment; filename=" + fileName.toString());
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("A17A18");
 	spreadsheet.newHeaderRow();
@@ -71,46 +69,52 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	spreadsheet.addHeader("Média de horas");
+	spreadsheet.addHeader("Ano das horas");
 
 	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { assiduousnessExportChoices.getYearMonth()
 		.getYear() });
-
-	LocalDate beginDate = new LocalDate(assiduousnessExportChoices.getYearMonth().getYear() - 1, 1, 1);
-	LocalDate endDate = new LocalDate(assiduousnessExportChoices.getYearMonth().getYear() - 1, 12, 31);
 
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
 	    AssiduousnessVacations assiduousnessVacations = assiduousness
 		    .getAssiduousnessVacationsByYear(assiduousnessExportChoices.getYearMonth().getYear());
 	    if (assiduousnessVacations != null
 		    && assiduousnessVacations.getYear().equals(assiduousnessExportChoices.getYearMonth().getYear())) {
-		AssiduousnessStatusHistory assiduousnessStatusHistory = assiduousnessVacations.getAssiduousness()
-			.getLastAssiduousnessStatusHistoryBetween(beginDate, endDate);
-		if (assiduousnessStatusHistory != null) {
-		    spreadsheet.newRow();
-		    spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getEmployeeNumber().toString());
-		    spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getPerson().getName());
 
-		    spreadsheet.addCell(assiduousnessVacations.getEfectiveWorkDays());
-		    spreadsheet.addCell(assiduousnessVacations.getArt17And18MaximumLimitDays());
-		    spreadsheet.addCell(assiduousnessVacations.getArt17And18LimitDays());
-		    spreadsheet.addCell(assiduousnessVacations.getNumberOfArt17());
-		    spreadsheet.addCell(assiduousnessVacations.getNumberOfArt18());
+		spreadsheet.newRow();
+		spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getEmployeeNumber().toString());
+		spreadsheet.addCell(assiduousnessVacations.getAssiduousness().getEmployee().getPerson().getName());
 
-		    List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
-			    assiduousnessStatusHistory.getAssiduousnessClosedMonths());
-		    Collections.sort(assiduousnessClosedMonths, new BeanComparator("beginDate"));
+		int efectiveWorkDays = assiduousnessVacations.getEfectiveWorkDays().intValue();
+		spreadsheet.addCell(efectiveWorkDays);
+		spreadsheet.addCell(assiduousnessVacations.getArt17And18MaximumLimitDays());
+		spreadsheet.addCell(assiduousnessVacations.getArt17And18LimitDays());
+		spreadsheet.addCell(assiduousnessVacations.getNumberOfArt17());
+		spreadsheet.addCell(assiduousnessVacations.getNumberOfArt18());
 
-		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
-			if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == (assiduousnessExportChoices
-				.getYearMonth().getYear() - 1)) {
-			    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime(), assiduousnessClosedMonth
-				    .getBeginDate().get(DateTimeFieldType.monthOfYear()) + 6);
+		LocalDate beginDate = new LocalDate(assiduousnessVacations.getEfectiveWorkYear(), 1, 1);
+		LocalDate endDate = new LocalDate(assiduousnessVacations.getEfectiveWorkYear(), 12, 31);
+		List<AssiduousnessStatusHistory> assiduousnessStatusHistories = assiduousnessVacations.getAssiduousness()
+			.getStatusBetween(beginDate, endDate);
+
+		if (assiduousnessStatusHistories != null) {
+		    for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
+
+			List<AssiduousnessClosedMonth> assiduousnessClosedMonths = new ArrayList<AssiduousnessClosedMonth>(
+				assiduousnessStatusHistory.getAssiduousnessClosedMonths());
+			Collections.sort(assiduousnessClosedMonths, new BeanComparator("beginDate"));
+
+			for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
+			    if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == assiduousnessVacations
+				    .getEfectiveWorkYear()) {
+				spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime(), assiduousnessClosedMonth
+					.getBeginDate().get(DateTimeFieldType.monthOfYear()) + 6);
+			    }
 			}
 		    }
-
-		    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate);
-		    spreadsheet.addDuration(averageWorkPeriodDuration, 19);
 		}
+
+		spreadsheet.addDuration(assiduousness.getAverageWorkTimeDuration(beginDate, endDate), 19);
+		spreadsheet.addCell(assiduousnessVacations.getEfectiveWorkYear(), 20);
 	    }
 
 	}
@@ -119,38 +123,5 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
-    }
-
-    private YearMonth getYearMonth(HttpServletRequest request) {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	if (yearMonth == null) {
-	    yearMonth = (YearMonth) request.getAttribute("yearMonth");
-	}
-	if (yearMonth == null) {
-	    yearMonth = new YearMonth();
-	    String year = request.getParameter("year");
-	    String month = request.getParameter("month");
-
-	    if (StringUtils.isEmpty(year) || StringUtils.isEmpty(month)) {
-		ClosedMonth lastClosedMonth = ClosedMonth.getLastMonthClosed();
-		if (lastClosedMonth != null) {
-		    yearMonth = new YearMonth(lastClosedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), lastClosedMonth
-			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
-		    yearMonth.addMonth();
-		} else {
-		    yearMonth = new YearMonth(new LocalDate());
-		}
-	    } else {
-		yearMonth.setYear(new Integer(year));
-		yearMonth.setMonth(Month.valueOf(month));
-	    }
-	}
-	if (yearMonth.getYear() < 2006) {
-	    ActionMessages actionMessages = new ActionMessages();
-	    actionMessages.add("message", new ActionMessage("error.invalidPastDateNoData"));
-	    saveMessages(request, actionMessages);
-	    return null;
-	}
-	return yearMonth;
     }
 }

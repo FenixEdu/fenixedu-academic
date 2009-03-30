@@ -2280,6 +2280,11 @@ class DomainObject {
 		Double normalWithLeavesDiscount;
 		Integer year;
 		Integer efectiveWorkDays;
+		Integer efectiveWorkYear;
+		Integer art17And18MaximumLimitDays;
+		Integer art17And18LimitDays;
+		Integer numberOfArt17;
+		Integer numberOfArt18;
 	}
 
 	class assiduousness.Card extends DomainObject {

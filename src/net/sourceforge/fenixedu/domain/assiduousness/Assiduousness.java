@@ -33,7 +33,9 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Months;
 import org.joda.time.Partial;
+import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 public class Assiduousness extends Assiduousness_Base {
@@ -719,28 +721,33 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate begin) {
-	return getExtraWorkRequests(begin.getYear(), begin.getMonthOfYear());
+	begin.plusMonths(1);
+	return getYearExtraWorkRequests(begin.getYear(), begin.getMonthOfYear());
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequests(int year, int month) {
-	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
-	for (ExtraWorkRequest request : getExtraWorkRequests()) {
-	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year) {
-		if (month == request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) && request.getApproved())
-		    result.add(request);
+    public List<ExtraWorkRequest> getExtraWorkRequests(Partial paymentPartial) {
+	Partial paymentDate = paymentPartial;
+	paymentDate.plus(Period.months(1));
+	return getYearExtraWorkRequests(paymentDate.get(DateTimeFieldType.year()), paymentDate.get(DateTimeFieldType
+		.monthOfYear()));
+    }
+
+    private List<ExtraWorkRequest> getYearExtraWorkRequests(int year, int month) {
+	List<ExtraWorkRequest> requests = new ArrayList<ExtraWorkRequest>();
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    Partial requestPaymentDate = extraWorkRequest.getRealPaymentPartialDate();
+	    if (requestPaymentDate.get(DateTimeFieldType.year()) == year
+		    && requestPaymentDate.get(DateTimeFieldType.monthOfYear()) <= month) {
+		requests.add(extraWorkRequest);
 	    }
 	}
-	return result;
+	return requests;
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequestsByUnit(Unit unit, int year) {
 	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
-	    if ((request.getPartialPayingDate().get(DateTimeFieldType.year()) == (year - 1)
-		    && request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) == 12
-		    && request.getUnit().equals(unit) && request.getApproved())
-		    || (request.getPartialPayingDate().get(DateTimeFieldType.year()) == year && request.getUnit().equals(unit) && request
-			    .getApproved()) && request.getPartialPayingDate().get(DateTimeFieldType.monthOfYear()) != 12) {
+	    if (request.getPaymentYear() == year && request.getUnit().equals(unit) && request.getApproved()) {
 		result.add(request);
 	    }
 	}
