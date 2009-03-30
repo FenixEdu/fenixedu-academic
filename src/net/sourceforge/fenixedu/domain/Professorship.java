@@ -192,7 +192,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	return supportLessons;
     }
 
-    public boolean hasTeachingInquiriesToAnswer() {
+    public boolean isTeachingInquiriesToAnswer() {
 	final ExecutionCourse executionCourse = this.getExecutionCourse();
 	final InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
 		InquiryResponsePeriodType.TEACHING);
