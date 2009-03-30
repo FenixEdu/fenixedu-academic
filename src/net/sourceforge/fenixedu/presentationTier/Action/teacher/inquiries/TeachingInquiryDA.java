@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCou
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
@@ -46,7 +47,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showInquiry3rdPage", path = "teaching-inquiries.showInquiry3rdPage"),
 	@Forward(name = "confirmSubmission", path = "teaching-inquiries.confirmSubmission"),
 	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false) })
+	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
+	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false) })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -268,7 +270,15 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", teachingResult);
-	return actionMapping.findForward("showTeachingInquiryResult");
+	return actionMapping.findForward(getTeachingInquiryResultTemplate(teachingResult));
+    }
+
+    public static String getTeachingInquiryResultTemplate(final StudentInquiriesTeachingResult teachingResult) {
+	final ExecutionSemester executionPeriod = teachingResult.getProfessorship().getExecutionCourse().getExecutionPeriod();
+	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
+	    return "showTeachingInquiryResult";
+	}
+	return "showTeachingInquiryResult_v2";
     }
 
 }

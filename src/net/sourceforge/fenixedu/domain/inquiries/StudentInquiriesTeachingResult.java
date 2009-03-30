@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesTeachingResultsBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -18,6 +21,8 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
+
+    transient private Map<String, String> valuesMap = null;
 
     public StudentInquiriesTeachingResult() {
 	super();
@@ -612,4 +617,20 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	return getValueForPresentation(super.getPerc_P9_3());
     }
 
+    public Map<String, String> getValuesMap() {
+	if (this.valuesMap == null) {
+	    synchronized (this) {
+		if (this.valuesMap == null) {
+		    Map<String, String> tmpMap = new HashMap<String, String>();
+		    String[] headers = getHeaders().split("\t");
+		    String[] values = getRawValues().split("\t");
+		    for (int i = 0; i < values.length; i++) {
+			tmpMap.put(headers[i], values[i]);
+		    }
+		    this.valuesMap = Collections.unmodifiableMap(tmpMap);
+		}
+	    }
+	}
+	return valuesMap;
+    }
 }
