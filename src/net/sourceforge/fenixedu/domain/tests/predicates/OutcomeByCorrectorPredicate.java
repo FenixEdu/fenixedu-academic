@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class OutcomeByCorrectorPredicate extends AtomicPredicate implements Predicate {
-    private DomainReference<NewCorrector> corrector;
+    private final DomainReference<NewCorrector> corrector;
 
     public OutcomeByCorrectorPredicate(NewCorrector corrector) {
 	super();
 
-	this.setCorrector(corrector);
+	this.corrector = new DomainReference<NewCorrector>(corrector);
     }
 
     public OutcomeByCorrectorPredicate(PredicateBean predicateBean) {
@@ -35,10 +35,6 @@ public class OutcomeByCorrectorPredicate extends AtomicPredicate implements Pred
 	return corrector.getObject();
     }
 
-    private void setCorrector(NewCorrector corrector) {
-	this.corrector = new DomainReference<NewCorrector>(corrector);
-    }
-
     public boolean uses(Object object) {
 	NewCorrector corrector = (NewCorrector) object;
 
@@ -46,13 +42,8 @@ public class OutcomeByCorrectorPredicate extends AtomicPredicate implements Pred
     }
 
     public Predicate transform(HashMap<Object, Object> transformMap) {
-	OutcomeByCorrectorPredicate predicate = new OutcomeByCorrectorPredicate(getCorrector());
-
-	if (transformMap.get(this.getCorrector()) != null) {
-	    predicate.setCorrector((NewCorrector) transformMap.get(this.getCorrector()));
-	}
-
-	return predicate;
+	NewCorrector transformation = (NewCorrector) transformMap.get(getCorrector());
+	return new OutcomeByCorrectorPredicate(transformation != null ? transformation : getCorrector());
     }
 
 }

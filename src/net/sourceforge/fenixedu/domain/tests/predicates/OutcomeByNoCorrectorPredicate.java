@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class OutcomeByNoCorrectorPredicate extends AtomicPredicate implements Predicate {
-    private DomainReference<NewAtomicQuestion> atomicQuestion;
+    private final DomainReference<NewAtomicQuestion> atomicQuestion;
 
     public OutcomeByNoCorrectorPredicate(NewAtomicQuestion atomicQuestion) {
 	super();
 
-	this.setAtomicQuestion(atomicQuestion);
+	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
     }
 
     public OutcomeByNoCorrectorPredicate(PredicateBean predicateBean) {
@@ -40,10 +40,6 @@ public class OutcomeByNoCorrectorPredicate extends AtomicPredicate implements Pr
 	return atomicQuestion.getObject();
     }
 
-    private void setAtomicQuestion(NewAtomicQuestion atomicQuestion) {
-	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
-    }
-
     public boolean uses(Object object) {
 	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
 
@@ -51,13 +47,8 @@ public class OutcomeByNoCorrectorPredicate extends AtomicPredicate implements Pr
     }
 
     public Predicate transform(HashMap<Object, Object> transformMap) {
-	OutcomeByNoCorrectorPredicate predicate = new OutcomeByNoCorrectorPredicate(getAtomicQuestion());
-
-	if (transformMap.get(this.getAtomicQuestion()) != null) {
-	    predicate.setAtomicQuestion((NewAtomicQuestion) transformMap.get(this.getAtomicQuestion()));
-	}
-
-	return predicate;
+	NewAtomicQuestion transformation = (NewAtomicQuestion) transformMap.get(getAtomicQuestion());
+	return new OutcomeByNoCorrectorPredicate(transformation != null ? transformation : getAtomicQuestion());
     }
 
 }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.tests.NewStringQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class StringSizeMoreThanPredicate extends AtomicPredicate implements Predicate {
-    private int size;
+    private final int size;
 
     public StringSizeMoreThanPredicate(int size) {
 	super();

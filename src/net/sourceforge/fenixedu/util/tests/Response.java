@@ -2,6 +2,12 @@ package net.sourceforge.fenixedu.util.tests;
 
 import net.sourceforge.fenixedu.util.FenixUtil;
 
+/**
+ * This is not compliant with what a value type should be, but take our word
+ * that it is not modified without setting the entity type that contains it. If
+ * you feel an urge to modify this, consider refactoring the whole online tests
+ * functionality.
+ */
 public class Response extends FenixUtil {
 
     private boolean responsed = false;

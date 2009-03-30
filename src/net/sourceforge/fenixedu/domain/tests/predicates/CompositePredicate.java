@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class CompositePredicate implements Predicate {
 
-    private List<Predicate> predicates;
+    private final List<Predicate> predicates;
 
     public CompositePredicate() {
 	predicates = new ArrayList<Predicate>();

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class NumericLessThanPredicate extends AtomicPredicate implements Predicate {
-    private double value;
+    private final double value;
 
     public NumericLessThanPredicate(double value) {
 	super();

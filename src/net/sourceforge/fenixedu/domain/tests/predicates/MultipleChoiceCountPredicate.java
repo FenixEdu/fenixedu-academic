@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class MultipleChoiceCountPredicate extends AtomicPredicate implements Predicate {
-    private int count;
+    private final int count;
 
     public MultipleChoiceCountPredicate(int count) {
 	super();

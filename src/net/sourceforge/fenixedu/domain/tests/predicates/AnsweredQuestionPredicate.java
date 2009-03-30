@@ -9,12 +9,11 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
 
 public class AnsweredQuestionPredicate extends AtomicPredicate implements Predicate {
-    private DomainReference<NewAtomicQuestion> atomicQuestion;
+    private final DomainReference<NewAtomicQuestion> atomicQuestion;
 
     public AnsweredQuestionPredicate(NewAtomicQuestion atomicQuestion) {
 	super();
-
-	this.setAtomicQuestion(atomicQuestion);
+	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
     }
 
     public AnsweredQuestionPredicate(PredicateBean predicateBean) {
@@ -29,10 +28,6 @@ public class AnsweredQuestionPredicate extends AtomicPredicate implements Predic
 	return atomicQuestion.getObject();
     }
 
-    private void setAtomicQuestion(NewAtomicQuestion atomicQuestion) {
-	this.atomicQuestion = new DomainReference<NewAtomicQuestion>(atomicQuestion);
-    }
-
     public boolean uses(Object object) {
 	NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) object;
 
@@ -40,13 +35,7 @@ public class AnsweredQuestionPredicate extends AtomicPredicate implements Predic
     }
 
     public Predicate transform(HashMap<Object, Object> transformMap) {
-	AnsweredQuestionPredicate predicate = new AnsweredQuestionPredicate(getAtomicQuestion());
-
-	if (transformMap.get(this.getAtomicQuestion()) != null) {
-	    predicate.setAtomicQuestion((NewAtomicQuestion) transformMap.get(this.getAtomicQuestion()));
-	}
-
-	return predicate;
+	NewAtomicQuestion transformation = (NewAtomicQuestion) transformMap.get(getAtomicQuestion());
+	return new AnsweredQuestionPredicate(transformation != null ? transformation : getAtomicQuestion());
     }
-
 }
