@@ -34,7 +34,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createPrecedentDegreeInformation(bean);
@@ -116,11 +116,13 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    return registration;
 	}
 
-	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
-	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+	return getPersonalDetails().hasPerson() && getPersonalDetails().getPerson().hasStudent()
+		&& getPersonalDetails().getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
     }
 
     private Registration getMostRecentRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -161,13 +163,13 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.degree");
 	}
 
-	if (personHasDegree(getPerson(), selectedDegree)) {
+	if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
 		    getCandidacyExecutionInterval()).getContent());
 	}

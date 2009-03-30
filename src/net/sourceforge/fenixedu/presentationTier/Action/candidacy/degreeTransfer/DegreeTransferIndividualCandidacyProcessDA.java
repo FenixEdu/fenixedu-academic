@@ -96,7 +96,7 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final DegreeTransferIndividualCandidacyProcessBean bean = new DegreeTransferIndividualCandidacyProcessBean();
-	bean.setPersonBean(new PersonBean(getProcess(request).getCandidacyPerson()));
+	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
     }

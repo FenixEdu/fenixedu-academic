@@ -34,7 +34,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createPrecedentDegreeInformation(bean);
@@ -114,13 +114,13 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.degree");
 	}
 
-	if (personHasDegree(getPerson(), selectedDegree)) {
+	if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
 		    getCandidacyExecutionInterval()).getContent());
 	}
@@ -176,11 +176,12 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	    return registration;
 	}
 
-	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
     private boolean hasRegistration(DegreeCurricularPlan degreeCurricularPlan) {
-	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+	return getPersonalDetails().hasStudent() && getPersonalDetails().getStudent().hasRegistrationFor(degreeCurricularPlan);
     }
 
     private Registration getMostRecentRegistration(final DegreeCurricularPlan degreeCurricularPlan) {

@@ -32,7 +32,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 
 	setSelectedDegree(bean.getSelectedDegree());
 	setProfessionalStatus(bean.getProfessionalStatus());
@@ -97,13 +97,13 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
 	if (selectedDegree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
 
-	if (personHasDegree(getPerson(), selectedDegree)) {
+	if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
 		    getCandidacyExecutionInterval()).getContent());
 	}
@@ -151,7 +151,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    return registration;
 	}
 
-	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
     private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {

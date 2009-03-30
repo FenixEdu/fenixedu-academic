@@ -280,7 +280,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
 	for (final SecondCycleIndividualCandidacyProcess process : name) {
 	    final Row row = spreadsheet.addRow();
-	    row.setCell(process.getCandidacyPerson().getName());
+	    row.setCell(process.getPersonalDetails().getName());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
 	    row.setCell(process.getCandidacyProfessionalExperience());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
@@ -320,7 +320,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	private String notes;
 
 	public SecondCycleCandidacyDegreeBean(final SecondCycleIndividualCandidacyProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getCandidacySelectedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

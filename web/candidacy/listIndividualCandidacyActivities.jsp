@@ -35,10 +35,10 @@
 	</logic:notEmpty>
 	
 	<%-- student information --%>
-	<logic:notEmpty name="process" property="candidacyPerson.student">
+	<logic:notEmpty name="process" property="personalDetails.student">
 		<br/>
 		<strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/>:</strong>
-		<fr:view name="process" property="candidacyPerson.student" schema="student.show.number.information">
+		<fr:view name="process" property="personalDetails.student" schema="student.show.number.information">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			</fr:layout>
@@ -58,7 +58,7 @@
 	<%-- show person information --%>
 	<br />
 	<strong><bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" />:</strong>
-	<fr:view name="process" property="candidacyPerson" schema="CandidacyProcess.personalData">
+	<fr:view name="process" property="personalDetails" schema="CandidacyProcess.personalData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -66,8 +66,8 @@
 	</fr:view>
 	
 	<%-- show person address information --%>
-	<logic:notEmpty name="process" property="candidacyPerson.defaultPhysicalAddress">
-		<fr:view name="process" property="candidacyPerson.defaultPhysicalAddress" schema="CandidacyProcess.personPhysicalAddress">
+	<logic:notEmpty name="process" property="personalDetails.defaultPhysicalAddress">
+		<fr:view name="process" property="personalDetails.defaultPhysicalAddress" schema="CandidacyProcess.personPhysicalAddress">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

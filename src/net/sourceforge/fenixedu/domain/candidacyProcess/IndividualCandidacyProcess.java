@@ -17,7 +17,8 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON = new Comparator<IndividualCandidacyProcess>() {
 	public int compare(IndividualCandidacyProcess o1, IndividualCandidacyProcess o2) {
-	    return Person.COMPARATOR_BY_NAME_AND_ID.compare(o1.getCandidacyPerson(), o2.getCandidacyPerson());
+	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(), o2
+		    .getPersonalDetails());
 	}
     };
 
@@ -113,16 +114,16 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return getCandidacy().isDebtPayed();
     }
 
-    public Person getCandidacyPerson() {
-	return getCandidacy().getPerson();
+    public IndividualCandidacyPersonalDetails getPersonalDetails() {
+	return getCandidacy().getPersonalDetails();
     }
 
     public boolean hasCandidacyPerson() {
-	return getCandidacyPerson() != null;
+	return getPersonalDetails() != null;
     }
 
     public Student getCandidacyStudent() {
-	return hasCandidacyPerson() && getCandidacyPerson().hasStudent() ? getCandidacyPerson().getStudent() : null;
+	return getPersonalDetails().getStudent();
     }
 
     public boolean hasCandidacyStudent() {

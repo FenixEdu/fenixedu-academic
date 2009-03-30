@@ -51,7 +51,9 @@
 	</slot>	
 </schema>
 
-<schema name="CandidacyProcess.personalData" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
+<schema name="CandidacyProcess.personalData"
+	type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails"
+	bundle="APPLICATION_RESOURCES">
 	<slot name="name" key="label.name">
 		<property name="classes" value="bold" />
 	</slot>
@@ -61,7 +63,7 @@
 	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.documentIdExpirationDate" />
 	<slot name="emissionLocationOfDocumentId" key="label.documentIdEmissionLocation" />
 	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirth" />
-	<slot name="gender" key="label.gender"  />
+	<slot name="gender" key="label.gender" />
 	<slot name="maritalStatus" key="label.maritalStatus" />
 	<slot name="country.name" key="label.nationality" />
 	<slot name="socialSecurityNumber" key="label.socialSecurityNumber" />
@@ -246,9 +248,9 @@
 
 <schema name="IndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyDate" key="label.candidacy.date" />
-	<slot name="candidacyPerson.name" key="label.name" />
-	<slot name="candidacyPerson.name" key="label.name" />
-	<slot name="candidacyPerson.documentIdNumber" key="label.identificationNumber" />
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="personalDetails.name" key="label.name" />
+	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
 </schema>
 
@@ -427,7 +429,7 @@
 </schema>
 
 <schema name="CandidacyProcess.candidacyDegreeBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$CandidacyDegreeBean" bundle="APPLICATION_RESOURCES">
-	<slot name="person" layout="format" key="label.name">
+	<slot name="personalDetails" layout="format" key="label.name">
 		<property name="format" value="${name} (${documentIdNumber})" />
 	</slot>
 	<slot name="degree.presentationName" key="label.Degree" />
@@ -503,8 +505,8 @@
 </schema>
 
 <schema name="Over23IndividualCandidacyResultBean.manage.all.students" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.documentIdNumber" read-only="true" key="label.identificationNumber" />
-	<slot name="candidacyProcess.candidacyPerson.name" read-only="true" key="label.name" />
+	<slot name="candidacyProcess.personalDetails.documentIdNumber" read-only="true" key="label.identificationNumber" />
+	<slot name="candidacyProcess.personalDetails.name" read-only="true" key="label.name" />
 	<slot name="state" key="label.candidacy.individual.state">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
@@ -567,7 +569,7 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
@@ -638,7 +640,7 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacy.introduce.results.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
@@ -706,7 +708,7 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
@@ -747,7 +749,7 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonIndividual.introduce.result.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
@@ -931,7 +933,7 @@
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyResultBean.introduce.result.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
@@ -1089,7 +1091,7 @@
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyProcess.introduce.result.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
@@ -1165,7 +1167,7 @@
 </schema>
 
 <schema name="StandaloneIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="state" key="label.candidacy.individual.state">
@@ -1174,8 +1176,8 @@
 </schema>
 
 <schema name="StandaloneIndividualCandidacyResultBean.manage.all.students" type="net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.documentIdNumber" read-only="true" key="label.identificationNumber" />
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+	<slot name="candidacyProcess.personalDetails.documentIdNumber" read-only="true" key="label.identificationNumber" />
+	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
 	<slot name="state" key="label.candidacy.individual.state">

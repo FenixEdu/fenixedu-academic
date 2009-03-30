@@ -7,10 +7,10 @@
  * The Fenix domain classes are all in the
  * net.sourceforge.fenixedu.domain package or some sub-package of
  * this package.
-*
+ * 
  * Note that this package declaration applies only to the
  * entity-types.  Value types are not affected by this.
-*/
+ */
 
 package net.sourceforge.fenixedu.domain;
 
@@ -4587,7 +4587,7 @@ class DomainObject {
 	
 					class serviceRequests.documentRequests.SchoolRegistrationDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
 					}
-					
+	
 					class serviceRequests.documentRequests.GenericDeclarationRequest extends serviceRequests.documentRequests.DeclarationRequest {
 					}
 	
@@ -5512,7 +5512,7 @@ class DomainObject {
 
 	class util.email.ExecutionCourseSender extends util.email.Sender {
 	}
-	
+
 	class util.email.CoordinatorSender extends util.email.Sender {
 	}
 
@@ -5575,7 +5575,7 @@ class DomainObject {
 		Integer pointsForTeacher;
 		String rulesLink;
 	}
-	
+
 	class vigilancy.VigilantWrapper extends DomainObject {
 		BigDecimal pointsWeight;
 		BigDecimal startPoints;
@@ -5784,7 +5784,6 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 		String style;
 	}
 
-
 		
 		class ExecutionCourseSite extends Site {
 			Boolean dynamicMailDistribution;
@@ -5808,7 +5807,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			MultiLanguageString sideBanner;
 			String googleAnalyticsCode;
 		}
-
+		
 		class DegreeSite extends UnitSite {
 		}
 
@@ -6004,6 +6003,16 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 	ProfessionType spouseProfessionType;
 	ProfessionalSituationConditionType spouseProfessionalCondition;
 
+}
+
+class candidacyProcess.IndividualCandidacyPersonalDetails extends DomainObject {
+}
+
+class candidacyProcess.IndividualCandidacyInternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
+}
+
+class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
+    Boolean internalized;
 }
 
 	class candidacyProcess.over23.Over23IndividualCandidacy extends candidacyProcess.IndividualCandidacy {
@@ -14393,9 +14402,14 @@ relation IndividualCandidacyRootDomainObject {
 	}
 }
 
+relation IndividualCandidacyCandidacyPersonalDetails {
+    candidacyProcess.IndividualCandidacy playsRole candidacy;
+    candidacyProcess.IndividualCandidacyPersonalDetails playsRole personalDetails;
+}
+
 relation IndividualCandidacyPerson {
 	Person playsRole person;
-	candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
+	candidacyProcess.IndividualCandidacyPersonalDetails playsRole individualCandidacies {
 		multiplicity *;
 	}
 }
@@ -15083,6 +15097,7 @@ relation YearDelegateCourseInquiryRootDomainObject {
 		multiplicity *;
 	}
 }
+
 relation AdministrativeOfficePermissionGroupRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
@@ -15117,3 +15132,4 @@ relation AdministrativeOfficePermissionGroupPermission {
 		multiplicity *;
 	}
 }
+

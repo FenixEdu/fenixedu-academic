@@ -47,6 +47,17 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
     }
 
+    public ActionForward exportXls(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	TutorateBean bean = (TutorateBean) getRenderedObject("tutorateBean");
+	Person person = Teacher.readByNumber(bean.getPersonNumber()).getPerson();
+	generateStudentsPerformanceBean(request, person);
+	request.setAttribute("tutor", person);
+	request.setAttribute("tutorateBean", bean);
+	RenderUtils.invalidateViewState();
+	return prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
+    }
+
     @Override
     public ActionForward prepareAllStudentsStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

@@ -156,7 +156,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	final Spreadsheet spreadsheet = new Spreadsheet(degree.getSigla(), getHeader());
 	for (final DegreeCandidacyForGraduatedPersonIndividualProcess process : candidacyProcesses) {
 	    final Row row = spreadsheet.addRow();
-	    row.setCell(process.getCandidacyPerson().getName());
+	    row.setCell(process.getPersonalDetails().getName());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
 	    row.setCell(process.getCandidacyAffinity());
 	    row.setCell(process.getCandidacyDegreeNature());
@@ -233,7 +233,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 
     static public class DegreeCandidacyForGraduatedPersonDegreeBean extends CandidacyDegreeBean {
 	public DegreeCandidacyForGraduatedPersonDegreeBean(final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getCandidacySelectedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

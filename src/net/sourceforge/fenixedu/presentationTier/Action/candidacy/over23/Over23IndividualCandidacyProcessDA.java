@@ -126,7 +126,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
-	bean.setPersonBean(new PersonBean(getProcess(request).getCandidacyPerson()));
+	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
     }

@@ -248,7 +248,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	    } else {
 		excelSpreadsheet.addCell("-");
 	    }
-	    excelSpreadsheet.addCell(process.getCandidacyPerson().getName());
+	    excelSpreadsheet.addCell(process.getPersonalDetails().getName());
 	    final CandidacyPrecedentDegreeInformation information = process.getCandidacyPrecedentDegreeInformation();
 	    excelSpreadsheet.addCell(information.getDegreeAndInstitutionName());
 	    excelSpreadsheet.addCell(getValue(process.getCandidacyAffinity()));
@@ -369,7 +369,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class DegreeTransferCandidacyDegreeBean extends CandidacyDegreeBean {
 	DegreeTransferCandidacyDegreeBean(final DegreeTransferIndividualCandidacyProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getCandidacySelectedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

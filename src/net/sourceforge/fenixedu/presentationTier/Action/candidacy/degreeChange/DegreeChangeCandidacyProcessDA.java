@@ -196,7 +196,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	    } else {
 		excelSpreadsheet.addCell("-");
 	    }
-	    excelSpreadsheet.addCell(process.getCandidacyPerson().getName());
+	    excelSpreadsheet.addCell(process.getPersonalDetails().getName());
 	    final CandidacyPrecedentDegreeInformation information = process.getCandidacyPrecedentDegreeInformation();
 	    excelSpreadsheet.addCell(information.getDegreeAndInstitutionName());
 	    excelSpreadsheet.addCell(getValue(process.getCandidacyAffinity()));
@@ -368,7 +368,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class DegreeChangeCandidacyDegreeBean extends CandidacyDegreeBean {
 	DegreeChangeCandidacyDegreeBean(final DegreeChangeIndividualCandidacyProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getCandidacySelectedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

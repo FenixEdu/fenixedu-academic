@@ -28,7 +28,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
 
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createPrecedentDegreeInformation(bean);
@@ -56,7 +56,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     }
 
     private void createDebt() {
-	new DegreeCandidacyForGraduatedPersonEvent(this, getPerson());
+	new DegreeCandidacyForGraduatedPersonEvent(this, getPersonalDetails().getPerson());
     }
 
     @Override
@@ -78,11 +78,11 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
 	}
-	
+
 	if (hasRegistration() && getRegistration().getDegree() != selectedDegree) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.degree");
 	}

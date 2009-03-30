@@ -114,7 +114,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 		    request.setAttribute("candidacyProcesses", candidacyProcesses);
 		    return;
 		}
-		
+
 		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 		request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
 	    }
@@ -215,8 +215,8 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     private void addRow(final Spreadsheet spreadsheet, final StandaloneIndividualCandidacyProcess candidacy) {
 	final Row row = spreadsheet.addRow();
-	row.setCell(candidacy.getCandidacyPerson().getName());
-	row.setCell(candidacy.getCandidacyPerson().getDocumentIdNumber());
+	row.setCell(candidacy.getPersonalDetails().getName());
+	row.setCell(candidacy.getPersonalDetails().getDocumentIdNumber());
 
 	final StringBuilder names = new StringBuilder();
 	final Iterator<CurricularCourse> elements = candidacy.getCurricularCourses().iterator();
@@ -246,7 +246,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
     static public class StandaloneCandidacyDegreeBean extends CandidacyDegreeBean {
 
 	public StandaloneCandidacyDegreeBean(final StandaloneIndividualCandidacyProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getCandidacySelectedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

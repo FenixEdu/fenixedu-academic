@@ -9,16 +9,21 @@
 
 <bean:define id="processName" name="processName"/>
 <bean:define id="processId" name="process" property="idInternal" />
-<bean:define id="personId" name="process" property="candidacy.person.idInternal" />
 
 <br/>
 
 <ul>
-	<li>
-		<html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
-			<bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
-		</html:link>
-	</li>
+    <li>
+        <logic:notEmpty name="process" property="candidacy.personalDetails.person">
+           <bean:define id="personId" name="process" property="candidacy.personalDetails.person.idInternal" />
+		   <html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
+			   <bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
+           </html:link>
+	   </logic:notEmpty>
+	   <logic:empty name="process" property="candidacy.personalDetails.person">
+           <bean:message key="label.payments.no.payments"/>
+	   </logic:empty>
+    </li>
 	<li>
 		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 			<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	

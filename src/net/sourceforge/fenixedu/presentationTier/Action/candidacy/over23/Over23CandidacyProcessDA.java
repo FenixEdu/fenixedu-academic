@@ -132,8 +132,8 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
 	for (final Over23IndividualCandidacyProcess candidacy : over23IndividualCandidacies) {
 	    final Row row = result.addRow();
-	    row.setCell(candidacy.getCandidacyPerson().getName());
-	    row.setCell(candidacy.getCandidacyPerson().getDocumentIdNumber());
+	    row.setCell(candidacy.getPersonalDetails().getName());
+	    row.setCell(candidacy.getPersonalDetails().getDocumentIdNumber());
 
 	    int count = 1;
 	    String degrees = "";
@@ -239,7 +239,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
     static public class Over23CandidacyDegreeBean extends CandidacyDegreeBean {
 	public Over23CandidacyDegreeBean(final Over23IndividualCandidacyProcess process) {
-	    setPerson(process.getCandidacyPerson());
+	    setPersonalDetails(process.getPersonalDetails());
 	    setDegree(process.getAcceptedDegree());
 	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());

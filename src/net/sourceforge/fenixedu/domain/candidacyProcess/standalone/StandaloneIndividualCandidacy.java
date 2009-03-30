@@ -34,7 +34,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	this();
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate());
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 	addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
 	createDebt(person);
     }
@@ -71,7 +71,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     }
 
     public void editCandidacyInformation(final LocalDate candidacyDate, final List<CurricularCourse> curricularCourses) {
-	super.checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	super.checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 	setCandidacyDate(candidacyDate);
 	getCurricularCourses().clear();
 	addSelectedCurricularCourses(curricularCourses, getCandidacyExecutionInterval());
@@ -111,7 +111,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	    return registration;
 	}
 
-	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
     @Override

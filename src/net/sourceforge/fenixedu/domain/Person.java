@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
@@ -3057,7 +3058,8 @@ public class Person extends Person_Base {
 
     private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz,
 	    final ExecutionInterval executionInterval) {
-	for (final IndividualCandidacy candidacy : getIndividualCandidacies()) {
+	for (final IndividualCandidacyPersonalDetails candidacyDetails : getIndividualCandidacies()) {
+	    IndividualCandidacy candidacy = candidacyDetails.getCandidacy();
 	    if (!candidacy.isCancelled() && candidacy.getClass().equals(clazz) && candidacy.isFor(executionInterval)) {
 		return true;
 	    }

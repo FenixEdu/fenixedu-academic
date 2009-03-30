@@ -29,10 +29,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    protected void init(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
-	setPerson(person);
+    protected void init(final IndividualCandidacyProcessBean bean, final IndividualCandidacyProcess process) {
+	IndividualCandidacyPersonalDetails.createDetails(this, bean);
 	setCandidacyProcess(process);
-	setCandidacyDate(candidacyDate);
+	setCandidacyDate(bean.getCandidacyDate());
 	setState(IndividualCandidacyState.STAND_BY);
     }
 
@@ -59,7 +59,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public void editPersonalCandidacyInformation(final PersonBean personBean) {
-	getPerson().edit(personBean);
+	getPersonalDetails().edit(personBean);
     }
 
     public void cancel(final Person person) {
@@ -156,7 +156,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	    return registration;
 	}
 
-	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+	getPersonalDetails().ensurePersonInternalization();
+	return createRegistration(getPersonalDetails().getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
@@ -174,11 +175,12 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     protected boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
-	return getPerson().hasStudent() && getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
+	return getPersonalDetails().hasStudent()
+		&& getPersonalDetails().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 
     public Student getStudent() {
-	return getPerson().hasStudent() ? getPerson().getStudent() : null;
+	return getPersonalDetails().getStudent();
     }
 
     public boolean hasStudent() {

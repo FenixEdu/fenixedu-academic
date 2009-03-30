@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
@@ -39,15 +38,12 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
     }
 
     public String getStudentNumber() {
-	return getCandidacyPerson().hasStudent() ? getCandidacyPerson().getStudent().getNumber().toString() : null;
-    }
-
-    private Person getCandidacyPerson() {
-	return getCandidacyProcess().getCandidacyPerson();
+	return getCandidacyProcess().getPersonalDetails().hasStudent() ? getCandidacyProcess().getPersonalDetails().getStudent()
+		.getNumber().toString() : null;
     }
 
     public String getCandidacyPersonName() {
-	return getCandidacyPerson().getName();
+	return getCandidacyProcess().getPersonalDetails().getName();
     }
 
     public BigDecimal getAffinity() {

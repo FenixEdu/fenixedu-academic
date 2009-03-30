@@ -15,6 +15,9 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private static final long serialVersionUID = 2860833709120576930L;
 
+    // TODO: this must be set to false if you want to use external persons
+    private Boolean internalPersonCandidacy = Boolean.TRUE;
+
     private DomainReference<CandidacyProcess> candidacyProcess;
 
     private ChoosePersonBean choosePersonBean;
@@ -24,6 +27,17 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     private LocalDate candidacyDate;
 
     private CandidacyInformationBean candidacyInformationBean;
+
+    public IndividualCandidacyProcessBean() {
+    }
+
+    public Boolean getInternalPersonCandidacy() {
+	return internalPersonCandidacy;
+    }
+
+    public void setInternalPersonCandidacy(Boolean internalPersonCandidacy) {
+	this.internalPersonCandidacy = internalPersonCandidacy;
+    }
 
     public CandidacyProcess getCandidacyProcess() {
 	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
@@ -70,7 +84,12 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     }
 
     public Person getOrCreatePersonFromBean() {
-	return getPersonBean().hasPerson() ? getPersonBean().getPerson().edit(getPersonBean()) : new Person(getPersonBean());
+	if (!getPersonBean().hasPerson()) {
+	    Person person = new Person(getPersonBean());
+	    getPersonBean().setPerson(person);
+	    return person;
+	}
+	return getPersonBean().getPerson().edit(personBean);
     }
 
     public ExecutionInterval getCandidacyExecutionInterval() {

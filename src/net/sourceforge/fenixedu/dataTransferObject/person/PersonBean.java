@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
@@ -120,8 +121,19 @@ public class PersonBean implements Serializable {
 	setDateOfBirth(dateOfBirth);
     }
 
-    public PersonBean(Person person) {
+    public PersonBean(IndividualCandidacyPersonalDetails details) {
+	if (details.isInternal()) {
+	    initPerson(details.getPerson());
+	} else {
+	    // TODO: initialize the bean with
+	}
+    }
 
+    public PersonBean(Person person) {
+	initPerson(person);
+    }
+
+    private void initPerson(Person person) {
 	setName(person.getName());
 	setUsername(person.getUsername());
 	setGender(person.getGender());

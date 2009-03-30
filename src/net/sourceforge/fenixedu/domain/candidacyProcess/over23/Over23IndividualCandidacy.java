@@ -30,7 +30,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegrees());
 
-	init(person, process, bean.getCandidacyDate());
+	init(bean, process);
 
 	setDisabilities(bean.getDisabilities());
 	setEducation(bean.getEducation());
@@ -94,7 +94,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     void editCandidacyInformation(final LocalDate candidacyDate, final List<Degree> degrees, final String disabilities,
 	    final String education, final String languages) {
 
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 	checkDegrees(degrees);
 
 	setCandidacyDate(candidacyDate);

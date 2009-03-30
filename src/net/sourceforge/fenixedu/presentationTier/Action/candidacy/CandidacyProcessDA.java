@@ -13,12 +13,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -48,6 +47,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     abstract protected Class getCandidacyPeriodType();
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setExecutionInterval(request);
@@ -135,17 +135,17 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
      */
     static public class CandidacyDegreeBean implements Serializable, Comparable<CandidacyDegreeBean> {
 
-	private DomainReference<Person> person;
+	private DomainReference<IndividualCandidacyPersonalDetails> details;
 	private DomainReference<Degree> degree;
 	private IndividualCandidacyState state;
 	private boolean isRegistrationCreated;
 
-	public Person getPerson() {
-	    return (this.person != null) ? this.person.getObject() : null;
+	public IndividualCandidacyPersonalDetails getPersonalDetails() {
+	    return (this.details != null) ? this.details.getObject() : null;
 	}
 
-	public void setPerson(Person person) {
-	    this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	public void setPersonalDetails(IndividualCandidacyPersonalDetails details) {
+	    this.details = (details != null) ? new DomainReference<IndividualCandidacyPersonalDetails>(details) : null;
 	}
 
 	public Degree getDegree() {
@@ -173,7 +173,8 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	}
 
 	public int compareTo(CandidacyDegreeBean other) {
-	    return Party.COMPARATOR_BY_NAME_AND_ID.compare(getPerson(), other.getPerson());
+	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(getPersonalDetails(), other
+		    .getPersonalDetails());
 	}
     }
 
