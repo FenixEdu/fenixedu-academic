@@ -17,11 +17,11 @@
 	</logic:notEmpty>
 </logic:present>
 
-<c:if test="${hasTeachingInquiriesToAnswer}">
+<c:if test="${professorship.teachingInquiriesToAnswer}">
 	<h4 class="mtop2">
 		<html:link page="/teachingInquiry.do?method=showInquiries1stPage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 			<bean:message key="link.teachingInquiries.fillInquiry" bundle="INQUIRIES_RESOURCES"/>
-		</html:link>
+		</html:link> <c:if test="${not empty professorship.teachingInquiry}"><span class="success0 smalltxt"><bean:message key="label.filled" bundle="INQUIRIES_RESOURCES"/></span></c:if>
 	</h4>
 </c:if>
 
@@ -50,6 +50,7 @@
 		</logic:notEmpty>
 	</logic:iterate>
 
+<%-- 
 	<p class="separator2 mtop25"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
 	<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
 		<% if (professorship.getTeacher().getPerson() == AccessControl.getPerson()) { %>
@@ -64,5 +65,6 @@
 			</logic:empty>
 		<% } %>
 	</logic:iterate>
+--%>
 
 </logic:present>

@@ -105,6 +105,8 @@ padding-right: 8px;
 }
 </style>
 
+<fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
+
 <bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult"></bean:define>
 
 <p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
@@ -140,8 +142,8 @@ padding-right: 8px;
 	</tr>
 	<tr>
 		<th>Representatividade para divulgação</th>
-        <td><c:out value="${inquiryResult.valuesMap['Repres_doc_curso_UC_interna']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Repres_doc_curso_UC_publica']}" /></td>        
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_doc_curso_UC_interna']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_doc_curso_UC_publica']}" /></td>
 	</tr>
 </table>
 
@@ -156,10 +158,10 @@ padding-right: 8px;
 	</tr>
 	<tr>
 		<th>Resultados a melhorar</th>
-        <td><c:out value="${inquiryResult.valuesMap['Res_insatisf_assiduidade']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_insatisf_prov_aprend_pres']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_insatisf_cap_pedag']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_insatisf_int_alunos']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_insatisf_assiduidade']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_insatisf_prov_aprend_pres']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_insatisf_cap_pedag']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_insatisf_int_alunos']}" /></td>
 	</tr>
 </table>
 
@@ -173,10 +175,10 @@ padding-right: 8px;
     </tr>
     <tr>
         <th>Resultados excelentes</th>
-        <td><c:out value="${inquiryResult.valuesMap['Res_excelentes_assiduidade']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_excelentes_prov_aprend_pres']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_excelentes_cap_pedag']}" /></td>
-        <td><c:out value="${inquiryResult.valuesMap['Res_excelentes_int_alunos']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_excelentes_assiduidade']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_excelentes_prov_aprend_pres']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_excelentes_cap_pedag']}" /></td>
+        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Res_excelentes_int_alunos']}" /></td>
     </tr>
 </table>
 

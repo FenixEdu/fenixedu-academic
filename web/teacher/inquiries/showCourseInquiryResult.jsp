@@ -105,7 +105,7 @@ padding-right: 8px;
 }
 </style>
 
-<p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
+<p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a 5 Novembro 2008</em></p>
 
 <h2>QUC - Garantia da Qualidade das UC - Resultados dos inquéritos aos alunos</h2>
 
@@ -123,28 +123,28 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft td50px thbgnone tdright">
 	<tr class="top">
 		<th>Nº de inscritos</th>
-		<td><c:out value="${inquiryResult.valuesMap['N_inscritos']}" /></td>
+		<td><c:out value="${inquiryResult.numberOfEnrolled}" /></td>
 	</tr>
 	<tr>
 		<th>Avaliados <a href="#" class="helpleft">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
-		<td><c:out value="${inquiryResult.valuesMap['perc_Avaliados']}" /></td>
+		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.evaluatedRatioForPresentation}" /></td>
 	</tr>
 	<tr>
 		<th>Aprovados <a href="#" class="helpleft">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
-		<td><c:out value="${inquiryResult.valuesMap['perc_Aprovados']}" /></td>
+		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.approvedRatioForPresentation}" /></td>
 	</tr>
 	<tr>
 		<th>Média notas <a href="#" class="helpleft">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
-		<td><c:out value="${inquiryResult.valuesMap['Media_Notas']}" /></td>
+		<td><c:out value="${inquiryResult.gradeAverageForPresentation}" /></td>
 	</tr>
 	<tr>
 		<th>Sujeita a inquérito <a href="#" class="helpleft">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
-		<td><c:out value="${inquiryResult.valuesMap['disponível_ inquérito']}" /></td>
+		<td><bean:message key="<%= "label." + result.getAvailableToInquiry().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
 <em>(informação do sistema)</em>
 
-<logic:equal name="inquiryResult" property="executionCourse.availableForInquiries" value="true">
+<logic:equal name="inquiryResult" property="availableToInquiry" value="true">
 	<h3 class="mtop15 mbottom0"><strong>Estatística de preenchimento e representatividade</strong></h3>
 	
 	<table class="tstyle1 thlight thleft td50px tdright">
@@ -154,24 +154,24 @@ padding-right: 8px;
 			<th class="aright">%</th>
 		</tr>
 		<tr>
-			<th>Respostas ao quadro inicial (carga de trabalho)</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_respostasQI']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_respQI']}" /></td>
+			<th>Respostas válidas quadro inicial (carga de trabalho)</th>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.validInitialFormAnswersNumber}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.validInitialFormAnswersRatio}" /></td>
 		</tr>
 		<tr>
-			<th>Inquéritos submetidos à UC <a href="#" class="helpleft">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a></th>
-			<td><c:out value="${inquiryResult.valuesMap['N_Inq_sub_UC']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_inq_sub_UC']}" /></td>
+			<th>Respostas válidas inquérito à UC <a href="#" class="helpleft">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a></th>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.validInquiryAnswersNumber}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.validInquiryAnswersRatio}" /></td>
 		</tr>
 		<tr>
 			<th>Não respostas à UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_NaoRespostasUC']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_NaoRespostasUC']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.noInquiryAnswersNumber}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.noInquiryAnswersRatio}" /></td>
 		</tr>
 		<tr>
-			<th>Respostas válidas à UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_Inq_aval_UC']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_Inq_aval_UC']}" /></td>
+			<th>Respostas inválidas inquérito à UC</th>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.invalidInquiryAnswersNumber}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.invalidInquiryAnswersRatio}" /></td>
 		</tr>
 	</table>
 									
@@ -184,8 +184,8 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Representatividade para divulgação</th>
-			<td><c:out value="${inquiryResult.valuesMap['Repres_div_interna']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Repres_div_publica']}" /></td>
+			<td><bean:message key="<%= "label." + result.getInternalDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getPublicDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 		</tr>
 	</table>
 	
@@ -193,34 +193,19 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais de 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
+			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
 			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
 			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
 		</tr>
 		<tr>
 			<th>Resultados a melhorar</th>
-			<td><c:out value="${inquiryResult.valuesMap['ResInsatisfat_OrganizUC']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['ResInsatisf_avaliacaoUC']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['UC_auditoria']}" /></td>
+			<td><bean:message key="<%= "label." + result.getUnsatisfactoryResultsCUOrganization().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getUnsatisfactoryResultsCUEvaluation().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+			<td><bean:message key="<%= "label." + result.getAuditCU().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 		</tr>
 	</table>
-
-    <table class="tstyle1 thlight thleft tdcenter">
-        <tr class="top">
-            <th></th>
-            <th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% alunos classifica como acima ou igual a 7(Concordo), todas as questões do grupo.</span></a></th>
-            <th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% alunos classifica como acima ou igual a 7 (Concordo) a questão.</span></a></th>
-        </tr>
-        <tr>
-            <th>Resultados exclentes</th>
-            <td><c:out value="${inquiryResult.valuesMap['ResExcelent_OrganizacaoUC']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['ResExcelent_AvaliacaoUC']}" /></td>
-        </tr>
-    </table>
-
-
 </logic:equal>
-<logic:notEqual name="inquiryResult" property="executionCourse.availableForInquiries" value="true">
+<logic:notEqual name="inquiryResult" property="availableToInquiry" value="true">
 <!-- TEXTO 2 -->
 </logic:notEqual>
 
@@ -232,11 +217,11 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft td50px">
 		<tr class="top">
 			<th>Carga Horária da UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['CargaHoraria']}" /></td>
+			<td><c:out value="${inquiryResult.scheduleLoadForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Nº ECTS da UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['ECTS']}" /></td>
+			<td><c:out value="${inquiryResult.ectsForPresentation}" /></td>
 		</tr>
 	</table>
 	<em>(informação do sistema)</em>
@@ -252,21 +237,21 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Nº médio de horas de trabalho autónomo por semana com a UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_NHTA']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['M_NHTA_']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['dp_NHTA_']}" /></td>
+			<td><c:out value="${inquiryResult.number_perc_NHTA}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_perc_weeklyHoursForPresentation}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_perc_NHTAForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Nº de dias de estudo da UC na época de exames</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_NDE']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_NDE_']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_NDE_']}" /></td>
+			<td><c:out value="${inquiryResult.number_NDE}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_NDEForPresentation}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_NDEForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Nº médio ECTS estimado <a href="#" class="helpleft">[?] <span>ECTS ESTIMADO = ((Nº de horas de trabalho autónomo por semana com a UC + Carga Horária da UC)* 14+ Nº de dias de estudo da UC na época de exames * 8)/28.</span></a></th>
-            <td><c:out value="${inquiryResult.valuesMap['N_ECTS_estimados']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_ECTSEstimados']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_ECTSestimados']}" /></td>
+			<td><c:out value="${inquiryResult.estimatedEctsNumber}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.estimatedEctsAverageForPresentation}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.estimatedEctsStandardDeviationForPresentation}" /></td>
 		</tr>
 	</table>
 	
@@ -285,14 +270,14 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Gama de valores da classificação dos alunos</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_1']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_10_12']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_13_14']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_15_16']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_17_18']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_19_20']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_flunked']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_nonEvaluated']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_1}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_10_12ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_13_14ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_15_16ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_17_18ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_19_20ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_flunkedForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_nonEvaluatedForPresentation}" /></td>
 		</tr>
 	</table>
 	
@@ -308,51 +293,41 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Trabalhos/projectos complexos</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_a']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_a']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_a}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_aForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Trabalhos/projectos extensos</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_b']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_b']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_b}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_bForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Trabalhos/projectos em número elevado</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_c']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_c']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_c}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_cForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Falta de preparação anterior exigindo mais trabalho/estudo</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_d']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_d']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_d}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_dForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Extensão do programa face ao nº de aulas previstas</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_e']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_e']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_e}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_eForPresentation}" /></td>
 		</tr>
 		<tr>
 			<th>Pouco acompanhamento das aulas ao longo do semestre</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P_1_2_f']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_f']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P_1_2_f}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_fForPresentation}" /></td>
 		</tr>
-        <tr>
-            <th>Problemas na organização administrativa da UC</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P_1_2_g']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_2_g']}" /></td>
-        </tr>
-        <tr>
-            <th>Problemas pessoais/com os colegas de grupo</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P_1_2_h']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_2_h']}" /></td>
-        </tr>
 		<tr>
 			<th>Outras razões</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_i']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_i']}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${inquiryResult.number_P1_2_g}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc__P1_2_gForPresentation}" /></td>
 		</tr>
 	</table>
-    
+	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
@@ -371,21 +346,22 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Conhecimentos anteriores suficientes para o acompanhamento da UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_3']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['M_P1_3_']}" /></td>
-			<td class="separatorright"><c:out value="${inquiryResult.valuesMap['dp_P1_3_']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_1']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_2']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_3']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_4']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_5']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_6']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_7']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_8']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_3_9']}" /></td>
+			<td><c:out value="${inquiryResult.number_P1_3}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_3}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P1_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_3_9ForPresentation}" /></td>
 		</tr>
 	</table>
-    
+	
+	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
@@ -398,180 +374,71 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Participação dos alunos na UC</th>
-			<td><c:out value="${inquiryResult.valuesMap['N_P1_4']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['M_P1_4']}" /></td>
-			<td class="separatorright"><c:out value="${inquiryResult.valuesMap['dp_P1_4']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_4_1']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_4_2']}" /></td>
-			<td><c:out value="${inquiryResult.valuesMap['Perc_P1_4_3']}" /></td>
+			<td><c:out value="${inquiryResult.number_P1_4}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P1_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P1_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P1_4_3ForPresentation}" /></td>
 		</tr>
 	</table>
-    
-    <table class="tstyle1 thlight thleft tdright td50px">
-        <tr class="top">
-            <th>Caracterização dos meios e métodos de estudo (escolhe de entre os seguintes os que mais usaste)</th>
-            <th class="aright">N</th>
-            <th class="aright">%</th>
-        </tr>
-        <tr>
-            <th>Assistir às aulas</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P1_5_a']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_a']}" /></td>
-        </tr>
-        <tr>
-            <th>Bibliografia sugerida</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P1_5_b']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_b']}" /></td>
-        </tr>
-        <tr>
-            <th>Apontamentos e outros documentos do professor</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P1_5_c']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_c']}" /></td>
-        </tr>
-        <tr>
-            <th>Apontamentos e outros documentos do aluno</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P1_5_d']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_d']}" /></td>
-        </tr>
-        <tr>
-            <th>Outros</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P1_5_e']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_e']}" /></td>
-        </tr>
-    </table>    
-    
-                            
+	
 	
 	<p class="mtop15 mbottom0"><strong>A UC contribuiu para a aquisição e/ou desenvolvimento das seguintes competências</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
-			<th>A frequência desta UC contribuiu para:</th>
-            <th class="aright">Não sabe/Não se aplica</th>
-			<th class="aright separatorright">N</th>
+			<th></th>
+			<th class="aright">N</th>
 			<th class="aright">Média</th>
 			<th class="aright separatorright">Desvio padrão</th>
-			<th class="aright">Não sabe</th>
-            <th class="aright">Não se aplica</th>
-            <th class="aright">Discordo totalmente<br/><b>1</b></th>
-            <th class="aright"><b>2</b></th>
-            <th class="aright">Discordo<br/><b>3</b></th>
-            <th class="aright"><b>4</b></th>
-            <th class="aright">Não concordo nem discordo<br/><b>5</b></th>
-            <th class="aright"><b>6</b></th>
-            <th class="aright">Concordo<br/><b>7</b></th>
-            <th class="aright"><b>8</b></th>
-            <th class="aright">Concordo totalmente<br/><b>9</b></th>            
+			<th class="aright">Não sabe / Não responde / Não aplicável</th>
+			<th class="aright">Não contribuiu<br/><b>1</b></th>
+			<th class="aright">Contribuiu<br/><b>2</b></th>
+			<th class="aright">Contribuiu muito<br/><b>3</b></th>
 		</tr>
 		<tr>
-			<th>Desenvolver o conhecimento e compreensão do tema</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_1_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_1_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_1_9']}" /></td>
+			<th>Conhecimento e compreensão do tema da UC</th>
+			<td><c:out value="${inquiryResult.number_P2_1}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_1ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_1_0ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_1_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_1_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_1_3ForPresentation}" /></td>
 		</tr>
-        <tr>
-            <th>Aumentar a capacidade de aplicar o conhecimento adquirido sobre o tema</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_2_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_2_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_9']}" /></td>
-        </tr>
-        <tr>
-            <th>Desenvolver o sentido crítico e a capacidade de reflexão sobre o tema</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_3_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_3_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_9']}" /></td>
-        </tr>
-        <tr>
-            <th>Promover a capacidade de cooperação e comunicação</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_4_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_4_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_9']}" /></td>
-        </tr>
-        <tr>
-            <th>Aumentar a capacidade de aprendizagem autónoma</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_5_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_5_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_9']}" /></td>
-        </tr>
-        <tr>
-            <th>Aprofundar a capacidade de análise sobre as implicações do tema no contexto social e profissional</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_6_ns']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['N_P2_6_comp']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P2_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P2_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_menos1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_0']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P2_6_9']}" /></td>
-        </tr>
+		<tr>
+			<th>Aplicação do conhecimento sobre o tema da UC</th>
+			<td><c:out value="${inquiryResult.number_P2_2}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_2ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_2_0ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_2_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_2_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_2_3ForPresentation}" /></td>
+		</tr>
+		<tr>
+			<th>Sentido crítico e espírito reflexivo</th>
+			<td><c:out value="${inquiryResult.number_P2_3}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_3ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_0ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_3_3ForPresentation}" /></td>
+		</tr>
+		<tr>
+			<th>Capacidade de cooperação e comunicação</th>
+			<td><c:out value="${inquiryResult.number_P2_4}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P2_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P2_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_0ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P2_4_3ForPresentation}" /></td>
+		</tr>
 	</table>
+	
 	
 	<p class="mtop15 mbottom0"><strong>Organização da UC</strong></p>
 	
@@ -592,65 +459,65 @@ padding-right: 8px;
 			<th class="aright">Concordo totalmente<br/><b>9</b></th>
 		</tr>
 		<tr>
-            <th>O programa previsto foi leccionado</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P3_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P3_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P3_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_1_9']}" /></td>
+			<th>O programa previsto foi leccionado</th>
+			<td><c:out value="${inquiryResult.number_P3_1}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_1ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_1_9ForPresentation}" /></td>
 		</tr>
-        <tr>
+		<tr>
 			<th>A UC encontra-se bem estruturada</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P3_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P3_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P3_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_2_9']}" /></td>
-        </tr>
-        <tr>
-            <th>A bibliografia foi importante</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P3_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P3_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P3_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_3_9']}" /></td>
-        </tr>
-        <tr>
-            <th>Os materiais de apoio foram bons</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P3_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P3_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P3_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P3_4_9']}" /></td>
-        </tr>
+			<td><c:out value="${inquiryResult.number_P3_2}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_2ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_2_9ForPresentation}" /></td>
+		</tr>
+		<tr>
+			<th>A bibliografia foi importante</th>
+			<td><c:out value="${inquiryResult.number_P3_3}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_3ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_3_9ForPresentation}" /></td>
+		</tr>
+		<tr>
+			<th>Os materiais de apoio foram bons</th>
+			<td><c:out value="${inquiryResult.number_P3_4}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P3_4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P3_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P3_4_9ForPresentation}" /></td>
+		</tr>
 	</table>
 	
 	
@@ -674,18 +541,18 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Os métodos de avaliação foram justos e apropriados</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P4_9']}" /></td>
+			<td><c:out value="${inquiryResult.number_P4}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P4ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P4_9ForPresentation}" /></td>
 		</tr>
 	</table>
 	
@@ -710,18 +577,18 @@ padding-right: 8px;
 		</tr>
 		<tr>
 			<th>Avaliação do funcionamento da UC</th>
-            <td><c:out value="${inquiryResult.valuesMap['N_P5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['M_P5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['dp_P5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_1']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_2']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_3']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_4']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_5']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_6']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_7']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_8']}" /></td>
-            <td><c:out value="${inquiryResult.valuesMap['Perc_P5_9']}" /></td>
+			<td><c:out value="${inquiryResult.number_P5}" /></td>
+			<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P5ForPresentation}" /></td>
+			<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_1ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_2ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_3ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_4ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_5ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_6ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_7ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_8ForPresentation}" /></td>
+			<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P5_9ForPresentation}" /></td>
 		</tr>
 	</table>
 </logic:equal>
