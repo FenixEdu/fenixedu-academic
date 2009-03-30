@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Merge Vigilant + VigilantBound to VigilantWrapper" vigilancyUpdates.sql
+execute "Introduce Personal Details Indirection" candidacy-person-indirection.sql
+execute "Alter Table AssiduousnessVacations" AlterTableAssiduousnessVacations.sql
