@@ -14,8 +14,14 @@
 
 <schema name="presentTeacherCategoryCode" type="net.sourceforge.fenixedu.domain.Teacher" bundle="VIGILANCY_RESOURCES">
 	<slot name="category" layout="null-as-label" key="label.vigilancy.category">
-		<property name="format" value="${code}"/>
+		<property name="label" value=" "/>
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="presentTeacherCategoryCodeString"/>
 	</slot>
+</schema>
+
+<schema name="presentTeacherCategoryCodeString" type="net.sourceforge.fenixedu.domain.teacher.Category" bundle="VIGILANCY_RESOURCES">
+	<slot name="code" key="label.vigilancy.category"/>
 </schema>
 
 <schema name="presentVigilantName" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilant" bundle="VIGILANCY_RESOURCES">

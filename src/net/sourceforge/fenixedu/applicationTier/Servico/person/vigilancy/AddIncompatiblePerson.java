@@ -13,6 +13,7 @@ public class AddIncompatiblePerson extends FenixService {
 	    vigilantWrapper.getPerson().getIncompatibleVigilant().setIncompatibleVigilant(null);
 	}
 	vigilantWrapper.getPerson().setIncompatibleVigilant(person);
+	person.setIncompatibleVigilant(vigilantWrapper.getPerson());
     }
 
 }
