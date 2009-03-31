@@ -1961,7 +1961,7 @@ public class Registration extends Registration_Base {
 	final Degree degree = getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
 	if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
-	    res.append(cycleType.getDescription(locale));
+	    res.append(cycleType.getDescription(locale)).append(",");
 	    res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male")).append(StringUtils.SINGLE_SPACE);
 	}
 
