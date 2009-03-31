@@ -65,8 +65,12 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
     @Override
     protected String getDegreeDescription() {
 	final Registration registration = getRegistration();
-	return registration.getDegreeType().isComposite() ? registration.getDegreeDescription(null) : super
-		.getDegreeDescription();
+	return registration.getDegreeType().isComposite() && hasMoreThanOneCycle(registration) ? registration
+		.getDegreeDescription(null) : super.getDegreeDescription();
+    }
+
+    private boolean hasMoreThanOneCycle(final Registration registration) {
+	return registration.getInternalCycleCurriculumGrops().size() > 1;
     }
 
     final private String getCurricularYear() {
