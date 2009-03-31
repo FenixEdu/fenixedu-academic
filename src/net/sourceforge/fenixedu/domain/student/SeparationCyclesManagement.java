@@ -143,7 +143,8 @@ public class SeparationCyclesManagement {
 	Set<ExecutionCourse> newExecutionCourses = newRegistration.getAttendingExecutionCoursesFor();
 	for (InquiriesRegistry inquiriesRegistry : oldStudentCurricularPlan.getRegistration().getAssociatedInquiriesRegistries()) {
 	    if (!oldExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
-		    && newExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())) {
+		    && newExecutionCourses.contains(inquiriesRegistry.getExecutionCourse())
+		    && !newRegistration.hasInquiryResponseFor(inquiriesRegistry.getExecutionCourse())) {
 		inquiriesRegistry.setStudent(newRegistration);
 	    }
 	}
@@ -400,7 +401,7 @@ public class SeparationCyclesManagement {
 	final CourseGroup degreeModule = curriculumGroup.getDegreeModule();
 	for (final Context context : degreeModule.getChildContexts(CurricularCourse.class)) {
 	    final CurricularCourse each = (CurricularCourse) context.getChildDegreeModule();
-	    if (each == curricularCourse && !curriculumGroup.hasChildDegreeModule(degreeModule)) {
+	    if (each.isEquivalent(curricularCourse) && !curriculumGroup.hasChildDegreeModule(degreeModule)) {
 		return true;
 	    }
 	}
