@@ -640,14 +640,14 @@ public class Person extends Person_Base {
 
 	Set<VigilantGroup> groups = new HashSet<VigilantGroup>();
 
-	Employee employee = this.getPerson().getEmployee();
+	Employee employee = this.getEmployee();
 	if (employee != null) {
 	    Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
 		    executionYear.getEndDateYearMonthDay());
 	    groups.addAll(department.getVigilantGroupsForGivenExecutionYear(executionYear));
 
 	} else {
-	    for (VigilantWrapper vigilantWrapper : this.getPerson().getVigilantWrapperForExecutionYear(executionYear)) {
+	    for (VigilantWrapper vigilantWrapper : this.getVigilantWrapperForExecutionYear(executionYear)) {
 		groups.add(vigilantWrapper.getVigilantGroup());
 	    }
 	}
