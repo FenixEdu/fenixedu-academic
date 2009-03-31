@@ -15,6 +15,8 @@
 	</tr>
 </table>
 
+<p><bean:message key="message.teachingInquiries.editInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
+
 <p class="mbottom0">
 	<div class="forminline dinline">
 		<fr:form action="/teachingInquiry.do?method=backFromPrepareConfirm">

@@ -166,12 +166,12 @@ padding-right: 8px;
 			<td><c:out value="${inquiryResult.valuesMap['perc_inq_sub_UC']}" /></td>
 		</tr>
 		<tr>
-			<th>Não respostas à UC</th>
+			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não respostas à UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_NaoRespostasUC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_NaoRespostasUC']}" /></td>
 		</tr>
 		<tr>
-			<th>Respostas válidas à UC</th>
+			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Respostas válidas à UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_Inq_aval_UC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_Inq_aval_UC']}" /></td>
 		</tr>
@@ -197,7 +197,7 @@ padding-right: 8px;
 			<th></th>
 			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais de 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
 			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
-			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
+			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de auditoria se organização e avaliação da UC com resultados a melhorar e, pelo menos, metade do corpo docente com resultados a melhorar no mínimo de dois grupos.</span></a></th>
 		</tr>
 		<tr>
 			<th>Resultados a melhorar</th>
@@ -214,7 +214,7 @@ padding-right: 8px;
             <th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% alunos classifica como acima ou igual a 7 (Concordo) a questão.</span></a></th>
         </tr>
         <tr>
-            <th>Resultados exclentes</th>
+            <th>Resultados excelentes</th>
             <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['ResExcelent_OrganizacaoUC']}" /></td>
             <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['ResExcelent_AvaliacaoUC']}" /></td>
         </tr>
@@ -411,7 +411,7 @@ padding-right: 8px;
     
     <table class="tstyle1 thlight thleft tdright td50px">
         <tr class="top">
-            <th>Caracterização dos meios e métodos de estudo (escolhe de entre os seguintes os que mais usaste)</th>
+            <th>Caracterização dos meios e métodos de estudo mais usados</th>
             <th class="aright">N</th>
             <th class="aright">%</th>
         </tr>
