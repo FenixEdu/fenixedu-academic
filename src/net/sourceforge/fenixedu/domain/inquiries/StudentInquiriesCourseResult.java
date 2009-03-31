@@ -26,89 +26,6 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Service
-    public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
-
-	String[] headersSplitted = headers.split("\t");
-
-	int executionCourseHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionCourseHeader(), headersSplitted);
-	int executionDegreeHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionDegreeHeader(), headersSplitted);
-	int unsatisfactoryResultsCUEvaluationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUEvaluationHeader(),
-		headersSplitted);
-	int unsatisfactoryResultsCUOrganizationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUOrganizationHeader(),
-		headersSplitted);
-
-	for (String row : values.split("\n")) {
-	    String[] columns = row.split("\t");
-
-	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
-		    Integer.valueOf(columns[executionCourseHeaderIndex]));
-	    if (executionCourse == null) {
-		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
-			columns[executionCourseHeaderIndex]);
-	    }
-
-	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
-		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
-	    if (executionDegree == null) {
-		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
-			columns[executionDegreeHeaderIndex]);
-	    }
-
-	    StudentInquiriesCourseResult studentInquiriesCourseResult = executionCourse
-		    .getStudentInquiriesCourseResult(executionDegree);
-
-	    if (studentInquiriesCourseResult == null) {
-		studentInquiriesCourseResult = new StudentInquiriesCourseResult();
-		studentInquiriesCourseResult.setExecutionCourse(executionCourse);
-		studentInquiriesCourseResult.setExecutionDegree(executionDegree);
-	    }
-
-	    studentInquiriesCourseResult.setRawValues(row);
-	    studentInquiriesCourseResult.setHeaders(headers);
-	    studentInquiriesCourseResult.setUploadDateTime(new DateTime());
-	    studentInquiriesCourseResult.setResultsDate(resultsBean.getResultsDate());
-	    studentInquiriesCourseResult
-		    .setUnsatisfactoryResultsCUEvaluation(fieldToBoolean(columns[unsatisfactoryResultsCUEvaluationIndex]));
-	    studentInquiriesCourseResult
-		    .setUnsatisfactoryResultsCUOrganization(fieldToBoolean(columns[unsatisfactoryResultsCUOrganizationIndex]));
-
-	}
-
-    }
-
-    private static int getHeaderIndex(String headerToFind, String[] headersSplitted) {
-	for (int i = 0; i < headersSplitted.length; i++) {
-	    if (headerToFind.equals(headersSplitted[i])) {
-		return i;
-	    }
-	}
-	throw new DomainException("error.StudentInquiriesCourseResult.headerNotFound", headerToFind);
-    }
-
-    private static Boolean fieldToBoolean(String field) {
-	return !StringUtils.isEmpty(field) && (field.equalsIgnoreCase("true") || field.equals("1"));
-    }
-
-    public boolean isUnsatisfactory() {
-	return getUnsatisfactoryResultsCUEvaluation() || getUnsatisfactoryResultsCUOrganization();
-    }
-
-    @Override
-    public Boolean getUnsatisfactoryResultsCUEvaluation() {
-	return super.getUnsatisfactoryResultsCUEvaluation() != null && super.getUnsatisfactoryResultsCUEvaluation();
-    }
-
-    @Override
-    public Boolean getUnsatisfactoryResultsCUOrganization() {
-	return super.getUnsatisfactoryResultsCUOrganization() != null && super.getUnsatisfactoryResultsCUOrganization();
-    }
-
-    @Override
-    public Boolean getAuditCU() {
-	return super.getAuditCU() != null && super.getAuditCU();
-    }
-
     private Double getValueForPresentation(Double value) {
 	// TODO: ugly hack, refactor
 	if (value == null) {
@@ -738,6 +655,89 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    return super.getInternalDisclosure();
 	}
 	return fieldToBoolean(getValuesMap().get("Repres_div_interna"));
+    }
+
+    private static int getHeaderIndex(String headerToFind, String[] headersSplitted) {
+	for (int i = 0; i < headersSplitted.length; i++) {
+	    if (headerToFind.equals(headersSplitted[i])) {
+		return i;
+	    }
+	}
+	throw new DomainException("error.StudentInquiriesCourseResult.headerNotFound", headerToFind);
+    }
+
+    private static Boolean fieldToBoolean(String field) {
+	return !StringUtils.isEmpty(field) && (field.equalsIgnoreCase("true") || field.equals("1"));
+    }
+
+    public boolean isUnsatisfactory() {
+	return getUnsatisfactoryResultsCUEvaluation() || getUnsatisfactoryResultsCUOrganization();
+    }
+
+    @Override
+    public Boolean getUnsatisfactoryResultsCUEvaluation() {
+	return super.getUnsatisfactoryResultsCUEvaluation() != null && super.getUnsatisfactoryResultsCUEvaluation();
+    }
+
+    @Override
+    public Boolean getUnsatisfactoryResultsCUOrganization() {
+	return super.getUnsatisfactoryResultsCUOrganization() != null && super.getUnsatisfactoryResultsCUOrganization();
+    }
+
+    @Override
+    public Boolean getAuditCU() {
+	return super.getAuditCU() != null && super.getAuditCU();
+    }
+
+    @Service
+    public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
+
+	String[] headersSplitted = headers.split("\t");
+
+	int executionCourseHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionCourseHeader(), headersSplitted);
+	int executionDegreeHeaderIndex = getHeaderIndex(resultsBean.getKeyExecutionDegreeHeader(), headersSplitted);
+	int unsatisfactoryResultsCUEvaluationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUEvaluationHeader(),
+		headersSplitted);
+	int unsatisfactoryResultsCUOrganizationIndex = getHeaderIndex(resultsBean.getUnsatisfactoryResultsCUOrganizationHeader(),
+		headersSplitted);
+
+	for (String row : values.split("\n")) {
+	    String[] columns = row.split("\t");
+
+	    ExecutionCourse executionCourse = RootDomainObject.getInstance().readExecutionCourseByOID(
+		    Integer.valueOf(columns[executionCourseHeaderIndex]));
+	    if (executionCourse == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.executionCourseNotFound",
+			columns[executionCourseHeaderIndex]);
+	    }
+
+	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+		    Integer.valueOf(columns[executionDegreeHeaderIndex]));
+	    if (executionDegree == null) {
+		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
+			columns[executionDegreeHeaderIndex]);
+	    }
+
+	    StudentInquiriesCourseResult studentInquiriesCourseResult = executionCourse
+		    .getStudentInquiriesCourseResult(executionDegree);
+
+	    if (studentInquiriesCourseResult == null) {
+		studentInquiriesCourseResult = new StudentInquiriesCourseResult();
+		studentInquiriesCourseResult.setExecutionCourse(executionCourse);
+		studentInquiriesCourseResult.setExecutionDegree(executionDegree);
+	    }
+
+	    studentInquiriesCourseResult.setRawValues(row);
+	    studentInquiriesCourseResult.setHeaders(headers);
+	    studentInquiriesCourseResult.setUploadDateTime(new DateTime());
+	    studentInquiriesCourseResult.setResultsDate(resultsBean.getResultsDate());
+	    studentInquiriesCourseResult
+		    .setUnsatisfactoryResultsCUEvaluation(fieldToBoolean(columns[unsatisfactoryResultsCUEvaluationIndex]));
+	    studentInquiriesCourseResult
+		    .setUnsatisfactoryResultsCUOrganization(fieldToBoolean(columns[unsatisfactoryResultsCUOrganizationIndex]));
+
+	}
+
     }
 
 }
