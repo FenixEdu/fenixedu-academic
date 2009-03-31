@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries.TeachingInquiryServices;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
-import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -229,7 +229,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeachingInquiryDTO teachingInquiryDTO = (TeachingInquiryDTO) getRenderedObject("teachingInquiry");
-	TeachingInquiry.saveAnswers(teachingInquiryDTO);
+	TeachingInquiryServices.saveAnswers(teachingInquiryDTO);
 	request.setAttribute("executionCourse", teachingInquiryDTO.getProfessorship().getExecutionCourse());
 	request.setAttribute("executionCoursesToAnswer", AccessControl.getPerson().getTeacher()
 		.getExecutionCoursesWithTeachingInquiriesToAnswer());
