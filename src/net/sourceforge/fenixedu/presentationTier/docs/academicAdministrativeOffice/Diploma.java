@@ -77,18 +77,14 @@ public class Diploma extends AdministrativeOfficeDocument {
 
     private String getConclusionDate(final DiplomaRequest diplomaRequest, final RegistrationConclusionBean conclusionBean) {
 	final LocalDate result = calculateConclusionDate(diplomaRequest, conclusionBean);
-	return result.toString(getConclusionDatePattern(), getLocale());
+	return result.toString(getDatePattern(), getLocale());
     }
 
     private String getFormatedCurrentDate() {
-	final StringBuilder pattern = new StringBuilder();
-	pattern.append("dd MMMM '");
-	pattern.append(getApplicationBundle().getString("label.of"));
-	pattern.append("' yyyy");
-	return new LocalDate().toString(pattern.toString(), getLocale());
+	return new LocalDate().toString(getDatePattern(), getLocale());
     }
 
-    private String getConclusionDatePattern() {
+    private String getDatePattern() {
 	final StringBuilder result = new StringBuilder();
 	result.append("dd '");
 	result.append(getApplicationBundle().getString("label.of"));
