@@ -26,13 +26,15 @@ public enum RegistrationAgreement {
 
     TIME(false, false),
 
-    TOTAL(false, false),
+    TOTAL(false, true),
 
     OTHER_EXTERNAL(false, false),
 
     MITP(false, true),
-    
-    SMILE(false, false);
+
+    SMILE(false, false),
+
+    ANGOLA_TELECOM(false, true);
 
     private boolean enrolmentByStudentAllowed;
 
