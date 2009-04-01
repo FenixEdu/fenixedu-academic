@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -67,7 +68,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    }
 	}
 
-	request.setAttribute("statistics1", Person.readPersonsByRoleType(RoleType.ALUMNI).size());
+	request.setAttribute("statistics1", Role.getRoleByRoleType(RoleType.ALUMNI).getAssociatedPersonsCount());
 	request.setAttribute("statistics2", totalAlumniCount);
 	request.setAttribute("statistics3", newAlumniCount);
 	request.setAttribute("statistics4", registeredAlumniCount);
