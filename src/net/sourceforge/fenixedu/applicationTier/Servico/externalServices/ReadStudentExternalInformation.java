@@ -283,10 +283,9 @@ public class ReadStudentExternalInformation extends FenixService {
 	InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
 		.newFromDomain(curricularCourse);
 	if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
-		&& cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-	    infoExternalCurricularCourseInfo.setCurricularYear((Integer.valueOf(infoExternalCurricularCourseInfo
-		    .getCurricularYear()) + 3)
-		    + "");
+		&& cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE) {
+	    final int curricularYear = Integer.parseInt(infoExternalCurricularCourseInfo.getCurricularYear()) + 3;
+	    infoExternalCurricularCourseInfo.setCurricularYear(Integer.toString(curricularYear));
 	}
 	info.addCourse(infoExternalCurricularCourseInfo);
     }
