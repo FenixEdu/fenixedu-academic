@@ -735,6 +735,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 		    .setUnsatisfactoryResultsCUEvaluation(fieldToBoolean(columns[unsatisfactoryResultsCUEvaluationIndex]));
 	    studentInquiriesCourseResult
 		    .setUnsatisfactoryResultsCUOrganization(fieldToBoolean(columns[unsatisfactoryResultsCUOrganizationIndex]));
+	    studentInquiriesCourseResult.valuesMap = null;
 
 	}
 

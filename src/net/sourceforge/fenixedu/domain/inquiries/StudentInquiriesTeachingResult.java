@@ -629,6 +629,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    studentInquiriesTeachingResult
 		    .setUnsatisfactoryResultsStudentInteraction(fieldToBoolean(columns[unsatisfactoryResultsStudentInteractionIndex]));
 	    studentInquiriesTeachingResult.setInternalDegreeDisclosure(fieldToBoolean(columns[internalDegreeDisclosureIndex]));
+	    studentInquiriesTeachingResult.valuesMap = null;
 
 	}
 
