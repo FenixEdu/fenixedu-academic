@@ -466,6 +466,13 @@ receipt.numberSeries.for.years=
 #--------------------------------------------------------------
 notifier.active=false
 
+
+#---------------------------------------------------------------
+# Name resolution service
+#--------------------------------------------------------------
+
+nameresolution.name=fenixRemoteRequests
+nameresolution.password=password
 #
 #
 #
