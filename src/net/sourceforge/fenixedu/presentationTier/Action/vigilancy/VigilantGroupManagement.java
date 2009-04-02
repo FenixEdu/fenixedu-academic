@@ -216,7 +216,9 @@ public class VigilantGroupManagement extends FenixDispatchAction {
     public ActionForward changeDisplaySettingsByVigilants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	VigilantGroupBean bean = prepareVigilantGroups(request);
+	VigilantGroupBean bean = (VigilantGroupBean) RenderUtils.getViewState("options").getMetaObject().getObject();
+	List<VigilantWrapperBean> vigilantWrapperBeans = prepareVigilantWrapperBeans(request, bean.getExecutionYear());
+	request.setAttribute("vigilantWrapperBeans", vigilantWrapperBeans);
 	request.setAttribute("bean", bean);
 	request.setAttribute("show", "vigilants");
 	return mapping.findForward("manageVigilantGroups");

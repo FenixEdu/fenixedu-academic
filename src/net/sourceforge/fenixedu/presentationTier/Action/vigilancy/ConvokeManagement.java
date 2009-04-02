@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -334,19 +332,15 @@ public class ConvokeManagement extends FenixDispatchAction {
 	ConvokeBean bean = (ConvokeBean) RenderUtils.getViewState("selectVigilants").getMetaObject().getObject();
 	List<VigilantWrapper> vigilants = bean.getTeachersForAGivenCourse();
 	vigilants.addAll(bean.getVigilants());
-	Set<Person> persons = new HashSet<Person>();
+	List<Person> incompatiblePersons = new ArrayList<Person>();
 	for (VigilantWrapper wrapper : vigilants) {
-	    persons.add(wrapper.getPerson());
+	    if (wrapper.getPerson().getIncompatibleVigilantPerson() != null) {
+		incompatiblePersons.add(wrapper.getPerson());
+		incompatiblePersons.add(wrapper.getPerson().getIncompatibleVigilantPerson());
+	    }
 	}
 
-	List<Person> incompatibleVigilants = new ArrayList<Person>();
-	for (VigilantWrapper vigilant : vigilants) {
-	    incompatibleVigilants.add(vigilant.getPerson());
-	}
-	persons.retainAll(incompatibleVigilants);
-	if (!persons.isEmpty()) {
-	    request.setAttribute("incompatibleVigilants", persons);
-	}
+	request.setAttribute("incompatiblePersons", incompatiblePersons);
 	request.setAttribute("bean", bean);
 	return mapping.findForward("prepareGenerateConvokes");
     }

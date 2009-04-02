@@ -297,7 +297,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     public List<VigilantWrapper> getVigilantWrappersWithIncompatiblePerson() {
 	List<VigilantWrapper> vigilantWrappers = new ArrayList<VigilantWrapper>();
 	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
-	    Person incompatiblePerson = vigilantWrapper.getPerson().getIncompatibleVigilant();
+	    Person incompatiblePerson = vigilantWrapper.getPerson().getIncompatibleVigilantPerson();
 	    if (incompatiblePerson != null && !vigilantWrappers.contains(incompatiblePerson.getVigilantWrappers())) {
 		vigilantWrappers.add(vigilantWrapper);
 	    }

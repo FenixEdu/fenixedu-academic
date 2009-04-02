@@ -7071,7 +7071,7 @@ relation VigilantWrapperRootDomainObject {
 }
 
 relation PersonIncompatibleVigilant {
-	Person playsRole person;
+	Person playsRole incompatiblePerson;
 	Person playsRole incompatibleVigilant;
 }
 

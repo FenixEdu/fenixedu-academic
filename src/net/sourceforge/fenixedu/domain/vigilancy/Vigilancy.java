@@ -55,7 +55,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     public VigilantGroup getAssociatedVigilantGroup() {
 	Set<VigilantGroup> groups = this.getWrittenEvaluation().getAssociatedVigilantGroups();
 	for (VigilantGroup group : groups) {
-	    if (this.getVigilant().hasVigilantGroup(group)) {
+	    if (this.getVigilantWrapper().hasVigilantGroup(group)) {
 		return group;
 	    }
 	}

@@ -33,7 +33,7 @@
 </schema>
 
 <schema name="presentPersonName" type="net.sourceforge.fenixedu.domain.Person" bundle="VIGILANCY_RESOURCES">
-		<slot name="name"/>
+		<slot name="name" key="label.vigilancy.incompatible.vigilants"/>
 </schema>
 
 

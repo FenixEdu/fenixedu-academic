@@ -89,16 +89,16 @@
 </fr:edit>
 
 <a name="vigilantTable"></a>
-<logic:notEmpty name="incompatibleVigilants">
+<logic:notEmpty name="incompatiblePersons">
 
 <p class="mtop15 mbottom05"><strong><bean:message key="label.vigilancy.incompatibilityDetected" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
-<fr:view name="incompatibleVigilants">
+<fr:view name="incompatiblePersons">
 	<fr:layout>
-		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="presentPersonName"/>
+		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="classes" value="error1 list2"/>
 	</fr:layout>
-</fr:view> 
+</fr:view>
 </logic:notEmpty>
 <p class="mbottom05"><strong><bean:message key="label.vigilancy.vigilantsThatDoNotTeachCourse" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
 <fr:edit id="selectVigilants" name="bean" schema="selectVigilants">

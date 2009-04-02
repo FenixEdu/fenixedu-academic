@@ -50,7 +50,14 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
     public static final Comparator<VigilantWrapper> POINTS_COMPARATOR = new BeanComparator("points");
 
-    public static final Comparator<VigilantWrapper> ESTIMATED_POINTS_COMPARATOR = new BeanComparator("estimatedPoints");
+    public static final Comparator<VigilantWrapper> ESTIMATED_POINTS_COMPARATOR = new Comparator<VigilantWrapper>() {
+
+	@Override
+	public int compare(VigilantWrapper o1, VigilantWrapper o2) {
+	    return Double.valueOf(o1.getEstimatedPoints()).compareTo(o2.getEstimatedPoints());
+	}
+
+    };
 
     public static final Comparator<VigilantWrapper> NAME_COMPARATOR = new BeanComparator("person.name");
 
@@ -355,7 +362,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public String getIncompatiblePersonName() {
-	return (this.getPerson().getIncompatibleVigilant() != null) ? this.getPerson().getIncompatibleVigilant().getName() : "";
+	return (this.getPerson().getIncompatibleVigilantPerson() != null) ? this.getPerson().getIncompatibleVigilantPerson()
+		.getName() : "";
     }
 
     public UnavailableTypes getWhyIsUnavailabeFor(WrittenEvaluation writtenEvaluation) {
@@ -389,7 +397,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 	    return UnavailableTypes.LESSON_AT_SAME_TIME;
 	}
 
-	Person person = this.getPerson().getIncompatibleVigilant();
+	Person person = this.getPerson().getIncompatibleVigilantPerson();
 	if (person != null) {
 	    List<Vigilancy> convokes = writtenEvaluation.getVigilancies();
 	    for (Vigilancy convoke : convokes) {

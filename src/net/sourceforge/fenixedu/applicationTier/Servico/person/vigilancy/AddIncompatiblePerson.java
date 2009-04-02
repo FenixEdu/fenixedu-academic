@@ -9,11 +9,11 @@ public class AddIncompatiblePerson extends FenixService {
 
     @Service
     public static void run(VigilantWrapper vigilantWrapper, Person person) {
-	if (vigilantWrapper.getPerson().getIncompatibleVigilant() != null) {
-	    vigilantWrapper.getPerson().getIncompatibleVigilant().setIncompatibleVigilant(null);
+	if (vigilantWrapper.getPerson().getIncompatibleVigilantPerson() != null) {
+	    vigilantWrapper.getPerson().getIncompatibleVigilantPerson().setIncompatibleVigilantPerson(null);
 	}
-	vigilantWrapper.getPerson().setIncompatibleVigilant(person);
-	person.setIncompatibleVigilant(vigilantWrapper.getPerson());
+	vigilantWrapper.getPerson().setIncompatibleVigilantPerson(person);
+	person.setIncompatibleVigilantPerson(vigilantWrapper.getPerson());
     }
 
 }

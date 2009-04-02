@@ -3133,4 +3133,18 @@ public class Person extends Person_Base {
 	return getAnnualIRSDocumentFor(year) != null;
     }
 
+    public Person getIncompatibleVigilantPerson() {
+	return getIncompatiblePerson() != null ? getIncompatiblePerson() : getIncompatibleVigilant();
+    }
+
+    public void setIncompatibleVigilantPerson(Person person) {
+	setIncompatibleVigilant(person);
+	setIncompatiblePerson(null);
+    }
+
+    public void removeIncompatibleVigilantPerson() {
+	setIncompatibleVigilant(null);
+	setIncompatiblePerson(null);
+    }
+
 }

@@ -38,7 +38,7 @@ public class ConvokeByPoints extends Strategy {
 	for (VigilantWrapper vigilant : vigilants) {
 
 	    if (vigilant.canBeConvokedForWrittenEvaluation(writtenEvaluation)
-		    && !incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilant())) {
+		    && !incompatiblePersons.contains(vigilant.getPerson().getIncompatibleVigilantPerson())) {
 		Teacher teacher = vigilant.getTeacher();
 		if (teacher != null && teacher.teachesAny(executionCourses)) {
 		    teachersSugestion.add(vigilant);

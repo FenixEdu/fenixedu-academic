@@ -8,8 +8,8 @@ public class RemoveIncompatiblePerson extends FenixService {
 
     @Service
     public static void run(VigilantWrapper vigilantWrapper) {
-	vigilantWrapper.getPerson().getIncompatibleVigilant().removeIncompatibleVigilant();
-	vigilantWrapper.getPerson().removeIncompatibleVigilant();
+	vigilantWrapper.getPerson().getIncompatibleVigilantPerson().removeIncompatibleVigilantPerson();
+	vigilantWrapper.getPerson().removeIncompatibleVigilantPerson();
     }
 
 }
