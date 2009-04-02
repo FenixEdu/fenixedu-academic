@@ -2340,7 +2340,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 	    }
 
-	    if (permission.isAppliable(this) && !permission.isMember(person)) {
+	    if (permission.isAppliable(getRegistration()) && !permission.isMember(person)) {
 		throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
 	    }
 	}
