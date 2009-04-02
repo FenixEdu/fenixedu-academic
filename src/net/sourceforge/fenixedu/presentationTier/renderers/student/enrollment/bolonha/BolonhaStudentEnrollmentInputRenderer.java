@@ -675,7 +675,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
 		final StudentCurricularPlan studentCurricularPlan, int depth) {
 
-	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
+	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()
+		    && studentCurricularPlan.getDegreeType().hasExactlyOneCycleType()) {
 		return;
 	    }
 
