@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
     private void addParametersInformation() {
 	addParameter("studentNumber", getStudentNumber());
-	addParameter("numberOfPrograms", calculateNumberOfPrograms());
+	addParameter("programsDescription", getProgramsDescription());
 	addParameter("degreeDescription", getDegreeDescription());
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
@@ -79,8 +80,16 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("name", getDocumentRequest().getPerson().getName());
     }
 
-    private String calculateNumberOfPrograms() {
+    private String numberOfPrograms() {
 	return NumberToWordsConverter.convert(getDocumentRequest().getEnrolmentsCount());
+    }
+
+    private String getProgramsDescription() {
+	if (getDocumentRequest().getEnrolmentsCount() == 1) {
+	    return getResourceBundle().getString("label.program.certificate.program");
+	} else {
+	    return MessageFormat.format(getResourceBundle().getString("label.program.certificate.programs"), numberOfPrograms());
+	}
     }
 
     @Override
