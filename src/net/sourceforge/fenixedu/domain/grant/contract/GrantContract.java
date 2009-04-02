@@ -13,6 +13,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
@@ -103,5 +107,17 @@ public class GrantContract extends GrantContract_Base {
 	    return true;
 	}
 	return false;
+    }
+
+    public LocalDate getRescissionDate() {
+	final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+	if (!StringUtils.isEmpty(getEndContractMotive())) {
+	    try {
+		LocalDate rescissionDate = dateFormat.parseDateTime(getEndContractMotive().trim()).toLocalDate();
+		return rescissionDate;
+	    } catch (IllegalArgumentException e) {
+	    }
+	}
+	return null;
     }
 }

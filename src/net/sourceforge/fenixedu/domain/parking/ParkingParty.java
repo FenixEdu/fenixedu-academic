@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -302,10 +303,19 @@ public class ParkingParty extends ParkingParty_Base {
 
 		    stringBuilder.append("<br/><strong>Início:</strong> "
 			    + contractRegime.getDateBeginContractYearMonthDay().toString("dd/MM/yyyy"));
+		    LocalDate endDate = contractRegime.getDateEndContractYearMonthDay().toLocalDate();
+		    boolean rescinded = false;
+		    if (contractRegime.getGrantContract().getRescissionDate() != null
+			    && endDate.isAfter(contractRegime.getGrantContract().getRescissionDate())) {
+			endDate = contractRegime.getGrantContract().getRescissionDate();
+			if (endDate.isBefore(new LocalDate())) {
+			    rescinded = true;
+			}
+		    }
 		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
-			    + contractRegime.getDateEndContractYearMonthDay().toString("dd/MM/yyyy"));
+			    + endDate.toString("dd/MM/yyyy"));
 		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Activo:</strong> ");
-		    if (contractRegime.isActive()) {
+		    if (contractRegime.isActive() && !rescinded) {
 			stringBuilder.append("Sim");
 		    } else {
 			stringBuilder.append("Não");
