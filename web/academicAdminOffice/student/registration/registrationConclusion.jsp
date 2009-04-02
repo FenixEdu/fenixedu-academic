@@ -10,6 +10,18 @@
 
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
+		
+	<ul class="mtop2 list5">
+		<li>
+			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
+				<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+	
+	<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
+		<div style="height: 20px;" class="error0"><strong><bean:message  key="message.conclusion.process.already.performed" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></div>
+	</logic:equal>
 	
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
 		<p>
@@ -21,14 +33,6 @@
 			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 		</p>
 	</html:messages>
-	
-	<ul class="mtop2 list5">
-		<li>
-			<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registrationConclusionBean" paramProperty="registration.idInternal">
-				<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
 
 	<logic:equal name="registrationConclusionBean" property="hasAccessToRegistrationConclusionProcess" value="true">
 	
@@ -75,11 +79,7 @@
 				<span class="error0">O grupo <bean:write name="curriculumGroup" property="fullPath"/> tem <bean:write name="curriculumGroup" property="aprovedEctsCredits"/> créditos ECTS quando deveria ter <bean:write name="curriculumGroup" property="creditsConcluded"/> créditos ECTS</span>
 			</p>
 		</logic:iterate>
-		
-		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
-			<div style="height: 20px;" class="error0"><strong><bean:message  key="message.conclusion.process.already.performed" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></div>
-		</logic:equal>
-	
+			
 		<logic:equal name="registrationConclusionBean" property="concluded" value="false">
 			<p>
 				<span class="error0"><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
