@@ -43,6 +43,19 @@ public enum PermissionType {
 
     },
 
+    REPEAT_CONCLUSION_PROCESS() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
+	}
+    },
+
     ENROLMENT_WITHOUT_RULES() {
 	@Override
 	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {

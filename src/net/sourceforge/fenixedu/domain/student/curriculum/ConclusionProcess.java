@@ -69,6 +69,8 @@ abstract public class ConclusionProcess extends ConclusionProcess_Base {
     abstract public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
 	    final String notes);
 
+    abstract public void update(final RegistrationConclusionBean bean);
+
     final protected void addVersions(final RegistrationConclusionBean bean) {
 	super.addVersions(new ConclusionProcessVersion(bean));
 	super.setLastVersion(Collections.max(getVersions(), ConclusionProcessVersion.COMPARATOR_BY_CREATION_DATE_TIME_AND_ID));

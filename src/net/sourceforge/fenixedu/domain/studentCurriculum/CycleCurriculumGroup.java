@@ -158,13 +158,22 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     @Checked("CycleCurriculumGroupPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
 	if (isConclusionProcessed()) {
-	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup().getName());
+	    if (!getRegistration().canRepeatConclusionProcess(AccessControl.getPerson())) {
+		throw new DomainException("error.CycleCurriculumGroup.cycle.is.already.concluded", getCycleCourseGroup()
+			.getName());
+	    }
 	}
+
 	if (!isConcluded()) {
 	    throw new DomainException("error.CycleCurriculumGroup.cycle.is.not.concluded");
 	}
 
-	CycleConclusionProcess.conclude(new RegistrationConclusionBean(getRegistration(), this));
+	if (hasConclusionProcess()) {
+	    getConclusionProcess().update(new RegistrationConclusionBean(getRegistration(), this));
+	} else {
+	    CycleConclusionProcess.conclude(new RegistrationConclusionBean(getRegistration(), this));
+	}
+
     }
 
     @Override

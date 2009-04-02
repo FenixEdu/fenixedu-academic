@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -26,7 +27,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private DomainReference<Registration> registration;
 
     private DomainReference<CycleCurriculumGroup> cycleCurriculumGroup;
-    
+
     private Boolean hasAccessToRegistrationConclusionProcess = Boolean.TRUE;
 
     public RegistrationConclusionBean(Registration registration) {
@@ -190,7 +191,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public boolean getCanBeConclusionProcessed() {
-	return !isConclusionProcessed() && isConcluded() && (getRegistration().getWasTransition() || groupStructureIsValid())
+	return (!isConclusionProcessed() || (isConclusionProcessed() && getRegistration().canRepeatConclusionProcess(
+		AccessControl.getPerson())))
+		&& isConcluded()
+		&& (getRegistration().getWasTransition() || groupStructureIsValid())
 		&& getCurriculumModulesWithNoConlusionDate().isEmpty();
     }
 
@@ -239,11 +243,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public Boolean getHasAccessToRegistrationConclusionProcess() {
-        return hasAccessToRegistrationConclusionProcess;
+	return hasAccessToRegistrationConclusionProcess;
     }
 
     public void setHasAccessToRegistrationConclusionProcess(Boolean hasAccessToRegistrationConclusionProcess) {
-        this.hasAccessToRegistrationConclusionProcess = hasAccessToRegistrationConclusionProcess;
+	this.hasAccessToRegistrationConclusionProcess = hasAccessToRegistrationConclusionProcess;
     }
 
 }

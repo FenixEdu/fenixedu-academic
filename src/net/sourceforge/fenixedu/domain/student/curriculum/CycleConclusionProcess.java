@@ -42,6 +42,16 @@ public class CycleConclusionProcess extends CycleConclusionProcess_Base {
     }
 
     @Override
+    public void update(RegistrationConclusionBean bean) {
+	if (!bean.isConclusionProcessed()) {
+	    throw new DomainException("error.ConclusionProcess.is.not.concluded");
+	}
+
+	addVersions(bean);
+
+    }
+
+    @Override
     final public void update(final Person responsible, final Integer finalAverage, final LocalDate conclusionDate,
 	    final String notes) {
 	addVersions(new RegistrationConclusionBean(getRegistration(), getCycle()));

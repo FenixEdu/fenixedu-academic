@@ -68,12 +68,17 @@
 			</fr:view>
 		</logic:notPresent>
 		
+				
 		<h3 class="mtop1 mbottom05"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<logic:iterate id="curriculumGroup" name="registrationConclusionBean" property="curriculumGroupsNotVerifyingStructure">
 			<p>
 				<span class="error0">O grupo <bean:write name="curriculumGroup" property="fullPath"/> tem <bean:write name="curriculumGroup" property="aprovedEctsCredits"/> créditos ECTS quando deveria ter <bean:write name="curriculumGroup" property="creditsConcluded"/> créditos ECTS</span>
 			</p>
 		</logic:iterate>
+		
+		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
+			<div style="height: 20px;" class="error0"><strong><bean:message  key="message.conclusion.process.already.performed" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></div>
+		</logic:equal>
 	
 		<logic:equal name="registrationConclusionBean" property="concluded" value="false">
 			<p>
@@ -157,7 +162,7 @@
 			</p>
 		</logic:equal>
 		
-		<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="false">
+		
 			<h3 class="mtop15 mbottom05"><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	
 			<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="true">
@@ -259,7 +264,7 @@
 				</table>
 			</logic:equal>	
 	
-		</logic:equal>
+		
 		
 		<logic:equal name="registrationConclusionBean" property="canBeConclusionProcessed" value="true">
 			<fr:form action="/registration.do?method=doRegistrationConclusion">

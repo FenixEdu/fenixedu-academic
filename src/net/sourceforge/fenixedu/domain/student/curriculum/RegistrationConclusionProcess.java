@@ -43,6 +43,16 @@ public class RegistrationConclusionProcess extends RegistrationConclusionProcess
 	createRegistrationStates(new RegistrationConclusionProcess(bean));
     }
 
+    @Override
+    public void update(final RegistrationConclusionBean bean) {
+	if (!bean.isConclusionProcessed()) {
+	    throw new DomainException("error.ConclusionProcess.is.not.concluded");
+	}
+
+	addVersions(bean);
+
+    }
+
     private static void createRegistrationStates(final RegistrationConclusionProcess conclusionProcess) {
 	final Registration reg = conclusionProcess.getRegistration();
 	final Person responsible = conclusionProcess.getResponsible();

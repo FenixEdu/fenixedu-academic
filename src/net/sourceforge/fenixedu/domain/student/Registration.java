@@ -51,6 +51,8 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.YearStudentSpecialSeasonCode;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -2671,15 +2673,25 @@ public class Registration extends Registration_Base {
 	}
 
 	if (isRegistrationConclusionProcessed()) {
-	    throw new DomainException("error.Registration.already.concluded");
+	    if (!canRepeatConclusionProcess(AccessControl.getPerson())) {
+		throw new DomainException("error.Registration.already.concluded");
+	    }
 	}
 
-	RegistrationConclusionProcess.conclude(new RegistrationConclusionBean(this));
+	if (hasConclusionProcess()) {
+	    getConclusionProcess().update(new RegistrationConclusionBean(this));
+	} else {
+	    RegistrationConclusionProcess.conclude(new RegistrationConclusionBean(this));
+	}
+
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
-	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
+    public boolean canRepeatConclusionProcess(Person person) {
+	final AdministrativeOfficePermission permission = person.getEmployeeAdministrativeOffice().getPermission(
+		PermissionType.REPEAT_CONCLUSION_PROCESS, person.getEmployeeCampus());
+
+	return permission != null && permission.isAppliable(this) && permission.isMember(person);
+
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
