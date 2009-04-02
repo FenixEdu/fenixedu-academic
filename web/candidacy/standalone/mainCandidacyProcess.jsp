@@ -31,7 +31,7 @@
 					<td>
 						<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId" onchange="this.form.submit();">
 							<html:option value=""><!-- w3c complient --></html:option>
-							<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+							<html:options collection="executionIntervals" property="idInternal" labelProperty="qualifiedName"/>
 						</html:select>
 					</td>
 				</tr>
