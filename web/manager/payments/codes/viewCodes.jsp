@@ -27,8 +27,8 @@
 
 	<br/>
 	<logic:present name="paymentCodeMappingBean" property="executionInterval">
-		<bean:define id="executionIntervalOid" name="paymentCodeMappingBean" property="executionInterval.OID" />
-		<html:link page='<%= "/payments.do?method=prepareCreatePaymentCodeMapping&amp;executionIntervalOid=" + executionIntervalOid %>'><bean:message key="label.create" bundle="MANAGER_RESOURCES" /></html:link>
+		<bean:define id="executionIntervalId" name="paymentCodeMappingBean" property="executionInterval.externalId" />
+		<html:link page='<%= "/payments.do?method=prepareCreatePaymentCodeMapping&amp;executionIntervalOid=" + executionIntervalId %>'><bean:message key="label.create" bundle="MANAGER_RESOURCES" /></html:link>
 		<br/>
 	</logic:present>
 
@@ -43,7 +43,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2" />
 
-				<fr:property name="linkFormat(delete)" value="/payments.do?method=deletePaymentCodeMapping&amp;paymentCodeMappingOid=${OID}" />
+				<fr:property name="linkFormat(delete)" value="/payments.do?method=deletePaymentCodeMapping&amp;paymentCodeMappingOid=${externalId}" />
 				<fr:property name="key(delete)" value="label.delete"/>
 				<fr:property name="bundle(delete)" value="MANAGER_RESOURCES"/>
 				<fr:property name="confirmationKey(delete)" value="label.paymentCodeMapping.confirm.delete.message" />

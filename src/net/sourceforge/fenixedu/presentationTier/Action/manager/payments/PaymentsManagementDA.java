@@ -1,15 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulReceipt;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelEvent;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulAccountingTransaction;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AnnulReceipt;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.DepositAmountOnEvent;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.OpenEvent;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
@@ -35,7 +30,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCodeMappingBean;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -119,7 +113,6 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	return mapping.findForward("showPaymentsForEvent");
     }
 
-    @SuppressWarnings( { "unused", "unchecked" })
     private Collection<Person> searchPerson(HttpServletRequest request, final SimpleSearchPersonWithStudentBean searchPersonBean)
 	    throws FenixFilterException, FenixServiceException {
 	final SearchParameters searchParameters = new SearchPerson.SearchParameters(searchPersonBean.getName(), null,
@@ -150,8 +143,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final CancelEventBean cancelEventBean = getCancelEventBean();
 
 	try {
-	    CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getEmployee(),
-		    cancelEventBean.getJustification());
+	    CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getEmployee(), cancelEventBean.getJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -230,9 +222,8 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean = (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
 
 	try {
-	    TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getEmployee(),
-		    transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
-		    transferPaymentsBean.getCancelJustification());
+	    TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getEmployee(), transferPaymentsBean.getSourceEvent(),
+		    transferPaymentsBean.getTargetEvent(), transferPaymentsBean.getCancelJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -275,8 +266,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final AnnulAccountingTransactionBean annulAccountingTransactionBean = (AnnulAccountingTransactionBean) getObjectFromViewState("annulAccountingTransactionBean");
 	try {
 
-	    AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(),
-		    annulAccountingTransactionBean);
+	    AnnulAccountingTransaction.run(getLoggedPerson(request).getEmployee(), annulAccountingTransactionBean);
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -404,7 +394,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 	RenderUtils.invalidateViewState();
 	final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
-	bean.setExecutionInterval((ExecutionInterval) getDomainObjectByOID(request, "executionIntervalOid"));
+	bean.setExecutionInterval((ExecutionInterval) getDomainObject(request, "executionIntervalOid"));
 	request.setAttribute("paymentCodeMappingBean", bean);
 	return mapping.findForward("createPaymentCodeMapping");
     }
@@ -437,7 +427,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward deletePaymentCodeMapping(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PaymentCodeMapping codeMapping = getDomainObjectByOID(request, "paymentCodeMappingOid");
+	final PaymentCodeMapping codeMapping = getDomainObject(request, "paymentCodeMappingOid");
 	final PaymentCodeMappingBean bean = new PaymentCodeMappingBean();
 	bean.setExecutionInterval(codeMapping.getExecutionInterval());
 
@@ -452,9 +442,9 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
 	return mapping.findForward("viewCodes");
     }
-    
-    public ActionForward prepareChangePaymentPlan(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward prepareChangePaymentPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	request.setAttribute("event", getEvent(request));
 	return mapping.findForward("changePaymentPlan");
     }
