@@ -253,4 +253,12 @@ public class Announcement extends Announcement_Base {
     public boolean isCanNotApproveUser() {
 	return getApproved() && getAnnouncementBoard().isCurrentUserApprover();
     }
+
+    public void setCategories(java.util.List<AnnouncementCategory> categories) {
+	this.getCategories().clear();
+
+	for (AnnouncementCategory category : categories) {
+	    this.addCategories(category);
+	}
+    }
 }

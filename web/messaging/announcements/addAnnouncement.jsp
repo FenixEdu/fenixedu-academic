@@ -10,6 +10,25 @@
 
 <html:xhtml/>
 
+<script language="javascript">
+	function set_image_size(imagetag, image) {
+		var image_width = image.width;
+		var image_height = image.height;
+		
+		if(image_width > 400 || image_height > 300) {
+			var width_ratio = 400 / image_width;
+			var height_ratio = 300 / image_height;
+
+			imagetag.width = image_width * Math.min(width_ratio, height_ratio);
+			imagetag.height = image_height * Math.min(width_ratio, height_ratio);
+		} else {
+			imagetag.width = image_width;
+			imagetag.height = image_height;
+		}
+	}
+</script>
+
+
 <em><bean:message key="label.manageChannels" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
@@ -86,7 +105,7 @@
 	<logic:notEmpty name="announcementBoard" property="files">
 		<tr>
 		<th>
-			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+			<bean:message key="label.insertFiles" bundle="MESSAGING_RESOURCES"/>:
 		</th>
 		<td>
 				<div style="height: 80px; overflow: auto; border: 1px solid #aaa; padding: 0.25em; background: #fafafa;">
@@ -238,9 +257,119 @@
 			<span class="error0"><fr:message for="publicationEnd-validated"/></span>
 		</td>
 	</tr>
+
+<%-- Categories --%>
+<%-- 
+ 	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
+		</th>
+		<td>
+			<fr:create id="categories-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="categories">
+				<fr:layout name="option-select">
+					<fr:property name="labelStyle" value="display:none"/>
+				
+                <fr:property name="label" value="" />
+                <fr:property name="providerClass"
+                        value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AnnouncementCategoryProvider" />
+                <fr:property name="eachSchema" value="announcement.category.name.content" />
+                <fr:property name="eachLayout" value="values" />
+				<fr:property name="classes" value="nobullet noindent" />
+        
+				</fr:layout>
+			</fr:create>
+		<span class="error0"><fr:message for="categories-validated"/></span>
+		</td>
+	</tr>
+--%>
+<%-- Campus --%>
+
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.campus.label"/>:
+		</th>
+		<td>
+			<fr:create id="campus-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement"  slot="campus">
+ 				<fr:layout name="menu-select">
+					<fr:property name="labelStyle" value="display:none"/>
+		<fr:property name="size" value="30"/>
+		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<fr:property name="format"	value="${spaceInformation.presentationName}" />
+				</fr:layout>
+			</fr:create>
+		</td>
+	</tr>
+
+<%-- Photo --%>	
+<%-- 
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>:
+		</th>
+		<td>
+			<span id="photoUrl">
+				<fr:create id="announcement-photoUrl" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="photoUrl" visible="true">
+					<fr:layout name="input-with-comment">
+						<fr:property name="style" value="display: none"/>
+					</fr:layout>
+				</fr:create>
+			</span>
+		
+			<span id="photo">
+				<img src="#" name="announcement"/>
+			</span>
+			
+			<p id="remove-paragraph" class="mvert025" style="display:none"><a onclick="getElementById('remove-paragraph').setAttribute('style', 'display:none'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value',''); getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a></p>
+		</td>	
+	</tr>
+	
+	<logic:notEmpty name="announcementBoard" property="files">
+		<tr>
+		<th>
+			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:
+		</th>
+		<td>
+				<div style="height: 80px; overflow: auto; padding: 0.25em;">
+				<logic:iterate id="file" name="announcementBoard" property="filesSortedByDate">
+                <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
+				<bean:define id="displayName" name="file" property="displayName"/>
+
+				<% 
+					final String REGEX = "^.*\\.(jpg|gif|png)$";
+					if(((String)downloadUrl).matches(REGEX)) {
+				%>
+				
+				<div style="display: inline">
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+					
+						<div class="announcement_gallery" onclick="<%= "getElementById('remove-paragraph').setAttribute('style', 'display:block'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
+						<table>
+							<tr>
+							<td>
+							<fr:view name="file" >
+								<fr:layout name="view-as-image">
+									<fr:property name="style" value="width:40px; height:30px"/>
+									<fr:property name="contextRelative" value="false"/>
+									<fr:property name="moduleRelative" value="false"/>
+									<fr:property name="useParent" value="false"/>
+									<fr:property name="imageFormat" value="${downloadUrl}"/>	
+								</fr:layout>
+							</fr:view>
+							</td>
+							</tr>
+						</table>
+					</div>
+                </div>
+                <% } %>
+			</logic:iterate>
+			</div>
+		</td>
+		</tr>
+	</logic:notEmpty>
+--%>
 </table>
 
-	
+
 	<p>
 	<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="creator">
 		<fr:hidden name="person"/>
@@ -258,6 +387,7 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 	</p>
+
 
 
 </fr:form>

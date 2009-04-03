@@ -169,6 +169,7 @@ enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice       
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
 enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
 enum net.sourceforge.fenixedu.domain.accessControl.PermissionType                                                         as PermissionType;
+enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType													  as AnnouncementCategoryType;
 
 /*
  * Value types that need special externalization
@@ -5672,6 +5673,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 MultiLanguageString subject;
                 Boolean visible;
                 Boolean approved;
+                String photoUrl;
 	}
 
                         class functionalities.ExecutionPath extends DomainObject {
@@ -6224,6 +6226,11 @@ class accessControl.academicAdminOffice.AdministrativeOfficePermission extends D
 
 	class accessControl.academicAdminOffice.UpdateRegistrationAfterConclusionPermission extends accessControl.academicAdminOffice.AdministrativeOfficePermission {
 	}
+
+class messaging.AnnouncementCategory extends DomainObject {
+	MultiLanguageString name;
+	AnnouncementCategoryType type;
+}
 
 /*
  * Relations definitions
@@ -15138,3 +15145,26 @@ relation AdministrativeOfficePermissionGroupPermission {
 	}
 }
 
+relation AnnouncementCategoryRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	messaging.AnnouncementCategory playsRole categories {
+		multiplicity *;
+	}
+}
+
+relation AnnouncementCategoryAnnouncement {
+	messaging.AnnouncementCategory playsRole categories {
+		multiplicity *;
+	}
+	
+	messaging.Announcement playsRole announcements {
+		multiplicity *;
+	}
+}
+
+relation AnnouncementCampus {
+	space.Campus playsRole campus;
+	messaging.Announcement playsRole announcements {
+		multiplicity *;
+	}
+}

@@ -7,9 +7,28 @@
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@page import="net.sourceforge.fenixedu.domain.messaging.Announcement"%>
 
 <%-- <em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em> --%>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
+
+<script language="javascript">
+	function set_image_size(imagetag, image) {
+		var image_width = image.width;
+		var image_height = image.height;
+		
+		if(image_width > 400 || image_height > 300) {
+			var width_ratio = 400 / image_width;
+			var height_ratio = 300 / image_height;
+
+			imagetag.width = image_width * Math.min(width_ratio, height_ratio);
+			imagetag.height = image_height * Math.min(width_ratio, height_ratio);
+		} else {
+			imagetag.width = image_width;
+			imagetag.height = image_height;
+		}
+	}
+</script>
 
 
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -28,6 +47,7 @@
 
 <fr:form action="<%=  contextPrefix + action %>">
 
+<fr:edit id="announcement" name="announcement" visible="false"/>
 
 <p class="mtop2 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
 
@@ -69,7 +89,7 @@
 	<logic:notEmpty name="announcementBoard" property="files">
 		<tr>
 		<th>
-			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
+			<bean:message key="label.insertFiles" bundle="MESSAGING_RESOURCES"/>
 		</th>
 		<td>
 				<div style="height: 80px; overflow: auto; border: 1px solid #aaa; padding: 0.25em; background: #fafafa;">
@@ -224,6 +244,145 @@
 			<fr:edit name="announcement" slot="visible"/>
 		</td>
 	</tr>
+	
+<%-- Categories --%>
+<%-- 
+ 	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
+		</th>
+		<td>
+			<fr:edit id="categories-validated" name="announcement" slot="categories">
+				<fr:layout name="option-select">
+					<fr:property name="labelStyle" value="display:none"/>
+				
+                <fr:property name="label" value="" />
+                <fr:property name="providerClass"
+                        value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AnnouncementCategoryProvider" />
+                <fr:property name="eachSchema" value="announcement.category.name.content" />
+                <fr:property name="eachLayout" value="values" />
+				<fr:property name="classes" value="nobullet noindent" />
+        
+				</fr:layout>
+			</fr:edit>
+		<span class="error0"><fr:message for="categories-validated"/></span>
+		</td>
+	</tr>
+--%>
+<%-- Campus --%>
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.campus.label"/>
+		</th>
+		<td>
+			<fr:edit id="campus-validated" name="announcement" slot="campus">
+ 				<fr:layout name="menu-select">
+					<fr:property name="labelStyle" value="display:none"/>
+					<fr:property name="size" value="30"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+					<fr:property name="format"	value="${spaceInformation.presentationName}" />
+				</fr:layout>
+			</fr:edit>
+		</td>
+	</tr>
+	
+<%-- Photo --%>	
+<%-- 
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>
+		</th>
+		<td>
+			<span id="photoUrl">
+				<fr:edit name="announcement" slot="photoUrl" visible="true">
+					<fr:layout name="input-with-comment">
+						<fr:property name="style" value="display: none"/>
+					</fr:layout>
+				</fr:edit>
+			</span>
+		
+			<span id="photo">
+			<logic:present name="announcement" property="photoUrl">
+			<logic:notEmpty name="announcement" property="photoUrl">
+				<fr:view name="announcement" >
+					<fr:layout name="view-as-image">
+						<fr:property name="contextRelative" value="false"/>
+						<fr:property name="moduleRelative" value="false"/>
+						<fr:property name="useParent" value="false"/>
+						<fr:property name="imageFormat" value="${photoUrl}"/>	
+					</fr:layout>
+				</fr:view>
+			</logic:notEmpty>
+			<logic:empty name="announcement" property="photoUrl">
+				<img src="http://bogus/bogus.jpg"/>
+			</logic:empty>
+
+			<bean:define id="photoUrl" name="announcement" property="photoUrl"/>
+			<script language="javascript">
+				photo = new Image();
+				photo.src = '<%= photoUrl %>';
+				set_image_size(document.getElementById('photo').childNodes[1], photo);
+			</script>
+			</logic:present>
+
+			<logic:notPresent name="announcement" property="photoUrl">
+				<img src="http://bogus/bogus.jpg"/>
+			</logic:notPresent>
+
+			</span>
+			
+			<p id="remove-paragraph" class="mvert025" style="display: <%= ((Announcement) request.getAttribute("announcement")).getPhotoUrl() != null &&  ((Announcement) request.getAttribute("announcement")).getPhotoUrl().length() > 0 ? "block" : "none" %>">
+				<a onclick="document.getElementById('remove-paragraph').setAttribute('style', 'display:none'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value',''); document.getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a>
+			</p>
+		</td>	
+	</tr>
+--%>	
+<%-- 	
+	<logic:notEmpty name="announcementBoard" property="files">
+		<tr>
+		<th>
+			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:
+		</th>
+		<td>
+				<div style="height: 80px; overflow: auto; padding: 0.25em;">
+				<logic:iterate id="file" name="announcementBoard" property="filesSortedByDate">
+                <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
+				<bean:define id="displayName" name="file" property="displayName"/>
+				
+				<% 
+					final String REGEX = "^.*\\.(jpg|gif|png)$";
+					if(((String)downloadUrl).matches(REGEX)) {
+				%>
+				
+				<div style="display: inline">
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+					
+					<div class="announcement_gallery" onclick="<%= "document.getElementById('remove-paragraph').setAttribute('style', 'display:block'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); document.getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(document.getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
+						<table>
+							<tr>
+							<td>
+							<fr:view name="file" >
+								<fr:layout name="view-as-image">
+									<fr:property name="style" value="width:40px; height:30px"/>
+									<fr:property name="contextRelative" value="false"/>
+									<fr:property name="moduleRelative" value="false"/>
+									<fr:property name="useParent" value="false"/>
+									<fr:property name="imageFormat" value="${downloadUrl}"/>	
+								</fr:layout>
+							</fr:view>
+							</td>
+							</tr>
+						</table>
+					</div>
+                </div>
+                <% } %>
+                
+			</logic:iterate>
+			</div>
+		</td>
+		</tr>
+	</logic:notEmpty>
+--%>	
 </table>
 
 
