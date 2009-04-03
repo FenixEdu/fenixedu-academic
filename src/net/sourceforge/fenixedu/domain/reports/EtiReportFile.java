@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EtiReportFile extends EtiReportFile_Base {
 
@@ -21,10 +21,12 @@ public class EtiReportFile extends EtiReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem para ETI";
     }
 
+    @Override
     protected String getPrefix() {
 	return "etiGrades";
     }

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Base {
 
@@ -20,6 +20,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Estatuto e aprovações entre " + getExecutionYear().getYear() + " e "
 		+ getExecutionYearFourYearsBack(getExecutionYear()).getYear();
@@ -91,6 +92,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 
     }
 
+    @Override
     protected String getPrefix() {
 	return "statusAndAproval";
     }
@@ -108,6 +110,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	return executionYearFourYearsBack;
     }
 
+    @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("ano lectivo");

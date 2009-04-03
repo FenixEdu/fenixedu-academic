@@ -32,9 +32,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -42,6 +39,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 /**
  * @author - �ngela Almeida (argelina@ist.utl.pt)
@@ -167,7 +167,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	    ExecutionYear executionYear) {
 	setHeaders(spreadsheet);
 	for (Enrolment registrationWithStateForExecutionYearBean : registrations) {
-	    Registration registration = (Registration) registrationWithStateForExecutionYearBean.getRegistration();
+	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
 	    spreadsheet.addCell(registration.getNumber().toString());
 	    spreadsheet.addCell(registration.getPerson().getName());

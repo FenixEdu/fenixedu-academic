@@ -60,8 +60,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -71,6 +69,8 @@ import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EvaluationManagementBackingBean extends FenixBackingBean {
 
@@ -852,7 +852,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
 		.getWrittenEvaluationSpaceOccupations()) {
 	    if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
-		return (AllocatableSpace) roomOccupation.getRoom();
+		return roomOccupation.getRoom();
 	    }
 	}
 	return null;
@@ -906,8 +906,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		.getWrittenEvaluationSpaceOccupationsCount());
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
 		.getWrittenEvaluationSpaceOccupations()) {
-	    result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), ((AllocatableSpace) roomOccupation.getRoom())
-		    .getIdentification()));
+	    result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), (roomOccupation.getRoom()).getIdentification()));
 	}
 	return result;
     }

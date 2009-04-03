@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionChart;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionSpreadsheet;
 
@@ -40,6 +39,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.Pair;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TSDProcessValuationAction extends FenixDispatchAction {

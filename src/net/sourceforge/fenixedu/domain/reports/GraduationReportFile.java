@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class GraduationReportFile extends GraduationReportFile_Base {
 
@@ -22,15 +23,17 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem de diplomados";
     }
-    
+
+    @Override
     protected String getPrefix() {
 	return "diplomados";
     }
-    
-    
+
+    @Override
     public void renderReport(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("número aluno");
 	spreadsheet.setHeader("nome");

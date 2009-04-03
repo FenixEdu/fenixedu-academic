@@ -69,9 +69,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -92,6 +89,9 @@ import org.apache.struts.util.MessageResources;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 /**
  * @author Luis Cruz

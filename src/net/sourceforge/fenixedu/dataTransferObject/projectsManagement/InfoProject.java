@@ -10,13 +10,13 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -133,6 +133,7 @@ public class InfoProject extends DataTranferObject {
 	return projectCode;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	if ((obj != null) && (obj instanceof InfoProject))
 	    return (projectCode != null) && projectCode.equals(((InfoProject) obj).getProjectCode());

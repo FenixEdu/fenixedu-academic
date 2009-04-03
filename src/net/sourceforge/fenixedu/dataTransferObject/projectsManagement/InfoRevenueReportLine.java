@@ -5,13 +5,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.CellReference;
+
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -109,10 +110,12 @@ public class InfoRevenueReportLine extends InfoReportLine {
 	return infoRevenueReportLine;
     }
 
+    @Override
     public int getNumberOfColumns() {
 	return 5;
     }
 
+    @Override
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
@@ -135,6 +138,7 @@ public class InfoRevenueReportLine extends InfoReportLine {
 	cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
+    @Override
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
@@ -160,6 +164,7 @@ public class InfoRevenueReportLine extends InfoReportLine {
 	    cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
+    @Override
     public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
@@ -172,6 +177,7 @@ public class InfoRevenueReportLine extends InfoReportLine {
 	cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
     }
 
+    @Override
     public Double getValue(int column) {
 	switch (column) {
 	case 5:

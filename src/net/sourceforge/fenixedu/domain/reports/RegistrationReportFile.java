@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class RegistrationReportFile extends RegistrationReportFile_Base {
 
@@ -15,14 +15,17 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem de matrí­culas";
     }
 
+    @Override
     protected String getPrefix() {
 	return "matriculas";
     }
 
+    @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet);

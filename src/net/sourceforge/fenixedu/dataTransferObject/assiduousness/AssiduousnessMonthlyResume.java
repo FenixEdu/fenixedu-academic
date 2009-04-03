@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.Duration;
 import org.joda.time.Hours;
@@ -17,6 +16,8 @@ import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class AssiduousnessMonthlyResume implements Serializable {
 

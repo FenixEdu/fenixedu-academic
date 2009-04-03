@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
@@ -14,14 +14,17 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem de docentes associados a turnos";
     }
 
+    @Override
     protected String getPrefix() {
 	return "teachersByShift";
     }
 
+    @Override
     public void renderReport(Spreadsheet spreadsheet) {
 
 	spreadsheet.setHeader("semestre");
@@ -30,7 +33,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("id execution course");
 	spreadsheet.setHeader("% assegurada pelo docente");
-	
+
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
 	    for (TeacherService teacherService : executionSemester.getTeacherServices()) {
 		for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {

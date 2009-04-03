@@ -10,11 +10,12 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorization_Base {
 
@@ -82,7 +83,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	for (Month month : Month.values()) {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()), spreadsheet.getExcelStyle().getVerticalHeaderStyle());
 	    spreadsheet.addHeader("");
-	    cellNum = (short) spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum();
+	    cellNum = spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum();
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(firstHeaderRow, (short) (cellNum - 1), firstHeaderRow, (short) cellNum));
 	}
@@ -107,7 +108,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	int firstRow = 9;
 	int firstColumn = 3;
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
-	int lastColumn = spreadsheet.getMaxiumColumnNumber() - 1;
+	int lastColumn = spreadsheet.getMaxiumColumnNumber();
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());

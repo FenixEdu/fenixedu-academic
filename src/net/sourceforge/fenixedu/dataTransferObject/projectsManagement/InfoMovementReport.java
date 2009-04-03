@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
@@ -18,6 +17,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.hssf.util.Region;
+
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -133,6 +134,7 @@ public class InfoMovementReport extends InfoReportLine {
 	return infoMovementReport;
     }
 
+    @Override
     public Double getValue(int column) {
 	return null;
     }
@@ -286,6 +288,7 @@ public class InfoMovementReport extends InfoReportLine {
 
     }
 
+    @Override
     public int getNumberOfColumns() {
 	return 8;
     }

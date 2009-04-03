@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTimeFieldType;
+
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 

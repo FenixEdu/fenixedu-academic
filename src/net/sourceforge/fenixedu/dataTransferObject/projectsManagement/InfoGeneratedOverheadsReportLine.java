@@ -5,13 +5,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.IGeneratedOverheadsReportLine;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.CellReference;
+
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -153,6 +154,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	return infoGeneratedOverheadsReportLine;
     }
 
+    @Override
     public int getNumberOfColumns() {
 	return 11;
     }
@@ -255,6 +257,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	}
     }
 
+    @Override
     public Double getValue(int column) {
 	switch (column) {
 	case 8:

@@ -3,14 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -33,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit.TeacherCreditsReportDTO;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
@@ -43,11 +37,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -58,6 +48,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 /**
  * @author Ricardo Rodrigues
@@ -117,16 +110,16 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    Collection<Department> departments = rootDomainObject.getDepartments();
 	    for (Department department : departments) {
 		Unit unit = department.getDepartmentUnit();
-		teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ReadTeachersCreditsResumeByPeriodAndUnit.run(unit, fromExecutionPeriod,
-				untilExecutionPeriod);
+		teacherCreditsReportList = ReadTeachersCreditsResumeByPeriodAndUnit.run(unit, fromExecutionPeriod,
+			untilExecutionPeriod);
 		teachersCreditsByDepartment.put(department, teacherCreditsReportList);
 	    }
 	    request.setAttribute("departmentID", 0);
 	} else {
 	    Department department = rootDomainObject.readDepartmentByOID(departmentID);
 	    Unit departmentUnit = department.getDepartmentUnit();
-	    teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod,
-			    untilExecutionPeriod);
+	    teacherCreditsReportList = ReadTeachersCreditsResumeByPeriodAndUnit.run(departmentUnit, fromExecutionPeriod,
+		    untilExecutionPeriod);
 	    teachersCreditsByDepartment.put(department, teacherCreditsReportList);
 	    request.setAttribute("department", department);
 	    request.setAttribute("departmentID", department.getIdInternal());
@@ -406,15 +399,16 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    Collection<Department> departments = rootDomainObject.getDepartments();
 	    for (Department department : departments) {
 		Unit unit = department.getDepartmentUnit();
-		departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ReadDepartmentTotalCreditsByPeriod.run(unit, fromExecutionPeriod, untilExecutionPeriod);
+		departmentPeriodTotalCredits = ReadDepartmentTotalCreditsByPeriod.run(unit, fromExecutionPeriod,
+			untilExecutionPeriod);
 		departmentTotalCredits.put(department, departmentPeriodTotalCredits);
 	    }
 	    request.setAttribute("departmentID", 0);
 	} else {
 	    Department department = rootDomainObject.readDepartmentByOID(departmentID);
 	    Unit departmentUnit = department.getDepartmentUnit();
-	    departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ReadDepartmentTotalCreditsByPeriod.run(departmentUnit, fromExecutionPeriod,
-			    untilExecutionPeriod);
+	    departmentPeriodTotalCredits = ReadDepartmentTotalCreditsByPeriod.run(departmentUnit, fromExecutionPeriod,
+		    untilExecutionPeriod);
 
 	    departmentTotalCredits.put(department, departmentPeriodTotalCredits);
 	    request.setAttribute("department", department);
@@ -499,7 +493,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(teacherCreditsReportDTO.getTeacher().getTeacherNumber().toString());
 	    row.setCell(teacherCreditsReportDTO.getTeacher().getPerson().getName());
-	    Double pastCredits = NumberUtils.formatNumber((Double) teacherCreditsReportDTO.getPastCredits(), 2);
+	    Double pastCredits = NumberUtils.formatNumber(teacherCreditsReportDTO.getPastCredits(), 2);
 	    row.setCell(pastCredits.toString().replace('.', ','));
 	    Set<ExecutionSemester> executionSemesters = teacherCreditsReportDTO.getCreditsByExecutionPeriod().keySet();
 	    Double totalCredits = 0.0;

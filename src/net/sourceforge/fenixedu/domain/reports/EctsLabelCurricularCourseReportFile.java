@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCourseReportFile_Base {
 
@@ -26,10 +26,12 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem para ECTS LABEL Disciplinas";
     }
 
+    @Override
     protected String getPrefix() {
 	return "ectsLabel_Disciplinas";
     }

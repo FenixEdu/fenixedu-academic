@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -17,6 +16,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -74,6 +74,7 @@ public class InfoExpensesReport extends InfoProjectReport {
 	this.summaryPTEReport = summaryPTEReport;
     }
 
+    @Override
     public void getReportToExcel(IUserView userView, HSSFWorkbook wb, ReportType reportType) {
 	ExcelStyle excelStyle = new ExcelStyle(wb);
 	super.getReportToExcel(userView, wb, reportType);

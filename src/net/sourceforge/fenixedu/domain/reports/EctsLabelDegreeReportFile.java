@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
@@ -18,10 +18,12 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem para ECTS LABEL Cursos";
     }
 
+    @Override
     protected String getPrefix() {
 	return "ectsLabel_Cursos";
     }
@@ -44,39 +46,39 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
     private void createEctsLabelDegreesHeader(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeaders(new String[] {
 
-		"Nome",
+	"Nome",
 
-		"Nome Inglês",
+	"Nome Inglês",
 
-		"Tipo Curso",
+	"Tipo Curso",
 
-		"Duração em anos",
+	"Duração em anos",
 
-		"Duração em Semanas de Estudo",
+	"Duração em Semanas de Estudo",
 
-		"Créditos ECTS",
+	"Créditos ECTS",
 
-		"Requisitos de Ingresso",
+	"Requisitos de Ingresso",
 
-		"Requisitos de Ingresso (inglês)",
+	"Requisitos de Ingresso (inglês)",
 
-		"Objectivos Educacionais",
+	"Objectivos Educacionais",
 
-		"Objectivos Educacionais (inglês)",
+	"Objectivos Educacionais (inglês)",
 
-		"Acesso a um nível superior de estudos",
+	"Acesso a um nível superior de estudos",
 
-		"Acesso a um nível superior de estudos (inglês)",
+	"Acesso a um nível superior de estudos (inglês)",
 
-		"Normas e Regulamentos",
+	"Normas e Regulamentos",
 
-		"Normas e Regulamentos (inglês)",
+	"Normas e Regulamentos (inglês)",
 
-		"Coordenador",
+	"Coordenador",
 
-		"Contactos",
+	"Contactos",
 
-		"Contactos (inglês)"
+	"Contactos (inglês)"
 
 	});
     }

@@ -23,8 +23,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -34,6 +32,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -79,8 +79,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 	YearMonthDay beginDate = (beginDateDay > 0 && beginDateMonth > 0 && beginDateYear > 0) ? new YearMonthDay(beginDateYear,
 		beginDateMonth, beginDateDay) : null;
 
-	List<InsuranceTransaction> payedInsurances = (List<InsuranceTransaction>) ListPayedInsurancesByDates.run(executionYear,
-		beginDate, endDate);
+	List<InsuranceTransaction> payedInsurances = ListPayedInsurancesByDates.run(executionYear, beginDate, endDate);
 
 	ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	String functionalityName = rb.getString("link.masterDegree.administrativeOffice.gratuity.listPayedInsurances");

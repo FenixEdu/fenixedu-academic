@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EurAceReportFile extends EurAceReportFile_Base {
 
@@ -17,10 +17,12 @@ public class EurAceReportFile extends EurAceReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem para EUR-ACE";
     }
 
+    @Override
     protected String getPrefix() {
 	return "eurAce";
     }

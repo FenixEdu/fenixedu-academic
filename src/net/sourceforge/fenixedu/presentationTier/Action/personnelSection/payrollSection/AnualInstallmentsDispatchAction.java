@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Emp
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,7 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
@@ -167,7 +167,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);
 	bonusInstallment.getRows(spreadsheet, enumBundle);
 
-	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() + 1);
+	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum(), 0, spreadsheet.getMaxiumColumnNumber());
 
 	response.setContentType("text/plain");
 	StringBuilder filename = new StringBuilder();

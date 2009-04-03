@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryPTEReportLine;
-import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -13,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 
 /**
  * @author Susana Fernandes
@@ -89,6 +89,7 @@ public class InfoSummaryPTEReportLine extends InfoReportLine {
 	return infoSummaryPTEReportLine;
     }
 
+    @Override
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	int nextRow = sheet.getLastRowNum() + 2;
 	HSSFRow row = sheet.createRow(nextRow);

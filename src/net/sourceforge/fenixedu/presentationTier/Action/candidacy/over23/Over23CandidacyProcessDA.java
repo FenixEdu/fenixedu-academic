@@ -21,9 +21,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualC
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -35,6 +32,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -80,6 +80,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
+    @Override
     protected ActionForward introForward(ActionMapping mapping) {
 	return mapping.findForward("intro");
     }
@@ -246,6 +247,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
+    @Override
     protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(final HttpServletRequest request) {
 	final Over23CandidacyProcess process = getProcess(request);
 	final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();

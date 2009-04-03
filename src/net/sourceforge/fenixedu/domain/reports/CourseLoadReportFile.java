@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
@@ -14,14 +14,17 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem de tipos de aula e carga horária";
     }
 
+    @Override
     public String getDescription() {
 	return getJobName() + " no formato " + getType().toUpperCase();
     }
 
+    @Override
     protected String getPrefix() {
 	return "carga_horaria";
     }

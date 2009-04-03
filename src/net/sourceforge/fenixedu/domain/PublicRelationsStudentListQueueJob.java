@@ -5,11 +5,11 @@ import java.io.ByteArrayOutputStream;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentListQueueJob_Base {
-    
+
     public PublicRelationsStudentListQueueJob(ExecutionYear executionYear, DegreeType degreeType, Boolean concluded,
 	    Boolean active) {
 	super();
@@ -19,14 +19,17 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
 	setConcluded(concluded);
     }
 
+    @Override
     public String getDescription() {
 	return "Listagem de Alunos para Relações públicas";
     }
 
+    @Override
     public String getFilename() {
 	return "listagem_" + getRequestDate().toString("yyyy_MM_dd_HH_mm") + ".xls";
     }
 
+    @Override
     public QueueJobResult execute() throws Exception {
 	Language.setLocale(Language.getDefaultLocale());
 	final ExecutionYear executionYear = getExecutionYear();

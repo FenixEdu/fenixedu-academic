@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class FlunkedReportFile extends FlunkedReportFile_Base {
 
@@ -13,14 +13,17 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 	super();
     }
 
+    @Override
     public String getJobName() {
 	return "Listagem de prescrições";
     }
 
+    @Override
     protected String getPrefix() {
 	return "prescricoes";
     }
 
+    @Override
     public void renderReport(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet);

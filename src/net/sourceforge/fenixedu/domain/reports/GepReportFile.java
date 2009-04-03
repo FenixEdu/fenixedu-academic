@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.report.Spreadsheet;
-import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public abstract class GepReportFile extends GepReportFile_Base {
 
@@ -33,6 +33,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	return executionYearFourYearsBack;
     }
 
+    @Override
     public String getDescription() {
 	return " no formato " + getType().toUpperCase();
     }
@@ -41,6 +42,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     protected abstract String getPrefix();
 
+    @Override
     public String getFilename() {
 	return getReportName().replace(' ', '_') + "." + getType();
     }
@@ -114,6 +116,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     public abstract void renderReport(Spreadsheet spreadsheet) throws Exception;
 
+    @Override
     public QueueJobResult execute() throws Exception {
 	final Spreadsheet spreadsheet = new Spreadsheet(getReportName());
 

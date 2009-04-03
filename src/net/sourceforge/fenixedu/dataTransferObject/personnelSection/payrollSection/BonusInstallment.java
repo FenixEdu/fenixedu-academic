@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.Anu
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeBonusInstallment;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment;
 import net.sourceforge.fenixedu.util.Month;
-import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
+
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class BonusInstallment implements Serializable {
     private Integer year;
@@ -74,7 +75,7 @@ public class BonusInstallment implements Serializable {
 	spreadsheet.addHeader(bundle.getString("label.workingUnit"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.subCostCenter"), 2000);
 	spreadsheet.addHeader(bundle.getString("label.explorationUnit"), 2000);
-	int nextFirstRow = spreadsheet.getRow().getLastCellNum() + 1;
+	int nextFirstRow = spreadsheet.getNextWritableCell();
 	AnualBonusInstallment anualBonusInstallment = AnualBonusInstallment.readByYearAndInstallment(getYear(), getInstallment());
 
 	List<Partial> sortedPartials = anualBonusInstallment.getAssiduousnessPartials().getSortedPartials();
