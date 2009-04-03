@@ -13,9 +13,7 @@ public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLines
 
     public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	return mapping.findForward("backToStudentEnrolments");
-
     }
 
 }

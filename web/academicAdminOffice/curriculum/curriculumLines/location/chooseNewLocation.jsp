@@ -9,12 +9,15 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<em><bean:message key="label.academicAdminOffice"
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	<h2><strong><bean:message key="label.course.moveEnrolments"	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+	<logic:equal name="moveCurriculumLinesBean" property="withRules" value="true">
+		<h2><strong><bean:message key="label.course.moveEnrolments.with.rules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+	</logic:equal>
+	<logic:equal name="moveCurriculumLinesBean" property="withRules" value="false">
+		<h2><strong><bean:message key="label.course.moveEnrolments.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+	</logic:equal>
 	
 	<bean:define id="studentCurricularPlanId" name="moveCurriculumLinesBean" property="studentCurricularPlan.idInternal" />
-	<fr:form
-		action="<%="/curriculumLinesLocationManagement.do?scpID=" + studentCurricularPlanId.toString() %>">
-		
+	<fr:form action="<%="/curriculumLinesLocationManagement.do?scpID=" + studentCurricularPlanId.toString() %>">
 		<input type="hidden" name="method" />
 
 		<logic:messagesPresent message="true">
@@ -47,17 +50,21 @@
 					<fr:property name="columnClasses" value="nowrap," />
 				</fr:layout>
 				<fr:destination name="invalid" path="<%="/curriculumLinesLocationManagement.do?method=moveCurriculumLines&scpID=" + studentCurricularPlanId.toString() %>"/>
-				<fr:destination name="cancel" path="<%="/curriculumLinesLocationManagement.do?method=prepare&scpID=" + studentCurricularPlanId.toString() %>"/>
 			</fr:edit>
 	
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-				onclick="this.form.method.value='moveCurriculumLines';">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='moveCurriculumLines';">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.submit" />
 			</html:submit>
-			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"
-				onclick="this.form.method.value='prepare';">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel" />
-			</html:cancel>
+			<logic:equal name="moveCurriculumLinesBean" property="withRules" value="true">
+				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepare';">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel" />
+				</html:cancel>
+			</logic:equal>
+			<logic:equal name="moveCurriculumLinesBean" property="withRules" value="false">
+				<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareWithoutRules';">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel" />
+				</html:cancel>
+			</logic:equal>
 		</logic:notEmpty>
 	</fr:form>
 </logic:present>

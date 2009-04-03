@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.enrolment;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWrapper {
@@ -63,4 +67,15 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
 	}
 	return false;
     }
+
+    @Override
+    public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
+	if (hasDegreeModule()) {
+	    if (getDegreeModule().getParentDegreeCurricularPlan() == getDismissal().getDegreeCurricularPlanOfStudent()) {
+		return getDegreeModule().getCurricularRules(getContext(), executionSemester);
+	    }
+	}
+	return Collections.emptyList();
+    }
+
 }

@@ -1,6 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collections;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
@@ -63,4 +68,11 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 	return builder;
     }
 
+    @Override
+    public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(ExecutionSemester executionSemester) {
+	if (isValid(executionSemester) && isEnroled()) {
+	    return Collections.<IDegreeModuleToEvaluate> singleton(new ExternalDegreeEnrolmentWrapper(this, executionSemester));
+	}
+	return Collections.emptySet();
+    }
 }

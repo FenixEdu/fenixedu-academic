@@ -185,15 +185,14 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	return false;
     }
 
-    public boolean isFor(DegreeModule degreeModule) {
+    public boolean isFor(final DegreeModule degreeModule) {
 	return getDegreeModule() == degreeModule;
     }
 
-    public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
+    public boolean isAnnualCurricularCourse(final ExecutionYear executionYear) {
 	if (getDegreeModule().isLeaf()) {
 	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
 	}
-
 	return false;
     }
 }

@@ -64,7 +64,7 @@
 								</logic:equal>
 								<logic:equal name="studentCurricularPlan" property="transition" value="false">
 									, 
-									<html:link action="/curriculumLinesLocationManagement.do?method=prepare" paramId="scpID" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
+									<html:link action="/curriculumLinesLocationManagement.do?method=prepareWithoutRules" paramId="scpID" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="label.course.moveEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 								</logic:equal>
 								, 
 								<html:link action="/studentDismissals.do?method=manage" paramId="scpID" paramName="studentCurricularPlan" paramProperty="idInternal"><bean:message key="link.student.dismissal.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>

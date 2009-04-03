@@ -18,6 +18,7 @@ public class MoveCurriculumLinesBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
     private List<CurriculumLineLocationBean> curriculumLineLocations;
+    private boolean withRules = true;
 
     public MoveCurriculumLinesBean() {
 	this.curriculumLineLocations = new ArrayList<CurriculumLineLocationBean>();
@@ -64,4 +65,13 @@ public class MoveCurriculumLinesBean implements Serializable {
 	}
 	return result;
     }
+
+    public boolean isWithRules() {
+	return withRules;
+    }
+
+    public void withRules(boolean value) {
+	this.withRules = value;
+    }
+
 }

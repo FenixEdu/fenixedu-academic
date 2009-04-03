@@ -14,7 +14,11 @@ public class MoveCurriculumLines extends FenixService {
 
     public void run(final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 	final StudentCurricularPlan studentCurricularPlan = moveCurriculumLinesBean.getStudentCurricularPlan();
-	studentCurricularPlan.moveCurriculumLines(AccessControl.getPerson(), moveCurriculumLinesBean);
+	if (moveCurriculumLinesBean.isWithRules()) {
+	    studentCurricularPlan.moveCurriculumLines(AccessControl.getPerson(), moveCurriculumLinesBean);
+	} else {
+	    studentCurricularPlan.moveCurriculumLinesWithoutRules(AccessControl.getPerson(), moveCurriculumLinesBean);
+	}
     }
 
     public void run(final OptionalCurricularCoursesLocationBean bean) throws FenixServiceException {

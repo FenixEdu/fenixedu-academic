@@ -45,20 +45,6 @@ public class StudentCurricularPlanPredicates {
 	}
     };
 
-    static public final AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES = new AccessControlPredicate<StudentCurricularPlan>() {
-
-	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
-	    final Person person = AccessControl.getPerson();
-	    return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person.hasRole(RoleType.MANAGER);
-	}
-
-    };
-
-    static private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
-	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-		person.getEmployeeCampus());
-    }
-
     static public AccessControlPredicate<StudentCurricularPlan> ENROL_WITHOUT_RULES = new AccessControlPredicate<StudentCurricularPlan>() {
 
 	@Override
@@ -82,9 +68,53 @@ public class StudentCurricularPlanPredicates {
 	}
     };
 
+    static public final AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES = new AccessControlPredicate<StudentCurricularPlan>() {
+
+	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+	    final Person person = AccessControl.getPerson();
+	    return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person.hasRole(RoleType.MANAGER);
+	}
+    };
+
+    static public AccessControlPredicate<StudentCurricularPlan> MOVE_CURRICULUM_LINES_WITHOUT_RULES = new AccessControlPredicate<StudentCurricularPlan>() {
+
+	@Override
+	public boolean evaluate(StudentCurricularPlan studentCurricularPlan) {
+	    final Person person = AccessControl.getPerson();
+
+	    if (person.hasRole(RoleType.MANAGER)) {
+		return true;
+	    }
+
+	    if (!person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+		return false;
+	    }
+
+	    final AdministrativeOfficePermission permission = getMoveCurriculumLinesWithoutRulesPermission(person);
+	    if (permission == null || !permission.isAppliable(studentCurricularPlan)) {
+		return true;
+	    }
+
+	    return permission.isMember(person);
+
+	}
+
+    };
+
+    static private AdministrativeOfficePermission getPermission(final Person person, final PermissionType type) {
+	return person.getEmployeeAdministrativeOffice().getPermission(type, person.getEmployeeCampus());
+    }
+
+    static private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
+	return getPermission(person, PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION);
+    }
+
     static private AdministrativeOfficePermission getEnrolmentWithoutRulesPermission(final Person person) {
-	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.ENROLMENT_WITHOUT_RULES,
-		person.getEmployeeCampus());
+	return getPermission(person, PermissionType.ENROLMENT_WITHOUT_RULES);
+    }
+
+    static private AdministrativeOfficePermission getMoveCurriculumLinesWithoutRulesPermission(Person person) {
+	return getPermission(person, PermissionType.MOVE_CURRICULUM_LINES_WITHOUT_RULES);
     }
 
 }

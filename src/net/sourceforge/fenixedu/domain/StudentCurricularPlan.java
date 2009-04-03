@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -2518,16 +2517,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
 
-		if (!responsiblePerson.hasRole(RoleType.MANAGER) && !destination.canAdd(curriculumLine)) {
+		if (!destination.canAdd(curriculumLine)) {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
 			    curriculumLine.getFullPath(), destination.getFullPath());
 		}
 		if (!destination.isExtraCurriculum()) {
 		    runRules = true;
 		}
+		curriculumLine.setCurriculumGroup(destination);
 	    }
 
-	    curriculumLine.setCurriculumGroup(destination);
 	    if (!curriculumLine.hasCreatedBy()) {
 		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
 	    }
@@ -2535,10 +2534,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	runRules &= isBolonhaDegree();
 
-	if (runRules && !responsiblePerson.hasRole(RoleType.MANAGER)) {
-	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(executionSemester),
-		    executionSemester);
+	if (runRules) {
+	    checkEnrolmentRules(responsiblePerson, moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester
+		    .readActualExecutionSemester()), ExecutionSemester.readActualExecutionSemester());
+	}
+    }
+
+    @Checked("StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES")
+    public void moveCurriculumLinesWithoutRules(final Person responsiblePerson,
+	    final MoveCurriculumLinesBean moveCurriculumLinesBean) {
+
+	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsiblePerson);
+
+	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
+
+	    final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
+	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
+
+	    if (curriculumLine.getCurriculumGroup() != destination) {
+		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
+		curriculumLine.setCurriculumGroup(destination);
+	    }
+	    if (!curriculumLine.hasCreatedBy()) {
+		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
+	    }
 	}
     }
 

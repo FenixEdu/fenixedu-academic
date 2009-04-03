@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledEnrolmentWrapper;
+import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -1245,11 +1246,18 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public Set<IDegreeModuleToEvaluate> getDegreeModulesToEvaluate(final ExecutionSemester executionSemester) {
 	if (isValid(executionSemester) && isEnroled()) {
-	    final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
-	    result.add(new EnroledEnrolmentWrapper(this, executionSemester));
-	    return result;
+	    if (isFromExternalDegree()) {
+		return Collections
+			.<IDegreeModuleToEvaluate> singleton(new ExternalDegreeEnrolmentWrapper(this, executionSemester));
+	    } else {
+		return Collections.<IDegreeModuleToEvaluate> singleton(new EnroledEnrolmentWrapper(this, executionSemester));
+	    }
 	}
 	return Collections.emptySet();
+    }
+
+    private boolean isFromExternalDegree() {
+	return getDegreeModule().getParentDegreeCurricularPlan() != getDegreeCurricularPlanOfStudent();
     }
 
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {

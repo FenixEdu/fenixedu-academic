@@ -28,6 +28,9 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	    studentEnrolmentBean.setStudentCurricularPlan(plan);
 	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
 	    studentEnrolmentBean.canEnrolWithoutRules(StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(plan));
+	    studentEnrolmentBean
+		    .canMoveCurriculumLinesWithoutRules(StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES
+			    .evaluate(plan));
 	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();
@@ -47,6 +50,9 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	studentEnrolmentBean.setStudentCurricularPlan((StudentCurricularPlan) request.getAttribute("studentCurricularPlan"));
 	studentEnrolmentBean.canEnrolWithoutRules(StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES
 		.evaluate(studentEnrolmentBean.getStudentCurricularPlan()));
+	studentEnrolmentBean
+		.canMoveCurriculumLinesWithoutRules(StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES
+			.evaluate(studentEnrolmentBean.getStudentCurricularPlan()));
 
 	return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);
     }

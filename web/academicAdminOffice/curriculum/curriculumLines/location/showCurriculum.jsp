@@ -1,25 +1,25 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@page
-	import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
-<html:xhtml />
+<%@page	import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<html:xhtml />
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-	<em><bean:message key="label.academicAdminOffice"
-		bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	<h2><strong><bean:message key="label.course.moveEnrolments"	bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
+	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="idInternal" />
+	<bean:define id="withRules" name="withRules" />
 
-	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan"
-		property="idInternal" />
-	<fr:form
-		action="<%="/curriculumLinesLocationManagement.do?scpID=" + studentCurricularPlanId.toString() %>">
-		
+	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
+	<logic:equal name="withRules" value="true">
+		<h2><strong><bean:message key="label.course.moveEnrolments.with.rules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+	</logic:equal>
+	<logic:equal name="withRules" value="false">
+		<h2><strong><bean:message key="label.course.moveEnrolments.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+	</logic:equal>
+	
+	<fr:form action="<%="/curriculumLinesLocationManagement.do?scpID=" + studentCurricularPlanId.toString() + "&amp;withRules=" + withRules.toString() %>">
 		<input type="hidden" name="method" />
-		
 		
 		<logic:messagesPresent message="true">
 			<ul class="nobullet list6">
@@ -30,12 +30,10 @@
 			</ul>
 			<br/>
 		</logic:messagesPresent>
-		
 
 		<fr:edit name="studentCurricularPlan">
 			<fr:layout>
-				<fr:property name="organizedBy"
-					value="<%=OrganizationType.GROUPS.name()%>" />
+				<fr:property name="organizedBy" value="<%=OrganizationType.GROUPS.name()%>" />
 				<fr:property name="detailed" value="false" />
 				<fr:property name="selectable" value="true" />
 				<fr:property name="selectionName" value="selectedCurriculumLineIds" />
@@ -43,12 +41,10 @@
 		</fr:edit>
 		
 		<p>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-				onclick="this.form.method.value='chooseNewDestination';">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='chooseNewDestination';">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.continue" />
 			</html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back"
-				onclick="this.form.method.value='backToStudentEnrolments';">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='backToStudentEnrolments';">
 				<bean:message bundle="APPLICATION_RESOURCES" key="label.back" />
 			</html:submit>
 		</p>

@@ -1823,7 +1823,9 @@
 </schema>
 
 <schema name="academicAdminOffice.show.permissions" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionViewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="permissionType.localizedName" key="label.permission" />
+	<slot name="permissionType.localizedName" key="label.permission">
+		<property name="classes" value="nowrap" />
+	</slot>
 	<slot name="members" key="label.elements" layout="list">
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="academicAdminOffice.show.permissions.member" />

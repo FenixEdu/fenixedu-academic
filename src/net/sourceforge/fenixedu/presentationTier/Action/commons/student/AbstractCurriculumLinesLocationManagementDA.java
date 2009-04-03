@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.MoveCurriculumLinesBean;
+import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -26,11 +27,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
+    private ActionForward prepare(final ActionMapping mapping, final HttpServletRequest request, final boolean isWithRules) {
 	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
-
+	request.setAttribute("withRules", isWithRules);
 	return mapping.findForward("showCurriculum");
+    }
+
+    public ActionForward prepareWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepare(mapping, request, false);
+    }
+
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	return prepare(mapping, request, true);
     }
 
     public ActionForward chooseNewDestination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -40,15 +49,19 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 
 	if (selectedCurriculumLines.isEmpty()) {
 	    addActionMessage(request, "label.student.moveCurriculumLines.curriculumLines.selection.required");
-	    return prepare(mapping, form, request, response);
+	    return prepare(mapping, request, isWithRules(request));
 	}
 
 	final MoveCurriculumLinesBean moveCurriculumLinesBean = MoveCurriculumLinesBean.buildFrom(selectedCurriculumLines);
 	moveCurriculumLinesBean.setStudentCurricularPlan(getStudentCurricularPlan(request));
-
+	moveCurriculumLinesBean.withRules(isWithRules(request));
 	request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
 
 	return mapping.findForward("chooseNewLocation");
+    }
+
+    protected boolean isWithRules(final HttpServletRequest request) {
+	return Boolean.valueOf((String) getFromRequest(request, "withRules")).booleanValue();
     }
 
     public ActionForward moveCurriculumLines(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -63,25 +76,25 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 
 	try {
 	    executeService("MoveCurriculumLines", new Object[] { moveCurriculumLinesBean });
-	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages(request, ex.getFalseResult());
-
+	} catch (final EnrollmentDomainException e) {
+	    addRuleResultMessagesToActionMessages(request, e.getFalseResult());
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-
 	    return mapping.findForward("chooseNewLocation");
-
-	} catch (DomainException ex) {
-
-	    addActionMessage(request, ex.getMessage(), ex.getArgs());
-
+	    
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage(request, "error.NotAuthorized");
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
-
+	    return mapping.findForward("chooseNewLocation");
+	    
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
 	    return mapping.findForward("chooseNewLocation");
 	}
 
 	request.setAttribute("studentCurricularPlan", moveCurriculumLinesBean.getStudentCurricularPlan());
+	request.setAttribute("withRules", moveCurriculumLinesBean.isWithRules());
 	return mapping.findForward("showCurriculum");
-
     }
 
     private void addRuleResultMessagesToActionMessages(HttpServletRequest request, RuleResult... falseRuleResults) {
@@ -94,7 +107,6 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 		}
 	    }
 	}
-
     }
 
     private List<CurriculumLine> getSelectedCurriculumLines(HttpServletRequest request) {
@@ -109,7 +121,6 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 	}
 
 	return result;
-
     }
 
     protected StudentCurricularPlan getStudentCurricularPlan(HttpServletRequest request) {

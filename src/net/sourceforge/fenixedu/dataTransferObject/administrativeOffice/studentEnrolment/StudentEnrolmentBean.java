@@ -22,6 +22,7 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
     private boolean canEnrolWithoutRules = false;
+    private boolean canMoveCurriculumLinesWithoutRules = false;
 
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return (this.studentCurricularPlan == null) ? null : this.studentCurricularPlan.getObject();
@@ -111,6 +112,14 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 
     public void canEnrolWithoutRules(boolean value) {
 	canEnrolWithoutRules = value;
+    }
+
+    public boolean getCanMoveCurriculumLinesWithoutRules() {
+	return canMoveCurriculumLinesWithoutRules;
+    }
+
+    public void canMoveCurriculumLinesWithoutRules(boolean value) {
+	canMoveCurriculumLinesWithoutRules = value;
     }
 
 }
