@@ -61,6 +61,20 @@
     <logic:present name="performanceGridTable">
         
         <logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
+        
+            <bean:define id="filtersBean" name="performanceGridFiltersBean" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean"/>
+            <bean:define id="degreeOID" value="<%= filtersBean.getDegree().getIdInternal().toString() %>" />
+            <bean:define id="entryYearOID" value="<%= filtersBean.getStudentsEntryYear().getIdInternal().toString() %>" />
+            <bean:define id="monitoringYearOID" value="<%= filtersBean.getCurrentMonitoringYear().getIdInternal().toString() %>" />
+            <bean:define id="tutorOID" name="tutor" property="idInternal" />
+            <bean:define id="args" value="<%="degreeOID=" + degreeOID + "&entryYearOID=" + entryYearOID + "&monitoringYearOID=" + monitoringYearOID + "&tutorOID=" +  tutorOID %>" />
+        
+            <p>
+            <html:link action="<%= "/tutorStudentsPerformanceGrid.do?method=exportXls&" + args %>" >
+                <bean:message key="link.export.xls" bundle="COMMON_RESOURCES"/>
+            </html:link>
+            </p>
+        
             <bean:define id="degreeMaxYears" name="performanceGridFiltersBean" property="degreeCurricularPeriod"  />
             <%
                 Integer numberOfFixedColumns = ((Integer)degreeMaxYears) * 2 + 2;
