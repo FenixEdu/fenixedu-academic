@@ -916,7 +916,9 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 </schema>
 
 <schema name="insert.addToVacations" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
-	<slot name="addToVacations"  bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="addToVacations" read-only="true"  bundle="ASSIDUOUSNESS_RESOURCES">
+		<property name="readOnly" value="true" />
+	</slot>
 </schema>
 
 <schema name="insert.addToWeekRestTime" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWorkRequestFactory">
