@@ -53,8 +53,9 @@ public class ScheduleExemption extends ScheduleExemption_Base {
 	return new Attributes(attributes);
     }
 
+    @Override
     public boolean canDoExtraWorkInWeekDays() {
-	if (getMeal() == null || getMeal().getMinimumMealBreakInterval().equals(Duration.ZERO)) {
+	if (getScheduleClockingType().equals(ScheduleClockingType.NOT_MANDATORY_CLOCKING)) {
 	    return false;
 	}
 	return true;
