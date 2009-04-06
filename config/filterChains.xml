@@ -548,7 +548,7 @@
 
     <filterChain>
         <name>ReadCoursesInformationAuthorization</name>
-        <expression>ExecutionDegreeCoordinatorAuthorization || GEPAuthorization</expression>
+        <expression>ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorization || GEPAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>

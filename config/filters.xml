@@ -350,6 +350,13 @@
     </filter>
 
     <filter>
+        <name>ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
+
+    <filter>
         <name>ExecutionPeriodsEnrollmentFenix</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionPeriodsEnrollmentFenix</implementationClass>
         <description></description>

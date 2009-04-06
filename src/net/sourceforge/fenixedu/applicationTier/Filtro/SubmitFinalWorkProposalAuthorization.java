@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -68,6 +69,13 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
     private boolean isCoordinatorFor(final ExecutionDegree executionDegree, final Person person) {
 	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
 	    if (coordinator.getPerson() == person) {
+		return true;
+	    }
+	}
+	for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
+	    if (executionDegree == scientificCommission.getExecutionDegree()
+			|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree().getDegreeCurricularPlan()
+				&& executionDegree.getExecutionYear() == scientificCommission.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
 		return true;
 	    }
 	}
