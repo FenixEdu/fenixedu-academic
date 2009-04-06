@@ -19,7 +19,7 @@
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
-<!-- Photo -->
+    <!-- Photo -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop" width="25"><span class="emphasis-box">1</span></td>
@@ -30,10 +30,18 @@
 	<table class="mvert1 tdtop">
 		<tbody>
 			<tr>
-				<td><html:img align="middle"
-					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
-					altKey="personPhoto" bundle="IMAGE_RESOURCES"
-					style="border: 1px solid #aaa; padding: 3px;" /></td>
+				<td>
+                    <logic:notEmpty name="person" property="personalPhotoEvenIfPending">
+					    <html:img align="middle"
+						src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
+						altKey="personPhoto" bundle="IMAGE_RESOURCES"
+						style="border: 1px solid #aaa; padding: 3px;" />
+                    </logic:notEmpty>						
+					<logic:empty name="person" property="personalPhotoEvenIfPending">
+	                    <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
+	                    <img src="<%=request.getContextPath()%>/images/photo_placer01_<%=language == null ? "pt" : String.valueOf(language)%>.gif"/>
+	                </logic:empty>
+			    </td>
 				<td>
                     <div style="padding: 0 2em;">
                     <div class="infoop2">
@@ -44,25 +52,25 @@
         </tbody>
     </table>
 
-            		<p class="mtop1 mbottom0">
-    				    <html:link page="/uploadPhoto.do?method=prepare">
-    					   <bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
-        				</html:link>
-                    </p>
-
-                    <p class="mvert05">
-                    <logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
-    					<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
-                            <p><em><bean:message key="label.person.photo.pending.info" bundle="APPLICATION_RESOURCES" /></em>
-                            <html:link action="/uploadPhoto.do?method=cancelSubmission">
-                                <bean:message key="link.person.photo.cancel.submission" bundle="APPLICATION_RESOURCES" />
-                            </html:link>
-                            </p>
-					    </logic:equal>
-    				</logic:notEmpty>
-                    </p>
-				</div>
-
+		<p class="mtop1 mbottom0">
+			<html:link page="/uploadPhoto.do?method=prepare">
+			<bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
+			</html:link>
+		</p>
+		
+		<p class="mvert05">
+			<logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
+			<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
+			<p>
+				<em><bean:message key="label.person.photo.pending.info" bundle="APPLICATION_RESOURCES" /></em>
+				<html:link action="/uploadPhoto.do?method=cancelSubmission">
+				<bean:message key="link.person.photo.cancel.submission" bundle="APPLICATION_RESOURCES" />
+				</html:link>
+			</p>
+			</logic:equal>
+			</logic:notEmpty>
+		</p>
+	</div>
 
     <logic:notEmpty name="person" property="personalPhoto">
     <logic:equal name="person" property="personalPhoto.state" value="APPROVED">
@@ -414,6 +422,7 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.WebAddress" />:</td>
         <td>-</td>
+        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
