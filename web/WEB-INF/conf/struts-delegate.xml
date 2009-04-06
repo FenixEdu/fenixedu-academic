@@ -66,25 +66,9 @@
 			 <forward name="selectCurricularCourses" path="selectCurricularCourses"/>
 		 </action>
 		 
-		 <action path="/sendEmailToDelegateStudents"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.SendEmailToDelegateStudents">
-			 <forward name="choose-receivers" path="choose-receivers" />
-			 <forward name="compose-mail" path="compose-mail-students" />
-			 <forward name="success" path="/sendEmailToDelegateStudents.do?method=prepare"/>
-             <forward name="problem" path="/sendEmailToDelegateStudents.do?method=prepare"/>
-		 </action>
 		 
-		 <action path="/sendEmailToDelegates"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.SendEmailToDelegates">
-			 <forward name="choose-receivers" path="choose-receivers" />
-			 <forward name="compose-mail" path="compose-mail-delegates" />
-			 <forward name="success" path="/sendEmailToDelegates.do?method=prepare"/>
-             <forward name="problem" path="/sendEmailToDelegates.do?method=prepare"/>
-		 </action>
+		 
+		 <action path="/sendEmailRedirect" forward="email-redirect"/>
 		 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -132,15 +132,12 @@ public class EmailsDA extends FenixDispatchAction {
 	}
     }
 
-    public static ActionForward sendEmail(HttpServletRequest request, Sender sender) {
-	return sendEmail(request, sender, null);
-    }
-
-    public static ActionForward sendEmail(HttpServletRequest request, Sender sender, Recipient recipient) {
+    public static ActionForward sendEmail(HttpServletRequest request, Sender sender, Recipient... recipient) {
 	EmailBean emailBean = new EmailBean();
 	if (recipient != null)
-	    emailBean.setRecipients(Collections.singletonList(recipient));
-	emailBean.setSender(sender);
+	    emailBean.setRecipients(Arrays.asList(recipient));
+	if (sender != null)
+	    emailBean.setSender(sender);
 	request.setAttribute("emailBean", emailBean);
 	return FORWARD_TO_NEW_EMAIL;
     }

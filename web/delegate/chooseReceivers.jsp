@@ -7,7 +7,7 @@
 
 <h2><bean:message key="label.sendMailToStudents" bundle="DELEGATES_RESOURCES" /></h2>
 
-<bean:define id="year" name="currentExecutionYear" property="domainObject.year"/>
+<bean:define id="year" name="currentExecutionYear" property="executionYear.externalId"/>
 <fr:form action="/sendEmailToDelegateStudents.do?method=chooseExecutionYearCurricularCourseList">
 	<fr:edit schema="choose.execution.year" name="currentExecutionYear" id="chooseExecutionYear" layout="tabular">
 		<fr:destination name="postBackChooseExecutionYear" path="/sendEmailToDelegateStudents.do?method=chooseExecutionYearCurricularCourseList"/>
@@ -44,7 +44,7 @@
 
 <logic:present name="curricularCoursesList" >
 	<logic:notEmpty name="curricularCoursesList">
-		<fr:form action='<%= "/sendEmailToDelegateStudents.do?method=sendToStudentsFromSelectedCurricularCourses&amp;year=" + year %>'>
+		<fr:form action='<%= "/sendEmailToDelegateStudents.do?method=sendToStudentsFromSelectedCurricularCourses&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;year=" + year %>'>
 			<fr:view name="curricularCoursesList" layout="tabular" schema="delegates.sendEmail.showCurricularCourses.curricularCourseInfo">
 				<fr:layout>
 					<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>

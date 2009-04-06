@@ -977,6 +977,16 @@ public class Person extends Person_Base {
 	return !getPersonFunctions().isEmpty();
     }
 
+    public Collection<PersonFunction> getAllActivePersonFunctions(FunctionType functionType) {
+	Set<PersonFunction> personFunctions = new HashSet<PersonFunction>();
+	for (PersonFunction personFunction : getActivePersonFunctions()) {
+	    if (personFunction.getFunction().isOfFunctionType(functionType)) {
+		personFunctions.add(personFunction);
+	    }
+	}
+	return personFunctions;
+    }
+
     public Collection<PersonFunction> getPersonFunctions() {
 	return (Collection<PersonFunction>) getParentAccountabilities(AccountabilityTypeEnum.MANAGEMENT_FUNCTION,
 		PersonFunction.class);

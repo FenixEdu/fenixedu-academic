@@ -23,13 +23,8 @@
     <definition name="showStudents" extends="definition.delegate.two-column">
        <put name="body" value="/delegate/showStudents.jsp"/>  
     </definition>
-    <definition name="choose-receivers" extends="definition.delegate.two-column">
-       <put name="body" value="/delegate/chooseReceivers.jsp"/>  
+    <definition name="email-redirect" extends="definition.delegate.two-column">
+       <put name="body" value="/email/sendEmailRedirect.jsp"/>  
     </definition>
-    <definition name="compose-mail-students" extends="definition.delegate.two-column">
-       <put name="body" value="/delegate/composeMailToStudents.jsp"/>  
-    </definition>
-    <definition name="compose-mail-delegates" extends="definition.delegate.two-column">
-       <put name="body" value="/delegate/composeMailToDelegates.jsp"/>  
-    </definition>
+    
 </tiles-definitions>

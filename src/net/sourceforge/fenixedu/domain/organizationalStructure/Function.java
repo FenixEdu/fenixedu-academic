@@ -194,4 +194,8 @@ public class Function extends Function_Base {
 	}
 	return personFunctions;
     }
+
+    public boolean isOfFunctionType(FunctionType functionType) {
+	return getFunctionType().equals(functionType);
+    }
 }

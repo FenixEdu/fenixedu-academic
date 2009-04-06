@@ -246,10 +246,25 @@
 </schema>
 
 <schema name="choose.execution.year" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
-	<slot name="domainObject" key="label.executionYear" layout="menu-select-postback">
+	<slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/> 
 		<property name="format" value="${year}"/>
 		<property name="nullOptionHidden" value="true" />
 		<property name="destination" value="postBackChooseExecutionYear"/>
 	</slot>
+</schema>
+
+<schema name="delegates.show.eachGroup" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	<slot name="name" layout="label"/>
+</schema>
+
+<schema name="delegates.show.recipients" type="net.sourceforge.fenixedu.presentationTier.Action.delegate.GroupsBean">
+		<slot name="selected" layout="option-select" bundle="MESSAGING_RESOURCES" key="label.receiversGroup">
+			<property name="saveOptions" value="true"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DelegatesGroupsProvider"/>
+			<!-- <property name="format" value="${name}"/> -->
+			<property name="eachSchema" value="delegates.show.eachGroup"/>
+			<property name="eachLayout" value="values"/>
+			<property name="classes" value="nobullet noindent"/>
+		</slot>
 </schema>

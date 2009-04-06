@@ -48,7 +48,7 @@
 			<bean:message bundle="DELEGATES_RESOURCES" key="label.delegates.comunication"/>
 		</li>
 		<li>
-			<html:link page="<%= "/sendEmailToDelegates.do?method=prepare"%>">
+			<html:link page="<%= "/sendEmailRedirect.do"%>">
 				<bean:message key="link.sendEmailToDelegates" bundle="DELEGATES_RESOURCES"/>
 			</html:link>
 		</li>

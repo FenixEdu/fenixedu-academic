@@ -15,7 +15,6 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 	setFromName(executionCourse.getNome());
 	setFromAddress("noreply@ist.utl.pt");
 	addReplyTos(new ExecutionCourseReplyTo());
-	// why not create PersonReplyTo ?
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new ExecutionCourseTeachersGroup(executionCourse));
 	final String labelECTeachers = RenderUtils.getResourceString("SITE_RESOURCES",
@@ -27,6 +26,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 	final String labelECResponsibleTeachers = RenderUtils.getResourceString("SITE_RESOURCES",
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
 		new Object[] { executionCourse.getNome() });
+	// fixed recipients
 	addRecipients(new Recipient(labelECTeachers, new ExecutionCourseTeachersGroup(executionCourse)));
 	addRecipients(new Recipient(labelECStudents, new ExecutionCourseStudentsGroup(executionCourse)));
 	addRecipients(new Recipient(labelECResponsibleTeachers, new ExecutionCourseResponsibleTeachersGroup(executionCourse)));
@@ -34,7 +34,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
     @Service
     public static ExecutionCourseSender newInstance(ExecutionCourse ec) {
-	ExecutionCourseSender sender = (ExecutionCourseSender) ec.getSender();
+	ExecutionCourseSender sender = ec.getSender();
 	return sender == null ? new ExecutionCourseSender(ec) : sender;
     }
 

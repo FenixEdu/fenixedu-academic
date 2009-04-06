@@ -5513,14 +5513,13 @@ class DomainObject {
 		Group members;
 	}
 
-		class util.email.UnitBasedSender extends util.email.Sender {
-		}
+	class util.email.UnitBasedSender extends util.email.Sender {}
 
-	class util.email.ExecutionCourseSender extends util.email.Sender {
-	}
+	class util.email.ExecutionCourseSender extends util.email.Sender { }
 
-	class util.email.CoordinatorSender extends util.email.Sender {
-	}
+	class util.email.CoordinatorSender extends util.email.Sender {}
+	
+	class util.email.PersonFunctionSender extends util.email.Sender {}
 
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
@@ -8007,6 +8006,11 @@ relation ExecutionCourseSender {
 relation CoordinatorSender {
 	Degree playsRole degree;
 	util.email.CoordinatorSender playsRole sender;
+}
+
+relation PersonFunctionSender {
+	organizationalStructure.PersonFunction playsRole personFunction;
+	util.email.PersonFunctionSender playsRole sender;
 }
 
 relation ExecutionDegreeCampus {
