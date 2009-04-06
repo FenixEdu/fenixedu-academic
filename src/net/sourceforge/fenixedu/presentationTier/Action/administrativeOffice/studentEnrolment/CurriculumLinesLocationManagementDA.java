@@ -9,6 +9,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdminOffice")
+@Forwards( {
+
+@Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"),
+
+@Forward(name = "chooseNewLocation", path = "/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
+
+@Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
+
+})
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
     public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
