@@ -139,8 +139,12 @@
 			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException"
 				key="error.NotAuthorized"
 				path="/publicNotAuthorized.do"/>	
-        </action>       	
-    	   		
+        </action>   	
+    	<action path="/exportParkingData"
+				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ExportParkingData"
+				scope="request"
+				validate="false"
+    	/>
 	</action-mappings>
   
   <!-- ========== Controller Configuration ================================ -->
