@@ -20,7 +20,9 @@
 	</ul>
 	
 	<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
-		<div style="height: 20px;" class="error0"><strong><bean:message  key="message.conclusion.process.already.performed" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></div>
+		<br/>
+		<div class="error0"><strong><bean:message  key="message.conclusion.process.already.performed" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></div>
+		<br/>
 	</logic:equal>
 	
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>" >
