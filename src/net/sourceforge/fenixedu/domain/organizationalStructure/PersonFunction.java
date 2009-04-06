@@ -16,11 +16,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonFunction extends PersonFunction_Base {
 
-	public final static Comparator<PersonFunction> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
+    public final static Comparator<PersonFunction> COMPARATOR_BY_BEGIN_DATE = new ComparatorChain();
 
-	public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
+    public final static Comparator<PersonFunction> COMPARATOR_BY_PERSON_NAME = new ComparatorChain();
 
-	static {
+    static {
 		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE)
 				.addComparator(new BeanComparator("beginDate"));
 		((ComparatorChain) COMPARATOR_BY_BEGIN_DATE)
@@ -30,169 +30,172 @@ public class PersonFunction extends PersonFunction_Base {
 				.addComparator(new BeanComparator("person.name"));
 		((ComparatorChain) COMPARATOR_BY_PERSON_NAME)
 				.addComparator(DomainObject.COMPARATOR_BY_ID);
-	}
+    }
 
 	public PersonFunction(Party parentParty, Party childParty,
 			Function function, YearMonthDay begin, YearMonthDay end,
-			Double credits) {
-		super();
-		setParentParty(parentParty);
-		setChildParty(childParty);
-		setAccountabilityType(function);
-		setCredits(credits);
-		setOccupationInterval(begin, end);
-	}
+	    Double credits) {
+	super();
+	setParentParty(parentParty);
+	setChildParty(childParty);
+	setAccountabilityType(function);
+	setCredits(credits);
+	setOccupationInterval(begin, end);
+    }
 
 	public PersonFunction(Party parentParty, Party childParty,
 			Function function, YearMonthDay begin, YearMonthDay end) {
-		this(parentParty, childParty, function, begin, end, 0.0);
-	}
+	this(parentParty, childParty, function, begin, end, 0.0);
+    }
 
 	public PersonFunction(Person parentParty, Person childParty,
 			Function function, YearMonthDay begin, YearMonthDay end) {
-		super();
-		setParentParty(parentParty);
-		setChildParty(childParty);
-		setAccountabilityType(function);
-		setCredits(0.0);
-		setOccupationInterval(begin, end);
-	}
+	super();
+	setParentParty(parentParty);
+	setChildParty(childParty);
+	setAccountabilityType(function);
+	setCredits(0.0);
+	setOccupationInterval(begin, end);
+    }
 
-	public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {
-		setCredits(credits);
-		setOccupationInterval(begin, end);
-	}
+    public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {
+	setCredits(credits);
+	setOccupationInterval(begin, end);
+    }
 
-	@Override
-	public void setChildParty(Party childParty) {
-		if (childParty == null || !childParty.isPerson()) {
-			throw new DomainException("error.invalid.child.party");
-		}
-		super.setChildParty(childParty);
+    @Override
+    public void setChildParty(Party childParty) {
+	if (childParty == null || !childParty.isPerson()) {
+	    throw new DomainException("error.invalid.child.party");
 	}
+	super.setChildParty(childParty);
+    }
 
-	@Override
-	public void setParentParty(Party parentParty) {
-		if (parentParty == null || !parentParty.isUnit()) {
-			throw new DomainException("error.invalid.parent.party");
-		}
-		super.setParentParty(parentParty);
+    @Override
+    public void setParentParty(Party parentParty) {
+	if (parentParty == null || !parentParty.isUnit()) {
+	    throw new DomainException("error.invalid.parent.party");
 	}
+	super.setParentParty(parentParty);
+    }
 
-	public void setParentParty(Person parentParty) {
-		if (parentParty == null) {
-			throw new DomainException("error.invalid.parent.party");
-		}
-		super.setParentParty(parentParty);
+    public void setParentParty(Person parentParty) {
+	if (parentParty == null) {
+	    throw new DomainException("error.invalid.parent.party");
 	}
+	super.setParentParty(parentParty);
+    }
 
 	public void setOccupationInterval(YearMonthDay beginDate,
 			YearMonthDay endDate) {
 		checkPersonFunctionDatesIntersection(getPerson(), getUnit(),
 				getFunction(), beginDate, endDate);
-		super.setBeginDate(beginDate);
-		super.setEndDate(endDate);
-	}
+	super.setBeginDate(beginDate);
+	super.setEndDate(endDate);
+    }
 
-	@Override
-	public void setBeginDate(YearMonthDay beginDate) {
-		throw new DomainException("error.invalid.operation");
-	}
+    @Override
+    public void setBeginDate(YearMonthDay beginDate) {
+	throw new DomainException("error.invalid.operation");
+    }
 
-	@Override
-	public void setEndDate(YearMonthDay endDate) {
-		throw new DomainException("error.invalid.operation");
-	}
+    @Override
+    public void setEndDate(YearMonthDay endDate) {
+	throw new DomainException("error.invalid.operation");
+    }
 
-	@Override
-	public Double getCredits() {
-		if (super.getCredits() == null) {
-			return 0d;
-		}
-		return super.getCredits();
+    @Override
+    public Double getCredits() {
+	if (super.getCredits() == null) {
+	    return 0d;
 	}
+	return super.getCredits();
+    }
 
-	public Person getPerson() {
-		return (Person) getChildParty();
-	}
+    public Person getPerson() {
+	return (Person) getChildParty();
+    }
 
-	public Unit getUnit() {
+    public Unit getUnit() {
 		return getParentParty() instanceof Unit ? (Unit) getParentParty()
 				: null;
-	}
+    }
 
-	public Function getFunction() {
-		return (Function) getAccountabilityType();
-	}
+    public Function getFunction() {
+	return (Function) getAccountabilityType();
+    }
 
-	@Override
-	public boolean isPersonFunction() {
-		return true;
-	}
+    @Override
+    public boolean isPersonFunction() {
+	return true;
+    }
 
 	private void checkPersonFunctionDatesIntersection(Person person, Unit unit,
 			Function function, YearMonthDay begin, YearMonthDay end) {
-		checkBeginDateAndEndDate(begin, end);
-		for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
+	checkBeginDateAndEndDate(begin, end);
+	for (PersonFunction personFunction : person.getPersonFunctions(unit)) {
 			if (!personFunction.equals(this)
 					&& personFunction.getFunction().equals(function)
-					&& personFunction.checkDatesIntersections(begin, end)) {
+		    && personFunction.checkDatesIntersections(begin, end)) {
 				throw new DomainException(
 						"error.personFunction.dates.intersection.for.same.function");
-			}
-		}
+	    }
 	}
+    }
 
-	private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
+    private boolean checkDatesIntersections(YearMonthDay begin, YearMonthDay end) {
 		return ((end == null || !getBeginDate().isAfter(end)) && (getEndDate() == null || !getEndDate()
 				.isBefore(begin)));
-	}
+    }
 
-	private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
-		if (begin == null) {
-			throw new DomainException("error.personFunction.no.beginDate");
-		}
-		if (end == null) {
-			throw new DomainException("error.personFunction.no.endDate");
-		}
-		if (end != null && begin.isAfter(end)) {
+    private void checkBeginDateAndEndDate(YearMonthDay begin, YearMonthDay end) {
+	if (begin == null) {
+	    throw new DomainException("error.personFunction.no.beginDate");
+	}
+	if (end == null) {
+	    throw new DomainException("error.personFunction.no.endDate");
+	}
+	if (end != null && begin.isAfter(end)) {
 			throw new DomainException(
 					"error.personFunction.endDateBeforeBeginDate");
-		}
 	}
+    }
 
-	public boolean hasCredits() {
-		return getCredits() > 0d;
-	}
+    public boolean hasCredits() {
+	return getCredits() > 0d;
+    }
 
 	public static PersonFunction createYearDelegatePersonFunction(
 			DegreeUnit unit, Person person, YearMonthDay startDate,
 			YearMonthDay endDate, Function function,
 			CurricularYear curricularYear) {
-		if (function == null)
-			throw new DomainException("error.delegates.noDelegateFunction");
+	if (function == null)
+	    throw new DomainException("error.delegates.noDelegateFunction");
 		PersonFunction personFunction = new PersonFunction(unit, person,
 				function, startDate, endDate);
-		personFunction.setCurricularYear(curricularYear);
+	personFunction.setCurricularYear(curricularYear);
 		new PersonFunctionSender(personFunction);
-		return personFunction;
-	}
+	return personFunction;
+    }
 
 	public static void createDelegatePersonFunction(Unit unit, Person person,
 			YearMonthDay startDate, YearMonthDay endDate, Function function) {
-		if (function == null)
-			throw new DomainException("error.delegates.noDelegateFunction");
+	if (function == null)
+	    throw new DomainException("error.delegates.noDelegateFunction");
 		PersonFunction personFunction = new PersonFunction(unit, person,
 				function, startDate, endDate);
 		new PersonFunctionSender(personFunction);
-	}
+    }
 
-	@Override
-	@Service
-	public void delete() {
-		if (hasCurricularYear()) {
-			removeCurricularYear();
-		}
-		super.delete();
+    @Override
+    @Service
+    public void delete() {
+	if (hasCurricularYear()) {
+	    removeCurricularYear();
 	}
+	if(hasDelegate()){
+	    removeDelegate();
+	}
+	super.delete();
+    }
 }
