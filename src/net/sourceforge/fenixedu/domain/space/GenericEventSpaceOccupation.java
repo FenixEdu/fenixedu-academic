@@ -64,7 +64,7 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
 
     @Override
     public YearMonthDay getBeginDate() {
-	return getGenericEvent().getBeginDate();
+	return getGenericEvent() == null ? null : getGenericEvent().getBeginDate();
     }
 
     @Override

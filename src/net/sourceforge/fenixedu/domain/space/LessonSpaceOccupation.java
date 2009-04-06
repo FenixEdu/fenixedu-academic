@@ -67,12 +67,12 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     public OccupationPeriod getPeriod() {
-	return getLesson().getPeriod();
+	return getLesson() == null ? null : getLesson().getPeriod();
     }
 
     @Override
     protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
-	return getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
+	return getPeriod() != null && getPeriod().nestedOccupationPeriodsIntersectDates(startDate, endDate);
     }
 
     @Override
