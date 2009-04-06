@@ -45,4 +45,4 @@ function executeWithTempFile() {
 
 execute "Alter Person Incompatible Vigilant" vigilancyUpdates.sql
 execute "Create Announcement Categories And Add Fields To Announcement" createAnnouncementCategory.sql
-
+execute "Create Person Function Senders" createPersonFunctionSender.sql
