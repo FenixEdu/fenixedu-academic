@@ -42,5 +42,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Create Person Function Senders" createPersonFunctionSender.sql
