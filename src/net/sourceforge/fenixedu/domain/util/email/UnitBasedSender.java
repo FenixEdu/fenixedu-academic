@@ -7,14 +7,15 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
+import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
 
     public UnitBasedSender(final Unit unit, final String fromAddress, final Group members) {
-        super();
-        setUnit(unit);
+	super();
+	setUnit(unit);
 	setFromAddress(fromAddress);
 	setMembers(members);
     }
@@ -118,4 +119,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 	addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
     }
 
+    public static UnitBasedSender newInstance(Unit unit) {
+	return new UnitBasedSender(unit, "noreply@ist.utl.pt", new UnitEmployeesGroup(unit));
+    }
 }

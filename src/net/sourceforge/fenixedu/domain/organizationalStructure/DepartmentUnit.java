@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +32,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     private DepartmentUnit() {
 	super();
 	super.setType(PartyTypeEnum.DEPARTMENT);
+	UnitBasedSender.newInstance(this);
     }
 
     public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode,
@@ -227,4 +229,14 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	return new DepartmentSite(this);
     }
 
+    public static List<DepartmentUnit> readAllDepartmentUnits() {
+	List<Unit> units = readAllUnits();
+	List<DepartmentUnit> departments = new ArrayList<DepartmentUnit>();
+	for (Unit unit : units) {
+	    if (unit instanceof DepartmentUnit && unit.getType().equals(PartyTypeEnum.DEPARTMENT)) {
+		departments.add((DepartmentUnit) unit);
+	    }
+	}
+	return departments;
+    }
 }

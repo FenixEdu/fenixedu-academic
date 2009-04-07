@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -37,9 +39,29 @@ public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
 	return elements;
     }
 
+    private boolean checkParentUnits(Unit search, Collection<Unit> units) {
+	if (units.isEmpty()) {
+	    return false;
+	} else {
+	    for (Unit unit : units) {
+		if (unit == search)
+		    return true;
+	    }
+	    for (Unit unit : units) {
+		if (checkParentUnits(search, unit.getParentUnits()))
+		    return true;
+	    }
+	    return false;
+	}
+    }
+
     @Override
     public boolean isMember(Person person) {
-	return (person != null && person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() == getObject());
+	return (person != null && person.hasEmployee() && checkParentUnits(getObject(), Collections.singletonList(person
+		.getEmployee().getCurrentWorkingPlace())));
+	// return (person != null && person.hasEmployee() && getObject() ==
+	// person.getEmployee().getCurrentDepartmentWorkingPlace()
+	// .getDepartmentUnit());
     }
 
     @Override
