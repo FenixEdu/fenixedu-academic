@@ -36,6 +36,22 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/documentRequestsManagement", module = "academicAdminOffice")
+@Forwards( {
+	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
+	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"),
+	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"),
+	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
+	// Once tiles definition is deleted, below should be:
+	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
+	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails"),
+	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
+
+})
 
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -129,22 +145,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
-    }
-
-    public ActionForward viewRegistrationDocumentRequestsHistoric(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("registration", getRegistration(request));
-	return mapping.findForward("viewRegistrationDocumentRequestsHistoric");
-    }
-
-    public ActionForward viewDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("documentRequest", getDocumentRequest(request));
-	request.setAttribute("url", buildUrl(form, request).toString());
-
-	return mapping.findForward("viewDocumentRequest");
     }
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,

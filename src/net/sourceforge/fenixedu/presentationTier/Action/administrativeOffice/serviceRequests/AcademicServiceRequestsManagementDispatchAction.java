@@ -43,8 +43,29 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+@Mapping(path = "/academicServiceRequestsManagement", module = "academicAdminOffice", formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
+@Forwards( {
+	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"),
+	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"),
+	// Once tiles definition is deleted, below should be:
+	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
+	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails"),
+	@Forward(name = "confirmCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"),
+	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareSendAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareReceiveAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareReceiveAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareCancelAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareConcludeDocumentRequest", path = "/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
+	@Forward(name = "prepareConcludeServiceRequest", path = "/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"),
+	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"),
+	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp")
+
+})
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int REQUESTS_PER_PAGE = 50;
@@ -60,6 +81,40 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     private static final String ORDER_MARKER = "=";
     public static final String[] ASC_ORDER_DIR = { "ascending", "asc" };
     public static final String DEFAULT_ORDER_DIR = "desc";
+
+    public static class AcademicServiceRequestsManagementForm extends ActionForm {
+
+	private static final long serialVersionUID = 1L;
+
+	private String justification;
+	private Integer numberOfPages;
+	private Boolean sendEmailToStudent;
+
+	public String getJustification() {
+	    return justification;
+	}
+
+	public void setJustification(String justification) {
+	    this.justification = justification;
+	}
+
+	public Integer getNumberOfPages() {
+	    return numberOfPages;
+	}
+
+	public void setNumberOfPages(Integer numberOfPages) {
+	    this.numberOfPages = numberOfPages;
+	}
+
+	public Boolean getSendEmailToStudent() {
+	    return sendEmailToStudent;
+	}
+
+	public void setSendEmailToStudent(Boolean sendEmailToStudent) {
+	    this.sendEmailToStudent = sendEmailToStudent;
+	}
+
+    }
 
     private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
 	Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
@@ -254,7 +309,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	((DynaActionForm) actionForm).set("sendEmailToStudent", Boolean.TRUE);
+	AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
+	form.setSendEmailToStudent(Boolean.TRUE);
 
 	if (academicServiceRequest.isDocumentRequest()) {
 	    request.setAttribute("serviceRequestBean", new AcademicServiceRequestBean(academicServiceRequest,

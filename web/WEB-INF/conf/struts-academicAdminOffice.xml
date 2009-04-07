@@ -29,36 +29,6 @@
 			<form-property name="registrationID" type="java.lang.Integer" />
 	    </form-bean>
 
-		<!-- Academic Service Requests Management -->	    
-   		<form-bean name="academicServiceRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="justification" type="java.lang.String" />
-			<form-property name="numberOfPages" type="java.lang.Integer" />
-			<form-property name="sendEmailToStudent" type="java.lang.Boolean" />
-	    </form-bean>
-
-		<!-- Document Requests Management -->
-   		<form-bean name="documentRequestsManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="documentRequestType" type="java.lang.String" />
-			<form-property name="requestSituationType" type="java.lang.String" />
-			<form-property name="isUrgent" type="java.lang.String" initial="false"/>
-			<form-property name="studentNumber" type="java.lang.String" />
-			<form-property name="registrationId" type="java.lang.Integer" />
-			<form-property name="documentRequestId" type="java.lang.String" />
-			<form-property name="documentIdsToProcess" type="java.lang.Integer[]" />
-			<form-property name="chosenDocumentRequestType" type="java.lang.String" />
-			<form-property name="chosenDocumentRequestTypes" type="java.lang.String[]" />
-			<form-property name="chosenDocumentPurposeType" type="java.lang.String" />
-			<form-property name="otherPurpose" type="java.lang.String" />
-			<form-property name="notes" type="java.lang.String" />
-			<form-property name="schoolRegistrationExecutionYearId" type="java.lang.Integer" />
-			<form-property name="enrolmentDetailed" type="java.lang.String" initial="false"/>
-			<form-property name="enrolmentExecutionYearId" type="java.lang.Integer" />	
-			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
-			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
-	    </form-bean>
-	    	    	    
-
       <!-- Bean for The Creation of a Contributor -->
       <form-bean name="createContributorForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -316,50 +286,7 @@
 			<forward name="createExternalEnrolments" path="student.externalEnrolment.createExternalEnrolments"/>
 			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
 		</action>
-		
-		<!-- Academic Service Requests Management -->
-		<action path="/academicServiceRequestsManagement"
-				name="academicServiceRequestsManagementForm"
-		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction"
-				scope="request">
-				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>				
-				<forward name="viewRegistrationAcademicServiceRequestsHistoric" path="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric"/>
-				<forward name="viewAcademicServiceRequest" path="academicServiceRequests.management.viewAcademicServiceRequest"/>
-				<forward name="prepareRejectAcademicServiceRequest" path="academicServiceRequests.management.prepareRejectAcademicServiceRequest"/>
-				<forward name="prepareSendAcademicServiceRequest" path="academicServiceRequests.management.prepareSendAcademicServiceRequest"/>
-				<forward name="prepareReceiveAcademicServiceRequest" path="academicServiceRequests.management.prepareReceiveAcademicServiceRequest"/>
-				<forward name="prepareCancelAcademicServiceRequest" path="academicServiceRequests.management.prepareCancelAcademicServiceRequest"/>
-				<forward name="prepareConcludeDocumentRequest" path="/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"/>
-				<forward name="searchResults" path="academicServiceRequests.management.searchResults"/>
-				
-				<forward name="prepareCreateServiceRequest" path="academicServiceRequests.management.prepareCreateServiceRequest"/>
-				<forward name="confirmCreateServiceRequest" path="academicServiceRequests.management.confirmCreateServiceRequest"/>
-				<forward name="prepareConcludeServiceRequest" path="academicServiceRequests.management.prepareConcludeServiceRequest"/>
-		</action>
 
-		<!-- Document Requests Management -->
-		<action path="/documentRequestsManagement"
-				name="documentRequestsManagementForm"
-		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction"
-				scope="request">
-				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
-				<forward name="chooseStudentToCreateDocumentRequest" path="documentRequests.management.chooseStudentToCreateDocumentRequest"/>
-				<forward name="createDocumentRequests" path="documentRequests.management.createDocumentRequests"/>
-				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>
-				<forward name="printDocument" path="documentRequests.management.printDocument"/>
-				<forward name="prepareCreateDocumentRequest" path="documentRequests.management.prepareCreateDocumentRequest"/>
-				<forward name="confirmCreateDocumentRequest" path="documentRequests.management.confirmCreateDocumentRequest"/>		
-				<forward name="viewDocumentRequestsToCreate" path="documentRequest.viewDocumentRequestsToCreate"/>		
-				<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-				<forward name="processNewAcademicServiceRequest" path="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest"/>
-				<forward name="chooseExamsToCreateExamDateCertificateRequest" path="documentRequest.management.chooseExamsToCreateExamDateCertificateRequest" />
-				
-		</action>
-			
-		
 		<!-- Begin Prices Management -->
 		<action path="/pricesManagement"
 		     	parameter="method"
