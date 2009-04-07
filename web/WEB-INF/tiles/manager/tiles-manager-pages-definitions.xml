@@ -947,15 +947,9 @@
 		<put name="body" value="/manager/registration/conclusion/editForRegistration.jsp"></put>
 	</definition>
 		
-	<!-- End: Posting Rules Management -->
-	
 	<!-- Registration State Management -->
 	<definition name="student.showRegistrationStates" extends="definition.manager.masterPage">
         <put name="body" value="/manager/registration/manageRegistrationState.jsp"></put>
-    </definition>
-
-	<definition name="enrolmentLogs.searchEnrolmentLogs" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/viewEnrolmentLogs.jsp"></put>
     </definition>
 
      <definition name="df.page.send.email.form" extends="definition.manager.masterPage">

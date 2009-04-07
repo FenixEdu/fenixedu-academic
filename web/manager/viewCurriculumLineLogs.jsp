@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" key="label.view.enrolmentLogs"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.view.curriculumLineLogs"/></h2>
 
 <logic:messagesPresent message="true">
 	<ul>
@@ -14,27 +14,23 @@
 	</ul>
 </logic:messagesPresent>
 
-<fr:edit id="search"
-		 name="bean"
-		 type="net.sourceforge.fenixedu.dataTransferObject.enrolmentLog.SearchEnrolmentLog"
-		 schema="enrolmentLog.search"
-		 action="/enrolmentLogs.do?method=viewEnrolmentLogs">
+<fr:edit id="search" name="bean" schema="curriculumLineLog.search" action="/curriculumLineLogs.do?method=viewCurriculumLineLogs">
 	<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	</fr:layout>
 </fr:edit>
 
-<logic:present name="enrolmentLogs">
+<logic:present name="curriculumLineLogs">
 	<p>
-		<logic:empty name="enrolmentLogs">
-			<em><bean:message bundle="MANAGER_RESOURCES" key="label.noEnrolmentLogsFound"/></em>	
+		<logic:empty name="curriculumLineLogs">
+			<em><bean:message bundle="MANAGER_RESOURCES" key="label.noCurriculumLineLogsFound"/></em>	
 		</logic:empty>
-		<logic:notEmpty name="enrolmentLogs">
-			<fr:view name="enrolmentLogs" schema="enrolmentLogs.list">
+		<logic:notEmpty name="curriculumLineLogs">
+			<fr:view name="curriculumLineLogs" schema="curriculumLineLogs.list">
 				<fr:layout name="tabular">
-					<fr:property name="sortBy" value="dateDateTime=asc"/>
 					<fr:property name="classes" value="tstyle4" />
+					<fr:property name="sortBy" value="dateDateTime=asc,description=asc"/>
 				</fr:layout>
 			</fr:view>	
 		</logic:notEmpty>

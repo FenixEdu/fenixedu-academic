@@ -3722,15 +3722,28 @@ class DomainObject {
 		ContractType contractType;
 		SalaryType salaryType;
 	}
-
-	class log.EnrolmentLog extends DomainObject {
+	
+	class log.CurriculumLineLog extends DomainObject {
 		EnrolmentAction action;
 		DateTime dateDateTime;
 		String who;
 	}
 
-		class log.OptionalEnrolmentLog extends log.EnrolmentLog {
+		class log.EnrolmentLog extends log.CurriculumLineLog {
 		}
+
+			class log.OptionalEnrolmentLog extends log.EnrolmentLog {
+			}
+
+		class log.DismissalLog extends log.CurriculumLineLog {
+			String sourceDescription;
+			BigDecimal credits;
+		}
+			class log.OptionalDismissalLog extends log.DismissalLog {
+			}
+		
+			class log.CreditsDismissalLog extends log.DismissalLog {
+			}
 
 	class material.PersonExtension extends DomainObject {
 		YearMonthDay begin;
@@ -7202,11 +7215,11 @@ relation CurricularCourseCurriculum {
 	CurricularCourse playsRole curricularCourse;
 }
 
-relation CurricularCourseEnrolmentLog {
-	log.EnrolmentLog playsRole enrolmentLogs {
+relation CurricularCourseCurriculumLineLog {
+	log.CurriculumLineLog playsRole curriculumLineLogs {
 		multiplicity *;
 	}
-	CurricularCourse playsRole curricularCourse;
+	degreeStructure.DegreeModule playsRole degreeModule;
 }
 
 relation OptionalCurricularCourseOptionalEnrolmentLog {
@@ -8125,8 +8138,8 @@ relation ExecutionPeriodContextEnd {
 	}
 }
 
-relation ExecutionPeriodEnrolmentLog {
-	log.EnrolmentLog playsRole enrolmentLogs {
+relation ExecutionPeriodCurriculumLineLog {
+	log.CurriculumLineLog playsRole curriculumLineLogs {
 		multiplicity *;
 	}
 	ExecutionSemester playsRole executionPeriod;
@@ -10975,9 +10988,9 @@ relation RootDomainObjectEnrolmentEvaluation {
 	}
 }
 
-relation RootDomainObjectEnrolmentLog {
+relation RootDomainObjectCurriculumLineLog {
 	RootDomainObject playsRole rootDomainObject;
-	log.EnrolmentLog playsRole enrolmentLogs {
+	log.CurriculumLineLog playsRole curriculumLineLogs {
 		multiplicity *;
 	}
 }
@@ -13001,7 +13014,7 @@ relation StudentDistributedTestLogs {
 }
 
 relation StudentEnrolmentLog {
-	log.EnrolmentLog playsRole enrolmentLogs {
+	log.CurriculumLineLog playsRole curriculumLineLogs {
 		multiplicity *;
 	}
 	student.Registration playsRole student;

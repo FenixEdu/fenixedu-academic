@@ -35,7 +35,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
 		createdBy);
 	setOptionalCurricularCourse(optionalCurricularCourse);
-	createEnrolmentLog(EnrolmentAction.ENROL);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
@@ -51,7 +51,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     }
 
     @Override
-    protected void createEnrolmentLog(final EnrolmentAction action) {
+    protected void createCurriculumLineLog(final EnrolmentAction action) {
 	new OptionalEnrolmentLog(action, getRegistration(), getCurricularCourse(), getOptionalCurricularCourse(),
 		getExecutionPeriod(), getCurrentUser());
     }
@@ -153,7 +153,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	optionalEnrolment.getTheses().addAll(enrolment.getTheses());
 	optionalEnrolment.getExamDateCertificateRequests().addAll(enrolment.getExamDateCertificateRequests());
 	changeAttends(enrolment, optionalEnrolment);
-	optionalEnrolment.createEnrolmentLog(EnrolmentAction.ENROL);
+	optionalEnrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 
 	return optionalEnrolment;
     }

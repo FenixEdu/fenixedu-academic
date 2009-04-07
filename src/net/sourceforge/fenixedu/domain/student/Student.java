@@ -14,8 +14,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.crypto.KeyGenerator;
-
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -47,7 +45,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -1250,10 +1248,10 @@ public class Student extends Student_Base {
 	}
     }
 
-    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
-	Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
-	for (Registration registration : getRegistrationsSet()) {
-	    res.addAll(registration.getEnrolmentLogsByPeriod(executionSemester));
+    public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionSemester executionSemester) {
+	final Collection<CurriculumLineLog> res = new HashSet<CurriculumLineLog>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    res.addAll(registration.getCurriculumLineLogs(executionSemester));
 	}
 	return res;
     }

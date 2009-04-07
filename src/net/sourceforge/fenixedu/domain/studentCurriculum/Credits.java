@@ -191,15 +191,16 @@ public class Credits extends Credits_Base {
 
     @Checked("CreditsPredicates.DELETE")
     final public void delete() {
-	removeStudentCurricularPlan();
-	removeRootDomainObject();
-	removeExecutionPeriod();
 
 	for (; hasAnyDismissals(); getDismissals().get(0).delete())
 	    ;
 
 	for (; hasAnyEnrolments(); getEnrolments().get(0).delete())
 	    ;
+
+	removeStudentCurricularPlan();
+	removeRootDomainObject();
+	removeExecutionPeriod();
 
 	super.deleteDomainObject();
     }

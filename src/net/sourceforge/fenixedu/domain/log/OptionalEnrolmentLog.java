@@ -17,18 +17,19 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
 	    final ExecutionSemester executionSemester, final String who) {
 
 	this();
+	check(optionalCurricularCourse, "error.OptionalEnrolmentLog.invalid.optionalCurricularCourse");
 	init(action, registration, curricularCourse, executionSemester, who);
-	checkParameter(optionalCurricularCourse, "error.OptionalEnrolmentLog.invalid.optionalCurricularCourse");
 	setOptionalCurricularCourse(optionalCurricularCourse);
     }
 
-    public void delete() {
+    @Override
+    protected void disconnect() {
 	removeOptionalCurricularCourse();
-	super.delete();
+	super.disconnect();
     }
 
     @Override
-    public String getCurricularCourseName() {
-	return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getCurricularCourseName() + ")";
+    public String getDescription() {
+	return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getDescription() + ")";
     }
 }

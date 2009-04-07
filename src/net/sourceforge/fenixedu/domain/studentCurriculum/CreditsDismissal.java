@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.log.CreditsDismissalLog;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -25,6 +27,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 	if (noEnrolCurricularCourses != null) {
 	    getNoEnrolCurricularCourses().addAll(noEnrolCurricularCourses);
 	}
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     private void checkIfCanCreate(final Credits credits, final Collection<CurricularCourse> noEnrolCurricularCourses,
@@ -122,4 +125,9 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 	return ectsCredits.equals(dismissal.getEctsCredits());
     }
 
+    @Override
+    protected void createCurriculumLineLog(final EnrolmentAction action) {
+	new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup().getDegreeModule(), getCredits(),
+		getExecutionPeriod(), getCurrentUser());
+    }
 }

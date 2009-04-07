@@ -72,7 +72,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -285,7 +285,7 @@ public class Registration extends Registration_Base {
 	    ;
 	for (; hasAnyRegistrationRegimes(); getRegistrationRegimes().get(0).delete())
 	    ;
-	for (; hasAnyEnrolmentLogs(); getEnrolmentLogs().get(0).delete())
+	for (; hasAnyCurriculumLineLogs(); getCurriculumLineLogs().get(0).delete())
 	    ;
 
 	if (hasRegistrationNumber()) {
@@ -3527,11 +3527,11 @@ public class Registration extends Registration_Base {
 	attends.delete();
     }
 
-    public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
-	final Collection<EnrolmentLog> res = new HashSet<EnrolmentLog>();
-	for (EnrolmentLog enrolmentLog : getEnrolmentLogsSet()) {
-	    if (enrolmentLog.getExecutionPeriod() == executionSemester) {
-		res.add(enrolmentLog);
+    public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionSemester executionSemester) {
+	final Collection<CurriculumLineLog> res = new HashSet<CurriculumLineLog>();
+	for (final CurriculumLineLog curriculumLineLog : getCurriculumLineLogsSet()) {
+	    if (curriculumLineLog.isFor(executionSemester)) {
+		res.add(curriculumLineLog);
 	    }
 	}
 	return res;

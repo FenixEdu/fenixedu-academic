@@ -31,7 +31,7 @@ public class ExternalDegreeEnrolment extends ExternalDegreeEnrolment_Base {
 	checkInitConstraints(studentCurricularPlan, curricularCourse, executionSemester);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
 		createdBy);
-	createEnrolmentLog(EnrolmentAction.ENROL);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     private void checkParameters(final StudentCurricularPlan studentCurricularPlan, final CurriculumGroup curriculumGroup,

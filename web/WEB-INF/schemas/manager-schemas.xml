@@ -666,20 +666,21 @@
 	<setter signature="editPeriod(beginDateYearMonthDay, endDateYearMonthDay)" />	
 </schema>
 
-<schema name="enrolmentLog.search" type="net.sourceforge.fenixedu.dataTransferObject.enrolmentLog.SearchEnrolmentLog" bundle="MANAGER_RESOURCES">
+<schema name="curriculumLineLog.search" type="net.sourceforge.fenixedu.dataTransferObject.curriculumLineLog.SearchCurriculumLineLog" bundle="MANAGER_RESOURCES">
 	<slot name="executionPeriod" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.manager.executionCourse.executionPeriod">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />	
 	</slot>
 	<slot name="studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="property.student.number"/>	
 </schema>	
 
-<schema name="enrolmentLogs.list" type="net.sourceforge.fenixedu.domain.log.EnrolmentLog" bundle="MANAGER_RESOURCES">
+<schema name="curriculumLineLogs.list" type="net.sourceforge.fenixedu.domain.log.CurriculumLineLog" bundle="MANAGER_RESOURCES">
 	<slot name="dateDateTime" key="label.date" >
+		<property name="classes" value="nowrap" />
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}:${secondOfMinute,02d}"/>
 	</slot>
-	<slot name="curricularCourseName" key="label.course.name" />
+	<slot name="description" key="label.course.name">
+	</slot>
 	<slot name="action.name" key="label.action" layout="slot-as-label">
 		<property name="bundle" value="MANAGER_RESOURCES"/>
 	</slot>	

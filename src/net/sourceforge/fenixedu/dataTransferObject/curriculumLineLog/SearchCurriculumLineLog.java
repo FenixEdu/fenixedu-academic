@@ -1,11 +1,11 @@
-package net.sourceforge.fenixedu.dataTransferObject.enrolmentLog;
+package net.sourceforge.fenixedu.dataTransferObject.curriculumLineLog;
 
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
-public class SearchEnrolmentLog implements Serializable {
+public class SearchCurriculumLineLog implements Serializable {
 
     private Integer studentNumber;
     private DomainReference<ExecutionSemester> executionSemester;

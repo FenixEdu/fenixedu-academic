@@ -89,7 +89,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition, String createdBy) {
 	this();
 	initializeAsNew(studentCurricularPlan, curricularCourse, executionSemester, enrolmentCondition, createdBy);
-	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	// validateDegreeModuleLink(curriculumGroup, curricularCourse);
 	initializeAsNew(studentCurricularPlan, curriculumGroup, curricularCourse, executionSemester, enrolmentCondition,
 		createdBy);
-	createEnrolmentLog(studentCurricularPlan.getRegistration(), EnrolmentAction.ENROL);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     protected void checkInitConstraints(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
@@ -261,7 +261,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     @Override
     public void delete() {
 	checkRulesToDelete();
-	createEnrolmentLog(EnrolmentAction.UNENROL);
+	createCurriculumLineLog(EnrolmentAction.UNENROL);
 	deleteInformation();
 	super.delete();
     }
@@ -853,12 +853,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		.countEnrolmentsByCurricularCourse(this.getCurricularCourse(), untilExecutionPeriod);
     }
 
-    protected void createEnrolmentLog(Registration registration, EnrolmentAction action) {
-	new EnrolmentLog(action, registration, this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
-    }
-
-    protected void createEnrolmentLog(EnrolmentAction action) {
-	new EnrolmentLog(action, this.getRegistration(), this.getCurricularCourse(), this.getExecutionPeriod(), getCurrentUser());
+    @Override
+    protected void createCurriculumLineLog(final EnrolmentAction action) {
+	new EnrolmentLog(action, getRegistration(), getCurricularCourse(), getExecutionPeriod(), getCurrentUser());
     }
 
     @Override
@@ -1452,7 +1449,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	enrolment.getTheses().addAll(optionalEnrolment.getTheses());
 	enrolment.getExamDateCertificateRequests().addAll(optionalEnrolment.getExamDateCertificateRequests());
 	changeAttends(optionalEnrolment, enrolment);
-	enrolment.createEnrolmentLog(EnrolmentAction.ENROL);
+	enrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 
 	return enrolment;
     }

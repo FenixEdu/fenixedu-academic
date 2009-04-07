@@ -20,8 +20,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DismissalCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.log.DismissalLog;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -34,6 +36,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     public Dismissal(Credits credits, CurriculumGroup curriculumGroup, CurricularCourse curricularCourse) {
 	init(credits, curriculumGroup, curricularCourse);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     protected void init(Credits credits, CurriculumGroup curriculumGroup) {
@@ -192,6 +195,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
     @Override
     public void delete() {
+	createCurriculumLineLog(EnrolmentAction.UNENROL);
+
 	final Credits credits = getCredits();
 	removeCredits();
 	if (credits != null && !credits.hasAnyDismissals()) {
@@ -289,6 +294,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	final Set<IDegreeModuleToEvaluate> result = new HashSet<IDegreeModuleToEvaluate>(1);
 	result.add(new DismissalCurriculumModuleWrapper(this, executionSemester));
 	return result;
+    }
+
+    @Override
+    protected void createCurriculumLineLog(final EnrolmentAction action) {
+	new DismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getExecutionPeriod(), getCurrentUser());
     }
 
 }

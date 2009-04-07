@@ -22,7 +22,7 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 	    ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition, String createdBy) {
 	this();
 	initializeAsNew(studentCurricularPlan, curricularCourse, executionSemester, enrolmentCondition, createdBy);
-	createEnrolmentLog(EnrolmentAction.ENROL);
+	createCurriculumLineLog(EnrolmentAction.ENROL);
     }
 
     @Override

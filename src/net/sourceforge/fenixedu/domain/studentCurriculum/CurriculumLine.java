@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.YearMonthDay;
 
@@ -75,7 +76,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public boolean isExtraCurricular() {
 	return getCurriculumGroup().isExtraCurriculum();
     }
-    
+
     public boolean isStandalone() {
 	return getCurriculumGroup().isStandalone();
     }
@@ -133,7 +134,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	collection.condicionalAdd(this);
     }
 
-    final public CurricularCourse getCurricularCourse() {
+    public CurricularCourse getCurricularCourse() {
 	return (CurricularCourse) getDegreeModule();
     }
 
@@ -273,4 +274,5 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	return 0;
     }
 
+    abstract protected void createCurriculumLineLog(final EnrolmentAction action);
 }
