@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,10 +28,11 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public double getPointsAverage() {
 	double sumOfPoints = 0;
-	for (Vigilant v : this.getVigilantsThatCanBeConvoked()) {
+	for (VigilantWrapper v : this.getVigilantWrappersThatCanBeConvoked()) {
 	    sumOfPoints += v.getPoints();
 	}
-	return ((this.getVigilantsThatCanBeConvoked().isEmpty()) ? 0 : sumOfPoints / this.getVigilantsThatCanBeConvoked().size());
+	return ((this.getVigilantWrappersThatCanBeConvoked().isEmpty()) ? 0 : sumOfPoints
+		/ this.getVigilantWrappersThatCanBeConvoked().size());
     }
 
     public VigilantWrapper hasPerson(Person person) {
@@ -85,60 +85,12 @@ public class VigilantGroup extends VigilantGroup_Base {
 	}
     }
 
-    public VigilantBound getBounds(Vigilant vigilant) {
-	for (VigilantBound bound : this.getBounds()) {
-	    if (bound.getVigilant().equals(vigilant)) {
-		return bound;
-	    }
-	}
-	return null;
-    }
-
-    public List<Vigilant> getVigilants() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
-	for (VigilantBound bound : this.getBounds()) {
-	    vigilants.add(bound.getVigilant());
-	}
-	return vigilants;
-    }
-
-    public void addVigilants(Vigilant vigilant) {
-	if (!vigilantAlreadyHasBoundWithGroup(vigilant)) {
-	    VigilantBound bound = new VigilantBound(vigilant, this);
-	    this.addBounds(bound);
-	}
-    }
-
-    public void removeVigilants(Vigilant vigilant) {
-	for (VigilantBound bound : this.getBounds()) {
-	    if (bound.getVigilant().equals(vigilant)) {
-		bound.delete();
-		return;
-	    }
-	}
-    }
-
-    public boolean vigilantAlreadyHasBoundWithGroup(Vigilant vigilant) {
-	for (VigilantBound bound : this.getBounds()) {
-	    if (bound.getVigilant().equals(vigilant)) {
-		return Boolean.TRUE;
-	    }
-	}
-	return Boolean.FALSE;
+    public List<VigilantWrapper> getVigilants() {
+	return this.getVigilantWrappers();
     }
 
     public int getVigilantsCount() {
 	return this.getVigilants().size();
-    }
-
-    private List<Vigilant> getVigilantsWithACertainBound(Boolean bool) {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
-	for (VigilantBound bound : this.getBounds()) {
-	    if (bound.getConvokable() == bool) {
-		vigilants.add(bound.getVigilant());
-	    }
-	}
-	return vigilants;
     }
 
     public List<VigilantWrapper> getVigilantWrappersThatCanBeConvoked() {
@@ -159,36 +111,6 @@ public class VigilantGroup extends VigilantGroup_Base {
 	    }
 	}
 	return vigilantWrappersThatCantBeConvoked;
-    }
-
-    public List<Vigilant> getVigilantsThatCanBeConvoked() {
-	return this.getVigilantsWithACertainBound(Boolean.TRUE);
-    }
-
-    public List<Vigilant> getVigilantsThatCantBeConvoked() {
-	return this.getVigilantsWithACertainBound(Boolean.FALSE);
-    }
-
-    public List<VigilantBound> getBoundsWhereVigilantsAreNotConvokable() {
-	List<VigilantBound> vigilantBounds = new ArrayList<VigilantBound>();
-	for (VigilantBound bound : this.getBounds()) {
-	    if (!bound.getConvokable()) {
-		vigilantBounds.add(bound);
-	    }
-	}
-	return vigilantBounds;
-    }
-
-    public HashMap<Vigilant, List<Vigilancy>> getConvokeMap() {
-
-	HashMap<Vigilant, List<Vigilancy>> convokeMap = new HashMap<Vigilant, List<Vigilancy>>();
-	List<Vigilant> vigilants = this.getVigilants();
-
-	for (Vigilant vigilant : vigilants) {
-	    convokeMap.put(vigilant, vigilant.getVigilancies());
-	}
-
-	return convokeMap;
     }
 
     public List<Person> getPersons() {
@@ -231,16 +153,6 @@ public class VigilantGroup extends VigilantGroup_Base {
 	return convokesToReturn;
     }
 
-    public List<Vigilancy> getVigilancies(Vigilant vigilant) {
-	List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
-	for (Vigilancy convoke : this.getVigilancies()) {
-	    if (convoke.getVigilant().equals(vigilant)) {
-		vigilantConvokes.add(convoke);
-	    }
-	}
-	return vigilantConvokes;
-    }
-
     public List<Vigilancy> getVigilancies(VigilantWrapper vigilantWrapper) {
 	List<Vigilancy> vigilantConvokes = new ArrayList<Vigilancy>();
 	for (Vigilancy convoke : this.getVigilancies()) {
@@ -249,22 +161,6 @@ public class VigilantGroup extends VigilantGroup_Base {
 	    }
 	}
 	return vigilantConvokes;
-    }
-
-    public List<Vigilant> removeGivenVigilantsFromGroup(List<Vigilant> vigilants) {
-
-	List<Vigilant> vigilantsUnableToRemove = new ArrayList<Vigilant>();
-	vigilants.retainAll(this.getVigilants());
-
-	for (Vigilant vigilant : vigilants) {
-	    try {
-		vigilant.delete();
-	    } catch (DomainException e) {
-		vigilantsUnableToRemove.add(vigilant);
-	    }
-	}
-
-	return vigilantsUnableToRemove;
     }
 
     public List<UnavailablePeriod> getUnavailablePeriodsOfVigilantsInGroup() {
@@ -281,17 +177,6 @@ public class VigilantGroup extends VigilantGroup_Base {
 		.getBeginOfSecondPeriodForUnavailablePeriods()) && date
 		.isBefore(this.getEndOfSecondPeriodForUnavailablePeriods())));
 
-    }
-
-    public List<Vigilant> getVigilantsWithIncompatiblePerson() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
-	for (Vigilant vigilant : this.getVigilants()) {
-	    Person incompatiblePerson = vigilant.getIncompatiblePerson();
-	    if (incompatiblePerson != null && !vigilants.contains(incompatiblePerson.getCurrentVigilant())) {
-		vigilants.add(vigilant);
-	    }
-	}
-	return vigilants;
     }
 
     public List<VigilantWrapper> getVigilantWrappersWithIncompatiblePerson() {
@@ -315,16 +200,21 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     public void delete() {
-	if (this.getBounds().isEmpty()) {
-	    removeExecutionYear();
-	    getExecutionCourses().clear();
-	    getExamCoordinators().clear();
-	    removeUnit();
-	    removeRootDomainObject();
-	    super.deleteDomainObject();
-	} else {
-	    throw new DomainException("label.vigilancy.error.cannotDeleteGroupWithVigilants");
+	removeExecutionYear();
+	getExecutionCourses().clear();
+	getExamCoordinators().clear();
+	removeUnit();
+	removeRootDomainObject();
+	for (VigilantWrapper vigilant : this.getVigilantWrappers()) {
+	    List<Vigilancy> vigilancies = vigilant.getVigilancies();
+	    for (Vigilancy vigilancy : vigilancies) {
+		if (vigilancy.isActive()) {
+		    throw new DomainException("label.vigilancy.error.cannotDeleteGroupWithVigilants");
+		}
+	    }
+	    removeVigilantWrappers(vigilant);
 	}
+	super.deleteDomainObject();
     }
 
     public List<WrittenEvaluation> getAllAssociatedWrittenEvaluations() {

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.WrittenEvaluationVigilancyView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,9 +74,9 @@ public class VigilantGroupExportReport extends VigilantGroupManagement {
 	return null;
     }
 
-    private String getVigilantListAsString(List<Vigilant> vigilants) {
+    private String getVigilantListAsString(List<VigilantWrapper> vigilants) {
 	String vigilantList = "";
-	for (Vigilant vigilant : vigilants) {
+	for (VigilantWrapper vigilant : vigilants) {
 	    vigilantList += vigilant.getPerson().getFirstAndLastName() + " (" + vigilant.getPerson().getIstUsername() + ")\n";
 	}
 	return vigilantList;

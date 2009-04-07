@@ -8,8 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class VigilancyConvokeBean implements Serializable {
 
@@ -19,7 +19,7 @@ public class VigilancyConvokeBean implements Serializable {
 
     private DomainReference<VigilantGroup> vigilantGroup;
 
-    private Collection<DomainReference<Vigilant>> vigilantsSugestion;
+    private Collection<DomainReference<VigilantWrapper>> vigilantsSugestion;
 
     private Boolean convokeIsFinal;
 
@@ -65,18 +65,18 @@ public class VigilancyConvokeBean implements Serializable {
 	this.numberOfVigilantsToSelect = numberOfVigilantsToSelect;
     }
 
-    public List<Vigilant> getVigilantsSugestion() {
-	List vigilants = new ArrayList<Vigilant>();
-	for (DomainReference<Vigilant> vigilant : this.vigilantsSugestion) {
+    public List<VigilantWrapper> getVigilantsSugestion() {
+	List vigilants = new ArrayList<VigilantWrapper>();
+	for (DomainReference<VigilantWrapper> vigilant : this.vigilantsSugestion) {
 	    if (vigilant != null)
 		vigilants.add(vigilant.getObject());
 	}
 	return vigilants;
     }
 
-    public void setVigilantsSugestion(List<Vigilant> vigilantsList) {
-	this.vigilantsSugestion = new ArrayList<DomainReference<Vigilant>>();
-	for (Vigilant vigilant : vigilantsList) {
+    public void setVigilantsSugestion(List<VigilantWrapper> vigilantsList) {
+	this.vigilantsSugestion = new ArrayList<DomainReference<VigilantWrapper>>();
+	for (VigilantWrapper vigilant : vigilantsList) {
 	    if (vigilant != null) {
 		this.vigilantsSugestion.add(new DomainReference(vigilant));
 	    }

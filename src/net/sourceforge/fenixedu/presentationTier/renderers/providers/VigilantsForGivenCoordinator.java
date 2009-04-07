@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.UnavailablePeriodBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
@@ -22,7 +22,7 @@ public class VigilantsForGivenCoordinator implements DataProvider {
 
 	ExamCoordinator coordinator = bean.getCoordinator();
 
-	List<Vigilant> vigilantsToReturn = new ArrayList<Vigilant>(coordinator.getVigilantsThatCanManage());
+	List<VigilantWrapper> vigilantsToReturn = new ArrayList<VigilantWrapper>(coordinator.getVigilantsThatCanManage());
 
 	Collections.sort(vigilantsToReturn, new BeanComparator("person.name"));
 	return vigilantsToReturn;

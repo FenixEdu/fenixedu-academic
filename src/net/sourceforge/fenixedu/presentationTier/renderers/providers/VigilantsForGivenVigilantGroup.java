@@ -31,7 +31,7 @@ public class VigilantsForGivenVigilantGroup implements DataProvider {
 	    WrittenEvaluation evaluation = convokeBean.getWrittenEvaluation();
 	    if (evaluation != null && evaluation.getVigilancies().size() > 0) {
 		for (Vigilancy convoke : evaluation.getVigilancies()) {
-		    vigilants.remove(convoke.getVigilant());
+		    vigilants.remove(convoke.getVigilantWrapper());
 		}
 	    }
 	} else {

@@ -69,7 +69,6 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 	removeRootDomainObject();
 	this.getPerson().removeUnavailablePeriods(this);
 	removePerson();
-	removeVigilant();
 	super.deleteDomainObject();
     }
 

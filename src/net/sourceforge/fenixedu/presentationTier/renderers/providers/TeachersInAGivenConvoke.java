@@ -19,7 +19,7 @@ public class TeachersInAGivenConvoke implements DataProvider {
 
 	if (writtenEvaluation != null && writtenEvaluation.getVigilancies().size() > 0) {
 	    for (Vigilancy convoke : writtenEvaluation.getVigilancies()) {
-		teachersForAGivenCourse.remove(convoke.getVigilant());
+		teachersForAGivenCourse.remove(convoke.getVigilantWrapper());
 	    }
 
 	}

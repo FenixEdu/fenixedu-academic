@@ -135,7 +135,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -1092,7 +1091,10 @@ public class CreateTestData {
 	person.addPersonRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
 	person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
 	person.addPersonRoleByRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-	final Vigilant vigilant = new Vigilant(person, ExecutionYear.readCurrentExecutionYear());
+	/*
+	 * final Vigilant vigilant = new Vigilant(person,
+	 * ExecutionYear.readCurrentExecutionYear());
+	 */
 	final VigilantGroup vigilantGroup;
 	if (RootDomainObject.getInstance().getVigilantGroupsSet().isEmpty()) {
 	    vigilantGroup = new VigilantGroup();
@@ -1105,7 +1107,7 @@ public class CreateTestData {
 	} else {
 	    vigilantGroup = RootDomainObject.getInstance().getVigilantGroupsSet().iterator().next();
 	}
-	vigilantGroup.addVigilants(vigilant);
+	/* vigilantGroup.addVigilants(vigilant); */
 	return teacher;
     }
 
@@ -1481,9 +1483,13 @@ public class CreateTestData {
 	final Vigilancy vigilancy = null;
 	writtenEvaluation.setDayDateYearMonthDay(yearMonthDay);
 	for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-	    final Vigilant vigilant = professorship.getTeacher().getPerson().getVigilantForGivenExecutionYear(
-		    executionPeriod.getExecutionYear());
-	    vigilant.addVigilancies(vigilancy);
+	    /*
+	     * final Vigilant vigilant = professorship.getTeacher().getPerson().
+	     * getVigilantForGivenExecutionYear(
+	     * executionPeriod.getExecutionYear());
+	     * 
+	     * vigilant.addVigilancies(vigilancy);
+	     */
 	}
     }
 

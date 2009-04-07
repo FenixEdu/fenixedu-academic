@@ -5565,16 +5565,6 @@ class DomainObject {
 		class vigilancy.OwnCourseVigilancy extends vigilancy.Vigilancy {
 		}
 
-	class vigilancy.Vigilant extends DomainObject {
-		BigDecimal pointsWeight;
-		BigDecimal startPoints;
-	}
-
-	class vigilancy.VigilantBound extends DomainObject {
-		Boolean convokable;
-		String justification;
-	}
-
 	class vigilancy.VigilantGroup extends DomainObject {
 		DateTime beginOfFirstPeriodForUnavailablePeriods;
 		DateTime beginOfSecondPeriodForUnavailablePeriods;
@@ -7045,13 +7035,6 @@ relation ConvokeForWrittenEvaluation {
 		multiplicity *;
 	}
 	WrittenEvaluation playsRole writtenEvaluation;
-}
-
-relation ConvokingVigilant {
-	vigilancy.Vigilant playsRole vigilant;
-	vigilancy.Vigilancy playsRole vigilancies {
-		multiplicity *;
-	}
 }
 
 relation ConvokingVigilantWrapper {
@@ -12639,20 +12622,6 @@ relation RootDomainVigilancy {
 	}
 }
 
-relation RootDomainVigilant {
-	RootDomainObject playsRole rootDomainObject;
-	vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-}
-
-relation RootDomainVigilantBound {
-	RootDomainObject playsRole rootDomainObject;
-	vigilancy.VigilantBound playsRole vigilantBounds {
-		multiplicity *;
-	}
-}
-
 relation RootDomainVigilantGroup {
 	RootDomainObject playsRole rootDomainObject;
 	vigilancy.VigilantGroup playsRole vigilantGroups {
@@ -13736,13 +13705,6 @@ relation VehicleParkingRequest {
 	}
 }
 
-relation VigilantBounds {
-	vigilancy.Vigilant playsRole vigilant;
-	vigilancy.VigilantBound playsRole bounds {
-		multiplicity *;
-	}
-}
-
 relation VigilantGroupBelongsToUnit {
 	vigilancy.VigilantGroup playsRole vigilantGroups {
 		multiplicity *;
@@ -13750,46 +13712,11 @@ relation VigilantGroupBelongsToUnit {
 	organizationalStructure.Unit playsRole unit;
 }
 
-relation VigilantGroupBounds {
-	vigilancy.VigilantGroup playsRole vigilantGroup;
-	vigilancy.VigilantBound playsRole bounds {
-		multiplicity *;
-	}
-}
-
 relation VigilantGroupInExecutionYear {
 	vigilancy.VigilantGroup playsRole vigilantGroups {
 		multiplicity *;
 	}
 	ExecutionYear playsRole executionYear;
-}
-
-relation VigilantInExecutionYear {
-	vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-	ExecutionYear playsRole executionYear;
-}
-
-relation VigilantIncompatiblePerson {
-	vigilancy.Vigilant playsRole incompatibleVigilants {
-		multiplicity *;
-	}
-	Person playsRole incompatiblePerson;
-}
-
-relation VigilantIsUnavailable {
-	vigilancy.Vigilant playsRole vigilant;
-	vigilancy.UnavailablePeriod playsRole unavailablePeriods {
-		multiplicity *;
-	}
-}
-
-relation VigilantPerson {
-	vigilancy.Vigilant playsRole vigilants {
-		multiplicity *;
-	}
-	Person playsRole person;
 }
 
 relation WeeklyOcupationTeacher {

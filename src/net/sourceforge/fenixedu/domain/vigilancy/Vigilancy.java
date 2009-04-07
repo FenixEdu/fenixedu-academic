@@ -172,7 +172,6 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     public void delete() {
 	removeWrittenEvaluation();
-	removeVigilant();
 	removeRootDomainObject();
 	removeVigilantWrapper();
 	super.deleteDomainObject();

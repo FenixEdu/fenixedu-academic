@@ -132,12 +132,11 @@ public class EditWrittenEvaluation extends FenixService {
 		new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
 
 	for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
-	    Person person = vigilancy.getVigilant().getPerson();
+	    Person person = vigilancy.getVigilantWrapper().getPerson();
 	    tos.add(person.getEmail());
 	}
 
 	EmailSender.send(group.getName(), group.getContactEmail(), new String[] { group.getContactEmail() }, tos, null, null,
 		subject, body);
     }
-
 }

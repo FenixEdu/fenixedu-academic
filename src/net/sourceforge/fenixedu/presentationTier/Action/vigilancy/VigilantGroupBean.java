@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
@@ -294,21 +293,6 @@ public class VigilantGroupBean extends VigilantBean implements Serializable {
 
     public void setUsername(String username) {
 	this.username = username;
-    }
-
-    public List<Vigilant> getVigilantsForGroupsInBean() {
-	List<VigilantGroup> groups = this.getVigilantGroups();
-	Set<Vigilant> vigilants = new HashSet<Vigilant>();
-	for (VigilantGroup group : groups) {
-	    vigilants.addAll(group.getVigilants());
-	}
-	ComparatorChain chain = new ComparatorChain();
-	chain.addComparator(Vigilant.POINTS_COMPARATOR);
-	chain.addComparator(Vigilant.CATEGORY_COMPARATOR);
-	chain.addComparator(Vigilant.USERNAME_COMPARATOR);
-	List<Vigilant> vigilantsList = new ArrayList<Vigilant>(vigilants);
-	Collections.sort(vigilantsList, chain);
-	return vigilantsList;
     }
 
     public List<VigilantWrapper> getVigilantWrappersForGroupsInBean() {

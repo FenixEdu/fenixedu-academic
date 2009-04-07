@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 
@@ -42,8 +42,8 @@ public class EmployeesForGivenUnit implements DataProvider {
 
 	VigilantGroup group = bean.getSelectedVigilantGroup();
 	if (group != null) {
-	    List<Vigilant> vigilants = group.getVigilants();
-	    for (Vigilant vigilant : vigilants) {
+	    List<VigilantWrapper> vigilants = group.getVigilants();
+	    for (VigilantWrapper vigilant : vigilants) {
 		Employee employee = vigilant.getPerson().getEmployee();
 		if (employee != null) {
 		    employees.remove(employee);

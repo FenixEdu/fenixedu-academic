@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
+import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 public class WrittenEvaluationVigilancyView {
 
@@ -36,27 +36,27 @@ public class WrittenEvaluationVigilancyView {
 	return getWrittenEvaluation().getOthersVigilancies().size();
     }
 
-    public List<Vigilant> getTeachersVigilants() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getTeachersVigilants() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (Vigilancy vigilancy : getWrittenEvaluation().getTeachersVigilancies()) {
-	    vigilants.add(vigilancy.getVigilant());
+	    vigilants.add(vigilancy.getVigilantWrapper());
 	}
 	return vigilants;
     }
 
-    public List<Vigilant> getOtherVigilants() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getOtherVigilants() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (Vigilancy vigilancy : getWrittenEvaluation().getOthersVigilancies()) {
-	    vigilants.add(vigilancy.getVigilant());
+	    vigilants.add(vigilancy.getVigilantWrapper());
 	}
 	return vigilants;
     }
 
-    public List<Vigilant> getCancelledConvokes() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getCancelledConvokes() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (Vigilancy vigilancy : getWrittenEvaluation().getVigilancies()) {
 	    if (!vigilancy.isActive()) {
-		vigilants.add(vigilancy.getVigilant());
+		vigilants.add(vigilancy.getVigilantWrapper());
 	    }
 	}
 	return vigilants;
@@ -66,12 +66,12 @@ public class WrittenEvaluationVigilancyView {
 	return getCancelledConvokes().size();
     }
 
-    public List<Vigilant> getConfirmedConvokes() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getConfirmedConvokes() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (Vigilancy vigilancy : getWrittenEvaluation().getOthersVigilancies()) {
 	    OtherCourseVigilancy otherCourseVigilancy = (OtherCourseVigilancy) vigilancy;
 	    if (otherCourseVigilancy.isConfirmed()) {
-		vigilants.add(otherCourseVigilancy.getVigilant());
+		vigilants.add(otherCourseVigilancy.getVigilantWrapper());
 	    }
 	}
 	return vigilants;
@@ -81,11 +81,11 @@ public class WrittenEvaluationVigilancyView {
 	return getConfirmedConvokes().size();
     }
 
-    public List<Vigilant> getAttendedConvokes() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>();
+    public List<VigilantWrapper> getAttendedConvokes() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	for (Vigilancy vigilancy : getWrittenEvaluation().getVigilancies()) {
 	    if (vigilancy.isAttended()) {
-		vigilants.add(vigilancy.getVigilant());
+		vigilants.add(vigilancy.getVigilantWrapper());
 	    }
 	}
 	return vigilants;

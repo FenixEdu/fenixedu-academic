@@ -103,7 +103,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -700,23 +699,6 @@ public class Person extends Person_Base {
 	return vigilancies;
     }
 
-    public Vigilant getVigilantForGivenExecutionYear(ExecutionYear executionYear) {
-	List<Vigilant> vigilants = this.getVigilants();
-	for (Vigilant vigilant : vigilants) {
-	    if (vigilant.getExecutionYear().equals(executionYear)) {
-		return vigilant;
-
-	    }
-	}
-
-	return null;
-    }
-
-    public Vigilant getLatestVigilant() {
-	List<Vigilant> vigilants = new ArrayList<Vigilant>(this.getVigilants());
-	return Collections.max(vigilants, Vigilant.COMPARATOR_BY_EXECUTION_YEAR);
-    }
-
     public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
 	List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
 	for (ExamCoordinator examCoordinator : examCoordinators) {
@@ -736,23 +718,24 @@ public class Person extends Person_Base {
 	return getExamCoordinatorForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
 
-    public Vigilant getCurrentVigilant() {
-	return getVigilantForGivenExecutionYear(ExecutionYear.readCurrentExecutionYear());
-    }
-
     public double getVigilancyPointsForGivenYear(ExecutionYear executionYear) {
-	Vigilant vigilant = this.getVigilantForGivenExecutionYear(executionYear);
-	if (vigilant == null)
+	List<VigilantWrapper> vigilants = this.getVigilantWrapperForExecutionYear(executionYear);
+	if (vigilants.isEmpty())
 	    return 0;
-	else
-	    return vigilant.getPoints();
+	else {
+	    double points = 0;
+	    for (VigilantWrapper vigilant : vigilants) {
+		points += vigilant.getPoints();
+	    }
+	    return points;
+	}
     }
 
     public double getTotalVigilancyPoints() {
-	List<Vigilant> vigilants = this.getVigilants();
+	List<VigilantWrapper> vigilants = this.getVigilantWrappers();
 
 	double points = 0;
-	for (Vigilant vigilant : vigilants) {
+	for (VigilantWrapper vigilant : vigilants) {
 	    points += vigilant.getPoints();
 	}
 	return points;

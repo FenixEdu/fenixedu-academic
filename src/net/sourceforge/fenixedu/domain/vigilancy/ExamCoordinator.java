@@ -56,15 +56,15 @@ public class ExamCoordinator extends ExamCoordinator_Base {
 	return new ArrayList<UnavailablePeriod>(unavailablePeriods);
     }
 
-    public List<Vigilant> getVigilantsThatCanManage() {
-	Set<Vigilant> vigilants = new HashSet<Vigilant>();
+    public List<VigilantWrapper> getVigilantsThatCanManage() {
+	List<VigilantWrapper> vigilants = new ArrayList<VigilantWrapper>();
 	List<VigilantGroup> groups = this.getVigilantGroups();
 
 	for (VigilantGroup group : groups) {
-	    vigilants.addAll(group.getVigilants());
+	    vigilants.addAll(group.getVigilantWrappers());
 	}
 
-	return new ArrayList<Vigilant>(vigilants);
+	return new ArrayList<VigilantWrapper>(vigilants);
     }
 
     public Boolean isAllowedToCreateGroups() {

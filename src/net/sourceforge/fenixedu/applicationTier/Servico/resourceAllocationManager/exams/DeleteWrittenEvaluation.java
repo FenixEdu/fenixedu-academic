@@ -46,7 +46,7 @@ public class DeleteWrittenEvaluation extends FenixService {
 		writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
 	for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
-	    Person person = vigilancy.getVigilant().getPerson();
+	    Person person = vigilancy.getVigilantWrapper().getPerson();
 	    tos.add(person.getEmail());
 	}
 
