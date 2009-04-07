@@ -105,7 +105,6 @@ public class VigilantManagement extends FenixDispatchAction {
 
 	VigilantWrapper vigilant = vigilantWrappers.get(0);
 	if (selectedVigilantGroup != null) {
-	    System.out.println(selectedVigilantGroup.getName());
 	    for (VigilantWrapper vigilantWrapper : vigilantWrappers) {
 		if (vigilantWrapper.getVigilantGroup().equals(selectedVigilantGroup)) {
 		    vigilant = vigilantWrapper;

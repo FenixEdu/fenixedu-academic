@@ -65,12 +65,12 @@
 <logic:iterate id="vigilancy" name="ownVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
 <tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 <td class="acenter">
-	<logic:present name="vigilancy" property="vigilant.teacher">
-		<fr:view name="vigilancy" property="vigilant.teacher.category.code"/>
+	<logic:present name="vigilancy" property="vigilantWrapper.teacher">
+		<fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/>
 	</logic:present>
 </td>
-<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.name" /></td>
-<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+<td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.name" /></td>
+<td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
 <td class="acenter"><fr:view name="vigilancy" property="points" /></td>
 
 			<logic:equal name="vigilancy" property="active" value="true">
@@ -108,12 +108,12 @@
 	<logic:iterate id="vigilancy" name="vigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
 		<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
 			<td class="acenter">
-				<logic:present name="vigilancy" property="vigilant.teacher">
-					<fr:view name="vigilancy" property="vigilant.teacher.category.code"/>
+				<logic:present name="vigilancy" property="vigilantWrapper.teacher">
+					<fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/>
 				</logic:present>
 			</td>
-			<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.name" /></td>
-			<td class="acenter"><fr:view name="vigilancy" property="vigilant.person.username"/></td>
+			<td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.name" /></td>
+			<td class="acenter"><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
 			<td class="acenter"><fr:view name="vigilancy" property="points" /></td>
 			<td class="acenter"><fr:view name="vigilancy" property="active"/></td>
 			<td class="acenter"><fr:view name="vigilancy" property="confirmed"/></td>

@@ -258,8 +258,6 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public void delete() {
 
 	if (this.getActiveVigilanciesInList(this.getVigilancies()).size() == 0) {
-	    for (; !this.getPerson().getUnavailablePeriods().isEmpty(); this.getPerson().getUnavailablePeriods().get(0).delete())
-		;
 	    for (; !this.getVigilancies().isEmpty(); this.getVigilancies().get(0).delete())
 		;
 	    removePerson();
@@ -352,8 +350,10 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     public String getUnavailablePeriodsAsString() {
 	String periods = "";
 	int i = 0;
-	int size = this.getPerson().getUnavailablePeriodsCount() - 1;
-	for (UnavailablePeriod period : this.getPerson().getUnavailablePeriods()) {
+	List<UnavailablePeriod> unavailablePeriodsForGivenYear = this.getPerson().getUnavailablePeriodsForGivenYear(
+		getExecutionYear());
+	int size = unavailablePeriodsForGivenYear.size() - 1;
+	for (UnavailablePeriod period : unavailablePeriodsForGivenYear) {
 	    periods += period.getUnavailableAsString();
 	    periods += (i == size) ? " " : ", ";
 	    i++;
@@ -444,6 +444,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public List<UnavailablePeriod> getUnavailablePeriods() {
-	return getPerson().getUnavailablePeriods();
+	return getPerson().getUnavailablePeriodsForGivenYear(getExecutionYear());
     }
+
 }

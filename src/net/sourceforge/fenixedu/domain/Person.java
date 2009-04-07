@@ -101,6 +101,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
+import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
@@ -3155,6 +3156,17 @@ public class Person extends Person_Base {
     public void removeIncompatibleVigilantPerson() {
 	setIncompatibleVigilant(null);
 	setIncompatiblePerson(null);
+    }
+
+    public List<UnavailablePeriod> getUnavailablePeriodsForGivenYear(ExecutionYear executionYear) {
+	List<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriods();
+	List<UnavailablePeriod> unavailablePeriodsForGivenYear = new ArrayList<UnavailablePeriod>();
+	for (UnavailablePeriod unavailablePeriod : unavailablePeriods) {
+	    if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()) {
+		unavailablePeriodsForGivenYear.add(unavailablePeriod);
+	    }
+	}
+	return unavailablePeriodsForGivenYear;
     }
 
 }

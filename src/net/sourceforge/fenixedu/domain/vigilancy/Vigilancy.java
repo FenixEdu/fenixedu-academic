@@ -103,7 +103,7 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public ExecutionYear getExecutionYear() {
-	return this.getVigilant().getExecutionYear();
+	return this.getVigilantWrapper().getExecutionYear();
     }
 
     public long getBeginDate() {

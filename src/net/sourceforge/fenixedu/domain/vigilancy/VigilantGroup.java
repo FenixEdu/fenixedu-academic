@@ -270,7 +270,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     public List<UnavailablePeriod> getUnavailablePeriodsOfVigilantsInGroup() {
 	List<UnavailablePeriod> unavailablePeriods = new ArrayList<UnavailablePeriod>();
 	for (VigilantWrapper vigilantWrapper : this.getVigilantWrappers()) {
-	    unavailablePeriods.addAll(vigilantWrapper.getPerson().getUnavailablePeriods());
+	    unavailablePeriods.addAll(vigilantWrapper.getUnavailablePeriods());
 	}
 	return unavailablePeriods;
     }

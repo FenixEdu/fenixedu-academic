@@ -79,9 +79,9 @@
 	<logic:iterate id="vigilancy"  name="writtenEvaluation" property="teachersVigilancies" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy">
 	<logic:equal name="permission" value="true">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
-		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
 			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/>
@@ -133,9 +133,9 @@
 
 	<logic:equal name="permission" value="false">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
-		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
 			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled" />
@@ -223,9 +223,9 @@
 	<bean:define id="vigilancy" name="vigilancy" type="net.sourceforge.fenixedu.domain.vigilancy.Vigilancy"/>
 	<logic:equal name="permission" value="true">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
-		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
 			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked"/>
@@ -279,9 +279,9 @@
 
 	<logic:equal name="permission" value="false">
 	<tr class="<%= !vigilancy.isActive() ? "color888" : ""%>">
-		<td><fr:view name="vigilancy" property="vigilant.teacherCategoryCode"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.username"/></td>
-			<td><fr:view name="vigilancy" property="vigilant.person.name"/></td>
+		<td><fr:view name="vigilancy" property="vigilantWrapper.teacherCategoryCode"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.username"/></td>
+			<td><fr:view name="vigilancy" property="vigilantWrapper.person.name"/></td>
 			
 			<logic:equal name="vigilancy" property="active" value="true">
 			<td class="acenter"><input name="<%= "radioActive-" + vigilancy.getIdInternal() %>" type="radio" checked="checked" disabled="disabled"/>

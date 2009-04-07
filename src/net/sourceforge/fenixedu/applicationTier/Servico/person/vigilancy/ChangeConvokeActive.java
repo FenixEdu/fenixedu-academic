@@ -67,7 +67,7 @@ public class ChangeConvokeActive extends FenixService {
 	DateTime beginDate = writtenEvaluation.getBeginningDateTime();
 	String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-" + beginDate.getYear();
 
-	message = "Caro(a) " + convoke.getVigilant().getPerson().getName() + ",\n\n";
+	message = "Caro(a) " + convoke.getVigilantWrapper().getPerson().getName() + ",\n\n";
 	message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils
 		.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
 	message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
