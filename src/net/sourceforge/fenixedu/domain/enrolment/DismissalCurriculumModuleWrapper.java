@@ -71,7 +71,7 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
     @Override
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
 	if (hasDegreeModule()) {
-	    if (getDegreeModule().getParentDegreeCurricularPlan() == getDismissal().getDegreeCurricularPlanOfStudent()) {
+	    if (getDegreeModule().getParentDegreeCurricularPlan() == getDismissal().getDegreeCurricularPlanOfDegreeModule()) {
 		return getDegreeModule().getCurricularRules(getContext(), executionSemester);
 	    }
 	}

@@ -1254,7 +1254,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private boolean isFromExternalDegree() {
-	return getDegreeModule().getParentDegreeCurricularPlan() != getDegreeCurricularPlanOfStudent();
+	return getDegreeModule().getParentDegreeCurricularPlan() != getDegreeCurricularPlanOfDegreeModule();
     }
 
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
