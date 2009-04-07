@@ -56,7 +56,6 @@
      		<fr:property name="columnClasses" value=",,tdclear tderror1"/>			
 		</fr:layout>
 		<fr:destination name="invalid" path="<%="/registration.do?method=prepareViewRegistrationCurriculumInvalid&registrationId=" + registrationId %>"/>
-		<fr:destination name="cancel" path="<%="/student.do?method=visualizeRegistration&registrationId=" + registrationId %>"/>
 	</fr:edit>
 	
 	<br/><br/>

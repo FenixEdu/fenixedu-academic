@@ -136,6 +136,8 @@ public class StudentDA extends FenixDispatchAction {
 
     public ActionForward prepareViewRegistrationCurriculumInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
+	
+	getRegistration(request);
 	request.setAttribute("registrationCurriculumBean", getRegistrationCurriculumBeanFromViewState());
 
 	final Integer degreeCurricularPlanID = getIntegerFromRequest(request, "degreeCurricularPlanID");
