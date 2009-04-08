@@ -39,7 +39,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -262,7 +261,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	final String justification = ((DynaActionForm) actionForm).getString("justification");
+	final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
 
 	try {
 	    RejectAcademicServiceRequest.run(academicServiceRequest, justification);
@@ -289,7 +288,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	final String justification = ((DynaActionForm) actionForm).getString("justification");
+	final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
 
 	try {
 	    executeService("CancelAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
@@ -325,10 +324,10 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
-	final DynaActionForm form = (DynaActionForm) actionForm;
+	final AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
 
 	try {
-	    ConcludeAcademicServiceRequest.run(academicServiceRequest, getSendEmailToStudent(form), getSituationDate(),
+	    ConcludeAcademicServiceRequest.run(academicServiceRequest, form.getSendEmailToStudent(), getSituationDate(),
 		    getJustification());
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
@@ -344,10 +343,6 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	request.setAttribute("registration", academicServiceRequest.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
-    }
-
-    private Boolean getSendEmailToStudent(final DynaActionForm form) {
-	return (Boolean) form.get("sendEmailToStudent");
     }
 
     private YearMonthDay getSituationDate() {
