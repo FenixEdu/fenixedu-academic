@@ -72,9 +72,6 @@
 			</td></tr></table>
 			<bean:define id="imageLabel" value="false"/>
 		</logic:equal>
-	<%if(testQuestion.getStudentSubQuestions().size()>1){%>	
-		<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
-	<%}%>
 		
 	<bean:define id="questionType" name="subQuestion" property="questionType.type"/>
 
@@ -90,7 +87,7 @@
 				<tr><td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="value"/></td></tr>
 			</logic:equal>
 		<%}%>
-		
+		<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 		
 		<tr><td>
 		<bean:define id="imageLabel" value="false"/>

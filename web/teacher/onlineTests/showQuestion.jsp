@@ -8,6 +8,8 @@
 <bean:define id="questionCode" name="iquestion" property="idInternal"/>
 <bean:define id="metadataCode" name="metadataId" />
 
+<bean:size id="subQuestionsSize" name="iquestion" property="subQuestions"/>
+
 <logic:iterate id="subQuestion" name="iquestion" property="subQuestions" indexId="itemIndex">
 <bean:define id="item" value="<%=itemIndex.toString()%>"/>
 <br/>
@@ -46,7 +48,14 @@
 </logic:equal>
 <tr><td><h2><bean:write name="subQuestion" property="itemId"/></h2></td></tr>
 <tr><td><b><bean:write name="subQuestion" property="title"/></b></td></tr>
-<tr><td><b><bean:message key="message.tests.subQuestionValue"/></b><bean:write name="subQuestion" property="questionValue"/></td></tr>
+<tr><td><b>
+<logic:greaterThan name="subQuestionsSize" value="1">
+	<bean:message key="message.tests.subQuestionValue"/>
+</logic:greaterThan>
+<logic:lessEqual name="subQuestionsSize" value="1">
+	<bean:message key="message.tests.questionValue"/>
+</logic:lessEqual>
+</b><bean:write name="subQuestion" property="questionValue"/></td></tr>
 <tr><td>
 <logic:iterate id="questionBody" name="subQuestion" property="presentation" indexId="indexQuestion">
 	<bean:define id="questionLabel" name="questionBody" property="label"/>

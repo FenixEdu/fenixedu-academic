@@ -77,7 +77,6 @@
 			 	if(itemIndex.equals(new Integer(0))){%>
 			 		<tr><td><span class="error"><bean:message key="message.subQuestions"/></span></td></tr>
 			 	<%}%>
-				<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 			<%}%>
 		
 		<%if(((Integer)testType).intValue()!=3){%>
@@ -88,6 +87,7 @@
 				<tr><td><b><bean:message key="label.student.classification" /></b>&nbsp;<bean:write name="value"/></td></tr>
 			</logic:equal>
 		<%}%>
+		<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 		
 		<tr><td>
 		<bean:define id="index" value="0"/>
