@@ -13,6 +13,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.Money;
 
+import org.joda.time.YearMonthDay;
+
 public class SibsIncommingPaymentFile {
 
     private static final String HEADER_REGISTER_TYPE = "0";
@@ -130,6 +132,14 @@ public class SibsIncommingPaymentFile {
 
     public String getFilename() {
 	return filename;
+    }
+
+    public YearMonthDay getWhenProcessedBySibs() {
+	return getHeader().getWhenProcessedBySibs();
+    }
+
+    public Integer getVersion() {
+	return getHeader().getVersion();
     }
 
 }
