@@ -137,9 +137,9 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	    return viewMarkSheet(mapping, actionForm, request, response);
 
 	} catch (final NotAuthorizedFilterException e) {
-	    addMessage(request, actionMessages, "error.not.authorized.to.create.dissertation.marksheet");
+	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (final IllegalDataAccessException e) {
-	    addMessage(request, actionMessages, "error.not.authorized.to.create.dissertation.marksheet");
+	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (final DomainException e) {
 	    addMessage(request, actionMessages, e.getMessage(), e.getArgs());
 	}
