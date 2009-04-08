@@ -33,7 +33,6 @@ import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.Months;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -721,8 +720,16 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate begin) {
-	begin.plusMonths(1);
-	return getYearExtraWorkRequests(begin.getYear(), begin.getMonthOfYear());
+	List<ExtraWorkRequest> requests = new ArrayList<ExtraWorkRequest>();
+	int monthOfYear = begin.getMonthOfYear() + 1;
+	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
+	    Partial requestPaymentDate = extraWorkRequest.getRealPaymentPartialDate();
+	    if (requestPaymentDate.get(DateTimeFieldType.year()) == begin.getYear()
+		    && requestPaymentDate.get(DateTimeFieldType.monthOfYear()) == monthOfYear) {
+		requests.add(extraWorkRequest);
+	    }
+	}
+	return requests;
     }
 
     public List<ExtraWorkRequest> getExtraWorkRequests(Partial paymentPartial) {
