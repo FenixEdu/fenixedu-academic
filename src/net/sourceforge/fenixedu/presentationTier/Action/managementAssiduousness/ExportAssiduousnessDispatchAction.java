@@ -1,13 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportJustifications;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthResume;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,8 +11,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportJustifications;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAllAssiduousnessWorkSheets;
+import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadMonthResume;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMonthlyResume;
@@ -32,7 +27,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
@@ -47,7 +41,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -85,7 +78,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ReadAllAssiduousnessWorkSheets.run(assiduousnessExportChoices);
+	List<EmployeeWorkSheet> employeeWorkSheetList = ReadAllAssiduousnessWorkSheets.run(assiduousnessExportChoices);
 	if (employeeWorkSheetList.size() != 0) {
 	    Map<String, String> parameters = new HashMap<String, String>();
 	    if (assiduousnessExportChoices.getYearMonth() != null) {
@@ -126,7 +119,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = (List<AssiduousnessMonthlyResume>) ReadMonthResume.run(assiduousnessExportChoices);
+	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = ReadMonthResume.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=resumoMes.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -146,7 +139,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ExportJustifications.run(assiduousnessExportChoices);
+	StyledExcelSpreadsheet spreadsheet = ExportJustifications.run(assiduousnessExportChoices);
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=justificacoes.xls");
 	final ServletOutputStream writer = response.getOutputStream();
@@ -194,7 +187,6 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response, AssiduousnessStatus assiduousnessStatus, String fileName, String action)
 	    throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	final IUserView userView = UserView.getUser();
 
 	if (!isMonthClosed(yearMonth)) {
 	    addError(request, "error.monthNotClosed");
@@ -204,7 +196,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("choose-year-month");
 	}
 
-	List<EmployeeAnualInfo> assignedEmployeeInfoList = (List<EmployeeAnualInfo>) ExportEmployeesAnualInfo.run(yearMonth, assiduousnessStatus);
+	List<EmployeeAnualInfo> assignedEmployeeInfoList = ExportEmployeesAnualInfo.run(yearMonth, assiduousnessStatus);
 
 	Collections.sort(assignedEmployeeInfoList, new BeanComparator("employee.employeeNumber"));
 	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("personnelSection.employeesAnualInfo", null, null,
@@ -266,7 +258,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     private boolean isMonthClosed(YearMonth yearMonth) {
 	for (ClosedMonth closedMonth : rootDomainObject.getClosedMonths()) {
-	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
+	    if (closedMonth.getClosedForBalance()
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == yearMonth.getYear()
 		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == yearMonth.getNumberOfMonth()) {
 		return true;
 	    }

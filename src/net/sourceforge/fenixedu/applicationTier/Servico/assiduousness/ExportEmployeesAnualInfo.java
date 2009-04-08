@@ -80,12 +80,11 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		setMedicalLeaves(employeeMonthInfo, leaves, beginDate, endDate);
 
 		setArticle66(employeeMonthInfo, assiduousnessClosedMonth, previousAssiduousnessClosedMonth);
-		employeeMonthInfo.setBereavementLeave(countLeaveNumberOfDays(leaves, "NOJO", beginDate, endDate));
-		employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
-		Integer countLeaveNumberOfDays = countLeaveNumberOfDays(leaves, "LP", beginDate, endDate)
-			+ countLeaveNumberOfDays(leaves, "LP25%", beginDate, endDate);
+		employeeMonthInfo.setBereavementLeave(countLeaveNumberOfDays(leaves, beginDate, endDate, "NOJO"));
+		employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, beginDate, endDate, "LPC"));
+		Integer countLeaveNumberOfDays = countLeaveNumberOfDays(leaves, beginDate, endDate, "LP", "LP25%");
 		employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays);
-		employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
+		employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, beginDate, endDate, "LS/V"));
 		List<JustificationMotive> justificationMotives = JustificationMotive
 			.getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
 		employeeMonthInfo
@@ -96,9 +95,9 @@ public class ExportEmployeesAnualInfo extends FenixService {
 			.setUsedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FER", "F1306", "FA42"));
 		employeeMonthInfo.setUsedTransferedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FTRANS",
 			"FT1306", "FA42T"));
-		employeeMonthInfo.setUsedPastHourVacations(countLeaveNumberOfWorkDays(leaves, "FHEA", beginDate, endDate));
+		employeeMonthInfo.setUsedPastHourVacations(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "FHEA"));
 		employeeMonthInfo.setUsedA17Vacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FA17", "FA1306"));
-		employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, "FEB", beginDate, endDate));
+		employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "FEB"));
 		employeeMonthInfo.setUsedExtraWorkVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FHE",
 			"FH1306"));
 		employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 FÉRIAS",
@@ -107,34 +106,33 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		// TODO not supported yet, dispensas adquiridas no mes por work
 		// extra
 		setAcquiredDismissal(employeeAnualInfo.getEmployee().getAssiduousness());
-		employeeMonthInfo.setUsedDismissal(countLeaveNumberOfDays(leaves, "DHE", beginDate, endDate));
+		employeeMonthInfo.setUsedDismissal(countLeaveNumberOfDays(leaves, beginDate, endDate, "DHE"));
 		setVacationsInWorkDays(employeeMonthInfo, leaves, beginDate, endDate);
-		employeeMonthInfo.setBereavementLeaveWorkDays(countLeaveNumberOfWorkDays(leaves, "NOJO", beginDate, endDate));
-		employeeMonthInfo.setMarriageInWorkDays(countLeaveNumberOfWorkDays(leaves, "LPC", beginDate, endDate));
-		Integer countLeaveNumberOfWorkDays = countLeaveNumberOfWorkDays(leaves, "LP", beginDate, endDate)
-			+ countLeaveNumberOfWorkDays(leaves, "LP25%", beginDate, endDate);
+		employeeMonthInfo.setBereavementLeaveWorkDays(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "NOJO"));
+		employeeMonthInfo.setMarriageInWorkDays(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "LPC"));
+		Integer countLeaveNumberOfWorkDays = countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "LP", "LP25%");
 		employeeMonthInfo.setChildbirthInWorkDays(countLeaveNumberOfWorkDays);
 		employeeMonthInfo
-			.setLeaveWithoutPaymentInWorkDays(countLeaveNumberOfWorkDays(leaves, "LS/V", beginDate, endDate));
+			.setLeaveWithoutPaymentInWorkDays(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "LS/V"));
 		setArticle52(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
 		setChildClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
 		setRelativeClinicTreatment(employeeMonthInfo, assiduousnessClosedMonth, beginDate, endDate);
-		employeeMonthInfo.setAFCT(countLeaveNumberOfDays(leaves, "AFCT", beginDate, endDate));
-		employeeMonthInfo.setInfectumContagious(countLeaveNumberOfDays(leaves, "IFC", beginDate, endDate));
-		employeeMonthInfo.setAccidentInServiceInLocal(countLeaveNumberOfDays(leaves, "ACINLO", beginDate, endDate));
-		employeeMonthInfo.setAccidentInServiceInIter(countLeaveNumberOfDays(leaves, "ACINTE", beginDate, endDate));
-		employeeMonthInfo.setBloodDonation(countLeaveNumberOfDays(leaves, "DSANG", beginDate, endDate));
-		employeeMonthInfo.setChildbirthOrPaternity(countLeaveNumberOfDays(leaves, "PATERNID", beginDate, endDate));
-		employeeMonthInfo.setWorkStudentExamEve(countLeaveNumberOfDays(leaves, "TEVESP", beginDate, endDate));
-		employeeMonthInfo.setWorkStudentExamDay(countLeaveNumberOfDays(leaves, "TRAEST", beginDate, endDate));
-		employeeMonthInfo.setFormationCoursesNotAuthorized(countLeaveNumberOfDays(leaves, "CURSO", beginDate, endDate));
-		employeeMonthInfo.setFormationCoursesAuthorized(countLeaveNumberOfDays(leaves, "CURCD", beginDate, endDate));
-		employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, "PRISÃO", beginDate, endDate));
-		employeeMonthInfo.setMissForFulfilmentOfObligation(countLeaveNumberOfDays(leaves, "A62", beginDate, endDate));
-		employeeMonthInfo.setUnionActivity(countLeaveNumberOfDays(leaves, "A.SINDIC", beginDate, endDate));
-		employeeMonthInfo.setMissWithLostOfIncome(countLeaveNumberOfDays(leaves, "A68", beginDate, endDate));
+		employeeMonthInfo.setAFCT(countLeaveNumberOfDays(leaves, beginDate, endDate, "AFCT"));
+		employeeMonthInfo.setInfectumContagious(countLeaveNumberOfDays(leaves, beginDate, endDate, "IFC"));
+		employeeMonthInfo.setAccidentInServiceInLocal(countLeaveNumberOfDays(leaves, beginDate, endDate, "ACINLO"));
+		employeeMonthInfo.setAccidentInServiceInIter(countLeaveNumberOfDays(leaves, beginDate, endDate, "ACINTE"));
+		employeeMonthInfo.setBloodDonation(countLeaveNumberOfDays(leaves, beginDate, endDate, "DSANG"));
+		employeeMonthInfo.setChildbirthOrPaternity(countLeaveNumberOfDays(leaves, beginDate, endDate, "PATERNID"));
+		employeeMonthInfo.setWorkStudentExamEve(countLeaveNumberOfDays(leaves, beginDate, endDate, "TEVESP"));
+		employeeMonthInfo.setWorkStudentExamDay(countLeaveNumberOfDays(leaves, beginDate, endDate, "TRAEST"));
+		employeeMonthInfo.setFormationCoursesNotAuthorized(countLeaveNumberOfDays(leaves, beginDate, endDate, "CURSO"));
+		employeeMonthInfo.setFormationCoursesAuthorized(countLeaveNumberOfDays(leaves, beginDate, endDate, "CURCD"));
+		employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, beginDate, endDate, "PRISÃO"));
+		employeeMonthInfo.setMissForFulfilmentOfObligation(countLeaveNumberOfDays(leaves, beginDate, endDate, "A62"));
+		employeeMonthInfo.setUnionActivity(countLeaveNumberOfDays(leaves, beginDate, endDate, "A.SINDIC"));
+		employeeMonthInfo.setMissWithLostOfIncome(countLeaveNumberOfDays(leaves, beginDate, endDate, "A68"));
 
-		Integer strikeDays = countLeaveNumberOfDays(leaves, "GREVE", beginDate, endDate);
+		Integer strikeDays = countLeaveNumberOfDays(leaves, beginDate, endDate, "GREVE");
 		if (strikeDays == null) {
 		    strikeDays = 0;
 		}
@@ -148,7 +146,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	    List<JustificationMotive> justificationMotives) {
 	int total = 0;
 	for (JustificationMotive justificationMotive : justificationMotives) {
-	    Integer days = countLeaveNumberOfDays(leaves, justificationMotive.getAcronym(), beginDate, endDate);
+	    Integer days = countLeaveNumberOfDays(leaves, beginDate, endDate, justificationMotive.getAcronym());
 	    if (days != null) {
 		total += days.intValue();
 	    }
@@ -160,7 +158,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	    String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
-	    Integer days = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
+	    Integer days = countLeaveNumberOfDays(leaves, beginDate, endDate, justification);
 	    if (days != null) {
 		total += days.intValue();
 	    }
@@ -172,7 +170,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	    String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
-	    Integer days = countLeaveNumberOfWorkDays(leaves, justification, beginDate, endDate);
+	    Integer days = countLeaveNumberOfWorkDays(leaves, beginDate, endDate, justification);
 	    if (days != null) {
 		total += days.intValue();
 	    }
@@ -372,12 +370,14 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return counter;
     }
 
-    private static Integer countLeaveNumberOfDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
-	    LocalDate endDate) {
+    private static Integer countLeaveNumberOfDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+	    String... justificationAcronyms) {
 	int counter = 0;
 	for (Leave leave : leaves) {
-	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
-		counter += countLeaveNumberOfDays(counter, leave, beginDate, endDate);
+	    for (String justificationAcronym : justificationAcronyms) {
+		if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
+		    counter += countLeaveNumberOfDays(counter, leave, beginDate, endDate);
+		}
 	    }
 	}
 	return counter != 0 ? counter : null;
@@ -391,13 +391,15 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	return Days.daysBetween(beginDateInPeriod, endDateInPeriod.plusDays(1)).getDays();
     }
 
-    private static Integer countLeaveNumberOfWorkDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
-	    LocalDate endDate) {
+    private static Integer countLeaveNumberOfWorkDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+	    String... justificationAcronyms) {
 	int countWorkDays = 0;
 	Interval dateInterval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight());
 	for (Leave leave : leaves) {
-	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
-		countWorkDays += leave.getWorkDaysBetween(dateInterval);
+	    for (String justificationAcronym : justificationAcronyms) {
+		if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
+		    countWorkDays += leave.getWorkDaysBetween(dateInterval);
+		}
 	    }
 	}
 	return countWorkDays != 0 ? countWorkDays : null;
