@@ -9,6 +9,9 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -26,7 +29,10 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     private final DomainReference<ExecutionYear> executionYear;
 
+    private final DomainReference<PersonFunction> personFunction;
+
     public DelegateStudentsGroup(PersonFunction delegateFunction, FunctionType functionType) {
+	this.personFunction = new DomainReference<PersonFunction>(delegateFunction);
 	Person person = delegateFunction.getPerson();
 	if (person.hasStudent()) {
 	    this.student = new DomainReference<Student>(person.getStudent());
@@ -68,7 +74,28 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-	return new Argument[] {};
+	return new Argument[] { new IdOperator(personFunction.getObject()) };
+    }
+
+    public static class Builder implements GroupBuilder {
+
+	public Group build(Object[] arguments) {
+	    try {
+		return new DelegateStudentsGroup((PersonFunction) arguments[0]);
+	    } catch (ClassCastException e) {
+		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
+			arguments[0].toString());
+	    }
+	}
+
+	public int getMinArguments() {
+	    return 0;
+	}
+
+	public int getMaxArguments() {
+	    return 1;
+	}
+
     }
 
     @Override

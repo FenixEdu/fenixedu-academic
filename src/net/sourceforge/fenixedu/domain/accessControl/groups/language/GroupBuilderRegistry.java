@@ -223,6 +223,8 @@ public class GroupBuilderRegistry {
 	register("teachersWithGradesToSubmit", TeachersWithGradesToSubmit.class, new TeachersWithGradesToSubmit.Builder());
 	register("groupingGroup", GroupingGroup.class, new GroupingGroup.Builder());
 	register("degreeAllCoordinatorsGroup", DegreeAllCoordinatorsGroup.class, new DegreeAllCoordinatorsGroup.Builder());
+	register("delegateCurricularCourseStudentsGroup", DelegateCurricularCourseStudentsGroup.class, new DelegateCurricularCourseStudentsGroup.Builder());
+	register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());	
 	registerGroupsWithNoArguments();
     }
 
@@ -231,8 +233,8 @@ public class GroupBuilderRegistry {
 		DegreeCoordinatorsGroup.class, AllMasterDegreesStudents.class, AllDegreesStudentsGroup.class,
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
-		ScientificCouncilMembersGroup.class, DelegateStudentsGroup.class, DelegateCurricularCourseStudentsGroup.class,
-		AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class, AllResearchersGroup.class };
+		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class,
+		AllStudentsGroup.class, AllResearchersGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
