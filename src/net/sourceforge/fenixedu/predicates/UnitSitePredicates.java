@@ -13,7 +13,7 @@ public class UnitSitePredicates {
 
 	public boolean evaluate(UnitSite site) {
 	    Person person = AccessControl.getPerson();
-	    return person.hasRole(RoleType.MANAGER) || site.hasManagers(person);
+	    return person.hasRole(RoleType.MANAGER) || person.hasRole(RoleType.SCIENTIFIC_COUNCIL) || site.hasManagers(person);
 	}
 
     };
