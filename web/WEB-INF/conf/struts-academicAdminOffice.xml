@@ -186,36 +186,6 @@
 		        parameter="method"
 			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentStatutesDA">
 			<forward name="manageStatutes" path="students.manageStatutes"/>
-		</action>  		
-
-		<action path="/student"
-				name="studentManagementForm"
-				scope="request"		
-		        parameter="method"
-			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA">
-			<forward name="editPersonalData" path="student.editPersonalData"/>
-			<forward name="viewPersonalData" path="student.viewPersonalData"/>
-			<forward name="viewStudentDetails" path="students.viewStudentDetails"/>
-			<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>
-			
-			<forward name="createPartyContact" path="student.createPartyContact"/>
-			<forward name="editPartyContact" path="student.editPartyContact"/>
-		</action>         
-		
-		<action path="/registration"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
-				scope="request">
-			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>
-			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
-			<forward name="chooseCycleForRegistrationConclusion" path="chooseCycleForRegistrationConclusion"/>
-			<forward name="registrationConclusion" path="registrationConclusion"/>
-			<forward name="registrationConclusionDocument" path="registrationConclusionDocument"/>
-			<forward name="viewRegistrationDetails" path="/student.do?method=visualizeRegistration"/>
-			<forward name="viewAttends" path="viewAttends"/>
-			<forward name="addAttends" path="addAttends"/>
-			<forward name="showRegimes" path="showRegimes"/>
-			<forward name="createRegime" path="createRegime"/>
 		</action>
 
 		<action path="/viewCurriculum"

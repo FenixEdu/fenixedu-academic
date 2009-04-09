@@ -32,12 +32,6 @@
     <definition name="students.viewStudentDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/viewStudentDetails.jsp"></put>
     </definition>
-    <definition name="student.editPersonalData" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/editPersonalData.jsp"></put>
-    </definition>
-    <definition name="student.viewPersonalData" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/viewPersonalData.jsp"></put>
-    </definition>
     <definition name="student.viewRegistrationDetails" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"></put>
     </definition>
@@ -46,24 +40,6 @@
     </definition>
     <definition name="student.editPartyContact" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/editPartyContact.jsp"></put>
-    </definition>
-    <definition name="chooseCycleForViewRegistrationCurriculum" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"></put>
-    </definition>
-    <definition name="view-registration-curriculum" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"></put>
-    </definition>
-    <definition name="viewAttends" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/viewAttends.jsp"></put>
-    </definition>
-    <definition name="addAttends" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/addAttends.jsp"></put>
-    </definition>
-    <definition name="showRegimes" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/showRegimes.jsp"></put>
-    </definition>
-    <definition name="createRegime" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/createRegime.jsp"></put>
     </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
@@ -95,15 +71,6 @@
     </definition>
     <definition name="student.deleteActualInfoConfirm" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp"></put>
-    </definition>      
-    <definition name="chooseCycleForRegistrationConclusion" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"></put>
-    </definition>      
-    <definition name="registrationConclusion" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/registrationConclusion.jsp"></put>
-    </definition>      
-    <definition name="registrationConclusionDocument" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"></put>
     </definition>      
     <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp"></put>
