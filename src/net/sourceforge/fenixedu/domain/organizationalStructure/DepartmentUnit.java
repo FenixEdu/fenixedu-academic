@@ -208,17 +208,19 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
 	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
 	Department department = this.getDepartment();
+	if (department != null) {
 
-	groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
-	// groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear,
-	// department));
-	groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
+	    groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
+	    // groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear,
+	    // department));
+	    groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
 
-	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-	degrees.addAll(getDepartment().getDegrees());
+	    SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+	    degrees.addAll(department.getDegrees());
 
-	for (Degree degree : degrees) {
-	    groups.add(new DegreeStudentsGroup(degree));
+	    for (Degree degree : degrees) {
+		groups.add(new DegreeStudentsGroup(degree));
+	    }
 	}
 
 	return groups;
