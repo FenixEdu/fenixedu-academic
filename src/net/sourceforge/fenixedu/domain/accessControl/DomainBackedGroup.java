@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
 
@@ -13,9 +12,9 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
     public DomainBackedGroup(T object) {
 	super();
 
-	if (object == null) {
-	    throw new DomainException("accessControl.group.domainBacked.null");
-	}
+//	if (object == null) {
+//	    throw new DomainException("accessControl.group.domainBacked.null");
+//	}
 
 	this.reference = new DomainReference<T>(object);
     }

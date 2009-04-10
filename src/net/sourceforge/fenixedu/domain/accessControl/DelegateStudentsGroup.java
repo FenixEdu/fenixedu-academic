@@ -5,11 +5,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -23,31 +24,15 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     private final FunctionType functionType;
 
-    private final DomainReference<Student> student;
+    private final Integer personFunctionId;
 
-    private final DomainReference<Person> person;
-
-    private final DomainReference<ExecutionYear> executionYear;
-
-    private final DomainReference<PersonFunction> personFunction;
-
-    public DelegateStudentsGroup(PersonFunction delegateFunction, FunctionType functionType) {
-	this.personFunction = new DomainReference<PersonFunction>(delegateFunction);
-	Person person = delegateFunction.getPerson();
-	if (person.hasStudent()) {
-	    this.student = new DomainReference<Student>(person.getStudent());
-	    this.person = null;
-	} else {
-	    this.student = null;
-	    this.person = new DomainReference<Person>(person);
-	}
+    public DelegateStudentsGroup(final PersonFunction delegateFunction, final FunctionType functionType) {
+	personFunctionId = delegateFunction.getIdInternal();
 	this.functionType = functionType;
-	this.executionYear = new DomainReference<ExecutionYear>(ExecutionYear.getExecutionYearByDate(delegateFunction
-		.getBeginDate()));
     }
 
     public DelegateStudentsGroup(PersonFunction delegateFunction) {
-	this(delegateFunction, delegateFunction.getFunction().getFunctionType());
+	this(delegateFunction, null);
     }
 
     @Override
@@ -74,14 +59,24 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     @Override
     protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(personFunction.getObject()) };
+	if (functionType == null) {
+	    return new Argument[] { new IdOperator(getPersonFunction()) };
+	} else {
+	    return new Argument[] { new IdOperator(getPersonFunction()), new StaticArgument(functionType.getName()) };
+	}
     }
 
     public static class Builder implements GroupBuilder {
 
 	public Group build(Object[] arguments) {
 	    try {
-		return new DelegateStudentsGroup((PersonFunction) arguments[0]);
+		if (arguments.length > 1 && arguments[1] != null) {
+		    final String functionTypeName = (String) arguments[1];
+		    final FunctionType functionType = FunctionType.valueOf(functionTypeName);
+		    return new DelegateStudentsGroup((PersonFunction) arguments[0], functionType);
+		} else {
+		    return new DelegateStudentsGroup((PersonFunction) arguments[0]);
+		}
 	    } catch (ClassCastException e) {
 		throw new GroupDynamicExpressionException("accessControl.group.builder.executionCourse.notExecutionCourse",
 			arguments[0].toString());
@@ -89,11 +84,11 @@ public class DelegateStudentsGroup extends LeafGroup {
 	}
 
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
 	public int getMaxArguments() {
-	    return 1;
+	    return 2;
 	}
 
     }
@@ -122,20 +117,28 @@ public class DelegateStudentsGroup extends LeafGroup {
 	return functionType;
     }
 
+    public PersonFunction getPersonFunction() {
+	return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(personFunctionId) : null;
+    }
+
     public Student getStudent() {
-	return (student != null ? student.getObject() : null);
+	final PersonFunction personFunction = getPersonFunction();
+	final Person person = personFunction.getPerson();
+	return person.hasStudent() ? person.getStudent() : null;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear != null ? executionYear.getObject() : null);
+	final PersonFunction personFunction = getPersonFunction();
+	return ExecutionYear.getExecutionYearByDate(personFunction.getBeginDate());
     }
 
     public Person getPerson() {
-	return (person != null ? person.getObject() : null);
+	final PersonFunction personFunction = getPersonFunction();
+	return personFunction.getPerson();
     }
 
     private Person getSender() {
-	return (getPerson() != null ? getPerson() : getStudent().getPerson());
+	return getPerson();
     }
 
 }

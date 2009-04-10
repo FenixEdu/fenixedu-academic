@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
@@ -19,13 +19,13 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private final DomainReference<CurricularCourse> curricularCourse;
+    private final Integer curricularCourseId;
 
-    private final DomainReference<ExecutionYear> executionYear;
+    private final Integer executionYearId;
 
     public DelegateCurricularCourseStudentsGroup(CurricularCourse curricularCourse, ExecutionYear executionYear) {
-	this.curricularCourse = new DomainReference<CurricularCourse>(curricularCourse);
-	this.executionYear = new DomainReference<ExecutionYear>(executionYear);
+	curricularCourseId = curricularCourse.getIdInternal();
+	executionYearId = executionYear.getIdInternal();
     }
 
     @Override
@@ -59,11 +59,11 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 	}
 
 	public int getMinArguments() {
-	    return 0;
+	    return 2;
 	}
 
 	public int getMaxArguments() {
-	    return 1;
+	    return 2;
 	}
 
     }
@@ -85,11 +85,11 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear != null ? executionYear.getObject() : null);
+	return executionYearId != null ? RootDomainObject.getInstance().readExecutionYearByOID(executionYearId) : null;
     }
 
     public CurricularCourse getCurricularCourse() {
-	return (curricularCourse != null ? curricularCourse.getObject() : null);
+	return (CurricularCourse) (curricularCourseId != null ? RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId) : null);
     }
 
     private int getNumberOfEnrolledStudents() {
