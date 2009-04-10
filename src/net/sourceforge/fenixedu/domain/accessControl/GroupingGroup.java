@@ -21,9 +21,10 @@ public class GroupingGroup extends DomainBackedGroup<Grouping> {
     @Override
     public Set<Person> getElements() {
 	Set<Person> persons = super.buildSet();
-
-	for (Attends attend : getObject().getAttends()) {
-	    persons.add(attend.getRegistration().getStudent().getPerson());
+	if (getObject() != null) {
+	    for (Attends attend : getObject().getAttends()) {
+		persons.add(attend.getRegistration().getStudent().getPerson());
+	    }
 	}
 	return super.freezeSet(persons);
     }
