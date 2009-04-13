@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
 
@@ -134,7 +136,7 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	    }
 	}
 
-	if (academicServiceRequestBean.isToConclude() && !isFree() && !isPayedUponCreation()) {
+	if (academicServiceRequestBean.isToConclude() && !isFree() && !hasEvent() && !isPayedUponCreation()) {
 	    DiplomaRequestEvent.create(getAdministrativeOffice(), getRegistration().getPerson(), this);
 	}
 
@@ -224,6 +226,13 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     public boolean isPayedUponCreation() {
 	return getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
+    }
+
+    @Service
+    @Override
+    @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
+    public void revertToProcessingState() {
+	internalRevertToProcessingState();
     }
 
 }

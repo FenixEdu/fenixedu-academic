@@ -19,6 +19,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCertificateRequest_Base {
 
     protected DegreeFinalizationCertificateRequest() {
@@ -294,6 +297,13 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
     @Override
     public boolean hasPersonalInfo() {
 	return true;
+    }
+
+    @Service
+    @Override
+    @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
+    public void revertToProcessingState() {
+	internalRevertToProcessingState();
     }
 
 }

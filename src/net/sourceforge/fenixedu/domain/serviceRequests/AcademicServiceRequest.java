@@ -608,4 +608,29 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return false;
     }
 
+    public void revertToProcessingState() {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.revert.to.processing.state");
+    }
+
+    protected void internalRevertToProcessingState() {
+	AcademicServiceRequestSituation activeSituation = getActiveSituation();
+
+	if (activeSituation == null || activeSituation.isProcessing() || activeSituation.isNew()) {
+	    throw new DomainException(
+		    "error.serviceRequests.AcademicServiceRequest.revert.to.processing.in.only.possibile.from.later.states");
+	} else if (activeSituation.isCancelled()) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.cancelled.requests.cannot.be.reverted");
+	}
+
+	if (getAcademicServiceRequestSituations().size() <= 1) {
+	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.revert.is.requires.more.than.one.state");
+	}
+
+	while (getAcademicServiceRequestSituations().size() > 1 && !activeSituation.isProcessing()) {
+	    activeSituation.delete(false);
+	    activeSituation = getActiveSituation();
+	}
+
+    }
+
 }

@@ -41,6 +41,10 @@ abstract public class AdministrativeOfficePermission extends AdministrativeOffic
 	return true;
     }
 
+    public boolean isValidFor(final DomainObject obj, final Person person) {
+	return !isAppliable(obj) || isMember(person);
+    }
+
     static AdministrativeOfficePermission create(final AdministrativeOfficePermissionGroup group, final PermissionType type) {
 	switch (type) {
 	case UPDATE_REGISTRATION_AFTER_CONCLUSION:

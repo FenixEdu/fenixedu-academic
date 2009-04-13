@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.AcademicServiceRequestPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -158,8 +159,28 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	getAndSetAcademicServiceRequest(request);
+	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	getAndSetUrl(form, request);
+	request.setAttribute("canRevertToProcessingState", AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE
+		.evaluate(academicServiceRequest));
+
+	return mapping.findForward("viewAcademicServiceRequest");
+    }
+
+    public ActionForward revertRequestToProcessingState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final AcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
+	getAndSetUrl(form, request);
+	request.setAttribute("canRevertToProcessingState", AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE
+		.evaluate(academicServiceRequest));
+
+	try {
+	    academicServiceRequest.revertToProcessingState();
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getMessage(), ex.getArgs());
+	}
+
 	return mapping.findForward("viewAcademicServiceRequest");
     }
 
@@ -510,4 +531,5 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	request.setAttribute("registration", bean.getRegistration());
 	return mapping.findForward("viewRegistrationDetails");
     }
+
 }

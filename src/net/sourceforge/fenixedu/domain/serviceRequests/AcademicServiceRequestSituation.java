@@ -112,13 +112,31 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED;
     }
 
+    public boolean isNew() {
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW;
+    }
+
+    public boolean isProcessing() {
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING;
+    }
+
+    public boolean isCancelled() {
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CANCELLED;
+    }
+
     void edit(final AcademicServiceRequestBean academicServiceRequestBean) {
 	super.setEmployee(academicServiceRequestBean.getEmployee());
 	super.setJustification(academicServiceRequestBean.getJustification());
     }
 
     public void delete() {
-	checkRulesToDelete();
+	delete(true);
+    }
+
+    public void delete(boolean checkRules) {
+	if (checkRules) {
+	    checkRulesToDelete();
+	}
 
 	super.setRootDomainObject(null);
 	super.setEmployee(null);

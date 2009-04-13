@@ -79,7 +79,9 @@
     <slot name="professionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
     <slot name="professionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
 	<slot name="profession" />
-	<slot name="maritalStatus" />
+	<slot name="maritalStatus">
+		<property name="excludedValues" value="UNKNOWN" />
+	</slot>
 </schema>
 
 <schema name="student.personalData-withoutProfessionDetails" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES" extends="student.personalData-edit">

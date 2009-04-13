@@ -91,7 +91,7 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
-	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) != 0) {
+	if (amountToPay.compareTo(event.calculateAmountToPay(when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.postingRules.BaseAmountPlusAmountPerUnitGreaterThanOnePR.amount.being.payed.must.match.amount.to.pay",
 		    event.getDescriptionForEntryType(getEntryType()));

@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/student", module = "academicAdminOffice")
+@Mapping(path = "/student", module = "academicAdminOffice", formBean = "studentManagementForm")
 @Forwards( {
 	// Once tiles definition is deleted, below should be:
 	// "/academicAdminOffice/student/viewStudentDetails.jsp"
@@ -31,7 +31,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails")
 
 })
-
 public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {

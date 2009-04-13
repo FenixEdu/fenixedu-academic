@@ -93,7 +93,11 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 	}
 
 	if (!isFree()) {
-	    new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+	    if (!hasEvent()) {
+		new CertificateRequestEvent(getAdministrativeOffice(), getEventType(), getRegistration().getPerson(), this);
+	    } else {
+		getEvent().recalculateState(academicServiceRequestBean.getFinalSituationDate());
+	    }
 	}
     }
 
