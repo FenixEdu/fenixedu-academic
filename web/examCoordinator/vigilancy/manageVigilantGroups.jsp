@@ -178,7 +178,7 @@
 		<logic:notEmpty name="group" property="vigilantWrappersThatCanBeConvoked">
 		<fr:view name="group" property="vigilantWrappersThatCanBeConvoked">
 		<fr:layout>
-		<fr:property name="eachSchema" value="presentVigilantName"/>
+		<fr:property name="eachSchema" value="presentVigilantWrapperName"/>
 		<fr:property name="sortBy" value="person.name"/>
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="classes" value="list2 mtop05"/>
@@ -189,7 +189,7 @@
 		<p class="mvert05"><strong><bean:message key="label.vigilancy.vigilantsThatCantBeConvoked" bundle="VIGILANCY_RESOURCES"/>:</strong></p>
 		<fr:view name="group" property="vigilantWrappersThatCantBeConvoked">
 		<fr:layout>
-		<fr:property name="eachSchema" value="presentVigilantName"/>
+		<fr:property name="eachSchema" value="presentVigilantWrapperName"/>
 		<fr:property name="sortBy" value="person.name"/>
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="classes" value="list2 mtop05"/>

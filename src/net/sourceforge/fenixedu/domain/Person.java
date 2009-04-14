@@ -3145,7 +3145,8 @@ public class Person extends Person_Base {
 	List<UnavailablePeriod> unavailablePeriods = this.getUnavailablePeriods();
 	List<UnavailablePeriod> unavailablePeriodsForGivenYear = new ArrayList<UnavailablePeriod>();
 	for (UnavailablePeriod unavailablePeriod : unavailablePeriods) {
-	    if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()) {
+	    if (unavailablePeriod.getBeginDate().getYear() == executionYear.getBeginCivilYear()
+		    || unavailablePeriod.getBeginDate().getYear() == executionYear.getEndCivilYear()) {
 		unavailablePeriodsForGivenYear.add(unavailablePeriod);
 	    }
 	}
