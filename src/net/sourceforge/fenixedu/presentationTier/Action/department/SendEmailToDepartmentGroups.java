@@ -17,7 +17,7 @@ public class SendEmailToDepartmentGroups extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Unit unit = DomainObject.fromExternalId("unitExternalId");
+	Unit unit = DomainObject.fromExternalId(request.getParameter("unitExternalId"));
 	Sender sender = unit.getUnitBasedSender().iterator().next();
 	return EmailsDA.sendEmail(request, sender);
     }
