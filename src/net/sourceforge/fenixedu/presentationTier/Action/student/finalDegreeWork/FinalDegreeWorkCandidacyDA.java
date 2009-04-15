@@ -3,26 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveStudentCurricularPlanByDegreeType;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadFinalDegreeWorkStudentGroupByUsername;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveProposalFromFinalDegreeWorkStudentGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAvailableFinalDegreeWorkProposalHeadersForGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.EstablishFinalDegreeWorkStudentGroup;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -37,6 +17,16 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.EstablishFinalDegreeWorkStudentGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadActiveStudentCurricularPlanByDegreeType;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAvailableFinalDegreeWorkProposalHeadersForGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadFinalDegreeWorkStudentGroupByUsername;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveProposalFromFinalDegreeWorkStudentGroup;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
@@ -45,7 +35,6 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStud
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -131,7 +120,18 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	dynaActionForm.set("executionDegreeOID", null);
+	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
+	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
+	    IUserView userView = UserView.getUser();
+	    try {
+		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), new Integer(executionDegreeOID));
+	    } catch (FenixServiceException ex) {
+		request.setAttribute("CalledFromSelect", Boolean.TRUE);
+		dynaActionForm.set("executionDegreeOID", null);
+		prepareCandidacy(mapping, form, request, response);
+		throw ex;
+	    }
+	}
 	request.setAttribute("CalledFromSelect", Boolean.TRUE);
 	return prepareCandidacy(mapping, form, request, response);
     }
@@ -171,7 +171,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 		&& idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
 
 	    try {
-		RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUtilizador(), new Integer(idInternal), new Integer(studentToRemove));
+		RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUtilizador(), new Integer(idInternal), new Integer(
+			studentToRemove));
 	    } catch (FenixServiceException ex) {
 		prepareCandidacy(mapping, form, request, response);
 		throw ex;
@@ -191,7 +192,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID)) {
 	    IUserView userView = UserView.getUser();
 
-	    List finalDegreeWorkProposalHeaders = (List) ReadAvailableFinalDegreeWorkProposalHeadersForGroup.run(new Integer(groupOID));
+	    List finalDegreeWorkProposalHeaders = ReadAvailableFinalDegreeWorkProposalHeadersForGroup.run(new Integer(groupOID));
 	    request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
 	}
 
@@ -255,7 +256,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 		&& orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
 		&& StringUtils.isNumeric(orderOfProposalPreference)) {
 
-	    ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(new Integer(idInternal), new Integer(selectedGroupProposal), new Integer(orderOfProposalPreference));
+	    ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(new Integer(idInternal), new Integer(
+		    selectedGroupProposal), new Integer(orderOfProposalPreference));
 	}
 
 	dynaActionForm.set("selectedGroupProposal", null);
@@ -278,7 +280,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
 	IUserView userView = UserView.getUser();
 
-	InfoGroup infoGroup = (InfoGroup) ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionYear);
+	InfoGroup infoGroup = ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionYear);
 
 	if (infoGroup != null) {
 	    if (infoGroup.getExecutionDegree() != null && infoGroup.getExecutionDegree().getIdInternal() != null) {
@@ -288,7 +290,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	    if (infoGroup.getGroupStudents() != null && !infoGroup.getGroupStudents().isEmpty()) {
 		String[] students = new String[infoGroup.getGroupStudents().size()];
 		for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
-		    InfoGroupStudent infoGroupStudent = (InfoGroupStudent) infoGroup.getGroupStudents().get(i);
+		    InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
 		    students[i] = infoGroupStudent.getStudent().getIdInternal().toString();
 		}
 		dynaActionForm.set("students", students);
@@ -347,7 +349,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView, final DegreeType degreeType)
 	    throws FenixServiceException, FenixFilterException {
 
-	return (InfoStudentCurricularPlan) ReadActiveStudentCurricularPlanByDegreeType.run(userView, degreeType);
+	return ReadActiveStudentCurricularPlanByDegreeType.run(userView, degreeType);
     }
 
     /**
@@ -366,8 +368,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
 
-	List infoExecutionDegrees = (List) ReadExecutionDegreesByExecutionYearAndType.run(infoExecutionYear.getIdInternal(),
-		degreeTypes);
+	List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType
+		.run(infoExecutionYear.getIdInternal(), degreeTypes);
 	Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 
