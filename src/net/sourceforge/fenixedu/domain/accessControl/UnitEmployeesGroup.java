@@ -48,7 +48,7 @@ public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
 		    return true;
 	    }
 	    for (Unit unit : units) {
-		if (checkParentUnits(search, unit.getParentUnits()))
+		if (unit != null && checkParentUnits(search, unit.getParentUnits()))
 		    return true;
 	    }
 	    return false;
