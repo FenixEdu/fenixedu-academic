@@ -42,7 +42,7 @@
 				</logic:present>					
 					
 		<%
-				} else if (!inquiryResponsePeriod.getEnd().isBeforeNow()) {
+				} else if (!inquiryResponsePeriod.getBegin().plusDays(12).isBeforeNow()) {
 		%>
 				    <bean:message key="message.teachingInquiries.noResults.msg3" bundle="INQUIRIES_RESOURCES"/>
 		<%
