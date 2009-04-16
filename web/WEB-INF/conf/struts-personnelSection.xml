@@ -79,6 +79,7 @@
 			<forward name="show-clockings" path="show-clockings"/>
 			<forward name="show-justifications" path="show-justifications"/>
 			<forward name="show-vacations" path="show-vacations"/>
+			<forward name="show-vacations-map" path="show-vacations-map"/>
 			<forward name="show-status" path="show-status"/>
 			<forward name="show-all-schedules" path="show-all-schedules"/>
 			<forward name="show-balance-resume" path="show-balance-resume"/>
@@ -247,13 +248,25 @@
       <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
 	</plug-in>
 
+	<!--
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
 					  /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
-	</plug-in>    
+	</plug-in>
+	-->
+	<plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
+        <set-property property="definitions-config" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
+					  /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" />
+        <set-property property="moduleAware" value="true" />
+        <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.managementAssiduousness.masterPage" />
+    </plug-in>
+    
 	<plug-in
 		className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
 		<set-property property="config"

@@ -24,6 +24,9 @@
 	<definition name="show-vacations" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/showVacations.jsp"/>
 	</definition>
+		<definition name="show-vacations-map" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/showVacationsMap.jsp"/>
+	</definition>
 	<definition name="show-status" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/showStatus.jsp"/>
 	</definition>

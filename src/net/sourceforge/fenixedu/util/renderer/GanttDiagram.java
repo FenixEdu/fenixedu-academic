@@ -38,7 +38,7 @@ public class GanttDiagram {
 
     private Locale locale;
 
-    private List<GanttDiagramEvent> events;
+    private List<? extends GanttDiagramEvent> events;
 
     private ViewType viewType;
 
@@ -50,48 +50,54 @@ public class GanttDiagram {
 
     private List<DateTime> months, days;
 
-    public static GanttDiagram getNewTotalGanttDiagram(List<GanttDiagramEvent> events_) throws InvalidArgumentException {
+    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.TOTAL);
     }
 
-    public static GanttDiagram getNewTotalGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin, YearMonthDay end)
-	    throws InvalidArgumentException {
+    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin,
+	    YearMonthDay end) throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.TOTAL, begin, end);
     }
 
-    public static GanttDiagram getNewWeeklyGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin)
+    public static GanttDiagram getNewWeeklyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
 	    throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.WEEKLY, begin);
     }
 
-    public static GanttDiagram getNewDailyGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin)
+    public static GanttDiagram getNewDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
 	    throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.DAILY, begin);
     }
 
-    public static GanttDiagram getNewMonthlyGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin)
+    public static GanttDiagram getNewMonthlyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
 	    throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.MONTHLY, begin);
     }
 
-    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<GanttDiagramEvent> events_, YearMonthDay begin)
+    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
 	    throws InvalidArgumentException {
 	return new GanttDiagram(events_, ViewType.MONTHLY_TOTAL, begin);
     }
 
-    private GanttDiagram(List<GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
+    public static GanttDiagram getNewYearDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
+	    throws InvalidArgumentException {
+	return new GanttDiagram(events_, ViewType.YEAR_DAILY, begin);
+    }
+
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
 	setViewType(type);
 	setEvents(events_);
 	init(type, null, null);
     }
 
-    private GanttDiagram(List<GanttDiagramEvent> events_, ViewType type, YearMonthDay begin) throws InvalidArgumentException {
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin)
+	    throws InvalidArgumentException {
 	setViewType(type);
 	setEvents(events_);
 	init(type, begin, null);
     }
 
-    private GanttDiagram(List<GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end)
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end)
 	    throws InvalidArgumentException {
 	setViewType(type);
 	setEvents(events_);
@@ -123,6 +129,11 @@ public class GanttDiagram {
 
 	case DAILY:
 	    calculateFirstAndLastInstantInDailyMode(begin);
+	    generateYearsViewMonthsViewAndDays();
+	    break;
+
+	case YEAR_DAILY:
+	    calculateFirstAndLastInstantInMonthlyMode(begin);
 	    generateYearsViewMonthsViewAndDays();
 	    break;
 
@@ -249,11 +260,11 @@ public class GanttDiagram {
 	}
     }
 
-    public List<GanttDiagramEvent> getEvents() {
+    public List<? extends GanttDiagramEvent> getEvents() {
 	return events;
     }
 
-    public void setEvents(List<GanttDiagramEvent> events) {
+    public void setEvents(List<? extends GanttDiagramEvent> events) {
 	this.events = events;
     }
 
@@ -348,6 +359,6 @@ public class GanttDiagram {
     }
 
     public enum ViewType {
-	TOTAL, MONTHLY, MONTHLY_TOTAL, WEEKLY, DAILY;
+	TOTAL, MONTHLY, MONTHLY_TOTAL, WEEKLY, DAILY, YEAR_DAILY;
     }
 }

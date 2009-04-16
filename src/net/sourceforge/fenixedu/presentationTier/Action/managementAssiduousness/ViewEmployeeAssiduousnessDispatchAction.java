@@ -22,31 +22,40 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.VacationsEvent;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.Month;
+import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.lang.StringUtils;
+import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward chooseEmployee(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -86,8 +95,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(),
-		beginDate, endDate, true);
+	EmployeeWorkSheet employeeWorkSheet = ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(), beginDate, endDate,
+		true);
 
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	setEmployeeStatus(request, employee, beginDate, endDate);
@@ -251,6 +260,125 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	return mapping.findForward("show-status");
     }
 
+    private boolean isJustificationNotAnulatedAndInVacationGroup(Justification justification) {
+	return (justification.hasJustificationMotive()) && (!justification.isAnulated())
+		&& (justification.getJustificationMotive().getJustificationGroup() != null)
+		&& (justification.getJustificationMotive().getJustificationGroup().isVacation());
+    }
+
+    public ActionForward showVacationsMapByMonth(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth == null) {
+	    return mapping.findForward("show-vacations-map");
+	}
+	if (employee.getAssiduousness() != null) {
+	    List<VacationsEvent> vacations = new ArrayList<VacationsEvent>();
+
+	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), yearMonth
+		    .getPartial().get(DateTimeFieldType.monthOfYear()), 1);
+	    DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
+	    DateTime LastMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
+	    Interval monthInterval = new Interval(FirstMomentOfMonth, LastMomentOfMonth);
+
+	    for (AssiduousnessRecord assiduousnessRecord : employee.getAssiduousness().getAssiduousnessRecords()) {
+		if (assiduousnessRecord.isLeave()) {
+		    Justification justification = (Justification) assiduousnessRecord;
+
+		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
+			DateTime leaveBeginDate = assiduousnessRecord.getDate();
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
+			Interval leaveInterval = new Interval(leaveBeginDate, leaveEndDate.plusDays(1));
+
+			if (leaveInterval.overlaps(monthInterval)) {
+			    boolean vacationsEventFound = false;
+			    for (VacationsEvent vacationsEvent : vacations) {
+				if (vacationsEvent.getGanttDiagramEventName().equalInAnyLanguage(
+					justification.getJustificationMotive().getDescription())) {
+				    vacationsEvent.addNewInterval(leaveInterval);
+				    vacationsEventFound = true;
+				}
+			    }
+			    if (vacationsEventFound == false) {
+				VacationsEvent vacationsEvent = VacationsEvent.create(new MultiLanguageString(justification
+					.getJustificationMotive().getDescription()), yearMonth.getNumberOfMonth(), monthInterval);
+				vacations.add(vacationsEvent);
+				vacationsEvent.addNewInterval(leaveInterval);
+			    }
+			}
+		    }
+		}
+	    }
+	    Collections.sort(vacations, new BeanComparator("title"));
+	    GanttDiagram diagram = GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
+	    request.setAttribute("ganttDiagramByMonth", diagram);
+	}
+
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employee", employee);
+
+	return mapping.findForward("show-vacations-map");
+    }
+
+    public ActionForward showVacationsMap(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+	final Employee employee = getEmployee(request, (DynaActionForm) form);
+	ActionForward actionForward = validateEmployee(mapping, request, employee);
+	if (actionForward != null) {
+	    return actionForward;
+	}
+	YearMonth yearMonth = getYearMonth(request, employee);
+	if (yearMonth == null) {
+	    return mapping.findForward("show-vacations-map");
+	}
+
+	DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear() - 1, 12, 1, 0, 0, 0, 0);
+	DateTime LastMomentOfMonth = new DateTime(yearMonth.getYear(), 1, 1, 0, 0, 0, 0);
+
+	if (employee.getAssiduousness() != null) {
+	    List<VacationsEvent> vacations = new ArrayList<VacationsEvent>();
+	    for (int i = 0; i < 12; i++) {
+		FirstMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
+		LastMomentOfMonth = LastMomentOfMonth.plusMonths(1);
+		final String label = RenderUtils.getResourceString("ENUMERATION_RESOURCES", Month.values()[i].toString());
+		vacations.add(VacationsEvent.create(new MultiLanguageString(label), i + 1, new Interval(FirstMomentOfMonth,
+			LastMomentOfMonth)));
+	    }
+
+	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), 1, 1);
+
+	    for (AssiduousnessRecord assiduousnessRecord : employee.getAssiduousness().getAssiduousnessRecords()) {
+		if (assiduousnessRecord.isLeave()) {
+		    Justification justification = (Justification) assiduousnessRecord;
+
+		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
+			DateTime leaveBeginDate = assiduousnessRecord.getDate();
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
+			if (leaveBeginDate.getYear() == beginDate.getYear()) {
+			    for (VacationsEvent vacationsEvent : vacations) {
+				vacationsEvent.addNewInterval(new Interval(leaveBeginDate, leaveEndDate.plusHours(23)
+					.plusMinutes(59).plusSeconds(59)));
+			    }
+			}
+		    }
+		}
+	    }
+
+	    GanttDiagram diagram = GanttDiagram.getNewYearDailyGanttDiagram(vacations, beginDate);
+	    request.setAttribute("ganttDiagram", diagram);
+	}
+
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employee", employee);
+
+	return mapping.findForward("show-vacations-map");
+    }
+
     public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer personID = new Integer(request.getParameter("personID"));
@@ -305,8 +433,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		    employeeBalanceResume.setEmployeeBalanceResume(assiduosunessClosedMonth);
 		} else {
 
-		    EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ReadAssiduousnessWorkSheet.run(employee
-			    .getAssiduousness(), beginDate, endDate);
+		    EmployeeWorkSheet employeeWorkSheet = ReadAssiduousnessWorkSheet.run(employee.getAssiduousness(), beginDate,
+			    endDate);
 		    employeeBalanceResume.setEmployeeBalanceResume(employeeWorkSheet.getTotalBalance() == null ? Duration.ZERO
 			    : employeeWorkSheet.getTotalBalance(),
 			    employeeWorkSheet.getBalanceToCompensate() == null ? Duration.ZERO : employeeWorkSheet

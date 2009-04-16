@@ -229,6 +229,12 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="unusedVacations" key="label.unusedVacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
+<schema name="show.vacations.map"
+	type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord">
+	<slot name="date" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
+</schema>
+
 <schema name="show.a17AndA18Calcule"
 	type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations">
 	<slot name="efectiveWorkDays" key="label.lastYearEfectiveWorkDays" bundle="ASSIDUOUSNESS_RESOURCES"/>

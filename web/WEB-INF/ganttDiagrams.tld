@@ -65,6 +65,16 @@
 	   		<name>bundle</name>
 	   		<required>false</required>
 	   		<rtexprvalue>true</rtexprvalue>
-	   </attribute>	   
+		</attribute>
+	   	<attribute>
+	   		<name>showPeriod</name>
+	   		<required>false</required>
+	   		<rtexprvalue>false</rtexprvalue>
+	   </attribute>
+	   	   	<attribute>
+	   		<name>showObservations</name>
+	   		<required>false</required>
+	   		<rtexprvalue>false</rtexprvalue>
+	   </attribute>	 
 	</tag>
 </taglib>
