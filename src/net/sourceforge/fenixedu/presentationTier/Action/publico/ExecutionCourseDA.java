@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -290,16 +291,29 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
-		getIntegerFromRequest(request, "resultId")));
-	return actionMapping.findForward("execution-course-show-course-inquiries-result");
+	final StudentInquiriesCourseResult courseResult = RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
+		getIntegerFromRequest(request, "resultId"));
+	request.setAttribute("inquiryResult", courseResult);
+
+	final ExecutionSemester executionPeriod = courseResult.getExecutionCourse().getExecutionPeriod();
+	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
+	    return actionMapping.findForward("execution-course-show-course-inquiries-result");
+	}
+	return new ActionForward(null, "/inquiries/showCourseInquiryResult_v2.jsp", false, "/teacher");
     }
 
     public ActionForward showInquiryTeachingResult(ActionMapping actionMapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	request.setAttribute("inquiryResult", RootDomainObject.getInstance().readStudentInquiriesTeachingResultByOID(
-		getIntegerFromRequest(request, "resultId")));
-	return actionMapping.findForward("execution-course-show-teaching-inquiries-result");
+	final StudentInquiriesTeachingResult teachingResult = RootDomainObject.getInstance()
+		.readStudentInquiriesTeachingResultByOID(getIntegerFromRequest(request, "resultId"));
+	request.setAttribute("inquiryResult", teachingResult);
+
+	final ExecutionSemester executionPeriod = teachingResult.getProfessorship().getExecutionCourse().getExecutionPeriod();
+	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
+	    return actionMapping.findForward("execution-course-show-teaching-inquiries-result");
+	}
+
+	return new ActionForward(null, "/inquiries/showTeachingInquiryResult_v2.jsp", false, "/teacher");
     }
 
     private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final HttpServletRequest request) {
