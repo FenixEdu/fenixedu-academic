@@ -24,11 +24,11 @@ public class NameUtils extends FenixUtil {
 		    return "";
 		}
 
-		return tempNome;
+		return tempNome.trim();
 
 	    }
 
-	    return tempNome.substring(tempNome.lastIndexOf(" "), tempNome.length());
+	    return tempNome.substring(tempNome.lastIndexOf(" "), tempNome.length()).trim();
 
 	}
 	return "";

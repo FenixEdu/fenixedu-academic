@@ -25,7 +25,9 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institutionStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
@@ -45,8 +47,10 @@
 	<parameter name="years" isForPrompting="false" class="java.lang.Integer"/>
 	<parameter name="semesters" isForPrompting="false" class="java.lang.Integer"/>
 	<parameter name="weeksOfStudyPerYear" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Double"/>
+	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Long"/>
+	<parameter name="programmeRequirements" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
+	<parameter name="languages" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="body" >
@@ -170,7 +174,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.one.five") + $P{documentIdType} + ":"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.one.five") + $P{documentIdType} + " / " + $P{bundle}.getString("diploma.supplement.one.five.two") + ":"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -187,7 +191,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.number") + " " + $P{documentIdNumber} + ", " + $P{bundle}.getString("label.valid.until") + " " + $P{documentIdExpiration}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber} + $P{documentIdExpiration}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -295,7 +299,7 @@
 					<reportElement
 						x="0"
 						y="255"
-						width="215"
+						width="445"
 						height="13"
 						key="textField-21"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -347,7 +351,7 @@
 						x="9"
 						y="406"
 						width="435"
-						height="24"
+						height="13"
 						key="textField-24"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -363,7 +367,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
-						y="432"
+						y="419"
 						width="444"
 						height="13"
 						key="textField-25"
@@ -381,7 +385,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="9"
-						y="446"
+						y="432"
 						width="435"
 						height="13"
 						key="textField-30"
@@ -411,7 +415,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityName} + ", <estatuto>"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityName} + ", " + $P{universityStatus}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -547,13 +551,13 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName} + ", <estatuto>"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName} + ", " + $P{institutionStatus}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="12"
 						y="270"
-						width="215"
+						width="343"
 						height="13"
 						key="textField-40"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -564,12 +568,12 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<linguas>"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{languages}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
-						y="460"
+						y="445"
 						width="444"
 						height="13"
 						key="textField-41"
@@ -587,7 +591,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="9"
-						y="474"
+						y="458"
 						width="435"
 						height="13"
 						key="textField-42"

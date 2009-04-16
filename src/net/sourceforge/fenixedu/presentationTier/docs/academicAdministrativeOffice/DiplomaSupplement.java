@@ -21,18 +21,22 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.GradeDistribution.Distribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.util.NameUtils;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
@@ -55,12 +59,26 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addRegistrationParameters();
     }
 
+    protected CycleType getRequestedCycle() {
+	return ((DiplomaRequest) getDocumentRequest()).getWhatShouldBeRequestedCycle();
+    }
+
     private void addUniversityParameters() {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
 	addParameter("universityName", institutionsUniversityUnit.getName());
 	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
 		.getValidatedName());
+	addParameter("universityStatus", getEnumerationBundle()
+		.getString(
+			AcademicalInstitutionType.class.getSimpleName() + "."
+				+ institutionsUniversityUnit.getInstitutionType().getName()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+	addParameter("institutionStatus", getEnumerationBundle().getString(
+		RootDomainObject.getInstance().getInstitutionUnit().getType().getName())
+		+ SINGLE_SPACE
+		+ getResourceBundle().getString("diploma.supplement.of")
+		+ SINGLE_SPACE
+		+ institutionsUniversityUnit.getName());
     }
 
     protected void addPersonParameters() {
@@ -75,32 +93,55 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     private void addDocumentIdParameters(final Person person) {
-	addParameter("documentIdType", getEnumerationBundle().getString(person.getIdDocumentType().getName()));
+	addParameter("documentIdType", getResourceBundle().getString("diploma.supplement.one.five.one").replace("{0}",
+		getEnumerationBundle().getString(person.getIdDocumentType().getName())));
 	addParameter("documentIdNumber", person.getDocumentIdNumber());
-	addParameter("documentIdExpiration", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY,
-		getLocale()));
+	if (person.getExpirationDateOfDocumentIdYearMonthDay() != null) {
+	    addParameter("documentIdExpiration", " / "
+		    + person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
+	} else {
+	    addParameter("documentIdExpiration", EMPTY_STR);
+	}
     }
 
     private Integer addRegistrationParameters() {
 	final Registration registration = getRegistration();
+	ExecutionYear conclusion = registration.getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+		.getConclusionProcess().getConclusionYear();
+	CycleCurriculumGroup cycleGroup = registration.getLastStudentCurricularPlan().getCycle(getRequestedCycle());
+	long ectsCredits = Math.round(cycleGroup.getDefaultEcts(conclusion));
+	StringBuilder areas = new StringBuilder();
+	int counter = 0;
+	for (CurriculumGroup group : cycleGroup.getChildCurriculumGroups()) {
+	    if (group.getAprovedEctsCredits() != 0) {
+		counter++;
+		areas.append(group.getName().getContent(Language.getDefaultLanguage()));
+		areas.append(" (");
+		areas.append(group.getAprovedEctsCredits());
+		areas.append(") ");
+	    }
+	}
+	addParameter("programmeRequirements", String.format(
+		"O curso de %s em %s é constituido por %d ECTS e oferece %d àreas de especialização: %s", "licenciatura",
+		"engenharia qq coisa", ectsCredits, counter, areas.toString().trim()));
+
 	addParameter("registrationNumber", registration.getNumber());
-	return addDegreeParameters(registration);
+	return addDegreeParameters(registration, conclusion);
     }
 
-    private Integer addDegreeParameters(final Registration registration) {
+    private Integer addDegreeParameters(final Registration registration, ExecutionYear conclusion) {
 	final Degree degree = registration.getDegree();
+	String degreeName = degree.getFilteredName(conclusion);
 	addParameter("degreeFilteredName", degree.getDegreeType().getFilteredName() + SINGLE_SPACE
-		+ getResourceBundle().getString("label.in") + SINGLE_SPACE + degree.getFilteredName());
-	addParameter("prevailingScientificArea", degree.getPrevailingScientificArea());
-	addDegreeInfoParameters(registration, degree);
+		+ getResourceBundle().getString("label.in") + SINGLE_SPACE + degreeName);
+	addParameter("prevailingScientificArea", degreeName);
+	addDegreeInfoParameters(registration, degree, conclusion);
 
-	return addCycleTypeParameters(registration, degree);
+	return addCycleTypeParameters(registration, degree, conclusion);
     }
 
-    private void addDegreeInfoParameters(final Registration registration, final Degree degree) {
-	final ExecutionYear conclusionYear = registration.getConclusionYear();
-	final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(conclusionYear);
-	addParameter("qualificationLevel", getMLSTextContent(degreeInfo.getQualificationLevel()));
+    private void addDegreeInfoParameters(final Registration registration, final Degree degree, ExecutionYear conclusion) {
+	final DegreeInfo degreeInfo = degree.getDegreeInfoFor(conclusion);
 	addParameter("professionalExits", getMLSTextContent(degreeInfo.getProfessionalExits()));
 
 	final MultiLanguageString dcpDescription = registration.getLastDegreeCurricularPlan().getDescriptionI18N();
@@ -151,15 +192,25 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	}
     }
 
-    private Integer addCycleTypeParameters(final Registration registration, final Degree degree) {
-	final CycleType cycleType = ((DiplomaRequest) getDocumentRequest()).getWhatShouldBeRequestedCycle();
+    private Integer addCycleTypeParameters(final Registration registration, final Degree degree, ExecutionYear conclusion) {
+	final CycleType cycleType = getRequestedCycle();
 	addEntriesParameters(registration, cycleType);
+	addParameter("qualificationLevel", getResourceBundle().getString("diploma.supplement.qualification." + cycleType));
 	addParameter("weeksOfStudyPerYear", getResourceBundle().getString("diploma.supplement.weeksOfStudyPerYear." + cycleType));
-	// addParameter("ectsCredits", cycleType.getDefaultEcts());
 
 	final DegreeType degreeType = degree.getDegreeType();
+	// TODO: Confirmar com o João
+	addParameter("ectsCredits", Math.round(registration.getLastStudentCurricularPlan().getCycle(cycleType).getDefaultEcts(
+		conclusion)));
 	addParameter("years", degreeType.getYears(cycleType));
 	addParameter("semesters", degreeType.getSemesters(cycleType));
+	if (cycleType.equals(CycleType.FIRST_CYCLE)) {
+	    addParameter("languages", getEnumerationBundle().getString("pt"));
+	} else {
+	    addParameter("languages", getEnumerationBundle().getString("pt") + SINGLE_SPACE
+		    + getEnumerationBundle().getString("AND").toLowerCase() + SINGLE_SPACE
+		    + getEnumerationBundle().getString("en"));
+	}
 	addDegreeTypeParameters(cycleType, degreeType);
 
 	return addGradesParameters(registration, cycleType);
@@ -225,19 +276,19 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     public class DiplomaSupplementEntry implements Comparable<DiplomaSupplementEntry> {
 
-	private ICurriculumEntry entry;
+	private final ICurriculumEntry entry;
 
-	private String executionYear;
+	private final String executionYear;
 
-	private String name;
+	private final String name;
 
-	private BigDecimal ectsCreditsForCurriculum;
+	private final BigDecimal ectsCreditsForCurriculum;
 
-	private String gradeValue;
+	private final String gradeValue;
 
-	private String ectsScale;
+	private final String ectsScale;
 
-	private String academicUnitId;
+	private final String academicUnitId;
 
 	public DiplomaSupplementEntry(final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
 	    this.entry = entry;
@@ -294,9 +345,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     public class AcademicUnitEntry {
-	private String identifier;
+	private final String identifier;
 
-	private String name;
+	private final String name;
 
 	public AcademicUnitEntry(final Entry<Unit, String> entry) {
 	    this.identifier = entry.getValue();
