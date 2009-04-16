@@ -555,6 +555,14 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     public Boolean getInternalDegreeDisclosure() {
 	return super.getInternalDegreeDisclosure() != null && super.getInternalDegreeDisclosure();
     }
+    
+    @Override
+    public Boolean getPublicDegreeDisclosure() {
+	if (super.getPublicDegreeDisclosure() != null) {
+	    return super.getPublicDegreeDisclosure();
+	}
+	return fieldToBoolean(getValuesMap().get("Repres_doc_curso_UC_publica"));        
+    }
 
     @Service
     public static void importResults(String headers, String values, UploadStudentInquiriesTeachingResultsBean resultsBean) {

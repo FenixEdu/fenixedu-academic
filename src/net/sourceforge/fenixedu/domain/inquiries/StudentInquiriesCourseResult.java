@@ -689,6 +689,14 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	return super.getAuditCU() != null && super.getAuditCU();
     }
 
+    @Override
+    public Boolean getPublicDisclosure() {
+	if (super.getPublicDisclosure() != null) {
+	    return super.getPublicDisclosure();
+	}
+	return fieldToBoolean(getValuesMap().get("Repres_div_publica"));
+    }
+
     @Service
     public static void importResults(String headers, String values, UploadStudentInquiriesCourseResultsBean resultsBean) {
 
