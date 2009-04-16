@@ -207,19 +207,6 @@ padding-right: 8px;
 		</tr>
 	</table>
 
-    <table class="tstyle1 thlight thleft tdcenter">
-        <tr class="top">
-            <th></th>
-            <th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% alunos classifica como acima ou igual a 7(Concordo), todas as questões do grupo.</span></a></th>
-            <th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% alunos classifica como acima ou igual a 7 (Concordo) a questão.</span></a></th>
-        </tr>
-        <tr>
-            <th>Resultados excelentes</th>
-            <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['ResExcelent_OrganizacaoUC']}" /></td>
-            <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['ResExcelent_AvaliacaoUC']}" /></td>
-        </tr>
-    </table>
-
 
 </logic:equal>
 <logic:notEqual name="inquiryResult" property="executionCourse.availableForInquiries" value="true">
