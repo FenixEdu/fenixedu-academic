@@ -96,7 +96,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 	Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
 	    final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
-	    if (publicDisclosure != null && publicDisclosure.booleanValue()) {
+	    if (publicDisclosure != null && publicDisclosure.booleanValue() && studentInquiriesCourseResult.hasExecutionCourse()) {
 		executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
 	    }
 	}
