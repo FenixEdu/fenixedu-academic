@@ -183,7 +183,7 @@ padding-right: 8px;
 </table>
 
 
-<c:if test="${inquiryResult.valuesMap['Repres_doc_curso_UC_interna'] == '1'}" >
+<c:if test="${((empty publicContext || !publicContext) && inquiryResult.valuesMap['Repres_doc_curso_UC_interna'] == '1' || (not empty publicContext && publicContext) && inquiryResult.publicDegreeDisclosure)}" >
 
 <p class="mtop15 mbottom0"><strong>Proveito da aprendizagem presencial</strong></p>
 

@@ -213,8 +213,7 @@ padding-right: 8px;
 <!-- TEXTO 2 -->
 </logic:notEqual>
 
-
-<c:if test="${inquiryResult.valuesMap['Repres_div_interna'] == '1'}" >
+<c:if test="${((empty publicContext || !publicContext) && inquiryResult.valuesMap['Repres_div_interna'] == '1' || (not empty publicContext && publicContext) && inquiryResult.publicDisclosure)}" >
 
 	<h3 class="mtop15 mbottom0"><strong>Acompanhamento e carga de trabalho da UC ao longo do semestre</strong></h3>
 	
