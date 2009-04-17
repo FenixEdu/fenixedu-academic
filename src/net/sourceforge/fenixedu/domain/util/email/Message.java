@@ -111,8 +111,8 @@ public class Message extends Message_Base {
 
     public void dispatch() {
 	final Sender sender = getSender();
-	new Email(sender.getFromName(), sender.getFromAddress(), getReplyToAddresses(), Collections.EMPTY_SET,
-		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
+	new Email(sender.getFromName(getPerson()), sender.getFromAddress(), getReplyToAddresses(),
+		Collections.EMPTY_SET, Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
     }

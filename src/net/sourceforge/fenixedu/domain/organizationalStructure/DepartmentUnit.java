@@ -32,7 +32,6 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     private DepartmentUnit() {
 	super();
 	super.setType(PartyTypeEnum.DEPARTMENT);
-	UnitBasedSender.newInstance(this);
     }
 
     public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode,
@@ -211,7 +210,8 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	if (department != null) {
 
 	    groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
-	    // groups.add(new DepartmentStudentsByExecutionYearGroup(currentYear,
+	    // groups.add(new
+	    // DepartmentStudentsByExecutionYearGroup(currentYear,
 	    // department));
 	    groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
 
@@ -240,5 +240,14 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	    }
 	}
 	return departments;
+    }
+
+    @Override
+    public UnitBasedSender getOneUnitBasedSender() {
+	if (hasAnyUnitBasedSender()) {
+	    return getUnitBasedSender().get(0);
+	} else {
+	    return UnitBasedSender.newInstance(this);
+	}
     }
 }

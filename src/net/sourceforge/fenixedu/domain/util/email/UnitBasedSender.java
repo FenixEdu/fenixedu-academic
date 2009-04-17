@@ -7,17 +7,26 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
 
-    public UnitBasedSender(final Unit unit, final String fromAddress, final Group members) {
-	super();
+    public void init(final Unit unit, final String fromAddress, final Group members) {
 	setUnit(unit);
 	setFromAddress(fromAddress);
 	setMembers(members);
+    }
+
+    public UnitBasedSender(final Unit unit, final String fromAddress, final Group members) {
+	super();
+	init(unit, fromAddress, members);
+    }
+
+    public UnitBasedSender() {
+	super();
     }
 
     @Override
@@ -30,6 +39,19 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     public String getFromName() {
 	final Unit unit = getUnit();
 	return unit.getName();
+    }
+
+    @Override
+    public List<ReplyTo> getReplyTos() {
+	if (!hasAnyReplyTos()) {
+	    addReplyTos(new CurrentUserReplyTo());
+	}
+	return super.getReplyTos();
+    }
+
+    @Service
+    private void createCurrentUserReplyTo() {
+	addReplyTos(new CurrentUserReplyTo());
     }
 
     @Override
@@ -59,6 +81,13 @@ public class UnitBasedSender extends UnitBasedSender_Base {
     private void updateRecipients() {
 	final Unit unit = getUnit();
 	if (unit != null) {
+
+	    for (final IGroup group : unit.getGroups()) {
+		if (!hasRecipientWithToName(group.getName())) {
+		    createRecipient(group);
+		}
+	    }
+
 	    for (final PersistentGroupMembers persistentGroupMembers : unit.getPersistentGroupsSet()) {
 		if (!hasRecipientWithToName(persistentGroupMembers.getName())) {
 		    createRecipient(persistentGroupMembers);
@@ -119,7 +148,12 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 	addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
     }
 
+    protected void createRecipient(final IGroup group) {
+	addRecipients(new Recipient(null, (Group) group));
+    }
+
+    @Service
     public static UnitBasedSender newInstance(Unit unit) {
-	return new UnitBasedSender(unit, "noreply@ist.utl.pt", new UnitEmployeesGroup(unit));
+	return new UnitBasedSender(unit, "noreply@ist.utl.pt", new UnitMembersGroup(unit));
     }
 }

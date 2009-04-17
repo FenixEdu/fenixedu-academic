@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -65,6 +66,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -108,10 +110,12 @@ public class Unit extends Unit_Base {
 	setName(partyName.getPreferedContent());
     }
 
+    @Override
     public String getName() {
 	return getPartyName().getPreferedContent();
     }
 
+    @Override
     public void setName(String name) {
 
 	if (name == null || StringUtils.isEmpty(name.trim())) {
@@ -173,6 +177,7 @@ public class Unit extends Unit_Base {
 	return start != null && (end == null || !start.isAfter(end));
     }
 
+    @Override
     public void delete() {
 
 	if (!canBeDeleted()) {
@@ -690,6 +695,18 @@ public class Unit extends Unit_Base {
 
     public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
 	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
+    }
+
+    @Service
+    /*
+     * @See UnitMailSenderAction
+     */
+    public UnitBasedSender getOneUnitBasedSender() {
+	if (hasAnyUnitBasedSender()) {
+	    return getUnitBasedSender().get(0);
+	} else {
+	    return UnitBasedSender.newInstance(this);
+	}
     }
 
     public int getUnitDepth() {
@@ -1223,6 +1240,11 @@ public class Unit extends Unit_Base {
 	return getPresentationNameWithParents();
     }
 
+    /**
+     * Used by messaging system
+     * 
+     * @return Groups to used as recipients
+     */
     public List<IGroup> getGroups() {
 	List<IGroup> groups = new ArrayList<IGroup>();
 	groups.addAll(getDefaultGroups());
@@ -1243,8 +1265,13 @@ public class Unit extends Unit_Base {
 	return isUserAbleToDefineGroups(AccessControl.getPerson());
     }
 
+    /**
+     * Used by UnitBasedSender as sender group members
+     * 
+     * @return members allowed to use the UnitBasedSenders
+     */
     public Collection<Person> getPossibleGroupMembers() {
-	List<Person> people = new ArrayList<Person>();
+	HashSet<Person> people = new HashSet<Person>();
 
 	for (Employee employee : getAllWorkingEmployees(new YearMonthDay(), null)) {
 	    people.add(employee.getPerson());
@@ -1491,6 +1518,7 @@ public class Unit extends Unit_Base {
 	return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear, checkSubunits);
     }
 
+    @Override
     public List<ResearchResultPublication> getResearchResultPublications() {
 	Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
 
@@ -1641,7 +1669,7 @@ public class Unit extends Unit_Base {
     public static Unit getParentUnitByNormalizedName(Unit childUnit, String parentNormalizedName) {
 	for (Unit possibleParent : childUnit.getParentUnits()) {
 	    if (parentNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(possibleParent.getName()))) {
-		return (Unit) possibleParent;
+		return possibleParent;
 	    }
 	}
 	return null;

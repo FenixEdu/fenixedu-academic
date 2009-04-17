@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -13,12 +14,15 @@ import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.util.email.ResearchUnitBasedSender;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchUnit extends ResearchUnit_Base {
@@ -118,7 +122,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-	List<Person> people = new ArrayList<Person>();
+	HashSet<Person> people = (HashSet<Person>) super.getPossibleGroupMembers();
 	YearMonthDay today = new YearMonthDay();
 	for (Accountability accountability : getChildsSet()) {
 	    if (accountability instanceof ResearchContract
@@ -196,4 +200,13 @@ public class ResearchUnit extends ResearchUnit_Base {
 	return new ResearchUnitSite(this);
     }
 
+    @Override
+    @Service
+    public UnitBasedSender getOneUnitBasedSender() {
+	if (hasAnyUnitBasedSender()) {
+	    return getUnitBasedSender().get(0);
+	} else {
+	    return ResearchUnitBasedSender.newInstance(this);
+	}
+    }
 }

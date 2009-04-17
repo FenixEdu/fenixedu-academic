@@ -61,7 +61,7 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-	return Role.getRoleByRoleType(RoleType.PEDAGOGICAL_COUNCIL).getAssociatedPersons();
+	return Role.getRoleByRoleType(RoleType.PEDAGOGICAL_COUNCIL).getAssociatedPersonsSet();
     }
 
     @Override

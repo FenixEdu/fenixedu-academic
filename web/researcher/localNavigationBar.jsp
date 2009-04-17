@@ -38,6 +38,7 @@
 		<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>
 		<logic:iterate id="unitIter" name="workingResearchUnits">
 			<bean:define id="unitID" name="unitIter" property="idInternal" type="java.lang.Integer"/>
+			<bean:define id="unitExternalId" name="unitIter" property="externalId"/>
 			<bean:define id="unitName" name="unitIter" property="name" type="java.lang.String"/>
 			<li> 
 				<html:link title="<%= unitName %>" page="<%= "/researchUnitFunctionalities.do?method=prepare&unitId=" + unitID %>">
@@ -48,7 +49,7 @@
 					<logic:equal name="unit" property="idInternal" value="<%= unitID.toString() %>">
 				<ul>
 					<li>
-						<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitId=" + unitID %>">
+						<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
 							<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 						 </html:link>
 				    </li>	

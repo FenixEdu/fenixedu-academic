@@ -6,12 +6,13 @@
 
 <html:xhtml/>
 <bean:define id="unitID" name="unit" property="idInternal"/>
+<bean:define id="unitExternalId" name="unit" property="externalId"/>
 
 <h2><fr:view name="unit" property="name"/> (<fr:view name="unit" property="acronym"/>)</h2>
 
 <ul>
 	<li>
-		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitId=" + unitID %>">
+		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
 			<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 		<br/>

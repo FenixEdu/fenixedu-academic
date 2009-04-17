@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -95,4 +96,7 @@ public class Sender extends Sender_Base {
 	return replyTos;
     }
 
+    public String getFromName(Person person) {
+	return getFromName();
+    }
 }

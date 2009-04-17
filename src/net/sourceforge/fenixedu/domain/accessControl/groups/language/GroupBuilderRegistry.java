@@ -59,6 +59,7 @@ import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmit;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersWithMarkSheetsToConfirm;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
@@ -224,7 +225,8 @@ public class GroupBuilderRegistry {
 	register("groupingGroup", GroupingGroup.class, new GroupingGroup.Builder());
 	register("degreeAllCoordinatorsGroup", DegreeAllCoordinatorsGroup.class, new DegreeAllCoordinatorsGroup.Builder());
 	register("delegateCurricularCourseStudentsGroup", DelegateCurricularCourseStudentsGroup.class, new DelegateCurricularCourseStudentsGroup.Builder());
-	register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());	
+	register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());
+	register("unitMembersGroup", UnitMembersGroup.class, new UnitMembersGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 

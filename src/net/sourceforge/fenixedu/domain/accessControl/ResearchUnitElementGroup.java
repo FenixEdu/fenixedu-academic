@@ -22,6 +22,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 	super(unit);
     }
 
+    @Override
     public String getName() {
 	return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.researchUnitElement");
     }
@@ -33,7 +34,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public boolean isMember(Person person) {
-	return person.getWorkingResearchUnits().contains(getObject());
+	return person.getWorkingResearchUnitsAndParents().contains(getObject());
     }
 
     @Override

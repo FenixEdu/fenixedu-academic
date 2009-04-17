@@ -76,7 +76,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
     @Override
     public Collection<Person> getPossibleGroupMembers() {
-	return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersons();
+	return Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL).getAssociatedPersonsSet();
     }
 
     @Override
