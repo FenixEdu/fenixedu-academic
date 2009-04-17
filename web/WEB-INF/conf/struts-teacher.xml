@@ -1622,7 +1622,7 @@
 
 		<action path="/registration"
 				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA"
 				scope="request">
 			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>				
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>

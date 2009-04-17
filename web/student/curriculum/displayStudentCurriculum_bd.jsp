@@ -16,7 +16,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<ul class="mtop2 printhidden">
 		<li>
-		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+		<html:link page="/viewCurriculum.do?method=checkValidation">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 		</li>
