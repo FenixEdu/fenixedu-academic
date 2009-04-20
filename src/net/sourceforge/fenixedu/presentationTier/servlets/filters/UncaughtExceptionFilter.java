@@ -41,6 +41,7 @@ public class UncaughtExceptionFilter implements Filter {
 			(HttpServletRequest) request, e));
 	    }
 
+	    e.printStackTrace();
 	    throw new RuntimeException(e);
 	}
     }
