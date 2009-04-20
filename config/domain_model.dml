@@ -6152,12 +6152,13 @@ class QueueJob extends DomainObject {
                DateTime jobEndTime;
 }
 
-class QueueJobFile extends QueueJob {
+class QueueJobWithFile extends QueueJob {
        String contentType;
-       ByteArray content;
 }
 
-class reports.GepReportFile extends QueueJobFile {
+class QueueJobResultFile extends documents.GeneratedDocument{}
+
+class reports.GepReportFile extends QueueJobWithFile {
 	String type;
 	DegreeType degreeType;
 }
@@ -6174,7 +6175,7 @@ class reports.TeachersByShiftReportFile extends reports.GepReportFile {}
 class reports.CourseLoadReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 
-class PublicRelationsStudentListQueueJob extends QueueJobFile{
+class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
 	Boolean active;
 	Boolean concluded;
 	DegreeType degreeType;
@@ -15075,6 +15076,11 @@ relation AdministrativeOfficeAdministrativeOfficePermissionGroup {
 	accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
 		multiplicity *;
 	}
+}
+
+relation QueueJobWithFileResult{
+	QueueJobWithFile playsRole job;
+	QueueJobResultFile playsRole file;
 }
 
 relation CampusAdministrativeOfficePermissionGroup {

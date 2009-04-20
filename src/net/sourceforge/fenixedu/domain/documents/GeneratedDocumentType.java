@@ -44,7 +44,9 @@ public enum GeneratedDocumentType {
 
     LIBRARY_MISSING_LETTERS,
 
-    LIBRARY_MISSING_LETTERS_STUDENTS;
+    LIBRARY_MISSING_LETTERS_STUDENTS,
+    
+    QUEUE_JOB;
 
     public static GeneratedDocumentType determineType(DocumentRequestType documentRequestType) {
 	return valueOf(documentRequestType.name());

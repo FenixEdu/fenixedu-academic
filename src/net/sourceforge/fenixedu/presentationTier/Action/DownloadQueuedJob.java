@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.QueueJobFile;
+import net.sourceforge.fenixedu.domain.QueueJobWithFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -24,11 +24,11 @@ public class DownloadQueuedJob extends FenixDispatchAction {
 
 	int oid = Integer.valueOf(request.getParameter("id"));
 	for (QueueJob queueJob : rootDomainObject.getQueueJob()) {
-	    if (queueJob.getIdInternal() == oid) {
-		httpServletResponse.setContentType(((QueueJobFile) queueJob).getContentType());
+	    if (queueJob.getIdInternal() == oid && ((QueueJobWithFile) queueJob).getFile() != null) {
+		httpServletResponse.setContentType(((QueueJobWithFile) queueJob).getContentType());
 		httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + queueJob.getFilename());
 		final OutputStream outputStream = httpServletResponse.getOutputStream();
-		outputStream.write(((QueueJobFile) queueJob).getContent().getBytes());
+		outputStream.write(((QueueJobWithFile) queueJob).getFile().getContents());
 		outputStream.close();
 	    }
 	}
