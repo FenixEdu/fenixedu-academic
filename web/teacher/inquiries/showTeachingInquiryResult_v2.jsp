@@ -168,10 +168,10 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft tdcenter">
     <tr class="top">
         <th></th>
-        <th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais de 75% dos alunos classifica como acima ou igual a 5(regularmente).</span></a></th>
-        <th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo.</span></a></th>
-        <th class="aright">Capacidade pedagógica <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo.</span></a></th>
-        <th class="aright">Interacção com os alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo.</span></a></th>
+        <th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais se 95% dos alunos classifica como acima ou igual a 3 (de vez em quando).</span></a></th>
+        <th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo (excepto a questão da assiduidade) e a média de respostas nos outros grupos (Capacidade Pedagógica e Interacção com os alunos) superior a 7 (Concordo).</span></a></th>
+        <th class="aright">Capacidade pedagógica <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Interacção com os alunos) superior a 7 (Concordo).</span></a></th>
+        <th class="aright">Interacção com os alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Capacidade pedagógica) superior a 7 (Concordo).</span></a></th>
     </tr>
     <tr>
         <th>Resultados excelentes</th>

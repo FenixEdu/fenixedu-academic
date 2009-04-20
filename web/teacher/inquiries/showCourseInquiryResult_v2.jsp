@@ -128,19 +128,19 @@ padding-right: 8px;
 		<td><c:out value="${inquiryResult.valuesMap['N_inscritos']}" /></td>
 	</tr>
 	<tr>
-		<th>Avaliados <a href="#" class="helpleft">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Avaliados <a href="#" class="help">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['perc_Avaliados']}" /></td>
 	</tr>
 	<tr>
-		<th>Aprovados <a href="#" class="helpleft">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Aprovados <a href="#" class="help">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['perc_Aprovados']}" /></td>
 	</tr>
 	<tr>
-		<th>Média notas <a href="#" class="helpleft">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Média notas <a href="#" class="help">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['Media_Notas']}" /></td>
 	</tr>
 	<tr>
-		<th>Sujeita a inquérito <a href="#" class="helpleft">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
+		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
 		<td><bean:message key="<%= "label." + result.getExecutionCourse().getAvailableForInquiries().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
@@ -161,7 +161,7 @@ padding-right: 8px;
 			<td><c:out value="${inquiryResult.valuesMap['perc_respQI']}" /></td>
 		</tr>
 		<tr>
-			<th>Inquéritos submetidos à UC <a href="#" class="helpleft">[?] <span>Respostas válidas - se os valores percentagem de NHTA e NDE não fossem simultaneamente iguais a zero, e a resposta ao inquérito foi submetida após a disponibilização da opção de não responder ao inquérito.</span></a></th>
+			<th>Inquéritos submetidos à UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_Inq_sub_UC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_inq_sub_UC']}" /></td>
 		</tr>
