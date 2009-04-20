@@ -4,7 +4,7 @@ alter table `QUEUE_JOB` add column `KEY_FILE` int(11);
 alter table `QUEUE_JOB` add index (`KEY_FILE`);
 
 INSERT INTO FILE_LOCAL_CONTENT
-SELECT 1, QUEUE_JOB.CONTENT,
+SELECT NULL, QUEUE_JOB.CONTENT,
 CONCAT("<virtualpath><nodes><virtualpathnode><name>GeneratedDocuments</name><description>Generated Documents</description></virtualpathnode><virtualpathnode><name>",PARTY.ID_INTERNAL, "</name><description>",SUBSTRING(PARTY_NAME,LOCATE(':', PARTY_NAME, 5)+1),"</description></virtualpathnode><virtualpathnode><name>QUEUE_JOB</name><description>QUEUE_JOB</description></virtualpathnode></nodes></virtualpath>"), NULL, 1
 FROM QUEUE_JOB, PARTY
 WHERE QUEUE_JOB.KEY_PERSON = PARTY.ID_INTERNAL AND CONTENT IS NOT NULL AND PARTY.OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.Person";
