@@ -86,9 +86,9 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
     }
 
     private boolean isVisible(PartyContact contact, boolean publicSpace) {
-	if (publicSpace && contact.getVisibleToPublic().booleanValue())
+	if (!UserView.hasUser() && publicSpace && contact.getVisibleToPublic().booleanValue())
 	    return true;
-	if (!publicSpace && UserView.hasUser()) {
+	if (UserView.hasUser()) {
 	    IUserView user = UserView.getUser();
 	    Person reader = user.getPerson();
 	    if (reader.hasRole(RoleType.ADMINISTRATOR).booleanValue())
