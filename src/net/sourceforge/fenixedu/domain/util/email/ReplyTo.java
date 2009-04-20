@@ -21,16 +21,15 @@ public abstract class ReplyTo extends ReplyTo_Base {
     }
 
     public void safeDelete() {
-	if (getMessagesSet().isEmpty()) {
-	    deleteDomainObject();
+	for (final Message message : getMessagesSet()) {
+	    removeMessages(message);
+	}	    
+	if (getSender() == null) {
+	    delete();
 	}
-	removeSender();
     }
 
     public void delete() {
-	for (final Message message : getMessagesSet()) {
-	    removeMessages(message);
-	}
 	removeSender();
 	removeRootDomainObject();
 	deleteDomainObject();
