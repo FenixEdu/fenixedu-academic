@@ -47,6 +47,7 @@
 	<parameter name="documentIdType" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="description" class="java.lang.String"/>
 	<field name="amountToPay" class="java.lang.String"/>
@@ -72,7 +73,7 @@
 			</band>
 		</title>
 		<pageHeader>
-			<band height="303"  isSplitAllowed="true" >
+			<band height="316"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="129"
@@ -146,9 +147,7 @@
 						width="455"
 						height="0"
 						key="line-10"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
@@ -247,7 +246,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement>
+					<textElement textAlignment="Left">
 						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Nome:]]></text>
@@ -264,7 +263,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement>
+					<textElement textAlignment="Left">
 						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Tipo de Documento:]]></text>
@@ -281,11 +280,49 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement>
+					<textElement textAlignment="Left">
 						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Número de Documento:]]></text>
 				</staticText>
+				<staticText>
+					<reportElement
+						x="31"
+						y="284"
+						width="131"
+						height="12"
+						key="staticText-47">
+							<printWhenExpression><![CDATA[$P{studentNumber} != null]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left">
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Nº de Aluno:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="173"
+						y="284"
+						width="411"
+						height="12"
+						key="textField-15">
+							<printWhenExpression><![CDATA[$P{studentNumber} != null]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentNumber}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -302,9 +339,7 @@
 						height="0"
 						key="line-6"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -337,7 +372,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Left" verticalAlignment="Bottom" markup="styled">
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
 						<font pdfFontName="Times-Roman" size="12" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{amountToPay} + "Eur"]]></textFieldExpression>
@@ -358,9 +393,7 @@
 						height="0"
 						key="line-9"
 						positionType="FixRelativeToBottom"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
@@ -500,9 +533,7 @@
 						height="0"
 						key="line-7"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
@@ -550,9 +581,7 @@
 						height="0"
 						key="line-8"
 						positionType="FixRelativeToBottom"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 				<staticText>
 					<reportElement
@@ -711,9 +740,7 @@
 						width="100"
 						height="1"
 						key="line-5"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
+					<graphicElement stretchType="NoStretch"/>
 				</line>
 			</band>
 		</summary>
