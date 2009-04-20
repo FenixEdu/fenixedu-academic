@@ -139,9 +139,11 @@ public class InfoMovementReport extends InfoReportLine {
 	return null;
     }
 
+    @Override
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
     }
 
+    @Override
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
 	HSSFCell cell = row.createCell((short) 0);
@@ -246,6 +248,7 @@ public class InfoMovementReport extends InfoReportLine {
 	row = sheet.createRow(sheet.getLastRowNum() + 1);
     }
 
+    @Override
     public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
 	HSSFCell cell = row.createCell((short) 0);
@@ -262,7 +265,7 @@ public class InfoMovementReport extends InfoReportLine {
 	CellReference cellRef1 = new CellReference(1, 8);
 	CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), 8);
 	cell.setCellStyle(excelStyle.getDoubleStyle());
-	cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
+	cell.setCellFormula("sum(" + cellRef1.formatAsString() + ":" + cellRef2.formatAsString() + ")");
 
 	row = sheet.createRow(sheet.getLastRowNum() + 1);
 	cell = row.createCell((short) 0);
@@ -273,7 +276,7 @@ public class InfoMovementReport extends InfoReportLine {
 	cellRef1 = new CellReference(1, 7);
 	cellRef2 = new CellReference(((short) row.getRowNum() - 1), 7);
 	cell.setCellStyle(excelStyle.getDoubleStyle());
-	cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
+	cell.setCellFormula("sum(" + cellRef1.formatAsString() + ":" + cellRef2.formatAsString() + ")");
 
 	row = sheet.createRow(sheet.getLastRowNum() + 1);
 	cell = row.createCell((short) 0);
@@ -284,7 +287,7 @@ public class InfoMovementReport extends InfoReportLine {
 	cellRef1 = new CellReference(sheet.getLastRowNum() - 2, 3);
 	cellRef2 = new CellReference(sheet.getLastRowNum() - 1, 3);
 	cell.setCellStyle(excelStyle.getDoubleStyle());
-	cell.setCellFormula(cellRef1.toString() + "-" + cellRef2.toString());
+	cell.setCellFormula(cellRef1.formatAsString() + "-" + cellRef2.formatAsString());
 
     }
 

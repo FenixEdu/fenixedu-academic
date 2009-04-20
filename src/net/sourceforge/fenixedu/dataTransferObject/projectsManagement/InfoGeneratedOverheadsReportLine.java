@@ -159,6 +159,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	return 11;
     }
 
+    @Override
     public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
@@ -197,6 +198,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
+    @Override
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
@@ -243,6 +245,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	    cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
+    @Override
     public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
@@ -253,7 +256,7 @@ public class InfoGeneratedOverheadsReportLine extends InfoReportLine {
 	    CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
 	    cell = row.createCell((short) i);
 	    cell.setCellStyle(excelStyle.getDoubleStyle());
-	    cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
+	    cell.setCellFormula("sum(" + cellRef1.formatAsString() + ":" + cellRef2.formatAsString() + ")");
 	}
     }
 

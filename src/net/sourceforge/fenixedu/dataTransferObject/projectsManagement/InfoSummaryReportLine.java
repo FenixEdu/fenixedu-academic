@@ -298,7 +298,7 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	    CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
 	    cell = row.createCell((short) i);
 	    cell.setCellStyle(excelStyle.getDoubleStyle());
-	    cell.setCellFormula("sum(" + cellRef1.toString() + ":" + cellRef2.toString() + ")");
+	    cell.setCellFormula("sum(" + cellRef1.formatAsString() + ":" + cellRef2.formatAsString() + ")");
 	}
     }
 
