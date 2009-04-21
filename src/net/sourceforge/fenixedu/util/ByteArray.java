@@ -24,6 +24,6 @@ public class ByteArray {
     }
 
     public byte[] getBytes() {
-	return bytes.clone();
+	return bytes == null ? null : bytes.clone();
     }
 }
