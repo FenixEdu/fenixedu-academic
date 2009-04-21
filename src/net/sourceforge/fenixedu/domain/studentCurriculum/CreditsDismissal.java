@@ -127,7 +127,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     protected void createCurriculumLineLog(final EnrolmentAction action) {
-	new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup().getDegreeModule(), getCredits(),
-		getExecutionPeriod(), getCurrentUser());
+	new CreditsDismissalLog(action, getRegistration(), getCurriculumGroup(), getCredits(), getExecutionPeriod(),
+		getCurrentUser());
     }
 }
