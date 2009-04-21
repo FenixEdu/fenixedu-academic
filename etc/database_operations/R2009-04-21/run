@@ -43,4 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adds a new Functionality called -Show Vacations Map- to the Personnel Section area" addVacationsMapFunctionality.sql
+execute "Converts QueueJobFile to GeneratedDocument" updateGeneratedDocuments.sql
 
