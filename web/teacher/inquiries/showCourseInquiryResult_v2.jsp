@@ -686,15 +686,15 @@ padding-right: 8px;
 			<th class="aright">N</th>
 			<th class="aright">Média</th>
 			<th class="aright separatorright">Desvio padrão</th>
-			<th class="aright">Discordo totalmente<br/><b>1</b></th>
-			<th class="aright"><b>2</b></th>
-			<th class="aright">Discordo<br/><b>3</b></th>
-			<th class="aright"><b>4</b></th>
-			<th class="aright">Não concordo nem discordo<br/><b>5</b></th>
-			<th class="aright"><b>6</b></th>
-			<th class="aright">Concordo<br/><b>7</b></th>
-			<th class="aright"><b>8</b></th>
-			<th class="aright">Concordo totalmente<br/><b>9</b></th>
+            <th class="aright">Muito mau<br/><b>1</b></th>
+            <th class="aright"><b>2</b></th>
+            <th class="aright">Mau<br/><b>3</b></th>
+            <th class="aright"><b>4</b></th>
+            <th class="aright">Nem bom nem mau<br/><b>5</b></th>
+            <th class="aright"><b>6</b></th>
+            <th class="aright">Bom<br/><b>7</b></th>
+            <th class="aright"><b>8</b></th>
+            <th class="aright">Muito bom<br/><b>9</b></th>            
 		</tr>
 		<tr>
 			<th>Avaliação do funcionamento da UC</th>
