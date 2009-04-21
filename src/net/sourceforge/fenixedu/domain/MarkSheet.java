@@ -441,7 +441,7 @@ public class MarkSheet extends MarkSheet_Base {
     private void removeEnrolmentEvaluations(Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeansToRemove) {
 	for (MarkSheetEnrolmentEvaluationBean enrolmentEvaluationBean : enrolmentEvaluationBeansToRemove) {
 	    enrolmentEvaluationBean.getEnrolmentEvaluation().removeFromMarkSheet();
-	    enrolmentEvaluationBean.getEnrolmentEvaluation().setGradeValue(null);
+	    enrolmentEvaluationBean.getEnrolmentEvaluation().setGrade(Grade.createEmptyGrade());
 	}
     }
 
