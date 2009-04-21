@@ -82,7 +82,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	}
     }
 
-    public static SibsPaymentFileProcessReport readBy(YearMonthDay date, Integer fileVersion) {
+    static public SibsPaymentFileProcessReport readBy(final YearMonthDay date, final Integer fileVersion) {
 	for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : RootDomainObject.getInstance()
 		.getSibsPaymentFileProcessReportsSet()) {
 	    if (sibsPaymentFileProcessReport.getWhenProcessedBySibs().isEqual(date)
@@ -94,7 +94,11 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	return null;
     }
 
-    public static List<SibsPaymentFileProcessReport> readAllBetween(YearMonthDay startDate, YearMonthDay endDate) {
+    static public boolean hasAny(final YearMonthDay date, final Integer fileVersion) {
+	return readBy(date, fileVersion) != null;
+    }
+
+    static public List<SibsPaymentFileProcessReport> readAllBetween(final YearMonthDay startDate, final YearMonthDay endDate) {
 	final List<SibsPaymentFileProcessReport> result = new ArrayList<SibsPaymentFileProcessReport>();
 	for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : RootDomainObject.getInstance()
 		.getSibsPaymentFileProcessReportsSet()) {
@@ -105,6 +109,5 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	}
 
 	return result;
-
     }
 }

@@ -1,6 +1,19 @@
 package net.sourceforge.fenixedu.dataTransferObject.accounting.sibsPaymentFileProcessReport;
 
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
+import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 
 import org.joda.time.YearMonthDay;
 
@@ -61,27 +74,33 @@ public class SibsPaymentFileProcessReportDTO {
 	this.residenceAmount = Money.ZERO;
     }
 
-    public void addAdministrativeOfficeTaxAmount(final Money amount) {
-	this.administrativeOfficeTaxTotalAmount = this.administrativeOfficeTaxTotalAmount.add(amount);
+    public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
+	this();
+	setWhenProcessedBySibs(sibsIncomingPaymentFile.getHeader().getWhenProcessedBySibs());
+	setFilename(sibsIncomingPaymentFile.getFilename());
+	setTransactionsTotalAmount(sibsIncomingPaymentFile.getFooter().getTransactionsTotalAmount());
+	setTotalCost(sibsIncomingPaymentFile.getFooter().getTotalCost());
+	setFileVersion(sibsIncomingPaymentFile.getHeader().getVersion());
+    }
 
+    private void addAdministrativeOfficeTaxAmount(final Money amount) {
+	this.administrativeOfficeTaxTotalAmount = this.administrativeOfficeTaxTotalAmount.add(amount);
     }
 
     public Money getAdministrativeOfficeTaxTotalAmount() {
 	return administrativeOfficeTaxTotalAmount;
     }
 
-    public void addBolonhaDegreeGratuityAmount(final Money amount) {
+    private void addBolonhaDegreeGratuityAmount(final Money amount) {
 	this.bolonhaDegreeGratuityTotalAmount = this.bolonhaDegreeGratuityTotalAmount.add(amount);
-
     }
 
     public Money getBolonhaDegreeGratuityTotalAmount() {
 	return bolonhaDegreeGratuityTotalAmount;
     }
 
-    public void addDegreeGratuityAmount(final Money amount) {
+    private void addDegreeGratuityAmount(final Money amount) {
 	this.degreeGratuityTotalAmount = this.degreeGratuityTotalAmount.add(amount);
-
     }
 
     public Money getDegreeGratuityTotalAmount() {
@@ -92,11 +111,11 @@ public class SibsPaymentFileProcessReportDTO {
 	return graduationInsuranceTotalAmount;
     }
 
-    public void addGraduationInsuranceAmount(Money amount) {
+    private void addGraduationInsuranceAmount(Money amount) {
 	this.graduationInsuranceTotalAmount = this.graduationInsuranceTotalAmount.add(amount);
     }
 
-    public void addDfaGratuityAmount(final Money amount) {
+    private void addDfaGratuityAmount(final Money amount) {
 	this.dfaGratuityTotalAmount = this.dfaGratuityTotalAmount.add(amount);
     }
 
@@ -120,7 +139,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.fileVersion = fileVersion;
     }
 
-    public void addAfterGraduationInsuranceAmount(final Money amount) {
+    private void addAfterGraduationInsuranceAmount(final Money amount) {
 	this.afterGraduationInsuranceTotalAmount = this.afterGraduationInsuranceTotalAmount.add(amount);
     }
 
@@ -128,7 +147,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return afterGraduationInsuranceTotalAmount;
     }
 
-    public void addIntegratedBolonhaMasterDegreeGratuityAmount(final Money amount) {
+    private void addIntegratedBolonhaMasterDegreeGratuityAmount(final Money amount) {
 	this.integratedBolonhaMasterDegreeGratuityTotalAmount = this.integratedBolonhaMasterDegreeGratuityTotalAmount.add(amount);
     }
 
@@ -136,7 +155,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return integratedBolonhaMasterDegreeGratuityTotalAmount;
     }
 
-    public void addIntegratedMasterDegreeGratuityAmount(final Money amount) {
+    private void addIntegratedMasterDegreeGratuityAmount(final Money amount) {
 	this.integratedMasterDegreeGratuityTotalAmount = this.integratedMasterDegreeGratuityTotalAmount.add(amount);
     }
 
@@ -144,7 +163,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return integratedMasterDegreeGratuityTotalAmount;
     }
 
-    public void addMasterDegreeGratuityAmount(final Money amount) {
+    private void addMasterDegreeGratuityAmount(final Money amount) {
 	this.masterDegreeGratuityTotalAmount = this.masterDegreeGratuityTotalAmount.add(amount);
     }
 
@@ -152,7 +171,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return masterDegreeGratuityTotalAmount;
     }
 
-    public void addBolonhaMasterDegreGratuityTotalAmount(final Money amount) {
+    private void addBolonhaMasterDegreGratuityTotalAmount(final Money amount) {
 	this.bolonhaMasterDegreeGratuityTotalAmount = this.bolonhaMasterDegreeGratuityTotalAmount.add(amount);
     }
 
@@ -160,7 +179,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return bolonhaMasterDegreeGratuityTotalAmount;
     }
 
-    public void addSpecializationGratuityAmount(final Money amount) {
+    private void addSpecializationGratuityAmount(final Money amount) {
 	this.specializationGratuityTotalAmount = this.specializationGratuityTotalAmount.add(amount);
     }
 
@@ -168,7 +187,7 @@ public class SibsPaymentFileProcessReportDTO {
 	return specializationGratuityTotalAmount;
     }
 
-    public void addPhdGratuityAmount(final Money amount) {
+    private void addPhdGratuityAmount(final Money amount) {
 	this.phdGratuityTotalAmout = this.phdGratuityTotalAmout.add(amount);
     }
 
@@ -206,5 +225,84 @@ public class SibsPaymentFileProcessReportDTO {
 
     public void addResidenceAmount(Money money) {
 	this.residenceAmount = this.residenceAmount.add(money);
+    }
+
+    public void addAmount(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
+	if (paymentCode instanceof AccountingEventPaymentCode) {
+	    addAmountForEvent(detailLine, paymentCode);
+	} else if (paymentCode instanceof GratuitySituationPaymentCode) {
+	    addAmountForGratuitySituation(detailLine, (GratuitySituationPaymentCode) paymentCode);
+	} else if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
+	    addAfterGraduationInsuranceAmount(detailLine.getAmount());
+	} else {
+	    throw new UnsupportedOperationException("Unknown payment code type");
+	}
+    }
+
+    private void addAmountForEvent(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
+	final Event event = ((AccountingEventPaymentCode) paymentCode).getAccountingEvent();
+	if (event instanceof GratuityEventWithPaymentPlan) {
+	    addAmountForGratuityEvent(detailLine, (GratuityEventWithPaymentPlan) event);
+	} else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+	    addAmountForAdministrativeOfficeAndInsuranceEvent(detailLine, (AdministrativeOfficeFeeAndInsuranceEvent) event);
+	} else if (event instanceof DfaGratuityEvent) {
+	    addDfaGratuityAmount(detailLine.getAmount());
+	} else if (event instanceof InsuranceEvent) {
+	    addAfterGraduationInsuranceAmount(detailLine.getAmount());
+	} else if (event instanceof ResidenceEvent) {
+	    addResidenceAmount(detailLine.getAmount());
+	} else {
+	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
+	}
+    }
+
+    private void addAmountForGratuityEvent(final SibsIncommingPaymentFileDetailLine detailLine,
+	    final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan) {
+	switch (gratuityEventWithPaymentPlan.getDegree().getDegreeType()) {
+	case DEGREE:
+	    addDegreeGratuityAmount(detailLine.getAmount());
+	    break;
+	case BOLONHA_DEGREE:
+	    addBolonhaDegreeGratuityAmount(detailLine.getAmount());
+	    break;
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    addIntegratedBolonhaMasterDegreeGratuityAmount(detailLine.getAmount());
+	    break;
+	case BOLONHA_MASTER_DEGREE:
+	    addBolonhaMasterDegreGratuityTotalAmount(detailLine.getAmount());
+	    break;
+	default:
+	    throw new IllegalArgumentException("unknown degree type for gratuity event");
+	}
+    }
+
+    private void addAmountForAdministrativeOfficeAndInsuranceEvent(final SibsIncommingPaymentFileDetailLine detailLine,
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent) {
+	if (detailLine.getAmount().greaterOrEqualThan(administrativeOfficeFeeAndInsuranceEvent.getAmountToPay())) {
+	    addGraduationInsuranceAmount(administrativeOfficeFeeAndInsuranceEvent.getInsuranceAmount());
+	    addAdministrativeOfficeTaxAmount(detailLine.getAmount().subtract(
+		    administrativeOfficeFeeAndInsuranceEvent.getInsuranceAmount()));
+	} else {
+	    addAdministrativeOfficeTaxAmount(detailLine.getAmount());
+	}
+    }
+
+    private void addAmountForGratuitySituation(final SibsIncommingPaymentFileDetailLine detailLine,
+	    GratuitySituationPaymentCode paymentCode) {
+	final GratuitySituation gratuitySituation = paymentCode.getGratuitySituation();
+	switch (gratuitySituation.getStudentCurricularPlan().getSpecialization()) {
+	case STUDENT_CURRICULAR_PLAN_MASTER_DEGREE:
+	    addMasterDegreeGratuityAmount(detailLine.getAmount());
+	    break;
+	case STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE:
+	    addIntegratedMasterDegreeGratuityAmount(detailLine.getAmount());
+	    break;
+	case STUDENT_CURRICULAR_PLAN_SPECIALIZATION:
+	    addSpecializationGratuityAmount(detailLine.getAmount());
+	    break;
+	default:
+	    throw new RuntimeException("Unknown specialization "
+		    + gratuitySituation.getStudentCurricularPlan().getSpecialization().name());
+	}
     }
 }
