@@ -40,7 +40,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	SearchInquiriesResultPageDTO searchPageDTO = (SearchInquiriesResultPageDTO) actionForm;
-	if (searchPageDTO.getExecutionSemesterID() == null) {
+	if (searchPageDTO.isEmptyExecutionSemesterID()) {
 	    final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    if (executionSemester != null) {
 		final ExecutionSemester previous = executionSemester.getPreviousExecutionPeriod();
@@ -50,7 +50,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 	    }
 	}
 
-	if (searchPageDTO.getExecutionSemesterID() != null) {
+	if (!searchPageDTO.isEmptyExecutionSemesterID()) {
 	    return selectExecutionSemester(actionMapping, actionForm, request, response);
 	}
 
@@ -96,7 +96,8 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 	Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
 	    final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
-	    if (publicDisclosure != null && publicDisclosure.booleanValue() && studentInquiriesCourseResult.hasExecutionCourse()) {
+	    if (publicDisclosure != null && publicDisclosure.booleanValue() && studentInquiriesCourseResult.hasExecutionCourse()
+		    && studentInquiriesCourseResult.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
 	    }
 	}

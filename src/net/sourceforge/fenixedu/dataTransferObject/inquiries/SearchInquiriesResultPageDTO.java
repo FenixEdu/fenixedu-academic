@@ -30,6 +30,10 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 	return executionSemesterID;
     }
 
+    public boolean isEmptyExecutionSemesterID() {
+	return isNullOrZero(executionSemesterID);
+    }
+
     public void setExecutionSemesterID(Integer executionSemesterID) {
 	this.executionSemesterID = executionSemesterID;
 	this.executionSemester = isNullOrZero(executionSemesterID) ? null : new DomainReference<ExecutionSemester>(
