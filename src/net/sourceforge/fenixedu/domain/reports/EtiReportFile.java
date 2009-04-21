@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -115,7 +116,14 @@ public class EtiReportFile extends EtiReportFile_Base {
 
 	row.setCell(registration.getRegistrationAgreement().getName());
 	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
-	final Attends attends = enrolment.getAttendsFor(executionSemester);
+	Attends attends = null; //enrolment.getAttendsFor(executionSemester);
+	for (final Attends a : enrolment.getAttendsSet()) {
+	    if (a.isFor(executionSemester)) {
+		if (attends == null) {
+		    attends = a;
+		}
+	    }
+	}
 	if (attends == null) {
 	    row.setCell("");
 	} else {
