@@ -40,6 +40,7 @@
 	<parameter name="civilYear" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -213,6 +214,17 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{registration}.getPerson().getArea().toUpperCase()]]></textFieldExpression>
 				</textField>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="9"
+						width="87"
+						height="181"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+				</image>
 			</band>
 		</title>
 		<pageHeader>
