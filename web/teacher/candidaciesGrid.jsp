@@ -216,12 +216,6 @@
 						              sendMailParameters.put("candidaciesSend","true");
 									  request.setAttribute("sendMailParameters",sendMailParameters);
 								%>
-								<bean:define id="sendMailLinkParameters" type="java.util.Map" name="sendMailParameters"/>
-								<p>
-									<html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
-										<bean:message key="link.sendEmailToAllStudents"/>
-									</html:link>
-								</p>
 								<bean:define name="candidacies" type="java.util.List" id="candidacies"/>
 								<p class="mbottom15">
 									<%=candidacies.size()%> <bean:message key="message.enrolledStudents"/>

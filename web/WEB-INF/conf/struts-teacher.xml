@@ -1453,13 +1453,7 @@
 		<action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.DownloadStudentsWithAttendsByExecutionCourseListAction" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
-        <!-- by gedl, 17-9-2003 -->
-        <action type="net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SendMailToSelectedStudents" 
-            path="/mailSender" name="sendMailForm" parameter="method" scope="request" validate="true">
-
-            <forward name="sendMail" path="sendMail"/>
-        </action>
-        
+                
 		        
         <!-- by gedl, 25-9-2003 -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.SelectCandidacies" path="/selectCandidacies" 

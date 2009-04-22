@@ -47,12 +47,6 @@
      <definition name="df.page.card.generation.showCardGenerationProblem" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/cardGeneration/showCardGenerationProblem.jsp"/>
     </definition>
-     <definition name="df.page.send.email.form" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/email/sendEmailForm.jsp"/>
-    </definition>
-     <definition name="df.page.send.email.result" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/email/sendEmailResult.jsp"/>
-    </definition>
      <definition name="df.page.send.email.redirect" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>
