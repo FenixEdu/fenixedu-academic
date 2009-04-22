@@ -299,7 +299,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	if (executionPeriod.getSemester() == 2 && executionPeriod.getYear().equals("2007/2008")) {
 	    return actionMapping.findForward("execution-course-show-course-inquiries-result");
 	}
-	
+
 	request.setAttribute("publicContext", true);
 	return new ActionForward(null, "/inquiries/showCourseInquiryResult_v2.jsp", false, "/teacher");
     }
@@ -334,8 +334,11 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 		    .getStudentInquiriesTeachingResults()) {
 		if (studentInquiriesTeachingResult.getPublicDegreeDisclosure() != null
 			&& studentInquiriesTeachingResult.getPublicDegreeDisclosure()) {
-		    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
-			    studentInquiriesTeachingResult);
+		    final StudentInquiriesCourseResultBean studentInquiriesCourseResultBean = courseResultsMap
+			    .get(studentInquiriesTeachingResult.getExecutionDegree());
+		    if (studentInquiriesCourseResultBean != null) {
+			studentInquiriesCourseResultBean.addStudentInquiriesTeachingResult(studentInquiriesTeachingResult);
+		    }
 		}
 	    }
 	}
