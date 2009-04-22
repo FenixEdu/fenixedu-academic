@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Month;
@@ -153,8 +154,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 
-			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
-			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
+			if (getJustificationMotive().getDayType() == DayType.EVERYDAY) {
+			    if (!isActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
+				return new ActionMessage("errors.inactiveEmployee");
+			    }
+			} else {
+			    if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
+				return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
+			    }
 			}
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, null)) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
@@ -380,9 +387,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 
-			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
-			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
+			if (getJustificationMotive().getDayType() == DayType.EVERYDAY) {
+			    if (!isActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
+				return new ActionMessage("errors.inactiveEmployee");
+			    }
+			} else {
+			    if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), duration)) {
+				return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
+			    }
 			}
+
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
@@ -1021,8 +1035,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     protected boolean isOverlapingOtherJustification(Assiduousness assiduousness, Duration duration, Justification justitication) {
-	Set<Leave> leaves = new HashSet(assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtStartOfDay().plus(
-		duration).toLocalDate()));
+	Set<Leave> leaves = new HashSet<Leave>(assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtStartOfDay()
+		.plus(duration).toLocalDate()));
 	return !leaves.isEmpty() && (justitication == null || !leaves.contains(justitication) || leaves.size() != 1);
     }
 
