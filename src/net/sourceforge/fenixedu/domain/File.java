@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,7 +69,29 @@ public abstract class File extends File_Base {
     }
 
     public byte[] getContents() {
-	return getLocalContent().getContent().getBytes();
+	if (hasLocalContent()) {
+	    return getLocalContent().getContent().getBytes();
+	}
+	InputStream fileInputStream = null;
+	try {
+	    final int fileSize = 1024;
+	    final byte[] buffer = new byte[fileSize];
+	    fileInputStream = FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(
+		    getExternalStorageIdentification());
+	    for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;)
+		;
+	    return buffer;
+	} catch (IOException e) {
+	    throw new Error(e);
+	} finally {
+	    if (fileInputStream != null) {
+		try {
+		    fileInputStream.close();
+		} catch (IOException e) {
+		    throw new Error(e);
+		}
+	    }
+	}
     }
 
     /**
