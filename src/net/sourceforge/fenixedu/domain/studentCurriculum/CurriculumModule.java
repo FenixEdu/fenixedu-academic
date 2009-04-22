@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -208,6 +209,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     final public Student getStudent() {
 	return getRegistration().getStudent();
+    }
+    
+    final public Person getPerson() {
+	return getStudent().getPerson();
     }
 
     public boolean isConcluded() {
