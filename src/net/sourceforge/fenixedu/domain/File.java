@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.FileDownload;
+import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
@@ -72,21 +73,17 @@ public abstract class File extends File_Base {
 	if (hasLocalContent()) {
 	    return getLocalContent().getContent().getBytes();
 	}
-	InputStream fileInputStream = null;
+	InputStream inputStream = null;
 	try {
-	    final int fileSize = 1024;
-	    final byte[] buffer = new byte[fileSize];
-	    fileInputStream = FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(
+	    inputStream = FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(
 		    getExternalStorageIdentification());
-	    for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;)
-		;
-	    return buffer;
+	    return ByteArray.toBytes(inputStream);
 	} catch (IOException e) {
 	    throw new Error(e);
 	} finally {
-	    if (fileInputStream != null) {
+	    if (inputStream != null) {
 		try {
-		    fileInputStream.close();
+		    inputStream.close();
 		} catch (IOException e) {
 		    throw new Error(e);
 		}
