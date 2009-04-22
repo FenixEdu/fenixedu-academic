@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -315,8 +314,9 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		}
 	    }
 	    Collections.sort(vacations, new BeanComparator("title"));
-	    GanttDiagram diagram = GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
-	    request.setAttribute("ganttDiagramByMonth", diagram);
+	    // GanttDiagram diagram =
+	    // GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
+	    // request.setAttribute("ganttDiagramByMonth", diagram);
 	}
 
 	request.setAttribute("yearMonth", yearMonth);
@@ -369,8 +369,9 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		}
 	    }
 
-	    GanttDiagram diagram = GanttDiagram.getNewYearDailyGanttDiagram(vacations, beginDate);
-	    request.setAttribute("ganttDiagram", diagram);
+	    // GanttDiagram diagram =
+	    // GanttDiagram.getNewYearDailyGanttDiagram(vacations, beginDate);
+	    // request.setAttribute("ganttDiagram", diagram);
 	}
 
 	request.setAttribute("yearMonth", yearMonth);
