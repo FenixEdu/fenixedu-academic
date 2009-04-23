@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.caseHandling.Activity;
-import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixframework.FenixFramework;
@@ -42,7 +40,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     private static Activity<? extends Process> getStartActivity(Class<? extends Process> process) throws InstantiationException,
 	    IllegalAccessException {
-	for (Class clazz : process.getDeclaredClasses()) {
+	for (Class<?> clazz : process.getDeclaredClasses()) {
 	    if (Activity.class.isAssignableFrom(clazz)) {
 		if (clazz.isAnnotationPresent(StartActivity.class)) {
 		    return (Activity<? extends Process>) clazz.newInstance();

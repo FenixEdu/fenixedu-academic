@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.caseHandling;
+package net.sourceforge.fenixedu.domain.caseHandling;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;

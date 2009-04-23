@@ -2,7 +2,7 @@
 	<slot name="displayName" key="label.name" />
 </schema>
 
-<schema name="caseHandling.list.activities" type="net.sourceforge.fenixedu.caseHandling.Activity">
+<schema name="caseHandling.list.activities" type="net.sourceforge.fenixedu.domain.caseHandling.Activity">
 	<slot name="class.name" layout="slot-as-label" key="label.activities" bundle="CASE_HANDLING_RESOURCES">
 		<property name="bundle" value="CASE_HANDLING_RESOURCES" />
 	</slot>

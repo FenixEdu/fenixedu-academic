@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.caseHandling.Activity;
-import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -72,7 +72,7 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 
     protected Object canCreateProcess(final String name) {
 	try {
-	    final Activity startActivity = Process.getStartActivity(name);
+	    final Activity<?> startActivity = Process.getStartActivity(name);
 	    startActivity.checkPreConditions(null, AccessControl.getUserView());
 	} catch (PreConditionNotValidException e) {
 	    return false;
