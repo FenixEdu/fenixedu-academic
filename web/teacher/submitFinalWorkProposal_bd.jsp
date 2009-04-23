@@ -63,11 +63,11 @@
 			<th width="7%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%">
 				<logic:present name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
-						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'/>
+					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
+						value=''/>
 				</logic:present>
 				<logic:notPresent name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
+					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
 				</logic:notPresent>
 			</td>
 		</tr>
@@ -97,11 +97,11 @@
 			<th width="7%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.name"/>:</th>
 			<td width="66%">
 				<logic:present name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
+					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
 						value='<%= ((Person) pageContext.findAttribute("coorientator")).getName().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
+					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
 				</logic:notPresent>
 			</td>
 		</tr>
