@@ -130,6 +130,7 @@
 	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
+	<slot name="branch" key="label.branch"/>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
 </schema>
 
@@ -272,6 +273,35 @@
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 </schema>
 
+<schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE_WithBranch.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
+	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average"></slot>
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+	<slot name="technicalEngineer" key="label.documentRequestsManagement.searchDocumentRequests.technicalEngineer"></slot>
+	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
+	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
+	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
+	<slot name="branch" key="label.branch"/>
+	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
+    <slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE_WithBranch.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="technicalEngineer" key="label.documentRequestsManagement.searchDocumentRequests.technicalEngineer"></slot>
+	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished" />
+	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved" />
+	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan" />
+	<slot name="branch" key="label.branch"/>
+	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate" />
+</schema>
+
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed"></slot>
@@ -282,9 +312,7 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
-    <slot name="language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
+    <slot name="language" layout="null-as-label"></slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"

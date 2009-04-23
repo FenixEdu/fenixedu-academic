@@ -13,9 +13,9 @@ DB_HOST=$3
 INSTITUTION=$4
 PASSWORD=$5
 
-echo Using host=$DB_HOST
+echo Using host: $DB_HOST
 echo Using database: $DB
-echo Using user $USER:
+echo Using user: $USER
 echo Institution: $INSTITUTION
 echo Password: $PASSWORD
 
@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add column Branch to degree finalization certificates" degreeFinalizationBranch.sql

@@ -196,10 +196,19 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
-	if (requestCreateBean.getHasAdditionalInformation()) {
-	    request.setAttribute("additionalInformationSchemaName", "DocumentRequestCreateBean."
-		    + requestCreateBean.getChosenDocumentRequestType().name() + ".AdditionalInformation");
+	if (!requestCreateBean.getHasAdditionalInformation()) {
+	    return;
 	}
+	DocumentRequestType requestType = requestCreateBean.getChosenDocumentRequestType();
+	final StringBuilder schemaName = new StringBuilder();
+	schemaName.append("DocumentRequestCreateBean.");
+	schemaName.append(requestType.name());
+	if ((!requestCreateBean.getRegistration().isBolonha())
+		&& (requestType.compareTo(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE) == 0)) {
+	    schemaName.append("_WithBranch");
+	}
+	schemaName.append(".AdditionalInformation");
+	request.setAttribute("additionalInformationSchemaName", schemaName.toString());
     }
 
     public ActionForward executionYearToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,

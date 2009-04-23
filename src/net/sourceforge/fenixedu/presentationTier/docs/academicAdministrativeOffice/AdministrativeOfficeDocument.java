@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
@@ -157,6 +158,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("documentRequest", getDocumentRequest());
 	addParameter("registration", getRegistration());
 
+	setBranchField();
+
 	if (showPriceFields()) {
 	    addPriceFields();
 	}
@@ -172,6 +175,24 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("degreeDescription", getDegreeDescription());
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	addParameter("day", new LocalDate().toString(DD_MM_YYYY, getLocale()));
+    }
+
+    protected void setBranchField() {
+	String branch = ((DegreeFinalizationCertificateRequest) getDocumentRequest()).getBranch();
+	if ((branch == null) || (branch.isEmpty())) {
+	    addParameter("branch", "");
+	    return;
+	}
+	final StringBuilder branchInfo = new StringBuilder();
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.in.the.male"));
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.branch").toLowerCase());
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.of.both"));
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(((DegreeFinalizationCertificateRequest) getDocumentRequest()).getBranch().toUpperCase());
+	addParameter("branch", branchInfo.toString());
     }
 
     protected boolean showPriceFields() {

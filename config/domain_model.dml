@@ -4562,6 +4562,7 @@ class DomainObject {
 						Boolean internshipAbolished;
 						Boolean internshipApproved;
 						Boolean studyPlan;
+						String branch;
 						YearMonthDay exceptionalConclusionDate;
 						MobilityProgram mobilityProgram;
 						Boolean ignoreExternalEntries;

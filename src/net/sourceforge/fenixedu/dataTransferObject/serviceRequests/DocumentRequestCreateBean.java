@@ -28,6 +28,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private String otherPurpose;
 
+    private String branch;
+
     private Boolean average = Boolean.FALSE;
 
     private Boolean detailed = Boolean.FALSE;
@@ -342,6 +344,14 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setNumberOfPrograms(Integer numberOfPrograms) {
 	this.numberOfPrograms = numberOfPrograms;
+    }
+
+    public void setBranch(String branch) {
+	this.branch = branch;
+    }
+
+    public String getBranch() {
+	return branch;
     }
 
 }
