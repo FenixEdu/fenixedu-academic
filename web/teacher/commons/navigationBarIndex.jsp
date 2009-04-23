@@ -109,5 +109,9 @@
 			<bean:message key="link.manage.thesis.document.confirmation" />
 		</html:link>
 	</li>
-
+	        <li>
+		        <html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'>
+		        	<bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
+		        </html:link>
+	        </li>
 </ul>
