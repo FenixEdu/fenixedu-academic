@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
@@ -27,7 +27,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("MESSAGING_RESOURCES", "label." + classType.getSimpleName());
+	return BundleUtil.getResourceString("resources.MessagingResources", "label." + classType.getSimpleName());
     }
 
     @Override

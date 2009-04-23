@@ -18,4 +18,8 @@ public class BundleUtil {
 	return getString(APPLICATION_RESOURCES, Language.getLocale(), key, args);
     }
 
+    public static String getResourceString(final String bundle, final String key, final String... args) {
+	return getString(bundle, Language.getLocale(), key, args);
+    }
+
 }

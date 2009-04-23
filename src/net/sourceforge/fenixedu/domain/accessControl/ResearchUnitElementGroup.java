@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
@@ -24,7 +24,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.researchUnitElement");
+	return BundleUtil.getResourceString("resources.ResearcherResources", "label.researchUnitElement");
     }
 
     @Override
