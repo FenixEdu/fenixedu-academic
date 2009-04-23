@@ -58,7 +58,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	}
 	professorShip.setResponsibleFor(responsibleFor);
 	professorShip.setExecutionCourse(executionCourse);
-	professorShip.setTeacher(teacher);
+	professorShip.setPerson(teacher.getPerson());
+	//professorShip.setTeacher(teacher);
 
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
 
@@ -210,6 +211,22 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    }
 	}
 	return null;
+    }
+
+    public Teacher getTeacher() {
+	return getPerson().getTeacher();
+    }
+
+    public void setTeacher(Teacher teacher) {
+	getPerson().setTeacher(teacher);
+    }
+
+    public boolean hasTeacher() {
+	return getPerson().hasTeacher();
+    }
+
+    public void removeTeacher() {
+	getPerson().removeTeacher();
     }
 
 }

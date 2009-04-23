@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing Relation Between Teacher And Professorship" changingRelationBetweenTeacherAndProfessorship.sql
 execute "Add column Branch to degree finalization certificates" degreeFinalizationBranch.sql

@@ -13189,11 +13189,11 @@ relation ProfessionalSituationCategory {
 	teacher.Category playsRole category;
 }
 
-relation TeacherProfessorship {
+relation PersonProfessorship {
 	Professorship playsRole professorships {
 		multiplicity *;
 	}
-	Teacher playsRole teacher;
+	Person playsRole person;
 }
 
 relation TeacherServiceExecutionPeriod {

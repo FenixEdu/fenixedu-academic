@@ -1301,4 +1301,35 @@ public class Teacher extends Teacher_Base {
 	return result;
     }
     
+    public int getProfessorshipsCount() {
+	return getPerson().getProfessorshipsCount();
+    }
+    
+    public boolean hasAnyProfessorships() {
+	return getPerson().hasAnyProfessorships();
+    }
+    
+    public boolean hasProfessorship(Professorship professorship){
+	return getPerson().hasProfessorships(professorship);
+    }
+    
+    public Set<Professorship> getProfessorshipsSet(){
+	return  getPerson().getProfessorshipsSet();
+    }
+    
+    public void addProfessorships(Professorship professorship){
+	getPerson().addProfessorships(professorship);
+    }
+    
+    public void removeProfessorships(Professorship professorship){
+	getPerson().removeProfessorships(professorship);
+    }
+    
+    public List<Professorship> getProfessorships(){
+	return getPerson().getProfessorships();
+    }
+
+    public Iterator<Professorship> getProfessorshipsIterator(){
+	return getPerson().getProfessorshipsIterator();
+    }
 }

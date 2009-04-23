@@ -143,7 +143,7 @@ public class SeperateExecutionCourse extends FenixService {
 	for (final Professorship professorship : originExecutionCourse.getProfessorships()) {
 	    final Professorship newProfessorship = new Professorship();
 	    newProfessorship.setExecutionCourse(destinationExecutionCourse);
-	    newProfessorship.setTeacher(professorship.getTeacher());
+	    newProfessorship.setPerson(professorship.getPerson());
 	    newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
 
 	    destinationExecutionCourse.getProfessorships().add(newProfessorship);
