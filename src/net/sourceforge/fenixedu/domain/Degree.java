@@ -237,6 +237,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	removeRootDomainObject();
 	removeUnit();
+	if (hasSender()) {
+	    removeSender();
+	}
 	deleteDomainObject();
     }
 
@@ -463,7 +466,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return result;
     }
-    
+
     public List<ExecutionCourse> getExecutionCourses(final CurricularYear curricularYear,
 	    final ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();

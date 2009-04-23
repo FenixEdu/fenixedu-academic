@@ -369,6 +369,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public void delete() {
 	if (canBeDeleted()) {
 
+	    if (hasSender()) {
+		removeSender();
+	    }
+
 	    if (hasSite()) {
 		getSite().delete();
 	    }
@@ -2082,5 +2086,5 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return null;
     }
-    
+
 }

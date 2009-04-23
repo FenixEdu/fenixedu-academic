@@ -111,10 +111,16 @@ public class Message extends Message_Base {
 
     public void dispatch() {
 	final Sender sender = getSender();
-	new Email(sender.getFromName(getPerson()), sender.getFromAddress(), getReplyToAddresses(),
-		Collections.EMPTY_SET, Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
+	new Email(sender.getFromName(getPerson()), sender.getFromAddress(), getReplyToAddresses(), Collections.EMPTY_SET,
+		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
+    }
+
+    @Service
+    public static Message newInstance(final Sender sender, final Collection<ReplyTo> replyTos,
+	    final Collection<Recipient> recipients, final String subject, final String body, final String bccs) {
+	return new Message(sender, replyTos, recipients, subject, body, bccs);
     }
 
 }

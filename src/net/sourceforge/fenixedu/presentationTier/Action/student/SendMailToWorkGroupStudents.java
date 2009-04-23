@@ -37,7 +37,7 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
 	Group groupToSend = new StudentGroupStudentsGroup(studentGroup);
 	Sender sender = ExecutionCourseSender.newInstance(executionCourse);
 	final String label = getResources(request, "APPLICATION_RESOURCES").getMessage("label.students.group.send.email",
-		studentGroup.getGroupNumber());
+		studentGroup.getGroupNumber(), studentGroup.getGrouping().getName());
 	Recipient recipient = Recipient.createNewRecipient(label, groupToSend);
 	return EmailsDA.sendEmail(request, sender, recipient);
     }

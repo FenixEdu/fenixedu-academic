@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -25,9 +24,14 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailR
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
@@ -150,11 +154,24 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	String subject = (String) form.get("bodyTextSubject");
 
-	final List<String> bccs = new ArrayList<String>(1);
-	bccs.add(emailAddress);
-
-	SendMail.run(null, null, bccs, fromName, fromAddress, subject, body.toString());
-
+	Recipient recipient = Recipient.createNewRecipient(student.getPerson().getName(), new PersonGroup(student.getPerson()));
+	final List<Recipient> recipients = Collections.singletonList(recipient);
+	Sender sender = getGEPSender();
+	if (sender == null) {
+	    return false;
+	}
+	Message.newInstance(sender, null, recipients, subject, body.toString(), "");
+	// SendMail.run(null, null, bccs, fromName, fromAddress, subject,
+	// body.toString());
 	return false;
+    }
+
+    private UnitBasedSender getGEPSender() {
+	for (Sender sender : Sender.getAvailableSenders()) {
+	    if (sender instanceof UnitBasedSender && ((UnitBasedSender) sender).getUnit().getAcronym().equals("GEP")) {
+		return (UnitBasedSender) sender;
+	    }
+	}
+	return null;
     }
 }

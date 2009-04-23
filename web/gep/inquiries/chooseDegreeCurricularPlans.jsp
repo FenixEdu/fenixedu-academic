@@ -27,28 +27,11 @@
 	<html:form action="/sendEmailReminder">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sendEmails" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-
-		<font class="underline italic">
-			<bean:message key="title.inquiries.reminder.sender.name" bundle="INQUIRIES_RESOURCES"/>
-		</font>
-		&nbsp;
-		<bean:define id="gepName">
-			<bean:message key="label.gep.fullName" bundle="INQUIRIES_RESOURCES"/>
-		</bean:define>
-		
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromName" property="fromName" value="<%= gepName %>" readonly="true" size="50"/>
-		<br/>
-
-		<font class="underline italic">
-			<bean:message key="title.inquiries.reminder.sender.email" bundle="INQUIRIES_RESOURCES"/>
-		</font>
-		&nbsp;
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.fromAddress" property="fromAddress" size="50"/>
-		<br/>
-
+		 
 		<p class="underline italic">
 			<bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
 		</p>
+		
 		<bean:define id="subject">
 			<bean:message key="message.inquiries.email.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
@@ -57,6 +40,7 @@
 		<p class="underline italic">
 			<bean:message key="title.inquiries.reminder.body" bundle="INQUIRIES_RESOURCES"/>
 		</p>
+		
 		<bean:define id="bodyIntro">
 			<bean:message key="message.inquiries.email.reminder.body.intro" bundle="INQUIRIES_RESOURCES"/>
 		</bean:define>
@@ -79,7 +63,6 @@
 		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
 	</strong></p>
 
-		<%--ul style="list-style-type: none;"--%>
 		<table>
 			<tr>
 				<th class="listClasses-header">
@@ -94,11 +77,10 @@
 				</th>
 			</tr>
 			
-
 			<logic:iterate id="degreeCurricularPlan" name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan">
-				<bean:define id="degreeType">
+				<%--<bean:define id="degreeType">
 					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
-				</bean:define>
+				</bean:define>--%>
 					<tr>
 						<td class="listClasses">
 							<bean:message name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
