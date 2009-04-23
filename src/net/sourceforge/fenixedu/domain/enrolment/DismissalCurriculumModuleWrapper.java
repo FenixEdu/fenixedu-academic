@@ -53,10 +53,9 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
 
     @Override
     public boolean isAnnualCurricularCourse(ExecutionYear executionYear) {
-	if (getDegreeModule() != null && getDegreeModule().isLeaf()) {
+	if (hasDegreeModule() && getDegreeModule().isLeaf()) {
 	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
 	}
-
 	return false;
     }
 
@@ -70,11 +69,6 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
 
     @Override
     public List<CurricularRule> getCurricularRulesFromDegreeModule(final ExecutionSemester executionSemester) {
-	if (hasDegreeModule()) {
-	    if (getDegreeModule().getParentDegreeCurricularPlan() == getDismissal().getDegreeCurricularPlanOfDegreeModule()) {
-		return getDegreeModule().getCurricularRules(getContext(), executionSemester);
-	    }
-	}
 	return Collections.emptyList();
     }
 
