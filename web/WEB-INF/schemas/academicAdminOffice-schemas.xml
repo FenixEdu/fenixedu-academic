@@ -1543,23 +1543,6 @@
 	</slot>
 </schema>
 
-<schema name="RegistrationConclusionBean.confirmConclusionForCycle" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
-	<slot name="cycleCurriculumGroup.name" />
-	<slot name="ingressionYear.name" key="ingressionYear"/>
-	<slot name="curriculumEntriesSize" />
-	<slot name="ectsCredits" />
-	<slot name="average"/>
-	<slot name="finalAverage" />
-	<slot name="dissertationThesisTitle" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
-        <property name="label" value="-"/>	
-	</slot>
-	<slot name="conclusionDate" />
-	<slot name="conclusionYear.name" key="conclusionYear"/>
-</schema>
-
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
 	<slot name="ingressionYear.name" key="ingressionYear"/>
 	<slot name="curriculumEntriesSize" />
@@ -1575,6 +1558,23 @@
 	</slot>
 	<slot name="conclusionDate" />
 	<slot name="conclusionYear.name" key="conclusionYear"/>
+</schema>
+
+<schema name="RegistrationConclusionBean.viewConclusionPreviewForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="ingressionYear.name" key="ingressionYear"/>
+	<slot name="curriculumEntriesSize" />
+	<slot name="calculatedEctsCredits" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.ectsCredits"/>
+	<slot name="calculatedAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/>
+	<slot name="registration.averageType"/>	
+	<slot name="calculatedFinalAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="calculatedConclusionDate" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.conclusionDate"/>
+	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>
 </schema>
 
 <schema name="Registration.editConclusionInformation" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
@@ -1650,6 +1650,23 @@
 	<slot name="conclusionProcessNotes" layout="null-as-label">
         <property name="label" value="-"/>	
 	</slot>	
+</schema>
+
+<schema name="RegistrationConclusionBean.viewConclusionPreviewForCycle" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
+	<slot name="cycleCurriculumGroup.name" />
+	<slot name="ingressionYear.name" key="ingressionYear"/>
+	<slot name="curriculumEntriesSize"/>
+	<slot name="calculatedEctsCredits" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.ectsCredits"/>
+	<slot name="calculatedAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/>
+	<slot name="calculatedFinalAverage" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.finalAverage"/>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="calculatedConclusionDate" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.conclusionDate"/>
+	<slot name="calculatedConclusionYear.name" key="conclusionYear"/>	
 </schema>
 
 <schema name="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">

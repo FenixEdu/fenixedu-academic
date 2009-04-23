@@ -76,6 +76,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	return isByCycle() ? getCycleCurriculumGroup().calculateRoundedAverage() : getRegistration().calculateRoundedAverage();
     }
 
+    public Integer getCalculatedFinalAverage() {
+	return calculateFinalAverage();
+    }
+
     public BigDecimal getAverage() {
 	if (isConclusionProcessed()) {
 	    return isByCycle() ? getCycleCurriculumGroup().getAverage() : getRegistration().getAverage();
@@ -88,6 +92,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	return isByCycle() ? getCycleCurriculumGroup().calculateAverage() : getRegistration().calculateAverage();
     }
 
+    public BigDecimal getCalculatedAverage() {
+	return calculateAverage();
+    }
+
     public YearMonthDay getConclusionDate() {
 	if (isConclusionProcessed()) {
 	    return isByCycle() ? getCycleCurriculumGroup().getConclusionDate() : getRegistration().getConclusionDate();
@@ -98,6 +106,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public YearMonthDay calculateConclusionDate() {
 	return isByCycle() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration().calculateConclusionDate();
+    }
+
+    public YearMonthDay getCalculatedConclusionDate() {
+	return calculateConclusionDate();
     }
 
     public ExecutionYear getIngressionYear() {
@@ -124,6 +136,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 	return isByCycle() ? getCycleCurriculumGroup().calculateConclusionYear() : getRegistration().calculateConclusionYear();
     }
 
+    public ExecutionYear getCalculatedConclusionYear() {
+	return calculateConclusionYear();
+    }
+
     public boolean hasDissertationThesis() {
 	return getRegistration().hasDissertationThesis();
     }
@@ -146,6 +162,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public double calculateCredits() {
 	return isByCycle() ? getCycleCurriculumGroup().calculateCreditsConcluded() : getRegistration().calculateCredits();
+    }
+
+    public double getCalculatedEctsCredits() {
+	return calculateCredits();
     }
 
     public ICurriculum getCurriculumForConclusion() {
@@ -196,6 +216,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 		&& isConcluded()
 		&& (getRegistration().getWasTransition() || groupStructureIsValid())
 		&& getCurriculumModulesWithNoConlusionDate().isEmpty();
+    }
+
+    public boolean getCanRepeatConclusionProcess() {
+	return getRegistration().canRepeatConclusionProcess(AccessControl.getPerson());
     }
 
     private boolean groupStructureIsValid() {

@@ -74,7 +74,8 @@
 			</fr:view>
 		</logic:notPresent>
 		
-				
+		
+		<%-- Credits in group not correct  --%> 		
 		<h3 class="mtop1 mbottom05"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<logic:iterate id="curriculumGroup" name="registrationConclusionBean" property="curriculumGroupsNotVerifyingStructure">
 			<p>
@@ -82,11 +83,14 @@
 			</p>
 		</logic:iterate>
 			
+		<%-- Registration Not Concluded  --%> 
 		<logic:equal name="registrationConclusionBean" property="concluded" value="false">
 			<p>
 				<span class="error0"><bean:message key="registration.not.concluded" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
 			</p>
+			<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 			<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
+				<%-- Conclusion Process For Cycle  --%>
 				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForCycle">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
@@ -95,6 +99,7 @@
 				</fr:view>
 			</logic:equal>
 			<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
+				<%-- Conclusion Process For Registration  --%>
 				<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForRegistration">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
@@ -104,25 +109,72 @@
 			</logic:equal>
 		</logic:equal>
 		
+		
+		<%-- Registration Concluded  --%>
 		<logic:equal name="registrationConclusionBean" property="concluded" value="true">
+			
+			<%-- Conclusion Processed  --%>
 			<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="true">
 				<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
-					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation">
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
-							<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-						</fr:layout>
-					</fr:view>
+				
+					<%-- Conclusion Process For Cycle  --%>
+					<div style="float: left;">
+						<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+						<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForCycleWithConclusionProcessedInformation">
+							<fr:layout name="tabular">
+								<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+								<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+							</fr:layout>
+						</fr:view>
+					</div>
+
+					<div style="float: left; margin-left: 20px;">				
+						<logic:equal name="registrationConclusionBean" property="canRepeatConclusionProcess" value="true">		
+							
+							<strong><bean:message  key="student.new.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>		
+							<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewConclusionPreviewForCycle">
+								<fr:layout name="tabular">
+									<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+									<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+								</fr:layout>
+							</fr:view>
+						</logic:equal>
+					</div>
+
+					<div style="clear: both;"></div>
 				</logic:equal>
+
 				<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
-					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation">
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
-							<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-						</fr:layout>
-					</fr:view>
+				
+					<%-- Conclusion Process For Registration  --%>
+					<div style="float: left;">
+						<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+						<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewForRegistrationWithConclusionProcessedInformation">
+							<fr:layout name="tabular">
+								<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+								<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+							</fr:layout>
+						</fr:view>
+					</div>
+					
+					<div style="float: left; margin-left: 20px;">
+						<logic:equal name="registrationConclusionBean" property="canRepeatConclusionProcess" value="true">		
+							<strong><bean:message  key="student.new.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+							<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewConclusionPreviewForRegistration">
+								<fr:layout name="tabular">
+									<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
+									<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+								</fr:layout>
+							</fr:view>
+						</logic:equal>
+					</div>
+					
 				</logic:equal>
+				<div style="clear: both;"></div>
+
 			</logic:equal>
+			
+			<%-- Conclusion Not Processed  --%>
 			<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="false">
 				<logic:iterate id="curriculumModule" name="registrationConclusionBean" property="curriculumModulesWithNoConlusionDate">
 					<p>
@@ -131,7 +183,9 @@
 				</logic:iterate>
 				
 				<logic:equal name="registrationConclusionBean" property="byCycle" value="true" >
-					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForCycle">
+					<%-- Conclusion Process For Cycle  --%>
+					<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewConclusionPreviewForCycle">
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
 							<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
@@ -139,7 +193,9 @@
 					</fr:view>
 				</logic:equal>
 				<logic:equal name="registrationConclusionBean" property="byCycle" value="false" >
-					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.confirmConclusionForRegistration">
+					<%-- Conclusion Process For Registration  --%>
+					<strong><bean:message  key="student.registrationConclusionProcess.data" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+					<fr:view name="registrationConclusionBean" schema="RegistrationConclusionBean.viewConclusionPreviewForRegistration">
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle4 thright thlight mvert05"/>
 							<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
