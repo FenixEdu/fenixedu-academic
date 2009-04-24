@@ -719,20 +719,26 @@ public class Assiduousness extends Assiduousness_Base {
 		&& getSchedules().isEmpty() && getExtraWorkRequests().isEmpty() && getEmployeeExtraWorkAuthorizations().isEmpty();
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate begin) {
+    public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate date) {
+	return getExtraWorkRequests(date.getYear(), date.getMonthOfYear());
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequests(Partial partial) {
+	return getExtraWorkRequests(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType.monthOfYear()));
+    }
+
+    public List<ExtraWorkRequest> getExtraWorkRequests(int year, int month) {
 	List<ExtraWorkRequest> requests = new ArrayList<ExtraWorkRequest>();
-	int monthOfYear = begin.getMonthOfYear() + 1;
 	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    Partial requestPaymentDate = extraWorkRequest.getRealPaymentPartialDate();
-	    if (requestPaymentDate.get(DateTimeFieldType.year()) == begin.getYear()
-		    && requestPaymentDate.get(DateTimeFieldType.monthOfYear()) == monthOfYear) {
+	    Partial paymentDate = extraWorkRequest.getPartialPayingDate();
+	    if (paymentDate.get(DateTimeFieldType.year()) == year && paymentDate.get(DateTimeFieldType.monthOfYear()) == month) {
 		requests.add(extraWorkRequest);
 	    }
 	}
 	return requests;
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequests(Partial paymentPartial) {
+    public List<ExtraWorkRequest> getYearExtraWorkRequests(Partial paymentPartial) {
 	Partial paymentDate = paymentPartial;
 	paymentDate.plus(Period.months(1));
 	return getYearExtraWorkRequests(paymentDate.get(DateTimeFieldType.year()), paymentDate.get(DateTimeFieldType

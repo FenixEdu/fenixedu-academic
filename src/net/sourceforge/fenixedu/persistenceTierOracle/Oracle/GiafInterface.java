@@ -157,7 +157,7 @@ public class GiafInterface {
 	    query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
 
 	    boolean hasMoreThanOneCostCenter = hasMoreThanOneCostCenter(extraWorkRequest.getAssiduousness(), extraWorkRequest
-		    .getHoursDoneInPartialDate());
+		    .getPartialPayingDate());
 	    if (hasMoreThanOneCostCenter) {
 		query.append(" and emp_ccusto =");
 		query.append(extraWorkRequest.getUnit().getCostCenterCode());

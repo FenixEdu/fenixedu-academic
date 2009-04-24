@@ -654,7 +654,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private Integer getHourByYearExtraWork() {
 	int result = 0;
-	for (ExtraWorkRequest request : getEmployee().getAssiduousness().getExtraWorkRequests(
+	for (ExtraWorkRequest request : getEmployee().getAssiduousness().getYearExtraWorkRequests(
 		getExtraWorkRequestFactory().getPartialPayingDate())) {
 	    if (getExtraWorkRequest() == null || !getExtraWorkRequest().equals(request)) {
 		if (request.getWorkdayHours() != null) {
