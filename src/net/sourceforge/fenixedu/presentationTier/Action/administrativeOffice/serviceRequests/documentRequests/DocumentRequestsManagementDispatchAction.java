@@ -52,7 +52,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
 
 })
-
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private DocumentRequest getDocumentRequest(HttpServletRequest request) {
@@ -203,8 +202,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final StringBuilder schemaName = new StringBuilder();
 	schemaName.append("DocumentRequestCreateBean.");
 	schemaName.append(requestType.name());
-	if ((!requestCreateBean.getRegistration().isBolonha())
-		&& (requestType.compareTo(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE) == 0)) {
+
+	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
 	}
 	schemaName.append(".AdditionalInformation");

@@ -15,7 +15,7 @@ public enum DocumentRequestType {
 
     APPROVEMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
-    DEGREE_FINALIZATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    DEGREE_FINALIZATION_CERTIFICATE(true, false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
     EXAM_DATE_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
 
@@ -45,6 +45,8 @@ public enum DocumentRequestType {
 
     private boolean allowedToQuickDeliver;
 
+    private boolean withBranch;
+
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
 	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD, EXTERNAL_COURSE_LOAD,
 	    PROGRAM_CERTIFICATE, EXTERNAL_PROGRAM_CERTIFICATE);
@@ -52,11 +54,17 @@ public enum DocumentRequestType {
     static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
 	    IRS_DECLARATION, GENERIC_DECLARATION);
 
-    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
+    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {
 	this.hasAdditionalInformation = hasAdditionalInformation;
 	this.allowedToQuickDeliver = allowedToQuickDeliver;
+	this.withBranch = withBranch;
 	this.administrativeOfficeTypes = Arrays.asList(administrativeOfficeTypes);
+    }
+
+    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
+	    AdministrativeOfficeType... administrativeOfficeTypes) {
+	this(hasAdditionalInformation, allowedToQuickDeliver, false, administrativeOfficeTypes);
     }
 
     public String getName() {
@@ -99,8 +107,8 @@ public enum DocumentRequestType {
 	return allowedToQuickDeliver;
     }
 
-    public void setAllowedToQuickDeliver(boolean allowedToQuickDeliver) {
-	this.allowedToQuickDeliver = allowedToQuickDeliver;
+    public boolean withBranch() {
+	return withBranch;
     }
 
     public boolean getCanBeFreeProcessed() {

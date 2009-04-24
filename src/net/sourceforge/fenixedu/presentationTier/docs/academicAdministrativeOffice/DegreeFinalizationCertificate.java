@@ -26,10 +26,15 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
     }
 
     @Override
+    protected DegreeFinalizationCertificateRequest getDocumentRequest() {
+	return (DegreeFinalizationCertificateRequest) super.getDocumentRequest();
+    }
+
+    @Override
     protected void fillReport() {
 	super.fillReport();
 
-	final DegreeFinalizationCertificateRequest req = (DegreeFinalizationCertificateRequest) getDocumentRequest();
+	final DegreeFinalizationCertificateRequest req = getDocumentRequest();
 
 	addParameter("degreeFinalizationDate", getDegreeFinalizationDate(req));
 	addParameter("exceptionalConclusionInfo", getExceptionalConclusionInfo(req));
@@ -41,11 +46,31 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	addParameter("diplomaDescription", getDiplomaDescription());
 	addParameter("detailedInfoIntro", getDetailedInfoIntro(req));
 	addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
+
+	setBranchField();
+    }
+
+    private void setBranchField() {
+	String branch = getDocumentRequest().getBranch();
+	if ((branch == null) || (branch.isEmpty())) {
+	    addParameter("branch", "");
+	    return;
+	}
+	final StringBuilder branchInfo = new StringBuilder();
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.in.the.male"));
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.branch").toLowerCase());
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getResourceBundle().getString("label.of.both"));
+	branchInfo.append(SINGLE_SPACE);
+	branchInfo.append(getDocumentRequest().getBranch().toUpperCase());
+	addParameter("branch", branchInfo.toString());
     }
 
     @Override
     protected String getDegreeDescription() {
-	final DegreeFinalizationCertificateRequest request = (DegreeFinalizationCertificateRequest) getDocumentRequest();
+	final DegreeFinalizationCertificateRequest request = getDocumentRequest();
 	return getRegistration().getDegreeDescription(request.getWhatShouldBeRequestedCycle(), getLocale());
     }
 
