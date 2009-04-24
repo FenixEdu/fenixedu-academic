@@ -5,75 +5,78 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 
-<p class="center">
-	<bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/>
-</p>
-<h2 class="center caps">
-	<bean:message key="title.inquiries.course.evaluation" bundle="INQUIRIES_RESOURCES"/>
-</h2>
-<h3 class="center caps">
-	<bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/>
-</h3>
+<p><em><bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/></em></p>
+<h2><bean:message key="title.inquiries.course.evaluation" bundle="INQUIRIES_RESOURCES"/></h2>
+<h3 class="mbottom1"><bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/></h3>
 
-<br/>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
+
 <logic:present name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>'>
-		<p class="caps"><strong>
+		<p class="mtop15 mbottom05">
 			<bean:message key="title.inquiries.edit.reminder" bundle="INQUIRIES_RESOURCES"/>
-		</strong></p>
+		</p>
 		
 	<html:form action="/sendEmailReminder">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sendEmails" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 		 
-		<p class="underline italic">
-			<bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
-		</p>
+<table class="tstyle5 thlight thleft mtop05">
+	<tr>
+		<th><bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/></th>
+		<td>
+			<bean:define id="subject">
+				<bean:message key="message.inquiries.email.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
+			</bean:define>
+			<html:text bundle="HTMLALT_RESOURCES" altKey="text.bodyTextSubject" property="bodyTextSubject" size="50" value='<%= subject %>' />
+		</td>
+	</tr>
+	<tr>
+		<th><bean:message key="title.inquiries.reminder.body" bundle="INQUIRIES_RESOURCES"/></th>
+		<td>
+			<bean:define id="bodyIntro">
+				<bean:message key="message.inquiries.email.reminder.body.intro" bundle="INQUIRIES_RESOURCES"/>
+			</bean:define>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextIntro" property="bodyTextIntro" styleClass="reminder" rows="12" cols="90" value='<%= bodyIntro %>' />
+		</td>
+	</tr>
+	<tr>
+		<th></th>
+		<td><bean:message key="title.inquiries.reminder.unevaluated.courses" bundle="INQUIRIES_RESOURCES"/></td>
+	</tr>
+	<tr>
+		<th></th>
+		<td>
+			<bean:define id="bodyEnd">
+				<bean:message key="message.inquiries.email.reminder.body.end" bundle="INQUIRIES_RESOURCES"/>
+			</bean:define>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextEnd" property="bodyTextEnd" styleClass="reminder" rows="7" cols="90" value='<%= bodyEnd %>' />
+		</td>
+	</tr>
+</table>
+
 		
-		<bean:define id="subject">
-			<bean:message key="message.inquiries.email.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
-		</bean:define>
-		<html:text bundle="HTMLALT_RESOURCES" altKey="text.bodyTextSubject" property="bodyTextSubject" styleClass="reminder" value='<%= subject %>' />
 			
-		<p class="underline italic">
-			<bean:message key="title.inquiries.reminder.body" bundle="INQUIRIES_RESOURCES"/>
-		</p>
-		
-		<bean:define id="bodyIntro">
-			<bean:message key="message.inquiries.email.reminder.body.intro" bundle="INQUIRIES_RESOURCES"/>
-		</bean:define>
-		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextIntro" property="bodyTextIntro" styleClass="reminder" rows="10" value='<%= bodyIntro %>' />
-	
-		<br/>
-		<strong>
-			<bean:message key="title.inquiries.reminder.unevaluated.courses" bundle="INQUIRIES_RESOURCES"/>
-		</strong>
-		<br/>
 
-		<bean:define id="bodyEnd">
-			<bean:message key="message.inquiries.email.reminder.body.end" bundle="INQUIRIES_RESOURCES"/>
-		</bean:define>
-		<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.bodyTextEnd" property="bodyTextEnd" styleClass="reminder" rows="5" value='<%= bodyEnd %>' />
-		<br/>
-		<br/>
 
-	<p class="caps"><strong>
+
+	<p class="mbottom05 mtop2">
 		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
-	</strong></p>
+	</p>
 
-		<table>
+		<table class="tstyle1 thleft mtop05">
 			<tr>
-				<th class="listClasses-header">
+				<th>
+					Tipo de Curso
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="table.header.curricular.plan" bundle="INQUIRIES_RESOURCES"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 					<bean:message key="table.header.acronym" bundle="INQUIRIES_RESOURCES"/>
 				</th>
-				<th class="listClasses-header">
+				<th>
 				</th>
 			</tr>
 			
@@ -82,16 +85,16 @@
 					<bean:write name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" />	
 				</bean:define>--%>
 					<tr>
-						<td class="listClasses">
+						<td>
 							<bean:message name="degreeCurricularPlan" property="infoDegree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 						</td>
-						<td class="listClasses">
+						<td>
 							<bean:write name="degreeCurricularPlan" property="infoDegree.nome" /> - <bean:write name="degreeCurricularPlan" property="name" />
 						</td>
-						<td class="listClasses">
+						<td>
 							<bean:write name="degreeCurricularPlan" property="infoDegree.sigla" />
 						</td>
-						<td class="listClasses">
+						<td>
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.degreeCurricularPlanIds" property="degreeCurricularPlanIds">
 								<bean:write name="degreeCurricularPlan" property="idInternal" />
 							</html:multibox>
@@ -100,19 +103,13 @@
 			</logic:iterate>
 		</table>		
 
-		<br/>
-		<br/>
 
-		<table class="reminder">
-			<tr>
-				<td align="right">
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
-						<bean:message key="button.inquiries.send.email.reminder" bundle="INQUIRIES_RESOURCES"/>
-					</html:submit>
-				</td>
-			</tr>
-		</table>			
 
+	<p class="mtop15">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.inquiries.send.email.reminder" bundle="INQUIRIES_RESOURCES"/>
+		</html:submit>
+	</p>
 
 	</html:form>
 

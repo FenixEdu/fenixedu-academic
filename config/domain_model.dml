@@ -5536,6 +5536,8 @@ class DomainObject {
 	class util.email.CoordinatorSender extends util.email.Sender {}
 	
 	class util.email.PersonFunctionSender extends util.email.Sender {}
+	
+	class util.email.PersonSender extends util.email.Sender {}
 
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
@@ -8011,6 +8013,11 @@ relation CoordinatorSender {
 relation PersonFunctionSender {
 	organizationalStructure.PersonFunction playsRole personFunction;
 	util.email.PersonFunctionSender playsRole sender;
+}
+
+relation PersonSender {
+	Person playsRole person;
+	util.email.PersonSender playsRole sender;
 }
 
 relation ExecutionDegreeCampus {

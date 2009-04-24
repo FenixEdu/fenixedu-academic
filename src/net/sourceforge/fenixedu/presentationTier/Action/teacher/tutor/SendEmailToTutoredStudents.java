@@ -10,10 +10,12 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutor
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.util.email.PersonSender;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,56 +23,28 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class SendEmailToTutoredStudents extends SimpleMailSenderAction {
+public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
     public Teacher getTeacher(HttpServletRequest request) {
-	final Person person = getLoggedPerson(request);
-
-	return person.getTeacher();
+	return getLoggedPerson(request).getTeacher();
     }
 
-    @Override
-    protected List<IGroup> getPossibleReceivers(HttpServletRequest request) {
-	List<IGroup> groups = super.getPossibleReceivers(request);
+    protected List<Recipient> getRecipients(HttpServletRequest request) {
 
 	StudentsByTutorBean receivers = (StudentsByTutorBean) request.getAttribute("receivers");
 
-	List<Person> persons = new ArrayList<Person>();
+	List<Recipient> recipients = new ArrayList<Recipient>();
 
 	if (receivers != null) {
 	    for (Tutorship tutorship : receivers.getStudentsList()) {
-		persons.add(tutorship.getStudent().getPerson());
+		Person person = tutorship.getStudent().getPerson();
+		recipients.add(Recipient.createNewRecipient(person.getName(), new PersonGroup(person)));
 	    }
 	}
 
-	groups.add(new FixedSetGroup(persons));
-
-	return groups;
+	return recipients;
     }
 
-    @Override
-    protected MailBean createMailBean(HttpServletRequest request) {
-	MailBean bean = new MailBean();
-
-	Person person = getLoggedPerson(request);
-	bean.setFromName(person.getName());
-	bean.setFromAddress(person.getEmail());
-
-	bean.setReceiversOptions(getPossibleReceivers(request));
-	bean.setReceiversGroupList(getPossibleReceivers(request));
-	bean.setReceiversGroup(getPossibleReceivers(request).get(0)); // only
-	// one
-	// group
-	// of
-	// persons
-	// (
-	// teacher
-	// tutors)
-
-	return bean;
-    }
-
-    @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	RenderUtils.invalidateViewState();
@@ -120,22 +94,16 @@ public class SendEmailToTutoredStudents extends SimpleMailSenderAction {
 
     public ActionForward createMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final Teacher teacher = getTeacher(request);
-
-	MailBean bean = createMailBean(request);
-	request.setAttribute("mailBean", bean);
-
-	request.setAttribute("tutor", teacher.getPerson());
-	return mapping.findForward("compose-mail");
+	final Person teacherPerson = getLoggedPerson(request);
+	Sender sender = PersonSender.newInstance(teacherPerson);
+	return EmailsDA.sendEmail(request, sender, getRecipients(request).toArray(new Recipient[] {}));
     }
-
-    @Override
-    public ActionForward sendInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	MailBean bean = createMailBean(request);
-
-	request.setAttribute("mailBean", bean);
-	request.setAttribute("tutor", getLoggedPerson(request));
-	return mapping.findForward("compose-mail");
-    }
+    /*
+     * public ActionForward sendInvalid(ActionMapping mapping, ActionForm
+     * actionForm, HttpServletRequest request, HttpServletResponse response)
+     * throws Exception { MailBean bean = createMailBean(request);
+     * 
+     * request.setAttribute("mailBean", bean); request.setAttribute("tutor",
+     * getLoggedPerson(request)); return mapping.findForward("compose-mail"); }
+     */
 }
