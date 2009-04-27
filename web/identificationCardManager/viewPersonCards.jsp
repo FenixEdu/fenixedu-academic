@@ -39,25 +39,43 @@
 	<br/>
 	<br/>
 
-	<fr:view name="person" property="cardGenerationEntries" schema="card.generation.person.card.list">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
-			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
-			<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
+	<logic:present role="MANAGER">
+		<fr:view name="person" property="cardGenerationEntries" schema="card.generation.person.card.list">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
+				<fr:property name="rowClasses" value=",bgcolorfafafa"/>
+				<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
 
-			<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCard"/>
-			<fr:property name="key(view)" value="label.view" />
-			<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
-			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
-			<fr:property name="order(view)" value="1" />
+				<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCard"/>
+				<fr:property name="key(view)" value="label.view" />
+				<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
+				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
+				<fr:property name="order(view)" value="1" />
 
-			<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
-			<fr:property name="key(delete)" value="label.delete" />
-			<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />
-			<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
-			<fr:property name="order(delete)" value="2" />
-		</fr:layout>
-	</fr:view>
+				<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
+				<fr:property name="key(delete)" value="label.delete" />
+				<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />
+				<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
+				<fr:property name="order(delete)" value="2" />
+			</fr:layout>
+		</fr:view>
+	</logic:present>
+
+	<logic:notPresent role="MANAGER">
+		<fr:view name="person" property="cardGenerationEntries" schema="card.generation.person.card.list">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
+				<fr:property name="rowClasses" value=",bgcolorfafafa"/>
+				<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
+
+				<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCard"/>
+				<fr:property name="key(view)" value="label.view" />
+				<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
+				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
+				<fr:property name="order(view)" value="1" />
+			</fr:layout>
+		</fr:view>
+	</logic:notPresent>
 
 	<br/>
 	<br/>
