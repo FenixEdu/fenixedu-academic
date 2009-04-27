@@ -105,8 +105,10 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
 	try {
 	    return getTargetGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
 	} catch (GroupDynamicExpressionException e) {
+	    e.printStackTrace();
 	    throw e;
 	} catch (Exception e) {
+	    e.printStackTrace();
 	    throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
 	}
     }

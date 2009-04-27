@@ -53,8 +53,10 @@ public class GroupAvailability extends GroupAvailability_Base {
 	try {
 	    return getTargetGroup().allows(context.getUserView());
 	} catch (GroupDynamicExpressionException e) {
+	    e.printStackTrace();
 	    throw e;
 	} catch (Exception e) {
+	    e.printStackTrace();
 	    throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
 	}
     }
