@@ -215,7 +215,7 @@ public class Teacher extends Teacher_Base {
 	TeacherProfessionalSituation regimen = getLastLegalRegimenWithoutSpecialSituations();
 	return (regimen != null) ? regimen.getCategory() : null;
     }
-    
+
     public Category getCurrentCategory() {
 	TeacherProfessionalSituation regimen = getCurrentLegalRegimenWithoutSpecialSitutions();
 	return (regimen != null) ? regimen.getCategory() : null;
@@ -1293,13 +1293,15 @@ public class Teacher extends Teacher_Base {
 	if (responsePeriod != null) {
 	    for (final Professorship professorship : getProfessorships(responsePeriod.getExecutionPeriod())) {
 		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()
-			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()) {
+			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()
+			&& (professorship.hasAssociatedLessonsInTeachingServices() || professorship.isResponsibleFor())) {
 		    result.add(professorship.getExecutionCourse());
 		}
 	    }
 	}
 	return result;
     }
+
     
     public int getProfessorshipsCount() {
 	return getPerson().getProfessorshipsCount();

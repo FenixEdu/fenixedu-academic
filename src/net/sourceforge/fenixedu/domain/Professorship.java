@@ -197,7 +197,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	final ExecutionCourse executionCourse = this.getExecutionCourse();
 	final InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
 		InquiryResponsePeriodType.TEACHING);
-	if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.getAvailableForInquiries()) {
+	if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.getAvailableForInquiries()
+		|| (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
 	    return false;
 	}
 	return true;
@@ -213,6 +214,15 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	return null;
     }
 
+    public boolean hasAssociatedLessonsInTeachingServices() {
+	for (final DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+	    if (!degreeTeachingService.getShift().getAssociatedLessons().isEmpty()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     public Teacher getTeacher() {
 	return getPerson().getTeacher();
     }
@@ -227,6 +237,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public void removeTeacher() {
 	getPerson().removeTeacher();
-    }
+    }    
 
 }
