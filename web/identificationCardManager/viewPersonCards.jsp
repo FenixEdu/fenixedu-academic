@@ -4,7 +4,15 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
+<%@page import="net.sourceforge.fenixedu.domain.Teacher"%>
+<%@page import="net.sourceforge.fenixedu.domain.Employee"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
+<%@page import="net.sourceforge.fenixedu.domain.StudentCurricularPlan"%>
+<%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry"%>
+<%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch"%>
+<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%><html:xhtml/>
 
 <h2>
 	<bean:message key="link.card.generation.search.people" />
@@ -13,6 +21,7 @@
 <br/>
 
 <logic:present name="person">
+	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<fr:view name="person" schema="card.generation.search.person.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
@@ -50,5 +59,32 @@
 	<logic:present name="cardGenerationEntry">
 		<bean:write name="cardGenerationEntry" property="line"/>
 	</logic:present>
+
+	<br/>
+	<br/>
+
+	<%
+		if (person.hasStudent()) {
+		    final Student student = person.getStudent();
+		    final Teacher teacher = person.getTeacher();
+		    final Employee employee = person.getEmployee();
+
+		    if ((teacher == null || !teacher.isActive()) && (employee == null || !employee.isActive())
+			    && !student.getActiveRegistrations().isEmpty()) {
+				for (final CardGenerationBatch cardGenerationBatch : CardGenerationBatch.getAvailableBatchesFor()) {
+				    if (cardGenerationBatch.getExecutionYear().isCurrent() && cardGenerationBatch.getSent() == null) {
+						%>
+							<%= cardGenerationBatch.getDescription() %>
+							<bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createNewEntry&amp;cardGenerationBatchID=<%= cardGenerationBatch.getOID() %>&amp;studentID=<%= student.getOID() %></bean:define>
+							<html:link page="<%= url %>">
+								<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.create.new.card.generation.entry.for.student"/>
+							</html:link>
+							<br/>
+						<%
+				    }
+				}
+			}
+		}
+	%>
 
 </logic:present>

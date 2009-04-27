@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGe
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem.CardGenerationProblemDeleter;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -258,6 +259,14 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	final Integer cardGenerationProblemID = cardGenerationProblemParam == null || cardGenerationProblemParam.length() == 0 ? null
 		: Integer.valueOf(cardGenerationProblemParam);
 	return cardGenerationProblemID == null ? null : rootDomainObject.readCardGenerationProblemByOID(cardGenerationProblemID);
+    }
+
+    public ActionForward createNewEntry(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final Student student = getDomainObject(request, "studentID");
+	final CardGenerationBatch cardGenerationBatch = getDomainObject(request, "cardGenerationBatchID");
+	cardGenerationBatch.createCardGenerationEntry(student);
+	return firstPage(mapping, actionForm, request, response);
     }
 
 }

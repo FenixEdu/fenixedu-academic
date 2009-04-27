@@ -1,13 +1,19 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -16,8 +22,21 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
+
+    public static final Comparator<CardGenerationBatch> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationBatch>() {
+
+	@Override
+	public int compare(CardGenerationBatch o1, CardGenerationBatch o2) {
+	    final int c = o1.getCreated().compareTo(o2.getCreated());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+	
+    };
 
     public static class CardGenerationBatchCreator implements FactoryExecutor {
 
@@ -193,6 +212,73 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	    }
 	}
 	return new CardGenerationBatch(description, executionYear, true);
+    }
+
+    private StudentCurricularPlan findStudentCurricularPlan(final Student student, final DateTime begin, final DateTime end) {
+	final Set<StudentCurricularPlan> studentCurricularPlans = getStudentCurricularPlans(begin, end, student);
+	if (studentCurricularPlans.size() == 1) {
+	    return studentCurricularPlans.iterator().next();
+	} else if (studentCurricularPlans.size() > 1) {
+	    final StudentCurricularPlan max = findMaxStudentCurricularPlan(studentCurricularPlans);
+	    return max;
+	}
+	return null;
+    }
+
+    private StudentCurricularPlan findMaxStudentCurricularPlan(final Set<StudentCurricularPlan> studentCurricularPlans) {
+	return Collections.max(studentCurricularPlans, new Comparator<StudentCurricularPlan>() {
+
+	    @Override
+	    public int compare(final StudentCurricularPlan o1, final StudentCurricularPlan o2) {
+		final DegreeType degreeType1 = o1.getDegreeType();
+		final DegreeType degreeType2 = o2.getDegreeType();
+		if (degreeType1 == degreeType2) {
+		    final YearMonthDay yearMonthDay1 = o1.getStartDateYearMonthDay();
+		    final YearMonthDay yearMonthDay2 = o2.getStartDateYearMonthDay();
+		    final int c = yearMonthDay1.compareTo(yearMonthDay2);
+		    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+		} else {
+		    return degreeType1.compareTo(degreeType2);
+		}
+	    }
+	    
+	});
+    }
+
+    public static SortedSet<CardGenerationBatch> getAvailableBatchesFor() {
+	final SortedSet<CardGenerationBatch> cardGenerationBatchs = new TreeSet<CardGenerationBatch>(COMPARATOR_BY_CREATION_DATE);
+	for (final CardGenerationBatch cardGenerationBatch : RootDomainObject.getInstance().getCardGenerationBatchesSet()) {
+	    final ExecutionYear executionYear = cardGenerationBatch.getExecutionYear();
+	    if (executionYear.isCurrent()) {
+		cardGenerationBatchs.add(cardGenerationBatch);
+	    }
+	}
+	return cardGenerationBatchs;
+    }
+
+    @Service
+    public void createCardGenerationEntry(final Student student) {
+	final ExecutionYear executionYear = getExecutionYear();
+	final DateTime begin = executionYear.getBeginDateYearMonthDay().toDateTimeAtMidnight();
+	final DateTime end = executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight();;
+	
+	final Person person = student.getPerson();
+	if (person != null) {
+	    final Teacher teacher = person.getTeacher();
+	    final Employee employee = person.getEmployee();
+
+	    if ((teacher == null || !teacher.isActive()) && (employee == null || !employee.isActive())
+		    && !student.getActiveRegistrations().isEmpty()) {
+		final StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(student, begin, end);
+		if (studentCurricularPlan != null && studentCurricularPlan.getDegreeType() != DegreeType.EMPTY) {
+		    final CardGenerationEntry cardGenerationEntry = new CardGenerationEntry();
+		    cardGenerationEntry.setCreated(new DateTime());
+		    cardGenerationEntry.setCardGenerationBatch(this);
+		    cardGenerationEntry.setPerson(person);
+		    cardGenerationEntry.setLine(studentCurricularPlan);
+		}
+	    }
+	}
     }
 
 }
