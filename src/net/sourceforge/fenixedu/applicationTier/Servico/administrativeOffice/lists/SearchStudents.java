@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -25,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class SearchStudents extends FenixService {
 
     @Service
-    public static List<RegistrationWithStateForExecutionYearBean> run(SearchStudentsByDegreeParametersBean searchbean)
+    public static List<RegistrationWithStateForExecutionYearBean> run(final SearchStudentsByDegreeParametersBean searchbean)
 	    throws FenixServiceException {
 
 	final Set<Registration> registrations = new TreeSet<Registration>(Registration.NUMBER_COMPARATOR);
@@ -47,10 +48,14 @@ public class SearchStudents extends FenixService {
 	    final Set<Registration> registrations, final ExecutionYear executionYear) {
 
 	final List<RegistrationWithStateForExecutionYearBean> result = new ArrayList<RegistrationWithStateForExecutionYearBean>();
-	for (Registration registration : registrations) {
+	for (final Registration registration : registrations) {
 
 	    if (!searchbean.getRegistrationAgreements().isEmpty()
 		    && !searchbean.getRegistrationAgreements().contains(registration.getRegistrationAgreement())) {
+		continue;
+	    }
+
+	    if (searchbean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchbean, registration)) {
 		continue;
 	    }
 
@@ -61,13 +66,19 @@ public class SearchStudents extends FenixService {
 		continue;
 	    }
 
-	    if (searchbean.getActiveEnrolments() != true
-		    || (searchbean.getActiveEnrolments() && registration.hasAnyEnrolmentsIn(executionYear))) {
+	    if (!searchbean.getActiveEnrolments()
+		    || registration.hasAnyEnrolmentsIn(executionYear)) {
 		result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
 	    }
 	}
 
 	return result;
+    }
+
+    static private boolean hasStudentStatuteType(final SearchStudentsByDegreeParametersBean searchbean,
+	    final Registration registration) {
+	return CollectionUtils.containsAny(searchbean.getStudentStatuteTypes(), registration.getStudent()
+		.getStatutesTypesValidOnAnyExecutionSemesterFor(searchbean.getExecutionYear()));
     }
 
 }

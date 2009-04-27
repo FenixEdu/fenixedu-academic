@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 /**
@@ -28,7 +30,9 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
     private List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
 
     private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
-    
+
+    private List<StudentStatuteType> studentStatuteTypes = new ArrayList<StudentStatuteType>();
+
     private boolean activeEnrolments = false;
 
     public Degree getDegree() {
@@ -47,6 +51,14 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
 	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
     }
 
+    public DegreeType getDegreeType() {
+	return degreeType;
+    }
+
+    public void setDegreeType(DegreeType degreeType) {
+	this.degreeType = degreeType;
+    }
+
     public List<RegistrationAgreement> getRegistrationAgreements() {
 	return registrationAgreements;
     }
@@ -63,22 +75,24 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
 	this.registrationStateTypes = registrationStateTypes;
     }
 
-    public DegreeType getDegreeType() {
-	return degreeType;
+    public List<StudentStatuteType> getStudentStatuteTypes() {
+	return studentStatuteTypes;
     }
 
-    public void setDegreeType(DegreeType degreeType) {
-	this.degreeType = degreeType;
+    public void setStudentStatuteTypes(List<StudentStatuteType> studentStatuteTypes) {
+	this.studentStatuteTypes = studentStatuteTypes;
+    }
+
+    public boolean hasAnyStudentStatuteType() {
+	return this.studentStatuteTypes != null && !this.studentStatuteTypes.isEmpty();
     }
 
     public boolean getActiveEnrolments() {
-        return activeEnrolments;
+	return activeEnrolments;
     }
 
     public void setActiveEnrolments(boolean activeEnrolments) {
-        this.activeEnrolments = activeEnrolments;
+	this.activeEnrolments = activeEnrolments;
     }
-
-
 
 }

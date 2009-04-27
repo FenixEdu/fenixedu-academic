@@ -1388,6 +1388,10 @@
 		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType" />
 		<property name="classes" value="list2" />
 	</slot>	
+	<slot name="studentStatuteTypes" key="label.statutes" layout="option-select">
+		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.student.StudentStatuteType" />
+		<property name="classes" value="list2" />
+	</slot>
 </schema>
 
 <schema name="studentCurricularPlanList.view" 
