@@ -36,7 +36,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public void setLine(final StudentCurricularPlan studentCurricularPlan) {
+    public static String createLine(final StudentCurricularPlan studentCurricularPlan) {
 	final StringBuilder stringBuilder = new StringBuilder();
 
 	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
@@ -56,7 +56,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(" ");
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
-	stringBuilder.append(getNumberOfCards(studentCurricularPlan));
+	stringBuilder.append("00");
 
 	stringBuilder.append("00");
 
@@ -77,6 +77,17 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("     ");
 	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
 	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public void setLine(final StudentCurricularPlan studentCurricularPlan) {
+	final String line = createLine(studentCurricularPlan);
+
+	final StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(line.substring(0, 30));
+	stringBuilder.append(getNumberOfCards(studentCurricularPlan));
+	stringBuilder.append(line.substring(32));
 
 	setLine(stringBuilder.toString());
     }
@@ -134,7 +145,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return Integer.parseInt(ministryCode);
     }
 
-    protected String fillLeftString(final String uppered, final char c, final int fillTo) {
+    protected static String fillLeftString(final String uppered, final char c, final int fillTo) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	for (int i = uppered.length(); i < fillTo; i++) {
 	    stringBuilder.append(c);
@@ -151,7 +162,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return stringBuilder.toString();
     }
 
-    protected String normalizeDegreeType17(final DegreeType degreeType) {
+    protected static String normalizeDegreeType17(final DegreeType degreeType) {
 	if (degreeType == DegreeType.DEGREE) {
 	    return "LICENCIATURA     ";
 	}
@@ -179,12 +190,12 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	throw new Error("Unknown degree type: " + degreeType);
     }
 
-    protected String normalizeStudentNumber(final Student student) {
+    protected static String normalizeStudentNumber(final Student student) {
 	final Integer number = student.getNumber();
 	return number.toString();
     }
 
-    protected String normalizeDegreeType12(final DegreeType degreeType) {
+    protected static String normalizeDegreeType12(final DegreeType degreeType) {
 	if (degreeType == DegreeType.DEGREE) {
 	    return "LICENCIATURA";
 	}
@@ -212,7 +223,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	throw new Error("Unknown degree type: " + degreeType);
     }
 
-    protected String normalizeDegreeName(final Degree degree) {
+    protected static String normalizeDegreeName(final Degree degree) {
 	final String degreeName = normalize(degree.getIdCardName());
 	if (degreeName.length() > 42) {
 	    throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
@@ -243,8 +254,13 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public Category getCategory() {
-	final String codeString = getLine().substring(11, 13);
+	return readCategory(getLine());
+    }
+
+    public static Category readCategory(final String line) {
+	final String codeString = line.substring(11, 13);
 	final int code = Integer.valueOf(codeString);
 	return Category.valueOf(code);
     }
+
 }

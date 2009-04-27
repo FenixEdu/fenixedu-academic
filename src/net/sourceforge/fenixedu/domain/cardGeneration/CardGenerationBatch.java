@@ -101,7 +101,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	}
     }
 
-    private Set<StudentCurricularPlan> getStudentCurricularPlans(final DateTime begin, final DateTime end, final Student student) {
+    public Set<StudentCurricularPlan> getStudentCurricularPlans(final DateTime begin, final DateTime end, final Student student) {
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 
 	for (final Registration registration : student.getRegistrationsSet()) {
