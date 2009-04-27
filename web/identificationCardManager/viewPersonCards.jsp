@@ -50,6 +50,12 @@
 			<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 			<fr:property name="order(view)" value="1" />
+
+			<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
+			<fr:property name="key(delete)" value="label.delete" />
+			<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />
+			<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
+			<fr:property name="order(delete)" value="2" />
 		</fr:layout>
 	</fr:view>
 

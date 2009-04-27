@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
@@ -246,13 +247,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return normalizedName;
     }
 
-    public void delete() {
-	removeCardGenerationBatch();
-	removePerson();
-	removeRootDomainObject();
-	deleteDomainObject();
-    }
-
     public Category getCategory() {
 	return readCategory(getLine());
     }
@@ -261,6 +255,14 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final String codeString = line.substring(11, 13);
 	final int code = Integer.valueOf(codeString);
 	return Category.valueOf(code);
+    }
+
+    @Service 
+    public void delete() {
+	removeCardGenerationBatch();
+	removePerson();
+	removeRootDomainObject();
+	deleteDomainObject();
     }
 
 }

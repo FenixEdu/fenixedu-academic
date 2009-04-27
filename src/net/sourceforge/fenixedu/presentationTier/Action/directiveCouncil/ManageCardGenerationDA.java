@@ -269,4 +269,13 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return firstPage(mapping, actionForm, request, response);
     }
 
+    public ActionForward deletePersonCard(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final CardGenerationEntry cardGenerationEntry = getDomainObject(request, "cardGenerationEntryId");
+	if (cardGenerationEntry != null) {
+	    cardGenerationEntry.delete();
+	}
+	return firstPage(mapping, actionForm, request, response);
+    }
+
 }
