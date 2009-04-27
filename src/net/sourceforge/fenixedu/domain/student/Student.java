@@ -554,8 +554,8 @@ public class Student extends Student_Base {
 	return getStatutes(ExecutionSemester.readActualExecutionSemester());
     }
 
-    public Collection<StudentStatuteBean> getStatutes(ExecutionSemester executionSemester) {
-	List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
+    public Collection<StudentStatuteBean> getStatutes(final ExecutionSemester executionSemester) {
+	final List<StudentStatuteBean> result = new ArrayList<StudentStatuteBean>();
 	for (final StudentStatute statute : getStudentStatutesSet()) {
 	    if (statute.isValidInExecutionPeriod(executionSemester)) {
 		result.add(new StudentStatuteBean(statute, executionSemester));
@@ -564,6 +564,21 @@ public class Student extends Student_Base {
 
 	if (isHandicapped()) {
 	    result.add(new StudentStatuteBean(StudentStatuteType.HANDICAPPED, executionSemester));
+	}
+
+	return result;
+    }
+
+    public Collection<StudentStatuteType> getStatutesTypesValidOnAnyExecutionSemesterFor(final ExecutionYear executionYear) {
+	final Collection<StudentStatuteType> result = new ArrayList<StudentStatuteType>();
+	for (final StudentStatute statute : getStudentStatutesSet()) {
+	    if (statute.isValidOnAnyExecutionPeriodFor(executionYear)) {
+		result.add(statute.getStatuteType());
+	    }
+	}
+
+	if (isHandicapped()) {
+	    result.add(StudentStatuteType.HANDICAPPED);
 	}
 
 	return result;
