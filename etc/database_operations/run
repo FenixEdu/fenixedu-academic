@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Changing Relation Between Teacher And Professorship" changingRelationBetweenTeacherAndProfessorship.sql
 execute "Add column Branch to degree finalization certificates" degreeFinalizationBranch.sql
+execute "Database schema updates" updates.sql
