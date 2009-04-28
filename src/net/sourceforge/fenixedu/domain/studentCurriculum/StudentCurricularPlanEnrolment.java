@@ -76,11 +76,11 @@ abstract public class StudentCurricularPlanEnrolment {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
 	}
 
-	if (isResponsiblePersonStudent()) {
-	    assertStudentEnrolmentPreConditions();
-
-	} else if (isResponsiblePersonAcademicAdminOffice()) {
+	if (isResponsiblePersonAcademicAdminOffice()) {
 	    assertAcademicAdminOfficePreConditions();
+
+	} else if (isResponsiblePersonStudent()) {
+	    assertStudentEnrolmentPreConditions();
 
 	} else {
 	    throw new DomainException("error.invalid.user");
