@@ -30,7 +30,7 @@ public class SDCandidacy extends SDCandidacy_Base {
     }
 
     @Override
-    void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
     }
 
     @Override

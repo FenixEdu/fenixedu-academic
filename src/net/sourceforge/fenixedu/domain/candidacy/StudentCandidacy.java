@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
@@ -96,6 +97,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	    return new DFACandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_PHD_PROGRAM:
+	    //TODO: REMOVE THIS
 	    return new PHDProgramCandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:

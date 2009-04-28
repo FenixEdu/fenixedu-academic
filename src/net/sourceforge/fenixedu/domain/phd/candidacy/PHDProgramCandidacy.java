@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacy;
+package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +8,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
+import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -65,7 +69,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
     }
 
     @Override
-    void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
     }
 
     @Override

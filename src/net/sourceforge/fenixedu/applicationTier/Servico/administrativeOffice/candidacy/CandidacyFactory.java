@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 
 import org.joda.time.YearMonthDay;
 

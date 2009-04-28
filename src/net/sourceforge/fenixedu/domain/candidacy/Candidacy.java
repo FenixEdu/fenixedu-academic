@@ -99,13 +99,13 @@ public abstract class Candidacy extends Candidacy_Base {
 	return result;
     }
 
-    public abstract String getDescription();
+    abstract public String getDescription();
 
-    abstract Set<Operation> getOperations(CandidacySituation candidacySituation);
+    abstract protected Set<Operation> getOperations(CandidacySituation candidacySituation);
 
-    abstract void moveToNextState(CandidacyOperationType candidacyOperationType, Person person);
+    abstract protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person);
 
-    public abstract boolean isConcluded();
+    abstract public boolean isConcluded();
 
     @Override
     public YearMonthDay getStartDate() {
@@ -175,11 +175,6 @@ public abstract class Candidacy extends Candidacy_Base {
 	case CANCELLED:
 	    throw new DomainException("error.impossible.to.forward.from.cancelled");
 	case ADMITTED:
-	    if (this instanceof PHDProgramCandidacy) {
-		if (((PHDProgramCandidacy) this).getPhdCandidacyEvent().isInDebt()) {
-		    throw new DomainException("error.student.needs.to.pay.candidacy.fee");
-		}
-	    }
 	    break;
 	case STAND_BY:
 	    if (isCancelling(nextState)) {

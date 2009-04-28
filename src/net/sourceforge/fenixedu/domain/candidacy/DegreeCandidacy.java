@@ -63,7 +63,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
     }
 
     @Override
-    void moveToNextState(final CandidacyOperationType operationType, Person person) {
+    protected void moveToNextState(final CandidacyOperationType operationType, Person person) {
 	switch (getActiveCandidacySituation().getCandidacySituationType()) {
 
 	case STAND_BY:

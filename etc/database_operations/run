@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing old Phd Tables" FixPhdOldTables.sql
+execute "Adding Phd Program Tables" AddPhdProgramTables.sql
+

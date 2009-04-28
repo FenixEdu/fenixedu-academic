@@ -119,7 +119,7 @@ public class DFACandidacy extends DFACandidacy_Base {
     }
 
     @Override
-    void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
+    protected void moveToNextState(CandidacyOperationType candidacyOperationType, Person person) {
 	// TODO Auto-generated method stub
 
     }

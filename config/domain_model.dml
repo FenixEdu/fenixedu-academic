@@ -170,6 +170,8 @@ enum net.sourceforge.fenixedu.util.WeekDay                                      
 enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
 enum net.sourceforge.fenixedu.domain.accessControl.PermissionType                                                         as PermissionType;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType													  as AnnouncementCategoryType;
+enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                        as PhdIndividualProgramProcessState;
+enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 
 /*
  * Value types that need special externalization
@@ -1759,13 +1761,7 @@ class DomainObject {
 		class accounting.events.gratuity.PhDGratuityEvent extends accounting.events.gratuity.GratuityEvent {
 			YearMonthDay creationDate;
 		}
-		
-		class accounting.events.phd.PhDCandidacyEvent extends accounting.AcademicEvent {
-		}
-		
-		class accounting.events.phd.PhDRegistrationEvent extends accounting.AcademicEvent { 
-		}
-
+				
 		class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
 			Integer numberOfDelayDays;
 		}
@@ -2541,9 +2537,6 @@ class DomainObject {
 			}
 
 			class candidacy.MDCandidacy extends candidacy.StudentCandidacy {
-			}
-
-			class candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 			}
 
 			class candidacy.SDCandidacy extends candidacy.StudentCandidacy {
@@ -6240,10 +6233,100 @@ class messaging.AnnouncementCategory extends DomainObject {
 	AnnouncementCategoryType type;
 }
 
+
+/* Phd Module */
+
+class phd.PhdProgram extends DomainObject {
+	DateTime whenCreated;
+	String creator;
+}
+
+class phd.PhdProgramUnit extends organizationalStructure.Unit {
+		
+}
+
+class phd.PhdUnitSite extends UnitSite {
+		
+}
+
+class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
+	PhdIndividualProgramProcessState state;
+}
+
+class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
+	PhdProgramCandidacyProcessState state;
+}
+
+class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
+}
+
+class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
+}
+
+/* End of Phd Module */
+
 /*
  * Relations definitions
  * 
  */
+
+ 
+/* Phd Module */
+
+relation PhdProgramRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProgram playsRole phdPrograms {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramPhdProgramUnit {
+	phd.PhdProgram playsRole phdProgram;
+	phd.PhdProgramUnit playsRole phdProgramUnit;
+}
+
+relation PhdProgramDegree {
+	phd.PhdProgram playsRole phdPrograms {
+		multiplicity *;
+	}
+	Degree playsRole degree;
+}
+
+relation PhdProgramPhdIndividualProgramProcess {
+	phd.PhdProgram playsRole phdProgram;
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProgramProcessPerson {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcesses {
+		multiplicity *;
+	}
+	Person playsRole person;
+}
+
+relation PhdIndividualProgramProcessRegistration {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+	student.Registration playsRole registration;
+}
+
+relation PhdIndividualProgramProcessPhdProgramCandidacyProcess {
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcess;
+	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
+}
+
+relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
+	phd.candidacy.PhdProgramCandidacyEvent playsRole event;
+}
+
+relation PhdProgramCandidacyProcessPhdProgramCandidacy {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
+	phd.candidacy.PHDProgramCandidacy playsRole candidacy;
+}
+
+/* End of Phd Module */
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
 	time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
@@ -7531,11 +7614,6 @@ relation DepartmentUnit {
 relation DfaRegistrationEventRegistration {
 	student.Registration playsRole registration;
 	accounting.events.dfa.DfaRegistrationEvent playsRole dfaRegistrationEvent;
-}
-
-relation PhDRegistrationEventRegistration {
-	student.Registration playsRole registration;
-	accounting.events.phd.PhDRegistrationEvent playsRole phdRegistrationEvent;
 }
 
 relation DistributedTestQuestions {
@@ -14086,10 +14164,6 @@ relation RootDomainObjectDelegateElectionPeriod {
 	}
 }
 
-relation PhDCandidacyEventPhDProgramCandidacy {
-	accounting.events.phd.PhDCandidacyEvent playsRole phdCandidacyEvent;
-	candidacy.PHDProgramCandidacy playsRole phdCandidacy;
-}
 
 relation RootDomainObjectCardGenerationBatch {
         RootDomainObject playsRole rootDomainObject;
