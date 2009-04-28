@@ -183,6 +183,8 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    return new Integer(new Double(row.getCell((short) i).getNumericCellValue()).intValue()).toString();
 	} catch (NumberFormatException e) {
 	    return row.getCell((short) i).getStringCellValue();
+	} catch (IllegalStateException e) {
+	    return row.getCell((short) i).getStringCellValue();
 	}
     }
 
