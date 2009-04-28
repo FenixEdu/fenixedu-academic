@@ -83,7 +83,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	for (Month month : Month.values()) {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()), spreadsheet.getExcelStyle().getVerticalHeaderStyle());
 	    spreadsheet.addHeader("");
-	    cellNum = spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum();
+	    cellNum = spreadsheet.getSheet().getRow(firstHeaderRow).getLastCellNum() - 1;
 	    spreadsheet.getSheet().addMergedRegion(
 		    new Region(firstHeaderRow, (short) (cellNum - 1), firstHeaderRow, (short) cellNum));
 	}
@@ -105,10 +105,10 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
-	int firstRow = 9;
+	int firstRow = 10;
 	int firstColumn = 3;
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
-	int lastColumn = spreadsheet.getMaxiumColumnNumber();
+	int lastColumn = spreadsheet.getMaxiumColumnNumber() - 1;
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
@@ -124,7 +124,7 @@ public class EmployeeExtraWorkAuthorization extends EmployeeExtraWorkAuthorizati
 	decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
 	spreadsheet.sumRows(firstRow, lastRow, firstColumn, lastColumn, 2, spreadsheet.getExcelStyle().getDoubleStyle());
 	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() - 1, 0,
-		spreadsheet.getMaxiumColumnNumber() + 1);
+		spreadsheet.getMaxiumColumnNumber() - 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet, int year) {

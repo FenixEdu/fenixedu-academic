@@ -167,7 +167,7 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	bonusInstallment.getExcelHeader(spreadsheet, bundle, enumBundle);
 	bonusInstallment.getRows(spreadsheet, enumBundle);
 
-	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum(), 0, spreadsheet.getMaxiumColumnNumber());
+	spreadsheet.setRegionBorder(0, spreadsheet.getSheet().getLastRowNum(), 0, spreadsheet.getMaxiumColumnNumber() - 1);
 
 	response.setContentType("text/plain");
 	StringBuilder filename = new StringBuilder();
