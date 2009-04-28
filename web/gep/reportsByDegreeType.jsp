@@ -87,6 +87,7 @@
 	<bean:define id="urlFlunked" type="java.lang.String">/reportsByDegreeType.do?method=downloadFlunked&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlTeachersByShift" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersByShift&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlCourseLoads" type="java.lang.String">/reportsByDegreeType.do?method=downloadCourseLoads&amp;<bean:write name="args" filter="false"/></bean:define>
+	<bean:define id="urlTutorshipProgram" type="java.lang.String">/reportsByDegreeType.do?method=downloadTutorshipProgram&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 	
 			<table class="tstyle1 thleft thlight mtop05">
@@ -272,6 +273,28 @@
 						|
 						<bean:define id="urlCourseLoadsXls" type="java.lang.String"><bean:write name="urlCourseLoads" filter="false"/>&amp;format=xls</bean:define>
 						<html:link page="<%= urlCourseLoadsXls %>">
+							<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+						</html:link>
+					</td>
+					<td>
+						<html:link page="<%= viewReports + "&type=9" %>">
+							<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+						</html:link>
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<bean:message key="label.report.tutorship.program" bundle="GEP_RESOURCES"/>
+					</td>
+					<td>
+						<bean:define id="urlTutorshipProgramCsv" type="java.lang.String"><bean:write name="urlTutorshipProgram" filter="false"/>&amp;format=csv</bean:define>
+						<html:link page="<%= urlTutorshipProgramCsv %>">
+							<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+						</html:link>
+						|
+						<bean:define id="urlTutorshipProgramXls" type="java.lang.String"><bean:write name="urlTutorshipProgram" filter="false"/>&amp;format=xls</bean:define>
+						<html:link page="<%= urlTutorshipProgramXls %>">
 							<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
 						</html:link>
 					</td>

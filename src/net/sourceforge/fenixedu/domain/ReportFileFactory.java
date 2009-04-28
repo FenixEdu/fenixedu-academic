@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
+import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReportFileFactory {
@@ -111,6 +112,15 @@ public class ReportFileFactory {
 	teachersByShiftReportFile.setDegreeType(degreeType);
 	teachersByShiftReportFile.setExecutionYear(executionYear);
 	return teachersByShiftReportFile;
+    }
+
+    @Service
+    public static GepReportFile createTutorshipProgramReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final TutorshipProgramReportFile tutorshipProgramReportFile = new TutorshipProgramReportFile();
+	tutorshipProgramReportFile.setType(type);
+	tutorshipProgramReportFile.setDegreeType(degreeType);
+	tutorshipProgramReportFile.setExecutionYear(executionYear);
+	return tutorshipProgramReportFile;
     }
 
 }

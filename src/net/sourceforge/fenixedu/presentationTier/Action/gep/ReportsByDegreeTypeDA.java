@@ -238,6 +238,18 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return mapping.findForward("selectDegreeType");
     }
 
+    @SuppressWarnings("unused")
+    public ActionForward downloadTutorshipProgram(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createTutorshipProgramReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
 	ReportBean reportBean = (ReportBean) getRenderedObject();
