@@ -91,19 +91,19 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 	    spreadsheet.addHeader(enumBundle.getString(month.getName()), 2000);
 	}
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
-	spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
+	spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) (spreadsheet.getMaxiumColumnNumber() - 1)));
     }
 
     public static void getExcelFooter(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
 	int lastRow = spreadsheet.getSheet().getLastRowNum();
-	int lastColumn = spreadsheet.getMaxiumColumnNumber();
+	int lastColumn = spreadsheet.getMaxiumColumnNumber() - 1;
 	int firstRow = 3;
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(bundle.getString("label.total").toUpperCase());
 	spreadsheet.sumColumn(firstRow, lastRow, 2, lastColumn, spreadsheet.getExcelStyle().getDoubleStyle());
 	spreadsheet.setRegionBorder(firstRow, spreadsheet.getSheet().getLastRowNum() + 1, 0,
-		spreadsheet.getMaxiumColumnNumber() + 1);
+		spreadsheet.getMaxiumColumnNumber() - 1);
     }
 
     public void getExcelRow(StyledExcelSpreadsheet spreadsheet) {
@@ -182,7 +182,8 @@ public class UnitExtraWorkAmount extends UnitExtraWorkAmount_Base {
 		// "message.extraWorkFirstYearMonthNote"));
 		spreadsheet.newHeaderRow();
 		EmployeeExtraWorkAuthorization.getExcelHeader(spreadsheet, bundle, enumBundle);
-		spreadsheet.getSheet().addMergedRegion(new Region(0, (short) 0, 0, (short) spreadsheet.getMaxiumColumnNumber()));
+		spreadsheet.getSheet().addMergedRegion(
+			new Region(0, (short) 0, 0, (short) (spreadsheet.getMaxiumColumnNumber() - 1)));
 		// spreadsheet.getSheet().addMergedRegion(
 		// new Region(rowNum, (short) 0, rowNum, (short) spreadsheet
 		// .getMaxiumColumnNumber()));
