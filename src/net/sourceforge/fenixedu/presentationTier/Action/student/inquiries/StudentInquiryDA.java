@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
@@ -274,7 +275,9 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
-	WriteStudentInquiry.run(studentInquiry);
+	if (studentInquiry.getInquiriesRegistry().getState() == InquiriesRegistryState.ANSWER_LATER) {
+	    WriteStudentInquiry.run(studentInquiry);
+	}
 	return showCoursesToAnswer(actionMapping, actionForm, request, response);
     }
 
