@@ -307,6 +307,8 @@ public class Registration extends Registration_Base {
 	removeDegree();
 	removeStudent();
 	removeRootDomainObject();
+
+	getDestinyRegistrations().clear();
 	getShiftsSet().clear();
 
 	super.deleteDomainObject();
