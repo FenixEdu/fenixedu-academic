@@ -1,1 +1,0 @@
-INSERT INTO ROLE(ROLE_TYPE, PORTAL_SUB_APPLICATION, PAGE, PAGE_NAME_PROPERTY, KEY_ROOT_DOMAIN_OBJECT, OJB_CONCRETE_CLASS) VALUES ("TUTORSHIP", "/pedagogicalCouncil", "/index.do", "portal.PedagogicalCouncil", 1, "net.sourceforge.fenixedu.domain.Role");
