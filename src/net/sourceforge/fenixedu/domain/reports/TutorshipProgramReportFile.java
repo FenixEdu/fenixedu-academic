@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.reports;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -31,6 +35,7 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("Número");
 	spreadsheet.setHeader("Sexo");
+	spreadsheet.setHeader("Média");
 	spreadsheet.setHeader("Média Anual");
 	spreadsheet.setHeader("Número Inscrições");
 	spreadsheet.setHeader("Número Aprovações");
@@ -46,6 +51,8 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 
 			    int enrolmentCounter = 0;
 			    int aprovalCounter = 0;
+			    BigDecimal bigDecimal = null;
+			    double totalCredits = 0;
 
 			    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
 				if (otherRegistration.getDegree() == registration.getDegree()) {
@@ -56,6 +63,12 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 						enrolmentCounter++;
 						if (enrolment.isApproved()) {
 						    aprovalCounter++;
+						    final Grade grade = enrolment.getGrade();
+						    if (grade.isNumeric()) {
+							final double credits = enrolment.getEctsCredits().doubleValue();
+							totalCredits += credits;
+							bigDecimal = bigDecimal.add(grade.getNumericValue().multiply(new BigDecimal(credits)));
+						    }
 						}
 					    }
 					}
@@ -66,7 +79,8 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 			    final Row row = spreadsheet.addRow();
 			    row.setCell(registration.getNumber().toString());
 			    row.setCell(registration.getPerson().getGender().toLocalizedString());
-			    row.setCell(registration.getAverage(executionYear)); // TODO - check wether this is what they want.
+			    row.setCell(registration.getAverage(executionYear));
+			    row.setCell(bigDecimal.divide(new BigDecimal(totalCredits), 5, RoundingMode.HALF_UP));
 			    row.setCell(Integer.toString(enrolmentCounter));
 			    row.setCell(Integer.toString(aprovalCounter));
 			    row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
