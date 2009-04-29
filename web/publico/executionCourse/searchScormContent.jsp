@@ -186,7 +186,7 @@
 		 	<logic:equal name="file" property="class.simpleName" value="FileContent">
 			<bean:define id="site" name="file" property="site"/>
 				<logic:equal name="site" property="class.simpleName" value="ExecutionCourseSite">
-				<bean:define id="executionCourse" name="site" property="executionCouse"/>
+				<bean:define id="executionCourse" name="site" property="executionCourse"/>
 			 	 <fr:view name="executionCourse" property="nome"/> (<fr:view name="executionCourse" property="executionPeriod.name"/> - <fr:view name="executionCourse" property="executionYear.year"/>) <br/> 
 			     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />  <fr:view name="file" property="displayName"></fr:view> (<a href="<fr:view name="file" property="downloadUrl"/>"><fr:view name="file" property="filename"/></a>)
 				</logic:equal>
