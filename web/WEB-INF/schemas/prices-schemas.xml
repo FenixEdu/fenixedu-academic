@@ -175,6 +175,16 @@
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
 </schema>
 
+<schema name="StandaloneEnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
 <schema name="PhotocopyRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
 		extends="BaseAmountPlusAmountPerPagePR.view" bundle="APPLICATION_RESOURCES">
 </schema>
@@ -314,6 +324,18 @@
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
 </schema>
 
+<schema name="StandaloneEnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
 <schema name="PhotocopyRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"
 		extends="BaseAmountPlusAmountPerPagePR.edit" bundle="APPLICATION_RESOURCES">
 </schema>
@@ -410,6 +432,14 @@
 </schema>
 
 <schema name="EnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="ExtraCurricularEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="StandaloneEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR" 
 		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 

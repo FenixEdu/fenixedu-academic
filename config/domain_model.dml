@@ -23,7 +23,7 @@ package net.sourceforge.fenixedu.domain;
 /*
  * Enums first
  */
-
+ 
 enum net.sourceforge.fenixedu.domain.AlumniRequestType                                                                    as AlumniRequestType;
 enum net.sourceforge.fenixedu.domain.CompetenceCourseType                                                                 as CompetenceCourseType;
 enum net.sourceforge.fenixedu.domain.ContractType                                                                         as ContractType;
@@ -1967,6 +1967,12 @@ class DomainObject {
 				}
 
 					class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
+					}
+					
+					class accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
+					}
+					
+					class accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
 					}
 
 			class accounting.postingRules.FixedAmountPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -4568,6 +4574,12 @@ class DomainObject {
 	
 					class serviceRequests.documentRequests.SchoolRegistrationCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
+					
+					class serviceRequests.documentRequests.ExtraCurricularCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
+					}
+					
+					class serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
+					}
 	
 					class serviceRequests.documentRequests.CourseLoadRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
@@ -6460,6 +6472,25 @@ relation CourseLoadRequestEnrolment {
 		multiplicity *;
 	}
 }
+
+relation ExtraCurricularCertificateRequestEnrolment {
+	Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	serviceRequests.documentRequests.ExtraCurricularCertificateRequest playsRole ExtraCurricularRequests {
+		multiplicity *;
+	}
+}
+
+relation StandaloneEnrolmentCertificateRequestEnrolment {
+	Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest playsRole StandaloneEnrolmentRequests {
+		multiplicity *;
+	}
+}
+
 
 relation ProgramCertificateRequestEnrolment {
 	Enrolment playsRole enrolments {

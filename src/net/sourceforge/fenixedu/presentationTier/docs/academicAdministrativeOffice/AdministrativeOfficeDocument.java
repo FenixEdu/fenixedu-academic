@@ -28,7 +28,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLo
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -103,6 +105,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	    case EXTERNAL_PROGRAM_CERTIFICATE:
 		return Collections.singletonList(new ExternalProgramCertificateRequestDocument(
 			(ExternalProgramCertificateRequest) documentRequest));
+	    case EXTRA_CURRICULAR_CERTIFICATE:
+		return Collections.singletonList(new ExtraCurricularCertificateRequestDocument(
+			(ExtraCurricularCertificateRequest) documentRequest));
+	    case STANDALONE_ENROLMENT_CERTIFICATE:
+		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(
+			(StandaloneEnrolmentCertificateRequest) documentRequest));
 	    default:
 		return Collections.singletonList(new AdministrativeOfficeDocument(documentRequest));
 	    }

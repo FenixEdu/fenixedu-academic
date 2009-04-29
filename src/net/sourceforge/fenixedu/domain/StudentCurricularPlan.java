@@ -2177,6 +2177,32 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public List<Enrolment> getExtraCurricularAprovedEnrolmentsNotInDismissal() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment each : getExtraCurricularEnrolments()) {
+	    if (!each.isApproved() || each.isSourceOfAnyCreditsInCurriculum()) {
+		continue;
+	    }
+	    result.add(each);
+	}
+
+	return result;
+    }
+
+    public List<Enrolment> getStandaloneAprovedEnrolmentsNotInDismissal() {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+
+	for (final Enrolment each : getStandaloneCurriculumGroup().getEnrolments()) {
+	    if (!each.isApproved() || each.isSourceOfAnyCreditsInCurriculum()) {
+		continue;
+	    }
+	    result.add(each);
+	}
+
+	return result;
+    }
+    
     public PropaedeuticsCurriculumGroup getPropaedeuticCurriculumGroup() {
 	return (PropaedeuticsCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS);
     }

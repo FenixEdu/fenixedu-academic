@@ -27,9 +27,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -206,8 +206,19 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
 	}
+	
 	schemaName.append(".AdditionalInformation");
 	request.setAttribute("additionalInformationSchemaName", schemaName.toString());
+
+	final Registration registration = requestCreateBean.getRegistration();
+
+	if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
+	    requestCreateBean.setEnrolments(registration.getLastStudentCurricularPlan()
+		    .getExtraCurricularAprovedEnrolmentsNotInDismissal());
+	} else if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
+	    requestCreateBean.setEnrolments((ArrayList<Enrolment>) registration.getLastStudentCurricularPlan()
+		    .getStandaloneAprovedEnrolmentsNotInDismissal());
+	}
     }
 
     public ActionForward executionYearToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,

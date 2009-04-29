@@ -217,7 +217,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
 	for (final CurriculumLine line : getRegistration().getExtraCurricularCurriculumLines()) {
 	    if (line.isEnrolment()) {
-		if (!isSourceOfAnyCreditsInCurriculum((Enrolment) line)) {
+		if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
 		    result.add(line);
 		}
 	    } else {
@@ -228,14 +228,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return result;
     }
 
-    private boolean isSourceOfAnyCreditsInCurriculum(final Enrolment enrolment) {
-	for (final InternalEnrolmentWrapper enrolmentWrapper : enrolment.getEnrolmentWrappers()) {
-	    if (enrolmentWrapper.getCredits().hasAnyDismissalInCurriculum()) {
-		return true;
-	    }
-	}
-	return false;
-    }
+    
 
     private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
 	for (final CurriculumLine line : lines) {

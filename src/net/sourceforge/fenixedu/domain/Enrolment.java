@@ -32,6 +32,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -1411,6 +1413,25 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return false;
     }
 
+    public boolean isSourceOfDismissal() {
+	final List<Dismissal> dismissals = getStudentCurricularPlan().getDismissals();
+	for (final Dismissal dismissal : dismissals) {
+	    if (dismissal.hasSourceIEnrolments(this)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isSourceOfAnyCreditsInCurriculum() {
+	for (final InternalEnrolmentWrapper enrolmentWrapper : this.getEnrolmentWrappers()) {
+	    if (enrolmentWrapper.getCredits().hasAnyDismissalInCurriculum()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     static public Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
 	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	return enrolments.get(0);
