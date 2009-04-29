@@ -1476,4 +1476,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
+    public boolean isAnual() {
+	final CurricularCourse curricularCourse = getCurricularCourse();
+	return curricularCourse != null && curricularCourse.isAnual();
+    }
+
 }

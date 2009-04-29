@@ -1586,4 +1586,9 @@ public class Thesis extends Thesis_Base {
     public ExecutionYear getExecutionYear() {
 	return getEnrolment().getExecutionYear();
     }
+
+    public boolean isAnual() {
+	final Enrolment enrolment = getEnrolment();
+	return enrolment.isAnual();
+    }
 }

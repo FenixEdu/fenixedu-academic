@@ -6,6 +6,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -93,7 +94,9 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
 
     public double getParticipationCredits() {
-	return Thesis.getCredits() * getCreditsDistribution() / 100;
+	final Thesis thesis = getThesis();
+	double anualFactor = thesis.isAnual() ? 1 : 0.5;
+	return Thesis.getCredits() * anualFactor * getCreditsDistribution() / 100;
     }
 
     public double getCreditsDistribution() {
