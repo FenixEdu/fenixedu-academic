@@ -80,7 +80,11 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 			    row.setCell(registration.getNumber().toString());
 			    row.setCell(registration.getPerson().getGender().toLocalizedString());
 			    row.setCell(registration.getAverage(executionYear));
-			    row.setCell(bigDecimal.divide(new BigDecimal(totalCredits), 5, RoundingMode.HALF_UP));
+			    if (bigDecimal == null) {
+				row.setCell("");
+			    } else {
+				row.setCell(bigDecimal.divide(new BigDecimal(totalCredits), 5, RoundingMode.HALF_UP));
+			    }
 			    row.setCell(Integer.toString(enrolmentCounter));
 			    row.setCell(Integer.toString(aprovalCounter));
 			    row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString() : StringUtils.EMPTY);
