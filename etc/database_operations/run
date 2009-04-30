@@ -43,4 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Alter Candidacy related tables" alterCandidacyRelatedTables.sql
+execute "Update nationalities names" alterNationality.sql
+execute "Update countries localized names" updateCountriesLocalizedNames.sql
+execute "Create candidacies section" candidacies_functions_section.sql

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
 
-public class AlumniFormation implements Serializable {
+public class AlumniFormation implements Serializable, IFormation {
 
     private final int FIRST_YEAR = 1933;
 

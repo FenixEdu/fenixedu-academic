@@ -152,4 +152,97 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     public void setSocialSecurityNumber(String number) {
 	getPerson().setSocialSecurityNumber(number);
     }
+
+    @Override
+    public String getAddress() {
+	return getDefaultPhysicalAddress() != null ? getDefaultPhysicalAddress().getAddress() : null;
+    }
+
+    @Override
+    public String getArea() {
+	return getDefaultPhysicalAddress() != null ? getDefaultPhysicalAddress().getArea() : null;
+    }
+
+    @Override
+    public String getAreaCode() {
+	return getDefaultPhysicalAddress() != null ? getDefaultPhysicalAddress().getAreaCode() : null;
+    }
+
+    @Override
+    public String getAreaOfAreaCode() {
+	return getDefaultPhysicalAddress() != null ? getDefaultPhysicalAddress().getAreaOfAreaCode() : null;
+    }
+
+    @Override
+    public Country getCountryOfResidence() {
+	return getPerson().getCountryOfResidence();
+    }
+
+    @Override
+    public void setCountryOfResidence(Country country) {
+	this.getPerson().setCountryOfResidence(country);
+    }
+
+    @Override
+    public void setAddress(String address) {
+	this.getPerson().getDefaultPhysicalAddress().setAddress(address);
+	
+    }
+
+    @Override
+    public void setArea(String area) {
+	this.getPerson().getDefaultPhysicalAddress().setArea(area);
+	
+    }
+    
+    @Override
+    public void setAreaCode(String areaCode) {
+	this.getPerson().getDefaultPhysicalAddress().setAreaCode(areaCode);
+    }
+
+    @Override
+    public void setAreaOfAreaCode(String areaOfAreaCode) {
+	this.getPerson().getDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
+    }
+
+    @Override
+    public String getFiscalCode() {
+	return this.getPerson().getFiscalCode();
+    }
+
+    @Override
+    public void setFiscalCode(String value) {
+	this.getPerson().setFiscalCode(value);
+    }
+
+    @Override
+    public String getEmail() {
+	return getPerson().getDefaultEmailAddress() != null ? this.getPerson().getDefaultEmailAddress().getValue() : null;
+    }
+
+    @Override
+    public String getTelephoneContact() {
+	return getPerson().getDefaultPhone() != null ? this.getPerson().getDefaultPhone().getNumber() : null;
+    }
+
+    @Override
+    public void setEmail(String email) {
+	this.getPerson().updateDefaultEmailAddress(email);
+    }
+
+    @Override
+    public void setTelephoneContact(String telephoneContact) {
+	this.getPerson().updateDefaultPhone(telephoneContact);	
+    }
+    
+    @Override
+    public String getProfession() {
+	return this.getPerson().getProfession();
+    }
+    
+    @Override
+    public void setProfession(String profession) {
+	this.getPerson().setProfession(profession);
+    }
+    
 }

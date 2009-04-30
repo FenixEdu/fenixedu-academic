@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -15,7 +16,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     }
 
     public ExternalPrecedentDegreeInformation(final IndividualCandidacy candidacy, final String degreeDesignation,
-	    final LocalDate conclusionDate, final Unit institution, final String conclusionGrade) {
+	    final LocalDate conclusionDate, final Unit institution, final String conclusionGrade, Country country) {
 	this();
 	checkParameters(candidacy, degreeDesignation, institution, conclusionGrade);
 	setCandidacy(candidacy);
@@ -23,6 +24,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	setConclusionDate(conclusionDate);
 	setInstitution(institution);
 	setConclusionGrade(conclusionGrade);
+	setCountry(country);
     }
 
     private void checkParameters(final IndividualCandidacy candidacy, final String degreeDesignation, final Unit institution,
@@ -39,10 +41,6 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	if (institution == null) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.institution");
 	}
-
-	if (conclusionGrade != null && conclusionGrade.length() != 0 && !conclusionGrade.matches("[0-9]+(\\.[0-9]+)?")) {
-	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.conclusionGrade");
-	}
     }
 
     @Override
@@ -53,6 +51,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     @Override
     public void edit(final CandidacyPrecedentDegreeInformationBean bean) {
 	checkParameters(getCandidacy(), bean.getDegreeDesignation(), bean.getInstitution(), bean.getConclusionGrade());
+	
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setConclusionDate(bean.getConclusionDate());
 	setInstitution(bean.getInstitution());
@@ -99,7 +98,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     @Override
     public void edit(final CandidacyInformationBean bean) {
 	super.edit(bean);
-
+	
 	setConclusionYear(bean.getConclusionYear());
 	setConclusionGrade(bean.getConclusionGrade());
 	setDegreeDesignation(bean.getDegreeDesignation());

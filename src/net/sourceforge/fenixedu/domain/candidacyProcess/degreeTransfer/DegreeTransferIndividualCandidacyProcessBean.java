@@ -23,9 +23,11 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 
     public DegreeTransferIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
+	initializeDocumentUploadBeans();
     }
 
     public DegreeTransferIndividualCandidacyProcessBean(final DegreeTransferIndividualCandidacyProcess process) {
+	setIndividualCandidacyProcess(process);
 	setCandidacyProcess(process.getCandidacyProcess());
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());

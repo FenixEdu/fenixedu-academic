@@ -15,7 +15,9 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
 	super();
 	setCandidacy(candidacy);
 	setInternalized(Boolean.FALSE);
-	// TODO: fill in necessary stuff
+	
+	PersonBean personBean = bean.getPersonBean();
+	edit(personBean);
     }
 
     @Override
@@ -25,7 +27,31 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
 
     @Override
     public void edit(PersonBean personBean) {
-	// TODO Auto-generated method stub
+
+	setNationality(personBean.getNationality());
+	
+	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
+	setDocumentIdNumber(personBean.getDocumentIdNumber());
+	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
+	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
+	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
+	setGender(personBean.getGender());
+	setIdDocumentType(personBean.getIdDocumentType());
+	setMaritalStatus(personBean.getMaritalStatus());
+	setName(personBean.getName());
+	
+	/*
+	 * 10/04/2009 - We want to retrieve the fiscal code
+	 */
+	setFiscalCode(personBean.getFiscalCode());
+	
+	setAddress(personBean.getAddress());
+	setArea(personBean.getArea());
+	setAreaCode(personBean.getAreaCode());
+	setAreaOfAreaCode(personBean.getAreaOfAreaCode());
+	
+	setTelephoneContact(personBean.getPhone());
+	setEmail(personBean.getEmail());
     }
 
     @Override
@@ -43,140 +69,29 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
 
     @Override
     public Country getCountry() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public YearMonthDay getDateOfBirthYearMonthDay() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public PhysicalAddress getDefaultPhysicalAddress() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public String getDocumentIdNumber() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public YearMonthDay getEmissionDateOfDocumentIdYearMonthDay() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public String getEmissionLocationOfDocumentId() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public YearMonthDay getExpirationDateOfDocumentIdYearMonthDay() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public Gender getGender() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public IDDocumentType getIdDocumentType() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public MaritalStatus getMaritalStatus() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public String getName() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public String getSocialSecurityNumber() {
-	// TODO Auto-generated method stub
-	return null;
+	return this.getNationality();
     }
 
     @Override
     public void setCountry(Country country) {
-	// TODO Auto-generated method stub
-
+	this.setNationality(country);
     }
 
     @Override
-    public void setDateOfBirthYearMonthDay(YearMonthDay birthday) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setDocumentIdNumber(String documentIdNumber) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay date) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setEmissionLocationOfDocumentId(String location) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay date) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setGender(Gender gender) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setIdDocumentType(IDDocumentType type) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setMaritalStatus(MaritalStatus status) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setName(String name) {
-	// TODO Auto-generated method stub
-
+    public String getSocialSecurityNumber() {
+	return this.getFiscalCode();
     }
 
     @Override
     public void setSocialSecurityNumber(String number) {
-	// TODO Auto-generated method stub
-
+	this.setFiscalCode(number);
     }
 
+    /**
+     *  External candidacy submissions dont use PhysicalAddress
+     */
+    @Override
+    public PhysicalAddress getDefaultPhysicalAddress() {
+	return null;
+    }
 }

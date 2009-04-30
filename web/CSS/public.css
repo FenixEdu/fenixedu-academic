@@ -5,7 +5,7 @@
 body caption:target { display: table-caption; background: none; }
 body caption:target span { background: #FCFFBA; }
 
-#perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando não tem items de navegação */
+#perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando nï¿½o tem items de navegaï¿½ï¿½o */
 .dinline { display: inline !important; }
 .tab_lay th { font-size: 1.0em !important; }
 .tab_lay { border-collapse: collapse; }
@@ -31,7 +31,7 @@ color: #000;
 .form1 input { display: block; }
 .form1 p.comment { font-size: 1em; color: #999; padding-top: 1em; }
 .form1 input#button { margin-top: 1em; }
-.form1 span.red { color: #bb1309 !important; }
+.form1 span.4d { color: #bb1309 !important; }
 .form1 span.comment { font-size: 1em; color: #999; font-weight: normal; }
 span.red { color: #c30 !important; }
 
@@ -838,6 +838,8 @@ margin: 0.5em 0;
 .infoop2 p { margin: 0.25em 0; }
 .width100pc { width: 100%; }
 .width100px { width: 100px; }
+.width175px { width: 175px; }
+.width200px { width: 200px; }
 .width300px { width: 300px; }
 .width500px { width: 500px; }
 .width10em { width: 10em; }
@@ -1056,3 +1058,17 @@ padding:0px;
 } 
  
 ul.autoCompleteItems li.selected { background-color:  #cef; }
+
+
+div.flowerror span span span span { color: #c00; background-color: #ffeadd; }
+div.flowerror span span span span span { color: #000; background: #fff; }
+div.flowerror ul.autoCompleteItems { color: #000; }
+
+div.flowerror_hide span span span span { display: none; }
+
+.steps { color: #000; }
+.steps span { border-bottom: 1px dotted #000; padding: 1px; }
+.steps span.actual { background: #fffbc7; }
+
+.marker { background: #fffbc7; padding: 2px; }
+.lightbulb { background: url(http://www.ist.utl.pt/img/icon_lightbulb.gif) no-repeat 10px 0px; padding-left: 35px; }

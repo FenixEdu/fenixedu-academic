@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeI
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -30,15 +32,29 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     DegreeChangeIndividualCandidacy(final DegreeChangeIndividualCandidacyProcess process,
 	    final DegreeChangeIndividualCandidacyProcessBean bean) {
 	this();
-
-	final Person person = bean.getOrCreatePersonFromBean();
-	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
-
-	init(bean, process);
+	
+	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
-
 	createPrecedentDegreeInformation(bean);
-	createDebt(person);
+	
+	/*
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
+	 * an Event
+	 */
+	if(bean.getInternalPersonCandidacy()) {
+	    createDebt(person);
+	}
+    }
+
+    @Override
+    protected void checkParameters(Person person, IndividualCandidacyProcess process, IndividualCandidacyProcessBean bean) {
+	DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess = (DegreeChangeIndividualCandidacyProcess) process;
+	DegreeChangeIndividualCandidacyProcessBean degreeChangeProcessBean = (DegreeChangeIndividualCandidacyProcessBean) bean;
+	LocalDate candidacyDate = bean.getCandidacyDate();
+	Degree selectedDegree = degreeChangeProcessBean.getSelectedDegree();
+	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = degreeChangeProcessBean.getPrecedentDegreeInformation();
+	
+	checkParameters(person, degreeChangeIndividualCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
     private void checkParameters(final Person person, final DegreeChangeIndividualCandidacyProcess process,
@@ -50,12 +66,18 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.degree");
 	}
-
+	
+	
+	/*
+	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 
+	 
 	if (personHasDegree(person, selectedDegree)) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
 		    getCandidacyExecutionInterval()).getContent());
 	}
-
+	 */
+	
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.precedentDegreeInformation");
 	}

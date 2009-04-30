@@ -18,9 +18,11 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 
     public DegreeCandidacyForGraduatedPersonIndividualProcessBean() {
 	setCandidacyDate(new LocalDate());
+	initializeDocumentUploadBeans();
     }
 
     public DegreeCandidacyForGraduatedPersonIndividualProcessBean(final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
+	setIndividualCandidacyProcess(process);
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());
 	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process

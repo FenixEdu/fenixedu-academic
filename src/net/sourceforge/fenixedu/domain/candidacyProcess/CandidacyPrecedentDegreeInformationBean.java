@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -25,6 +26,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     private BigDecimal gradeSum;
     private BigDecimal approvedEcts;
     private BigDecimal enroledEcts;
+    private DomainReference<Country> country;
 
     public CandidacyPrecedentDegreeInformationBean() {
     }
@@ -35,6 +37,8 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 	setConclusionDate(precedentDegreeInformation.getConclusionDate());
 	setConclusionGrade(precedentDegreeInformation.getConclusionGrade());
 	setInstitutionValue(precedentDegreeInformation);
+	setInstitutionName(precedentDegreeInformation.getInstitution().getName());
+	setCountry(precedentDegreeInformation.getCountry());
     }
 
     public CandidacyPrecedentDegreeInformationBean(final StudentCurricularPlan studentCurricularPlan) {
@@ -116,7 +120,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public Unit getInstitution() {
-	return getInstitutionUnitName().getUnit();
+	return getInstitutionUnitName() != null ? getInstitutionUnitName().getUnit() : null;
     }
 
     public void setInstitutionName(String institutionName) {
@@ -176,5 +180,12 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     public void setEnroledEcts(BigDecimal enroledEcts) {
 	this.enroledEcts = enroledEcts;
     }
-
+    
+    public Country getCountry() {
+	return this.country != null ? this.country.getObject() : null;
+    }
+    
+    public void setCountry(Country country) {
+	this.country = country != null ? new DomainReference<Country>(country) : null;
+    }
 }

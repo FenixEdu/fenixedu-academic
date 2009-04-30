@@ -11,7 +11,8 @@ public class ProcessLog extends ProcessLog_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setProcess(process);
-	setUserName(userView.getUtilizador());
+	
+	setUserName(userView != null ? userView.getUtilizador() : "PUBLICO");
 	setActivity(activity.getClass().getName());
 	setWhenDateTime(new DateTime());
     }

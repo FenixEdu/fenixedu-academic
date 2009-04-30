@@ -172,6 +172,7 @@ enum net.sourceforge.fenixedu.domain.accessControl.PermissionType               
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType													  as AnnouncementCategoryType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                        as PhdIndividualProgramProcessState;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType													  as IndividualCandidacyDocumentFileType;
 
 /*
  * Value types that need special externalization
@@ -634,6 +635,7 @@ class DomainObject {
 		String name;
 		MultiLanguageString countryNationality;
 		Boolean defaultCountry;
+		MultiLanguageString localizedName;
 	}
 
 	class CreditsInAnySecundaryArea extends DomainObject {
@@ -1373,6 +1375,7 @@ class DomainObject {
 		String title;
 		QualificationType type;
 		String year;
+		String designation;
 	}
 
 	class Formation extends Qualification {
@@ -1381,7 +1384,12 @@ class DomainObject {
 		BigDecimal ectsCredits;
 		Integer formationHours;
 	}
-
+	
+	class candidacyProcess.Formation extends Formation {
+		Boolean concluded;
+		String conclusionGrade;
+	}
+	
 	class Role extends DomainObject {
 		String page;
 		String pageNameProperty;
@@ -5972,8 +5980,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	class candidacyProcess.standalone.StandaloneCandidacyProcess extends candidacyProcess.CandidacyProcess {
 	}
 	
-class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
-}
+	class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
+		String accessHash;
+	}
 
 	class candidacyProcess.over23.Over23IndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
@@ -6021,8 +6030,15 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 	SchoolLevelType spouseSchoolLevel;
 	ProfessionType spouseProfessionType;
 	ProfessionalSituationConditionType spouseProfessionalCondition;
-
+	
+	Boolean hasPaidForCandidacy;
+	String observations;
+	String formerStudentNumber;
 }
+
+	class candidacyProcess.IndividualCandidacyDocumentFile extends File {
+		IndividualCandidacyDocumentFileType candidacyFileType;		
+	} 
 
 class candidacyProcess.IndividualCandidacyPersonalDetails extends DomainObject {
 }
@@ -6031,6 +6047,23 @@ class candidacyProcess.IndividualCandidacyInternalPersonDetails extends candidac
 }
 
 class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidacyProcess.IndividualCandidacyPersonalDetails {
+	String name;
+	Gender gender;
+	String profession;
+    MaritalStatus maritalStatus;
+	YearMonthDay dateOfBirthYearMonthDay;
+	String fiscalCode;
+	String documentIdNumber;
+	IDDocumentType idDocumentType;
+	YearMonthDay emissionDateOfDocumentIdYearMonthDay;
+	YearMonthDay expirationDateOfDocumentIdYearMonthDay;
+	String emissionLocationOfDocumentId;
+	String telephoneContact;
+	String email;
+	String address;
+	String area;
+	String areaCode;
+	String areaOfAreaCode;
     Boolean internalized;
 }
 
@@ -6038,6 +6071,9 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
 		String disabilities;
 		String education;
 		String languages;
+		String languagesRead;
+		String languagesWrite;
+		String languagesSpeak;
 	}
 	
 	class candidacyProcess.secondCycle.SecondCycleIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
@@ -6246,7 +6282,6 @@ class messaging.AnnouncementCategory extends DomainObject {
 	AnnouncementCategoryType type;
 }
 
-
 /* Phd Module */
 
 class phd.PhdProgram extends DomainObject {
@@ -6277,6 +6312,11 @@ class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
 
 /* End of Phd Module */
+
+class candidacyProcess.PublicCandidacyHashCode extends DomainObject {
+	String email;
+	String value;
+}
 
 /*
  * Relations definitions
@@ -15231,6 +15271,54 @@ relation AnnouncementCategoryAnnouncement {
 relation AnnouncementCampus {
 	space.Campus playsRole campus;
 	messaging.Announcement playsRole announcements {
+		multiplicity *;
+	}
+}
+
+relation IndividualCandidacyExternalPersonDetailsCountryOfResidence {
+	candidacyProcess.IndividualCandidacyExternalPersonDetails playsRole externalCandidacyPersonDetailsCountryOfResidence {
+		multiplicity *;
+	}
+	Country playsRole countryOfResidence;
+}
+
+relation IndividualCandidacyExternalPersonDetailsNationality {
+	candidacyProcess.IndividualCandidacyExternalPersonDetails playsRole externalCandidacyPersonDetailsNationality {
+		multiplicity *;
+	}
+	Country playsRole nationality;	
+}
+
+relation IndividualCandidacyIndividualCandidacyDocumentFile {
+	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+	candidacyProcess.IndividualCandidacyDocumentFile playsRole documents {
+		multiplicity *;
+	}
+}
+
+relation PublicCandidacyHashCodeRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.PublicCandidacyHashCode playsRole candidacyHashCodes {
+		multiplicity *;
+	}
+}
+
+relation PublicCandidacyHashCodeIndividualCandidacyProcess {
+	candidacyProcess.PublicCandidacyHashCode playsRole candidacyHashCode;
+	candidacyProcess.IndividualCandidacyProcess playsRole individualCandidacyProcess;
+}
+
+relation CandidacyProcessFormationIndividualCandidacy {
+	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+	candidacyProcess.Formation playsRole formations {
+		multiplicity *;
+	}
+}
+
+
+relation FormationExecutionYear {
+	ExecutionYear playsRole conclusionExecutionYear;
+	candidacyProcess.Formation playsRole candidacyFormations {
 		multiplicity *;
 	}
 }

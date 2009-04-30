@@ -60,50 +60,128 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
     }
 
     public abstract Student getStudent();
-
+    
     public abstract String getName();
-
     public abstract void setName(String name);
 
-    public abstract String getDocumentIdNumber();
+    public abstract Gender getGender();
+    public abstract void setGender(Gender gender);
+    
+    public abstract String getProfession();
+    public abstract void setProfession(String profession);
 
+    public abstract MaritalStatus getMaritalStatus();
+    public abstract void setMaritalStatus(MaritalStatus status);
+
+    public abstract YearMonthDay getDateOfBirthYearMonthDay();
+    public abstract void setDateOfBirthYearMonthDay(YearMonthDay birthday);
+    
+    /*
+     * FIXME ANIL : Change to get/setNationality()
+     */
+    public abstract Country getCountry();
+    public abstract void setCountry(Country country);
+
+    /**
+     * Return the Social Security Number
+     * 
+     * This method, in the context of candidacies, is used to obtain VAT which is not
+     * Social Security Number 
+     *
+     * @see #getFiscalCode()
+     */
+    /*
+     * TODO Anil: Check what property is used on accounting.Event in the context of
+     * candidacies and remove this method
+     */
+    @Deprecated
+    public abstract String getSocialSecurityNumber();
+    @Deprecated
+    public abstract void setSocialSecurityNumber(String number);
+
+    /**
+     * Returns the VAT (fiscal code) associated to a candidate
+     * 
+     */
+    /*
+     * TODO Anil: Check what property is used on accounting.Event in the context of
+     * candidacies
+     */
+    public abstract String getFiscalCode();
+    public abstract void setFiscalCode(String value);
+
+    /*
+     * -- PERSON IDENTIFICATION DOCUMENT
+     */
+    public abstract String getDocumentIdNumber();
     public abstract void setDocumentIdNumber(String documentIdNumber);
 
     public abstract IDDocumentType getIdDocumentType();
-
     public abstract void setIdDocumentType(IDDocumentType type);
 
     public abstract YearMonthDay getEmissionDateOfDocumentIdYearMonthDay();
-
     public abstract void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay date);
 
     public abstract YearMonthDay getExpirationDateOfDocumentIdYearMonthDay();
-
     public abstract void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay date);
 
     public abstract String getEmissionLocationOfDocumentId();
-
     public abstract void setEmissionLocationOfDocumentId(String location);
+    /*
+     * -- PERSON IDENTIFICATION DOCUMENT
+     */
+    
+    /*
+     * -- PERSON CONTACTS --
+     * 
+     * FIXME: See what contacts are filled in Administrative Office candidacy submission 
+     */
+    
+    public abstract String getTelephoneContact();
+    public abstract void setTelephoneContact(String telephoneContact);
+    
+    public abstract String getEmail();
+    public abstract void setEmail(String email);
 
-    public abstract YearMonthDay getDateOfBirthYearMonthDay();
+    /*
+     * -- END PERSON CONTACTS --
+     * 
+     */
 
-    public abstract void setDateOfBirthYearMonthDay(YearMonthDay birthday);
+    /*
+     * 06/04/2009 - 
+     * The next four methods will replace the method getDefaultPhysicalAddress()
+     * The reason for partitioning is that IndividualCandidacyExternalPersonDetails
+     * cannot be associated to a PhysicalAddress because its not a Party
+     * 
+     */
 
-    public abstract Gender getGender();
+    public abstract Country getCountryOfResidence();
+    public abstract void setCountryOfResidence(Country country);
 
-    public abstract void setGender(Gender gender);
+    public abstract String getAddress();
+    public abstract void setAddress(String address);
+    
+    public abstract String getArea();
+    public abstract void setArea(String area);
+    
+    public abstract String getAreaCode();
+    public abstract void setAreaCode(String areaCode);
+    
+    public abstract String getAreaOfAreaCode();
+    public abstract void setAreaOfAreaCode(String areaOfAreaCode);
 
-    public abstract MaritalStatus getMaritalStatus();
-
-    public abstract void setMaritalStatus(MaritalStatus status);
-
-    public abstract Country getCountry();
-
-    public abstract void setCountry(Country country);
-
-    public abstract String getSocialSecurityNumber();
-
-    public abstract void setSocialSecurityNumber(String number);
-
+    /**
+     * Returns the default address associated to a candidate
+     * 
+     * IndividualCandidacyExternalPersonDetails is not associated to Person.
+     * The calls of this method should be replaced by the following methods:
+     * @see #getAddress()
+     * @see #getArea()
+     * @see #getAreaCode()
+     * @see #getAreaOfAreaCode()
+     * 
+     */
+    @Deprecated
     public abstract PhysicalAddress getDefaultPhysicalAddress();
 }

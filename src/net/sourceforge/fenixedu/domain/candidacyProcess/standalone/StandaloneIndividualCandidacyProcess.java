@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy;
@@ -36,16 +38,24 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     public StandaloneIndividualCandidacyProcess(final StandaloneIndividualCandidacyProcessBean bean) {
 	this();
-	checkParameters(bean.getCandidacyProcess());
-	setCandidacyProcess(bean.getCandidacyProcess());
-	new StandaloneIndividualCandidacy(this, bean);
-	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
+
+	/*
+	 * 06/04/2009 - The checkParameters, IndividualCandidacy creation and
+	 * candidacy information are made in the init method
+	 */
+	init(bean);
     }
 
-    private void checkParameters(final StandaloneCandidacyProcess process) {
+    @Override
+    protected void checkParameters(final CandidacyProcess process) {
 	if (process == null || !process.hasCandidacyPeriod()) {
 	    throw new DomainException("error.StandaloneIndividualCandidacyProcess.invalid.candidacy.process");
 	}
+    }
+
+    @Override
+    protected void createIndividualCandidacy(final IndividualCandidacyProcessBean bean) {
+	new StandaloneIndividualCandidacy(this, (StandaloneIndividualCandidacyProcessBean) bean);
     }
 
     @Override
@@ -268,5 +278,4 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	    process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null, Ingression.STC);
 	}
     }
-
 }

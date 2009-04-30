@@ -25,7 +25,7 @@ import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - Angela Almeida (argelina@ist.utl.pt)
  * 
  */
 public class PersonBean implements Serializable {
@@ -109,7 +109,9 @@ public class PersonBean implements Serializable {
     private DomainReference<DistrictSubdivision> districtSubdivisionOfResidenceObject;
 
     private DomainReference<Country> countryOfResidence;
-
+    
+    private String fiscalCode;
+    
     public PersonBean() {
 	super();
     }
@@ -125,12 +127,72 @@ public class PersonBean implements Serializable {
 	if (details.isInternal()) {
 	    initPerson(details.getPerson());
 	} else {
-	    // TODO: initialize the bean with
+	    initPersonBeanFromPersonalDetails(details);
 	}
+	initPersonBeanFromPersonalDetails(details);
     }
 
     public PersonBean(Person person) {
 	initPerson(person);
+    }
+
+    private void initPersonBeanFromPersonalDetails(IndividualCandidacyPersonalDetails personalDetails) {
+	setName(personalDetails.getName());
+	setGender(personalDetails.getGender());
+	setMaritalStatus(personalDetails.getMaritalStatus());
+	setNationality(personalDetails.getCountry());
+	setDateOfBirth(personalDetails.getDateOfBirthYearMonthDay());
+	setDocumentIdEmissionDate(personalDetails.getEmissionDateOfDocumentIdYearMonthDay());
+	setDocumentIdEmissionLocation(personalDetails.getEmissionLocationOfDocumentId());
+	setDocumentIdExpirationDate(personalDetails.getExpirationDateOfDocumentIdYearMonthDay());
+	setDocumentIdNumber(personalDetails.getDocumentIdNumber());
+	setIdDocumentType(personalDetails.getIdDocumentType());
+	setFiscalCode(personalDetails.getFiscalCode());
+
+	setAddress(personalDetails.getAddress());
+	setArea(personalDetails.getArea());
+	setAreaCode(personalDetails.getAreaCode());
+	setAreaOfAreaCode(personalDetails.getAreaOfAreaCode());
+	setCountryOfResidence(personalDetails.getCountryOfResidence());
+
+	setPhone(personalDetails.getTelephoneContact());
+
+	setEmail(personalDetails.getEmail());
+
+	/*
+	 * 07/04/2009 - The following assignments are made when a candidacy is
+	 * internal or have a Person associated
+	 */
+	if (personalDetails.isInternal()) {
+	    Person person = personalDetails.getPerson();
+	    setUsername(person.getUsername());
+	    setPerson(person);
+
+	    /*
+	     * FIXME Anil (07/04/2009): Some fields are not in
+	     * IndividualCandidacyPersonalDetails. But they should.
+	     */
+	    setFatherName(person.getNameOfFather());
+	    setMotherName(person.getNameOfMother());
+	    setProfession(person.getProfession());
+	    setCountryOfBirth(person.getCountryOfBirth());
+	    setParishOfBirth(person.getParishOfBirth());
+	    setDistrictOfBirth(person.getDistrictOfBirth());
+	    setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+
+	    if (person.hasDefaultPhysicalAddress()) {
+		final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
+		setParishOfResidence(physicalAddress.getParishOfResidence());
+		setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+		setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+	    }
+
+	    setMobile(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhone().getNumber() : null);
+	    setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
+	    setEmailAvailable(person.getAvailableEmail());
+	    setHomepageAvailable(person.getAvailableWebSite());
+	    setPhotoAvailable(person.getAvailablePhoto());
+	}
     }
 
     private void initPerson(Person person) {
@@ -466,12 +528,23 @@ public class PersonBean implements Serializable {
 	this.profession = profession;
     }
 
+    /*
+     * FIXME Anil: In the context of candidacies Social Security Number means Fiscal Code
+     */
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
     }
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
 	this.socialSecurityNumber = socialSecurityNumber;
+    }
+
+    public String getFiscalCode() {
+	return fiscalCode;
+    }
+
+    public void setFiscalCode(String value) {
+	this.fiscalCode = value;
     }
 
     public String getUsername() {

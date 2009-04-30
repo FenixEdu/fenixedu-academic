@@ -254,4 +254,16 @@
     <definition name="internship.candidacy.final" extends="definition.public.internship">
        <put name="body" value="/publico/internship/candidacyFinal.jsp"/>
     </definition>
+
+    <definition name="definition.candidacy.process" page="/layout/istLayout.jsp" >
+		<put name="title" value="Candidaturas | IST" />	
+        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+        <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+        <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
+		<put name="body" value="/commons/blank.jsp" />
+  		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+  		<!-- <put name="hideLanguage" value="false" /> -->
+	</definition>
+	
 </tiles-definitions>

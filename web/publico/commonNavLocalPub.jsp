@@ -1,11 +1,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <ul>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/destaques/">Destaques</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/instituto/">Instituto</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/estrutura/">Estrutura</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/ensino/">Ensino</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/id/">I &amp; D</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/sociedade/">Liga&ccedil;&atilde;o &agrave; Sociedade </a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/viverist/">Viver no IST</a></li>
-	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/recursos/">Recursos</a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/destaques/"><bean:message key="label.highlights" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/instituto/"><bean:message key="label.institution" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/estrutura/"><bean:message key="label.structure" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/ensino/"><bean:message key="label.education" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/id/"><bean:message key="label.research.and.development.acronyms" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/sociedade/"><bean:message key="label.links.to.society" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/viverist/"><bean:message key="label.life.at.ist" bundle="GLOBAL_RESOURCES"/></a></li>
+	<li><a href="<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>/html/recursos/"><bean:message key="label.resources" bundle="GLOBAL_RESOURCES"/></a></li>
 </ul>

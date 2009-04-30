@@ -11,11 +11,17 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacyProcess.Formation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
@@ -27,17 +33,48 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     Over23IndividualCandidacy(final Over23IndividualCandidacyProcess process, final Over23IndividualCandidacyProcessBean bean) {
 	this();
 
-	final Person person = bean.getOrCreatePersonFromBean();
-	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegrees());
-
-	init(bean, process);
+	Person person = init(bean, process);
 
 	setDisabilities(bean.getDisabilities());
 	setEducation(bean.getEducation());
 	setLanguages(bean.getLanguages());
+	setLanguagesRead(bean.getLanguagesRead());
+	setLanguagesWrite(bean.getLanguagesWrite());
+	setLanguagesSpeak(bean.getLanguagesSpeak());
 
 	createDegreeEntries(bean.getSelectedDegrees());
-	createDebt(person);
+
+	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+
+	/*
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
+	 */
+	if (bean.getInternalPersonCandidacy()) {
+	    createDebt(person);
+	}
+    }
+
+    private void createFormationEntries(List<FormationBean> formationConcludedBeanList,
+	    List<FormationBean> formationNonConcludedBeanList) {
+	for (FormationBean formation : formationConcludedBeanList) {
+	    this.addFormations(new Formation(this, formation));
+	}
+
+	for (FormationBean formation : formationNonConcludedBeanList) {
+	    this.addFormations(new Formation(this, formation));
+	}
+    }
+
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean) {
+	Over23IndividualCandidacyProcess over23Process = (Over23IndividualCandidacyProcess) process;
+	Over23IndividualCandidacyProcessBean over23ProcessBean = (Over23IndividualCandidacyProcessBean) bean;
+	LocalDate candidacyDate = bean.getCandidacyDate();
+	List<Degree> degrees = over23ProcessBean.getSelectedDegrees();
+
+	checkParameters(person, over23Process, candidacyDate, degrees);
     }
 
     private void checkParameters(final Person person, final Over23IndividualCandidacyProcess process,
@@ -45,14 +82,19 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
 	checkParameters(person, process, candidacyDate);
 
-	if (person.hasStudent()) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.person");
-	}
-
-	if (person.hasValidOver23IndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.Over23IndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
+	/*
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
+	 * 
+	 * 
+	 * if (person.hasStudent()) { throw new
+	 * DomainException("error.Over23IndividualCandidacy.invalid.person"); }
+	 * 
+	 * if(person.hasValidOver23IndividualCandidacy(process.
+	 * getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.Over23IndividualCandidacy.person.already.has.candidacy",
+	 * process .getCandidacyExecutionInterval().getName()); }
+	 */
 
 	checkDegrees(degrees);
     }
@@ -132,6 +174,49 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	}
     }
 
+    void editFormationEntries(List<FormationBean> formationConcludedBeanList, List<FormationBean> formationNonConcludedBeanList) {
+	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
+	for (final Formation formation : this.getFormations()) {
+	    if(formation.getConcluded())
+		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
+	}
+
+	for (final Formation formation : this.getFormations()) {
+	    if(!formation.getConcluded())
+		editFormationEntry(formationNonConcludedBeanList, formationsToBeRemovedList, formation);
+	}
+	
+	for(Formation formation : formationsToBeRemovedList) {
+	    this.getFormations().remove(formation);
+	    formation.delete();
+	}
+	
+	for (FormationBean bean : formationConcludedBeanList) {
+	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
+	}
+
+	for (FormationBean bean : formationNonConcludedBeanList) {
+	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
+	}	
+    }
+
+    private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
+	    final Formation formation) {
+	FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		FormationBean bean = (FormationBean) arg0;
+		return bean.getFormation() == formation;
+	    }
+	});
+
+	if (bean == null) {
+	    formationsToBeRemovedList.add(formation);
+	} else {
+	    formation.edit(bean);
+	}
+    }
+
     private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {
 	if (state != null) {
 	    if (state == IndividualCandidacyState.ACCEPTED
@@ -157,5 +242,4 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
-
 }

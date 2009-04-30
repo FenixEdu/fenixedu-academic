@@ -8,6 +8,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 
 import org.joda.time.LocalDate;
@@ -23,19 +26,40 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     private String education;
 
     private String languages;
+    
+    private String languagesRead;
+    private String languagesWrite;
+    private String languagesSpeak;
+    
+    private List<CandidacyProcessDocumentUploadBean> habilitationCertificateList;
+    private List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList;
+    private CandidacyProcessDocumentUploadBean handicapProofDocument;
+    private CandidacyProcessDocumentUploadBean curriculumVitaeDocument;
+    
+    private Boolean honorAgreement;
+    
 
     public Over23IndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	setSelectedDegrees(Collections.EMPTY_LIST);
+	setFormationConcludedBeanList(new ArrayList<FormationBean>());
+	setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
+	initializeDocumentUploadBeans();
+	this.honorAgreement = false;
     }
 
     public Over23IndividualCandidacyProcessBean(Over23IndividualCandidacyProcess process) {
+	setIndividualCandidacyProcess(process);
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegrees(Collections.EMPTY_LIST);
 	addDegrees(process.getSelectedDegreesSortedByOrder());
 	setDisabilities(process.getDisabilities());
 	setEducation(process.getEducation());
 	setLanguages(process.getLanguages());
+	initializeFormation(process.getCandidacy().getFormations());
+	setLanguagesRead(process.getLanguagesRead());
+	setLanguagesWrite(process.getLanguagesWrite());
+	setLanguagesSpeak(process.getLanguagesSpeak());
     }
 
     @Override
@@ -129,5 +153,99 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
 
     public void setLanguages(String languages) {
 	this.languages = languages;
+    }
+    
+    public List<CandidacyProcessDocumentUploadBean> getHabilitationCertificateList() {
+        return habilitationCertificateList;
+    }
+
+    public void setHabilitationCertificateList(List<CandidacyProcessDocumentUploadBean> habilitationCertificateList) {
+        this.habilitationCertificateList = habilitationCertificateList;
+    }
+
+    public List<CandidacyProcessDocumentUploadBean> getReportOrWorkDocumentList() {
+        return reportOrWorkDocumentList;
+    }
+
+    public void setReportOrWorkDocumentList(List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList) {
+        this.reportOrWorkDocumentList = reportOrWorkDocumentList;
+    }
+
+    public CandidacyProcessDocumentUploadBean getHandicapProofDocument() {
+        return handicapProofDocument;
+    }
+
+    public void setHandicapProofDocument(CandidacyProcessDocumentUploadBean handicapProofDocument) {
+        this.handicapProofDocument = handicapProofDocument;
+    }
+
+    public CandidacyProcessDocumentUploadBean getCurriculumVitaeDocument() {
+        return curriculumVitaeDocument;
+    }
+
+    public void setCurriculumVitaeDocument(CandidacyProcessDocumentUploadBean curriculumVitaeDocument) {
+        this.curriculumVitaeDocument = curriculumVitaeDocument;
+    }
+
+    public String getLanguagesRead() {
+	return this.languagesRead;
+    }
+    
+    public void setLanguagesRead(String value) {
+	this.languagesRead = value;
+    }
+    
+    public String getLanguagesWrite() {
+	return this.languagesWrite;
+    }
+    
+    public void setLanguagesWrite(String value) {
+	this.languagesWrite = value;
+    }
+    
+    public String getLanguagesSpeak() {
+	return this.languagesSpeak;
+    }
+    
+    public void setLanguagesSpeak(String value) {
+	this.languagesSpeak = value;
+    }
+    
+    public Boolean getHonorAgreement() {
+	return this.honorAgreement;
+    }
+    
+    public void setHonorAgreement(Boolean value) {
+	this.honorAgreement = value;
+    }
+    
+    public void addHabilitationCertificateDocument() {
+	this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(DocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
+    }
+    
+    public void removeHabilitationCertificateDocument(final int index) {
+	this.habilitationCertificateList.remove(index);
+    }
+    
+    public void addReportOrWorkDocument() {
+	this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(DocumentFileType.REPORT_OR_WORK_DOCUMENT));
+    }
+    
+    public void removeReportOrWorkDocument(final int index) {
+	this.reportOrWorkDocumentList.remove(index);
+    }
+    
+    @Override
+    protected void initializeDocumentUploadBeans() {
+        setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.DOCUMENT_IDENTIFICATION));
+        setPaymentDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.PAYMENT_DOCUMENT));
+        setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.VAT_CARD_DOCUMENT));
+        this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+        addHabilitationCertificateDocument();
+        this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+        addReportOrWorkDocument();
+        this.handicapProofDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.HANDICAP_PROOF_DOCUMENT);
+        this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.CV_DOCUMENT);
+        setPhotoDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.PHOTO));
     }
 }

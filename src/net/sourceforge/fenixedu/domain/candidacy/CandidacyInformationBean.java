@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -91,7 +92,34 @@ public class CandidacyInformationBean implements Serializable {
     public CandidacyInformationBean(Registration registration) {
 	setRegistration(registration);
     }
+    
+    public CandidacyInformationBean(IndividualCandidacy individualCandidacy) {
+	setCountryOfResidence(individualCandidacy.getCountryOfResidence());
+	setDistrictSubdivisionOfResidence(individualCandidacy.getDistrictSubdivisionOfResidence());
+	setSchoolTimeDistrictSubdivisionOfResidence(individualCandidacy.getSchoolTimeDistrictSubDivisionOfResidence());
+	setDislocatedFromPermanentResidence(individualCandidacy.getDislocatedFromPermanentResidence());
+	setNumberOfCandidaciesToHigherSchool(individualCandidacy.getNumberOfCandidaciesToHigherSchool());
+	setNumberOfFlunksOnHighSchool(individualCandidacy.getNumberOfFlunksOnHighSchool());
 
+	setGrantOwnerType(individualCandidacy.getGrantOwnerType());
+	setHighSchoolType(individualCandidacy.getHighSchoolType());
+	setMaritalStatus(individualCandidacy.getMaritalStatus());
+	setProfessionType(individualCandidacy.getProfessionType());
+	setProfessionalCondition(individualCandidacy.getProfessionalCondition());
+
+	setMotherSchoolLevel(individualCandidacy.getMotherSchoolLevel());
+	setMotherProfessionType(individualCandidacy.getMotherProfessionType());
+	setMotherProfessionalCondition(individualCandidacy.getMotherProfessionalCondition());
+
+	setFatherSchoolLevel(individualCandidacy.getFatherSchoolLevel());
+	setFatherProfessionType(individualCandidacy.getFatherProfessionType());
+	setFatherProfessionalCondition(individualCandidacy.getFatherProfessionalCondition());
+
+	setSpouseSchoolLevel(individualCandidacy.getSpouseSchoolLevel());
+	setSpouseProfessionType(individualCandidacy.getSpouseProfessionType());
+	setSpouseProfessionalCondition(individualCandidacy.getSpouseProfessionalCondition());
+    }
+    
     public CandidacyInformationBean() {
     }
 

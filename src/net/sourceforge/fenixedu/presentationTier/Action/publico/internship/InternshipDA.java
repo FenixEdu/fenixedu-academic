@@ -25,7 +25,7 @@ public class InternshipDA extends FenixDispatchAction {
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	LocalDateTime start = new LocalDateTime(2008, 11, 10, 9, 0);
-	LocalDateTime end = new LocalDateTime(2008, 12, 1, 0, 0);
+	LocalDateTime end = new LocalDateTime(2009, 12, 1, 0, 0);
 	LocalDateTime now = new LocalDateTime(System.currentTimeMillis());
 	if (now.isAfter(start) && now.isBefore(end)) {
 	    request.setAttribute("candidacy", new InternshipCandidacyBean());

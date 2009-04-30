@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.StandaloneIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -32,11 +33,33 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	    final StandaloneIndividualCandidacyProcessBean bean) {
 
 	this();
-	final Person person = bean.getOrCreatePersonFromBean();
-	checkParameters(person, process, bean.getCandidacyDate());
-	init(bean, process);
+	
+	Person person = init(bean, process);
 	addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
-	createDebt(person);
+	
+	/*
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
+	 * an Event
+	 */
+	if(bean.getInternalPersonCandidacy()) {
+	    createDebt(person);
+	}
+    }
+
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
+	LocalDate candidacyDate = bean.getCandidacyDate();
+	checkParameters(person, process, candidacyDate);
+    }
+
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
+	super.checkParameters(person, process, candidacyDate);
+
+	if (person.hasValidStandaloneIndividualCandidacy(process.getCandidacyExecutionInterval())) {
+	    throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
+		    .getCandidacyExecutionInterval().getName());
+	}
     }
 
     private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,
@@ -56,15 +79,6 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	}
     }
 
-    @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
-	super.checkParameters(person, process, candidacyDate);
-
-	if (person.hasValidStandaloneIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
-    }
 
     private void createDebt(final Person person) {
 	new StandaloneIndividualCandidacyEvent(this, person);
@@ -148,5 +162,4 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     protected ExecutionSemester getCandidacyExecutionInterval() {
 	return (ExecutionSemester) super.getCandidacyExecutionInterval();
     }
-
 }

@@ -23,13 +23,13 @@ function execute() {
 	if [ -z $3 ] 
 		then  
 			echo ---------------------------------------- $1 
-			mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+			mysql -p$PASSWORD -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
 			echo 
 		else 
 			if [ "$INSTITUTION" == "$3" ]
 			then 
 				echo ---------------------------------------- $1 specific for $3
-				mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+				mysql -p$PASSWORD -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
 				echo 
 			fi
 	fi

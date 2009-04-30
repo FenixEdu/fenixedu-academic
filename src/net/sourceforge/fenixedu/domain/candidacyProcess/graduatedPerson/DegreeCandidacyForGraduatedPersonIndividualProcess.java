@@ -13,6 +13,12 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -29,6 +35,9 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
 	activities.add(new CreateRegistration());
+	activities.add(new EditPublicCandidacyPersonalInformation());
+	activities.add(new EditPublicCandidacyDocumentFile());
+	
     }
 
     private DegreeCandidacyForGraduatedPersonIndividualProcess() {
@@ -37,16 +46,22 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     private DegreeCandidacyForGraduatedPersonIndividualProcess(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
 	this();
-	checkParameters(bean.getCandidacyProcess());
-	setCandidacyProcess(bean.getCandidacyProcess());
-	new DegreeCandidacyForGraduatedPerson(this, bean);
-	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
+
+	/*
+	 * 06/04/2009 - The checkParameters, IndividualCandidacy creation and
+	 * candidacy information are made in the init method
+	 */
+	init(bean);
     }
 
-    private void checkParameters(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess) {
+    protected void checkParameters(final CandidacyProcess candidacyProcess) {
 	if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonIndividualProcess.invalid.candidacy.process");
 	}
+    }
+
+    protected void createIndividualCandidacy(IndividualCandidacyProcessBean bean) {
+	new DegreeCandidacyForGraduatedPerson(this, (DegreeCandidacyForGraduatedPersonIndividualProcessBean) bean);
     }
 
     @Override
@@ -114,9 +129,14 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+		/* 
+		 * 06/04/2009
+		 * The candidacy may be submited by someone who's not authenticated in the system
+		 *
+	     *if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		 *throw new PreConditionNotValidException();
+	     *}
+		 */
 	}
 
 	@Override
@@ -284,6 +304,43 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	private DegreeCurricularPlan getDegreeCurricularPlan(
 		final DegreeCandidacyForGraduatedPersonIndividualProcess candidacyProcess) {
 	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
+	}
+    }
+
+    static private class EditPublicCandidacyPersonalInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }	    
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(DegreeCandidacyForGraduatedPersonIndividualProcess process,
+		IUserView userView, Object object) {
+	    process.editPersonalCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object).getPersonBean());
+	    process.editCommonCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object).getCandidacyInformationBean());
+	    return process;
+	}
+	
+    }
+    
+    static private class EditPublicCandidacyDocumentFile extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }	    
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(DegreeCandidacyForGraduatedPersonIndividualProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
 	}
     }
 

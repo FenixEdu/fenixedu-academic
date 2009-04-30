@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,12 +12,18 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.Formation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.LocalDate;
 
 public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandidacy_Base {
@@ -29,17 +36,44 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    final SecondCycleIndividualCandidacyProcessBean bean) {
 	this();
 
-	final Person person = bean.getOrCreatePersonFromBean();
-	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
-
-	init(bean, process);
+	Person person = init(bean, process);
 
 	setSelectedDegree(bean.getSelectedDegree());
 	setProfessionalStatus(bean.getProfessionalStatus());
 	setOtherEducation(bean.getOtherEducation());
 
 	createPrecedentDegreeInformation(bean);
-	createDebt(person);
+	
+	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+	
+	editFormerIstStudentNumber(bean);
+	
+	/*
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
+	 * an Event
+	 */
+	if(bean.getInternalPersonCandidacy()) {
+	    createDebt(person);
+	}
+    }
+
+    private void createFormationEntries(List<FormationBean> formationConcludedBeanList,
+	    List<FormationBean> formationNonConcludedBeanList) {
+	for (FormationBean formation : formationConcludedBeanList) {
+	    this.addFormations(new Formation(this, formation));
+	}
+    }
+
+    @Override
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
+	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) process;
+	SecondCycleIndividualCandidacyProcessBean secondCandidacyProcessBean = (SecondCycleIndividualCandidacyProcessBean) bean;
+	LocalDate candidacyDate = bean.getCandidacyDate();
+	Degree selectedDegree = secondCandidacyProcessBean.getSelectedDegree();
+	CandidacyPrecedentDegreeInformationBean candidacyPrecedentDegreeInformationBean = secondCandidacyProcessBean.getPrecedentDegreeInformation();
+	
+	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate, selectedDegree, candidacyPrecedentDegreeInformationBean);
+	
     }
 
     private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process,
@@ -48,11 +82,16 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
 	checkParameters(person, process, candidacyDate);
 
+	/*
+	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 
+
 	if (person.hasValidSecondCycleIndividualCandidacy(process.getCandidacyExecutionInterval())) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.person.already.has.candidacy", process
 		    .getCandidacyExecutionInterval().getName());
 	}
-
+	*/
+	
 	if (degree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
@@ -93,7 +132,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
 	}
     }
-
+    
+    void editSelectedDegree(final Degree selectedDegree) {
+	setSelectedDegree(selectedDegree);
+    }
+    
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
@@ -179,5 +222,43 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
+    
+    void editFormationEntries(List<FormationBean> formationConcludedBeanList) {
+	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
+	for (final Formation formation : this.getFormations()) {
+	    if(formation.getConcluded())
+		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
+	}
 
+	for(Formation formation : formationsToBeRemovedList) {
+	    this.getFormations().remove(formation);
+	    formation.delete();
+	}
+	
+	for (FormationBean bean : formationConcludedBeanList) {
+	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
+	}
+    }
+
+    private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
+	    final Formation formation) {
+	FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		FormationBean bean = (FormationBean) arg0;
+		return bean.getFormation() == formation;
+	    }
+	});
+
+	if (bean == null) {
+	    formationsToBeRemovedList.add(formation);
+	} else {
+	    formation.edit(bean);
+	}
+    }
+    
+    
+    void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
+	this.setFormerStudentNumber(bean.getIstStudentNumber());
+    }
 }

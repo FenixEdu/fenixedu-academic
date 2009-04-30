@@ -39,9 +39,14 @@ public class Qualification extends Qualification_Base {
 
     @Override
     public void setPerson(Person person) {
+	/*
+	 * 21/04/2009 - A Qualification may be associated with a IndividualCandidacy. So the person may be
+	 * null
+	 */
+	/*
 	if (person == null) {
 	    throw new DomainException("The person should not be null!");
-	}
+	}*/
 	super.setPerson(person);
     }
 

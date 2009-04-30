@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -27,19 +28,54 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	super();
 	super.setWhenCreated(new DateTime());
 	setRootDomainObject(RootDomainObject.getInstance());
+	
     }
-
-    protected void init(final IndividualCandidacyProcessBean bean, final IndividualCandidacyProcess process) {
+    
+    protected Person init(final IndividualCandidacyProcessBean bean, final IndividualCandidacyProcess process) {
+	/*
+	 * 31/03/2009 - Now the person may be created inside init() method
+	 * 
+	 * 06/04/2009 - All subclasses share the code below. So the checkParameters() is now abstract
+	 */
+	Person person = null;
+	if(bean.getInternalPersonCandidacy().booleanValue()) {
+	    person = bean.getOrCreatePersonFromBean();
+	}
+	
+	checkParameters(person, process, bean);
+	
 	IndividualCandidacyPersonalDetails.createDetails(this, bean);
 	setCandidacyProcess(process);
 	setCandidacyDate(bean.getCandidacyDate());
 	setState(IndividualCandidacyState.STAND_BY);
-    }
-
+	editObservations(bean);
+	
+	return person;
+    }    
+    
+    /**
+     * 06/04/2009
+     * All subclasses of IndividualCandidacy call a checkParameters() in their constructor.
+     * The arguments of checkParameters varies from subclass to subclass but they come
+     * from Person, IndividualCandidacyProcess and IndividualCandidacyProcessBean
+     * 
+     * @param person
+     * @param process
+     * @param bean
+     */
+    protected abstract void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean);    
+    
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
+	/*
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not
+	 * in administrative office)
+	 *
+	 
 	if (person == null) {
 	    throw new DomainException("error.IndividualCandidacy.invalid.person");
 	}
+	*/
+	
 	if (process == null) {
 	    throw new DomainException("error.IndividualCandidacy.invalid.process");
 	}
@@ -111,7 +147,14 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
 	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();
-	if (processBean.isExternalPrecedentDegreeType()) {
+	/*
+	 * 31/03/2009 - 
+	 * The candidacy may be submited in a public area (by a possible student) and in that
+	 * case the candidacy may not be associated with a student which may be a person.
+	 * In the case above the precedent degree information will be external even if
+	 * the candidate has a degree of this institution
+	 */
+	if (processBean.isExternalPrecedentDegreeType() || !processBean.getInternalPersonCandidacy()) {
 	    createExternalPrecedentDegreeInformation(bean);
 	} else {
 	    final StudentCurricularPlan studentCurricularPlan = processBean.getPrecedentStudentCurricularPlan();
@@ -122,10 +165,23 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
     }
 
+    private Unit getOrCreateInstitution(final CandidacyPrecedentDegreeInformationBean bean) {
+	if (bean.getInstitution() != null) {
+	    return bean.getInstitution();
+	}
+
+	if (bean.getInstitutionName() == null || bean.getInstitutionName().isEmpty()) {
+	    throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
+	}
+
+	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
+	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+    }
+
     protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
 	    final CandidacyPrecedentDegreeInformationBean bean) {
-	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(), bean
-		.getInstitution(), bean.getConclusionGrade());
+	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(), getOrCreateInstitution(bean), 
+		bean.getConclusionGrade(), bean.getCountry());
     }
 
     protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
@@ -254,7 +310,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
 	getPrecedentDegreeInformation().editMissingInformation(bean);
     }
-
+    
+    public void editObservations(final IndividualCandidacyProcessBean bean) {
+	this.setObservations(bean.getObservations());
+    }
+    
     private void editMainCandidacyInformation(final CandidacyInformationBean bean) {
 	setCountryOfResidence(bean.getCountryOfResidence());
 	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());

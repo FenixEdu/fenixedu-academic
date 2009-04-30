@@ -827,7 +827,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalPhone(this, number) : null;
     }
 
-    protected void updateDefaultPhone(final String number) {
+    public void updateDefaultPhone(final String number) {
 	if (hasDefaultPhone()) {
 	    getDefaultPhone().edit(number);
 	} else {
