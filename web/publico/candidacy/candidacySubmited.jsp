@@ -41,10 +41,3 @@
 
 <div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 
-<div class="mtop2">
-	<bean:define id="mappingPath" name="mappingPath"/>
-	<bean:define id="link" name="link"/>
-	<p><a href='<%= link %>'>Testes > Simular acesso candidatura</a></p>
-	<p><a href='<%= fullPath + "?method=beginCandidacyProcessIntro" %>'> <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
-</div>
-

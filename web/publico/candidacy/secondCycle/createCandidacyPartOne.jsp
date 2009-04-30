@@ -96,22 +96,6 @@
 
 		<p class="mtop15">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
-			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+			<%--<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>--%>
 		</p>
 </fr:form>
-
-<%-- 
-<script language="javascript">
-	function set_OnLoadEvent() {
-		var myspan = document.getElementById('photoInputSpanId');
-		myspan.childNodes[1].onchange=MyEvent_OnLoad;
-	}
-
-	function MyEvent_OnLoad(e) {
-		var myspan = document.getElementById('photoInputSpanId');
-		var photoImg = document.getElementById('photoImgId');
-	}
-
-	set_OnLoadEvent();
-</script>
---%>

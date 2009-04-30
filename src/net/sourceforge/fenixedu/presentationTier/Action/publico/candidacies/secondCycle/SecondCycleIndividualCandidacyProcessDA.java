@@ -131,21 +131,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
-	/* FIXME ANil : Fill for fun */
-	bean.getPersonBean().setName("Anil MAmede Ali Kassamali Degree Transfer");
-	bean.getPersonBean().setGender(Gender.MALE);
-	bean.getPersonBean().setDateOfBirth(new YearMonthDay(1980, 02, 15));
-	bean.getPersonBean().setDocumentIdNumber("123456789");
-	bean.getPersonBean().setIdDocumentType(IDDocumentType.IDENTITY_CARD);
-	bean.getPersonBean().setDocumentIdEmissionDate(new YearMonthDay(2008, 02, 15));
-	bean.getPersonBean().setDocumentIdExpirationDate(new YearMonthDay(2013, 02, 15));
-	bean.getPersonBean().setDocumentIdEmissionLocation("Lisboa");
-	bean.getPersonBean().setFiscalCode("987654321");
-	bean.getPersonBean().setAddress("Rua Vasco Da Gama");
-	bean.getPersonBean().setArea("Odivelas");
-	bean.getPersonBean().setAreaCode("2675-460");
-	bean.getPersonBean().setAreaOfAreaCode("Odivelas");
-	bean.getPersonBean().setPhone("939584538");
 	bean.getPersonBean().setEmail(candidacyHashCode.getEmail());
 
 	return mapping.findForward("show-candidacy-creation-page");

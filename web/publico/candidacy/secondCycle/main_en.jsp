@@ -26,7 +26,7 @@
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Selection criteria</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#faq">FAQ</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submit Application</b></a></li>
-    	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recover 4Access</b></a></li>
+    	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recover Access</b></a></li>
    </ul>
 </div>
 
