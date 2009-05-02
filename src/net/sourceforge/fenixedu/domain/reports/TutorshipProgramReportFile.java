@@ -67,7 +67,9 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 						    if (grade.isNumeric()) {
 							final double credits = enrolment.getEctsCreditsForCurriculum().doubleValue();
 							totalCredits += credits;
-							bigDecimal = bigDecimal.add(grade.getNumericValue().multiply(new BigDecimal(credits)));
+							bigDecimal = bigDecimal == null ?
+								grade.getNumericValue().multiply(new BigDecimal(credits)) :
+								bigDecimal.add(grade.getNumericValue().multiply(new BigDecimal(credits)));
 						    }
 						}
 					    }
