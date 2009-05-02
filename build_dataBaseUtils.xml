@@ -187,7 +187,7 @@
     <target name="OidSqlGenerator" depends="set-properties"
     		description="Generates a single run file for upgrading database.">
 		<java classname="pt.utl.ist.codeGenerator.OidSqlGenerator" fork="true">
-			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
+			<arg value="${basedir}/web/WEB-INF/classes/domain_model.dml"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
