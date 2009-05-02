@@ -3,6 +3,7 @@ package pt.utl.ist.codeGenerator;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
+
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import pt.ist.fenixframework.Config;
@@ -123,19 +126,30 @@ public class OidSqlGenerator {
 	    fileWriter.append("';\n");
 	}
 
-	protected void writeUpdate(final FileWriter fileWriter, final String tablename) throws IOException {
-	    fileWriter.append("update ");
-	    fileWriter.append(tablename);
-	    fileWriter.append(" set OID = (@xpto << 32) + ID_INTERNAL;\n");
-	}
-
-	protected void writeUpdate(final FileWriter fileWriter, final String domainClassName, final String tablename)
+	protected void writeUpdate(final FileWriter fileWriter, final String domainClassName, final String tablename, final boolean appendConcreteClassClause)
 		throws IOException {
 	    fileWriter.append("update ");
 	    fileWriter.append(tablename);
-	    fileWriter.append(" set OID = (@xpto << 32) + ID_INTERNAL where OJB_CONCRETE_CLASS = '");
-	    fileWriter.append(domainClassName);
-	    fileWriter.append("';\n");
+	    fileWriter.append(" set OID = (@xpto << 32) + ID_INTERNAL");
+
+	    final DomainClass domainClass = domainModel.findClass(domainClassName);
+	    for (final Slot slot : domainClass.getSlotsList()) {
+		final String typeName = slot.getTypeName();
+		if (DateTime.class.getName().equals(typeName) || DateTime.class.getSimpleName().equals(typeName)) {
+		    final String columnName = getSqlName(slot.getName());
+		    fileWriter.append(", ");
+		    fileWriter.append(columnName);
+		    fileWriter.append(" = ");
+		    fileWriter.append(columnName);
+		}
+	    }
+
+	    if (appendConcreteClassClause) {
+		fileWriter.append(" where OJB_CONCRETE_CLASS = '");
+		fileWriter.append(domainClassName);
+		fileWriter.append("'");
+	    }
+	    fileWriter.append(";\n");
 	}
 
 	@Override
@@ -145,7 +159,7 @@ public class OidSqlGenerator {
 		final String tablename = entry.getValue();
 
 		writeSelect(fileWriter, domainClassName, tablename);
-		writeUpdate(fileWriter, tablename);
+		writeUpdate(fileWriter, domainClassName, tablename, false);
 	    }
 
 	    for (final Entry<String, String> entry : mapFamily.entrySet()) {
@@ -153,7 +167,7 @@ public class OidSqlGenerator {
 		final String tablename = entry.getValue();
 
 		writeSelect(fileWriter, domainClassName, tablename);
-		writeUpdate(fileWriter, domainClassName, tablename);
+		writeUpdate(fileWriter, domainClassName, tablename, true);
 	    }
 
 	    for (final String[] strings : mapKeys) {
@@ -177,6 +191,7 @@ public class OidSqlGenerator {
 
     }
 
+    private static DomainModel domainModel = null;
     private static final AlterTableRegistry alterTableRegistry = new AlterTableRegistry();
     private static final UpdateRegistry updateRegistry = new UpdateRegistry();
 
@@ -192,7 +207,7 @@ public class OidSqlGenerator {
     private static void generate(final String dmlFilePath) throws IOException {
 	Config config = PropertiesManager.getFenixFrameworkConfig(dmlFilePath);
 	MetadataManager.init(config);
-	final DomainModel domainModel = MetadataManager.getDomainModel();
+	domainModel = MetadataManager.getDomainModel();
 
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
 	    final int domainClassHierarchyLevel = calculateHierarchyLevel(domainClass);
