@@ -3,7 +3,6 @@ package pt.utl.ist.codeGenerator;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +11,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.joda.time.DateTime;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.pstm.MetadataManager;
 import dml.DomainClass;
@@ -108,9 +108,10 @@ public class OidSqlGenerator {
 	    mapFamily.put(domainClassName, tablename);
 	}
 
-	private void addUpdateKeyInstruction(final String tablename, final String otherTablename, final String key,
+	private void addUpdateKeyInstruction(final DomainClass domainClass, final String tablename, final String otherTablename, final String key,
 		final String newKey) {
-	    mapKeys.add(new String[] { tablename, otherTablename, newKey, key });
+	    final String domainClassName = domainClass == null ? null : domainClass.getFullName();
+	    mapKeys.add(new String[] { domainClassName, tablename, otherTablename, newKey, key });
 	}
 
 	@Override
@@ -171,10 +172,11 @@ public class OidSqlGenerator {
 	    }
 
 	    for (final String[] strings : mapKeys) {
-		final String tablename = strings[0];
-		final String otherTablename = strings[1];
-		final String newKey = strings[2];
-		final String key = strings[3];
+		final String domainClassName = strings[0];
+		final String tablename = strings[1];
+		final String otherTablename = strings[2];
+		final String newKey = strings[3];
+		final String key = strings[4];
 
 		fileWriter.append("update ");
 		fileWriter.append(tablename);
@@ -182,7 +184,23 @@ public class OidSqlGenerator {
 		fileWriter.append(otherTablename);
 		fileWriter.append(" as t2 set t1.");
 		fileWriter.append(newKey);
-		fileWriter.append(" = t2.OID where t2.ID_INTERNAL = t1.");
+		fileWriter.append(" = t2.OID");
+
+		if (domainClassName != null) {
+		    final DomainClass domainClass = domainModel.findClass(domainClassName);
+		    for (final Slot slot : domainClass.getSlotsList()) {
+			final String typeName = slot.getTypeName();
+			if (DateTime.class.getName().equals(typeName) || DateTime.class.getSimpleName().equals(typeName)) {
+			    final String columnName = getSqlName(slot.getName());
+			    fileWriter.append(", t1.");
+			    fileWriter.append(columnName);
+			    fileWriter.append(" = t1.");
+			    fileWriter.append(columnName);
+			}
+		    }
+		}
+
+		fileWriter.append(" where t2.ID_INTERNAL = t1.");
 		fileWriter.append(key);
 		fileWriter.append(";\n");
 	    }
@@ -262,7 +280,7 @@ public class OidSqlGenerator {
 
 		alterTableRegistry.addColumn(tablename, newKey);
 
-		updateRegistry.addUpdateKeyInstruction(tablename, otherTablename, key, newKey);
+		updateRegistry.addUpdateKeyInstruction(domainClass, tablename, otherTablename, key, newKey);
 	    } else if (role.getMultiplicityUpper() == -1) {
 		if (role.getOtherRole().getMultiplicityUpper() == -1) {
 		    writeIndirectionKeySqlInstructions(role.getRelation());
@@ -294,7 +312,7 @@ public class OidSqlGenerator {
 	    final String otherTablename = getTopLevelTableName((DomainClass) role.getType());
 	    final String key = getIndirectionKeyFromRole(role);
 	    final String newKey = getNewIndirectionKeyFromRole(role);
-	    updateRegistry.addUpdateKeyInstruction(tablename, otherTablename, key, newKey);
+	    updateRegistry.addUpdateKeyInstruction(null, tablename, otherTablename, key, newKey);
 	}
     }
 
