@@ -170,7 +170,9 @@ enum net.sourceforge.fenixedu.util.WeekDay                                      
 enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
 enum net.sourceforge.fenixedu.domain.accessControl.PermissionType                                                         as PermissionType;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType													  as AnnouncementCategoryType;
-enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                        as PhdIndividualProgramProcessState;
+enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
+enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
+enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                            	  as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType													  as IndividualCandidacyDocumentFileType;
 
@@ -6299,6 +6301,8 @@ class phd.PhdUnitSite extends UnitSite {
 
 class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
 	PhdIndividualProgramProcessState state;
+	PhdIndividualProgramCollaborationType collaborationType;
+	String otherCollaborationType;
 }
 
 class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
@@ -6378,6 +6382,15 @@ relation PhdProgramCandidacyProcessPhdProgramCandidacy {
 	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
 	phd.candidacy.PHDProgramCandidacy playsRole candidacy;
 }
+
+relation PhdIndividualProgramProcessExecutionYear {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcesses {
+		multiplicity *;
+	}
+	
+	ExecutionYear playsRole executionYear;
+}
+
 
 /* End of Phd Module */
 

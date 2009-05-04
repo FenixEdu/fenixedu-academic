@@ -62,6 +62,8 @@ public class PersonBean implements Serializable {
     // contacts
     private String phone;
 
+    private String workPhone;
+
     private String mobile;
 
     private String email;
@@ -502,6 +504,14 @@ public class PersonBean implements Serializable {
 
     public void setPhone(String phoneNumber) {
 	this.phone = phoneNumber;
+    }
+
+    public String getWorkPhone() {
+	return workPhone;
+    }
+
+    public void setWorkPhone(String workPhone) {
+	this.workPhone = workPhone;
     }
 
     public ProfessionType getProfessionType() {

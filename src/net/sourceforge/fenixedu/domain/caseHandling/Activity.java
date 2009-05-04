@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.ProcessLog;
 
 public abstract class Activity<P extends Process> {
 
+    // TODO: change method return to boolean
     public abstract void checkPreConditions(P process, IUserView userView);
 
     protected abstract P executeActivity(P process, IUserView userView, Object object);

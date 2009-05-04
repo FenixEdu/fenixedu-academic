@@ -38,7 +38,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	}
     }
 
-    private static Activity<? extends Process> getStartActivity(Class<? extends Process> process) throws InstantiationException,
+    public static Activity<? extends Process> getStartActivity(Class<? extends Process> process) throws InstantiationException,
 	    IllegalAccessException {
 	for (Class<?> clazz : process.getDeclaredClasses()) {
 	    if (Activity.class.isAssignableFrom(clazz)) {
@@ -50,7 +50,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	return null;
     }
 
-    public static Activity getStartActivity(String processName) {
+    public static Activity<?> getStartActivity(String processName) {
 	synchronized (lock) {
 	    if (startActivities == null) {
 		load();
@@ -64,8 +64,18 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	return activity;
     }
 
-    public static Process createNewProcess(IUserView userView, String processName, Object object) {
-	return getStartActivity(processName).execute(null, userView, object);
+    public static <T extends Process> T createNewProcess(IUserView userView, Class<? extends Process> processClass, Object object) {
+	try {
+	    return (T) getStartActivity(processClass).execute(null, userView, object);
+	} catch (InstantiationException e) {
+	    throw new RuntimeException(e);
+	} catch (IllegalAccessException e) {
+	    throw new RuntimeException(e);
+	}
+    }
+
+    public static <T extends Process> T createNewProcess(IUserView userView, String processName, Object object) {
+	return (T) getStartActivity(processName).execute(null, userView, object);
     }
 
     abstract public List<Activity> getActivities();

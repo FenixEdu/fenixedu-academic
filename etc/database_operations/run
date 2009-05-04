@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing table individual program process" AlterTablePhdIndividualProgramProcess.sql
+

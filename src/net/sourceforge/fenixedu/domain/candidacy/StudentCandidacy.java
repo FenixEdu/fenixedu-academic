@@ -27,18 +27,21 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
     }
 
     protected void init(Person person, ExecutionDegree executionDegree) {
-	if (executionDegree == null) {
-	    throw new DomainException("execution degree cannot be null");
-	}
-	if (person == null) {
-	    throw new DomainException("person cannot be null");
-	}
+	check(executionDegree, "execution degree cannot be null");
+	check(person, "person cannot be null");
+
 	if (person.hasStudentCandidacyForExecutionDegree(executionDegree)) {
 	    StudentCandidacy existentCandidacy = person.getStudentCandidacyForExecutionDegree(executionDegree);
 	    if (!existentCandidacy.hasRegistration() || existentCandidacy.getRegistration().getActiveStateType().isActive())
 		throw new DomainException("error.candidacy.already.created");
 	}
 	setExecutionDegree(executionDegree);
+	setPerson(person);
+	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
+    }
+
+    protected void init(Person person) {
+	check(person, "person cannot be null");
 	setPerson(person);
 	setPrecedentDegreeInformation(new PrecedentDegreeInformation());
     }
@@ -97,7 +100,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	    return new DFACandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_PHD_PROGRAM:
-	    //TODO: REMOVE THIS
+	    // TODO: REMOVE THIS
 	    return new PHDProgramCandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:

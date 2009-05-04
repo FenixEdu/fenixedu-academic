@@ -2,4 +2,18 @@ package net.sourceforge.fenixedu.domain.phd;
 
 public enum PhdProgramCandidacyProcessState {
 
+    STAND_BY_WITH_MISSING_INFORMATION,
+
+    STAND_BY_COMPLETE_INFORMATION,
+
+    VALIDATED,
+
+    PENDING_FOR_COORDINATOR_OPINION,
+
+    WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION,
+
+    RATIFIED_BY_CIENTIFIC_COUNCIL,
+
+    CONCLUDED;
+
 }

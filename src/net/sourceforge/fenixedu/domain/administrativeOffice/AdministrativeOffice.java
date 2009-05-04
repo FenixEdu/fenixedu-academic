@@ -270,6 +270,10 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	return getAdministrativeOfficeType().equals(AdministrativeOfficeType.DEGREE);
     }
 
+    public boolean isMasterDegree() {
+	return getAdministrativeOfficeType() == AdministrativeOfficeType.MASTER_DEGREE;
+    }
+
     private AdministrativeOfficePermissionGroup getAdministrativeOfficePermissionGroup(final Campus campus) {
 	for (final AdministrativeOfficePermissionGroup group : getAdministrativeOfficePermissionGroupsSet()) {
 	    if (group.hasCampus(campus)) {

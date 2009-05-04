@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -10,47 +9,20 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
-import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
-    private static Map<String, Set<String>> stateMap;
-
-    static {
-	stateMap = new HashMap<String, Set<String>>();
-
-	Set<String> standBy = new HashSet<String>();
-	standBy.add(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString());
-	standBy.add(CandidacySituationType.CANCELLED.toString());
-	stateMap.put(CandidacySituationType.STAND_BY.toString(), standBy);
-
-	Set<String> standByConfirmedData = new HashSet<String>();
-	standByConfirmedData.add(CandidacySituationType.ADMITTED.toString());
-	standByConfirmedData.add(CandidacySituationType.CANCELLED.toString());
-	stateMap.put(CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString(), standByConfirmedData);
-
-	Set<String> admitted = new HashSet<String>();
-	admitted.add(CandidacySituationType.REGISTERED.toString());
-	admitted.add(CandidacySituationType.CANCELLED.toString());
-	stateMap.put(CandidacySituationType.ADMITTED.toString(), admitted);
-
-	stateMap.put(CandidacySituationType.REGISTERED.toString(), new HashSet<String>());
-
-    }
-
     public PHDProgramCandidacy(Person person, ExecutionDegree executionDegree) {
 	super();
 	init(person, executionDegree);
-	new StandByCandidacySituation(this);
 
-	// final AdministrativeOffice administrativeOffice =
-	// AdministrativeOffice
-	//.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE
-	// );
-	// new PhDCandidacyEvent(administrativeOffice, person, this);
+    }
+
+    public PHDProgramCandidacy(Person person) {
+	super();
+	init(person);
     }
 
     @Override
@@ -65,7 +37,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     @Override
     public Set<Operation> getOperations(CandidacySituation candidacySituation) {
-	return new HashSet<Operation>();
+	return Collections.emptySet();
     }
 
     @Override
@@ -74,19 +46,12 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     @Override
     public String getDefaultState() {
-	switch (getActiveCandidacySituation().getCandidacySituationType()) {
-	case STAND_BY:
-	    return CandidacySituationType.STAND_BY_CONFIRMED_DATA.toString();
-	case STAND_BY_CONFIRMED_DATA:
-	    return CandidacySituationType.ADMITTED.toString();
-	default:
-	    return null;
-	}
+	return null;
     }
 
     @Override
     public Map<String, Set<String>> getStateMapping() {
-	return stateMap;
+	return Collections.emptyMap();
     }
 
 }
