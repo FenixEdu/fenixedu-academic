@@ -80,7 +80,7 @@
 
     <target name="SQLUpdateGenerator" depends="compile"
     		description="Generates possible sql instructions to be run on next deploy.">
-		<java classname="pt.ist.fenixWebFramework.repository.SQLUpdateGenerator" fork="true">
+		<java classname="pt.ist.fenixframework.pstm.repository.SQLUpdateGenerator" fork="true">
 <!--				jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y" -->
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
@@ -89,11 +89,12 @@
 			        <include name="**/*.jar"/>
                 </fileset>
 			</classpath>
-			<arg value="${build.home.webinf.classes}/domain_model.dml"/>
+			<arg value="-charset"/>
+			<arg value="latin1"/>
 			<arg value="${db.alias}"/>
 			<arg value="${db.user}"/>
 			<arg value="${db.pass}"/>
-			<arg value="latin1"/>
+			<arg value="${build.home.webinf.classes}/domain_model.dml"/>
 		</java>
     </target>
 
