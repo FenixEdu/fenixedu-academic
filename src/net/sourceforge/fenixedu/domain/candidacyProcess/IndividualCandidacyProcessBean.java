@@ -111,7 +111,6 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public Person getOrCreatePersonFromBean() {
 	if (!getPersonBean().hasPerson()) {
 	    Person person = new Person(getPersonBean());
-	    getPersonBean().setPerson(person);
 	    return person;
 	}
 	return getPersonBean().getPerson().edit(personBean);
@@ -251,10 +250,10 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     }
     
     protected void initializeDocumentUploadBeans() {
-        this.documentIdentificationDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.DOCUMENT_IDENTIFICATION);
-        this.paymentDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.PAYMENT_DOCUMENT);
-        this.habilitationCertificationDocument =  new CandidacyProcessDocumentUploadBean(DocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
-        this.firstCycleAccessHabilitationDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_DOCUMENT);
-        this.vatCatCopyDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.VAT_CARD_DOCUMENT);
+        this.documentIdentificationDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
+        this.paymentDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
+        this.habilitationCertificationDocument =  new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
+        this.firstCycleAccessHabilitationDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_DOCUMENT);
+        this.vatCatCopyDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
     }
 }

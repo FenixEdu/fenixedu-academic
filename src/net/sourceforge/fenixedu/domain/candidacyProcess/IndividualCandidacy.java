@@ -39,10 +39,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	 */
 	Person person = null;
 	if(bean.getInternalPersonCandidacy().booleanValue()) {
-	    person = bean.getOrCreatePersonFromBean();
+	    person = bean.getOrCreatePersonFromBean();    
 	}
 	
 	checkParameters(person, process, bean);
+	bean.getPersonBean().setPerson(person);
 	
 	IndividualCandidacyPersonalDetails.createDetails(this, bean);
 	setCandidacyProcess(process);

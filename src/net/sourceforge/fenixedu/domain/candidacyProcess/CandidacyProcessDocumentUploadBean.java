@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 
 public class CandidacyProcessDocumentUploadBean implements Serializable {
@@ -18,7 +18,7 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     DomainReference<IndividualCandidacyProcess> individualCandidacyProcess;
-    private DocumentFileType type;
+    private IndividualCandidacyDocumentFileType type;
     private transient InputStream stream;
     private long fileSize;
     private String fileName;
@@ -31,16 +31,16 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
 	this.id = System.currentTimeMillis();
     }
 
-    public CandidacyProcessDocumentUploadBean(DocumentFileType type) {
+    public CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType type) {
 	this.id = System.currentTimeMillis();
 	this.type = type;
     }
 
-    public DocumentFileType getType() {
+    public IndividualCandidacyDocumentFileType getType() {
 	return type;
     }
 
-    public void setType(DocumentFileType type) {
+    public void setType(IndividualCandidacyDocumentFileType type) {
 	this.type = type;
     }
 

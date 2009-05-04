@@ -23,7 +23,3 @@
 <p><strong><bean:message key="message.email.sent.success" bundle="CANDIDATE_RESOURCES"/>.</strong></p>
 <p><bean:message key="message.email.sent.sucess.details" bundle="CANDIDATE_RESOURCES"/>.</p>
 
-<bean:define id="link" name="link"/>
-
-<a href='<%= link %>'>Testes > Simular acesso ao formulário</a>
-

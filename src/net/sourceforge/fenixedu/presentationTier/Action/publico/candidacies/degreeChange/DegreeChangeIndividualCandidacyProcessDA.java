@@ -198,5 +198,17 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     protected LocalDateTime getApplicationDateStart() {
 	return start;
     }
+
+    @Override
+    protected String getRootPortalCandidacyAccess() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    protected String getRootPortalCandidacySubmission() {
+	// TODO Auto-generated method stub
+	return null;
+    }
     
 }

@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public enum DocumentFileType {
+public enum IndividualCandidacyDocumentFileType {
     DOCUMENT_IDENTIFICATION,
     PAYMENT_DOCUMENT,
     HABILITATION_CERTIFICATE_DOCUMENT,

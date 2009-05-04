@@ -28,7 +28,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
@@ -207,12 +206,12 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 		.getCandidacyHashCode()));
     }
 
-    public ActionForward backToViewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	IndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request, "individualCandidacyProcess");
-	return forward(request, getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, individualCandidacyProcess
-		.getCandidacyHashCode()));
-    }
+//    public ActionForward backToViewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+//	    HttpServletResponse response) {
+//	IndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request, "individualCandidacyProcess");
+//	return forward(request, getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, individualCandidacyProcess
+//		.getCandidacyHashCode()));
+//    }
 
     private ActionForward forward(HttpServletRequest request, String windowLocation) {
 	final ActionForward actionForward = new ActionForward();
@@ -266,7 +265,6 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 		    getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
 	    
-	    request.setAttribute("link", getLinkFromPublicCandidacyHashCode(mapping, request, candidacyHashCode));
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
 	    addActionMessage(request, "error.candidacy.hash.code.already.bounded");
@@ -274,14 +272,13 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	}
     }
 
-    
     private void sendEmailForApplicationSubmissionCandidacyForm(PublicCandidacyHashCode candidacyHashCode, ActionMapping mapping, HttpServletRequest request) {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	String fromName = bundle.getString(FROM_NAME_KEY);
 	String fromAddress = bundle.getString(FROM_ADDRESS_KEY);
 	String subject = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_SUBJECT);
 	String body = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_BODY);
-	String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
+	String link = getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
 	
 	body = String.format(body, new String[] { link });
 	
@@ -350,17 +347,18 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	request.setAttribute("hash", hash);
 	return mapping.findForward("show-application-submission-conditions");
     }
+    
+    protected abstract String getRootPortalCandidacyAccess();
+    protected abstract String getRootPortalCandidacySubmission();
 
     protected String getLinkFromPublicCandidacyHashCodeForInternalUse(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-
-	return mapping.getPath() + ".do?method=showApplicationSubmissionConditions&hash=" + hashCode.getValue();
+	return mapping.getPath() + ".do?method=prepareCandidacyCreation&hash=" + hashCode.getValue();
     }
 
     protected String getLinkFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-	return request.getContextPath() + "/publico"
-		+ getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, hashCode);
+	return getRootPortalCandidacyAccess() + "?hash=" + hashCode.getValue();
     }
 
     protected String getFullLinkFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,
@@ -368,18 +366,28 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
 	    String link = bundle.getString(LINK_HTTP_HOSTNAME);
 	
-	return link + request.getContextPath() + "/publico"
-		+ getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, hashCode) + "&"
-		+ ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" +
-		request.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+	return link + request.getContextPath() + getLinkFromPublicCandidacyHashCode(mapping, request, hashCode);
     }
 
+    protected String getLinkForSubmissionFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
+	    PublicCandidacyHashCode hashCode) {
+	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue();
+    }
+
+    protected String getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,
+	    PublicCandidacyHashCode hashCode) {
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
+	    String link = bundle.getString(LINK_HTTP_HOSTNAME);
+	
+	return link + request.getContextPath() + getLinkForSubmissionFromPublicCandidacyHashCode(mapping, request, hashCode);
+    }
+
+    
     protected boolean candidacyIndividualProcessExistsForThisEmail(String email) {
 	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode
 		.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, getProcessType(), getCurrentOpenParentProcess());
 	return candidacyHashCode != null;
     }
-    
     
     protected boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {
 	final String captchaId = request.getSession().getId();

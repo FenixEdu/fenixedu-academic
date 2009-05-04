@@ -174,7 +174,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState       
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                            	  as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType													  as IndividualCandidacyDocumentFileType;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 
 /*
  * Value types that need special externalization

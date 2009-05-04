@@ -104,6 +104,10 @@
 </logic:notEmpty>
 </table>
 
+<%
+	}
+%>
+
 <h3 style="margin-bottom: 0.5em;"><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>
 
 <table class="tdtop">
@@ -165,12 +169,6 @@
 	</td>
 </tr>
 </table>
-
-
-
-<%
-	}
-%>
 
 
 

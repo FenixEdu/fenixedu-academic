@@ -358,4 +358,14 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	return start;
     }
 
+    @Override
+    protected String getRootPortalCandidacyAccess() {
+	return "/candidaturas/segundo_ciclo/acesso";
+    }
+
+    @Override
+    protected String getRootPortalCandidacySubmission() {
+	return "/candidaturas/segundo_ciclo/submissao";
+    }
+
 }

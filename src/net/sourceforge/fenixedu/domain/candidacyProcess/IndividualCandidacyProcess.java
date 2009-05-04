@@ -241,11 +241,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
     
     public IndividualCandidacyDocumentFile getPhoto() {
-	IndividualCandidacyDocumentFile photo = getFileForType(DocumentFileType.PHOTO);
+	IndividualCandidacyDocumentFile photo = getFileForType(IndividualCandidacyDocumentFileType.PHOTO);
 	return photo;
     }
     
-    private IndividualCandidacyDocumentFile getFileForType(DocumentFileType type) {
+    public IndividualCandidacyDocumentFile getFileForType(IndividualCandidacyDocumentFileType type) {
 	for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
 	    if (document.getCandidacyFileType().equals(type))
 		return document;
@@ -257,7 +257,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     
     private static final int MAX_FILE_SIZE = 30000000;
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
-	DocumentFileType type = uploadBean.getType();
+	IndividualCandidacyDocumentFileType type = uploadBean.getType();
 	String fileName = uploadBean.getFileName();
 	long fileSize = uploadBean.getFileSize();
 	InputStream stream = uploadBean.getStream();
@@ -284,23 +284,23 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	}
     }
     
-    public List<DocumentFileType> getMissingRequiredDocumentFiles() {
-	List<DocumentFileType> missingDocumentFiles = new ArrayList<DocumentFileType>();
+    public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
+	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
 	
-	if(getFileForType(DocumentFileType.CV_DOCUMENT) == null) {
-	    missingDocumentFiles.add(DocumentFileType.CV_DOCUMENT);
+	if(getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 	
-	if(getFileForType(DocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
-	    missingDocumentFiles.add(DocumentFileType.DOCUMENT_IDENTIFICATION);
+	if(getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	}
 	
-	if(getFileForType(DocumentFileType.PAYMENT_DOCUMENT) == null) {
-	    missingDocumentFiles.add(DocumentFileType.PAYMENT_DOCUMENT);
+	if(getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 	
-	if(getFileForType(DocumentFileType.VAT_CARD_DOCUMENT) == null) {
-	    missingDocumentFiles.add(DocumentFileType.VAT_CARD_DOCUMENT);
+	if(getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	}
 	
 	return missingDocumentFiles;

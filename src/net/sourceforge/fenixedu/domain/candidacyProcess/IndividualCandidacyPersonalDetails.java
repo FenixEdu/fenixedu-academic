@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -49,7 +50,9 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public static void createDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
 	if (bean.getInternalPersonCandidacy()) {
-	    new IndividualCandidacyInternalPersonDetails(candidacy, bean.getOrCreatePersonFromBean());
+	    Person person = bean.getOrCreatePersonFromBean();
+	    bean.getPersonBean().setPerson(person);
+	    new IndividualCandidacyInternalPersonDetails(candidacy, person);
 	} else {
 	    new IndividualCandidacyExternalPersonDetails(candidacy, bean);
 	}

@@ -434,4 +434,14 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     protected LocalDateTime getApplicationDateStart() {
 	return start;
     }
+
+    @Override
+    protected String getRootPortalCandidacyAccess() {
+	return "/candidaturas/lic/vinte_tres_anos/acesso";
+    }
+
+    @Override
+    protected String getRootPortalCandidacySubmission() {
+	return "/candidaturas/lic/vinte_tres_anos/submissao";
+    }
 }

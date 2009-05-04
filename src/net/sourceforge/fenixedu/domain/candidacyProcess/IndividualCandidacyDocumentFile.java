@@ -12,13 +12,13 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	super();
     }
 
-    public IndividualCandidacyDocumentFile(DocumentFileType type, IndividualCandidacy candidacy, byte[] contents,
+    public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy, byte[] contents,
 	    String filename) {
 	setIndividualCandidacy(candidacy);
 	setCandidacyFileType(type);
 	init(getVirtualPath(), filename, filename, null, contents, null);
 	
-	if(type.equals(DocumentFileType.PHOTO)) {
+	if(type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
 	    storeToContentManager();
 	}
     }

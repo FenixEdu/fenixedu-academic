@@ -52,6 +52,7 @@
 		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
+			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
 		</fr:edit>
 		
 
@@ -61,10 +62,11 @@
 					<bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:
 				</td>
 				<td>
-					<fr:edit id="individualCandidacyProcessBean.photo"
+					<fr:edit id="individualCandidacyProcessBean.document.file.photo"
 						name="individualCandidacyProcessBean" 
 						schema="PublicCandidacyProcessBean.documentUploadBean.photo"
 						property="photoDocument" >
+						<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
 						<fr:layout name="flow">
 							<fr:property name="labelExcluded" value="true"/>
 						</fr:layout>
@@ -76,6 +78,6 @@
 		
 		<p class="mtop15">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
-			<%--<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>--%>
+			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 		</p>
 </fr:form>

@@ -1307,6 +1307,8 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+            <property name="isKey" value="true"/>
         </validator>
     	<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
@@ -1361,6 +1363,11 @@
 	<slot name="stream" key="label.candidacy.document.file">
 		<property name="fileNameSlot" value="fileName"/>
 		<property name="fileSizeSlot" value="fileSize"/>
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3mb"/>
+			<property name="acceptedTypes" value="*" />			
+		</validator>		
 	</slot>
 </schema>
 
@@ -1368,6 +1375,12 @@
 	<slot name="stream" key="label.candidacy.document.file">
 		<property name="fileNameSlot" value="fileName"/>
 		<property name="fileSizeSlot" value="fileSize"/>
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3000000"/>
+			<property name="acceptedExtensions" value="gif,jpg,png" />
+			<property name="acceptedTypes" value="image/gif,image/jpg,image/png" />
+		</validator>		
 	</slot>
 </schema>
 
@@ -1378,7 +1391,7 @@
 
 <schema name="PublicCandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider"/>
 		<property name="format" value="${localizedName}"/>
 	</slot>
   <slot name="stream" key="label.candidacy.document.file">

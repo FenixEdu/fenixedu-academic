@@ -9,7 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.DocumentFileType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 
@@ -220,7 +220,7 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     }
     
     public void addHabilitationCertificateDocument() {
-	this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(DocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
+	this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
     }
     
     public void removeHabilitationCertificateDocument(final int index) {
@@ -228,7 +228,7 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     }
     
     public void addReportOrWorkDocument() {
-	this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(DocumentFileType.REPORT_OR_WORK_DOCUMENT));
+	this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT));
     }
     
     public void removeReportOrWorkDocument(final int index) {
@@ -237,15 +237,15 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     
     @Override
     protected void initializeDocumentUploadBeans() {
-        setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.DOCUMENT_IDENTIFICATION));
-        setPaymentDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.PAYMENT_DOCUMENT));
-        setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.VAT_CARD_DOCUMENT));
+        setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
+        setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
+        setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT));
         this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
         addHabilitationCertificateDocument();
         this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
         addReportOrWorkDocument();
-        this.handicapProofDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.HANDICAP_PROOF_DOCUMENT);
-        this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(DocumentFileType.CV_DOCUMENT);
-        setPhotoDocument(new CandidacyProcessDocumentUploadBean(DocumentFileType.PHOTO));
+        this.handicapProofDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HANDICAP_PROOF_DOCUMENT);
+        this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+        setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
     }
 }
