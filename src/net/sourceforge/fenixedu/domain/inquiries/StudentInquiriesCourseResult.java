@@ -637,10 +637,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    synchronized (this) {
 		if (this.valuesMap == null) {
 		    Map<String, String> tmpMap = new HashMap<String, String>();
-		    String[] headers = getHeaders().split("\t");
-		    String[] values = getRawValues().split("\t");
-		    for (int i = 0; i < values.length; i++) {
-			tmpMap.put(headers[i], values[i]);
+		    if (!StringUtils.isEmpty(getHeaders()) && !StringUtils.isEmpty(getRawValues())) {
+			String[] headers = getHeaders().split("\t");
+			String[] values = getRawValues().split("\t");
+			for (int i = 0; i < values.length; i++) {
+			    tmpMap.put(headers[i], values[i]);
+			}
 		    }
 		    this.valuesMap = Collections.unmodifiableMap(tmpMap);
 		}
@@ -654,7 +656,8 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	if (super.getInternalDisclosure() != null) {
 	    return super.getInternalDisclosure();
 	}
-	return fieldToBoolean(getValuesMap().get("Repres_div_interna"));
+	return getValuesMap().containsKey("Repres_div_interna") ? fieldToBoolean(getValuesMap().get("Repres_div_interna"))
+		: false;
     }
 
     private static int getHeaderIndex(String headerToFind, String[] headersSplitted) {
@@ -694,7 +697,8 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	if (super.getPublicDisclosure() != null) {
 	    return super.getPublicDisclosure();
 	}
-	return fieldToBoolean(getValuesMap().get("Repres_div_publica"));
+	return getValuesMap().containsKey("Repres_div_publica") ? fieldToBoolean(getValuesMap().get("Repres_div_publica"))
+		: false;	
     }
 
     @Service

@@ -496,10 +496,12 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	    synchronized (this) {
 		if (this.valuesMap == null) {
 		    Map<String, String> tmpMap = new HashMap<String, String>();
-		    String[] headers = getHeaders().split("\t");
-		    String[] values = getRawValues().split("\t");
-		    for (int i = 0; i < values.length; i++) {
-			tmpMap.put(headers[i], values[i]);
+		    if (!StringUtils.isEmpty(getHeaders()) && !StringUtils.isEmpty(getRawValues())) {
+			String[] headers = getHeaders().split("\t");
+			String[] values = getRawValues().split("\t");
+			for (int i = 0; i < values.length; i++) {
+			    tmpMap.put(headers[i], values[i]);
+			}
 		    }
 		    this.valuesMap = Collections.unmodifiableMap(tmpMap);
 		}
@@ -561,7 +563,8 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	if (super.getPublicDegreeDisclosure() != null) {
 	    return super.getPublicDegreeDisclosure();
 	}
-	return fieldToBoolean(getValuesMap().get("Repres_doc_curso_UC_publica"));        
+	return getValuesMap().containsKey("Repres_doc_curso_UC_publica") ? fieldToBoolean(getValuesMap().get(
+		"Repres_doc_curso_UC_publica")) : false;
     }
 
     @Service
