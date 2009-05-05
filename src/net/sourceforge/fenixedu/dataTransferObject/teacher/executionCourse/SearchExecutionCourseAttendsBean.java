@@ -225,25 +225,32 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 	String attendTypeValues = "", degreeNameValues = "", shiftsValues = "", workingStudentsValues = "";
 
 	for (StudentAttendsStateType attendType : attendsStates) {
-	    attendTypeValues += getEnumerationResourcesString(attendType.getQualifiedName()) + ", ";
+	    if (!attendTypeValues.isEmpty()) {
+		attendTypeValues += ", ";
+	    }
+	    attendTypeValues += getEnumerationResourcesString(attendType.getQualifiedName());
 	}
-	attendTypeValues = attendTypeValues.substring(0, attendTypeValues.length() - 2);
 
 	for (DomainReference<DegreeCurricularPlan> degree : degreeCurricularPlans) {
-	    degreeNameValues += degree.getObject().getName() + ", ";
+	    if (!degreeNameValues.isEmpty()) {
+		degreeNameValues += ", ";
+	    }
+	    degreeNameValues += degree.getObject().getName();
 	}
-	degreeNameValues = degreeNameValues.substring(0, degreeNameValues.length() - 2);
 
 	for (DomainReference<Shift> shift : shifts) {
-	    shiftsValues += shift.getObject().getPresentationName() + ", ";
+	    if (!shiftsValues.isEmpty()) {
+		shiftsValues += ", ";
+	    }
+	    shiftsValues += shift.getObject().getPresentationName();
 	}
-	shiftsValues = shiftsValues.substring(0, shiftsValues.length() - 2);
 
 	for (WorkingStudentSelectionType workingStudent : workingStudentTypes) {
-	    workingStudentsValues += getEnumerationResourcesString(workingStudent.getQualifiedName()) + ", ";
+	    if (!workingStudentsValues.isEmpty()) {
+		workingStudentsValues += ", ";
+	    }
+	    workingStudentsValues += getEnumerationResourcesString(workingStudent.getQualifiedName());
 	}
-
-	workingStudentsValues = workingStudentsValues.substring(0, workingStudentsValues.length() - 2);
 
 	return String.format("%s : %s \n%s : %s \n%s : %s \n%s", getApplicationResourcesString("label.selectStudents"),
 		attendTypeValues, getApplicationResourcesString("label.attends.courses"), degreeNameValues,
