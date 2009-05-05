@@ -322,9 +322,14 @@ public class ManageThesisDA extends FenixDispatchAction {
 	Student student = getStudent(request);
 	Enrolment enrolment = student.getDissertationEnrolment();
 
-	Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
-		student, enrolment.getDissertationProposal() });
-	request.setAttribute("thesis", thesis);
+	try {
+		Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
+			student, enrolment.getDissertationProposal() });
+		request.setAttribute("thesis", thesis);
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    return listThesis(mapping, actionForm, request, response);
+	}
 
 	return editProposal(mapping, actionForm, request, response);
     }
