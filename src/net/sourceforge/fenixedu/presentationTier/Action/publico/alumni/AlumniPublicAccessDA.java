@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPub
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -33,7 +32,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
 
-public class AlumniPublicAccessDA extends SimpleMailSenderAction {
+public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
@@ -121,8 +120,8 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 	}
 
 	try {
-	    final Alumni alumni = (Alumni) RegisterAlumniData.run(alumniBean.getStudentNumber(), alumniBean.getDocumentIdNumber()
-		    .trim(), alumniBean.getEmail());
+	    final Alumni alumni = RegisterAlumniData.run(alumniBean.getStudentNumber(), alumniBean.getDocumentIdNumber().trim(),
+		    alumniBean.getEmail());
 
 	    // development help
 	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
