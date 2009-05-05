@@ -71,7 +71,7 @@ public class Sender extends Sender_Base {
 	Set<Sender> senders = getAvailableSenders();
 	if (senders != null && !senders.isEmpty()) {
 	    for (final Sender sender : senders) {
-		if (!sender.getRecipientsSet().isEmpty())
+		if (sender.hasAnyRecipients())
 		    return true;
 	    }
 	}
