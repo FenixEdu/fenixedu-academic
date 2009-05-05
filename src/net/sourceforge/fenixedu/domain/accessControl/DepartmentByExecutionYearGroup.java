@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.lang.ref.SoftReference;
+
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -11,38 +12,46 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
-    private DomainReference<ExecutionYear> executionYearReference;
-
-    private DomainReference<Department> departmentReference;
-
     private String executionYear;
     private String department;
 
-    public DepartmentByExecutionYearGroup(ExecutionYear executionYear, Department department) {
-	this.executionYearReference = new DomainReference<ExecutionYear>(executionYear);
-	this.departmentReference = new DomainReference<Department>(department);
-    }
-
     public DepartmentByExecutionYearGroup(String executionYearName, String departmentName) {
-
 	this.executionYear = executionYearName;
 	this.department = departmentName;
-
     }
 
+    public DepartmentByExecutionYearGroup(ExecutionYear executionYear, Department department) {
+	this(executionYear.getName(), department.getName());
+    }
+
+    private transient SoftReference<Department> departmentRef = null;
     public Department getDepartment() {
-	if (this.departmentReference == null) {
-	    departmentReference = new DomainReference<Department>(Department.readByName(this.department));
+	Department result = departmentRef == null ? null : departmentRef.get();
+	if (result == null) {
+	    synchronized (department) {
+		result = departmentRef == null ? null : departmentRef.get();
+		if (result == null) {
+		    result = Department.readByName(department);
+		    departmentRef = new SoftReference<Department>(result);
+		}
+	    }
 	}
-	return this.departmentReference.getObject();
+	return result;
     }
 
+    private transient SoftReference<ExecutionYear> executionYearRef = null;
     public ExecutionYear getExecutionYear() {
-	if (this.executionYearReference == null) {
-	    this.executionYearReference = new DomainReference<ExecutionYear>(ExecutionYear
-		    .readExecutionYearByName(this.executionYear));
+	ExecutionYear result = executionYearRef == null ? null : executionYearRef.get();
+	if (result == null) {
+	    synchronized (executionYear) {
+		result = executionYearRef == null ? null : executionYearRef.get();
+		if (result == null) {
+		    result = ExecutionYear.readExecutionYearByName(this.executionYear);
+		    executionYearRef = new SoftReference<ExecutionYear>(result);
+		}
+	    }
 	}
-	return this.executionYearReference.getObject();
+	return result;
     }
 
     @Override
