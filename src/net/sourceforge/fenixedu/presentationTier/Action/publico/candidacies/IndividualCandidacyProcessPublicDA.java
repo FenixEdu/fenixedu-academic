@@ -206,12 +206,12 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 		.getCandidacyHashCode()));
     }
 
-//    public ActionForward backToViewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-//	    HttpServletResponse response) {
-//	IndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request, "individualCandidacyProcess");
-//	return forward(request, getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, individualCandidacyProcess
-//		.getCandidacyHashCode()));
-//    }
+    public ActionForward backToViewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	IndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request, "individualCandidacyProcess");
+	return forward(request, getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, individualCandidacyProcess
+		.getCandidacyHashCode()));
+    }
 
     private ActionForward forward(HttpServletRequest request, String windowLocation) {
 	final ActionForward actionForward = new ActionForward();
