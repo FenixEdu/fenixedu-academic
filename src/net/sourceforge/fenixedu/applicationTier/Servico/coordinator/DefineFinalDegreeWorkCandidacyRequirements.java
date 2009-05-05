@@ -16,7 +16,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends FenixService {
 	    Integer maximumCurricularYearToCountCompletedCourses, Integer minimumCompletedCurricularYear,
 	    Integer minimumNumberOfStudents, Integer maximumNumberOfStudents, Integer maximumNumberOfProposalCandidaciesPerGroup,
 	    Boolean attributionByTeachers, Boolean allowSimultaneousCoorientationAndCompanion,
-	    Integer minimumCompletedCreditsSecondCycle) {
+	    Integer minimumCompletedCreditsFirstCycle, Integer minimumCompletedCreditsSecondCycle) {
 
 	if (executionDegreeOID != null) {
 
@@ -41,6 +41,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends FenixService {
 			&& attributionByTeachers.booleanValue()));
 		scheduleing.setAllowSimultaneousCoorientationAndCompanion(allowSimultaneousCoorientationAndCompanion != null
 			&& allowSimultaneousCoorientationAndCompanion.booleanValue());
+		scheduleing.setMinimumCompletedCreditsFirstCycle(minimumCompletedCreditsFirstCycle);
 		scheduleing.setMinimumCompletedCreditsSecondCycle(minimumCompletedCreditsSecondCycle);
 	    }
 

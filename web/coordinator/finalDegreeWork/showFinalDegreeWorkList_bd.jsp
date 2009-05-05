@@ -226,6 +226,15 @@
 -->
 		<tr>
 			<th>
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsFirstCycle"/>:
+			</th>
+			<td>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCreditsFirstCycle" property="minimumCompletedCreditsFirstCycle" size="2"/>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle"/>:
 			</th>
 			<td>

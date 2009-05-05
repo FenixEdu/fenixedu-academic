@@ -2880,6 +2880,7 @@ class DomainObject {
 		Integer minimumCompletedCurricularYear;
 		Integer minimumNumberOfCompletedCourses;
 		Integer minimumNumberOfStudents;
+		Integer minimumCompletedCreditsFirstCycle;
 		Integer minimumCompletedCreditsSecondCycle;
 		YearMonthDay startOfCandidacyPeriodDateYearMonthDay;
 		HourMinuteSecond startOfCandidacyPeriodTimeHourMinuteSecond;

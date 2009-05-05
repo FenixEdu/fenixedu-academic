@@ -218,6 +218,15 @@
 -->
 		<tr>
 			<th class="listClasses-header">
+				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsFirstCycle"/>:
+			</th>
+			<td class="listClasses">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumCompletedCreditsFirstCycle" property="minimumCompletedCreditsFirstCycle" size="2"/>
+			</td>
+		</tr>
+
+		<tr>
+			<th class="listClasses-header">
 				<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle"/>
 			</th>
 			<td class="listClasses">

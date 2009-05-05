@@ -65,14 +65,15 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	// if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
 	// throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
 	// }
-	if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
-	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
+	if (scheduleing.getMinimumCompletedCreditsFirstCycle() == null) {
+	    throw new NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException();
 	}
 	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing
 		.getMaximumCurricularYearToCountCompletedCourses();
 	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
 	// final Integer minimumNumberOfCompletedCourses =
 	// scheduleing.getMinimumNumberOfCompletedCourses();
+	final Integer minimumCompletedCreditsFirstCycle = scheduleing.getMinimumCompletedCreditsFirstCycle();
 	final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
 
 	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
@@ -137,9 +138,16 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	if (studentCurricularPlan.getSecondCycle() == null) {
 	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
 	}
-	final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
-	if (minimumCompletedCreditsSecondCycle > completedCredits) {
-	    final String[] args = { completedCredits.toString(), minimumCompletedCreditsSecondCycle.toString() };
+
+	final Double completedCreditsFirstCycle = studentCurricularPlan.getFirstCycle().getAprovedEctsCredits();
+	if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
+	    final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
+	    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+	}
+
+	final Double completedCreditsSecondCycle = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
+	if (minimumCompletedCreditsSecondCycle > completedCreditsSecondCycle) {
+	    final String[] args = { completedCreditsSecondCycle.toString(), minimumCompletedCreditsSecondCycle.toString() };
 	    throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
 	}
 	return true;
@@ -238,6 +246,12 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	}
     }
 
+    public static class InsufficientCompletedCreditsInFirstCycleException extends FenixServiceException {
+	public InsufficientCompletedCreditsInFirstCycleException(String s, String[] args) {
+	    super(s, args);
+	}
+    }
+
     public static class InsufficientCompletedCreditsInSecondCycleException extends FenixServiceException {
 	public InsufficientCompletedCreditsInSecondCycleException(String s, String[] args) {
 	    super(s, args);
@@ -248,6 +262,30 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	public InsufficientCompletedCoursesException(String s, String[] args) {
 	    super(s, args);
 	}
+    }
+
+    public static class NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException extends FenixServiceException {
+
+	public NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException() {
+	    super();
+	}
+
+	public NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException(int errorType) {
+	    super(errorType);
+	}
+
+	public NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException(String s) {
+	    super(s);
+	}
+
+	public NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException(Throwable cause) {
+	    super(cause);
+	}
+
+	public NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException(String message, Throwable cause) {
+	    super(message, cause);
+	}
+
     }
 
     public static class NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException extends FenixServiceException {

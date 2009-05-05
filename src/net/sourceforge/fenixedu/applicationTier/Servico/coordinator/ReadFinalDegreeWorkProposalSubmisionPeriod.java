@@ -44,6 +44,7 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends FenixService {
 		    infoScheduleing.setAttributionByTeachers(scheduleing.getAttributionByTeachers());
 		    infoScheduleing.setAllowSimultaneousCoorientationAndCompanion(scheduleing
 			    .getAllowSimultaneousCoorientationAndCompanion());
+		    infoScheduleing.setMinimumCompletedCreditsFirstCycle(scheduleing.getMinimumCompletedCreditsFirstCycle());
 		    infoScheduleing.setMinimumCompletedCreditsSecondCycle(scheduleing.getMinimumCompletedCreditsSecondCycle());
 		}
 	    }

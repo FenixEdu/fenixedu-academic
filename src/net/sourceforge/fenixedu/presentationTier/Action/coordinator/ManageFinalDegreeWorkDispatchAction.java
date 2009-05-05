@@ -306,6 +306,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		    finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfCompletedCourses", infoScheduleing
 			    .getMinimumNumberOfCompletedCourses().toString());
 		}
+		if (infoScheduleing.getMinimumCompletedCreditsFirstCycle() != null) {
+		    finalDegreeWorkCandidacyRequirementsForm.set("minimumCompletedCreditsFirstCycle", infoScheduleing
+			    .getMinimumCompletedCreditsFirstCycle().toString());
+		}
 		if (infoScheduleing.getMinimumCompletedCreditsSecondCycle() != null) {
 		    finalDegreeWorkCandidacyRequirementsForm.set("minimumCompletedCreditsSecondCycle", infoScheduleing
 			    .getMinimumCompletedCreditsSecondCycle().toString());
@@ -983,6 +987,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	String minimumNumberOfCompletedCoursesString = (String) finalDegreeWorkScheduleingForm
 		.get("minimumNumberOfCompletedCourses");
+	String minimumCompletedCreditsFirstCycleString = (String) finalDegreeWorkScheduleingForm
+	.get("minimumCompletedCreditsFirstCycle");
 	String minimumCompletedCreditsSecondCycleString = (String) finalDegreeWorkScheduleingForm
 		.get("minimumCompletedCreditsSecondCycle");
 
@@ -1001,6 +1007,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	Integer minimumNumberOfCompletedCourses = null;
 	if (minimumNumberOfCompletedCoursesString != null && !minimumNumberOfCompletedCoursesString.equals("")) {
 	    minimumNumberOfCompletedCourses = Integer.valueOf(minimumNumberOfCompletedCoursesString);
+	}
+
+	Integer minimumCompletedCreditsFirstCycle = null;
+	if (minimumCompletedCreditsFirstCycleString != null && !minimumCompletedCreditsFirstCycleString.equals("")) {
+	    minimumCompletedCreditsFirstCycle = Integer.valueOf(minimumCompletedCreditsFirstCycleString);
 	}
 
 	Integer minimumCompletedCreditsSecondCycle = null;
@@ -1041,7 +1052,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    Object args[] = { executionDegreeOID, minimumNumberOfCompletedCourses, maximumCurricularYearToCountCompletedCourses,
 		    minimumCompletedCurricularYear, minimumNumberOfStudents, maximumNumberOfStudents,
 		    maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers,
-		    allowSimultaneousCoorientationAndCompanion, minimumCompletedCreditsSecondCycle };
+		    allowSimultaneousCoorientationAndCompanion, minimumCompletedCreditsFirstCycle, minimumCompletedCreditsSecondCycle };
 	    ServiceUtils.executeService("DefineFinalDegreeWorkCandidacyRequirements", args);
 	} catch (NotAuthorizedFilterException e) {
 	    ActionErrors actionErrors = new ActionErrors();

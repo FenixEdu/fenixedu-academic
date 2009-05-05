@@ -41,6 +41,8 @@ public class InfoScheduleing extends InfoObject {
 
     private Boolean allowSimultaneousCoorientationAndCompanion;
 
+    private Integer minimumCompletedCreditsFirstCycle;
+
     private Integer minimumCompletedCreditsSecondCycle;
 
     /* Construtores */
@@ -231,6 +233,14 @@ public class InfoScheduleing extends InfoObject {
 
     public void setAllowSimultaneousCoorientationAndCompanion(Boolean allowSimultaneousCoorientationAndCompanion) {
 	this.allowSimultaneousCoorientationAndCompanion = allowSimultaneousCoorientationAndCompanion;
+    }
+
+    public Integer getMinimumCompletedCreditsFirstCycle() {
+        return minimumCompletedCreditsFirstCycle;
+    }
+
+    public void setMinimumCompletedCreditsFirstCycle(Integer minimumCompletedCreditsFirstCycle) {
+        this.minimumCompletedCreditsFirstCycle = minimumCompletedCreditsFirstCycle;
     }
 
     public Integer getMinimumCompletedCreditsSecondCycle() {

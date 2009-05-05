@@ -3,10 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -33,6 +29,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Luis Cruz
  */
@@ -53,6 +52,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 
 	if (scheduleing == null || scheduleing.getMaximumNumberOfStudents() == null) {
 	    throw new MaximumNumberOfStudentsUndefinedException();
+	} else if (scheduleing.getMinimumCompletedCreditsFirstCycle() == null) {
+	    throw new MinimumCompletedCreditsFirstCycleUndefinedException();
 	} else if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
 	    throw new MinimumCompletedCreditsSecondCycleUndefinedException();
 	    // } else if (scheduleing.getMinimumNumberOfCompletedCourses() ==
@@ -66,6 +67,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	    final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
 	    // final Integer minimumNumberOfCompletedCourses =
 	    // scheduleing.getMinimumNumberOfCompletedCourses();
+	    final Integer minimumCompletedCreditsFirstCycle = scheduleing.getMinimumCompletedCreditsFirstCycle();
 	    final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
 
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
@@ -131,6 +133,14 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	    // MinimumNumberOfCompletedCoursesNotReachedException(null, args);
 	    // }
 	    // }
+
+	    if (minimumCompletedCreditsFirstCycle != null) {
+		final Double completedCredits = studentCurricularPlan.getFirstCycle().getAprovedEctsCredits();
+		if (minimumCompletedCreditsFirstCycle > completedCredits) {
+		    final String[] args = { completedCredits.toString(), minimumCompletedCreditsFirstCycle.toString() };
+		    throw new MinimumCompletedCreditsFirstCycleNotReachedException(null, args);
+		}
+	    }
 
 	    if (minimumCompletedCreditsSecondCycle != null) {
 		final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
@@ -249,6 +259,28 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 	}
     }
 
+    public static class MinimumCompletedCreditsFirstCycleUndefinedException extends FenixServiceException {
+	public MinimumCompletedCreditsFirstCycleUndefinedException() {
+	    super();
+	}
+
+	public MinimumCompletedCreditsFirstCycleUndefinedException(int errorType) {
+	    super(errorType);
+	}
+
+	public MinimumCompletedCreditsFirstCycleUndefinedException(String s) {
+	    super(s);
+	}
+
+	public MinimumCompletedCreditsFirstCycleUndefinedException(Throwable cause) {
+	    super(cause);
+	}
+
+	public MinimumCompletedCreditsFirstCycleUndefinedException(String message, Throwable cause) {
+	    super(message, cause);
+	}
+    }
+
     public static class MinimumCompletedCreditsSecondCycleUndefinedException extends FenixServiceException {
 	public MinimumCompletedCreditsSecondCycleUndefinedException() {
 	    super();
@@ -279,6 +311,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends FenixService {
 
     public static class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
 	public MinimumNumberOfCompletedCoursesNotReachedException(String s, String[] args) {
+	    super(s, args);
+	}
+    }
+
+    public static class MinimumCompletedCreditsFirstCycleNotReachedException extends FenixServiceException {
+	public MinimumCompletedCreditsFirstCycleNotReachedException(String s, String[] args) {
 	    super(s, args);
 	}
     }
