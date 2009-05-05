@@ -277,6 +277,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	final Registration registration = getRegistration();
 
+	getStudentCurricularPlan().setIsFirstTimeToNull();
 	removeExecutionPeriod();
 	removeStudentCurricularPlan();
 	removeDegreeModule();
@@ -1473,6 +1474,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	enrolment.createCurriculumLineLog(EnrolmentAction.ENROL);
 
 	return enrolment;
+    }
+
+    @Override
+    public void setCurriculumGroup(CurriculumGroup curriculumGroup) {
+	super.setCurriculumGroup(curriculumGroup);
+	// Enrolment "isFirstTime" optimization needs to be re-computed, for all
+	// sibling enrolments.
+	if (curriculumGroup != null) {
+	    curriculumGroup.getStudentCurricularPlan().setIsFirstTimeToNull();
+	}
     }
 
     static protected void changeAttends(final Enrolment from, final Enrolment to) {

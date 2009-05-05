@@ -1651,7 +1651,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	size = studentNotNeedToEnrollCourses.size();
 	for (int i = 0; i < size; i++) {
-	    CurricularCourse ccNotNeedToDo = (CurricularCourse) studentNotNeedToEnrollCourses.get(i);
+	    CurricularCourse ccNotNeedToDo = studentNotNeedToEnrollCourses.get(i);
 	    Set curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(ccNotNeedToDo);
 	    if (curricularCourseEquivalences.contains(curricularCourse)) {
 		return true;
@@ -2202,7 +2202,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return result;
     }
-    
+
     public PropaedeuticsCurriculumGroup getPropaedeuticCurriculumGroup() {
 	return (PropaedeuticsCurriculumGroup) getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS);
     }
@@ -2440,6 +2440,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return (curriculumGroup == null) ? Double.valueOf(0d) : curriculumGroup.getCreditsConcluded();
     }
 
+    final public void setIsFirstTimeToNull() {
+	for (final Enrolment enrolment : getEnrolmentsSet()) {
+	    enrolment.setIsFirstTime(null);
+	}
+    }
+
     final public void resetIsFirstTimeEnrolmentForCurricularCourse(final CurricularCourse curricularCourse) {
 	final SortedSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
@@ -2495,7 +2501,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Tutorship getLastTutorship() {
-	return (Tutorship) Collections.max(getTutorships(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+	return Collections.max(getTutorships(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
     }
 
     public Tutorship getActiveTutorship() {
