@@ -15,7 +15,7 @@
 
 <h1>Licenciaturas</h1>
 
-<p>O ingresso nas licenciaturas do IST poderão ser efectuadas através dos seguintes mecanismos de acesso:</p>
+<p>O ingresso nas licenciaturas do IST poderá ser efectuado através dos seguintes mecanismos de acesso:</p>
 
 <ul>
 	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/lic/concurso_nacional_acesso" %>">Concurso Nacional de Acesso</a></li>

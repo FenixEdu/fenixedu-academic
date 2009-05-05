@@ -46,5 +46,4 @@ function executeWithTempFile() {
 execute "Changing table individual program process" AlterTablePhdIndividualProgramProcess.sql
 execute "Add Candidacies Access to Root Portal" addCandidaciesAccessRootPortal.sql
 execute "Add Candidacies Submission Access to Root Portal" addCandidaciesSubmissionRootPortal.sql
-
-
+execute "Modify Languages Speak, Read and Write column size" alterIndividualCandidacyTable.sql
