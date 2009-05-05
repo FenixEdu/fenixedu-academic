@@ -98,12 +98,4 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 	Sender sender = PersonSender.newInstance(teacherPerson);
 	return EmailsDA.sendEmail(request, sender, getRecipients(request).toArray(new Recipient[] {}));
     }
-    /*
-     * public ActionForward sendInvalid(ActionMapping mapping, ActionForm
-     * actionForm, HttpServletRequest request, HttpServletResponse response)
-     * throws Exception { MailBean bean = createMailBean(request);
-     * 
-     * request.setAttribute("mailBean", bean); request.setAttribute("tutor",
-     * getLoggedPerson(request)); return mapping.findForward("compose-mail"); }
-     */
 }
