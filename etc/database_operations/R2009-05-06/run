@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update db structure." updates.sql
+execute "Department Statistics Optimization Reset" departmentStatisticsOptimizationReset.sql
