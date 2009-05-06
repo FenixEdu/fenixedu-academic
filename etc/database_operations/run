@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Remove Invalid Tutorships" removeInvalidTutorships.sql

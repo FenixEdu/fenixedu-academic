@@ -45,3 +45,5 @@ function executeWithTempFile() {
 
 execute "Update db structure." updates.sql
 execute "Department Statistics Optimization Reset" departmentStatisticsOptimizationReset.sql
+execute "Remove Invalid Tutorships" removeInvalidTutorships.sql
+
