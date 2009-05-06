@@ -2501,7 +2501,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Tutorship getLastTutorship() {
-	return Collections.max(getTutorships(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+	if (hasAnyTutorships()) {
+	    return Collections.max(getTutorships(), Tutorship.TUTORSHIP_START_DATE_COMPARATOR);
+	}
+	return null;
     }
 
     public Tutorship getActiveTutorship() {
