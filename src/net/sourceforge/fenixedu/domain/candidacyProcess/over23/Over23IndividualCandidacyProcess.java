@@ -33,6 +33,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new EditPublicCandidacyPersonalInformation());
 	activities.add(new EditPublicCandidacyDocumentFile());
 	activities.add(new EditPublicCandidacyHabilitations());
+	activities.add(new EditDocuments());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -361,7 +362,12 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    process.editCommonCandidacyInformation(((Over23IndividualCandidacyProcessBean) object).getCandidacyInformationBean());
 	    return process;
 	}
-	
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    // TODO Auto-generated method stub
+	    return Boolean.FALSE;
+	}
     }
     
     static private class EditPublicCandidacyDocumentFile extends Activity<Over23IndividualCandidacyProcess> {
@@ -380,6 +386,13 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+	
+	
     }
     
     static private class EditPublicCandidacyHabilitations extends Activity<Over23IndividualCandidacyProcess> {
@@ -400,8 +413,31 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    process.getCandidacy().setDisabilities(((Over23IndividualCandidacyProcessBean) object).getDisabilities());
 	    return process;
 	}
-    }
 
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+    }
+    
+    static private class EditDocuments extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }	    
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
+    }    
+    
     private void saveLanguagesReadWriteSpeak(Over23IndividualCandidacyProcessBean bean) {
 	this.getCandidacy().setLanguagesRead(bean.getLanguagesRead());
 	this.getCandidacy().setLanguagesSpeak(bean.getLanguagesSpeak());

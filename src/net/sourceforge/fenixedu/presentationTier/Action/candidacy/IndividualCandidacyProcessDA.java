@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +19,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -116,6 +120,19 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
 	request.setAttribute("executionIntervals", ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(process
 		.getCandidacyPeriod().getClass()));
+    }
+
+    private List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
+	List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+	ArrayList<Activity> resultActivities = new ArrayList<Activity>();
+
+	for (Activity activity : activities) {
+	    if (activity.isVisibleForAdminOffice()) {
+		resultActivities.add(activity);
+	    }
+	}
+
+	return resultActivities;
     }
 
     /**
@@ -368,4 +385,37 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    public ActionForward prepareExecuteEditDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final IndividualCandidacyProcess process = getProcess(request);
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), process);
+	CandidacyProcessDocumentUploadBean uploadBean = new CandidacyProcessDocumentUploadBean();
+	uploadBean.setIndividualCandidacyProcess(process);
+	request.setAttribute("candidacyDocumentUploadBean", uploadBean);
+	
+	RenderUtils.invalidateViewState("individualCandidacyProcessBean.document");
+	
+	return mapping.findForward("prepare-edit-candidacy-documents");
+    }
+
+    public ActionForward uploadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
+	try {
+	    executeActivity(getProcess(request), "EditDocuments", uploadBean);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	}
+	
+	return prepareExecuteEditDocuments(mapping, actionForm, request, response);
+
+    }
+
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final IndividualCandidacyProcess process = getProcess(request);
+	request.setAttribute("activities", getAllowedActivities(process));
+	return mapping.findForward("list-allowed-activities");
+    }
 }

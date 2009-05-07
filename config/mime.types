@@ -1,0 +1,6 @@
+#
+# 07/05/2009 - This file overrides the default mime types defined in activation.jar#META-INF/mimetypes.default  
+#
+
+application/pdf					pdf
+application/msword				doc dot

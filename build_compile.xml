@@ -35,7 +35,10 @@
 	<property name="xfire" location="${config}/xfire" />
 	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir" />
 	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes" />
-
+	
+	<!-- Mime Types file-->
+	<property name="mime.types.file" value="${config}/mime.types"/>
+	
 	<!-- Compilation options -->
 	<property name="compile.debug" value="on" />
 	<property name="compile.deprecation" value="off" />
@@ -136,7 +139,11 @@
 		<copy encoding="${encoding}" todir="${build.home.xfire}">
 			<fileset dir="${xfire}" />
 		</copy>
-
+		
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes.meta.inf}" overwrite="true">
+			<fileset file="${mime.types.file}"/>
+		</copy>
+		
 		<antcall target="prepare-institution" />
 
 		<!-- Replace tokens in configuration files with local config -->

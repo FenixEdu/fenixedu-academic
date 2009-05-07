@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -14,12 +15,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
@@ -34,6 +37,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected IndividualCandidacyProcess() {
 	super();
 	setAccessHash(RandomStringGenerator.getRandomStringGenerator(16));
+
     }
 
     /**
@@ -56,25 +60,35 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	setCandidacyHashCode(bean.getPublicCandidacyHashCode());
 
 	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
+	setProcessCodeForThisIndividualCandidacy(bean.getCandidacyProcess());
+    }
+
+    private void setProcessCodeForThisIndividualCandidacy(CandidacyProcess process) {
+	CandidacyPeriod period = process.getCandidacyPeriod();
+	String beginExecutionYear = String.valueOf(
+		period.getExecutionInterval().getBeginDateYearMonthDay().get(DateTimeFieldType.year())).substring(2, 4);
+	String endExecutionYear = String.valueOf(
+		period.getExecutionInterval().getEndDateYearMonthDay().get(DateTimeFieldType.year())).substring(2, 4);
+	setProcessCode(beginExecutionYear + endExecutionYear + getIdInternal());
     }
 
     private void setCandidacyDocumentFiles(IndividualCandidacyProcessBean bean) {
-	if(bean.getDocumentIdentificationDocument() != null)
+	if (bean.getDocumentIdentificationDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getDocumentIdentificationDocument());
-	
-	if(bean.getFirstCycleAccessHabilitationDocument() != null)
+
+	if (bean.getFirstCycleAccessHabilitationDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getFirstCycleAccessHabilitationDocument());
-	
-	if(bean.getHabilitationCertificationDocument() != null)
+
+	if (bean.getHabilitationCertificationDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getHabilitationCertificationDocument());
-	
-	if(bean.getPaymentDocument() != null)
+
+	if (bean.getPaymentDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getPaymentDocument());
-	
-	if(bean.getVatCatCopyDocument() != null)
+
+	if (bean.getVatCatCopyDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getVatCatCopyDocument());
-	
-	if(bean.getPhotoDocument() != null)
+
+	if (bean.getPhotoDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getPhotoDocument());
     }
 
@@ -209,7 +223,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected void editPersonalCandidacyInformation(final PersonBean personBean) {
 	getCandidacy().editPersonalCandidacyInformation(personBean);
     }
-    
+
     public CandidacyInformationBean getCandidacyInformationBean() {
 	return hasCandidacy() ? getCandidacy().getCandidacyInformationBean() : null;
     }
@@ -239,12 +253,12 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
 	return null;
     }
-    
+
     public IndividualCandidacyDocumentFile getPhoto() {
 	IndividualCandidacyDocumentFile photo = getFileForType(IndividualCandidacyDocumentFileType.PHOTO);
 	return photo;
     }
-    
+
     public IndividualCandidacyDocumentFile getFileForType(IndividualCandidacyDocumentFileType type) {
 	for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
 	    if (document.getCandidacyFileType().equals(type))
@@ -253,59 +267,60 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
 	return null;
     }
-    
-    
+
     private static final int MAX_FILE_SIZE = 30000000;
+
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
 	IndividualCandidacyDocumentFileType type = uploadBean.getType();
 	String fileName = uploadBean.getFileName();
 	long fileSize = uploadBean.getFileSize();
-	InputStream stream = uploadBean.getStream();
-	
-	byte[] contents = null;
-	if(uploadBean.getContents() != null) {
-	    contents = uploadBean.getContents();
-	} else if (stream != null && fileSize > 0) {
-	    contents = new byte[(int) fileSize];
-	    try {
+	try {
+	    InputStream stream = uploadBean.getStream();
+
+	    byte[] contents = null;
+	    if (uploadBean.getContents() != null) {
+		contents = uploadBean.getContents();
+	    } else if (stream != null && fileSize > 0) {
+		contents = new byte[(int) fileSize];
 		stream.read(contents);
-	    } catch (IOException exception) {
-		throw new DomainException("error.read.input.stream.candidacy");
 	    }
-	    
-	}
-	
-	if(fileSize > MAX_FILE_SIZE) {
-	    throw new DomainException("File too big");
-	}
-	
-	if(contents != null) {
-	    new IndividualCandidacyDocumentFile(type, getCandidacy(), contents, fileName);
+
+	    if (fileSize > MAX_FILE_SIZE) {
+		throw new DomainException("File too big");
+	    }
+
+	    if (contents != null) {
+		new IndividualCandidacyDocumentFile(type, getCandidacy(), contents, fileName);
+	    }
+	} catch (FileNotFoundException e) {
+	    throw new DomainException("individual.candidacy.document.file.not.found");
+	} catch (IOException exception) {
+	    throw new DomainException("error.read.input.stream.candidacy");
 	}
     }
-    
+
     public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
-	
-	if(getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
-	
-	if(getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
 	}
-	
-	if(getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
-	
-	if(getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
+
+	if (getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	}
-	
+
 	return missingDocumentFiles;
     }
-    
+
     public Boolean getAllRequiredFilesUploaded() {
 	return getMissingRequiredDocumentFiles().isEmpty();
     }

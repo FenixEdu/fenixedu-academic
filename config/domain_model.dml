@@ -6059,6 +6059,7 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	
 	class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 		String accessHash;
+		String processCode;
 	}
 
 	class candidacyProcess.over23.Over23IndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {

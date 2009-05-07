@@ -52,6 +52,10 @@
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.documents" bundle="CANDIDATE_RESOURCES"/></a>
 </fr:form>
 
+<p style="margin-bottom: 0.5em;">
+	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualCandidacyProcess" property="processCode"/>
+</p>
+
 <h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <fr:view name="individualCandidacyProcessBean" 

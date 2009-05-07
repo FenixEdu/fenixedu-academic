@@ -1190,6 +1190,17 @@
 		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="CandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
 
 <!-- Public Candidacies -->
 
@@ -1250,7 +1261,7 @@
 		<property name="sortBy" value="nationality"/>
 	</slot>
 	
-	<slot name="personBean.fiscalCode" key="label.fiscalCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="personBean.fiscalCode" key="label.fiscalCode" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="50"/>

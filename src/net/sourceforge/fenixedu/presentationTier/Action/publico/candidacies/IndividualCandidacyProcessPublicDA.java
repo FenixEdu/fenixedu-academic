@@ -295,7 +295,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	String body = bundle.getString(INFORM_APPLICATION_SUCCESS_BODY);
 	String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
 	
-	body = String.format(body, new String[] { link, getFormattedApplicationSubmissionEndDate() });
+	body = String.format(body, new String[] { candidacyHashCode.getIndividualCandidacyProcess().getProcessCode(), link, getFormattedApplicationSubmissionEndDate() });
 	
 	candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
     }
@@ -322,7 +322,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    String body = bundle.getString(RECOVER_LINK_BODY);
 	    String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
 
-	    body = String.format(body, new String[] { link });
+	    body = String.format(body, new String[] { link, candidacyHashCode.getIndividualCandidacyProcess().getProcessCode() });
 
 	    candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
 	}
@@ -358,7 +358,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
     protected String getLinkFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-	return getRootPortalCandidacyAccess() + "?hash=" + hashCode.getValue();
+	return getRootPortalCandidacyAccess() + "?hash=" + hashCode.getValue() + "&locale=" + Language.getLocale().getLanguage();
     }
 
     protected String getFullLinkFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,
@@ -371,7 +371,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
     protected String getLinkForSubmissionFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue();
+	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue() + "&locale=" + Language.getLocale().getLanguage();
     }
 
     protected String getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,

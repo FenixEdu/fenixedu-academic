@@ -3,13 +3,13 @@
  */
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 
 public class CandidacyProcessDocumentUploadBean implements Serializable {
     /**
@@ -26,6 +26,8 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     private Long id;
 
     private byte[] contents;
+    
+    private java.io.File file;
 
     public CandidacyProcessDocumentUploadBean() {
 	this.id = System.currentTimeMillis();
@@ -44,11 +46,15 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
 	this.type = type;
     }
 
-    public InputStream getStream() {
-	return stream;
+    public InputStream getStream() throws FileNotFoundException {
+	if(file != null) return new FileInputStream(file);
+	return this.stream;
     }
 
-    public void setStream(InputStream stream) {
+    public void setStream(InputStream stream) throws IOException {
+	if(stream != null) {
+	    this.file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(stream);
+	}
 	this.stream = stream;
     }
 
@@ -90,14 +96,13 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     }
 
     public void fromInputStreamToContents() throws IOException {
-	if (this.stream != null) {
+	InputStream localStream = getStream();
+	if (localStream != null) {
 	    try {
-		
 		this.contents = new byte[(int) this.fileSize];
-		this.stream.read(this.contents);
+		localStream.read(this.contents);
 	    } finally {
-		this.stream.read(this.contents);
-		this.stream.close();
+		localStream.close();
 	    }
 	}
     }

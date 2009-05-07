@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -35,6 +36,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new EditPublicCandidacyPersonalInformation());
 	activities.add(new EditPublicCandidacyDocumentFile());
 	activities.add(new EditPublicCandidacyHabilitations());
+	activities.add(new EditDocuments());
 	
     }
 
@@ -358,8 +360,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
-    
-    
+        
     static private class EditPublicCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
@@ -376,7 +377,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getCandidacyInformationBean());
 	    return process;
 	}
-	
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
     
     static private class EditPublicCandidacyDocumentFile extends Activity<SecondCycleIndividualCandidacyProcess> {
@@ -395,6 +401,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
     
     static private class EditPublicCandidacyHabilitations extends Activity<SecondCycleIndividualCandidacyProcess> {
@@ -416,6 +428,30 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
 	    return process;
 	}
+	
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+	
     }
-    
+
+    static private class EditDocuments extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }	    
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
+    }    
+
 }

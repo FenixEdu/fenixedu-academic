@@ -25,7 +25,7 @@
 	<span><bean:message key="label.step.two.habilitations.document.files" bundle="CANDIDATE_RESOURCES"/></span>
 </p>
 
-<p class="mtop15"><span><bean:message key="message.all.fields.are.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<p><span class="error0"><bean:write name="message"/></span></p>
@@ -50,6 +50,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
 		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeCreateCandidacyPersonalInformationInvalid" %>' />
 			<fr:destination name="cancel" path='<%= mappingPath + ".do?method=beginCandidacyProcessIntro" %>' />
