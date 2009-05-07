@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
@@ -35,7 +36,14 @@
 		    	<td class="infoop"><strong><bean:write name="personalInfo" property="name"/></strong></td>
           </tr>
 	 	</table>
-		<table width="98%">       
+		<table width="98%">  
+			<logic:notEmpty name="personalInfo" property="employee">
+			  <tr>
+	            	<td><html:link page="<%= "/professionalInformation.do?method=showSituations&personId="+ personID%>" titleKey="link.title.professionalInformation"  bundle="CONTRACTS_RESOURCES">
+	            		<bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/>
+	            	</html:link></td>
+	          </tr>
+	        </logic:notEmpty>
           <!-- Username -->
           <logic:notEmpty name="personalInfo" property="loginAlias">
 	          <tr>

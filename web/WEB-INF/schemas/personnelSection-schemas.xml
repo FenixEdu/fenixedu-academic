@@ -1373,3 +1373,53 @@ constructor="description, state, modifiedBy">
 	<slot name="modifiedBy" hidden="true"/>
 	<setter signature="editAssiduousnessStatus(description, state, modifiedBy)"/>
 </schema>
+
+<schema name="view.employee.employeeContractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeContractSituation" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="contractSituation.name" key="label.situation"/>
+	<slot name="step"/>
+	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
+</schema>
+
+<schema name="view.employee.employeeProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalCategory" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="professionalCategory.name" key="label.category"/>
+	<slot name="professionalCategory.categoryType" key="label.type"/>
+	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalRegime.name"/>
+	<slot name="level"/>
+	<slot name="step"/>
+</schema>
+
+<schema name="view.employee.employeeProfessionalRegime" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRegime" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalRegime.name"/>
+</schema>
+
+<schema name="view.employee.employeeProfessionalRelation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRelation" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="professionalRelation" key="label.relation" layout="values" schema="view.professionalRelation.name"/>
+	<slot name="professionalCategory" key="label.category" layout="values"  schema="view.professionalCategory.name"/>
+</schema>
+
+<schema name="view.employee.employeeProfessionalContract" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalContract" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="contractSituation.name" key="label.situation"/>
+</schema>
+
+<schema name="view.professionalRegime.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.regime" layout="null-as-label"/>
+</schema>
+
+<schema name="view.professionalCategory.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.category" layout="null-as-label"/>
+</schema>
+
+<schema name="view.professionalRelation.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.relation" layout="null-as-label"/>
+</schema>
+
