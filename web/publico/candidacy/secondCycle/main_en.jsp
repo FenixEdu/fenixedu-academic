@@ -208,7 +208,7 @@
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">29 of June to 3 of July of 2009</span></td>
-		<td>Complaints on placements </td>
+		<td>Complaint Period </td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">17 of July of 2009</span></td>
@@ -216,13 +216,13 @@
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">17 to 21 of July of 2009</span></td>
-		<td>Registration of students whose complaints were settle</td>
+		<td>Registration of students whose complaints were accepted</td>
 	</tr>
 </table> 
 
 <h2 id="prop">Tuition fees</h2>
 
-<p>The tuition fee for the academic year of 2009/2010 for all the Master - 2nd cycle programs is expected to be <b>996.85 Euros</b>, exception is due to the "Master in Pharmaceutical Engineering" where the tuition fee is set to <b>5000 Euros</b>. For the "Master in Complex Transport Infrastructure Systems" application should consult the respective <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">webpage</a>.</p>
+<p>The tuition fee for the academic year of 2009/2010 for all the Master - 2nd cycle programs is expected to be <b>996.85 Euros</b>, exception is due to the "Master in Pharmaceutical Engineering" where the tuition fee is set to <b>5000 Euros</b>. For the "Master in Complex Transport Infrastructure Systems" applicants should consult the respective <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">webpage</a>.</p>
 
 
 
