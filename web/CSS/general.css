@@ -453,12 +453,21 @@ ul.padding1 li { padding: 0.25em 0; }
 ------ Feedback  -------
 ----------------------- */
 
-.error0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.1em 0.3em;*/ background-color: #ffeadd; color: #c00; /*padding: 0.1em 0.2em;*/ }
+.error0 { background-color: #ffeadd; color: #c00; }
 .error1, .error2 { background-color: #ffeadd; color: #c00; }
 .error1 { border: 2px solid #c00; }
 .error1 h4 { border-bottom: 1px dotted #d00; background: #fff; color: #c00; }
 .error1 p { padding: 0.5em 0.5em;}
 .error2 { padding: 0.2em 0.5em 0.2em 28px; background: #ffeadd) 6px 50% no-repeat; }
+.error3 {
+background-color: #ffeadd;
+color: #a00;
+border-top: 1px solid #c33;
+border-bottom: 1px solid #c33;
+padding: 4px 5px 5px 5px;
+}
+
+
 
 .success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #e2f5e2; color: #146e14; }
 .success1, .success2, .success3 { background-color: #efe; color: #070; }
@@ -2510,3 +2519,4 @@ border-collapse: collapse;
 div.announcement_gallery table * {
 border:none;
 }
+
