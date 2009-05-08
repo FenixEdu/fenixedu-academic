@@ -4,9 +4,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -34,13 +36,17 @@ public abstract class PartyContact extends PartyContact_Base {
 	super.setParty(party);
 	super.setType(type);
 
-	if (type.equals(PartyContactType.INSTITUTIONAL))
+	if (type.equals(PartyContactType.INSTITUTIONAL)) {
 	    setVisibleToPublic();
-	else if (defaultContact)
-	    setVisibleToPublic();
-	else if (type.equals(PartyContactType.WORK)) {
-	    setVisibleToEmployees(Boolean.TRUE);
-	    setVisibleToTeachers(Boolean.TRUE);
+	} else if (party.isPerson() && !((Person) party).hasRole(RoleType.TEACHER)
+		&& !((Person) party).hasRole(RoleType.EMPLOYEE)) {
+	    setVisibleToStudents(type == PartyContactType.WORK);
+	    setVisibleToAlumni(type == PartyContactType.WORK);
+	    setVisibleToTeachers(type == PartyContactType.WORK);
+	    setVisibleToEmployees(type == PartyContactType.WORK);
+	} else {
+	    setVisibleToTeachers(type == PartyContactType.WORK);
+	    setVisibleToEmployees(type == PartyContactType.WORK);
 	}
 	setDefaultContactInformation(defaultContact);
     }
