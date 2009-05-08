@@ -147,12 +147,6 @@
 		<put name="body" value="/teacher/tutor/chooseReceivers.jsp" />
 	</definition>
 
-	<definition name="sendMailToTutoredStudents" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp" />
-		<put name="body" value="/teacher/tutor/composeMail.jsp" />
-	</definition>
-	
-	
 	<!-- ************************************** LEEC Enrollment **************************** -->
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" 
 		extends="definition.teacher.two-column.extra-menu.tutor">

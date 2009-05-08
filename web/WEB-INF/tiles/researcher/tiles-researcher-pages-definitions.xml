@@ -194,10 +194,6 @@
        <put name="body" value="/researcher/researchUnit/showUnitFunctionalities.jsp"/>  
     </definition>
 	
-	<definition name="sendMail" extends="researcher.unit.functionalities">
-       <put name="body" value="/researcher/researchUnit/sendEmail.jsp"/>  
-    </definition>      
-
 	<definition name="manage-persisted-groups" extends="researcher.unit.functionalities">
        <put name="body" value="/researcher/researchUnit/managePersistedGroups.jsp"/>  
     </definition>          

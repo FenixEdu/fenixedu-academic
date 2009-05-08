@@ -343,11 +343,7 @@
 
 		<action path="/sendEmailToResearchUnitGroups"
 			parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.SendEmailToResearchUnitGroups">
-			     <forward name="compose-mail" path="sendMail"/>
-	            <forward name="success" path="sendMail"/>
-    	        <forward name="problem" path="sendMail"/>	    
-		</action>
+			type="net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.SendEmailToResearchUnitGroups"/>
 		
 		<action path="/prizes/prizeManagement"
 			parameter="method"

@@ -628,11 +628,8 @@
 		 
 		<action path="/sendEmailToDepartmentGroups"
 			parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.department.SendEmailToDepartmentGroups">
-			     <forward name="compose-mail" path="sendMail"/>
-	            <forward name="success" path="sendMail"/>
-    	        <forward name="problem" path="sendMail"/>	    
-		</action>
+			type="net.sourceforge.fenixedu.presentationTier.Action.department.SendEmailToDepartmentGroups"/>
+		
 		 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->

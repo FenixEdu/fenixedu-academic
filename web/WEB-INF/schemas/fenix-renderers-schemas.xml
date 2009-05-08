@@ -49,7 +49,6 @@
     <!ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml">
 	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
-	<!ENTITY email SYSTEM "email-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
     <!ENTITY support SYSTEM "support-schemas.xml">
     <!ENTITY alumni SYSTEM "alumni-schemas.xml">
@@ -739,7 +738,6 @@
     &facultyAdmOffice;
     &contentSchemas;    
     &caseHandlingSchemas;
-    &email;
     &residenceManagement;
     &support;
     &alumni;

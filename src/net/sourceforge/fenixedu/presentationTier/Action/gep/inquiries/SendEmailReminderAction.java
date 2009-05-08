@@ -51,6 +51,7 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
  */
 public class SendEmailReminderAction extends FenixDispatchAction {
 
+    @SuppressWarnings("unchecked")
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -72,6 +73,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	return mapping.findForward("chooseDegreeCurricularPlans");
     }
 
+    @SuppressWarnings( { "unchecked", "deprecation" })
     public ActionForward sendEmails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -158,9 +160,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	    return false;
 	}
 	Message.newInstance(sender, null, recipients, subject, body.toString(), "");
-	// SendMail.run(null, null, bccs, fromName, fromAddress, subject,
-	// body.toString());
-	return false;
+	return true;
     }
 
     private UnitBasedSender getGEPSender() {

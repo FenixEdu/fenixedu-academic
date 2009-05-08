@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 
 import org.joda.time.DateTime;
 
@@ -65,7 +64,12 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     }
 
     @Override
-    protected void setMessage(Thesis thesis, MailBean bean) {
+    protected String getSubject(Thesis thesis) {
+	return getMessage(SUBJECT_KEY, thesis.getTitle().getContent());
+    }
+
+    @Override
+    protected String getMessage(Thesis thesis) {
 	Person currentPerson = AccessControl.getPerson();
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
@@ -90,11 +94,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 	String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
 	String currentPersonName = currentPerson.getNickname();
 
-	bean.setSubject(getMessage(SUBJECT_KEY, title));
-	bean.setMessage(getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
+	return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, presidentName, presidentAffiliation,
 		orientatorName, orientatorAffiliation, includeFlag(coorientatorName), coorientatorName, coorientatorAffiliation,
 		includeFlag(vowel1Name), vowel1Name, vowel1Affiliation, includeFlag(vowel2Name), vowel2Name, vowel2Affiliation,
-		includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date, currentPersonName));
+		includeFlag(vowel3Name), vowel3Name, vowel3Affiliation, date, currentPersonName);
 
     }
 

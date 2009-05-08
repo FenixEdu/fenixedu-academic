@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 import net.sourceforge.fenixedu.util.Month;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
@@ -138,24 +137,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     }
 
     @Override
-    protected void setMessage(Thesis thesis, MailBean bean) {
-	Person currentPerson = AccessControl.getPerson();
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-
-	String title = thesis.getTitle().getContent();
-	String year = executionYear.getYear();
-	String degreeName = thesis.getDegree().getNameFor(executionYear).getContent();
-	String studentName = thesis.getStudent().getPerson().getName();
-	String studentNumber = thesis.getStudent().getNumber().toString();
-
-	String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
-	String currentPersonName = currentPerson.getNickname();
-
-	bean.setSubject(getMessage(SUBJECT_KEY, title));
-	bean.setMessage(getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName));
-    }
-
-    @Override
     protected Collection<Person> getReceivers(Thesis thesis) {
 	Person student = thesis.getStudent().getPerson();
 	Person president = getPerson(thesis.getPresident());
@@ -170,6 +151,28 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	}
 
 	return persons;
+    }
+
+    @Override
+    protected String getMessage(Thesis thesis) {
+	Person currentPerson = AccessControl.getPerson();
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+
+	String title = thesis.getTitle().getContent();
+	String year = executionYear.getYear();
+	String degreeName = thesis.getDegree().getNameFor(executionYear).getContent();
+	String studentName = thesis.getStudent().getPerson().getName();
+	String studentNumber = thesis.getStudent().getNumber().toString();
+
+	String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
+	String currentPersonName = currentPerson.getNickname();
+
+	return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName);
+    }
+
+    @Override
+    protected String getSubject(Thesis thesis) {
+	return getMessage(SUBJECT_KEY, thesis.getTitle().getContent());
     }
 
 }
