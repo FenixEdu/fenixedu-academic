@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Process Code" addProcessCodeToProcessTable.sql
+execute "Fixing Professhorships" dataFix.sql IST
