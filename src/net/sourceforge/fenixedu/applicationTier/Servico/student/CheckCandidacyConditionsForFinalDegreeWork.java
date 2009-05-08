@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -139,10 +140,28 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
 	}
 
-	final Double completedCreditsFirstCycle = studentCurricularPlan.getFirstCycle().getAprovedEctsCredits();
-	if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
-	    final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
-	    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+	CycleCurriculumGroup firstCycleCurriculumGroup = studentCurricularPlan.getFirstCycle();
+	if (firstCycleCurriculumGroup != null) {
+	    final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
+	    if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
+		final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
+		throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+	    }
+	} else {
+	    final Registration sourceRegistration = registration.getSourceRegistration();
+	    if (sourceRegistration != null) {
+		final StudentCurricularPlan sourceStudentCurricularPlan = registration.getLastStudentCurricularPlan();
+		if (sourceStudentCurricularPlan != null) {
+		    firstCycleCurriculumGroup = sourceStudentCurricularPlan.getFirstCycle();
+		    if (firstCycleCurriculumGroup != null) {
+			final Double completedCreditsFirstCycle = firstCycleCurriculumGroup.getAprovedEctsCredits();
+			if (minimumCompletedCreditsFirstCycle > completedCreditsFirstCycle) {
+			    final String[] args = { completedCreditsFirstCycle.toString(), minimumCompletedCreditsFirstCycle.toString() };
+			    throw new InsufficientCompletedCreditsInFirstCycleException(null, args);
+			}
+		    }
+		}
+	    }
 	}
 
 	final Double completedCreditsSecondCycle = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
