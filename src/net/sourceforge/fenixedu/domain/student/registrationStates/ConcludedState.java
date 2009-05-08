@@ -1,12 +1,15 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -33,6 +36,22 @@ public class ConcludedState extends ConcludedState_Base {
 
     @Override
     public void delete() {
+	checkRulesToDelete();
+	super.delete();
+    }
+
+    private void checkRulesToDelete() {
+	final Person person = AccessControl.getPerson();
+	if (person != null) {
+	    final AdministrativeOfficePermission permission = person.getEmployeeAdministrativeOffice().getPermission(
+		    PermissionType.REPEAT_CONCLUSION_PROCESS, person.getEmployeeCampus());
+	    if (permission != null && permission.isAppliable(getRegistration())) {
+		if (permission.isMember(person)) {
+		    return;
+		}
+	    }
+	}
+
 	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
 		.isEmpty()) {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.degree.finalization.request");
@@ -41,8 +60,6 @@ public class ConcludedState extends ConcludedState_Base {
 	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DIPLOMA_REQUEST).isEmpty()) {
 	    throw new DomainException("cannot.delete.concluded.state.of.registration.with.concluded.diploma.request");
 	}
-
-	super.delete();
     }
 
     @Override
