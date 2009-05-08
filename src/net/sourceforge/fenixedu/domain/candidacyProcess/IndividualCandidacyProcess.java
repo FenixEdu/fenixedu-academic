@@ -314,10 +314,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
-	}
-
 	return missingDocumentFiles;
     }
 
