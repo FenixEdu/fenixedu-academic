@@ -2697,6 +2697,11 @@ public class Registration extends Registration_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
+    public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
+	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
 	    final String notes) {
 	if (!isRegistrationConclusionProcessed()) {
