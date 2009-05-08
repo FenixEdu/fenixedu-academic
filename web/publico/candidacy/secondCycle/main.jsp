@@ -25,6 +25,8 @@
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Propinas</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#praz">Prazos</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Critérios de selecção</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessários</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#faq">FAQs</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submeter Candidatura</b></a></li>
     	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recuperar Accesso</b></a></li>
@@ -238,6 +240,31 @@
 </ol>
 <p>Nos casos dos candidatos em que se considere que a formação de 1º ciclo não corresponde às competências necessárias para a formação a que se candidatam, poderá o júri de selecção excluir o candidato ou propor a admissão condicionada à frequência e aprovação num conjunto de unidades curriculares propedêuticas.</p>
 <p>O conjunto de unidades curriculares propedêuticas nunca poderá exceder os 30 ECTS e a aprovação nas mesmas condicionará a conclusão do curso. As classificações obtidas nestas unidades curriculares não serão contabilizadas para a classificação final do curso.</p>
+
+
+<h2 id="docnec">Documentos necessários</h2>
+<p>Para completar o processo de candidatura é necessário submeter os seguintes documentos digitalizados:</p>
+
+<ul>
+	<li>Foto actual</li>
+	<li>Curriculum vitae</li>
+	<li>Certificados de habilitações discriminado com média</li>
+	<li>Documento de identificação</li>
+	<li>Cartão de contribuinte</li>
+	<li>Comprovativo de pagamento dos emolumentos de candidatura</li>
+</ul>
+
+
+<h2 id="emol">Emolumentos de candidatura</h2>
+
+<strong>Nome do banco:</strong> Millennium BCP<br />
+<strong>NIB:</strong> 0033 0000 00007920342 05<br />
+
+<strong>IBAN:</strong> PT50 0033 0000 00007920342 05<br />
+<strong>SWIFT/BIC:</strong> BCOMPTPL<br />
+<strong>Montante:</strong> 100 euros
+
+<p/>
 
 
 <h2 id="faq">FAQ</h2>

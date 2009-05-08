@@ -24,6 +24,8 @@
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#praz">Deadlines</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Tuition fees</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Selection criteria</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentation needed</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Application fees</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#faq">FAQ</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submit Application</b></a></li>
     	<li><a href="<%= fullPath + "?method=prepareApplicationAccessRecovery" %>"><b>Recover Access</b></a></li>
@@ -224,20 +226,6 @@
 
 <p>The tuition fee for the academic year of 2009/2010 for all the Master - 2nd cycle programs is expected to be <b>996.85 Euros</b>, exception is due to the "Master in Pharmaceutical Engineering" where the tuition fee is set to <b>5000 Euros</b>. For the "Master in Complex Transport Infrastructure Systems" applicants should consult the respective <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">webpage</a>.</p>
 
-
-
-<h2 id="6">Application fees</h2>
-
-<strong>Bank Name:</strong> Millennium BCP<br />
-<strong>NIB:</strong> 0033 0000 00007920342 05<br />
-
-<strong>IBAN:</strong> PT50 0033 0000 00007920342 05<br />
-     	<strong>SWIFT/BIC:</strong> BCOMPTPL<br />
-<strong>Amount:</strong> 100 euros
-
-<p/>
-
-
 <h2 id="critsel">Selection criteria</h2>
 <p>Students applying for the Master - 2nd cycle program are selected by the coordinator considering the following criteria:</p>
 <ol>
@@ -247,6 +235,30 @@
 </ol>
 
 <p>The selection board can propose the student's conditional admission subject to attendance of a set of mandatory preliminary course units. These preliminary course units can never exceed 30 ECTS. The completion of the 2nd cycle programme requires the approval on all of the pre-defined preliminary course units. The grades obtained by the student in these preliminary units are not considered in the final classification.</p>
+
+
+<h2 id="docnec">Documentation needed</h2>
+
+<p>The following documents should be uploaded in order to complete the submission application process:</p>
+
+<ul>
+	<li>Current photo</li>
+	<li>Curriculum vitae</li>
+	<li>Official transcript of the candidate's university records</li>
+	<li>Passport or identity card</li>
+	<li>Bank transfer transcript with the payment of the application fee</li>
+</ul>
+
+<h2 id="emol">Application fees</h2>
+
+<strong>Bank Name:</strong> Millennium BCP<br />
+<strong>NIB:</strong> 0033 0000 00007920342 05<br />
+
+<strong>IBAN:</strong> PT50 0033 0000 00007920342 05<br />
+     	<strong>SWIFT/BIC:</strong> BCOMPTPL<br />
+<strong>Amount:</strong> 100 euros
+
+<p/>
 
 <h2 id="faq">FAQ</h2>
 

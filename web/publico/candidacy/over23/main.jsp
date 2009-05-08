@@ -21,6 +21,8 @@
 <h2 class="brown">Nesta página</h2>
 	<ul>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Critérios de selecção</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessários</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#vag">Vagas</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Propinas</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#praz">Prazos</a></li>
@@ -60,6 +62,30 @@ de três horas e será realizada numa única chamada. As componentes da prova poder
 candidato pretenda aceder.</p>
 
 <p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
+
+
+<h2 id="docnec">Documentos necessários</h2>
+
+<p>Para completar o processo de candidatura é necessário submeter os seguintes documentos digitalizados:</p>
+<ul>
+	<li>Foto actual</li>
+	<li>Curriculum vitae</li>
+	<li>Certificados de habilitações discriminado com média</li>
+	<li>Documento de identificação</li>
+	<li>Cartão de contribuinte</li>
+	<li>Comprovativo de pagamento dos emolumentos de candidatura</li>
+</ul>
+
+<h2 id="emol">Emolumentos de candidatura</h2>
+
+<strong>Nome do banco:</strong> Millennium BCP<br />
+<strong>NIB:</strong> 0033 0000 00007920342 05<br />
+
+<strong>IBAN:</strong> PT50 0033 0000 00007920342 05<br />
+<strong>SWIFT/BIC:</strong> BCOMPTPL<br />
+<strong>Montante:</strong> 100 euros
+
+<p/>
 
 
 <h2 id="vag">Vagas</h2>

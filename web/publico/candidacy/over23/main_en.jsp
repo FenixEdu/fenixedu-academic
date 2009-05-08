@@ -21,6 +21,8 @@
 <h2 class="brown">Nesta página</h2>
 	<ul>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Critérios de selecção</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessários</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#vag">Vagas</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Propinas</a></li>
     	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#praz">Prazos</a></li>
@@ -31,7 +33,7 @@
 
 
 
-<h1>Maiores de 23 anos</h1>
+<h1>Candidato: Maiores de 23 anos (1º Ciclo)</h1>
 
 <p>Ao Concurso Especial de Acesso destinado a Maiores de 23 anos podem candidatar-se os indivíduos que, cumulativamente:</p>
 
@@ -41,7 +43,7 @@
 	<li>Não sejam titulares de um curso superior, nem tenham frequência anterior do ensino superior.</li>
 </ul>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/reg_maiores23.pdf">Regulamento</a></p>
+<p><a href="http://www.ist.utl.pt/files/ensino/reg_maiores23.pdf">Regulamento (PDF, 68KB)</a></p>
 
 
 <h2 id="critsel">Critérios de selecção</h2>
@@ -59,7 +61,31 @@
 de três horas e será realizada numa única chamada. As componentes da prova poderão variar consoante o(s) curso(s) a que o
 candidato pretenda aceder.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20082009.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
+<p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
+
+
+<h2 id="docnec">Documentos necessários</h2>
+
+<p>Para completar o processo de candidatura é necessário submeter os seguintes documentos digitalizados:</p>
+<ul>
+	<li>Foto actual</li>
+	<li>Curriculum vitae</li>
+	<li>Certificados de habilitações discriminado com média</li>
+	<li>Documento de identificação</li>
+	<li>Cartão de contribuinte</li>
+	<li>Comprovativo de pagamento dos emolumentos de candidatura</li>
+</ul>
+
+<h2 id="emol">Emolumentos de candidatura</h2>
+
+<strong>Nome do banco:</strong> Millennium BCP<br />
+<strong>NIB:</strong> 0033 0000 00007920342 05<br />
+
+<strong>IBAN:</strong> PT50 0033 0000 00007920342 05<br />
+<strong>SWIFT/BIC:</strong> BCOMPTPL<br />
+<strong>Montante:</strong> 100 euros
+
+<p/>
 
 
 <h2 id="vag">Vagas</h2>
@@ -168,7 +194,7 @@ candidato pretenda aceder.</p>
 </table>
 
 <h2 id="prop">Propinas</h2>
-<p>Para o ano lectivo de 2008/2009 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados foi fixada no valor de 996,85 Euros.</p>
+<p>Para o ano lectivo de 2009/2010 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados está prevista no valor de <b>996,85 Euros</b>.</p>
 
 
 <h2 id="praz">Prazos</h2>
