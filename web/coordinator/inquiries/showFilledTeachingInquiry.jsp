@@ -21,7 +21,6 @@
 
 <body class="survey">
 
-
 <style>
 body.survey {
 background: #fff;
