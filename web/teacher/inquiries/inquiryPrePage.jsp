@@ -51,6 +51,7 @@
 	</logic:iterate>
 
 <%-- 
+--%>
 	<p class="separator2 mtop25"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
 	<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
 		<% if (professorship.getTeacher().getPerson() == AccessControl.getPerson()) { %>
@@ -60,11 +61,7 @@
 					<bean:write name="professorship" property="teacher.person.name"/> 
 				</html:link>
 			</logic:notEmpty>
-			<logic:empty name="professorship" property="teachingInquiry">
-				<bean:write name="professorship" property="teacher.person.name"/> 
-			</logic:empty>
 		<% } %>
 	</logic:iterate>
---%>
 
 </logic:present>
