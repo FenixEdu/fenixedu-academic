@@ -502,17 +502,29 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
-    final public Set<CurriculumGroup> getAllCurriculumGroups() {
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroups() {
 	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	result.add(this);
+
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
-	    if (!curriculumModule.isLeaf()) {
-		result.add((CurriculumGroup) curriculumModule);
-		result.addAll(((CurriculumGroup) curriculumModule).getAllCurriculumGroups());
-	    }
+	    result.addAll(curriculumModule.getAllCurriculumGroups());
 	}
 	return result;
     }
 
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+	result.add(this);
+
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    result.addAll(curriculumModule.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
+	}
+	return result;
+    }
+
+    @Override
     public Set<CurriculumLine> getAllCurriculumLines() {
 	Set<CurriculumLine> result = new HashSet<CurriculumLine>();
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
@@ -683,6 +695,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    @Override
     public int getNumberOfAllApprovedEnrolments(final ExecutionSemester executionSemester) {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
@@ -959,6 +972,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return hasAnyCurriculumModules(andPredicate);
     }
 
+    @Override
     public boolean isEnroledInSpecialSeason(final ExecutionSemester executionSemester) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule.isEnroledInSpecialSeason(executionSemester)) {
@@ -968,6 +982,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return false;
     }
 
+    @Override
     public boolean isEnroledInSpecialSeason(final ExecutionYear executionYear) {
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
 	    if (curriculumModule.isEnroledInSpecialSeason(executionYear)) {

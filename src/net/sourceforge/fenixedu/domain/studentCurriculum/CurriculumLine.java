@@ -274,5 +274,15 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	return 0;
     }
 
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroups() {
+	return Collections.emptySet();
+    }
+
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	return Collections.emptySet();
+    }
+
     abstract protected void createCurriculumLineLog(final EnrolmentAction action);
 }

@@ -3666,6 +3666,13 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+    
+    <service>
+        <name>SearchCurriculumGroupsForRegistration</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchCurriculumGroupsForRegistration</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 
     <service>
         <name>SearchDistrictSubdivisions</name>

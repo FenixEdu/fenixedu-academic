@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.joda.time.YearMonthDay;
 
@@ -27,6 +28,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private DocumentPurposeType chosenDocumentPurposeType;
 
     private String otherPurpose;
+
+    private DomainReference<CurriculumGroup> branchCurriculumGroup;
 
     private String branch;
 
@@ -352,6 +355,22 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public String getBranch() {
 	return branch;
+    }
+
+    public CurriculumGroup getBranchCurriculumGroup() {
+	return branchCurriculumGroup != null ? branchCurriculumGroup.getObject() : null;
+    }
+
+    public void setBranchCurriculumGroup(CurriculumGroup branchCurriculumGroup) {
+	this.branchCurriculumGroup = (branchCurriculumGroup != null ? new DomainReference<CurriculumGroup>(branchCurriculumGroup)
+		: null);
+    }
+
+    public String getBranchName() {
+	if (getBranchCurriculumGroup() == null) {
+	    return branch;
+	}
+	return getBranchCurriculumGroup().getName().getContent();
     }
 
 }

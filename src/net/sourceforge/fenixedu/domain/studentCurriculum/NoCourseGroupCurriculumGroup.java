@@ -219,4 +219,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     public boolean allowAccumulatedEctsCredits() {
 	return false;
     }
+
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	return Collections.emptySet();
+    }
 }

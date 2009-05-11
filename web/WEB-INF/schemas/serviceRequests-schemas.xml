@@ -296,7 +296,17 @@
 	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished"></slot>
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
-	<slot name="branch" key="label.branch"/>
+	<slot name="branchCurriculumGroup" key="label.branch" layout="autoComplete">
+		<property name="size" value="50"/>
+		<property name="labelField" value="name.content"/>
+		<property name="format" value="${name.content} (${studentCurricularPlan.name})"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchCurriculumGroupsForRegistration"/>
+		<property name="serviceArgs" value="registrationID=${registration.externalId}"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup"/>
+		<property name="minChars" value="0"/>
+		<property name="rawSlotName" value="branch"/>
+	</slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
     <slot name="language" layout="null-as-label">
         <property name="label" value="-"/>

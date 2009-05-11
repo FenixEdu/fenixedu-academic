@@ -92,6 +92,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -3707,5 +3708,21 @@ public class Registration extends Registration_Base {
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {
 	return getLastStudentCurricularPlan().getInternalCycleCurriculumGrops();
+    }
+
+    public Collection<CurriculumGroup> getAllCurriculumGroups() {
+	Collection<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
+	for (final StudentCurricularPlan plan : getStudentCurricularPlans()) {
+	    result.addAll(plan.getAllCurriculumGroups());
+	}
+	return result;
+    }
+
+    public Collection<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	Collection<CurriculumGroup> result = new TreeSet<CurriculumGroup>(CurriculumGroup.COMPARATOR_BY_NAME_AND_ID);
+	for (final StudentCurricularPlan plan : getStudentCurricularPlans()) {
+	    result.addAll(plan.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
+	}
+	return result;
     }
 }

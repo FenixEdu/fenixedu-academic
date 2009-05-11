@@ -501,6 +501,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getAllCurriculumLines() : new HashSet<CurriculumLine>(super.getEnrolmentsSet());
     }
 
+    public Set<CurriculumGroup> getAllCurriculumGroups() {
+	return isBoxStructure() ? getRoot().getAllCurriculumGroups() : Collections.EMPTY_SET;
+    }
+
+    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	return isBoxStructure() ? getRoot().getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() : Collections.EMPTY_SET;
+    }
+
     @Override
     final public List<Enrolment> getEnrolments() {
 	return hasRoot() ? getRoot().getEnrolments() : super.getEnrolments();
@@ -2878,5 +2886,4 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	return false;
     }
-
 }

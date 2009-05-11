@@ -75,7 +75,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     public RootCurriculumGroup getRootCurriculumGroup() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getRootCurriculumGroup() : (RootCurriculumGroup) this;
     }
-    
+
     public CycleCurriculumGroup getParentCycleCurriculumGroup() {
 	return hasCurriculumGroup() ? getCurriculumGroup().getParentCycleCurriculumGroup() : null;
     }
@@ -210,7 +210,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     final public Student getStudent() {
 	return getRegistration().getStudent();
     }
-    
+
     final public Person getPerson() {
 	return getStudent().getPerson();
     }
@@ -407,9 +407,13 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 	return hasAnyCurriculumModules(new CurriculumModulePredicateByType(CurriculumLine.class));
     }
 
+    abstract public Set<CurriculumGroup> getAllCurriculumGroups();
+
+    abstract public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups();
+
     static public class CurriculumModulePredicateByType extends Predicate<CurriculumModule> {
 
-	private Class<? extends CurriculumModule> clazz;
+	private final Class<? extends CurriculumModule> clazz;
 
 	public CurriculumModulePredicateByType(final Class<? extends CurriculumModule> clazz) {
 	    this.clazz = clazz;
@@ -428,7 +432,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     static public class CurriculumModulePredicateByExecutionSemester extends Predicate<CurriculumModule> {
 
-	private ExecutionSemester executionYear;
+	private final ExecutionSemester executionYear;
 
 	public CurriculumModulePredicateByExecutionSemester(final ExecutionSemester executionYear) {
 	    this.executionYear = executionYear;
@@ -450,7 +454,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     static public class CurriculumModulePredicateByExecutionYear extends Predicate<CurriculumModule> {
 
-	private ExecutionYear executionYear;
+	private final ExecutionYear executionYear;
 
 	public CurriculumModulePredicateByExecutionYear(final ExecutionYear executionYear) {
 	    this.executionYear = executionYear;

@@ -56,16 +56,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 	    addParameter("branch", "");
 	    return;
 	}
-	final StringBuilder branchInfo = new StringBuilder();
-	branchInfo.append(SINGLE_SPACE);
-	branchInfo.append(getResourceBundle().getString("label.in.the.male"));
-	branchInfo.append(SINGLE_SPACE);
-	branchInfo.append(getResourceBundle().getString("label.branch").toLowerCase());
-	branchInfo.append(SINGLE_SPACE);
-	branchInfo.append(getResourceBundle().getString("label.of.both"));
-	branchInfo.append(SINGLE_SPACE);
-	branchInfo.append(getDocumentRequest().getBranch().toUpperCase());
-	addParameter("branch", branchInfo.toString());
+	addParameter("branch", SINGLE_SPACE + getDocumentRequest().getBranch());
     }
 
     @Override

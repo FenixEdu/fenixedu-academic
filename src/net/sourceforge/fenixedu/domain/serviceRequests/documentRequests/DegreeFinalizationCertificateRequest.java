@@ -41,7 +41,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setInternshipAbolished(bean.getInternshipAbolished());
 	super.setInternshipApproved(bean.getInternshipApproved());
 	super.setStudyPlan(bean.getStudyPlan());
-	super.setBranch(bean.getBranch());
+	super.setBranch(bean.getBranchName());
 	super.setExceptionalConclusionDate(bean.getExceptionalConclusionDate());
 	super.setLanguage(bean.getLanguage());
     }

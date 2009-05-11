@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -360,4 +361,23 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return result;
     }
 
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroups() {
+	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    result.addAll(curriculumModule.getAllCurriculumGroups());
+	}
+	return result;
+    }
+
+    @Override
+    public Set<CurriculumGroup> getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups() {
+	Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
+
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    result.addAll(curriculumModule.getAllCurriculumGroupsWithoutNoCourseGroupCurriculumGroups());
+	}
+	return result;
+    }
 }
