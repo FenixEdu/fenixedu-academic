@@ -5,25 +5,21 @@
 package net.sourceforge.fenixedu.presentationTier.Action.gep;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -87,45 +83,16 @@ public class SearchTeachersInformationAction extends SearchAction {
 	return new Object[] { executionDegreeId, basic, executionYear };
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * presentationTier.Action.framework.SearchAction#prepareFormConstants(org
-     * .apache.struts.action.ActionMapping,
-     * javax.servlet.http.HttpServletRequest,
-     * org.apache.struts.action.ActionForm)
-     */
     @Override
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
-	IUserView userView = UserView.getUser();
+	final ExecutionYear executionYear = StringUtils.isEmpty(request.getParameter("executionYear")) ? ExecutionYear
+		.readCurrentExecutionYear() : ExecutionYear.readExecutionYearByName(request.getParameter("executionYear"));
 
-	String executionYear = request.getParameter("executionYear");
+	final List<ExecutionDegree> executionDegrees = ExecutionDegree.getAllByExecutionYear(executionYear);
+	Collections.sort(executionDegrees, ExecutionDegree.COMPARATOR_BY_DEGREE_NAME);
 
-	InfoExecutionYear infoExecutionYear = null;
-	if (executionYear != null) {
-
-	    infoExecutionYear = ReadExecutionYear.run(executionYear);
-	} else {
-	    infoExecutionYear = ReadCurrentExecutionYear.run();
-	}
-
-	request.setAttribute("executionYear", infoExecutionYear.getYear());
-
-	List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndDegreeType.run(executionYear, DegreeType.DEGREE);
-	Collections.sort(infoExecutionDegrees, new Comparator() {
-	    public int compare(Object o1, Object o2) {
-		InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) o1;
-		InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) o2;
-		return infoExecutionDegree1.getInfoDegreeCurricularPlan().getInfoDegree().getNome().compareTo(
-			infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-	    }
-	});
-
-	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
-	infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees, messageResources);
-
-	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
+	request.setAttribute("executionYear", executionYear.getYear());
+	request.setAttribute("executionDegrees", executionDegrees);
 	request.setAttribute("showNextSelects", "true");
     }
 }

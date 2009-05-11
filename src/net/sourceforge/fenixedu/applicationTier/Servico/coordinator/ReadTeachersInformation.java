@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,14 +17,11 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 public class ReadTeachersInformation extends FenixService {
 
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString) throws FenixServiceException {
 
-	List professorships = null;
+	List<Professorship> professorships = null;
 	ExecutionYear executionYear = null;
 
 	if (executionYearString != null && !executionYearString.equals("")) {
@@ -56,12 +54,13 @@ public class ReadTeachersInformation extends FenixService {
 	    }
 	}
 
-	List<Teacher> teachers = (List<Teacher>) CollectionUtils.collect(professorships, new Transformer() {
-	    public Object transform(Object o) {
-		return ((Professorship) o).getTeacher();
+	Set<Teacher> teachers = new HashSet<Teacher>();
+	for (Professorship professorship : professorships) {
+	    if (professorship.hasTeacher()) {
+		teachers.add(professorship.getTeacher());
 	    }
-	});
-	teachers = removeDuplicates(teachers);
+	}
+
 	List<InfoSiteTeacherInformation> infoSiteTeachersInformation = new ArrayList<InfoSiteTeacherInformation>();
 	ReadTeacherInformation readTeacherInformationService = new ReadTeacherInformation();
 
@@ -80,18 +79,6 @@ public class ReadTeachersInformation extends FenixService {
 	});
 	return infoSiteTeachersInformation;
 
-    }
-
-    private List<Teacher> removeDuplicates(List teachers) {
-	List<Teacher> result = new ArrayList<Teacher>();
-	Iterator iter = teachers.iterator();
-	while (iter.hasNext()) {
-	    Teacher teacher = (Teacher) iter.next();
-	    if (!result.contains(teacher))
-		result.add(teacher);
-	}
-
-	return result;
     }
 
     private List<DegreeCurricularPlan> getDegreeCurricularPlans(final List<ExecutionDegree> executionDegrees) {
