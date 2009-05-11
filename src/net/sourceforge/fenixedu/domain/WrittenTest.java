@@ -180,7 +180,7 @@ public class WrittenTest extends WrittenTest_Base {
 	Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
 	for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
 	    for (Lesson lesson : executionCourse.getLessons()) {
-		if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
+		if (lesson.getRoomOccupation() && lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
 		    rooms.add(lesson.getRoomOccupation().getRoom());
 		}
 	    }
