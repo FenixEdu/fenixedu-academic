@@ -10,6 +10,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
+import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -59,7 +60,15 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
 	this.delegate = new DomainReference<YearDelegate>(delegate);
 	this.startDateTime = new DateTime();
-	buildQuestionBlocks();
+	buildQuestionBlocks(null);
+    }
+
+    public YearDelegateCourseInquiryDTO(final YearDelegateCourseInquiry inquiry) {
+	super();
+	this.executionCourse = new DomainReference<ExecutionCourse>(inquiry.getExecutionCourse());
+	this.delegate = new DomainReference<YearDelegate>(inquiry.getDelegate());
+	this.startDateTime = new DateTime();
+	buildQuestionBlocks(inquiry);
     }
 
     public Map<String, InquiriesQuestion> buildAnswersMap(boolean fullLabels) {
@@ -93,44 +102,52 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 		&& getEighthBlock().validate();
     }
 
-    private void buildQuestionBlocks() {
+    private void buildQuestionBlocks(final YearDelegateCourseInquiry inquiry) {
 
 	this.firstBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.yearDelegateInquiries.belowExpected",
 		"header.yearDelegateInquiries.expected", "header.yearDelegateInquiries.aboveExpected");
-	this.firstBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.workLoadClassification", 1, 3, false));
+	this.firstBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.workLoadClassification", 1, 3, false)
+		.setInitialValue(inquiry == null ? null : inquiry.getWorkLoadClassification()));
 	this.firstBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.workLoadClassificationReasons", false)
-		.setRequired(false));
+		.setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getWorkLoadClassificationReasons()));
 
 	this.secondBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.yearDelegateInquiries.totallyDisagree",
 		"header.yearDelegateInquiries.two", "header.yearDelegateInquiries.disagree", "header.yearDelegateInquiries.four",
 		"header.yearDelegateInquiries.neitherAgreeOrDisagree", "header.yearDelegateInquiries.six",
 		"header.yearDelegateInquiries.agree", "header.yearDelegateInquiries.eight",
 		"header.yearDelegateInquiries.totallyAgree");
-	this.secondBlock
-		.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.enoughOnlineCUInformation", 1, 9, false));
+	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.enoughOnlineCUInformation", 1, 9, false)
+		.setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getEnoughOnlineCUInformation()));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.enoughOnlineCUInformationReasons", false)
-		.setRequired(false));
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.clearOnlineCUInformation", 1, 9, false));
+		.setRequired(false).setRequired(false).setInitialValue(
+			inquiry == null ? null : inquiry.getEnoughOnlineCUInformationReasons()));
+	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.clearOnlineCUInformation", 1, 9, false)
+		.setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getClearOnlineCUInformation()));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.clearOnlineCUInformationReasons", false)
-		.setRequired(false));
-	this.secondBlock
-		.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.explicitEvaluationMethods", 1, 9, false));
+		.setRequired(false).setRequired(false).setInitialValue(
+			inquiry == null ? null : inquiry.getClearOnlineCUInformationReasons()));
+	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.explicitEvaluationMethods", 1, 9, false)
+		.setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getExplicitEvaluationMethods()));
 	this.secondBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.explicitEvaluationMethodsReasons", false)
-		.setRequired(false));
+		.setRequired(false).setRequired(false).setInitialValue(
+			inquiry == null ? null : inquiry.getExplicitEvaluationMethodsReasons()));
 	this.secondBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.evaluationMethodsWellApplied", 1, 9,
-		false));
+		false).setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getEvaluationMethodsWellApplied()));
 	this.secondBlock
 		.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.evaluationMethodsWellAppliedReasons", false)
-			.setRequired(false));
+			.setRequired(false).setRequired(false).setInitialValue(
+				inquiry == null ? null : inquiry.getEvaluationMethodsWellAppliedReasons()));
 
 	this.thirdBlock = new InquiriesBlock("title.yearDelegateInquiries.evaluationMethodsDisclosed", true,
 		"header.yearDelegateInquiries.yes", "header.yearDelegateInquiries.no");
 	this.thirdBlock.addQuestion(new RadioGroupQuestion(
 		"label.yearDelegateInquiries.evaluationMethodsDisclosedToWorkingStudents", false).addChoice("YES",
-		StringUtils.EMPTY).addChoice("NO", StringUtils.EMPTY));
+		StringUtils.EMPTY).addChoice("NO", StringUtils.EMPTY).setRequired(false).setInitialValue(
+		inquiry == null ? null : inquiry.getEvaluationMethodsDisclosedToWorkingStudents()));
 	this.thirdBlock.addQuestion(new RadioGroupQuestion(
 		"label.yearDelegateInquiries.evaluationMethodsDisclosedToSpecialSeasonStudents", false).addChoice("YES",
-		StringUtils.EMPTY).addChoice("NO", StringUtils.EMPTY));
+		StringUtils.EMPTY).addChoice("NO", StringUtils.EMPTY).setRequired(false).setInitialValue(
+		inquiry == null ? null : inquiry.getEvaluationMethodsDisclosedToSpecialSeasonStudents()));
 
 	this.fourthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.yearDelegateInquiries.totallyDisagree",
 		"header.yearDelegateInquiries.two", "header.yearDelegateInquiries.disagree", "header.yearDelegateInquiries.four",
@@ -138,33 +155,43 @@ public class YearDelegateCourseInquiryDTO implements Serializable {
 		"header.yearDelegateInquiries.agree", "header.yearDelegateInquiries.eight",
 		"header.yearDelegateInquiries.totallyAgree");
 	this.fourthBlock.addQuestion(new RadioGroupQuestion(
-		"label.yearDelegateInquiries.evaluationDatesScheduleActiveParticipation", 1, 9, false));
+		"label.yearDelegateInquiries.evaluationDatesScheduleActiveParticipation", 1, 9, false).setRequired(false)
+		.setInitialValue(inquiry == null ? null : inquiry.getEvaluationDatesScheduleActiveParticipation()));
 	this.fourthBlock.addQuestion(new TextBoxQuestion(
-		"label.yearDelegateInquiries.evaluationDatesScheduleActiveParticipationReasons", false).setRequired(false));
+		"label.yearDelegateInquiries.evaluationDatesScheduleActiveParticipationReasons", false).setRequired(false)
+		.setRequired(false).setInitialValue(
+			inquiry == null ? null : inquiry.getEvaluationDatesScheduleActiveParticipationReasons()));
 	this.fourthBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.supportMaterialAvailableOnTime", 1, 9,
-		false));
+		false).setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getSupportMaterialAvailableOnTime()));
 	this.fourthBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.supportMaterialAvailableOnTimeReasons",
-		false).setRequired(false));
+		false).setRequired(false).setRequired(false).setInitialValue(
+		inquiry == null ? null : inquiry.getSupportMaterialAvailableOnTimeReasons()));
 	this.fourthBlock.addQuestion(new RadioGroupQuestion("label.yearDelegateInquiries.previousKnowlegdeArticulation", 1, 9,
-		false));
+		false).setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getPreviousKnowlegdeArticulation()));
 	this.fourthBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.previousKnowlegdeArticulationReasons",
-		false).setRequired(false));
+		false).setRequired(false).setRequired(false).setInitialValue(
+		inquiry == null ? null : inquiry.getPreviousKnowlegdeArticulationReasons()));
 
 	this.fifthBlock = new InquiriesBlock(false);
-	this.fifthBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.suggestedBestPractices", true));
+	this.fifthBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.suggestedBestPractices", true).setRequired(
+		false).setInitialValue(inquiry == null ? null : inquiry.getSuggestedBestPractices()));
 
 	this.sixthBlock = new InquiriesBlock(true);
 	this.sixthBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.strongAndWeakPointsOfCUTeachingProcess",
-		true));
+		true).setRequired(false).setInitialValue(
+		inquiry == null ? null : inquiry.getStrongAndWeakPointsOfCUTeachingProcess()));
 
 	this.seventhBlock = new InquiriesBlock(true);
-	this.seventhBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.finalCommentsAndImproovements", true));
+	this.seventhBlock.addQuestion(new TextBoxQuestion("label.yearDelegateInquiries.finalCommentsAndImproovements", true)
+		.setRequired(false).setInitialValue(inquiry == null ? null : inquiry.getFinalCommentsAndImproovements()));
 
 	this.eighthBlock = new InquiriesBlock(StringUtils.EMPTY, true, "header.yearDelegateInquiries.yes",
 		"header.yearDelegateInquiries.no");
 	final RadioGroupQuestion reportDisclosureAuthorizationRadio = new RadioGroupQuestion(
 		"label.yearDelegateInquiries.reportDisclosureAuthorization", false);
-	reportDisclosureAuthorizationRadio.setValue("YES");
+	reportDisclosureAuthorizationRadio
+		.setValue(inquiry != null && inquiry.getReportDisclosureAuthorization() != null ? inquiry
+			.getReportDisclosureAuthorization() : "YES");
 	this.eighthBlock.addQuestion(reportDisclosureAuthorizationRadio.addChoice("YES", StringUtils.EMPTY).addChoice("NO",
 		StringUtils.EMPTY));
     }

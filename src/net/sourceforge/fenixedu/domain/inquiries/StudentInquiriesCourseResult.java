@@ -687,6 +687,18 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	return super.getUnsatisfactoryResultsCUOrganization() != null && super.getUnsatisfactoryResultsCUOrganization();
     }
 
+    public boolean isExcellent() {
+	return getExcellentResultsCUEvaluation() || getExcellentResultsCUOrganization();
+    }
+
+    public Boolean getExcellentResultsCUEvaluation() {
+	return fieldToBoolean(getValuesMap().get("ResExcelent_AvaliacaoUC"));
+    }
+
+    public Boolean getExcellentResultsCUOrganization() {
+	return fieldToBoolean(getValuesMap().get("ResExcelent_OrganizacaoUC"));
+    }
+
     @Override
     public Boolean getAuditCU() {
 	return super.getAuditCU() != null && super.getAuditCU();
@@ -698,7 +710,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 	    return super.getPublicDisclosure();
 	}
 	return getValuesMap().containsKey("Repres_div_publica") ? fieldToBoolean(getValuesMap().get("Repres_div_publica"))
-		: false;	
+		: false;
     }
 
     @Service

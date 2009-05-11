@@ -54,4 +54,19 @@ public class StudentInquiriesCourseResultBean implements Serializable {
 	this.studentInquiriesTeachingResults.add(new DomainReference<StudentInquiriesTeachingResult>(
 		studentInquiriesTeachingResult));
     }
+
+    public boolean isToImproove() {
+	if (getStudentInquiriesCourseResult().isUnsatisfactory()) {
+	    return true;
+	}
+
+	for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : getStudentInquiriesTeachingResults()) {
+	    if (studentInquiriesTeachingResult.isUnsatisfactory()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
 }

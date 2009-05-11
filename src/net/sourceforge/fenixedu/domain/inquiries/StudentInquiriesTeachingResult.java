@@ -528,6 +528,11 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 		|| getUnsatisfactoryResultsPresencialLearning() || getUnsatisfactoryResultsStudentInteraction();
     }
 
+    public boolean isExcellent() {
+	return getExcellentResultsAssiduity() || getExcellentResultsPedagogicalCapacity()
+		|| getExcellentResultsPresencialLearning() || getExcellentResultsStudentInteraction();
+    }
+
     @Override
     public Boolean getUnsatisfactoryResultsAssiduity() {
 	return super.getUnsatisfactoryResultsAssiduity() != null && super.getUnsatisfactoryResultsAssiduity();
@@ -557,7 +562,23 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     public Boolean getInternalDegreeDisclosure() {
 	return super.getInternalDegreeDisclosure() != null && super.getInternalDegreeDisclosure();
     }
-    
+
+    public Boolean getExcellentResultsAssiduity() {
+	return fieldToBoolean(getValuesMap().get("Res_excelentes_assiduidade"));
+    }
+
+    public Boolean getExcellentResultsPedagogicalCapacity() {
+	return fieldToBoolean(getValuesMap().get("Res_excelentes_cap_pedag"));
+    }
+
+    public Boolean getExcellentResultsPresencialLearning() {
+	return fieldToBoolean(getValuesMap().get("Res_excelentes_prov_aprend_pres"));
+    }
+
+    public Boolean getExcellentResultsStudentInteraction() {
+	return fieldToBoolean(getValuesMap().get("Res_excelentes_int_alunos"));
+    }
+
     @Override
     public Boolean getPublicDegreeDisclosure() {
 	if (super.getPublicDegreeDisclosure() != null) {

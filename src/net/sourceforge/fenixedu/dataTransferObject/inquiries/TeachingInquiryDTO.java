@@ -344,14 +344,16 @@ public class TeachingInquiryDTO implements Serializable {
 	final RadioGroupQuestion reportDisclosureToAcademicComunityQuestion = new RadioGroupQuestion(
 		"label.teachingInquiries.reportDisclosureToAcademicComunity", false).addChoice(Boolean.toString(true),
 		StringUtils.EMPTY).addChoice(Boolean.toString(false), StringUtils.EMPTY);
-	reportDisclosureToAcademicComunityQuestion.setValue(inquiry == null ? Boolean.toString(true) : inquiry
-		.getReportDisclosureToAcademicComunity().toString());
+	reportDisclosureToAcademicComunityQuestion.setValue(inquiry != null
+		&& inquiry.getReportDisclosureToAcademicComunity() != null ? inquiry.getReportDisclosureToAcademicComunity()
+		.toString() : Boolean.toString(true));
 	this.firstPageFourthBlock.addQuestion(reportDisclosureToAcademicComunityQuestion.setShowRequiredMark(false));
 	final RadioGroupQuestion resultsDisclosureToAcademicComunityQuestion = new RadioGroupQuestion(
 		"label.teachingInquiries.resultsDisclosureToAcademicComunity", false).addChoice(Boolean.toString(true),
 		StringUtils.EMPTY).addChoice(Boolean.toString(false), StringUtils.EMPTY);
-	resultsDisclosureToAcademicComunityQuestion.setValue(inquiry == null ? Boolean.toString(true) : inquiry
-		.getResultsDisclosureToAcademicComunity().toString());
+	resultsDisclosureToAcademicComunityQuestion.setValue(inquiry != null
+		&& inquiry.getResultsDisclosureToAcademicComunity() != null ? inquiry.getResultsDisclosureToAcademicComunity()
+		.toString() : Boolean.toString(true));
 	this.firstPageFourthBlock.addQuestion(resultsDisclosureToAcademicComunityQuestion.setHeader(
 		new QuestionHeader("title.teachingInquiries.resultsDisclosureToAcademicComunity", "label.true", "label.false"))
 		.setShowRequiredMark(false).setToolTip("label.teachingInquiries.resultsDisclosureToAcademicComunity.tooltip"));
@@ -461,8 +463,9 @@ public class TeachingInquiryDTO implements Serializable {
 	final RadioGroupQuestion responsibleTeacherReportDisclosureToAcademicComunityQuestion = new RadioGroupQuestion(
 		"label.teachingInquiries.responsibleTeacherReportDisclosureToAcademicComunity", false).addChoice(
 		Boolean.toString(true), StringUtils.EMPTY).addChoice(Boolean.toString(false), StringUtils.EMPTY);
-	responsibleTeacherReportDisclosureToAcademicComunityQuestion.setValue(inquiry == null ? Boolean.toString(true) : inquiry
-		.getResponsibleTeacherReportDisclosureToAcademicComunity().toString());
+	responsibleTeacherReportDisclosureToAcademicComunityQuestion.setValue(inquiry != null
+		&& inquiry.getResponsibleTeacherReportDisclosureToAcademicComunity() != null ? inquiry
+		.getResponsibleTeacherReportDisclosureToAcademicComunity().toString() : Boolean.toString(true));
 	this.thirdPageReportDisclosureBlock.addQuestion(responsibleTeacherReportDisclosureToAcademicComunityQuestion
 		.setShowRequiredMark(false));
 

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
@@ -254,7 +255,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final StudentInquiriesCourseResult courseResult = RootDomainObject.getInstance().readStudentInquiriesCourseResultByOID(
 		Integer.valueOf(getFromRequest(request, "resultId").toString()));
-	if (!AccessControl.getPerson().getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())) {
+	final Person loggedPerson = AccessControl.getPerson();
+	if (!loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(courseResult.getExecutionCourse())
+		&& courseResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", courseResult);
@@ -273,9 +276,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final StudentInquiriesTeachingResult teachingResult = RootDomainObject.getInstance()
 		.readStudentInquiriesTeachingResultByOID(Integer.valueOf(getFromRequest(request, "resultId").toString()));
-	if (teachingResult.getProfessorship().getTeacher() != AccessControl.getPerson().getTeacher()
-		&& AccessControl.getPerson().getTeacher()
-			.isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null) {
+	final Person loggedPerson = AccessControl.getPerson();
+	if (teachingResult.getProfessorship().getTeacher() != loggedPerson.getTeacher()
+		&& loggedPerson.getTeacher().isResponsibleFor(teachingResult.getProfessorship().getExecutionCourse()) == null
+		&& teachingResult.getExecutionDegree().getCoordinatorByTeacher(loggedPerson) == null) {
 	    return null;
 	}
 	request.setAttribute("inquiryResult", teachingResult);

@@ -59,7 +59,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setResponsibleFor(responsibleFor);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
-	//professorShip.setTeacher(teacher);
+	// professorShip.setTeacher(teacher);
 
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
 
@@ -143,7 +143,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	Set<Professorship> professorships = new HashSet<Professorship>();
 	for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
 	    for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
-		if (curricularCourse.getBasic().equals(basic)) {
+		if (curricularCourse.getBasic() == null || curricularCourse.getBasic().equals(basic)) {
 		    if (executionYear != null) {
 			for (ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionYear(executionYear)) {
 			    professorships.addAll(executionCourse.getProfessorships());
@@ -222,7 +222,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	}
 	return false;
     }
-    
+
     public Teacher getTeacher() {
 	return getPerson().getTeacher();
     }
@@ -232,11 +232,11 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public boolean hasTeacher() {
-	return getPerson().hasTeacher();
+	return hasPerson() && getPerson().hasTeacher();
     }
 
     public void removeTeacher() {
 	getPerson().removeTeacher();
-    }    
+    }
 
 }
