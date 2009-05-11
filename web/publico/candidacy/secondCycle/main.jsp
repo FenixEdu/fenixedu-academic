@@ -109,7 +109,7 @@
 		<td>20</td>
 	</tr>
 	<tr>
-		<td><a href="http://fenix.ist.utl.pt/meec?locale=pt">Mestrado em Engenharia Electrónica</a></td>
+		<td><a href="http://fenix.ist.utl.pt/mee?locale=pt">Mestrado em Engenharia Electrónica</a></td>
 		<td>Taguspark</td>
 		<td>15</td>
 	</tr>
