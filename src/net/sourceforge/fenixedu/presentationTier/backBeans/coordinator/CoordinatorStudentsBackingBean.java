@@ -1,20 +1,31 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator;
 
+import java.io.IOException;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.context.FacesContext;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
@@ -199,6 +210,11 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     public Collection<StudentCurricularPlan> getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
+	final List<StudentCurricularPlan> studentCurricularPlans = filterStudentCurricularPlans();
+	return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex(), studentCurricularPlans.size()));
+    }
+
+    private List<StudentCurricularPlan> filterStudentCurricularPlans() {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
@@ -249,8 +265,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	} else {
 	    Collections.sort(studentCurricularPlans, new BeanComparator(sortBy));
 	}
-
-	return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex(), studentCurricularPlans.size()));
+	return studentCurricularPlans;
     }
 
     private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
@@ -348,4 +363,82 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	this.showPhoto = showPhoto;
     }
 
+    public void exportStudentsToExcel() throws IOException {
+	final Spreadsheet spreadsheet = generateSpreadsheet();
+
+	getResponse().setContentType("application/vnd.ms-excel");
+	getResponse().setHeader("Content-disposition", "attachment; filename=" + getFilename() + ".xls");
+	spreadsheet.exportToXLSSheet(getResponse().getOutputStream());
+	getResponse().getOutputStream().flush();
+	getResponse().flushBuffer();
+	FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    private Spreadsheet generateSpreadsheet() {
+	final Spreadsheet spreadsheet = createSpreadSheet();
+	for (final StudentCurricularPlan studentCurricularPlan : filterStudentCurricularPlans()) {
+	    final Row row = spreadsheet.addRow();
+
+	    row.setCell(studentCurricularPlan.getRegistration().getNumber());
+	    row.setCell(studentCurricularPlan.getPerson().getName());
+	    row.setCell(studentCurricularPlan.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	    row.setCell(studentCurricularPlan.getCurrentState().getLocalizedName());
+	    row.setCell(studentCurricularPlan.getRegistration().getNumberOfCurriculumEntries());
+	    row.setCell(studentCurricularPlan.getRegistration().getEctsCredits());
+	    row.setCell(getAverageInformation(studentCurricularPlan));
+	    row.setCell(studentCurricularPlan.getRegistration().getCurricularYear());
+
+	    final Tutorship tutorship = studentCurricularPlan.getActiveTutorship();
+	    row.setCell((tutorship != null) ? tutorship.getPerson().getName() : "");
+	}
+
+	return spreadsheet;
+    }
+
+    private String getFilename() {
+	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+		"label.students.lowercase");
+    }
+
+    private String getAverageInformation(final StudentCurricularPlan studentCurricularPlan) {
+	final Registration registration = studentCurricularPlan.getRegistration();
+
+	if (registration.isConcluded()) {
+	    if (registration.isRegistrationConclusionProcessed()
+		    && (!registration.isBolonha() || studentCurricularPlan.getInternalCycleCurriculumGroupsSize().intValue() == 1)) {
+		return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+	    } else {
+		return " - ";
+	    }
+	} else {
+	    return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
+	}
+    }
+
+    private Spreadsheet createSpreadSheet() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
+
+	spreadsheet.setHeaders(new String[] {
+
+	bundle.getString("label.number"),
+
+	bundle.getString("label.name"),
+
+	bundle.getString("label.email"),
+
+	bundle.getString("label.student.curricular.plan.state"),
+
+	bundle.getString("label.number.approved.curricular.courses"),
+
+	bundle.getString("label.ects"),
+
+	bundle.getString("label.average"),
+
+	bundle.getString("label.student.curricular.year"),
+
+	" ", " " });
+
+	return spreadsheet;
+    }
 }

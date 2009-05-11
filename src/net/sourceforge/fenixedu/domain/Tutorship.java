@@ -136,4 +136,8 @@ public class Tutorship extends Tutorship_Base {
 	int month = getEndDate().get(DateTimeFieldType.monthOfYear());
 	return ExecutionYear.readByDateTime(new LocalDate(year, month, 1).toDateTimeAtCurrentTime());
     }
+
+    public Person getPerson() {
+	return getTeacher().getPerson();
+    }
 }

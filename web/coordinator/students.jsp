@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -53,12 +54,16 @@
 			<h:selectBooleanCheckbox id="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}" />
 		</h:panelGrid>
 
-		<h:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['button.search']}"/>
-	</h:form>
+		<fc:commandButton alt="#{htmlAltBundle['commandButton.search']}" styleClass="inputbutton" value="#{bundle['button.search']}"/>
 
-	<h:outputText value="<br/>#{bundle['label.number.results']}: " escape="false"/>
-	<h:outputText value="#{CoordinatorStudentsBackingBean.numberResults}"/>
-	<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="<br/><br/>#{bundle['label.number.results']}: " escape="false"/>
+		<h:outputText value="#{CoordinatorStudentsBackingBean.numberResults}"/>
+		<h:outputText value="<br/><br/>" escape="false"/>
+	
+		<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
+		<h:outputText value="&nbsp;" escape="false" />
+		<fc:commandLink value="#{bundle['link.exportToExcel']}" action="#{CoordinatorStudentsBackingBean.exportStudentsToExcel}"/>
+	</h:form>
 
 	<h:panelGrid>
 	<h:panelGroup>
@@ -167,7 +172,7 @@
 		</h:column>
 		<h:column>
 			<f:facet name="header">
-					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=registration.person.email&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.plan.state']}</a>" escape="false"/>
+					<h:outputText value="<a href='#{CoordinatorStudentsBackingBean.contextPath}/coordinator/students.faces?degreeCurricularPlanID=#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}&amp;sortBy=currentState&amp;studentCurricularPlanStateString=#{CoordinatorStudentsBackingBean.studentCurricularPlanStateString}&amp;studentNumber=#{studentCurricularPlan.registration.student.number}&amp;minGradeString=#{CoordinatorStudentsBackingBean.minGradeString}&amp;maxGradeString=#{CoordinatorStudentsBackingBean.maxGradeString}&amp;minNumberApprovedString=#{CoordinatorStudentsBackingBean.minNumberApprovedString}&amp;maxNumberApprovedString=#{CoordinatorStudentsBackingBean.maxNumberApprovedString}&amp;minStudentNumberString=#{CoordinatorStudentsBackingBean.minStudentNumberString}&amp;maxStudentNumberString=#{CoordinatorStudentsBackingBean.maxStudentNumberString}&amp;showPhoto=#{CoordinatorStudentsBackingBean.showPhoto}'>#{bundle['label.student.curricular.plan.state']}</a>" escape="false"/>
 			</f:facet>
 			<h:outputText value="<a href='mailto:#{studentCurricularPlan.currentState}'>" escape="false"/>
 			<h:outputText value="#{bundleEnum[studentCurricularPlan.currentState]}</a>" escape="false"/>
