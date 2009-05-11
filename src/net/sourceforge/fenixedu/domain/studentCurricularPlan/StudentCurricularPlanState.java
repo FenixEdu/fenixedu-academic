@@ -4,6 +4,8 @@
 
 package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 /**
  * @author Nuno Nunes & Joana Mota
  */
@@ -23,5 +25,9 @@ public enum StudentCurricularPlanState {
 
     public String getName() {
 	return name();
+    }
+
+    public String getLocalizedName() {
+	return BundleUtil.getResourceString("resources.EnumerationResources", name());
     }
 }
