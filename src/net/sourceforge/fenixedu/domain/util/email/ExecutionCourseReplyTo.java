@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
+import net.sourceforge.fenixedu.domain.Person;
+
 public class ExecutionCourseReplyTo extends ExecutionCourseReplyTo_Base {
 
     public ExecutionCourseReplyTo() {
@@ -7,7 +9,7 @@ public class ExecutionCourseReplyTo extends ExecutionCourseReplyTo_Base {
     }
 
     @Override
-    public String getReplyToAddress() {
+    public String getReplyToAddress(final Person person) {
 	ExecutionCourseSender executionCourseSender = (ExecutionCourseSender) getSender();
 	return executionCourseSender.getCourse().getSite().getMail();
     }

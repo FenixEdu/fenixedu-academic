@@ -100,18 +100,19 @@ public class Message extends Message_Base {
 	return emailAddresses;
     }
 
-    protected String[] getReplyToAddresses() {
+    protected String[] getReplyToAddresses(final Person person) {
 	final String[] replyToAddresses = new String[getReplyTosCount()];
 	int i = 0;
 	for (final ReplyTo replyTo : getReplyTosSet()) {
-	    replyToAddresses[i++] = replyTo.getReplyToAddress();
+	    replyToAddresses[i++] = replyTo.getReplyToAddress(person);
 	}
 	return replyToAddresses;
     }
 
     public void dispatch() {
 	final Sender sender = getSender();
-	new Email(sender.getFromName(getPerson()), sender.getFromAddress(), getReplyToAddresses(), Collections.EMPTY_SET,
+	final Person person = getPerson();
+	new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), Collections.EMPTY_SET,
 		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());

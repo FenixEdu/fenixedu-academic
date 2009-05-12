@@ -11,7 +11,7 @@ public class PersonReplyTo extends PersonReplyTo_Base {
     }
 
     @Override
-    public String getReplyToAddress() {
+    public String getReplyToAddress(final Person person) {
 	return getPerson().getEmail();
     }
 
