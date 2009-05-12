@@ -239,6 +239,7 @@
 
 
 		<h2 style="margin-top: 1.5em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
+		<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
 		
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.curriculum.vitae.academic.professional" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<fr:edit id="individualCandidacyProcessBean.document.file.curriculum.vitae"

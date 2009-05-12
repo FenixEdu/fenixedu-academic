@@ -10,11 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -131,7 +134,8 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-	bean.getPhotoDocument().fromInputStreamToContents();
+	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean.getPersonBean().getDocumentIdNumber());
+	bean.getPhotoDocument().setDocumentFile(photoDocumentFile);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("candidacy.continue.creation");
     }
@@ -143,7 +147,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     public ActionForward submitCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws IOException {
 	try {
 
 	    Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
@@ -178,7 +182,8 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
-
+	    
+	    saveDocumentFiles(bean);
 	    Over23IndividualCandidacyProcess process = (Over23IndividualCandidacyProcess) createNewProcess(bean);
 	    sendEmailForApplicationSuccessfullySubmited(process, mapping, request);
 
@@ -423,6 +428,45 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	}
 
 	return null;
+    }
+
+    private void saveDocumentFiles(Over23IndividualCandidacyProcessBean bean) throws IOException {
+	String documentIdNumber = bean.getPersonBean().getDocumentIdNumber();
+	
+	if(bean.getDocumentIdentificationDocument() != null) {
+	    IndividualCandidacyDocumentFile documentIdentificationDocumentFile = createIndividualCandidacyDocumentFile(bean.getDocumentIdentificationDocument(), documentIdNumber);
+	    bean.getDocumentIdentificationDocument().setDocumentFile(documentIdentificationDocumentFile);
+	}
+	
+	if(bean.getFirstCycleAccessHabilitationDocument() != null) {
+	    IndividualCandidacyDocumentFile firstCycleAccessHabilitationDocumentFile = createIndividualCandidacyDocumentFile(bean.getFirstCycleAccessHabilitationDocument(), documentIdNumber);
+	    bean.getFirstCycleAccessHabilitationDocument().setDocumentFile(firstCycleAccessHabilitationDocumentFile);
+	}
+	
+	if(bean.getHabilitationCertificationDocument() != null) {
+	    IndividualCandidacyDocumentFile habilitationCertficationDocument = createIndividualCandidacyDocumentFile(bean.getHabilitationCertificationDocument(), documentIdNumber);
+	    bean.getHabilitationCertificationDocument().setDocumentFile(habilitationCertficationDocument);
+	}
+	
+	if(bean.getPaymentDocument() != null) {
+	    IndividualCandidacyDocumentFile paymentDocumentFile = createIndividualCandidacyDocumentFile(bean.getPaymentDocument(), documentIdNumber);
+	    bean.getPaymentDocument().setDocumentFile(paymentDocumentFile);
+	}
+	
+	if(bean.getVatCatCopyDocument() != null) {
+	    IndividualCandidacyDocumentFile vatDocumentFile = createIndividualCandidacyDocumentFile(bean.getVatCatCopyDocument(), documentIdNumber);
+	    bean.getVatCatCopyDocument().setDocumentFile(vatDocumentFile);
+	}
+	
+	for(CandidacyProcessDocumentUploadBean uploadBean : bean.getReportOrWorkDocumentList()) {
+	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
+	    uploadBean.setDocumentFile(documentFile);
+	}
+	
+	for(CandidacyProcessDocumentUploadBean uploadBean : bean.getHabilitationCertificateList()) {
+	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
+	    uploadBean.setDocumentFile(documentFile);	    
+	}
     }
 
     @Override

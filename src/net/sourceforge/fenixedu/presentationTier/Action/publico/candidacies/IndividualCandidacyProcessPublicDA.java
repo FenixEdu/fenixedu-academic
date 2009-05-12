@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
@@ -152,18 +156,26 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
     }
 
     public ActionForward editCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.documents");
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
+	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
 	try {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, uploadBean
+		    .getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+	    uploadBean.setDocumentFile(documentFile);
+
 	    executeActivity(uploadBean.getIndividualCandidacyProcess(), "EditPublicCandidacyDocumentFile", uploadBean);
+	    request.setAttribute("individualCandidacyProcess", uploadBean.getIndividualCandidacyProcess());
+	    return backToViewCandidacyInternal(mapping, form, request, response);
 	} catch (final DomainException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	    bean.setIndividualCandidacyProcess(uploadBean.getIndividualCandidacyProcess());
+	    request.setAttribute("candidacyDocumentUploadBean", bean);
+	    
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	    return mapping.findForward("edit-candidacy");
+	    return mapping.findForward("edit-candidacy-documents");
 	}
-
-	request.setAttribute("individualCandidacyProcess", uploadBean.getIndividualCandidacyProcess());
-	return backToViewCandidacyInternal(mapping, form, request, response);
     }
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
@@ -254,7 +266,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
     private static final String SEND_LINK_TO_ACCESS_SUBMISSION_FORM_BODY = "message.email.body.send.link.to.submission.form";
     private static final String INFORM_APPLICATION_SUCCESS_BODY = "message.email.body.application.submited";
     private static final String RECOVER_LINK_BODY = "message.email.body.recovery.access";
-    
+
     private static final String LINK_HTTP_HOSTNAME = "const.public.applications.link.http.hostname";
 
     public ActionForward bindEmailWithHashCodeAndSendMailWithLink(ActionMapping mapping, ActionForm form,
@@ -264,7 +276,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getUnusedOrCreateNewHashCode(getProcessType(),
 		    getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
-	    
+
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
 	    addActionMessage(request, "error.candidacy.hash.code.already.bounded");
@@ -272,21 +284,23 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	}
     }
 
-    private void sendEmailForApplicationSubmissionCandidacyForm(PublicCandidacyHashCode candidacyHashCode, ActionMapping mapping, HttpServletRequest request) {
+    private void sendEmailForApplicationSubmissionCandidacyForm(PublicCandidacyHashCode candidacyHashCode, ActionMapping mapping,
+	    HttpServletRequest request) {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	String fromName = bundle.getString(FROM_NAME_KEY);
 	String fromAddress = bundle.getString(FROM_ADDRESS_KEY);
 	String subject = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_SUBJECT);
 	String body = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_BODY);
 	String link = getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
-	
+
 	body = String.format(body, new String[] { link });
-	
+
 	candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
-	
+
     }
-    
-    protected void sendEmailForApplicationSuccessfullySubmited(IndividualCandidacyProcess process, ActionMapping mapping, HttpServletRequest request) {
+
+    protected void sendEmailForApplicationSuccessfullySubmited(IndividualCandidacyProcess process, ActionMapping mapping,
+	    HttpServletRequest request) {
 	PublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	String fromName = bundle.getString(FROM_NAME_KEY);
@@ -294,9 +308,10 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	String subject = bundle.getString(INFORM_APPLICATION_SUCCESS_SUBJECT);
 	String body = bundle.getString(INFORM_APPLICATION_SUCCESS_BODY);
 	String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
-	
-	body = String.format(body, new String[] { candidacyHashCode.getIndividualCandidacyProcess().getProcessCode(), link, getFormattedApplicationSubmissionEndDate() });
-	
+
+	body = String.format(body, new String[] { candidacyHashCode.getIndividualCandidacyProcess().getProcessCode(), link,
+		getFormattedApplicationSubmissionEndDate() });
+
 	candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
     }
 
@@ -347,8 +362,9 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	request.setAttribute("hash", hash);
 	return mapping.findForward("show-application-submission-conditions");
     }
-    
+
     protected abstract String getRootPortalCandidacyAccess();
+
     protected abstract String getRootPortalCandidacySubmission();
 
     protected String getLinkFromPublicCandidacyHashCodeForInternalUse(ActionMapping mapping, HttpServletRequest request,
@@ -363,32 +379,32 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
     protected String getFullLinkFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
-	    String link = bundle.getString(LINK_HTTP_HOSTNAME);
-	
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
+	String link = bundle.getString(LINK_HTTP_HOSTNAME);
+
 	return link + request.getContextPath() + getLinkFromPublicCandidacyHashCode(mapping, request, hashCode);
     }
 
     protected String getLinkForSubmissionFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
 	    PublicCandidacyHashCode hashCode) {
-	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue() + "&locale=" + Language.getLocale().getLanguage();
+	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue() + "&locale="
+		+ Language.getLocale().getLanguage();
     }
 
-    protected String getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(ActionMapping mapping, HttpServletRequest request,
-	    PublicCandidacyHashCode hashCode) {
-	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
-	    String link = bundle.getString(LINK_HTTP_HOSTNAME);
-	
+    protected String getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(ActionMapping mapping,
+	    HttpServletRequest request, PublicCandidacyHashCode hashCode) {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
+	String link = bundle.getString(LINK_HTTP_HOSTNAME);
+
 	return link + request.getContextPath() + getLinkForSubmissionFromPublicCandidacyHashCode(mapping, request, hashCode);
     }
 
-    
     protected boolean candidacyIndividualProcessExistsForThisEmail(String email) {
 	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode
 		.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, getProcessType(), getCurrentOpenParentProcess());
 	return candidacyHashCode != null;
     }
-    
+
     protected boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {
 	final String captchaId = request.getSession().getId();
 	final String captchaResponse = request.getParameter("j_captcha_response");
@@ -467,19 +483,19 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    this.email = email;
 	}
     }
-    
-    
+
     protected abstract LocalDateTime getApplicationDateStart();
+
     protected abstract LocalDateTime getApplicationDateEnd();
-    
+
     protected boolean isApplicationSubmissionPeriodValid() {
 	LocalDateTime now = new LocalDateTime(System.currentTimeMillis());
 	return now.isAfter(getApplicationDateStart()) && now.isBefore(getApplicationDateEnd());
     }
-    
+
     protected String getFormattedApplicationSubmissionEndDate() {
 	LocalDateTime end = getApplicationDateEnd();
-	if(isInEnglishLocale()) {
+	if (isInEnglishLocale()) {
 	    return end.toString("dd', 'MMMM' of 'yyyy", Language.getLocale());
 	}
 	return end.toString("dd' de 'MMMM' de 'yyyy", Language.getLocale());

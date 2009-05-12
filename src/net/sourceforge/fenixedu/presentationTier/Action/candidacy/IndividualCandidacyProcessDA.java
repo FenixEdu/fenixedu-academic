@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +22,8 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -399,9 +403,12 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     public ActionForward uploadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
 	try {
+	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, uploadBean.getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+	    uploadBean.setDocumentFile(documentFile);
+	    
 	    executeActivity(getProcess(request), "EditDocuments", uploadBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -418,4 +425,34 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute("activities", getAllowedActivities(process));
 	return mapping.findForward("list-allowed-activities");
     }
+    
+    private static final int MAX_FILE_SIZE = 3698688;
+    
+    protected IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(
+	    CandidacyProcessDocumentUploadBean uploadBean, String documentIdNumber) throws IOException {
+	if (uploadBean == null) {
+	    return null;
+	}
+
+	InputStream stream = uploadBean.getStream();
+	String fileName = uploadBean.getFileName();
+	long fileLength = uploadBean.getFileSize();
+	IndividualCandidacyDocumentFileType type = uploadBean.getType();
+
+
+	if (stream == null || fileLength == 0) {
+	    return null;
+	}
+
+	if (fileLength > MAX_FILE_SIZE) {
+	    throw new DomainException("error.file.to.big");
+	}
+
+	byte[] contents = new byte[(int) fileLength];
+	stream.read(contents);
+	
+	return IndividualCandidacyDocumentFile.createCandidacyDocument(contents, fileName, type, getParentProcessType()
+		.getSimpleName(), documentIdNumber);
+    }
+    
 }

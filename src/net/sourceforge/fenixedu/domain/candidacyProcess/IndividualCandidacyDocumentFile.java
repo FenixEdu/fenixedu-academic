@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -12,13 +13,22 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	super();
     }
 
-    public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy, byte[] contents,
-	    String filename) {
+    public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
+	    byte[] contents, String filename) {
 	setIndividualCandidacy(candidacy);
 	setCandidacyFileType(type);
 	init(getVirtualPath(), filename, filename, null, contents, null);
-	
-	if(type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
+
+	if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
+	    storeToContentManager();
+	}
+    }
+
+    private IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename, VirtualPath path) {
+	setCandidacyFileType(type);
+	init(path, filename, filename, null, contents, null);
+
+	if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
 	    storeToContentManager();
 	}
     }
@@ -35,5 +45,22 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	// FIXME Anil : Add to VirtualPathNode the execution year of this
 	// candidacy
 	return filePath;
+    }
+
+    private static VirtualPath obtainVirtualPath(String processName, String documentIdNumber) {
+	final VirtualPath filePath = new VirtualPath();
+	filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
+
+	filePath.addNode(new VirtualPathNode(processName, processName));
+	filePath.addNode(new VirtualPathNode(documentIdNumber, documentIdNumber));
+
+	// FIXME Anil : Add to VirtualPathNode the execution year of this
+	// candidacy
+	return filePath;
+    }
+
+    @Service
+    public static IndividualCandidacyDocumentFile createCandidacyDocument(byte[] contents, String filename, IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
+	return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 }

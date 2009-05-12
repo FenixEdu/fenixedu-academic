@@ -27,8 +27,16 @@
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
 
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES">
+	<p>
+		<span class="error0"><bean:write name="message"/></span>
+	</p>
+</html:messages>
+
+<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
-	<fr:edit id="individualCandidacyProcessBean.documents"
+	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
 		schema="PublicCandidacyProcessBean.documentUpload.edit">
 		<fr:layout>

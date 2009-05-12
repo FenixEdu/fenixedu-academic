@@ -1376,7 +1376,7 @@
 		<property name="fileSizeSlot" value="fileSize"/>
 		<validator
 			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="maxSize" value="3mb"/>
+			<property name="maxSize" value="3698688"/>
 			<property name="acceptedTypes" value="*" />			
 		</validator>		
 	</slot>
@@ -1388,7 +1388,7 @@
 		<property name="fileSizeSlot" value="fileSize"/>
 		<validator
 			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="maxSize" value="3000000"/>
+			<property name="maxSize" value="3698688"/>
 			<property name="acceptedExtensions" value="gif,jpg,png" />
 			<property name="acceptedTypes" value="image/gif,image/jpg,image/png" />
 		</validator>		

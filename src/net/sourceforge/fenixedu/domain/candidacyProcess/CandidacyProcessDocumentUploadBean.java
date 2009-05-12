@@ -24,10 +24,8 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     private String fileName;
 
     private Long id;
-
-    private byte[] contents;
     
-    private java.io.File file;
+    private DomainReference<IndividualCandidacyDocumentFile> documentFile;
 
     public CandidacyProcessDocumentUploadBean() {
 	this.id = System.currentTimeMillis();
@@ -47,14 +45,10 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     }
 
     public InputStream getStream() throws FileNotFoundException {
-	if(file != null) return new FileInputStream(file);
 	return this.stream;
     }
 
     public void setStream(InputStream stream) throws IOException {
-	if(stream != null) {
-	    this.file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(stream);
-	}
 	this.stream = stream;
     }
 
@@ -86,24 +80,12 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
     public Long getId() {
 	return this.id;
     }
-
-    public byte[] getContents() {
-	return this.contents;
+    
+    public IndividualCandidacyDocumentFile getDocumentFile() {
+	return this.documentFile != null ? this.documentFile.getObject() : null;
     }
-
-    public void setContents(byte[] value) {
-	this.contents = value;
-    }
-
-    public void fromInputStreamToContents() throws IOException {
-	InputStream localStream = getStream();
-	if (localStream != null) {
-	    try {
-		this.contents = new byte[(int) this.fileSize];
-		localStream.read(this.contents);
-	    } finally {
-		localStream.close();
-	    }
-	}
+    
+    public void setDocumentFile(IndividualCandidacyDocumentFile documentFile) {
+	this.documentFile = documentFile != null ? new DomainReference<IndividualCandidacyDocumentFile>(documentFile) : null;
     }
 }

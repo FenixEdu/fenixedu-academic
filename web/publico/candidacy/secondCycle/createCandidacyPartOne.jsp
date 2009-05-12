@@ -45,6 +45,7 @@
 </p>
 
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<p><span class="error0"><bean:write name="message"/></span></p>

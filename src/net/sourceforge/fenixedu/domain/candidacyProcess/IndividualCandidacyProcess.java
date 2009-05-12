@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
@@ -268,34 +269,9 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return null;
     }
 
-    private static final int MAX_FILE_SIZE = 30000000;
-
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
-	IndividualCandidacyDocumentFileType type = uploadBean.getType();
-	String fileName = uploadBean.getFileName();
-	long fileSize = uploadBean.getFileSize();
-	try {
-	    InputStream stream = uploadBean.getStream();
-
-	    byte[] contents = null;
-	    if (uploadBean.getContents() != null) {
-		contents = uploadBean.getContents();
-	    } else if (stream != null && fileSize > 0) {
-		contents = new byte[(int) fileSize];
-		stream.read(contents);
-	    }
-
-	    if (fileSize > MAX_FILE_SIZE) {
-		throw new DomainException("File too big");
-	    }
-
-	    if (contents != null) {
-		new IndividualCandidacyDocumentFile(type, getCandidacy(), contents, fileName);
-	    }
-	} catch (FileNotFoundException e) {
-	    throw new DomainException("individual.candidacy.document.file.not.found");
-	} catch (IOException exception) {
-	    throw new DomainException("error.read.input.stream.candidacy");
+	if(uploadBean.getDocumentFile() != null) {
+	    uploadBean.getDocumentFile().setIndividualCandidacy(this.getCandidacy());
 	}
     }
 
