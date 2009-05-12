@@ -15,4 +15,8 @@ public class PersonReplyTo extends PersonReplyTo_Base {
 	return getPerson().getEmail();
     }
 
+    public String getReplyToAddress() {
+	return getPerson().getEmail();
+    }
+
 }

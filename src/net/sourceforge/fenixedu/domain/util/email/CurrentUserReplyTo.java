@@ -18,4 +18,10 @@ public class CurrentUserReplyTo extends CurrentUserReplyTo_Base {
 	return emailAddress == null ? "" : emailAddress.getValue();
     }
 
+    public String getReplyToAddress() {
+	final Person currentUser = AccessControl.getPerson();
+	final EmailAddress emailAddress = currentUser == null ? null : currentUser.getDefaultEmailAddress();
+	return emailAddress == null ? "" : emailAddress.getValue();
+    }
+
 }

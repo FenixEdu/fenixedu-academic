@@ -14,4 +14,9 @@ public class ExecutionCourseReplyTo extends ExecutionCourseReplyTo_Base {
 	return executionCourseSender.getCourse().getSite().getMail();
     }
 
+    public String getReplyToAddress() {
+	ExecutionCourseSender executionCourseSender = (ExecutionCourseSender) getSender();
+	return executionCourseSender.getCourse().getSite().getMail();
+    }
+
 }

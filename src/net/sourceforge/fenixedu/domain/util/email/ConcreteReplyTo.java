@@ -14,4 +14,8 @@ public class ConcreteReplyTo extends ConcreteReplyTo_Base {
 	return getReplyToAddress();
     }
 
+    public String getReplyToAddress() {
+	return getReplyToAddress();
+    }
+
 }
