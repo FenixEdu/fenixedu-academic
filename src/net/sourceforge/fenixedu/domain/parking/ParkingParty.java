@@ -719,7 +719,8 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
 		if (person.hasStudent()) {
-		    Registration registration = getRegistrationByDegreeType(person.getStudent(), DegreeType.BOLONHA_PHD_PROGRAM);
+		    Registration registration = getRegistrationByDegreeType(person.getStudent(),
+			    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
 		    return registration != null && registration.isActive();
 		} else {
 		    return Boolean.FALSE;

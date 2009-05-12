@@ -94,7 +94,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
 	final Set<DegreeType> degreeTypes = new HashSet<DegreeType>(2);
 	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-	degreeTypes.add(DegreeType.BOLONHA_PHD_PROGRAM);
+	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
 
 	request.setAttribute("degreeCurricularPlans", DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes,
 		DegreeCurricularPlanState.ACTIVE));

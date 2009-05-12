@@ -58,10 +58,10 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 		new YearMonthDay(), null, null, null, null, null);
 	if (parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
+		    .readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+		    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	}
 
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);

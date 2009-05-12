@@ -692,6 +692,19 @@
 		<slot name="name" key="label.degree.name" />
 		<slot name="sigla" key="label.sigla" />
 	</schema>
+	
+	<schema name="DegreeCurricularPlanRendererConfig.search" type="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" bundle="APPLICATION_RESOURCES">
+		<slot name="executionInterval" layout="menu-select-postback" key="label.executionYear">
+			<property name="format" value="${qualifiedName}" />
+			<property name="nullOptionHidden" value="true" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig$ExecutionIntervalProvider" />
+		</slot>
+		<slot name="organizeBy" key="label.view.structure.organized.by">
+			<property name="defaultOptionHidden" value="true" />
+		</slot>
+		<slot name="showRules" key="label.view.rules" />
+		<slot name="showCourses" key="label.view.curricularCourses" />
+	</schema>
 
  	&researcher;
 	&markSheet;

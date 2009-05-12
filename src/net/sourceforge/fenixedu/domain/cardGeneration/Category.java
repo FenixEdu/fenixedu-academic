@@ -18,7 +18,7 @@ public enum Category {
     CODE_92(92, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.DEGREE, DegreeType.BOLONHA_DEGREE)),
     CODE_94(94, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE,
 		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)), CODE_95(95, LineLayout.STUDENT,
-	    newDegreeTypeSet(DegreeType.BOLONHA_PHD_PROGRAM)),
+	    newDegreeTypeSet(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)),
     CODE_96(96, LineLayout.MULTIPE, newDegreeTypeSet()),
     CODE_97(97, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)),
     CODE_98(98, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));

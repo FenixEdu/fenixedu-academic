@@ -276,7 +276,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
 	    if (executionDegree != null) {
 		infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear()
-			.readExecutionPeriodForSemester(1));
+			.getExecutionSemesterFor(1));
 		request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 		escolherContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
 		RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);

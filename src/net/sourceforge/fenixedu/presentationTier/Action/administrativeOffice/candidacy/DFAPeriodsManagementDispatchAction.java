@@ -29,7 +29,7 @@ public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final List<ExecutionDegree> executionDegrees = getExecutionYear(request, (DynaActionForm) form).getExecutionDegreesFor(
-		DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_PHD_PROGRAM);
+		DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
 	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 	request.setAttribute("executionDegrees", executionDegrees);
 

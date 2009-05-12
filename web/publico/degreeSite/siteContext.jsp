@@ -47,7 +47,12 @@
 
 <!-- COURSE NAME -->
 <h1 class="mbottom15">
-	<bean:write name="degree" property="presentationName"/>
+	<logic:notEmpty name="degree" property="phdProgram">
+		<bean:write name="degree" property="phdProgram.presentationName"/>
+	</logic:notEmpty>
+	<logic:empty name="degree" property="phdProgram">
+		<bean:write name="degree" property="presentationName"/>
+	</logic:empty>
 </h1>
 
 <bean:define id="site" name="degree" property="site" toScope="request"/>

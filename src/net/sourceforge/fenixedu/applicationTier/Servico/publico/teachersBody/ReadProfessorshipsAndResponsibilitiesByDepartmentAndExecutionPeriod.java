@@ -35,7 +35,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 	    executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 	}
 
-	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
+	final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
 	if (semester.intValue() != 0 && executionSemester == null) {
 	    throw new FenixServiceException("error.noExecutionPeriod");
 	}

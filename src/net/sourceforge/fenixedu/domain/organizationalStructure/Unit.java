@@ -845,7 +845,7 @@ public class Unit extends Unit_Base {
 	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
 		new YearMonthDay(), null, null, null, null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit, AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+		.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
 	return noOfficialExternalInstitutionUnit;
     }

@@ -97,8 +97,8 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	ExecutionYear fromExecutionYear = rootDomainObject.readExecutionYearByOID(fromExecutionYearID);
 	ExecutionYear untilExecutionYear = rootDomainObject.readExecutionYearByOID(untilExecutionYearID);
 
-	ExecutionSemester fromExecutionPeriod = fromExecutionYear.readExecutionPeriodForSemester(1);
-	ExecutionSemester untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
+	ExecutionSemester fromExecutionPeriod = fromExecutionYear.getExecutionSemesterFor(1);
+	ExecutionSemester untilExecutionPeriod = untilExecutionYear.getExecutionSemesterFor(2);
 
 	if (!validExecutionPeriodsChoice(fromExecutionPeriod, untilExecutionPeriod)) {
 	    throw new InvalidPeriodException();
@@ -382,10 +382,10 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 		ExecutionSemester.readStartExecutionSemesterForCredits().getExecutionYear())) {
 	    fromExecutionPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
 	} else {
-	    fromExecutionPeriod = fromExecutionYear.getPreviousExecutionYear().readExecutionPeriodForSemester(1);
+	    fromExecutionPeriod = fromExecutionYear.getPreviousExecutionYear().getExecutionSemesterFor(1);
 	}
 
-	ExecutionSemester untilExecutionPeriod = untilExecutionYear.readExecutionPeriodForSemester(2);
+	ExecutionSemester untilExecutionPeriod = untilExecutionYear.getExecutionSemesterFor(2);
 
 	if (!validExecutionPeriodsChoice(fromExecutionPeriod, untilExecutionPeriod)) {
 	    throw new InvalidPeriodException();

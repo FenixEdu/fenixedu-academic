@@ -52,7 +52,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 
     private static UniversityUnit createNewUnit(Unit parentUnit, UniversityUnit universityUnit) {
 	universityUnit.addParentUnit(parentUnit, AccountabilityType
-		.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
+		.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 
 	checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(universityUnit);
 	return universityUnit;

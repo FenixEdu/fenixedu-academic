@@ -128,7 +128,7 @@ public class Invitation extends Invitation_Base {
     }
 
     public static AccountabilityType getInvitationAccountabilityType() {
-	return AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.INVITATION);
+	return AccountabilityType.readByType(AccountabilityTypeEnum.INVITATION);
     }
 
     public static int nextUserIDForInvitedPerson() {

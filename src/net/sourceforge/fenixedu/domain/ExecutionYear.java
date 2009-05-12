@@ -152,7 +152,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return executionDegrees;
     }
 
-    public ExecutionSemester readExecutionPeriodForSemester(final Integer semester) {
+    public ExecutionSemester getExecutionSemesterFor(final Integer semester) {
 	for (final ExecutionSemester executionSemester : getExecutionPeriods()) {
 	    if (executionSemester.isFor(semester)) {
 		return executionSemester;

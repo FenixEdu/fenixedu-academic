@@ -28,7 +28,12 @@
 
 		<tr>
 		   <td>
-				<bean:write name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.presentationName" />
+				<logic:notEmpty name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.phdProgram">
+					<bean:write name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.phdProgram.presentationName"/>
+				</logic:notEmpty>
+				<logic:empty name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.phdProgram">
+					<bean:write name="infoDegreeCurricularPlan" property="degreeCurricularPlan.degree.presentationName"/>
+				</logic:empty>
 		   </td>
 		   <td class="acenter">
 				<html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>

@@ -99,8 +99,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 		    : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST;
-	case BOLONHA_PHD_PROGRAM:
-	    return EventType.BOLONHA_PHD_PROGRAM_DIPLOMA_REQUEST;
 	default:
 	    throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
 	}
@@ -145,8 +143,8 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 	}
     }
 
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(new DegreeType[] { DegreeType.BOLONHA_PHD_PROGRAM,
-	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA,
+	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();

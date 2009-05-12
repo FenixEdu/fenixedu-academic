@@ -19,7 +19,7 @@ public abstract class ResearchContract extends ResearchContract_Base {
 
 	super.init(person, beginDate, endDate, unit);
 	setExternalContract(isExternalContract);
-	setAccountabilityType(AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT));
+	setAccountabilityType(AccountabilityType.readByType(AccountabilityTypeEnum.RESEARCH_CONTRACT));
     }
 
     public static ResearchContract createResearchContract(ResearchContractType contractType, Person person,

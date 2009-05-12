@@ -620,14 +620,14 @@
 			validate="true">
     </action>
      	      
-     <!-- For degreesÂ´s Site-->
+     <!-- For degrees Site-->
     <action path="/showDegrees" 
      		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" 
      		parameter="method"
      		>
 	     <forward  name="showDegrees" path="showDegrees"/>  		  
      </action>	 
-      <!-- For degreesÂ´s Site-->
+      <!-- For degrees Site-->
     <action path="/showDegreesNew" 
      		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreesAction" 
      		parameter="method"

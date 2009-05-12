@@ -127,8 +127,12 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return multiLanguageString;
     }
 
+    public MultiLanguageString getNameI18N(final ExecutionYear executionYear) {
+	return getNameI18N((executionYear == null) ? null : executionYear.getLastExecutionPeriod());
+    }
+
     public MultiLanguageString getNameI18N() {
-	return getNameI18N(null);
+	return getNameI18N((ExecutionSemester) null);
     }
 
     protected String getName(final ExecutionSemester executionSemester) {

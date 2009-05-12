@@ -153,7 +153,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
 		if (executionDegree != null) {
 		    infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionDegree.getExecutionYear()
-			    .readExecutionPeriodForSemester(1));
+			    .getExecutionSemesterFor(1));
 		    request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 		    chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
 		    RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);

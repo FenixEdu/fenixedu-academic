@@ -49,6 +49,8 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -721,7 +723,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	populateCurriculum(curriculumFactoryEditCurriculum, curriculum);
 	return curriculumFactoryEditCurriculum;
     }
-    
+
     private static void populateCurriculum(final CurriculumFactoryEditCurriculum curriculumFactoryEditCurriculum,
 	    final Curriculum curriculum) {
 	if (curriculum != null) {
@@ -950,8 +952,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-	return getAutonomousWorkHours((CurricularPeriod) null, executionYear == null ? null : executionYear
-		.getFirstExecutionPeriod());
+	return isBolonhaDegree() && hasCompetenceCourse() ? getCompetenceCourse().getAutonomousWorkHours(
+		curricularPeriod.getChildOrder(), executionYear) : 0d;
     }
 
     final public Double getAutonomousWorkHours(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
@@ -1524,6 +1526,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getRegime() != null;
     }
 
+    public boolean hasRegime(final ExecutionYear executionYear) {
+	return getRegime(executionYear) != null;
+    }
+
     /**
      * Maintened for legacy code compatibility purposes only. Makes no sense to
      * check an Enrolment concept in a CurricularCourse.
@@ -1570,6 +1576,13 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    return getRegimeType() == RegimeType.ANUAL;
 	}
 	return hasCompetenceCourse() && getCompetenceCourse().isAnual(executionYear);
+    }
+
+    public boolean isSemestrial(final ExecutionYear executionYear) {
+	if (!isBolonhaDegree()) {
+	    return getRegimeType() == RegimeType.SEMESTRIAL;
+	}
+	return hasCompetenceCourse() && getCompetenceCourse().isSemestrial(executionYear);
     }
 
     public boolean isEquivalent(CurricularCourse oldCurricularCourse) {

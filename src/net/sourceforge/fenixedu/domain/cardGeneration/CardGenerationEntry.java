@@ -179,7 +179,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    return "MESTR INTEGRADO  ";
 	}
-	if (degreeType == DegreeType.BOLONHA_PHD_PROGRAM) {
+	if (degreeType == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
 	    return "PROGRAMA DOUTORAL";
 	}
 	if (degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
@@ -212,7 +212,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
 	    return "MESTR INTEGR";
 	}
-	if (degreeType == DegreeType.BOLONHA_PHD_PROGRAM) {
+	if (degreeType == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
 	    return "PRG DOUTORAL";
 	}
 	if (degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
@@ -257,7 +257,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return Category.valueOf(code);
     }
 
-    @Service 
+ 
     public void delete() {
 	removeCardGenerationBatch();
 	removePerson();

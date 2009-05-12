@@ -28,12 +28,6 @@
 </schema>
 <schema name="candidacy.choose.executionDegree.toCreate"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean" bundle="ADMIN_OFFICE_RESOURCES">
-	<!-- <slot name="degreeType" key="label.degreeType" layout="radio-postback"  
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="includedValues" value="BOLONHA_ADVANCED_FORMATION_DIPLOMA, BOLONHA_PHD_PROGRAM"/>
-		<property name="destination" value="degreeTypePostback"/>
-		<property name="classes" value="liinline, nobullet"/>
-	</slot> -->
 	<slot name="degree" key="label.degree" 
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

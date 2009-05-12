@@ -20,7 +20,12 @@
 
 <!-- COURSE NAME -->
 <h1>
-	<bean:write name="degree" property="presentationName"/>
+	<logic:notEmpty name="degree" property="phdProgram">
+		<bean:write name="degree" property="phdProgram.presentationName"/>
+	</logic:notEmpty>
+	<logic:empty name="degree" property="phdProgram">
+		<bean:write name="degree" property="presentationName"/>
+	</logic:empty>
 </h1>
 
 <!-- PROFESSIONAL STATUS SITE -->

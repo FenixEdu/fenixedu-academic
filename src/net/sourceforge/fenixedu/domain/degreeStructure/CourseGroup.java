@@ -733,6 +733,15 @@ public class CourseGroup extends CourseGroup_Base {
 	return false;
     }
 
+    public boolean hasAnyChildContextWithCurricularCourse() {
+	for (final Context context : getChildContextsSet()) {
+	    if (context.getChildDegreeModule().isCurricularCourse()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     @Override
     public boolean isCourseGroup() {
 	return true;

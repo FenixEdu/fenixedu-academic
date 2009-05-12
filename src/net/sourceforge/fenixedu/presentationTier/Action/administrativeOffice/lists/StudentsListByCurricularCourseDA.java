@@ -107,7 +107,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	    final Integer semester) {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
-	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
+	final ExecutionSemester executionSemester = executionYear.getExecutionSemesterFor(semester);
 	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester)) {
 	    result.add(enrolment);
 	}

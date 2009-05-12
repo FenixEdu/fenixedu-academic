@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 
-public class BolonhaAdvancedFormationDiplomaRequestEvent extends BolonhaPhdProgramDiplomaRequestEvent_Base {
+public class BolonhaAdvancedFormationDiplomaRequestEvent extends BolonhaAdvancedFormationDiplomaRequestEvent_Base {
 
     protected BolonhaAdvancedFormationDiplomaRequestEvent() {
 	super();

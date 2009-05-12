@@ -34,7 +34,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 	    professorships = Professorship.readByDegreeCurricularPlanAndExecutionYear(executionDegree.getDegreeCurricularPlan(),
 		    executionDegree.getExecutionYear());
 	else {
-	    ExecutionSemester executionSemester = executionDegree.getExecutionYear().readExecutionPeriodForSemester(semester);
+	    ExecutionSemester executionSemester = executionDegree.getExecutionYear().getExecutionSemesterFor(semester);
 	    professorships = Professorship.readByDegreeCurricularPlanAndExecutionPeriod(
 		    executionDegree.getDegreeCurricularPlan(), executionSemester);
 	}

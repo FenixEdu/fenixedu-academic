@@ -135,7 +135,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 		if (studentCurricularPlan.isActive()) {
 		    if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
 			    || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
-			    || degreeType == DegreeType.BOLONHA_PHD_PROGRAM) {
+			    || degreeType == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
 			studentCurricularPlans.add(studentCurricularPlan);
 		    } else {
 			final RegistrationState registrationState = registration.getActiveState();

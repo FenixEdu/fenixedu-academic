@@ -335,8 +335,8 @@ public class Student extends Student_Base {
 	    return DegreeType.BOLONHA_SPECIALIZATION_DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA))
 	    return DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
-	if (isStudentOfDegreeType(DegreeType.BOLONHA_PHD_PROGRAM))
-	    return DegreeType.BOLONHA_PHD_PROGRAM;
+	if (isStudentOfDegreeType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))
+	    return DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_MASTER_DEGREE))
 	    return DegreeType.BOLONHA_MASTER_DEGREE;
 	if (isStudentOfDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))

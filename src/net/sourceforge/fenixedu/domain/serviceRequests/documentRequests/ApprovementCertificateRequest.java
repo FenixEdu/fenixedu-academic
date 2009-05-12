@@ -61,7 +61,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
-	return getRegistration().getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
+	return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
     }
 
     private boolean isEmployee() {

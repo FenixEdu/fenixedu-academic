@@ -17,9 +17,7 @@
 </div>
 
 <!-- COURSE NAME -->
-<h1>
-	<bean:write name="degree" property="presentationName"/>
-</h1>
+<h1>	<logic:notEmpty name="degree" property="phdProgram">		<bean:write name="degree" property="phdProgram.presentationName"/>	</logic:notEmpty>	<logic:empty name="degree" property="phdProgram">		<bean:write name="degree" property="presentationName"/>	</logic:empty></h1>
 
 <logic:notPresent name="infoDegreeCurricularPlan" >
 	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList"/></em></p>

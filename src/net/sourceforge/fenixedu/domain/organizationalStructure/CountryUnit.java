@@ -33,7 +33,7 @@ public class CountryUnit extends CountryUnit_Base {
 	CountryUnit countryUnit = new CountryUnit();
 	countryUnit.init(countryName, costCenterCode, countryAcronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
-	countryUnit.addParentUnit(parentUnit, AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum.GEOGRAPHIC));
+	countryUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 
 	checkIfAlreadyExistsOneCountryWithSameAcronymAndName(countryUnit);
 

@@ -35,7 +35,12 @@
 
 <!-- COURSE NAME -->
 <h1>
-	<bean:write name="degree" property="presentationName"/>
+	<logic:notEmpty name="degree" property="phdProgram">
+		<bean:write name="degree" property="phdProgram.presentationName"/>
+	</logic:notEmpty>
+	<logic:empty name="degree" property="phdProgram">
+		<bean:write name="degree" property="presentationName"/>
+	</logic:empty>
 </h1>
 
 <h2 class="greytxt mbottom2"><bean:message key="public.degree.information.label.thesis"  bundle="PUBLIC_DEGREE_INFORMATION" /></h2>

@@ -31,7 +31,7 @@ public class AccountabilityType extends AccountabilityType_Base {
 	super.setType(type);
     }
 
-    public static AccountabilityType readAccountabilityTypeByType(AccountabilityTypeEnum typeEnum) {
+    public static AccountabilityType readByType(AccountabilityTypeEnum typeEnum) {
 	List<AccountabilityType> allAccountabilityTypes = RootDomainObject.getInstance().getAccountabilityTypes();
 	for (AccountabilityType accountabilityType : allAccountabilityTypes) {
 	    if (accountabilityType.getType().equals(typeEnum)) {

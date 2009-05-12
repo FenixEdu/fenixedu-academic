@@ -1724,9 +1724,6 @@ class DomainObject {
 	
 					class accounting.events.serviceRequests.BolonhaAdvancedFormationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
-	
-					class accounting.events.serviceRequests.BolonhaPhdProgramDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
-				}
 				
 				class accounting.events.serviceRequests.StudentReingressionRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
@@ -1768,10 +1765,6 @@ class DomainObject {
 				class accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 
-		class accounting.events.gratuity.PhDGratuityEvent extends accounting.events.gratuity.GratuityEvent {
-			YearMonthDay creationDate;
-		}
-				
 		class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
 			Integer numberOfDelayDays;
 		}
@@ -1923,12 +1916,6 @@ class DomainObject {
 		DateTime startDate;
 	}
 
-		class accounting.postingRules.PhDGratuityPR extends accounting.PostingRule {
-			Money phdGratuityAmount;
-			Money initialPayment;
-			BigDecimal penaltyPercentage;
-		}
-		
 		class accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR extends accounting.PostingRule {
 		}
 
@@ -6267,15 +6254,15 @@ class internship.InternshipCandidacy extends DomainObject {
 }
 
 class QueueJob extends DomainObject {
-               Boolean done;
-               Integer failedCounter;
-               DateTime requestDate;
-               DateTime jobStartTime;
-               DateTime jobEndTime;
+	Boolean done;
+	Integer failedCounter;
+	DateTime requestDate;
+	DateTime jobStartTime;
+	DateTime jobEndTime;
 }
 
 class QueueJobWithFile extends QueueJob {
-       String contentType;
+	String contentType;
 }
 
 class QueueJobResultFile extends documents.GeneratedDocument{}
@@ -6365,13 +6352,12 @@ class messaging.AnnouncementCategory extends DomainObject {
 class phd.PhdProgram extends DomainObject {
 	DateTime whenCreated;
 	String creator;
+	
+	MultiLanguageString name;
+	String acronym;
 }
 
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
-		
-}
-
-class phd.PhdUnitSite extends UnitSite {
 		
 }
 
@@ -6419,9 +6405,7 @@ relation PhdProgramPhdProgramUnit {
 }
 
 relation PhdProgramDegree {
-	phd.PhdProgram playsRole phdPrograms {
-		multiplicity *;
-	}
+	phd.PhdProgram playsRole phdProgram;
 	Degree playsRole degree;
 }
 

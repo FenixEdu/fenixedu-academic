@@ -615,8 +615,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getAutonomousWorkHours(order, (ExecutionSemester) null);
     }
 
-    final public Double getAutonomousWorkHours(final Integer order, final ExecutionYear executionYear) {
-	return getAutonomousWorkHours(order, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+    final public Double getAutonomousWorkHours(final Integer order, final ExecutionYear year) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(year);
+	return (information != null) ? information.getAutonomousWorkHours(order) : 0.0;
     }
 
     public Double getAutonomousWorkHours(final Integer order, final ExecutionSemester period) {
@@ -898,6 +899,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return getRegime(executionYear) == RegimeType.ANUAL;
     }
 
+    public boolean isSemestrial(final ExecutionYear executionYear) {
+	return getRegime(executionYear) == RegimeType.SEMESTRIAL;
+    }
+
     public boolean isApproved() {
 	return getCurricularStage() == CurricularStage.APPROVED;
     }
@@ -994,6 +999,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	super.addCompetenceCourseInformationChangeRequests(request);
     }
 
+    public boolean hasOneCourseLoad(final ExecutionYear executionYear) {
+	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(executionYear);
+	return information != null && information.getCompetenceCourseLoadsCount() == 1;
+    }
+
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
@@ -1036,4 +1046,5 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	}
 	return result;
     }
+
 }

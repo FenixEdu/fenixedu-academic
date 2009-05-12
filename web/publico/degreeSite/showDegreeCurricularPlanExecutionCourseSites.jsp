@@ -21,7 +21,12 @@
 
 <!-- COURSE NAME -->
 <h1>
-	<bean:write name="infoDegree" property="degree.presentationName"/>
+	<logic:notEmpty name="degree" property="phdProgram">
+		<bean:write name="degree" property="phdProgram.presentationName"/>
+	</logic:notEmpty>
+	<logic:empty name="degree" property="phdProgram">
+		<bean:write name="degree" property="presentationName"/>
+	</logic:empty>
 </h1>
 
 <em><span class="error0"><!-- Error messages go here --><html:errors/></span></em>

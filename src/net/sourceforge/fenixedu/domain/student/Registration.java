@@ -2753,8 +2753,8 @@ public class Registration extends Registration_Base {
 	return (degreeType == DegreeType.MASTER_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE);
     }
 
-    final public boolean isPhD() {
-	return getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM;
+    final public boolean isDEA() {
+	return getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
     }
 
     final public EnrolmentModel getEnrolmentModelForCurrentExecutionYear() {
@@ -3613,7 +3613,7 @@ public class Registration extends Registration_Base {
 	if (getStartExecutionYear() == executionYear) {
 	    return getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
 
-	} else if (getDegreeType() == DegreeType.BOLONHA_PHD_PROGRAM) {
+	} else if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
 	    return startDate.getYear() == executionYear.getBeginCivilYear();
 
 	} else if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE

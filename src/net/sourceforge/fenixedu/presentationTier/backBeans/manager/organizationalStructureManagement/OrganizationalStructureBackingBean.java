@@ -440,7 +440,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 		    selectItem.setLabel("(MI) " + degree.getNome());
 		} else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
 		    selectItem.setLabel("(DFA) " + degree.getNome());
-		} else if (degree.getDegreeType().equals(DegreeType.BOLONHA_PHD_PROGRAM)) {
+		} else if (degree.getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
 		    selectItem.setLabel("(DEA) " + degree.getNome());
 		} else if (degree.getDegreeType().equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)) {
 		    selectItem.setLabel("(SD) " + degree.getNome());
@@ -595,7 +595,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    return "";
 	}
 
-	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum
+	AccountabilityType accountabilityType = AccountabilityType.readByType(AccountabilityTypeEnum
 		.valueOf(getUnitRelationTypeValue()));
 
 	CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
@@ -666,7 +666,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    return "";
 	}
 
-	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(AccountabilityTypeEnum
+	AccountabilityType accountabilityType = AccountabilityType.readByType(AccountabilityTypeEnum
 		.valueOf(getUnitRelationTypeValue()));
 
 	try {

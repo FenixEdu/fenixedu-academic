@@ -43,7 +43,7 @@ public class ExecutionCoursePathProcessor extends AbstractPathProcessor {
 	    ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(pathElements[1].replace('-', '/'));
 	    if (executionYear != null) {
 		if (pathElements.length > 2 && pathElements[2].matches("[1-2]-semestre")) {
-		    return executionYear.readExecutionPeriodForSemester(Integer
+		    return executionYear.getExecutionSemesterFor(Integer
 			    .valueOf(String.valueOf(pathElements[2].charAt(0))));
 		}
 		return executionYear;

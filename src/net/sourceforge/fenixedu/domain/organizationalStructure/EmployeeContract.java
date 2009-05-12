@@ -12,7 +12,7 @@ public class EmployeeContract extends EmployeeContract_Base {
 	    AccountabilityTypeEnum contractType, Boolean teacherContract) {
 	super();
 	super.init(person, beginDate, endDate, unit);
-	AccountabilityType accountabilityType = AccountabilityType.readAccountabilityTypeByType(contractType);
+	AccountabilityType accountabilityType = AccountabilityType.readByType(contractType);
 	setAccountabilityType(accountabilityType);
 	setTeacherContract(teacherContract);
     }

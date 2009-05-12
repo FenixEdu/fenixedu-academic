@@ -88,7 +88,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 		.getExecutionDegreesByType(DegreeType.MASTER_DEGREE);
 	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));
-	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_PHD_PROGRAM));
+	executionDegrees.addAll(executionYear.getExecutionDegreesByType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA));
 
 	Iterator<ExecutionDegree> orderedExecutionDegreesIter = new OrderedIterator<ExecutionDegree>(executionDegrees.iterator(),
 		new BeanComparator("degreeCurricularPlan.name"));

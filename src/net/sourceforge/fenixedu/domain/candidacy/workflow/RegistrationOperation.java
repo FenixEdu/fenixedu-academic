@@ -94,7 +94,7 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private ExecutionSemester getExecutionPeriod() {
-	return getExecutionYear().readExecutionPeriodForSemester(1);
+	return getExecutionYear().getExecutionSemesterFor(1);
     }
 
     protected Registration createRegistration() {

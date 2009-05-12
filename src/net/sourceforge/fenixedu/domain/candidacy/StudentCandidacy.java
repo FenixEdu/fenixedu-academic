@@ -99,8 +99,9 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return new DFACandidacy(studentPerson, executionDegree);
 
-	case BOLONHA_PHD_PROGRAM:
-	    // TODO: REMOVE THIS
+	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+	    // TODO: remove this after PHD Program candidacy is completed and
+	    // data migrated
 	    return new PHDProgramCandidacy(studentPerson, executionDegree);
 
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:

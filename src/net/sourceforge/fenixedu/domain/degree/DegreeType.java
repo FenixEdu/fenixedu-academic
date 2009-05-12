@@ -349,9 +349,9 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_PHD_PROGRAM(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-	    false, // canCreateStudentOnlyWithCandidacy
-	    true // qualifiesForGraduateTitle
+    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
+	    true, // canCreateStudentOnlyWithCandidacy
+	    false // qualifiesForGraduateTitle
     ) {
 
 	@Override
@@ -408,8 +408,8 @@ public enum DegreeType {
 
     },
 
-    BOLONHA_ADVANCED_FORMATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.YEAR, true, // canCreateStudent
-	    true, // canCreateStudentOnlyWithCandidacy
+    BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA(GradeScale.TYPE20, AcademicPeriod.TWO_YEAR, true, // canCreateStudent
+	    false, // canCreateStudentOnlyWithCandidacy
 	    false // qualifiesForGraduateTitle
     ) {
 
@@ -714,8 +714,7 @@ public enum DegreeType {
 	return canCreateStudentOnlyWithCandidacy;
     }
 
-    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused")
-    final CycleType cycleType) {
+    public boolean canRemoveEnrolmentIn(@SuppressWarnings("unused") final CycleType cycleType) {
 	return false;
     }
 
@@ -808,7 +807,7 @@ public enum DegreeType {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
 	switch (this) {
-	case BOLONHA_PHD_PROGRAM:
+	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
 	    return result.toString();
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    result.append(bundle.getString("degree.DegreeType.prefix.one")).append(StringUtils.SINGLE_SPACE);

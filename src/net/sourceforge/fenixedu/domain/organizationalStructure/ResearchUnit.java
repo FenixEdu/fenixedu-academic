@@ -92,7 +92,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     public Collection<Person> getActivePeopleForContract(Class clazz) {
-	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+	AccountabilityType accountabilityType = Function.readByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	YearMonthDay today = new YearMonthDay();
 	List<Person> people = new ArrayList<Person>();
 	for (Accountability accountability : getChildsSet()) {
@@ -106,8 +106,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     public Collection<Accountability> getActiveResearchContracts(Class clazz) {
-	;
-	AccountabilityType accountabilityType = Function.readAccountabilityTypeByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+	AccountabilityType accountabilityType = Function.readByType(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	YearMonthDay today = new YearMonthDay();
 	List<Accountability> accountabilities = new ArrayList<Accountability>();
 	for (Accountability accountability : getChildsSet()) {

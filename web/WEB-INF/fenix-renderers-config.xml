@@ -1131,4 +1131,6 @@ Documentation:
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="net.sourceforge.fenixedu.presentationTier.renderers.SearchExecutionCourseAttendsRenderer" />
 	<renderer type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="execution-course-attends-spreadsheet" class="net.sourceforge.fenixedu.presentationTier.renderers.ExecutionCourseAttendsSpreadSheetRenderer" />
 	
+	<renderer mode="output" type="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" class="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRenderer"/>
+	
 </renderers-config>
