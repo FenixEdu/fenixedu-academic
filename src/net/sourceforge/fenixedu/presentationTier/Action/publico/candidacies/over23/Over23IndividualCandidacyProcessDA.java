@@ -433,6 +433,11 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     private void saveDocumentFiles(Over23IndividualCandidacyProcessBean bean) throws IOException {
 	String documentIdNumber = bean.getPersonBean().getDocumentIdNumber();
 	
+	if(bean.getCurriculumVitaeDocument() != null) {
+	    IndividualCandidacyDocumentFile curriculumVitaeDocumentFile = createIndividualCandidacyDocumentFile(bean.getCurriculumVitaeDocument(), documentIdNumber);
+	    bean.getCurriculumVitaeDocument().setDocumentFile(curriculumVitaeDocumentFile);	    
+	}
+	
 	if(bean.getDocumentIdentificationDocument() != null) {
 	    IndividualCandidacyDocumentFile documentIdentificationDocumentFile = createIndividualCandidacyDocumentFile(bean.getDocumentIdentificationDocument(), documentIdNumber);
 	    bean.getDocumentIdentificationDocument().setDocumentFile(documentIdentificationDocumentFile);
