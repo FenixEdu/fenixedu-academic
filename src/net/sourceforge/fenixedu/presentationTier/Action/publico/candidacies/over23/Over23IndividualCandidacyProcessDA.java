@@ -463,6 +463,11 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    bean.getVatCatCopyDocument().setDocumentFile(vatDocumentFile);
 	}
 	
+	if(bean.getHandicapProofDocument() != null) {
+	    IndividualCandidacyDocumentFile handicapProofDocumentFile = createIndividualCandidacyDocumentFile(bean.getHandicapProofDocument(), documentIdNumber);
+	    bean.getHandicapProofDocument().setDocumentFile(handicapProofDocumentFile);	    
+	}
+	
 	for(CandidacyProcessDocumentUploadBean uploadBean : bean.getReportOrWorkDocumentList()) {
 	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
 	    uploadBean.setDocumentFile(documentFile);
