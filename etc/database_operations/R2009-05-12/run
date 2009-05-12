@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change DegreeType from PHD to DEA" changeDegreeTypeValue.sql
+execute "Remove unused phd information" removeUnusedPhdInformation.sql
+execute "Add new columns to PhdProgram" alterTablePhdProgram.sql
