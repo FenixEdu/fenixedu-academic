@@ -40,4 +40,6 @@ public abstract class ReplyTo extends ReplyTo_Base {
 
     public abstract String getReplyToAddress(final Person person);
 
+    public abstract String getReplyToAddress();
+
 }
