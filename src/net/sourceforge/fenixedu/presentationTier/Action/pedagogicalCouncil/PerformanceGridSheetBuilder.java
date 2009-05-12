@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import pt.utl.ist.fenix.tools.excel.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.excel.WorkbookBuilder;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceGridLine> {
@@ -140,5 +141,9 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
     @Override
     protected List<ColumnBuilder> getColumns() {
 	return columns;
+    }
+
+    protected void build(WorkbookBuilder book) {
+	
     }
 }
