@@ -15,7 +15,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import pt.utl.ist.fenix.tools.excel.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.excel.WorkbookBuilder;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceGridLine> {
@@ -24,9 +23,9 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
     List<ColumnBuilder> columns = new ArrayList<ColumnBuilder>();
 
     class YearColumnGroup extends ColumnGroup {
-	private int year;
-	private ExecutionYear monitoredYear;
-	private boolean tutorated;
+	private final int year;
+	private final ExecutionYear monitoredYear;
+	private final boolean tutorated;
 
 	public YearColumnGroup(int year, ExecutionYear monitoredYear, boolean tutorated, ColumnBuilder... columns) {
 	    super(columns);
@@ -36,16 +35,16 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
 	}
 
 	@Override
-	public void fillHeader(HSSFCell cell) {
-	    cell.setCellValue(year + "º Ano (" + (tutorated ? monitoredYear.getName() : "Anos Anteriores") + ")");
+	public void fillHeader(HSSFWorkbook book, HSSFCell cell) {
+	    setHeaderValue(book, cell, year + "º Ano (" + (tutorated ? monitoredYear.getName() : "Anos Anteriores") + ")");
 	}
     }
 
     class SemesterColumnBuilder extends ColumnBuilder {
-	private ExecutionYear monitoringYear;
-	private int year;
-	private int sem;
-	private boolean tutorated;
+	private final ExecutionYear monitoringYear;
+	private final int year;
+	private final int sem;
+	private final boolean tutorated;
 
 	public SemesterColumnBuilder(String headerKey, ResourceBundle headerBundle, ExecutionYear monitoringYear, int year,
 		int sem, boolean tutorated) {
@@ -57,13 +56,13 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
 	}
 
 	@Override
-	public void fillHeader(HSSFCell cell) {
-	    super.fillHeader(cell);
-	    cell.setCellValue(cell.getStringCellValue() + " (Ins/Ap/Re)");
+	public void fillHeader(HSSFWorkbook book, HSSFCell cell) {
+	    super.fillHeader(book, cell);
+	    setHeaderValue(book, cell, cell.getStringCellValue() + " (Ins/Ap/Re)");
 	}
 
 	@Override
-	public void fillCell(HSSFCell cell, PerformanceGridLine item) {
+	public void fillCell(HSSFWorkbook book, HSSFCell cell, PerformanceGridLine item) {
 	    PerformanceGridLineYearGroup yearEnrols = item.getStudentPerformanceByYear().get(year);
 	    List enrols;
 	    if (sem == 1) {
@@ -90,12 +89,12 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
 		    notEvaluated++;
 		}
 	    }
-	    setValue(cell, notEvaluated + "/" + approved + "/" + notApproved);
+	    setValue(book, cell, notEvaluated + "/" + approved + "/" + notApproved);
 	}
     }
 
-    public PerformanceGridSheetBuilder(HSSFWorkbook book, PerformanceGridTableDTO performanceGridTable) {
-	super(book);
+    public PerformanceGridSheetBuilder(PerformanceGridTableDTO performanceGridTable) {
+	super(performanceGridTable.getPerformanceGridTableLines());
 	columns.add(new PropertyColumnBuilder("label.studentNumber", bundle, "registration.number"));
 	columns.add(new PropertyColumnBuilder("label.name", bundle, "registration.person.name"));
 	columns.add(new NullSafePropertyColumnBuilder("label.entryPhase", bundle, "registration.entryPhase.entryPhase",
@@ -141,9 +140,5 @@ public class PerformanceGridSheetBuilder extends SpreadsheetBuilder<PerformanceG
     @Override
     protected List<ColumnBuilder> getColumns() {
 	return columns;
-    }
-
-    protected void build(WorkbookBuilder book) {
-	
     }
 }

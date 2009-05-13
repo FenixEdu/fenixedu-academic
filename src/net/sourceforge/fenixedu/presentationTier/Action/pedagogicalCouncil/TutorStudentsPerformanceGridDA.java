@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,15 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGrid
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsPerformanceGridDispatchAction;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -31,6 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.excel.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
 
 @Mapping(path = "/tutorStudentsPerformanceGrid", module = "pedagogicalCouncil")
 @Forwards( { @Forward(name = "searchTutors", path = "/pedagogicalCouncil/tutorship/showStudentsPerformanceGrid.jsp"),
@@ -64,16 +60,11 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
 	PerformanceGridTableDTO performanceGridTable = (PerformanceGridTableDTO) request.getAttribute("performanceGridTable");
 
-	HSSFWorkbook book = new HSSFWorkbook();
-	SpreadsheetBuilder<PerformanceGridLine> builder = new PerformanceGridSheetBuilder(book, performanceGridTable);
-	builder.build(person.getTeacher().getTeacherNumber() + "-students-performance", performanceGridTable
-		.getPerformanceGridTableLines());
+	SpreadsheetBuilder<PerformanceGridLine> builder = new PerformanceGridSheetBuilder(performanceGridTable);
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=" + person.getTeacher().getTeacherNumber()
 		+ "-students-performance.xls");
-	final ServletOutputStream writer = response.getOutputStream();
-	book.write(writer);
-	writer.flush();
+	builder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
 	response.flushBuffer();
 	return null;
     }
