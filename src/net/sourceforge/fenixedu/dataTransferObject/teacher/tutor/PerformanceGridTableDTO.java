@@ -106,6 +106,14 @@ public class PerformanceGridTableDTO extends DataTranferObject {
 	    this.approvedRatioBySemester = approvedRatioBySemester;
 	}
 
+	public Integer getApprovedRatioFirstSemester() {
+	    return approvedRatioBySemester.get(0);
+	}
+
+	public Integer getApprovedRatioSecondSemester() {
+	    return approvedRatioBySemester.get(1);
+	}
+
 	public Double getAritmeticAverage() {
 	    return aritmeticAverage;
 	}
