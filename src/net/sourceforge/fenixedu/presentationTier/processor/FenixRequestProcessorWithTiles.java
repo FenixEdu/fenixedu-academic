@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.processor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 
@@ -16,8 +15,6 @@ import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 public class FenixRequestProcessorWithTiles extends RenderersRequestProcessor {
 
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
-	HttpSession httpSession = request.getSession(false);
-	FenixRequestProcessor.setLocal(request, httpSession);
 	return true;
     }
 

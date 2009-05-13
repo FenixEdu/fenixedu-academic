@@ -20,6 +20,8 @@ import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 /**
  * @author Tânia Pousão
  * 
@@ -37,7 +39,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
 	    String degreeType = null;
 
 	    if (messageResources != null) {
-		final Locale locale = (Locale) request.getSession(false).getAttribute(Globals.LOCALE_KEY);
+		final Locale locale = Language.getLocale();
 		degreeType = messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan()
 			.getInfoDegree().getDegreeType().name());
 	    }

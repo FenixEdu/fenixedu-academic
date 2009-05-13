@@ -61,7 +61,7 @@ public class FenixFacesServlet implements Servlet {
 
     private void handleException(ServletRequest request, ServletResponse response, Exception e) {
 	HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-	httpServletRequest.getSession(false).setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
+	httpServletRequest.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
     }
 
     public String getServletInfo() {

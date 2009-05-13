@@ -914,17 +914,6 @@
 	</action>
 
 		<!-- =================== View Old Inquiries Teacher's Results ============== -->
-		<action path="/viewOldInquiriesTeachersResults"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries.ViewOldInquiriesTeachersResultsAction"
-			name = "viewOldInquiriesTeachersResultsForm"
-			scope="request"
-			input="/viewOldInquiriesTeachersResults.do?method=prepare&amp;page=0"
-			parameter="method"
-			>
-			<forward name="chooseExecutionPeriodAndCourse" path="inquiry-choose-execution-period-and-course"/>
-			<forward name="showOldInquiriesTeacherRes" path="show-old-inquiries-teacher-res"/>
-		</action>
-
 		<!-- Dispatch Action to print the list of all candidates -->
 		<action path="/printAllCandidatesList"
 		        input="/candidate/indexCandidate.jsp"

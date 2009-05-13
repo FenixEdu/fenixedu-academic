@@ -10,11 +10,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.struts.action.Action;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public abstract class NavigationAction extends Action {
     public static final String NAVIGATION_SHOW = "show";
 
     protected IUserView getUserView(HttpServletRequest request) {
-	return (IUserView) request.getSession().getAttribute("UserView");
+	return UserView.getUser();
+
     }
 
     protected Class getGivenType(HttpServletRequest request) throws ClassNotFoundException {
