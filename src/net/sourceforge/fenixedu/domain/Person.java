@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -3151,6 +3152,31 @@ public class Person extends Person_Base {
 	    }
 	}
 	return unavailablePeriodsForGivenYear;
+    }
+
+    public boolean hasAnyAdministrativeOfficeFeeAndInsuranceEventInDebt() {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean hasAnyPastAdministrativeOfficeFeeAndInsuranceEventInDebt() {
+	for (final Event event : getEventsByEventType(EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE)) {
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+
+	    if (administrativeOfficeFeeAndInsuranceEvent instanceof PastAdministrativeOfficeFeeAndInsuranceEvent) {
+		if (event.isInDebt()) {
+		    return true;
+		}
+	    }
+
+	}
+
+	return false;
     }
 
 }
