@@ -18,12 +18,13 @@ public class EmailAddressList implements Serializable {
 	final StringBuilder emailAddresses = new StringBuilder();
 	if (emailAddressCollection != null) {
 	    for (final String emailAddress : emailAddressCollection) {
-		final String emailAddressTrimmed = emailAddress.trim();
-		if (emailAddresses.length() > 0) {
-		    emailAddresses.append(", ");
+		if (emailAddress != null) {
+		    final String emailAddressTrimmed = emailAddress.trim();
+		    if (emailAddresses.length() > 0) {
+			emailAddresses.append(", ");
+		    }
+		    emailAddresses.append(emailAddressTrimmed);
 		}
-
-		emailAddresses.append(emailAddressTrimmed);
 	    }
 	}
 	this.emailAddresses = emailAddresses.length() == 0 ? null : emailAddresses.toString();
