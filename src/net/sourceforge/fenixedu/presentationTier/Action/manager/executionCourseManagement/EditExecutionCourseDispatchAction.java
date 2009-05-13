@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -83,7 +83,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    Collections.sort(infoExecutionPeriods, comparator);
 
 	    List executionPeriodLabels = buildLabelValueBeanForJsp(infoExecutionPeriods);
-	    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
+	    request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
 	}
 
 	return mapping.findForward("prepareEditECChooseExecutionPeriod");
@@ -128,7 +128,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	buildExecutionDegreeLabelValueBean(executionDegreeList, courses);
-	request.setAttribute(SessionConstants.DEGREES, courses);
+	request.setAttribute(PresentationConstants.DEGREES, courses);
 
 	return mapping.findForward("prepareEditECChooseExecDegreeAndCurYear");
     }
@@ -148,7 +148,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
     private void buildCurricularYearLabelValueBean(HttpServletRequest request) {
 	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
     }
 
     private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
@@ -193,7 +193,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	}
 
 	Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoExecutionCourses);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_LIST_KEY, infoExecutionCourses);
 
 	return mapping.findForward("prepareEditExecutionCourse");
     }
@@ -231,7 +231,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 	fillForm(form, infoExecutionCourse, request);
 
 	List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
@@ -278,7 +278,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    Collections.sort(infoExecutionCourse.getAssociatedInfoCurricularCourses(), new BeanComparator("name"));
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
 	return mapping.findForward("viewExecutionCourse");
     }

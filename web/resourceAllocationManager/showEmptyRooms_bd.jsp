@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -10,9 +10,9 @@
 		<td class="infoselected"><p>Crit&eacute;rios:</p>
 			<strong>
 <!--
-				<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="name" scope="request"/>
+				<bean:write name="<%=PresentationConstants.EXECUTION_PERIOD%>" property="name" scope="request"/>
 				-
-				<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="infoExecutionYear.year" scope="request"/>
+				<bean:write name="<%=PresentationConstants.EXECUTION_PERIOD%>" property="infoExecutionYear.year" scope="request"/>
 				<br/>
 -->
 				Entre <bean:write name="startDate" scope="request"/> e 

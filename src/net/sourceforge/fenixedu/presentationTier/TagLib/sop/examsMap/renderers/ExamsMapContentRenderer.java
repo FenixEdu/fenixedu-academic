@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.ExamsMapSlot;
 
@@ -65,10 +65,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			    + infoExecutionCourse.getSigla() + "&amp;ePName="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getName() + "&amp;eYName="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear() + "&amp;season="
-			    + infoExam.getSeason().getseason() + "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+			    + infoExam.getSeason().getseason() + "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-			    + SessionConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-			    + "&amp;" + SessionConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
+			    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
+			    + "&amp;" + PresentationConstants.EXECUTION_COURSE_OID + "=" + infoExecutionCourse.getIdInternal()
 			    + getCurricularYearsArgs() + "'>");
 
 		    if (isOnValidWeekDay) {
@@ -199,19 +199,19 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 	List curricularYears = examsMap.getCurricularYears();
 	for (int i = 0; i < curricularYears.size(); i++) {
 	    if (curricularYears.get(i).equals(new Integer(1))) {
-		result += "&amp;" + SessionConstants.CURRICULAR_YEARS_1 + "=1";
+		result += "&amp;" + PresentationConstants.CURRICULAR_YEARS_1 + "=1";
 	    }
 	    if (curricularYears.get(i).equals(new Integer(2))) {
-		result += "&amp;" + SessionConstants.CURRICULAR_YEARS_2 + "=2";
+		result += "&amp;" + PresentationConstants.CURRICULAR_YEARS_2 + "=2";
 	    }
 	    if (curricularYears.get(i).equals(new Integer(3))) {
-		result += "&amp;" + SessionConstants.CURRICULAR_YEARS_3 + "=3";
+		result += "&amp;" + PresentationConstants.CURRICULAR_YEARS_3 + "=3";
 	    }
 	    if (curricularYears.get(i).equals(new Integer(4))) {
-		result += "&amp;" + SessionConstants.CURRICULAR_YEARS_4 + "=4";
+		result += "&amp;" + PresentationConstants.CURRICULAR_YEARS_4 + "=4";
 	    }
 	    if (curricularYears.get(i).equals(new Integer(5))) {
-		result += "&amp;" + SessionConstants.CURRICULAR_YEARS_5 + "=5";
+		result += "&amp;" + PresentationConstants.CURRICULAR_YEARS_5 + "=5";
 	    }
 	}
 	return result;

@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -262,11 +262,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	sortExecutionDegrees(result);
 
-	request.setAttribute(SessionConstants.DEGREE_LIST, ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(result,
+	request.setAttribute(PresentationConstants.DEGREE_LIST, ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(result,
 		getResources(request, "ENUMERATION_RESOURCES"), request));
 
-	request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, getListOfChosenCurricularYears());
-	request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, getListOfChosenCurricularSemesters());
+	request.setAttribute(PresentationConstants.ENROLMENT_YEAR_LIST_KEY, getListOfChosenCurricularYears());
+	request.setAttribute(PresentationConstants.ENROLMENT_SEMESTER_LIST_KEY, getListOfChosenCurricularSemesters());
 
     }
 

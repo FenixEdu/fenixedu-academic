@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
         <h2><bean:message key="title.manage.schedule"/></h2>
         <span class="error"><!-- Error messages go here --><html:errors /></span>
         <html:form action="/escolherContextoForm">
 
-		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
         <table width="98%" border="0" cellpadding="0" cellspacing="0">

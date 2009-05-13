@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message key="title.search.rooms"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
@@ -12,10 +12,10 @@
 		<td class="infoop"><bean:message key="message.search.rooms" /></td>
 	</tr>
 </table>
-<logic:present name="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" scope="request">
+<logic:present name="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD%>" scope="request">
 
 	<html:form action="/prepareConsultRoomsNew.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 		
@@ -31,7 +31,7 @@
 			    				 onchange='this.form.submit();'>
 						<html:options property="value"
 							labelProperty="label" 
-							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
+							collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 					</html:select>
 					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 						<bean:message key="button.submit"/>
@@ -43,7 +43,7 @@
 	<br />
 </logic:present>
 <html:form action="/chooseRoomsFormNew" >
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>"  property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>"  property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 
     <table border="0" cellpadding="0" cellspacing="0">
         <tr>

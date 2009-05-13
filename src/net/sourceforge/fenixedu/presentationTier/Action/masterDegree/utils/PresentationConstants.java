@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils;
  * 
  */
 
-public abstract class SessionConstants {
+public abstract class PresentationConstants {
 
     //--------------------------------------------------------------------------
     // -----

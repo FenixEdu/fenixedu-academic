@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <em><bean:message key="title.resourceAllocationManager.management" /></em>
 <h2>Avaliações Escritas</h2>
@@ -18,7 +18,7 @@ execu&ccedil&atilde;o seleccionado.</p>
 
 <fr:form action="/mainExamsNew.do?method=choose">
 	<fr:edit schema="academicIntervalSelectionBean.choose"
-		name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>">
+		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
@@ -35,9 +35,9 @@ execu&ccedil&atilde;o seleccionado.</p>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
 		value="switchPublishedState" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	<html:hidden alt="<%=SessionConstants.ACADEMIC_INTERVAL%>"
-		property="<%=SessionConstants.ACADEMIC_INTERVAL%>"
-		value="<%=pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString()%>" />
+	<html:hidden alt="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
+		property="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
+		value="<%=pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>" />
 
 	<p><bean:message key="publish.exams.map" /> <html:submit bundle="HTMLALT_RESOURCES"
 		altKey="submit.submit" styleClass="inputbutton">

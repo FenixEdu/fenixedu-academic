@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message key="label.certificate.create" /></h2>
-<bean:define id="certificateList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
+<bean:define id="certificateList" name="<%= PresentationConstants.CERTIFICATE_LIST %>"/>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
    <table>
@@ -35,7 +35,7 @@
          <td>
        
             <html:select bundle="HTMLALT_RESOURCES" altKey="select.certificateList" property="certificateList" >
-                <html:options collection="<%= SessionConstants.CERTIFICATE_LIST %>" property="value" labelProperty="label"  />
+                <html:options collection="<%= PresentationConstants.CERTIFICATE_LIST %>" property="value" labelProperty="label"  />
              </html:select>       
         
          </td>
@@ -47,7 +47,7 @@
     	<tr>
          	<td><h2><bean:message key="label.masterDegree.administrativeOffice.destination"/><h2></td>
        	</tr>
-         	<logic:iterate id="item" name="<%= SessionConstants.DOCUMENT_REASON %>" >
+         	<logic:iterate id="item" name="<%= PresentationConstants.DOCUMENT_REASON %>" >
       	<tr> 
         	<td>        
        			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.destination" property="destination">

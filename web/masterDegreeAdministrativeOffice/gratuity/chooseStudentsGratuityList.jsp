@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 
@@ -58,7 +58,7 @@
 						<html:option value="all" key="label.masterDegree.gratuity.all">
 							<bean:message key="label.masterDegree.gratuity.all"/>
 						</html:option>
-						<html:optionsCollection name="<%=SessionConstants.DEGREES%>"/>
+						<html:optionsCollection name="<%=PresentationConstants.DEGREES%>"/>
 					</html:select>
 				</td>
 			</tr>

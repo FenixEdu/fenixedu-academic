@@ -2,17 +2,17 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEmployee" %>
 
-<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
-<bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" scope="request"/>
-<bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
-<bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
+<bean:define id="dissertationTitle" name="<%= PresentationConstants.DISSERTATION_TITLE %>" scope="request"/>
+<bean:define id="responsibleEmployee" name="<%= PresentationConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
+<bean:define id="lastModification" name="<%= PresentationConstants.LAST_MODIFICATION %>" scope="request"/>
 
 <h2 align="center">
 	<bean:message key="title.masterDegree.administrativeOffice.thesis.visualizeHistory"/> - 
@@ -64,11 +64,11 @@
 <table border="0" width="100%" cellspacing="3" cellpadding="10">
 
 	<!-- Guiders -->
-	<logic:present name="<%= SessionConstants.GUIDERS_LIST %>" scope="request">
+	<logic:present name="<%= PresentationConstants.GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.guiders"/></th>				
 		</tr>
-		<bean:define id="guidersList" name="<%= SessionConstants.GUIDERS_LIST %>" type="java.util.List"/>
+		<bean:define id="guidersList" name="<%= PresentationConstants.GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
 			<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
@@ -90,12 +90,12 @@
 	
 	<!-- External Guiders -->
 	
-	<logic:present name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
+	<logic:present name="<%= PresentationConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalGuiders"/></th>				
 		</tr>
 	
-		<bean:define id="externalGuidersList" name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" type="java.util.List"/>
+		<bean:define id="externalGuidersList" name="<%= PresentationConstants.EXTERNAL_GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
 			<td>&nbsp;</td>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
@@ -119,12 +119,12 @@
 	
 	<!-- Assistent Guiders -->
 	
-	<logic:present name="<%= SessionConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
+	<logic:present name="<%= PresentationConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.assistentGuiders"/></th>				
 		</tr>
 	
-		<bean:define id="assistentsGuidersList" name="<%= SessionConstants.ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
+		<bean:define id="assistentsGuidersList" name="<%= PresentationConstants.ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
@@ -148,12 +148,12 @@
 		<!-- External Assistent Guiders -->
 	
 			
-	<logic:present name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" scope="request">
+	<logic:present name="<%= PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" scope="request">
 	
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalAssistentGuiders"/></th>				
 		</tr>		
-		<bean:define id="externalAssistentsGuidersList" name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
+		<bean:define id="externalAssistentsGuidersList" name="<%= PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
 			<td>&nbsp;</td>	
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>

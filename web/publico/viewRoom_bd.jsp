@@ -4,7 +4,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoRoom" name="component" property="infoRoom" />
@@ -24,7 +24,7 @@
 		    <td nowrap="nowrap">
 		        <html:select bundle="HTMLALT_RESOURCES"  property="selectedExecutionPeriodID" size="1" onchange="this.form.submit();">
    					<html:options property="value" labelProperty="label"
-						collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
+						collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD %>" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
@@ -35,7 +35,7 @@
 		    <td nowrap="nowrap">
 		        <html:select bundle="HTMLALT_RESOURCES" property="indexWeek" size="1" onchange="this.form.submit();">
 	    			<html:options property="value" labelProperty="label" 
-						collection="<%= SessionConstants.LABELLIST_WEEKS%>" />
+						collection="<%= PresentationConstants.LABELLIST_WEEKS%>" />
 				</html:select>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>

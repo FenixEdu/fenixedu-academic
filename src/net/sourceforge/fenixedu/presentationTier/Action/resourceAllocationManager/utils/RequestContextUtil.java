@@ -17,20 +17,20 @@ public class RequestContextUtil {
 	Calendar examDateAndTime = Calendar.getInstance();
 	Long dateAndTime = null;
 	try {
-	    dateAndTime = new Long(request.getParameter(SessionConstants.EXAM_DATEANDTIME));
+	    dateAndTime = new Long(request.getParameter(PresentationConstants.EXAM_DATEANDTIME));
 	} catch (NumberFormatException ex) {
-	    examDateAndTime = (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
+	    examDateAndTime = (Calendar) request.getAttribute(PresentationConstants.EXAM_DATEANDTIME);
 	    if (examDateAndTime != null) {
-		request.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
+		request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, examDateAndTime);
 	    } else {
-		request.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
-		request.setAttribute(SessionConstants.EXAM_DATEANDTIME, null);
+		request.removeAttribute(PresentationConstants.EXAM_DATEANDTIME);
+		request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, null);
 	    }
 	}
 
 	if (dateAndTime != null) {
 	    examDateAndTime.setTimeInMillis(dateAndTime.longValue());
-	    request.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
+	    request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, examDateAndTime);
 	}
     }
 
@@ -48,10 +48,10 @@ public class RequestContextUtil {
 	calendar.set(Calendar.HOUR_OF_DAY, examDateAndTime.get(Calendar.HOUR_OF_DAY));
 	calendar.set(Calendar.MINUTE, examDateAndTime.get(Calendar.MINUTE));
 	calendar.set(Calendar.SECOND, examDateAndTime.get(Calendar.SECOND));
-	request.setAttribute(SessionConstants.EXAM_DATEANDTIME, calendar);
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, calendar);
     }
 
     public static Calendar getExamDateAndTimeContext(HttpServletRequest request) {
-	return (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
+	return (Calendar) request.getAttribute(PresentationConstants.EXAM_DATEANDTIME);
     }
 }

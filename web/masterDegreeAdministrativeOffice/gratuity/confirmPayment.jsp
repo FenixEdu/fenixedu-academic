@@ -2,18 +2,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue" %>
 	
-<bean:define id="title" name="<%= SessionConstants.PAGE_TITLE %>" scope="request" type="java.lang.String"/>
+<bean:define id="title" name="<%= PresentationConstants.PAGE_TITLE %>" scope="request" type="java.lang.String"/>
 	
 <h2 align="center"><bean:message key="<%= title %>"/></h2>
 <center>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br/><br/>
 	
-	<bean:define id="contributor" name="<%= SessionConstants.CONTRIBUTOR %>" scope="request"/>
-	<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+	<bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>" scope="request"/>
+	<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
 			
 	<html:form action="/payGratuity.do" >
 			
@@ -76,8 +76,8 @@
 			</tr>
 			
 			<!-- Gratuity Situation -->
-			<logic:present name="<%= SessionConstants.GRATUITY_SITUATION %>" scope="request">
-				<bean:define id="gratuitySituation" name="<%= SessionConstants.GRATUITY_SITUATION %>" scope="request"/>
+			<logic:present name="<%= PresentationConstants.GRATUITY_SITUATION %>" scope="request">
+				<bean:define id="gratuitySituation" name="<%= PresentationConstants.GRATUITY_SITUATION %>" scope="request"/>
 				<tr align="left">
 					<th><bean:message key="label.executionYear"/>: </th>
 					<td><bean:write name="gratuitySituation" property="infoGratuityValues.infoExecutionDegree.infoExecutionYear.year"/></td>
@@ -98,8 +98,8 @@
 				
 					
 				<!-- Insurance Value -->
-				<logic:present name="<%= SessionConstants.INSURANCE_VALUE_WITH_GRATUITY %>" scope="request">
-					<bean:define id="insuranceValueWithGratuity" name="<%= SessionConstants.INSURANCE_VALUE_WITH_GRATUITY %>" scope="request"/>
+				<logic:present name="<%= PresentationConstants.INSURANCE_VALUE_WITH_GRATUITY %>" scope="request">
+					<bean:define id="insuranceValueWithGratuity" name="<%= PresentationConstants.INSURANCE_VALUE_WITH_GRATUITY %>" scope="request"/>
 					<tr align="left"><td>&nbsp;</td></tr>
 					<tr align="left">
 						<th><bean:message key="label.masterDegree.gratuity.insuranceNotPayedValue"/>: </th>
@@ -117,8 +117,8 @@
 				
 			
 			<!-- Insurance Value -->
-			<logic:present name="<%= SessionConstants.INSURANCE_VALUE %>" scope="request">
-				<bean:define id="insuranceValue" name="<%= SessionConstants.INSURANCE_VALUE %>" scope="request"/>
+			<logic:present name="<%= PresentationConstants.INSURANCE_VALUE %>" scope="request">
+				<bean:define id="insuranceValue" name="<%= PresentationConstants.INSURANCE_VALUE %>" scope="request"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.insuranceExecutionYearId" property="insuranceExecutionYearId" />
 				<tr align="left">
 					<th><bean:message key="label.executionYear"/>: </th>

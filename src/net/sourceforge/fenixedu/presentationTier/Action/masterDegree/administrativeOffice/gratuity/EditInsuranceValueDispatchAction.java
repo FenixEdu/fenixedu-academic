@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -112,9 +112,9 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 	    editInsuranceForm.set("endDateYear", Data.OPTION_DEFAULT);
 	}
 
-	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_KEY, Data.getCustomYears(Integer.parseInt(executionYears[0]), Integer
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getCustomYears(Integer.parseInt(executionYears[0]), Integer
 		.parseInt(executionYears[1])));
 
 	return mapping.findForward("defineInsuranceValue");

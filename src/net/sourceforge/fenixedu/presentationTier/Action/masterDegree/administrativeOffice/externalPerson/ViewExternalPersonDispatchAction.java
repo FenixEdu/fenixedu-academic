@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,7 +44,7 @@ public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.EXTERNAL_PERSON, infoExternalPerson);
+	request.setAttribute(PresentationConstants.EXTERNAL_PERSON, infoExternalPerson);
 
 	return mapping.findForward("start");
 

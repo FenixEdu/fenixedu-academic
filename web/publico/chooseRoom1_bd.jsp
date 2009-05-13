@@ -4,18 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <logic:present name="publico.infoRooms" >
-<bean:define id="executionLabel" name="<%= SessionConstants.EXECUTION_PERIOD %>" scope="request" />
+<bean:define id="executionLabel" name="<%= PresentationConstants.EXECUTION_PERIOD %>" scope="request" />
   <h2><bean:message key="title.chooseRoom"/></h2>
   <br/>
   <h2><bean:write name="executionLabel" property="name"/> - <bean:write name="executionLabel"  property="infoExecutionYear.year" /></h2>
    <br/>
   <span class="error"><!-- Error messages go here --><html:errors /></span>	
 		<html:form action="/viewRoomNew.do">
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD %>" property="<%= SessionConstants.EXECUTION_PERIOD %>" value="<%=""+ pageContext.findAttribute("executionLabel") %>" />
+	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD %>" property="<%= PresentationConstants.EXECUTION_PERIOD %>" value="<%=""+ pageContext.findAttribute("executionLabel") %>" />
 	
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.name" name="roomForm" property="name"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.building" name="roomForm" property="building"/>

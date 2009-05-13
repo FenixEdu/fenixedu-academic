@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <logic:present name="infoDegreeCurricularPlan">
@@ -52,20 +52,20 @@
 	</h2>
 
 	<html:form action="/prepareConsultCurricularPlanNew.do" method="get" >
-		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" value="<%= pageContext.findAttribute("degreeCurricularPlanID").toString() %>" />	
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.index" property="index" value="<%= ""+ request.getAttribute("index")%>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="select"/>
-		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE%>" property="<%= SessionConstants.EXECUTION_DEGREE%>" value="<%= "" + request.getAttribute(SessionConstants.EXECUTION_DEGREE)%>"/>		
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE%>" property="<%= PresentationConstants.EXECUTION_DEGREE%>" value="<%= "" + request.getAttribute(PresentationConstants.EXECUTION_DEGREE)%>"/>		
 		
 		<table border="0" cellspacing="2" cellpadding="0">			
 			<tr>
 				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.executionYear"/>:</td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" property="indice" size="1" onchange="this.form.submit();">
-						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
+						<html:options property="value" labelProperty="label" collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 						<bean:define id="indiceID" name="chooseContextDegreeForm" property="indice"/>
 					</html:select>
 					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -290,7 +290,7 @@
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td class="<%= rowColor %>">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
-						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")%>" >
+						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")%>" >
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>

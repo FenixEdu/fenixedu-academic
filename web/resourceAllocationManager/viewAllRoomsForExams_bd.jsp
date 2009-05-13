@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 
-<logic:present name="<%= SessionConstants.INFO_EXAMS_MAP_LIST%>">
-	<logic:iterate id="infoExamsMap" name="<%= SessionConstants.INFO_EXAMS_MAP_LIST%>">
+<logic:present name="<%= PresentationConstants.INFO_EXAMS_MAP_LIST%>">
+	<logic:iterate id="infoExamsMap" name="<%= PresentationConstants.INFO_EXAMS_MAP_LIST%>">
 	<h2 class="break-before"><bean:message key="title.view.room"/></h2>
 	<br />
 			<table width="100%">
@@ -59,7 +59,7 @@
 		<app:generateExamsMap name="infoExamsMap" user="sop"/>
 	</logic:iterate>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_MAP_LIST%>">
+<logic:notPresent name="<%= PresentationConstants.INFO_EXAMS_MAP_LIST%>">
 	<h2><bean:message key="title.view.room"/></h2>
 	<br />
 	<table align="center">

@@ -2,21 +2,21 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 
 
-<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
 <bean:define id="scpID" name="studentCurricularPlan" property="idInternal" scope="request" />
-<bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
-<bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
-<bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
-<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
-	<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
+<bean:define id="attachedCopiesNumber" name="<%= PresentationConstants.ATTACHED_COPIES_NUMBER %>" />
+<bean:define id="responsibleEmployee" name="<%= PresentationConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
+<bean:define id="lastModification" name="<%= PresentationConstants.LAST_MODIFICATION %>" scope="request"/>
+<logic:present name="<%= PresentationConstants.PROOF_DATE %>" scope="request">
+	<bean:define id="proofDate" name="<%= PresentationConstants.PROOF_DATE %>" />
 </logic:present>
-<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
-	<bean:define id="thesisDeliveryDate" name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" />
+<logic:present name="<%= PresentationConstants.THESIS_DELIVERY_DATE %>" scope="request">
+	<bean:define id="thesisDeliveryDate" name="<%= PresentationConstants.THESIS_DELIVERY_DATE %>" />
 </logic:present>
 			
 <h2 align="center">
@@ -52,13 +52,13 @@
 		</tr>
 		
 		<!-- Proof Date -->
-		<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+		<logic:present name="<%= PresentationConstants.PROOF_DATE %>" scope="request">
 			<tr>
 				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 				<td><bean:write name="proofDate"/></td>
 			</tr>
 		</logic:present>
-		<logic:notPresent name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+		<logic:notPresent name="<%= PresentationConstants.PROOF_DATE %>" scope="request">
 			<tr>
 				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 				<td><bean:message key="message.masterDegree.administrativeOffice.proofDateNotDefined" /></td>
@@ -67,13 +67,13 @@
 		
 		
 		<!-- Thesis Delivery Date -->
-		<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+		<logic:present name="<%= PresentationConstants.THESIS_DELIVERY_DATE %>" scope="request">
 			<tr>
 				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 				<td><bean:write name="thesisDeliveryDate"/></td>
 			</tr>
 		</logic:present>
-		<logic:notPresent name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+		<logic:notPresent name="<%= PresentationConstants.THESIS_DELIVERY_DATE %>" scope="request">
 			<tr>
 				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 				<td><bean:message key="message.masterDegree.administrativeOffice.thesisDeliveryDateNotDefined" /></td>
@@ -87,7 +87,7 @@
 				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 			</th>
 			<td>
-				<bean:message name="<%= SessionConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES" />
+				<bean:message name="<%= PresentationConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES" />
 			</td>
 		</tr>
 					
@@ -105,11 +105,11 @@
 				
 		<!-- Juries -->
 	
-			<logic:present name="<%= SessionConstants.JURIES_LIST %>" scope="request">
+			<logic:present name="<%= PresentationConstants.JURIES_LIST %>" scope="request">
 				<tr>
 					<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
 				</tr>
-				<bean:define id="juriesList" name="<%= SessionConstants.JURIES_LIST %>" type="java.util.List"/>
+				<bean:define id="juriesList" name="<%= PresentationConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>				
@@ -127,11 +127,11 @@
 			
 			
 		<!-- External Juries -->
-		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" scope="request">
+		<logic:present name="<%= PresentationConstants.EXTERNAL_JURIES_LIST %>" scope="request">
 			<tr>
 				<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.externalJuries"/></th>				
 			</tr>
-			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
+			<bean:define id="externalJuriesList" name="<%= PresentationConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
 			<tr>
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/></th>				

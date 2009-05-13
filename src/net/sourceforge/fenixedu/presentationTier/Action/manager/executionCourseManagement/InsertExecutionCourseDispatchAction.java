@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -77,7 +77,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 		}
 	    }, executionPeriodLabels);
 
-	    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
+	    request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
 
 	    List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
 	    for (EntryPhase entryPhase : EntryPhase.getAll()) {

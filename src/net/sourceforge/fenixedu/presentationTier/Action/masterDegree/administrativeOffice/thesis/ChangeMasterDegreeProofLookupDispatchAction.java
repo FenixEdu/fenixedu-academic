@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionErrors;
@@ -56,8 +56,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -87,8 +87,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -106,7 +106,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	    HttpServletResponse response) throws FenixActionException {
 
 	// to display the external persons search form
-	request.setAttribute(SessionConstants.SEARCH_EXTERNAL_JURIES, new Boolean(true));
+	request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_JURIES, new Boolean(true));
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
@@ -114,8 +114,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -138,12 +138,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByName(form, request, "externalJuryName",
-		    SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS, actionErrors);
+		    PresentationConstants.EXTERNAL_JURIES_SEARCH_RESULTS, actionErrors);
 
 	} catch (Exception e1) {
 	    throw new FenixActionException(e1);
@@ -164,8 +164,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -195,8 +195,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", SessionConstants.EXTERNAL_JURIES_LIST,
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalJuriesIDs", PresentationConstants.EXTERNAL_JURIES_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -327,12 +327,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	// dissertation title
 	DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
 	String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, dissertationTitle);
 
 	// dates combo boxes options
-	request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.DAYS_LIST, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTHS_LIST, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_LIST, Data.getExpirationYears());
 
     }
 

@@ -3,13 +3,13 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
 <h2><bean:message key="label.candidate.applicationInfoSituation" /></h2>
     <table>
-    <bean:define id="applicationInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" />
+    <bean:define id="applicationInfo" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" />
         <logic:present name="applicationInfo">
           <!-- Nome -->
           <tr>

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
@@ -46,7 +46,7 @@ public class StartupServlet extends HttpServlet {
 	try {
 	    try {
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ReadCurrentExecutionPeriod.run();
-		config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		config.getServletContext().setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
 		setScheduleForGratuitySituationCreation();
 

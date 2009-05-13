@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -17,4 +17,4 @@
 </table>
 <br />
 <br />
-<app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="sop"/>
+<app:generateExamsMap name="<%= PresentationConstants.INFO_EXAMS_MAP %>" user="sop"/>

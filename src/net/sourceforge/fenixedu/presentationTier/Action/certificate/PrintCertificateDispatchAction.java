@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.util.Data;
 
@@ -46,33 +46,33 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	final HttpSession session = request.getSession(false);
 	if (session != null) {
 	    IUserView userView = getUserView(request);
-	    session.removeAttribute(SessionConstants.MATRICULA);
-	    session.removeAttribute(SessionConstants.MATRICULA_ENROLMENT);
-	    session.removeAttribute(SessionConstants.DURATION_DEGREE);
-	    session.removeAttribute(SessionConstants.ENROLMENT);
-	    session.removeAttribute(SessionConstants.ENROLMENT_LIST);
-	    session.removeAttribute(SessionConstants.APROVMENT);
-	    session.removeAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT);
-	    session.removeAttribute(SessionConstants.EXTRA_ENROLMENT_LIST);
-	    session.removeAttribute(SessionConstants.INFO_FINAL_RESULT);
-	    session.removeAttribute(SessionConstants.FINAL_RESULT);
-	    session.removeAttribute(SessionConstants.CONCLUSION_DATE);
-	    session.removeAttribute(SessionConstants.FINAL_RESULT_SIMPLE);
-	    session.removeAttribute(SessionConstants.FINAL_RESULT_DEGREE_SIMPLE);
-	    session.removeAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE);
-	    session.removeAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE);
-	    session.removeAttribute(SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE);
-	    session.removeAttribute(SessionConstants.DIPLOMA);
-	    session.removeAttribute(SessionConstants.DEGREE_LETTER);
-	    session.removeAttribute(SessionConstants.DATE);
+	    session.removeAttribute(PresentationConstants.MATRICULA);
+	    session.removeAttribute(PresentationConstants.MATRICULA_ENROLMENT);
+	    session.removeAttribute(PresentationConstants.DURATION_DEGREE);
+	    session.removeAttribute(PresentationConstants.ENROLMENT);
+	    session.removeAttribute(PresentationConstants.ENROLMENT_LIST);
+	    session.removeAttribute(PresentationConstants.APROVMENT);
+	    session.removeAttribute(PresentationConstants.EXTRA_CURRICULAR_APROVMENT);
+	    session.removeAttribute(PresentationConstants.EXTRA_ENROLMENT_LIST);
+	    session.removeAttribute(PresentationConstants.INFO_FINAL_RESULT);
+	    session.removeAttribute(PresentationConstants.FINAL_RESULT);
+	    session.removeAttribute(PresentationConstants.CONCLUSION_DATE);
+	    session.removeAttribute(PresentationConstants.FINAL_RESULT_SIMPLE);
+	    session.removeAttribute(PresentationConstants.FINAL_RESULT_DEGREE_SIMPLE);
+	    session.removeAttribute(PresentationConstants.DISCRIMINATED_WITHOUT_AVERAGE);
+	    session.removeAttribute(PresentationConstants.DISCRIMINATED_WITH_AVERAGE);
+	    session.removeAttribute(PresentationConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE);
+	    session.removeAttribute(PresentationConstants.DIPLOMA);
+	    session.removeAttribute(PresentationConstants.DEGREE_LETTER);
+	    session.removeAttribute(PresentationConstants.DATE);
 	    session.removeAttribute("notString");
 	    InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) request
-		    .getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
+		    .getAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN);
 	    InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) request
-		    .getAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
+		    .getAttribute(PresentationConstants.MASTER_DEGREE_THESIS_DATA_VERSION);
 	    InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) request
-		    .getAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY);
-	    String certificate = (String) request.getAttribute(SessionConstants.CERTIFICATE_TYPE);
+		    .getAttribute(PresentationConstants.MASTER_DEGREE_PROOF_HISTORY);
+	    String certificate = (String) request.getAttribute(PresentationConstants.CERTIFICATE_TYPE);
 
 	    String anoLectivo = new String();
 	    InfoExecutionYear infoExecutionYear = null;
@@ -91,15 +91,15 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		else
 		    anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
 		if (certificate.equals("Matrícula"))
-		    session.setAttribute(SessionConstants.MATRICULA, certificate.toUpperCase());
+		    session.setAttribute(PresentationConstants.MATRICULA, certificate.toUpperCase());
 		if (certificate.equals("Matrícula e Inscrição"))
-		    session.setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate.toUpperCase());
+		    session.setAttribute(PresentationConstants.MATRICULA_ENROLMENT, certificate.toUpperCase());
 		if (certificate.equals(CertificateList.DURACAO_CURSO_STRING)) {
 
 		    if (infoStudentCurricularPlan.getSpecialization()
 			    .equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 			certificate = "Matrícula";
-			session.setAttribute(SessionConstants.DURATION_DEGREE, certificate.toUpperCase());
+			session.setAttribute(PresentationConstants.DURATION_DEGREE, certificate.toUpperCase());
 		    } else {
 			ActionErrors errors = new ActionErrors();
 			errors.add("AlunoNãoExiste", new ActionError("error.invalidStudentType"));
@@ -140,10 +140,10 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 			}
 		    }
 		    if (normalEnrolment.size() != 0)
-			session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+			session.setAttribute(PresentationConstants.ENROLMENT_LIST, normalEnrolment);
 		    if (extraEnrolment.size() != 0)
-			session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
-		    session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());
+			session.setAttribute(PresentationConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
+		    session.setAttribute(PresentationConstants.ENROLMENT, certificate.toUpperCase());
 		} else {
 		    if ((certificate.equals("Aproveitamento"))
 			    || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
@@ -176,8 +176,8 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 			    }
 			}
 
-			session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
-			session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
+			session.setAttribute(PresentationConstants.ENROLMENT_LIST, normalEnrolment);
+			session.setAttribute(PresentationConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
 			if (certificate.equals("Aproveitamento")) {
 			    if (normalEnrolment.size() == 0) {
 				ActionErrors errors = new ActionErrors();
@@ -185,7 +185,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				saveErrors(request, errors);
 				return new ActionForward(mapping.getInput());
 			    }
-			    session.setAttribute(SessionConstants.APROVMENT, certificate.toUpperCase());
+			    session.setAttribute(PresentationConstants.APROVMENT, certificate.toUpperCase());
 			} else if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular")) {
 			    if (extraEnrolment.size() == 0) {
 				ActionErrors errors = new ActionErrors();
@@ -193,7 +193,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				saveErrors(request, errors);
 				return new ActionForward(mapping.getInput());
 			    }
-			    session.setAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT, certificate.toUpperCase());
+			    session.setAttribute(PresentationConstants.EXTRA_CURRICULAR_APROVMENT, certificate.toUpperCase());
 			}
 		    } else {
 			if (infoStudentCurricularPlan.getSpecialization().equals(
@@ -256,22 +256,22 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
 				Date date = GetEndOfScholarshipDate.run(infoStudentCurricularPlan.getIdInternal());
 				conclusionDate = DateFormat.getDateInstance().format(date);
-				session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
-				session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
-				session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
-				session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
-				session.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
+				session.setAttribute(PresentationConstants.ENROLMENT_LIST, normalEnrolment);
+				session.setAttribute(PresentationConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
+				session.setAttribute(PresentationConstants.CONCLUSION_DATE, conclusionDate);
+				session.setAttribute(PresentationConstants.INFO_FINAL_RESULT, infoFinalResult);
+				session.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
 					infoMasterDegreeThesisDataVersion);
 				//  							
 				if (certificate.equals("Fim parte escolar simples"))
-				    session.setAttribute(SessionConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
+				    session.setAttribute(PresentationConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
 				if (certificate.equals("Fim parte escolar discriminada sem média"))
-				    session.setAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate
+				    session.setAttribute(PresentationConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate
 					    .toUpperCase());
 				if (certificate.equals("Fim parte escolar discriminada com média"))
-				    session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());
+				    session.setAttribute(PresentationConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());
 				if (certificate.equals("Diploma"))
-				    session.setAttribute(SessionConstants.DIPLOMA, certificate.toUpperCase());
+				    session.setAttribute(PresentationConstants.DIPLOMA, certificate.toUpperCase());
 				if (certificate.equals("Fim de curso de Mestrado discriminada com média")
 					|| certificate.equals("Carta de Curso"))
 
@@ -289,8 +289,8 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 					    Locale locale = new Locale("pt", "PT");
 					    String dataFinal = DateFormat.getDateInstance(DateFormat.LONG, locale).format(
 						    infoMasterDegreeProofVersion.getProofDate());
-					    session.setAttribute(SessionConstants.CONCLUSION_DATE, dataFinal);
-					    session.setAttribute(SessionConstants.FINAL_RESULT, infoMasterDegreeProofVersion
+					    session.setAttribute(PresentationConstants.CONCLUSION_DATE, dataFinal);
+					    session.setAttribute(PresentationConstants.FINAL_RESULT, infoMasterDegreeProofVersion
 						    .getFinalResult().name());
 					} else {
 					    ActionErrors errors = new ActionErrors();
@@ -301,11 +301,11 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    }
 				}
 				if (certificate.equals("Fim de curso de Mestrado discriminada com média")) {
-				    session.setAttribute(SessionConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE, certificate
+				    session.setAttribute(PresentationConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE, certificate
 					    .toUpperCase());
 				}
 				if (certificate.equals("Carta de Curso")) {
-				    session.setAttribute(SessionConstants.DEGREE_LETTER, certificate.toUpperCase());
+				    session.setAttribute(PresentationConstants.DEGREE_LETTER, certificate.toUpperCase());
 				    return mapping.findForward("printDegreeLetter");
 				}
 
@@ -313,13 +313,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				if ((certificate.equals("Fim de curso de Mestrado simples"))) {
 				    if (!infoMasterDegreeProofVersion.getFinalResult().equals(
 					    MasterDegreeClassification.UNDEFINED)) {
-					session.setAttribute(SessionConstants.FINAL_RESULT_DEGREE_SIMPLE, certificate
+					session.setAttribute(PresentationConstants.FINAL_RESULT_DEGREE_SIMPLE, certificate
 						.toUpperCase());
-					session.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_HISTORY,
+					session.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_HISTORY,
 						infoMasterDegreeProofVersion);
 					String dataFinal = DateFormat.getDateInstance().format(
 						infoMasterDegreeProofVersion.getProofDate());
-					session.setAttribute(SessionConstants.CONCLUSION_DATE, dataFinal);
+					session.setAttribute(PresentationConstants.CONCLUSION_DATE, dataFinal);
 
 					String notString = " ";
 					if (infoMasterDegreeProofVersion.getFinalResult().equals(
@@ -328,9 +328,9 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 					}
 
 					session.setAttribute("notString", notString);
-					session.setAttribute(SessionConstants.FINAL_RESULT, infoMasterDegreeProofVersion
+					session.setAttribute(PresentationConstants.FINAL_RESULT, infoMasterDegreeProofVersion
 						.getFinalResult().name());
-					session.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
+					session.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
 						infoMasterDegreeThesisDataVersion);
 				    } else {
 					ActionErrors errors = new ActionErrors();
@@ -349,13 +349,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		    }
 		}
 	    }
-	    session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	    session.setAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 	    Locale locale = new Locale("pt", "PT");
 	    Date date = new Date();
 	    String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 	    request.setAttribute("anoLectivo", anoLectivo);
-	    session.setAttribute(SessionConstants.DATE, formatedDate);
-	    session.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificate);
+	    session.setAttribute(PresentationConstants.DATE, formatedDate);
+	    session.setAttribute(PresentationConstants.CERTIFICATE_TYPE, certificate);
 	    return mapping.findForward("PrintReady");
 	}
 

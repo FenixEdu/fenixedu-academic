@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -114,7 +114,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("executionYear", executionYear);
 	request.setAttribute("degree", degree);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegreeID));
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegreeID));
 	request.setAttribute("candidateList", candidateList);
 
 	return mapping.findForward("PrepareSuccess");
@@ -165,7 +165,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	Collections.sort(masterDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	List newDegreeList = masterDegreeList;
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
-	request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+	request.setAttribute(PresentationConstants.DEGREE_LIST, executionDegreeLabels);
 
 	return mapping.findForward("PrepareSecondChooseMasterDegreeReady");
     }
@@ -220,7 +220,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	String degree = getFromRequest("degree", request);
 	String candidateID = getFromRequest("candidateID", request);
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	if (((degree == null) || (degree.length() == 0)) && infoExecutionDegree != null) {
 	    degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();

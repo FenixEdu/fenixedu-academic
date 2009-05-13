@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -30,7 +30,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 	// setExecutionContext(request);
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -44,7 +44,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
 	infoExecutionDegreeList = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegreeList, messageResources);
 
-	request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST, infoExecutionDegreeList);
+	request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST, infoExecutionDegreeList);
 
 	return mapping.findForward("choose");
     }
@@ -54,7 +54,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	DynaActionForm chooseViewAllClassesSchedulesContextForm = (DynaActionForm) form;
 
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 	// setExecutionContext(request);
 
 	List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
@@ -84,10 +84,10 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 	List infoViewClassScheduleList = ReadDegreesClassesLessons.run(selectedInfoExecutionDegrees, academicInterval);
 
 	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
-	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);
+	    request.removeAttribute(PresentationConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);
 	} else {
 	    Collections.sort(infoViewClassScheduleList, new BeanComparator("infoClass.nome"));
-	    request.setAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE, infoViewClassScheduleList);
+	    request.setAttribute(PresentationConstants.ALL_INFO_VIEW_CLASS_SCHEDULE, infoViewClassScheduleList);
 	}
 
 	return mapping.findForward("list");

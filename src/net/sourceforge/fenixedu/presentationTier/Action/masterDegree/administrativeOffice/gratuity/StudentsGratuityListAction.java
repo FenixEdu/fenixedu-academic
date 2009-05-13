@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -103,7 +103,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList, request);
 
-	request.setAttribute(SessionConstants.DEGREES, executionDegreeLabels);
+	request.setAttribute(PresentationConstants.DEGREES, executionDegreeLabels);
 	request.setAttribute("showNextSelects", "true");
 
 	return chooseExecutionYear(mapping, actionForm, request, response);

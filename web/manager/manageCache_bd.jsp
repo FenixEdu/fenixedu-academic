@@ -2,13 +2,13 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.cache"/></h2>
 <br />
 
-<logic:present name="<%= SessionConstants.NUMBER_CACHED_ITEMS %>" scope="request">
+<logic:present name="<%= PresentationConstants.NUMBER_CACHED_ITEMS %>" scope="request">
 	<bean:message bundle="MANAGER_RESOURCES" key="cache.domain.number"/>
-	<bean:write name="<%= SessionConstants.NUMBER_CACHED_ITEMS %>"/>
+	<bean:write name="<%= PresentationConstants.NUMBER_CACHED_ITEMS %>"/>
 	<br /> <br />
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
 		<bean:message bundle="MANAGER_RESOURCES" key="label.cache.refresh"/>
@@ -23,7 +23,7 @@
 --%>
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.NUMBER_CACHED_ITEMS %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.NUMBER_CACHED_ITEMS %>" scope="request">
 	<bean:message bundle="MANAGER_RESOURCES" key="cache.domain.state.undetermined"/>
 	<br />
 	<html:link module="/manager" page="/manageCache.do?method=prepare">
@@ -31,14 +31,14 @@
 	</html:link>
 </logic:notPresent>
 
-<logic:present name="<%= SessionConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
+<logic:present name="<%= PresentationConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
 	<br /> <br /><br /> <br />
 	<bean:message bundle="MANAGER_RESOURCES" key="cache.response.number"/>:
-	<bean:write name="<%= SessionConstants.NUMBER_CACHED_RESPONSES %>"/>
+	<bean:write name="<%= PresentationConstants.NUMBER_CACHED_RESPONSES %>"/>
 	<br />
-	<logic:present name="<%= SessionConstants.CACHED_RESPONSES_TIMEOUT %>" scope="request">
+	<logic:present name="<%= PresentationConstants.CACHED_RESPONSES_TIMEOUT %>" scope="request">
 		<bean:message bundle="MANAGER_RESOURCES" key="cache.response.refresh.timeout"/>:
-		<bean:define id="currentRefreshValue"><bean:write name="<%= SessionConstants.CACHED_RESPONSES_TIMEOUT %>"/></bean:define>
+		<bean:define id="currentRefreshValue"><bean:write name="<%= PresentationConstants.CACHED_RESPONSES_TIMEOUT %>"/></bean:define>
 		<html:form action="/manageCache" focus="executionDegreeOID">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="setResponseRefreshTimeout"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -62,7 +62,7 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="label.cache.clear"/>
 	</html:link>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.NUMBER_CACHED_RESPONSES %>" scope="request">
 </logic:notPresent>
 <br/>
 <br />

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -45,7 +45,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_LIST);
 
 	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
@@ -57,7 +57,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O Degree de Mestrado", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 
 	return mapping.findForward("DisplayMasterDegreeList");
     }
@@ -81,7 +81,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O plano curricular ", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
 	return mapping.findForward("MasterDegreeReady");
     }
@@ -128,7 +128,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 	BeanComparator numberComparator = new BeanComparator("infoStudent.number");
 	Collections.sort(result, numberComparator);
 
-	request.setAttribute(SessionConstants.STUDENT_LIST, result);
+	request.setAttribute(PresentationConstants.STUDENT_LIST, result);
 
 	InfoExecutionDegree infoExecutionDegree = null;
 	try {

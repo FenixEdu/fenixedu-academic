@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -38,24 +38,24 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
 		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
 	}
 	if (executionPeriodsLabelValueList.size() > 1) {
-	    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	    request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
 	} else {
-	    request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	    request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 	}
 	/* ------------------------------------ */
 
 	// If executionPeriod was previously selected,form has that value as
 	// default
 	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	if (selectedExecutionPeriod != null) {
 	    DynaActionForm indexForm = (DynaActionForm) form;
 
 	    indexForm.set("index", new Integer(executionPeriods.indexOf((selectedExecutionPeriod))));
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
 	}
 	// ----------------------------------------------------------
 
@@ -82,8 +82,8 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
 	if (infoExecutionPeriods != null && index != null) {
 	    InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) infoExecutionPeriods.get(index.intValue());
 	    // Set selected executionPeriod in request
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
 	}
 
 	return mapping.findForward("choose");

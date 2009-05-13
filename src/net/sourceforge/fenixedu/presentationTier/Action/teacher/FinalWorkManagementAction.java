@@ -50,7 +50,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -654,8 +654,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    throw new ExistingActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.CURRICULUM, result);
-	request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	request.setAttribute(PresentationConstants.CURRICULUM, result);
+	request.setAttribute(PresentationConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 
 	return mapping.findForward("ShowStudentCurriculum");
     }

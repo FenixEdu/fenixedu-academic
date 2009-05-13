@@ -3,12 +3,12 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <jsp:include page="contextExecutionDegree.jsp"/>
 
-<logic:present name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
-	<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+<logic:present name="<%= PresentationConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+	<logic:iterate id="year" name="<%= PresentationConstants.CURRICULAR_YEARS_LIST %>" scope="request">
 		<logic:equal name="year" value="1">
 			<bean:define id="curricularYears_1"
 						 value="1"

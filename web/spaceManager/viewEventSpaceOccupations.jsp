@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType"%>
 <html:xhtml/>
 
@@ -52,7 +52,7 @@
 				
 		<logic:notEmpty name="eventSpaceOccupationsBean" property="day">
 			<p class="mtop15">
-				<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SPACE_MANAGER_TIMETABLE %>" />
+				<app:gerarHorario name="<%= PresentationConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SPACE_MANAGER_TIMETABLE %>" />
 			</p>			
 		</logic:notEmpty>
 		

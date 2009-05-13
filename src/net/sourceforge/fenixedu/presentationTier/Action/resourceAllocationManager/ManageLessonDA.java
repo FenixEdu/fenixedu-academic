@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -76,7 +76,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
     public ActionForward viewAllLessonDates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
+	InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
 	Lesson lesson = rootDomainObject.readLessonByOID(infoLesson.getIdInternal());
 	SortedSet<YearMonthDay> allLessonDates = lesson.getAllLessonDates();
 	Set<NextPossibleSummaryLessonsAndDatesBean> lessonDatesBean = new TreeSet<NextPossibleSummaryLessonsAndDatesBean>(
@@ -113,7 +113,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	DynaActionForm manageLessonForm = (DynaActionForm) form;
 
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 	Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
 	GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
 
@@ -140,7 +140,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	DynaActionForm manageLessonForm = (DynaActionForm) form;
 
-	InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
+	InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
 
 	manageLessonForm.set("diaSemana", infoLesson.getDiaSemana().getDiaSemana().toString());
 	manageLessonForm.set("horaInicio", "" + infoLesson.getInicio().get(Calendar.HOUR_OF_DAY));
@@ -210,8 +210,8 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		frequency = FrequencyType.WEEKLY;
 	    }
 
-	    InfoLesson infoLesson = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
-	    InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	    InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
+	    InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	    String action = request.getParameter("action");
 
@@ -271,7 +271,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    }
 
 	    if (action != null && action.equals("edit")
-		    && ((InfoLesson) request.getAttribute(SessionConstants.LESSON)).getInfoRoomOccupation() != null) {
+		    && ((InfoLesson) request.getAttribute(PresentationConstants.LESSON)).getInfoRoomOccupation() != null) {
 
 		emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
 		manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -338,7 +338,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 
 	if (actionErrors.isEmpty()) {
 
-	    InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
+	    InfoShift infoShift = (InfoShift) (request.getAttribute(PresentationConstants.SHIFT));
 
 	    InfoRoomOccupationEditor infoRoomOccupation = null;
 	    if (infoSala != null) {
@@ -363,7 +363,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    String action = request.getParameter("action");
 	    if (action != null && action.equals("edit")) {
 
-		InfoLesson infoLessonOld = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
+		InfoLesson infoLessonOld = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
 		Boolean createLessonInstances = (Boolean) manageLessonForm.get("createLessonInstances");
 
 		try {
@@ -402,7 +402,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    HttpServletResponse response) throws Exception {
 
 	List<Integer> lessons = new ArrayList<Integer>();
-	lessons.add(Integer.valueOf(request.getParameter(SessionConstants.LESSON_OID)));
+	lessons.add(Integer.valueOf(request.getParameter(PresentationConstants.LESSON_OID)));
 
 
 	try {
@@ -418,7 +418,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    return mapping.findForward("LessonDeleted");
 	}
 
-	request.removeAttribute(SessionConstants.LESSON_OID);
+	request.removeAttribute(PresentationConstants.LESSON_OID);
 	return mapping.findForward("LessonDeleted");
     }
 

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ page import="java.util.List"%>
 
 <em><bean:message key="label.manager.executionCourses" /></em>
@@ -24,7 +24,7 @@
 	e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong></p>
 	</div>
 
-	<fr:edit name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>" schema="executionCourseContext.choose">
+	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>" schema="executionCourseContext.choose">
 		<fr:destination name="intervalPostBack" path="/manageExecutionCourses.do?method=choosePostBack" />
 		<fr:destination name="degreePostBack" path="/manageExecutionCourses.do?method=choosePostBack" />
 		<fr:destination name="yearPostBack" path="/manageExecutionCourses.do?method=choosePostBack" />

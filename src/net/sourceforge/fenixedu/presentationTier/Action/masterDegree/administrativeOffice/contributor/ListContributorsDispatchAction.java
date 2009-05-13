@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -46,11 +46,11 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	String action = request.getParameter("action");
 
 	if (action.equals("visualize")) {
-	    session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
-	    session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
+	    session.removeAttribute(PresentationConstants.CONTRIBUTOR_ACTION);
+	    session.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
 	} else if (action.equals("edit")) {
-	    session.removeAttribute(SessionConstants.CONTRIBUTOR_ACTION);
-	    session.setAttribute(SessionConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
+	    session.removeAttribute(PresentationConstants.CONTRIBUTOR_ACTION);
+	    session.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
 	}
 
 	return mapping.findForward("PrepareReady");
@@ -68,13 +68,13 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	if (contributors.size() == 1) {
 	    InfoContributor infoContributor = (InfoContributor) contributors.get(0);
-	    session.removeAttribute(SessionConstants.CONTRIBUTOR);
-	    session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+	    session.removeAttribute(PresentationConstants.CONTRIBUTOR);
+	    session.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 	    return mapping.findForward("ActionReady");
 	}
 
-	session.removeAttribute(SessionConstants.CONTRIBUTOR_LIST);
-	session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributors);
+	session.removeAttribute(PresentationConstants.CONTRIBUTOR_LIST);
+	session.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributors);
 	return mapping.findForward("ChooseContributor");
     }
 
@@ -83,14 +83,14 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	List contributorList = (List) session.getAttribute(SessionConstants.CONTRIBUTOR_LIST);
+	List contributorList = (List) session.getAttribute(PresentationConstants.CONTRIBUTOR_LIST);
 
 	Integer choosenContributorPosition = Integer.valueOf(request.getParameter("contributorPosition"));
 
 	// Put the selected Contributor in Session
 	InfoContributor infoContributor = (InfoContributor) contributorList.get(choosenContributorPosition.intValue());
 
-	session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+	session.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 	return mapping.findForward("ActionReady");
 
     }
@@ -102,7 +102,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
-	InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = (InfoContributor) session.getAttribute(PresentationConstants.CONTRIBUTOR);
 
 	editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
 	editContributorForm.set("contributorName", infoContributor.getContributorName());
@@ -126,7 +126,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
 	IUserView userView = getUserView(request);
-	InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = (InfoContributor) session.getAttribute(PresentationConstants.CONTRIBUTOR);
 
 	// Get the Information
 	String contributorNumberString = (String) editContributorForm.get("contributorNumber");
@@ -149,7 +149,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException("O Contribuinte", e);
 	}
 
-	session.setAttribute(SessionConstants.CONTRIBUTOR, newInfoContributor);
+	session.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
 	return mapping.findForward("EditSuccess");
 
     }

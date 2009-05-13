@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -31,9 +31,9 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	dynaActionForm.set(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
+	dynaActionForm.set(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
 	return mapping.findForward("show");
     }
 
@@ -108,7 +108,7 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     private AcademicInterval getAcademicInterval(DynaActionForm dynaActionForm, HttpServletRequest request)
 	    throws FenixFilterException, FenixServiceException {
 	return AcademicInterval
-		.getAcademicIntervalFromResumedString(dynaActionForm.getString(SessionConstants.ACADEMIC_INTERVAL));
+		.getAcademicIntervalFromResumedString(dynaActionForm.getString(PresentationConstants.ACADEMIC_INTERVAL));
     }
 
     private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

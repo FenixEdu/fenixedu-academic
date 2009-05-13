@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,8 +32,8 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	HttpSession session = request.getSession(false);
-	session.removeAttribute(SessionConstants.INFO_SECTION);
-	InfoSite site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	session.removeAttribute(PresentationConstants.INFO_SECTION);
+	InfoSite site = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
 	String alternativeSite = site.getAlternativeSite();
 	String mail = site.getMail();
 	String initialStatement = site.getMail();
@@ -52,8 +52,8 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 	DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
 
 	HttpSession session = request.getSession(false);
-	session.removeAttribute(SessionConstants.INFO_SECTION);
-	InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	session.removeAttribute(PresentationConstants.INFO_SECTION);
+	InfoSite infoSite = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
 
 	String alternativeSite = (String) alternativeSiteForm.get("siteAddress");
 	String mail = (String) alternativeSiteForm.get("mail");
@@ -67,7 +67,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(SessionConstants.INFO_SITE, InfoSite.newInfoFromDomain(ExecutionCourseSite
+	session.setAttribute(PresentationConstants.INFO_SITE, InfoSite.newInfoFromDomain(ExecutionCourseSite
 		.readExecutionCourseSiteByOID(infoSite.getIdInternal())));
 	session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 

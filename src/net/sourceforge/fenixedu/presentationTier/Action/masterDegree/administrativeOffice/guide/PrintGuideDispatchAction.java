@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,40 +39,40 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+	InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
 	String graduationType = (String) request.getAttribute("graduationType");
 	if (graduationType == null) {
 	    graduationType = request.getParameter("graduationType");
 	}
 	request.setAttribute("graduationType", graduationType);
 
-	if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
-	    Integer numberRequester = new Integer(request.getParameter(SessionConstants.REQUESTER_NUMBER));
-	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
+	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
+	    Integer numberRequester = new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER));
+	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, numberRequester);
 	}
 
 	if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE.name())) {
 	    // Read The Candidate
 	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	    try {
-		if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null) {
+		if (session.getAttribute(PresentationConstants.REQUESTER_NUMBER) == null) {
 
 		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadMasterDegreeCandidate.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson());
 		} else {
-		    Integer number = (Integer) session.getAttribute(SessionConstants.REQUESTER_NUMBER);
+		    Integer number = (Integer) session.getAttribute(PresentationConstants.REQUESTER_NUMBER);
 
 		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadCandidateListByPersonAndExecutionDegree.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number);
 		}
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 	}
 
 	Locale locale = new Locale("pt", "PT");
 	String formatedDate = "Lisboa, "
 		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(infoGuide.getCreationDate());
-	session.setAttribute(SessionConstants.DATE, formatedDate);
+	session.setAttribute(PresentationConstants.DATE, formatedDate);
 	return mapping.findForward("PrintReady");
 
     }
@@ -84,11 +84,11 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 	Integer number = new Integer(request.getParameter("number"));
 	Integer year = new Integer(request.getParameter("year"));
 	Integer version = new Integer(request.getParameter("version"));
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE);
 	Integer numberRequester = null;
-	if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
-	    numberRequester = new Integer(request.getParameter(SessionConstants.REQUESTER_NUMBER));
-	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
+	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
+	    numberRequester = new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER));
+	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, numberRequester);
 	}
 
 	InfoGuide infoGuide = null;
@@ -116,19 +116,19 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 		    if (infoStudent.getDegreeType().equals(DegreeType.MASTER_DEGREE))
 			break;
 		}
-		request.setAttribute(SessionConstants.STUDENT, infoStudent.getNumber());
+		request.setAttribute(PresentationConstants.STUDENT, infoStudent.getNumber());
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
 
 	} else {
-	    request.setAttribute(SessionConstants.STUDENT, numberRequester);
+	    request.setAttribute(PresentationConstants.STUDENT, numberRequester);
 	}
 	Locale locale = new Locale("pt", "PT");
 	String formatedDate = "Lisboa, "
 		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(infoGuide.getCreationDate());
-	session.setAttribute(SessionConstants.DATE, formatedDate);
-	session.setAttribute(SessionConstants.GUIDE, infoGuide);
+	session.setAttribute(PresentationConstants.DATE, formatedDate);
+	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	String copies = request.getParameter("copies");
 	if (copies != null && copies.equals("2")) {

@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -66,7 +66,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	}
 	request.setAttribute("inEnglish", inEnglish);
 
-	request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 
 	return mapping.findForward("prepare");
     }
@@ -127,9 +127,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	    request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 	}
 
-	// indice, SessionConstants.EXECUTION_PERIOD,
-	// SessionConstants.EXECUTION_PERIOD_OID
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	Integer executionPeriodID = (Integer) chooseExamContextoForm.get("indice");
 	if (executionPeriodID != null) {
 	    infoExecutionPeriod = ReadExecutionPeriodByOID.run(executionPeriodID);
@@ -137,11 +135,9 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 	chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
 	RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
-	// SessionConstants.EXECUTION_DEGREE, executionDegreeID,
-	// infoExecutionDegree
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());
 	ExecutionDegree executionDegree = null;
@@ -157,15 +153,15 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 		    request.setAttribute("indice", infoExecutionPeriod.getIdInternal());
 		    chooseExamContextoForm.set("indice", infoExecutionPeriod.getIdInternal());
 		    RequestUtils.setExecutionPeriodToRequest(request, infoExecutionPeriod);
-		    request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-		    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+		    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+		    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 		}
 	    }
 	}
 
 	if (executionDegree != null) {
 	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 	    request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal().toString());
 	    RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 	} else {

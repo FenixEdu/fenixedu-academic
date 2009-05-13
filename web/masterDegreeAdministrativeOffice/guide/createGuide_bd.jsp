@@ -5,18 +5,18 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
-<logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request">
+<logic:present name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request">
    <table>
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
-    <html:hidden alt="<%=SessionConstants.EXECUTION_DEGREE_OID %>" property="<%=SessionConstants.EXECUTION_DEGREE_OID %>" value="<%= pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID).toString()%>"/>
+    <html:hidden alt="<%=PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%=PresentationConstants.EXECUTION_DEGREE_OID %>" value="<%= pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID).toString()%>"/>
       <!-- Degree -->
 	  <tr>
    		<td align="center" class="infoselected" colspan="2">
-			<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
+			<bean:define id="executionDegree" name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request" />
    			<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>: &nbsp;</b>
 			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /> -
 			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.name" /> -

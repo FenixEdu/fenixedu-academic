@@ -8,7 +8,7 @@
 
 <%@ page import="java.lang.String" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
@@ -66,7 +66,7 @@
 			<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			| 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 			| 
@@ -119,7 +119,7 @@
 				<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			, 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 			, 
@@ -170,7 +170,7 @@
 				<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			, 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 		</p>

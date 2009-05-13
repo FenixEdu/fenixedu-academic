@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.Con
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -45,12 +45,12 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) request
-		.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
+		.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID,
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID,
 		contextSelectionBean.getCurricularYear() != null ? contextSelectionBean.getCurricularYear().getIdInternal()
 			: null);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree().getIdInternal());
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, contextSelectionBean.getExecutionDegree().getIdInternal());
 
 	request.setAttribute("execution_course_name", contextSelectionBean.getCourseName().replaceAll("%", "%25"));
 
@@ -71,7 +71,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
 	    sortList(request, infoExecutionCourses);
 
-	    request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
+	    request.setAttribute(PresentationConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
 
 	}
 	return mapping.findForward("ShowSearchForm");

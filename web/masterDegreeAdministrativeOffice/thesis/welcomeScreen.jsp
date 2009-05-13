@@ -1,11 +1,11 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 
 
-<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
+<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
 
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.thesis.title"/></h2>
 <center>

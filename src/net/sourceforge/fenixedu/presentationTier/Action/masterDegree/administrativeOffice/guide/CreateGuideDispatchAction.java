@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInform
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -74,24 +74,24 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	IUserView userView = getUserView(request);
 
 	// Transport chosen Execution Degree
-	String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID, request);
+	String executionDegreeIDParam = getFromRequest(PresentationConstants.EXECUTION_DEGREE_OID, request);
 	Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
 	createGuideForm.set("executionDegreeID", executionDegreeID);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
 	InfoExecutionDegree infoExecutionDegree = null;
 	infoExecutionDegree = ReadExecutionDegreeByOID.run(executionDegreeID);
 	if (infoExecutionDegree != null) {
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 	}
 
-	session.removeAttribute(SessionConstants.PRINT_PASSWORD);
-	session.removeAttribute(SessionConstants.PRINT_INFORMATION);
+	session.removeAttribute(PresentationConstants.PRINT_PASSWORD);
+	session.removeAttribute(PresentationConstants.PRINT_INFORMATION);
 
 	// Contributor
-	String unexistinngContributor = getFromRequest(SessionConstants.UNEXISTING_CONTRIBUTOR, request);
+	String unexistinngContributor = getFromRequest(PresentationConstants.UNEXISTING_CONTRIBUTOR, request);
 	if (unexistinngContributor != null && unexistinngContributor.length() > 0) {
-	    request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+	    request.setAttribute(PresentationConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
 	}
 
 	request.setAttribute("chooseContributorBean", new CreateReceiptBean());
@@ -142,7 +142,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
+	session.setAttribute(PresentationConstants.CERTIFICATE_LIST, studentGuideList);
 
 	final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils.getViewState("chooseContributorBean")
 		.getMetaObject().getObject();
@@ -159,8 +159,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	    throw new NoActiveStudentCurricularPlanActionException(e);
 	} catch (NonExistingContributorServiceException e) {
-	    request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
+	    request.setAttribute(PresentationConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
 	    return mapping.getInputForward();
 	} catch (NonExistingServiceException e) {
@@ -174,14 +174,14 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(SessionConstants.GUIDE, infoGuide);
+	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
-	request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
+	request.setAttribute(PresentationConstants.REQUESTER_NUMBER, number);
 	request.setAttribute("graduationType", graduationType);
-	request.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
+	request.setAttribute(PresentationConstants.REQUESTER_TYPE, requesterType);
 
 	if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
-	    session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+	    session.removeAttribute(PresentationConstants.REQUESTER_TYPE);
 	    generateToken(request);
 	    saveToken(request);
 
@@ -190,7 +190,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 	if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
-	    session.removeAttribute(SessionConstants.REQUESTER_TYPE);
+	    session.removeAttribute(PresentationConstants.REQUESTER_TYPE);
 	    return mapping.findForward("CreateStudentGuide");
 	}
 
@@ -210,8 +210,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
 
-	session.removeAttribute(SessionConstants.PRINT_PASSWORD);
-	session.removeAttribute(SessionConstants.PRINT_INFORMATION);
+	session.removeAttribute(PresentationConstants.PRINT_PASSWORD);
+	session.removeAttribute(PresentationConstants.PRINT_INFORMATION);
 
 	// Get the information
 	String othersRemarks = (String) createGuideForm.get("othersRemarks");
@@ -250,7 +250,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	GuideState situationOfGuide = GuideState.valueOf(guideSituationString);
-	InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+	InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
 
 	InfoGuide newInfoGuide = null;
 
@@ -262,17 +262,15 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    object = "Anulada";
 	    throw new InvalidSituationActionException(object);
 	} catch (NonExistingContributorServiceException e) {
-	    // session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
-	    // Boolean.TRUE);
-	    request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+	    request.setAttribute(PresentationConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
 	    return mapping.getInputForward();
 	}
 
 	// Check if it's necessary to create a password for the candidate And to
 	// change his situation
-	String requesterType = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
+	String requesterType = (String) request.getAttribute(PresentationConstants.REQUESTER_TYPE);
 	if (requesterType == null)
-	    requesterType = request.getParameter(SessionConstants.REQUESTER_TYPE);
+	    requesterType = request.getParameter(PresentationConstants.REQUESTER_TYPE);
 	if (requesterType == null)
 	    requesterType = (String) createGuideForm.get("requester");
 
@@ -300,19 +298,19 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 		    // Put variable in Session to Inform that it's necessary to
 		    // print the password
-		    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+		    session.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
 
 		} else {
-		    session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
+		    session.setAttribute(PresentationConstants.PRINT_INFORMATION, Boolean.TRUE);
 		}
 	    }
 	}
-	session.removeAttribute(SessionConstants.GUIDE);
-	session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
+	session.removeAttribute(PresentationConstants.GUIDE);
+	session.setAttribute(PresentationConstants.GUIDE, newInfoGuide);
 
-	if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
-	    Integer numberRequester = new Integer(request.getParameter(SessionConstants.REQUESTER_NUMBER));
-	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
+	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
+	    Integer numberRequester = new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER));
+	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, numberRequester);
 	}
 	return mapping.findForward("CreateSuccess");
 

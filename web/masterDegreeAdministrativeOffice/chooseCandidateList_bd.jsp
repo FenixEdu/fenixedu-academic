@@ -5,13 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
-     <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
-    <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
-    <bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
-    <bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
+<bean:define id="executionDegree" name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request"/>
+     <bean:define id="executionYearName" name="<%= PresentationConstants.EXECUTION_YEAR %>"/>
+    <bean:define id="degreeList" name="<%= PresentationConstants.DEGREE_LIST %>" scope="session" />
+    <bean:define id="situationList" name="<%= PresentationConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
+    <bean:define id="title" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>

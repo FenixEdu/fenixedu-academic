@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <bean:define id="forwardTo" name="forwardTo" toScope="request" />
 <bean:define id="teacherNumber" name="tutorshipManagementBean" property="teacherNumber" />
@@ -15,7 +15,7 @@
 <h2><bean:message key="label.coordinator.tutorshipHistory" bundle="APPLICATION_RESOURCES"/></h2>
 
 <div class="infoop2">
-	<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
+	<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
 	
 		<!-- SELECTED TEACHER -->
 		<p class="mvert025"><b><bean:message key="label.tutor"/>:&nbsp;</b>
@@ -23,7 +23,7 @@
 			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
-		<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
 		<p class="mvert025">
 			<b><bean:message key="label.masterDegree.coordinator.executionYear"/></b>
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />

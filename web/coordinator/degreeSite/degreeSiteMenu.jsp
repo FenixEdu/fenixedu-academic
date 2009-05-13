@@ -1,13 +1,13 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
 <html:xhtml/>
 
-<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal" scope="request" />

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -53,7 +53,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, masterDegrees);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, masterDegrees);
 
 	return mapping.findForward("showMasterDegrees");
     }

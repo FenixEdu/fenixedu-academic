@@ -3,15 +3,15 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 </logic:present>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
-<logic:present name="<%=SessionConstants.ENROLMENT_LIST%>">
-	<bean:define id="enrolmentList" name="<%=SessionConstants.ENROLMENT_LIST%>" scope="request" />
+<logic:present name="<%=PresentationConstants.ENROLMENT_LIST%>">
+	<bean:define id="enrolmentList" name="<%=PresentationConstants.ENROLMENT_LIST%>" scope="request" />
 	<logic:iterate id="enrolmentElem" name="enrolmentList" length="1">
 		<table>
 		  	<tr>

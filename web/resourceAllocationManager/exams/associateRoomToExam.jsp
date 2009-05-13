@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 Exame de
-	<logic:present name="<%=SessionConstants.LIST_EXECUTION_COURSE_NAMES%>">		
-		<bean:define id="executionCourses" name="<%=SessionConstants.LIST_EXECUTION_COURSE_NAMES%>"/>	
+	<logic:present name="<%=PresentationConstants.LIST_EXECUTION_COURSE_NAMES%>">		
+		<bean:define id="executionCourses" name="<%=PresentationConstants.LIST_EXECUTION_COURSE_NAMES%>"/>	
 		<bean:size id="lenght" name="executionCourses"/>
 	
 				<logic:iterate indexId="index" id ="executionCourseName" name="executionCourses">
@@ -18,7 +18,7 @@ Exame de
 					</logic:notEqual>
 				</logic:iterate>
 	</logic:present>
-dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
+dia <bean:write name="<%=PresentationConstants.EXAM_DATEANDTIME_STR%>"/>
  <br/>
 
 <html:form action="/associateRoomToExam">
@@ -31,20 +31,20 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 	
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
-					 value="<%= pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
-					 value="<%= pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
-					 value="<%= pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>"
+					 value="<%= pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
+					 value="<%= pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
+					 value="<%= pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR_OID).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_COURSE_OID %>" property="<%= PresentationConstants.EXECUTION_COURSE_OID %>"
 					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-	<logic:present name="<%= SessionConstants.DATE %>">
-		<html:hidden alt="<%= SessionConstants.DATE %>" property="<%= SessionConstants.DATE %>"
+	<logic:present name="<%= PresentationConstants.DATE %>">
+		<html:hidden alt="<%= PresentationConstants.DATE %>" property="<%= PresentationConstants.DATE %>"
 						 value="<%= pageContext.findAttribute("date").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.START_TIME %>" property="<%= SessionConstants.START_TIME %>"
+		<html:hidden alt="<%= PresentationConstants.START_TIME %>" property="<%= PresentationConstants.START_TIME %>"
 						 value="<%= pageContext.findAttribute("start_time").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.END_TIME %>" property="<%= SessionConstants.END_TIME %>"
+		<html:hidden alt="<%= PresentationConstants.END_TIME %>" property="<%= PresentationConstants.END_TIME %>"
 						 value="<%= pageContext.findAttribute("end_time").toString() %>"/>
 	</logic:present>
 	
@@ -58,8 +58,8 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.season" property="season" />
 	
 	<h2>Salas</h2>
-	<logic:present name="<%=SessionConstants.AVAILABLE_ROOMS%>">		
-		<bean:define id="availableRooms" name="<%=SessionConstants.AVAILABLE_ROOMS%>"/>
+	<logic:present name="<%=PresentationConstants.AVAILABLE_ROOMS%>">		
+		<bean:define id="availableRooms" name="<%=PresentationConstants.AVAILABLE_ROOMS%>"/>
 				<logic:iterate id ="infoRoom" name="availableRooms">
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.rooms" property="rooms">
 						<bean:write name="infoRoom" property="idInternal"/>
@@ -83,13 +83,13 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourses" property="executionCourses" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 	</logic:iterate>
 	
-	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
+	<logic:notPresent name="<%=PresentationConstants.AVAILABLE_ROOMS%>">
 		Não existem salas disponíveis.
 	</logic:notPresent>
 
-<logic:present name="<%= SessionConstants.EXAM_OID %>">
-	<html:hidden alt="<%= SessionConstants.EXAM_OID %>" property="<%= SessionConstants.EXAM_OID %>"
-		value="<%= pageContext.findAttribute(SessionConstants.EXAM_OID).toString() %>"/>
+<logic:present name="<%= PresentationConstants.EXAM_OID %>">
+	<html:hidden alt="<%= PresentationConstants.EXAM_OID %>" property="<%= PresentationConstants.EXAM_OID %>"
+		value="<%= pageContext.findAttribute(PresentationConstants.EXAM_OID).toString() %>"/>
 </logic:present>
 
 <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">

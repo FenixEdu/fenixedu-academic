@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -34,13 +34,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -60,13 +60,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -93,13 +93,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -116,19 +116,19 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	    HttpServletResponse response) throws FenixActionException {
 
 	// to display the external persons search form
-	request.setAttribute(SessionConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
+	request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -145,19 +145,19 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	    HttpServletResponse response) throws FenixActionException {
 
 	// to display the external persons search form
-	request.setAttribute(SessionConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
+	request.setAttribute(PresentationConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -177,15 +177,15 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByName(form, request, "externalAssistentGuiderName",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 	} catch (Exception e1) {
 	    throw new FenixActionException(e1);
@@ -204,16 +204,16 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByName(form, request, "externalGuiderName",
-		    SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS, actionErrors);
+		    PresentationConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS, actionErrors);
 
 	} catch (Exception e1) {
 	    throw new FenixActionException(e1);
@@ -232,13 +232,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 	} catch (Exception e1) {
 	    throw new FenixActionException(e1);
@@ -257,12 +257,12 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -290,13 +290,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -324,13 +324,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {
@@ -357,13 +357,13 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {

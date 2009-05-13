@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -53,7 +53,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	InfoExecutionDegree ied = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+	InfoExecutionDegree ied = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	Integer degreeId = ied.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
 

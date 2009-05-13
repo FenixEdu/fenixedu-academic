@@ -2,14 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.visualize"/></h2>
 <center>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <br/>
-<logic:present name="<%= SessionConstants.WORK_LOCATIONS_LIST %>" scope="request">
+<logic:present name="<%= PresentationConstants.WORK_LOCATIONS_LIST %>" scope="request">
 	<html:form action="/visualizeExternalPersons.do?method=visualize" >
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 		<table>
@@ -17,7 +17,7 @@
 				<td>
 					<bean:message key="label.masterDegree.administrativeOffice.externalPersonInstitution"/>:&nbsp;					
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.institutionId" property="institutionId">
-			    		<html:options collection="<%= SessionConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
+			    		<html:options collection="<%= PresentationConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
 			   		</html:select> 
 				</td>
 			</tr>

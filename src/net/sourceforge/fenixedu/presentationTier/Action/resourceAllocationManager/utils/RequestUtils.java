@@ -47,7 +47,7 @@ public abstract class RequestUtils {
 	    String infoExecutionCourseInitials) throws Exception {
 
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
 	final ExecutionCourse executionCourse = ExecutionCourse.getExecutionCourseByInitials(academicInterval,
 		infoExecutionCourseInitials);

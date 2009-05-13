@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
  * @author Tânia Pousão
@@ -155,7 +155,7 @@ public class GratuityFileLetters extends GratuityFile {
 	// and if the student not payed add to the total value
 	// after the insurance value is appended to the line
 
-	if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE)) {
+	if (infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.NOT_PAYED_INSURANCE)) {
 	    // insurance not payed
 	    line.append(INSURANCE);
 

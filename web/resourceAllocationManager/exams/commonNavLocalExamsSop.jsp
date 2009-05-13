@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@page import="net.sourceforge.fenixedu.domain.ResourceAllocationRole"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu.domain.Person"%><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@page import="net.sourceforge.fenixedu.domain.Person"%><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
 <ul>
@@ -19,11 +19,11 @@
 	<li class="navheader"><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></li>  
 	<li><html:link page="/mainExamsNew.do?method=prepare"><bean:message key="link.choose.execution.period" bundle="SOP_RESOURCES"/></html:link>
 		<ul>
-			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"	+ SessionConstants.ACADEMIC_INTERVAL	+ "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.map"/></html:link></li>
-			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationsByRoom.faces?" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.by.room"/></html:link></li>
-			<li><html:link page="<%= "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchWrittenEvaluationsByDegreeAndYear"/></html:link></li>
-			<li><html:link page="<%= "/searchWrittenEvaluationsByDate.do?method=prepare&amp;" + SessionConstants.ACADEMIC_INTERVAL + "="	+ pageContext.findAttribute("academicInterval") %>"><bean:message key="link.written.evaluations.search.by.date"/></html:link></li>
-			<li><html:link page="<%= "/roomSearch.do?method=prepare&amp;nextPage=viewEmptyRooms&amp;" + SessionConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchAvailableRooms"/></html:link></li>
+			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationCalendar.faces?"	+ PresentationConstants.ACADEMIC_INTERVAL	+ "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.map"/></html:link></li>
+			<li><html:link page="<%= "/writtenEvaluations/writtenEvaluationsByRoom.faces?" + PresentationConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.writtenEvaluation.by.room"/></html:link></li>
+			<li><html:link page="<%= "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchWrittenEvaluationsByDegreeAndYear"/></html:link></li>
+			<li><html:link page="<%= "/searchWrittenEvaluationsByDate.do?method=prepare&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "="	+ pageContext.findAttribute("academicInterval") %>"><bean:message key="link.written.evaluations.search.by.date"/></html:link></li>
+			<li><html:link page="<%= "/roomSearch.do?method=prepare&amp;nextPage=viewEmptyRooms&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=" + pageContext.findAttribute("academicInterval") %>"><bean:message key="link.exams.searchAvailableRooms"/></html:link></li>
 		</ul>
 	</li>
 	
@@ -72,7 +72,7 @@
 <%--
 <li>
 	<html:link page="<%= "/chooseDegreeAndYearContext.do?method=prepare&amp;"
-							+ SessionConstants.EXECUTION_PERIOD_OID
+							+ PresentationConstants.EXECUTION_PERIOD_OID
  							+ "="
  							+ pageContext.findAttribute("executionPeriodOID") %>">
 		<bean:message key="link.exams.examsManagement"/>
@@ -82,7 +82,7 @@
 <%--
 <li>
 	<html:link page="<%= "/roomExamSearch.do?method=prepare&amp;nextPage=viewExams&amp;"
- 							+ SessionConstants.EXECUTION_PERIOD_OID
+ 							+ PresentationConstants.EXECUTION_PERIOD_OID
  							+ "="
  							+ pageContext.findAttribute("executionPeriodOID") %>">
 		<bean:message key="link.exams.searchExamsByRoom"/>
@@ -92,7 +92,7 @@
 <%--	
 <li>
 	<html:link page="<%= "/ExamSearchByDegreeAndYear.do?method=prepare&amp;"
- 							+ SessionConstants.EXECUTION_PERIOD_OID
+ 							+ PresentationConstants.EXECUTION_PERIOD_OID
  							+ "="
  							+ pageContext.findAttribute("executionPeriodOID") %>">
 		<bean:message key="link.exams.searchExamsByDegree"/>
@@ -101,7 +101,7 @@
 --%>	
 <%--<li>
 	<html:link page="<%= "/ExamSearchByDate.do?method=prepare&amp;"
- 							+ SessionConstants.EXECUTION_PERIOD_OID
+ 							+ PresentationConstants.EXECUTION_PERIOD_OID
  							+ "="
  							+ pageContext.findAttribute("executionPeriodOID") %>">
 		<bean:message key="link.exams.searchExamsByDate"/>

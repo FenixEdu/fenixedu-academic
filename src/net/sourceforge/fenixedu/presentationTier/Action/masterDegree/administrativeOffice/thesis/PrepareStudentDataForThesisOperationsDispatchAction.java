@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,7 +37,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDi
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject
 		.readStudentCurricularPlanByOID((Integer) ((DynaActionForm) form).get("scpID"));
 
-	request.setAttribute(SessionConstants.STUDENT, studentCurricularPlan.getRegistration());
+	request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
 	request.setAttribute("scpID", studentCurricularPlan.getIdInternal());
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 

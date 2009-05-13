@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction" %>
@@ -15,10 +15,10 @@
 <center>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
-	<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
-	<bean:define id="gratuitySituation" name="<%= SessionConstants.GRATUITY_SITUATION %>" scope="request"/>
-	<bean:define id="transactionList" name="<%= SessionConstants.TRANSACTION_LIST %>" scope="request"/>
-	<bean:define id="transactionsWithoutGuide" name="<%= SessionConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST %>" scope="request" type="java.util.List"/>
+	<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
+	<bean:define id="gratuitySituation" name="<%= PresentationConstants.GRATUITY_SITUATION %>" scope="request"/>
+	<bean:define id="transactionList" name="<%= PresentationConstants.TRANSACTION_LIST %>" scope="request"/>
+	<bean:define id="transactionsWithoutGuide" name="<%= PresentationConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST %>" scope="request" type="java.util.List"/>
 		
 	
 	<table border="0">

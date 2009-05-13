@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -17,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -48,11 +46,11 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	DynaActionForm examForm = (DynaActionForm) form;
 	IUserView userView = UserView.getUser();
@@ -70,7 +68,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	    executionCourseNames.add(infoExecutionCourse.getNome());
 	}
 
-	request.setAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
+	request.setAttribute(PresentationConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
 
 	// exam start time
 	Calendar examStartTime = Calendar.getInstance();
@@ -139,10 +137,10 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
 	    sortList(request, finalAvailableRooms);
 
-	    request.setAttribute(SessionConstants.AVAILABLE_ROOMS, finalAvailableRooms);
+	    request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, finalAvailableRooms);
 	} else {
 	    sortList(request, availableInfoRoom);
-	    request.setAttribute(SessionConstants.AVAILABLE_ROOMS, availableInfoRoom);
+	    request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, availableInfoRoom);
 	}
 
 	String date = new String((String) examForm.get("day") + "/" + (String) examForm.get("month") + "/"
@@ -152,12 +150,12 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
 	String endTime = new String((String) examForm.get("endHour") + ":" + (String) examForm.get("endMinute"));
 
-	request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
 
 	String[] scopeIDArray = (String[]) examForm.get("scopes");
 	request.setAttribute("scopes", scopeIDArray);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
 	return mapping.findForward("AssociateRoom");
@@ -166,11 +164,11 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	DynaValidatorForm chooseRoomForm = (DynaValidatorForm) form;
 
@@ -185,12 +183,10 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 	ContextUtils.setExecutionPeriodContext(request);
 	ContextUtils.setCurricularYearsContext(request);
 
-	String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
+	String executionDegreeOID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
 	request.setAttribute("executionDegreeOID", executionDegreeOID);
-	// request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID,
-	// executionDegreeOID);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
 	return mapping.findForward("forwardChoose");

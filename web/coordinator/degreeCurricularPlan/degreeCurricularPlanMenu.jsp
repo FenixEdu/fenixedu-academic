@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 
 <%
@@ -17,8 +17,8 @@ if (degreeCurricularPlanID == null) {
 }
 %>
 
-<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
+<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<br/>
 	<ul>
 		<li class="navheader">

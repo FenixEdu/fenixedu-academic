@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,9 +44,9 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
@@ -69,7 +69,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	    BeanComparator nameComparator = new BeanComparator("nome");
 	    Collections.sort(infoClassesList, nameComparator);
 
-	    request.setAttribute(SessionConstants.CLASSES, infoClassesList);
+	    request.setAttribute(PresentationConstants.CLASSES, infoClassesList);
 	}
 	request.setAttribute("executionDegreeD", executionDegree);
 
@@ -83,10 +83,10 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 	String className = (String) classForm.get("className");
 	IUserView userView = UserView.getUser();
 
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
 	Integer curricularYear = infoCurricularYear.getYear();
 
@@ -108,13 +108,13 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
 	ContextUtils.setClassContext(request);
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	IUserView userView = UserView.getUser();
 
 	ApagarTurma.run(infoClass);
 
-	request.removeAttribute(SessionConstants.CLASS_VIEW);
+	request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
 	return listClasses(mapping, form, request, response);
     }

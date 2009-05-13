@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadExamsByDate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -31,8 +31,8 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	final String executionPeriodString = (String) request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
+	final String executionPeriodString = (String) request.getParameter(PresentationConstants.EXECUTION_PERIOD_OID);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, executionPeriodString);
 	return mapping.findForward("choose");
     }
 
@@ -40,14 +40,14 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	DynaActionForm formSearch = (DynaActionForm) form;
 
-	String strDate = (String) request.getAttribute(SessionConstants.DATE);
+	String strDate = (String) request.getAttribute(PresentationConstants.DATE);
 	Calendar date = Calendar.getInstance();
 	date.setTimeInMillis(new Long(strDate).longValue());
 	formSearch.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
 	formSearch.set("month", new Integer(date.get(Calendar.MONTH) + 1).toString());
 	formSearch.set("year", new Integer(date.get(Calendar.YEAR)).toString());
 
-	String strStartTime = (String) request.getAttribute(SessionConstants.START_TIME);
+	String strStartTime = (String) request.getAttribute(PresentationConstants.START_TIME);
 	if (strStartTime != null && !strStartTime.equals("null")) {
 	    Calendar startTime = Calendar.getInstance();
 	    startTime.setTimeInMillis(new Long(strStartTime).longValue());
@@ -58,7 +58,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 	    formSearch.set("beginningMinute", null);
 	}
 
-	String strEndTime = (String) request.getAttribute(SessionConstants.END_TIME);
+	String strEndTime = (String) request.getAttribute(PresentationConstants.END_TIME);
 	if (strEndTime != null && !strEndTime.equals("null")) {
 	    Calendar endTime = Calendar.getInstance();
 	    endTime.setTimeInMillis(new Long(strEndTime).longValue());
@@ -146,19 +146,19 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 	InfoViewExam infoViewExam = (InfoViewExam) ReadExamsByDate.run(examDate, examStartTime, examEndTime);
 
 	if (infoViewExam.getInfoViewExamsByDayAndShift().size() != 0) {
-	    request.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoViewExam.getInfoViewExamsByDayAndShift());
+	    request.setAttribute(PresentationConstants.LIST_EXAMSANDINFO, infoViewExam.getInfoViewExamsByDayAndShift());
 	}
-	request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, examDateString);
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, examDateString);
 
 	Long date = new Long(examDate.getTimeInMillis());
-	request.setAttribute(SessionConstants.DATE, date.toString());
+	request.setAttribute(PresentationConstants.DATE, date.toString());
 	if (examStartTime != null) {
 	    Long sTime = new Long(examStartTime.getTimeInMillis());
-	    request.setAttribute(SessionConstants.START_TIME, sTime.toString());
+	    request.setAttribute(PresentationConstants.START_TIME, sTime.toString());
 	}
 	if (examEndTime != null) {
 	    Long eTime = new Long(examEndTime.getTimeInMillis());
-	    request.setAttribute(SessionConstants.END_TIME, eTime.toString());
+	    request.setAttribute(PresentationConstants.END_TIME, eTime.toString());
 	}
 
 	return mapping.findForward("show");

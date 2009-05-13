@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionError;
@@ -47,7 +47,7 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ReadCurricularYearByOID.run(anoCurricular);
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR, infoCurricularYear);
 
 	/* Determine Selected Execution Degree */
 	Integer executionDegreeOID = new Integer((String) chooseExamsContextForm.get("executionDegreeOID"));
@@ -61,7 +61,7 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 
 	    return mapping.getInputForward();
 	}
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
 	return mapping.findForward("ManageExams");
 

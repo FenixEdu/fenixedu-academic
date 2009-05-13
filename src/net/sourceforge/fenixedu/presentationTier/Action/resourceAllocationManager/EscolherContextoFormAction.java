@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,7 +36,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
@@ -45,7 +45,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
 	int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR, infoCurricularYear);
 
 	List infoExecutionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 
@@ -54,9 +54,9 @@ public class EscolherContextoFormAction extends FenixContextAction {
 	if (infoExecutionDegree != null) {
 	    CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(
 		    anoCurricular, semestre, infoExecutionDegree);
-	    request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+	    request.setAttribute(PresentationConstants.CONTEXT_KEY, cYSiED);
 
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 	} else {
 
 	    return mapping.findForward("Licenciatura execucao inexistente");

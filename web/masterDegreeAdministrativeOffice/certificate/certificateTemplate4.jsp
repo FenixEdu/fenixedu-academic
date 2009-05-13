@@ -3,22 +3,22 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-	<logic:present name="<%= SessionConstants.ENROLMENT_LIST%>">
-		<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+	<logic:present name="<%= PresentationConstants.ENROLMENT_LIST%>">
+		<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= PresentationConstants.ENROLMENT_LIST%>" />
 	</logic:present>
-	<logic:present name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>">
-		<bean:define id="infoEnrolmentExtraCurricularPlan" name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>" />
+	<logic:present name="<%= PresentationConstants.EXTRA_ENROLMENT_LIST%>">
+		<bean:define id="infoEnrolmentExtraCurricularPlan" name="<%= PresentationConstants.EXTRA_ENROLMENT_LIST%>" />
 	</logic:present>
-	<logic:present name="<%= SessionConstants.ENROLMENT%>">
-	<logic:present name="<%= SessionConstants.ENROLMENT_LIST%>">
+	<logic:present name="<%= PresentationConstants.ENROLMENT%>">
+	<logic:present name="<%= PresentationConstants.ENROLMENT_LIST%>">
 	nas seguintes disciplinas:<br />
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 	<br />
 		<bean:write name="itr" property="infoCurricularCourse.name" />
 	</logic:iterate>
 	</logic:present>
-	<logic:present name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>">
+	<logic:present name="<%= PresentationConstants.EXTRA_ENROLMENT_LIST%>">
 	nas seguintes disciplinas Extra-Curriculares:<br />
 	<logic:iterate id="itr" name="infoEnrolmentExtraCurricularPlan">
 	<br />
@@ -26,7 +26,7 @@
 	</logic:iterate>
 		</logic:present>
 	</logic:present>
-		<logic:present name="<%= SessionConstants.APROVMENT%>">
+		<logic:present name="<%= PresentationConstants.APROVMENT%>">
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 	<br />
 		<bean:write name="itr" property="infoCurricularCourse.name" />
@@ -39,8 +39,8 @@
  		</logic:equal>
 	</logic:iterate>
 		</logic:present>
-		<logic:present name="<%= SessionConstants.EXTRA_CURRICULAR_APROVMENT%>">
-			<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>" />
+		<logic:present name="<%= PresentationConstants.EXTRA_CURRICULAR_APROVMENT%>">
+			<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= PresentationConstants.EXTRA_ENROLMENT_LIST%>" />
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 <br />
  		<bean:write name="itr" property="infoCurricularCourse.name" />
@@ -50,7 +50,7 @@
 		 valores
 	</logic:iterate>
 		</logic:present>
-	<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
+	<bean:define id="infoStudentCurricularPlan" name="<%= PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
 	<logic:notEmpty name="infoStudentCurricularPlan"  property="givenCredits" >
 		<br/>
 		Atribuição de Créditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> Créditos

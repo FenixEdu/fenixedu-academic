@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>"  />
+<bean:define id="candidateList" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST %>"  />
 
 <%= ((List) candidateList).size() %> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
 

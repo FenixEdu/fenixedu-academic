@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState" %>
 
@@ -18,7 +18,7 @@
 	<h2><bean:message key="title.masterDegree.administrativeOffice.guide.reimbursementGuide.viewReimbursementGuides"/></h2>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
-	<bean:define id="reimbursementGuidesList" name="<%= SessionConstants.REIMBURSEMENT_GUIDES_LIST %>" type="java.util.List"/>
+	<bean:define id="reimbursementGuidesList" name="<%= PresentationConstants.REIMBURSEMENT_GUIDES_LIST %>" type="java.util.List"/>
 	
 	<table>
 		

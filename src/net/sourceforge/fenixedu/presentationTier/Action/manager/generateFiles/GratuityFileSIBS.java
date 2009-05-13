@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
  * @author Tânia Pousão
@@ -180,7 +180,7 @@ public class GratuityFileSIBS extends GratuityFile {
 	if (valueToPay < 0) {
 	    valueToPay = 0;
 	}
-	if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE)) {
+	if (infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.NOT_PAYED_INSURANCE)) {
 	    valueToPay = valueToPay + INSURANCE;
 	}
 

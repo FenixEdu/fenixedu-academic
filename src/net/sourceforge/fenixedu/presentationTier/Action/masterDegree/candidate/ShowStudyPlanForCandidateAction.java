@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -49,9 +49,9 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
 	    }
 
 	    if (candidates.size() == 1) {
-		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
+		session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
 	    } else {
-		session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+		session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
 	    }
 
 	    return (InfoMasterDegreeCandidate) candidates.get(0);

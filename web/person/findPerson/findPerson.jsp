@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <script type="text/javascript">
 function getElementsByClass(searchClass,node,tag) {

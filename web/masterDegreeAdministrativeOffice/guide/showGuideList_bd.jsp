@@ -6,7 +6,7 @@
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
@@ -14,7 +14,7 @@
 
    <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-    <bean:define id="guideList" name="<%= SessionConstants.GUIDE_LIST %>" scope="request" />
+    <bean:define id="guideList" name="<%= PresentationConstants.GUIDE_LIST %>" scope="request" />
     
 	<bean:define id="link">/guideListingByYear.do?method=chooseGuide<%= "&" %>page=0<%= "&" %>year=
 	</bean:define>

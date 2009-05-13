@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.ArrayUtils;
 
@@ -70,8 +70,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	    return mapping.findForward("firstPage");
 	}
 
-	request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
-	request.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
+	request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
+	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
 	if (ae.getScope() != "request") {
 	    ae.setScope("session");
@@ -97,9 +97,9 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	String sessionContext = exceptionInfo.getSessionContext();
 	String stackTrace = exceptionInfo.getStackTrace();
 
-	request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
-	request.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
-	request.setAttribute(SessionConstants.REQUEST_CONTEXT, requestContext);
+	request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
+	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
+	request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContext);
 
 	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
 	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request

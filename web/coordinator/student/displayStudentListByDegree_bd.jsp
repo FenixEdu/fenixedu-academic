@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <h2><bean:message key="link.coordinator.studentList.title"/></h2>
 
@@ -12,7 +12,7 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-  <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
+  <bean:define id="studentList" name="<%= PresentationConstants.STUDENT_LIST %>" scope="request" />
   <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
   <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
 	<p>

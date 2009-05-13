@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInform
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -73,10 +73,10 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	editGuideForm.set("paymentDateDay", Data.OPTION_DEFAULT);
 	editGuideForm.set("paymentDateMonth", Data.OPTION_DEFAULT);
 	editGuideForm.set("paymentDateYear", Data.OPTION_DEFAULT);
-	session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
-	session.setAttribute(SessionConstants.GUIDE, infoGuide);
+	session.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	session.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	session.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	return mapping.findForward("EditReady");
 
@@ -149,12 +149,12 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-	session.removeAttribute(SessionConstants.GUIDE);
-	session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
-	session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
-	session.removeAttribute(SessionConstants.YEARS_KEY);
-	session.removeAttribute(SessionConstants.PAYMENT_TYPE);
-	session.removeAttribute(SessionConstants.GUIDE_SITUATION_LIST);
+	session.removeAttribute(PresentationConstants.GUIDE);
+	session.removeAttribute(PresentationConstants.MONTH_DAYS_KEY);
+	session.removeAttribute(PresentationConstants.MONTH_LIST_KEY);
+	session.removeAttribute(PresentationConstants.YEARS_KEY);
+	session.removeAttribute(PresentationConstants.PAYMENT_TYPE);
+	session.removeAttribute(PresentationConstants.GUIDE_SITUATION_LIST);
 
 	return mapping.findForward("SituationChanged");
 
@@ -187,8 +187,8 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 		    + infoContributor.getContributorName(), infoContributor.getContributorNumber()));
 	}
 
-	session.setAttribute(SessionConstants.GUIDE, infoGuide);
-	session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
+	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	session.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributorList);
 
 	request.setAttribute("othersQuantity", new Integer(0));
 	request.setAttribute("othersPrice", new Double(0));
@@ -301,9 +301,9 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("A Guia", e);
 	}
-	request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, guideList);
 
-	request.setAttribute(SessionConstants.GUIDE, result);
+	request.setAttribute(PresentationConstants.GUIDE, result);
 	return mapping.findForward("EditInformationSuccess");
     }
 

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.Globals;
@@ -57,7 +57,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("error");
 	}
 
-	request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		.getAttribute(Globals.LOCALE_KEY)));
 	return mapping.findForward("start");
 
@@ -87,7 +87,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 			    .toString()));
 		}
 
-		request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
+		request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, institutionsValueBeanList);
 	    }
 	return institutions;
     }
@@ -108,7 +108,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	String email = (String) insertExternalPersonForm.get("email");
 
 	if (institutionID == 0) {
-	    request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		    .getAttribute(Globals.LOCALE_KEY)));
 
 	    getInstitutions(request);
@@ -124,12 +124,12 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	try {
 	    InsertExternalPerson.run(name, sex, address, institutionID, phone, mobile, homepage, email);
 	} catch (ExistingServiceException e) {
-	    request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		    .getAttribute(Globals.LOCALE_KEY)));
 	    getInstitutions(request);
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (FenixServiceException e) {
-	    request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		    .getAttribute(Globals.LOCALE_KEY)));
 	    getInstitutions(request);
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));

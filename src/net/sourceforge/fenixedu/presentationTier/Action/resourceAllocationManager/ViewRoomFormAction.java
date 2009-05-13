@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomOccupationWeekBean;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,10 +44,10 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
 
 	DynaActionForm indexForm = (DynaActionForm) form;
-	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(SessionConstants.SELECTED_ROOMS);
+	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
 	InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
-	request.setAttribute(SessionConstants.ROOM, infoRoom);
-	request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());
+	request.setAttribute(PresentationConstants.ROOM, infoRoom);
+	request.setAttribute(PresentationConstants.ROOM_OID, infoRoom.getIdInternal());
 
 	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(infoRoom.getIdInternal());
 	Calendar calendar = Calendar.getInstance();
@@ -59,7 +59,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	List<InfoObject> showOccupations = ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay
 		.fromCalendarFields(calendar));
 	if (showOccupations != null) {
-	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
+	    request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
 	}
 
 	return mapping.findForward("Sucess");

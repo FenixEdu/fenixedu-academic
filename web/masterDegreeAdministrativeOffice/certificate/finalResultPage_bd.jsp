@@ -4,10 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
-<bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" />
-<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<bean:define id="infoStudentCurricularPlan" name="<%= PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
+<bean:define id="infoExecutionYear" name="<%= PresentationConstants.INFO_EXECUTION_YEAR %>" />
+<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= PresentationConstants.ENROLMENT_LIST%>" />
 <table width="90%">
 	<tr> 
     	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" /></b><br /><br /><br /><br /></td>
@@ -16,8 +16,8 @@
  			<b><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
 		</td>
 	<tr>
-	<logic:present name="<%= SessionConstants.INFO_BRANCH %>" >
-		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" />
+	<logic:present name="<%= PresentationConstants.INFO_BRANCH %>" >
+		<bean:define id="infoBranch" name="<%= PresentationConstants.INFO_BRANCH %>" />
 	 		<td>Area de especialização em <b><bean:write name="infoBranch" /></b>   			
 			</td>	
 		<tr>

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -234,7 +234,7 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
 	}
 	// input
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	Integer degreeId = getFromRequest("degreeID", request);
 	if (degreeId == null)
@@ -345,7 +345,7 @@ public class SiteViewerDispatchActionNew extends FenixContextDispatchAction {
     }
 
     private void setFromRequest(HttpServletRequest request) {
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	String shift = request.getParameter("shift");
 	if (shift == null)

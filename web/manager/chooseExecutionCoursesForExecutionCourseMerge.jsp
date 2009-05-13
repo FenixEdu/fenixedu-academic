@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -19,7 +19,7 @@
 
 <html:form action="/mergeExecutionCoursesForm.do?method=mergeExecutionCourses" >
 
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="<%= SessionConstants.ACADEMIC_INTERVAL%>" value="<%= ((AcademicInterval)request.getAttribute(SessionConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>"/>
+    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="<%= PresentationConstants.ACADEMIC_INTERVAL%>" value="<%= ((AcademicInterval)request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>"/>
 	<br/>
 	
 	

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -28,7 +28,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append("<a href='");
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
-	    strBuffer.append(SessionConstants.ACADEMIC_INTERVAL + "=");
+	    strBuffer.append(PresentationConstants.ACADEMIC_INTERVAL + "=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());
@@ -47,7 +47,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
 	    strBuffer.append("<a href='");
 	    strBuffer.append(context).append("/resourceAllocationManager/");
 	    strBuffer.append("manageExecutionCourse.do?method=prepare&amp;page=0&amp;");
-	    strBuffer.append(SessionConstants.ACADEMIC_INTERVAL + "=");
+	    strBuffer.append(PresentationConstants.ACADEMIC_INTERVAL + "=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getAcademicInterval().getResumedRepresentationInStringFormat());
 	    strBuffer.append("&amp;execution_course_oid=");
 	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal());

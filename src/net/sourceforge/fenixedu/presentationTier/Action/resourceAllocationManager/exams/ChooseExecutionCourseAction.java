@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -36,7 +36,7 @@ public class ChooseExecutionCourseAction
 	SessionUtils.getExecutionCourses(request);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 	return mapping.findForward("showForm");
 
     }
@@ -48,7 +48,7 @@ public class ChooseExecutionCourseAction
 
 	Integer executionCourseID = new Integer((String) chooseCourseForm.get("executionCourseID"));
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_OID, executionCourseID.toString());
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, executionCourseID.toString());
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionDegreeContext(request);

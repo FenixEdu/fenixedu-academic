@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -42,13 +42,13 @@ public class CreateMasterDegreeThesisDispatchAction extends FenixDispatchAction 
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {

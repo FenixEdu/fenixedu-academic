@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" />
-<bean:define id="infoThesisDataVersion" name="<%= SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION%>" />
+<bean:define id="infoStudentCurricularPlan" name="<%= PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" />
+<bean:define id="infoThesisDataVersion" name="<%= PresentationConstants.MASTER_DEGREE_THESIS_DATA_VERSION%>" />
  
 <html>
 
@@ -75,9 +75,9 @@ background: #e0a;
 			 <bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 		</span>
 	<span style="margin-left: 4.7cm;" class="hide">lhe foi concebido em,</span>
-	<span style="width: 14em; position: absolute; top: -3px;">&nbsp;<bean:write name="<%= SessionConstants.CONCLUSION_DATE%>" /></span>
+	<span style="width: 14em; position: absolute; top: -3px;">&nbsp;<bean:write name="<%= PresentationConstants.CONCLUSION_DATE%>" /></span>
 	<span style="padding-left: 11em;" class="hide">o grau de mestre em &nbsp;&nbsp;</span> 
-	<span style="margin:0; padding:0; width: 20em; position: absolute; right: 5.6cm; top: 1.8em;"><span class="hide"> com a qualificação de &nbsp;</span><span> <bean:message name="<%= SessionConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES"/></span></span>
+	<span style="margin:0; padding:0; width: 20em; position: absolute; right: 5.6cm; top: 1.8em;"><span class="hide"> com a qualificação de &nbsp;</span><span> <bean:message name="<%= PresentationConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES"/></span></span>
 </p>
 
 <p style="margin-top: 0.80cm;"><span class="hide">que, em conformidade com as disposições legais em vigor, lhe mandei passar a presente carta de curso</span></p>

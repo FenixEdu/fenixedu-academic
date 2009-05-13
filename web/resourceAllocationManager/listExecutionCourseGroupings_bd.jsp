@@ -6,13 +6,13 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <em><bean:message key="label.manager.executionCourses" /></em>
 <h2><bean:message key="label.execution.course.groupings" bundle="SOP_RESOURCES" /></h2>
 
 <fr:form>
-	<fr:edit name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>"
+	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>"
 		schema="academicInterval.chooseWithPostBack">
 		<fr:destination name="intervalPostBack"
 			path="/listExecutionCourseGroupings.do?method=selectExecutionPeriod" />
@@ -23,9 +23,9 @@
 	</fr:edit>
 </fr:form>
 
-<logic:present name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>">
+<logic:present name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
 	<p><html:link page="/listExecutionCourseGroupings.do?method=downloadExecutionCourseGroupings"
-		paramId="academicInterval" paramName="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>"
+		paramId="academicInterval" paramName="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>"
 		paramProperty="academicInterval.resumedRepresentationInStringFormat">
 		<bean:message key="link.downloadExcelSpreadSheet" />
 		<html:img border="0" src="<%=request.getContextPath() + "/images/excel.gif"%>" altKey="excel"

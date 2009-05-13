@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -49,7 +49,7 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
 	// Store the UserView into the session and return
 	UserView.setUser(userView);
 	sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
-	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+	sessao.setAttribute(PresentationConstants.SESSION_IS_VALID, new Boolean(true));
 
 	ActionForward forward = mapping.findForward("changePass");
 	request.setAttribute(Globals.EXCEPTION_KEY, ex);

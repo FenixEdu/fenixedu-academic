@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -9,7 +9,7 @@
 <html:form action="/chooseDayAndShiftForm">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nextPage" property="nextPage" value='<%= pageContext.findAttribute(SessionConstants.NEXT_PAGE).toString() %>'/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nextPage" property="nextPage" value='<%= pageContext.findAttribute(PresentationConstants.NEXT_PAGE).toString() %>'/>
 
 		<table width="100%">
 	    	<tr>
@@ -22,19 +22,19 @@
                 <td width="50"><bean:message key="property.exam.year"/>:</td>
                 <td width="100"><html:select bundle="HTMLALT_RESOURCES" altKey="select.year" property="year">
                     	<option value="" selected="selected"></option>
-                    	<html:options name="<%= SessionConstants.LABLELIST_YEARS %>"/>
+                    	<html:options name="<%= PresentationConstants.LABLELIST_YEARS %>"/>
                    	</html:select>
                	</td>
                	<td width="50"><bean:message key="property.exam.month"/>:</td>
                	<td width="125"><html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
                        <option value="" selected="selected"></option>
-                       <html:options collection="<%= SessionConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
+                       <html:options collection="<%= PresentationConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
                   	</html:select>
                	</td>
                	<td width="50"><bean:message key="property.exam.day"/>:</td>
                	<td width="105"><html:select bundle="HTMLALT_RESOURCES" altKey="select.day" property="day">
                        <option value="" selected="selected"></option>
-                       <html:options name="<%= SessionConstants.LABLELIST_DAYSOFMONTH %>"/>
+                       <html:options name="<%= PresentationConstants.LABLELIST_DAYSOFMONTH %>"/>
                   	</html:select>
              	</td>
           	</tr>
@@ -53,7 +53,7 @@
                 <td>
                     <html:select bundle="HTMLALT_RESOURCES" altKey="select.beginning" property="beginning">
                     	<option value="" selected="selected"></option>                        
-                        <html:options name="<%= SessionConstants.LABLELIST_HOURS %>"/>
+                        <html:options name="<%= PresentationConstants.LABLELIST_HOURS %>"/>
                     </html:select>
                 </td>
             </tr>

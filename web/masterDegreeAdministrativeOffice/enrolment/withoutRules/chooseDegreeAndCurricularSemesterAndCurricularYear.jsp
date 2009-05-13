@@ -1,12 +1,12 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
-<bean:define id="executionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
-<bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
-<bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
+<bean:define id="executionDegreesNamesList" name="<%= PresentationConstants.DEGREE_LIST %>" scope="request"/>
+<bean:define id="yearsList" name="<%= PresentationConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
+<bean:define id="semestersList" name="<%= PresentationConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
 
 <h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE"/></h2>
 

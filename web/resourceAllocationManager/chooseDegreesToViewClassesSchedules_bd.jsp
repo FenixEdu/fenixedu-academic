@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2>Listagem de Horários por Turmas</h2>
@@ -13,10 +13,10 @@
 <html:form action="/viewAllClassesSchedulesDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="list"/>
-    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-	<bean:define id="infoExecutionDegreesList" name="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" scope="request"/>
-	<html:hidden alt="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" property="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" value="infoExecutionDegreesList"/>
+    <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+	<bean:define id="infoExecutionDegreesList" name="<%=PresentationConstants.INFO_EXECUTION_DEGREE_LIST%>" scope="request"/>
+	<html:hidden alt="<%=PresentationConstants.INFO_EXECUTION_DEGREE_LIST%>" property="<%=PresentationConstants.INFO_EXECUTION_DEGREE_LIST%>" value="infoExecutionDegreesList"/>
 	
 	<p>
 		<bean:message key="label.select.degrees" />
@@ -26,7 +26,7 @@
 	   	<bean:message key="property.context.degree"/>:
    	</p>
 	
-	<logic:present name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>" scope="request">
+	<logic:present name="<%= PresentationConstants.INFO_EXECUTION_DEGREE_LIST %>" scope="request">
 		<p>
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.selectAllDegrees" property="selectAllDegrees"/> 
 			<strong><bean:message key="checkbox.show.all.degrees"/></strong>
@@ -34,7 +34,7 @@
 
 
 		<%int index = 0;%>
-		<logic:iterate id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>">
+		<logic:iterate id="infoExecutionDegree" name="<%= PresentationConstants.INFO_EXECUTION_DEGREE_LIST %>">
 			<p class="mvert025">
 				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedDegrees" property="selectedDegrees" value="<%= new String(""+index)%>"/>
 				<bean:write name="infoExecutionDegree" property="label"/><br/>

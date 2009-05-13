@@ -5,14 +5,14 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <center>
 	<h2><bean:message key="title.masterDegree.administrativeOffice.guide.reimbursementGuide.createReimbursementGuide"/></h2>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </center>
 
-<bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="request"/>
+<bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" scope="request"/>
 
 
 

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -56,7 +56,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	if (session != null) {
 
-	    session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_LIST);
 
 	    IUserView userView = getUserView(request);
 
@@ -70,7 +70,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 		throw new NonExistingActionException("O Degree de Mestrado", e);
 	    }
 
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 
 	    return mapping.findForward("DisplayMasterDegreeList");
 	}
@@ -100,7 +100,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 		throw new NonExistingActionException("O plano curricular ", e);
 	    }
 
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
 	    return mapping.findForward("MasterDegreeReady");
 	}
@@ -126,8 +126,8 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException(e);
 	}
 	List executionYearsLabels = transformIntoLabels(executionYearList);
-	request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, curricularPlanID);
+	request.setAttribute(PresentationConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, curricularPlanID);
 
 	return mapping.findForward("PrepareSuccess");
 
@@ -138,7 +138,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
+	session.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
 	Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
 	if (curricularPlanID == null) {
@@ -147,7 +147,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
 	return mapping.findForward("CreateReady");
 
     }
@@ -159,11 +159,11 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
 	// Create the Degree Type List
 
-	String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	String executionDegreeId = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	if (executionDegreeId == null) {
-	    executionDegreeId = request.getParameter(SessionConstants.EXECUTION_DEGREE);
+	    executionDegreeId = request.getParameter(PresentationConstants.EXECUTION_DEGREE);
 	}
-	session.setAttribute(SessionConstants.EXECUTION_YEAR, session.getAttribute(SessionConstants.EXECUTION_YEAR));
+	session.setAttribute(PresentationConstants.EXECUTION_YEAR, session.getAttribute(PresentationConstants.EXECUTION_YEAR));
 
 	Integer curricularPlanID = null;
 	String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
@@ -174,7 +174,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	}
 
 	request.setAttribute("curricularPlanID", curricularPlanID);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegreeId);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegreeId);
 
 	return mapping.findForward("PrepareSuccess");
 
@@ -202,7 +202,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException("O Candidato", e);
 	}
 
-	request.setAttribute(SessionConstants.NEW_MASTER_DEGREE_CANDIDATE, createdCandidate);
+	request.setAttribute(PresentationConstants.NEW_MASTER_DEGREE_CANDIDATE, createdCandidate);
 	return mapping.findForward("CreateSuccess");
     }
 

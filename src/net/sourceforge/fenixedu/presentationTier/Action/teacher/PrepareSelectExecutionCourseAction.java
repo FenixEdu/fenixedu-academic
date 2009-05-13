@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -48,7 +48,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 	ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
 	readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	InfoExecutionDegree infoExecutionDegree = RequestUtils.getExecutionDegreeFromRequest(request, infoExecutionPeriod
 		.getInfoExecutionYear());

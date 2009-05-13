@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.CertificateList;
 
 import org.apache.struts.action.ActionForm;
@@ -53,8 +53,8 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	Integer number = new Integer((String) ((DynaActionForm) form).get("requesterNumber"));
 	request.setAttribute("registrations", Registration.readByNumberAndDegreeType(number, DegreeType.MASTER_DEGREE));
 
-	request.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
-	request.setAttribute(SessionConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
+	request.setAttribute(PresentationConstants.DOCUMENT_REASON, DocumentReason.values());
+	request.setAttribute(PresentationConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
 
 	return mapping.findForward("ChooseStudentCurricularPlan");
     }
@@ -72,7 +72,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	Integer studentCurricularPlanID = (Integer) chooseDeclaration.get("studentCurricularPlanID");
 
 	if (destination.length != 0) {
-	    request.setAttribute(SessionConstants.DOCUMENT_REASON_LIST, destination);
+	    request.setAttribute(PresentationConstants.DOCUMENT_REASON_LIST, destination);
 	}
 
 	InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan.newInfoFromDomain(rootDomainObject
@@ -118,13 +118,13 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	Locale locale = new Locale("pt", "PT");
 	Date date = new Date();
 	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-	request.setAttribute(SessionConstants.DATE, formatedDate);
+	request.setAttribute(PresentationConstants.DATE, formatedDate);
 
-	request.setAttribute(SessionConstants.CERTIFICATE_TYPE, certificateString);
-	request.setAttribute(SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION, infoMasterDegreeThesisDataVersion);
-	request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, infoMasterDegreeProofVersion);
-	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
-	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	request.setAttribute(PresentationConstants.CERTIFICATE_TYPE, certificateString);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_THESIS_DATA_VERSION, infoMasterDegreeThesisDataVersion);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_PROOF_HISTORY, infoMasterDegreeProofVersion);
+	request.setAttribute(PresentationConstants.INFO_EXECUTION_YEAR, infoExecutionYear);
+	request.setAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 
 	return mapping.findForward("ChooseSuccess");
 

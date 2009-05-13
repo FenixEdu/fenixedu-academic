@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -136,7 +136,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
 
 	return mapping.findForward("Success");
     }
@@ -174,7 +174,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
 	// Check if the info can be changed
 	if ((infoCandidateSituation == null) || !(infoCandidateSituation.getSituation().equals(SituationName.PENDENTE_OBJ))) {
-	    request.setAttribute(SessionConstants.CANDIDATE_SITUATION, infoCandidateSituation);
+	    request.setAttribute(PresentationConstants.CANDIDATE_SITUATION, infoCandidateSituation);
 	    return mapping.findForward("Unchangeable");
 	}
 
@@ -197,14 +197,14 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 	    nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
 	}
 
-	request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-	request.setAttribute(SessionConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
+	request.setAttribute(PresentationConstants.NATIONALITY_LIST_KEY, nationalityList);
+	request.setAttribute(PresentationConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
 		.getAttribute(Globals.LOCALE_KEY)));
-	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
-	request.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
-	request.setAttribute(SessionConstants.PERSONAL_INFO_KEY, masterDegreeCandidate.getInfoPerson());
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.PERSONAL_INFO_KEY, masterDegreeCandidate.getInfoPerson());
 	changeApplicationInfoForm.set("candidateID", masterDegreeCandidate.getIdInternal());
 
 	// if New Person -> All personal info can be changed

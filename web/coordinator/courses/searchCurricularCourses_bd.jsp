@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -31,7 +31,7 @@
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodOID" property="executionPeriodOID" size="1">
 				<html:options	property="value" 
      						labelProperty="label" 
-							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
+							collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD %>" />
 			</html:select>
     	</td>
   	</tr>
@@ -43,7 +43,7 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYearOID" property="curricularYearOID" size="1">
 			<html:options	property="value" 
      						labelProperty="label" 
-							collection="<%= SessionConstants.LABELLIST_CURRICULAR_YEARS %>" />
+							collection="<%= PresentationConstants.LABELLIST_CURRICULAR_YEARS %>" />
 		</html:select>
     </td>
   </tr>

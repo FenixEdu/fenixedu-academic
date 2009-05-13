@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -55,7 +55,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	List executionPeriods = (List) ReadExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear()
 		.getIdInternal());
@@ -72,11 +72,11 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
 	}
 
-	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
 	/* Obtain a list of curricular years */
 	List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+	request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
 	return mapping.findForward("ReadyToSearch");
     }
@@ -105,11 +105,11 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod.getIdInternal().toString()));
 	}
 
-	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
 	/* Obtain a list of curricular years */
 	List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+	request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
 	return mapping.findForward("ReadyToSearch");
     }
@@ -121,7 +121,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	IUserView userView = getUserView(request);
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
@@ -178,7 +178,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	if (infoExecutionCourses != null) {
 	    sortList(request, infoExecutionCourses);
-	    request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
+	    request.setAttribute(PresentationConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
 	}
 
 	return mapping.findForward("ShowCurricularCourseList");

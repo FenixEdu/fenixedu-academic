@@ -14,7 +14,7 @@ import javax.servlet.jsp.PageContext;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
@@ -45,12 +45,12 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 	if (examsMap.getInfoExecutionDegree() != null && typeUser.equals("sop")) {
 	    strBuffer.append("<a href='showExamsManagement.do?method=createByDay" + "&amp;"
-		    + SessionConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
-		    + SessionConstants.EXECUTION_PERIOD_OID + "=" + examsMap.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-		    + SessionConstants.CURRICULAR_YEAR_OID + "=" + examsMap.getCurricularYears().get(0) + "&amp;"
-		    + SessionConstants.DAY + "=" + examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) + "&amp;"
-		    + SessionConstants.MONTH + "=" + (examsMapSlot.getDay().get(Calendar.MONTH) + 1) + "&amp;"
-		    + SessionConstants.YEAR + "=" + examsMapSlot.getDay().get(Calendar.YEAR) + "'>");
+		    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;"
+		    + PresentationConstants.EXECUTION_PERIOD_OID + "=" + examsMap.getInfoExecutionPeriod().getIdInternal() + "&amp;"
+		    + PresentationConstants.CURRICULAR_YEAR_OID + "=" + examsMap.getCurricularYears().get(0) + "&amp;"
+		    + PresentationConstants.DAY + "=" + examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) + "&amp;"
+		    + PresentationConstants.MONTH + "=" + (examsMapSlot.getDay().get(Calendar.MONTH) + 1) + "&amp;"
+		    + PresentationConstants.YEAR + "=" + examsMapSlot.getDay().get(Calendar.YEAR) + "'>");
 	}
 	strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
 	if ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) || isFirstDayOfSeason
@@ -98,12 +98,12 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		String courseInitials = infoExam.getInfoExecutionCourse().getSigla();
 
 		if (typeUser.equals("sop")) {
-		    strBuffer.append("<a href='showExamsManagement.do?method=edit&amp;" + SessionConstants.EXECUTION_COURSE_OID
-			    + "=" + infoExecutionCourse.getIdInternal() + "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "="
+		    strBuffer.append("<a href='showExamsManagement.do?method=edit&amp;" + PresentationConstants.EXECUTION_COURSE_OID
+			    + "=" + infoExecutionCourse.getIdInternal() + "&amp;" + PresentationConstants.EXECUTION_PERIOD_OID + "="
 			    + infoExecutionCourse.getInfoExecutionPeriod().getIdInternal() + "&amp;"
-			    + SessionConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
-			    + "&amp;" + SessionConstants.CURRICULAR_YEAR_OID + "=" + curicularYear.toString() + "&amp;"
-			    + SessionConstants.EXAM_OID + "=" + infoExam.getIdInternal() + "'>");
+			    + PresentationConstants.EXECUTION_DEGREE_OID + "=" + examsMap.getInfoExecutionDegree().getIdInternal()
+			    + "&amp;" + PresentationConstants.CURRICULAR_YEAR_OID + "=" + curicularYear.toString() + "&amp;"
+			    + PresentationConstants.EXAM_OID + "=" + infoExam.getIdInternal() + "'>");
 		    if (isOnValidWeekDay) {
 			strBuffer.append(courseInitials);
 		    } else {
@@ -242,21 +242,6 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 	    strBuffer.append("<b><span class='redtxt'>");
 
-	    /*
-	     * strBuffer.append( " <a
-	     * href='showExamsManagement.do?method=edit&amp;" +
-	     * SessionConstants.EXECUTION_COURSE_OID + "=" +
-	     * infoExam.getInfoExecutionCourse().getIdInternal() + "&amp;" +
-	     * SessionConstants.EXECUTION_PERIOD_OID + "=" +
-	     * infoExam.getInfoExecutionCourse
-	     * ().getInfoExecutionPeriod().getIdInternal() + "&amp;" +
-	     * SessionConstants.EXECUTION_DEGREE_OID + "=" +
-	     * examsMap.getInfoExecutionDegree().getIdInternal() + "&amp;" +
-	     * SessionConstants.CURRICULAR_YEAR_OID + "=" +
-	     * infoExam.getInfoExecutionCourse().getCurricularYear() + "&amp;" +
-	     * SessionConstants.EXAM_OID + "=" + infoExam.getIdInternal() +
-	     * "'>");
-	     */
 	    strBuffer.append(courseInitials);
 	    // strBuffer.append("</a>");
 

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 <%@ page import="java.util.Iterator" %>
 
 	
@@ -11,9 +11,9 @@
 <center>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	
-	<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
-	<bean:define id="contributor" name="<%= SessionConstants.CONTRIBUTOR %>" scope="request"/>
-	<bean:define id="transactionList" name="<%= SessionConstants.TRANSACTION_LIST %>" scope="request"  type="java.util.List"/>
+	<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
+	<bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>" scope="request"/>
+	<bean:define id="transactionList" name="<%= PresentationConstants.TRANSACTION_LIST %>" scope="request"  type="java.util.List"/>
 	
 	<html:form action="/createGuideFromTransactions.do" >
 		<table border="0">

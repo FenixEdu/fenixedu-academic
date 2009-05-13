@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedPublicExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +34,7 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 
 	HttpSession sessao = request.getSession(true);
 
-	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+	sessao.setAttribute(PresentationConstants.SESSION_IS_VALID, new Boolean(true));
 
 	/* Set in request ExecutionPeriods bean */
 
@@ -47,16 +47,16 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 		    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
 	}
 	if (executionPeriodsLabelValueList.size() > 1) {
-	    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+	    request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 	} else {
-	    request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	    request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 	}
 	/* ------------------------------------ */
 
 	// If executionPeriod was previously selected,form has that value as
 	// default
 	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	if (selectedExecutionPeriod != null) {
 	    DynaActionForm indexForm = (DynaActionForm) form;
@@ -79,8 +79,8 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 	    InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) infoExecutionPeriods.get(index.intValue());
 
 	    // Set selected executionPeriod in request
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
 	}
 
 	return mapping.findForward("choose");

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNumberCached
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.tools.Profiler;
 
 import org.apache.struts.action.ActionForm;
@@ -47,7 +47,7 @@ public class ManageCacheDA extends FenixDispatchAction {
 
 	Integer numberCachedItems = (Integer) ReadNumberCachedItems.run();
 
-	request.setAttribute(SessionConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
+	request.setAttribute(PresentationConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
 
 	return mapping.findForward("Manage");
     }

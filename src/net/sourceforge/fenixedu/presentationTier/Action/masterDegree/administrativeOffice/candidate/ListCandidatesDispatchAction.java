@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -83,16 +83,16 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	String action = request.getParameter("action");
 
 	if (action.equals("visualize")) {
-	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
+	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
 	} else if (action.equals("edit")) {
-	    session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
+	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION);
+	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
 
 	}
 
 	// Get the chosen exectionYear
-	String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+	String executionYear = (String) session.getAttribute(PresentationConstants.EXECUTION_YEAR);
 	listCandidatesForm.set("executionYear", executionYear);
 
 	// Get the Degree List
@@ -112,11 +112,11 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	List newDegreeList = degreeList;
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
 
-	session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+	session.setAttribute(PresentationConstants.DEGREE_LIST, executionDegreeLabels);
 
 	// Create the Candidate Situation List
 
-	session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	session.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
 	return mapping.findForward("PrepareReady");
 
@@ -167,7 +167,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	if (result.size() == 1) {
 	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
 	    request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 	    return mapping.findForward("ActionReady");
 	}
 	// Create find query String
@@ -187,10 +187,10 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 		query += "  - N�mero de Candidato: " + candidateNumber + "<br />";
 	}
 
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY);
-	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
-	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_QUERY);
+	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
 
 	return mapping.findForward("ChooseCandidate");
 
@@ -212,7 +212,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new Exception(e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 
 	return mapping.findForward("ActionReady");
     }
@@ -242,7 +242,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	if (candidateStudyPlan != null)
 	    request.setAttribute("studyPlan", candidateStudyPlan);
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, result);
 	return mapping.findForward("VisualizeCandidate");
     }
 
@@ -285,17 +285,17 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
 	}
 
-	request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-	request.setAttribute(SessionConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
+	request.setAttribute(PresentationConstants.NATIONALITY_LIST_KEY, nationalityList);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	request.setAttribute(PresentationConstants.SEX_LIST_KEY, GenderHelper.getSexLabelValues((Locale) request
 		.getAttribute(Globals.LOCALE_KEY)));
-	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
 
-	request.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
-	request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	request.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
 	return mapping.findForward("PrepareReady");
     }
@@ -435,7 +435,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
 	return mapping.findForward("ChangeSuccess");
     }
 
@@ -464,8 +464,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException();
 	}
 	request.setAttribute("password", pass);
-	session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-	session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	session.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
 	return mapping.findForward("ChangePasswordSuccess");
 
     }

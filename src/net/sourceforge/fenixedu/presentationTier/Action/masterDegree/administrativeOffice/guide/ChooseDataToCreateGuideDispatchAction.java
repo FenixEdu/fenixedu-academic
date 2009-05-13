@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,7 +33,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_LIST);
 
 	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
@@ -46,7 +46,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 	}
 
 	return mapping.findForward("DisplayMasterDegreeList");
@@ -73,7 +73,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 	}
 
 	return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
@@ -94,7 +94,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 	result = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
 	if ((result != null) && (result.size() > 0)) {
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_LIST, result);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_LIST, result);
 	}
 
 	return mapping.findForward("DisplayExecutionDegreeList");

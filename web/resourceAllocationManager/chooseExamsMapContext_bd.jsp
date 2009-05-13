@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/chooseExamsMapContextDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -18,7 +18,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.index" property="index" size="1">
-    	<html:options collection="<%=SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+    	<html:options collection="<%=PresentationConstants.DEGREES %>" property="value" labelProperty="label"/>
     </html:select>
 	</p>
 	<br />
@@ -32,8 +32,8 @@
    	<bean:message key="property.context.curricular.year"/>:
    	<br />
 	<br />
-	<logic:present name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>" scope="request">
-		<logic:iterate id="item" name="<%= SessionConstants.CURRICULAR_YEAR_LIST_KEY %>">
+	<logic:present name="<%= PresentationConstants.CURRICULAR_YEAR_LIST_KEY %>" scope="request">
+		<logic:iterate id="item" name="<%= PresentationConstants.CURRICULAR_YEAR_LIST_KEY %>">
 			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedCurricularYears" property="selectedCurricularYears">
 				<bean:write name="item"/>
 			</html:multibox>

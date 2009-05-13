@@ -3,13 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST %>">	
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<logic:present name="<%= PresentationConstants.DOCUMENT_REASON_LIST %>">	
 	<p>Esta DECLARAÇÃO destina-se a fins comprovativos de:</p>
-	<p><b><logic:iterate id="item" name="<%= SessionConstants.DOCUMENT_REASON_LIST %>" >
+	<p><b><logic:iterate id="item" name="<%= PresentationConstants.DOCUMENT_REASON_LIST %>" >
 			<bean:message name="item" bundle="ENUMERATION_RESOURCES"/><br />
 		</logic:iterate></b></p>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.DOCUMENT_REASON_LIST %>">
+<logic:notPresent name="<%= PresentationConstants.DOCUMENT_REASON_LIST %>">
 	<p>Esta DECLARAÇÃO destina-se a fins comprovativos.</p>
 </logic:notPresent>

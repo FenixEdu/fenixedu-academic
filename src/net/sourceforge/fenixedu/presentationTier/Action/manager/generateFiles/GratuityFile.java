@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
  * @author Tânia Pousão
@@ -69,13 +69,13 @@ public class GratuityFile {
 	// created
 	// and the error is registed
 	if (infoGratuitySituation.getRemainingValue().doubleValue() <= 0
-		&& infoGratuitySituation.getInsurancePayed().equals(SessionConstants.PAYED_INSURANCE)) {
+		&& infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.PAYED_INSURANCE)) {
 	    writerErrors.write(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + " "
 		    + NOTHING_TO_PAY);
 	    writerErrors.newLine();
 	    return false;
 	} else if (infoGratuitySituation.getRemainingValue().doubleValue() <= 0
-		&& !infoGratuitySituation.getInsurancePayed().equals(SessionConstants.PAYED_INSURANCE)) {
+		&& !infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.PAYED_INSURANCE)) {
 	    writerErrors.write(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber() + " "
 		    + INSURANCE_TO_PAY);
 	    writerErrors.newLine();

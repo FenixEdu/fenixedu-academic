@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.Con
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,7 +36,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) request
-		.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
+		.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(ExecutionDegree
 		.filterByAcademicInterval(contextSelectionBean.getAcademicInterval()));
 	Collections.sort(executionDegrees, executionDegreeComparator);
@@ -48,7 +48,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) request
-		.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
+		.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
 	final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(ExecutionDegree
 		.filterByAcademicInterval(contextSelectionBean.getAcademicInterval()));
 	Collections.sort(executionDegrees, executionDegreeComparator);

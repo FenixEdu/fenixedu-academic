@@ -52,7 +52,7 @@ import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -408,7 +408,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	    List<InfoObject> showOccupations = ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(
 		    (AllocatableSpace) space, day);
-	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
+	    request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
 	}
 
 	return mapping.findForward("ViewEventSpaceOccupations");

@@ -3,13 +3,13 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <jsp:include page="context.jsp"/>
 
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
+<logic:present name="<%= PresentationConstants.EXECUTION_COURSE %>" scope="request">
 	<bean:define id="executionCourse"
-				 name="<%= SessionConstants.EXECUTION_COURSE %>"
+				 name="<%= PresentationConstants.EXECUTION_COURSE %>"
 				 toScope="request"
 				 scope="request"/>
 	<bean:define id="executionCourseOID"

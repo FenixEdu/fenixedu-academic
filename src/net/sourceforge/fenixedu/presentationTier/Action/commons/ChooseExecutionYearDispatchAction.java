@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -48,7 +48,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O Degree de Mestrado", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 
 	return mapping.findForward("DisplayMasterDegreeList");
     }
@@ -72,7 +72,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O plano curricular ", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
 	return mapping.findForward("MasterDegreeReady");
     }
@@ -94,8 +94,8 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException(e);
 	}
 	List executionYearsLabels = transformIntoLabels(executionYearList);
-	request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, curricularPlanID);
+	request.setAttribute(PresentationConstants.EXECUTION_YEAR_LIST, executionYearsLabels);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, curricularPlanID);
 
 	return mapping.findForward("PrepareSuccess");
     }
@@ -126,7 +126,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
 	request.setAttribute("degreeCurricularPlanID", curricularPlanID);
 	return mapping.findForward("ChooseSuccess");
     }

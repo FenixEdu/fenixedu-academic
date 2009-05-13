@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 
 <h2 align="center"><bean:message key="label.masterDegree.administrativeOffice.searchResults"/></h2>
 
@@ -11,8 +11,8 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<br/>
 
-	<logic:present name="<%= SessionConstants.EXTERNAL_PERSONS_LIST %>" scope="request">
-		<bean:define id="externalPersonsList" name="<%= SessionConstants.EXTERNAL_PERSONS_LIST %>" type="java.util.List"/>
+	<logic:present name="<%= PresentationConstants.EXTERNAL_PERSONS_LIST %>" scope="request">
+		<bean:define id="externalPersonsList" name="<%= PresentationConstants.EXTERNAL_PERSONS_LIST %>" type="java.util.List"/>
 		<table>
 			<tr align="center">
 				<td><strong><bean:message key="label.masterDegree.administrativeOffice.externalPersonName" /></strong></td>

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -39,14 +39,14 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 	String action = request.getParameter("action");
 	DynaActionForm chooseGuide = (DynaActionForm) form;
 
-	session.removeAttribute(SessionConstants.GUIDE);
-	session.removeAttribute(SessionConstants.GUIDE_LIST);
-	session.removeAttribute(SessionConstants.REQUESTER_NUMBER);
+	session.removeAttribute(PresentationConstants.GUIDE);
+	session.removeAttribute(PresentationConstants.GUIDE_LIST);
+	session.removeAttribute(PresentationConstants.REQUESTER_NUMBER);
 
 	if (action.equals("visualize")) {
-	    session.setAttribute(SessionConstants.ACTION, "label.action.visualizeGuide");
+	    session.setAttribute(PresentationConstants.ACTION, "label.action.visualizeGuide");
 	} else if (action.equals("edit")) {
-	    session.setAttribute(SessionConstants.ACTION, "label.action.editGuide");
+	    session.setAttribute(PresentationConstants.ACTION, "label.action.editGuide");
 	}
 
 	chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
@@ -73,14 +73,14 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("A Guia", e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, result);
 	if (result.size() == 1) {
-	    request.setAttribute(SessionConstants.GUIDE, result.get(0));
+	    request.setAttribute(PresentationConstants.GUIDE, result.get(0));
 	    return mapping.findForward("ActionReady");
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
-	request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
+	request.setAttribute(PresentationConstants.GUIDE_YEAR, guideYear);
+	request.setAttribute(PresentationConstants.GUIDE_NUMBER, guideNumber);
 
 	return mapping.findForward("ShowVersionList");
     }
@@ -112,8 +112,8 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("A Guia", e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
-	request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, guideList);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 	return mapping.findForward("ActionReady");
 
     }

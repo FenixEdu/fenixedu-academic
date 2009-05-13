@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -42,7 +42,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	session.removeAttribute(PresentationConstants.MASTER_DEGREE_LIST);
 
 	IUserView userView = getUserView(request);
 
@@ -56,7 +56,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O Degree de Mestrado", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
 
 	return mapping.findForward("DisplayMasterDegreeList");
 
@@ -83,7 +83,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("O plano curricular ", e);
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
 	return mapping.findForward("MasterDegreeReady");
 
@@ -143,7 +143,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 	BeanComparator numberComparator = new BeanComparator("infoStudentCurricularPlan.infoStudent.number");
 	Collections.sort(enrolments, numberComparator);
 
-	request.setAttribute(SessionConstants.ENROLMENT_LIST, enrolments);
+	request.setAttribute(PresentationConstants.ENROLMENT_LIST, enrolments);
 
 	return mapping.findForward("Success");
     }

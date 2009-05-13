@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils;
 
-public abstract class SessionConstants {
+public abstract class PresentationConstants {
 
     // Constants for Registration Shift Enrolment
     public static final String INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY = "INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY";

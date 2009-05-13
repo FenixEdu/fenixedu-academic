@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -47,8 +47,8 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
     public ActionForward createClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-	request.removeAttribute(SessionConstants.LESSON_LIST_ATT);
+	request.removeAttribute(PresentationConstants.EXECUTION_COURSE_KEY);
+	request.removeAttribute(PresentationConstants.LESSON_LIST_ATT);
 	String className = getClassName(form);
 
 	IUserView userView = UserView.getUser();
@@ -59,18 +59,18 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 	    if (classView == null) {
 		InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
-			.getAttribute(SessionConstants.CURRICULAR_YEAR);
+			.getAttribute(PresentationConstants.CURRICULAR_YEAR);
 		Integer curricularYear = infoCurricularYear.getYear();
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
-			.getAttribute(SessionConstants.EXECUTION_DEGREE);
+			.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-			.getAttribute(SessionConstants.EXECUTION_PERIOD);
+			.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 		InfoClass infoClass = null;
 
 		try {
 		    infoClass = (InfoClass) CriarTurma.run(className, curricularYear, infoExecutionDegree, infoExecutionPeriod);
-		    request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
+		    request.setAttribute(PresentationConstants.CLASS_VIEW, infoClass);
 		} catch (ExistingServiceException e) {
 		    throw new ExistingActionException("A SchoolClass", e);
 		}
@@ -95,7 +95,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 	if (change) {
 
-	    InfoClass oldClassView = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	    InfoClass oldClassView = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	    if (oldClassView == null) {
 		addErrorMessage(request, "errors.unknownClass", "errors.unknownClass", className);
@@ -119,11 +119,10 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 	    // return mapping.getInputForward();
 	    // }
 	    //
-	    // request.setAttribute(SessionConstants.CLASS_VIEW, newClassView);
 
 	} else {
 	    /** starting editing */
-	    request.setAttribute(SessionConstants.CLASS_VIEW, getInfoTurma(userView, className, request));
+	    request.setAttribute(PresentationConstants.CLASS_VIEW, getInfoTurma(userView, className, request));
 	}
 
 	setLessonListToSession(request, userView, className);
@@ -137,9 +136,8 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 	// String className = getClassName(form);
 	IUserView userView = UserView.getUser();
 	// InfoClass classView = getInfoTurma(userView, className, request);
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 	setLessonListToSession(request, userView, infoClass.getNome());
-	// request.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 	return mapping.getInputForward();
     }
@@ -147,11 +145,11 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
     public ActionForward deleteClass(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	ApagarTurma.run(infoClass);
 
-	request.removeAttribute(SessionConstants.CLASS_VIEW);
+	request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
 	return mapping.findForward("listClasses");
     }
@@ -165,8 +163,8 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
     private InfoClass getInfoTurma(IUserView userView, String className, HttpServletRequest request) throws Exception {
 	/* :FIXME: put this 2 variables into parameters */
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	InfoClass classView = LerTurma.run(className, infoExecutionDegree, infoExecutionPeriod);
 	return classView;
@@ -174,8 +172,8 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
     private void setLessonListToSession(HttpServletRequest request, IUserView userView, String className) throws Exception {
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	InfoClass infoClass = null;
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
@@ -189,7 +187,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
 	List lessonList = LerAulasDeTurma.run(infoClass);
 
-	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
+	request.setAttribute(PresentationConstants.LESSON_LIST_ATT, lessonList);
 
     }
 

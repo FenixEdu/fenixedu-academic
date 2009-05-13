@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -64,11 +64,11 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 	editReimbursementGuideSituationForm.set("officialDateMonth", Data.OPTION_DEFAULT);
 	editReimbursementGuideSituationForm.set("officialDateYear", Data.OPTION_DEFAULT);
 
-	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
-	request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
-	request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE_STATES_LIST, ReimbursementGuideState.values());
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+	request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE_STATES_LIST, ReimbursementGuideState.values());
 
 	return mapping.findForward("start");
 
@@ -98,7 +98,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
 	    EditReimbursementGuide.run(reimbursementGuideID, situation, officialDate, remarks, userView);
 
-	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
+	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 
 	} catch (InvalidGuideSituationServiceException e) {
 	    throw new InvalidGuideSituationActionException(mapping.findForward("error"));

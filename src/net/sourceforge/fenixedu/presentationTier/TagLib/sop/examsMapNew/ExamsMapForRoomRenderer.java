@@ -142,20 +142,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 		    strBuffer.append("<td>");
 		    for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
 			InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
-			/*
-			 * strBuffer.append( " <a
-			 * href='showExamsManagement.do?method=edit&amp;" +
-			 * SessionConstants.EXECUTION_COURSE_OID + "=" +
-			 * infoEC.getIdInternal() + "&amp;" +
-			 * SessionConstants.EXECUTION_PERIOD_OID + "=" +
-			 * infoEC.getInfoExecutionPeriod().getIdInternal() +
-			 * "&amp;" + SessionConstants.EXECUTION_DEGREE_OID + "="
-			 * + examsMap.getInfoExecutionDegree().getIdInternal() +
-			 * "&amp;" + SessionConstants.CURRICULAR_YEAR_OID + "="
-			 * + infoEC.getCurricularYear() + "&amp;" +
-			 * SessionConstants.EXAM_OID + "=" +
-			 * infoExam.getIdInternal() + "'>");
-			 */strBuffer.append(infoEC.getSigla());
+			 strBuffer.append(infoEC.getSigla());
 			// strBuffer.append("</a>");
 
 			strBuffer.append("<br/>");

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.S
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -56,7 +56,7 @@ public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 	}
 
 	if ((infoExternalPersonsList != null) && (infoExternalPersonsList.isEmpty() == false)) {
-	    request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersonsList);
+	    request.setAttribute(PresentationConstants.EXTERNAL_PERSONS_LIST, infoExternalPersonsList);
 
 	    return mapping.findForward("success");
 	}

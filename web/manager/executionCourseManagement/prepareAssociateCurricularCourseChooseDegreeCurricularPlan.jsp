@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -34,7 +34,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlan" property="degreeCurricularPlan" size="1">
-					<html:options collection="<%=SessionConstants.DEGREES%>" property="value" labelProperty="label"/>
+					<html:options collection="<%=PresentationConstants.DEGREES%>" property="value" labelProperty="label"/>
 				</html:select>
 				<br />
 			</td>

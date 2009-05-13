@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
 import org.apache.struts.action.ActionForm;
@@ -79,27 +79,27 @@ public class SearchGrantOwnerAction extends SearchAction {
     }
 
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-	return (startIndex + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN - 1) < numberOfElementsInResult;
+	return (startIndex + PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN - 1) < numberOfElementsInResult;
     }
 
     private boolean hasBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-	return (startIndex - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN + 1) > 0;
+	return (startIndex - PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN + 1) > 0;
     }
 
     private Integer getNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
-	return Integer.valueOf(startIndex + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
+	return Integer.valueOf(startIndex + PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
     }
 
     private Integer getBeforeSpan(Integer startIndex, Integer numberOfElementsInResult) {
-	return Integer.valueOf(startIndex - SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
+	return Integer.valueOf(startIndex - PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN);
     }
 
     private Integer getActualPage(Integer startIndex) {
-	return Integer.valueOf((startIndex / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
+	return Integer.valueOf((startIndex / PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
     }
 
     private Integer getTotalNumberOfPages(Integer numberOfElements) {
-	return Integer.valueOf((numberOfElements / SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
+	return Integer.valueOf((numberOfElements / PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN) + 1);
     }
 
 }

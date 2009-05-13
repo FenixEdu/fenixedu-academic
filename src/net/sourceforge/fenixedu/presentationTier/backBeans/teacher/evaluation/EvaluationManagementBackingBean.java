@@ -57,7 +57,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -788,7 +788,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		    .append("/resourceAllocationManager/searchWrittenEvaluationsByDate.do?method=returnToSearchPage&amp;page=0&date=");
 	    stringBuilder.append(DateFormatUtil.format("yyyy/MM/dd", this.getBegin().getTime()));
 	    stringBuilder.append("&");
-	    stringBuilder.append(SessionConstants.EXECUTION_PERIOD_OID);
+	    stringBuilder.append(PresentationConstants.EXECUTION_PERIOD_OID);
 	    stringBuilder.append("=");
 	    stringBuilder.append(executionCourse.getExecutionPeriod().getIdInternal());
 	    if (selectedBegin != null && selectedBegin.length() > 0 && selectedBegin.equals("true")) {

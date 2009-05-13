@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/app.tld" prefix="app" %><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %><%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %><bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/><%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %><%@ taglib uri="/WEB-INF/app.tld" prefix="app" %><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %><%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %><bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs mvert0">
 	<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
 	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -9,7 +9,7 @@
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 		<logic:present name="infoDegreeCurricularPlan" >
 			&nbsp;&gt;&nbsp;
-			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" ><bean:write name="infoDegreeCurricularPlan" property="name" /></html:link>
+			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)  %>" ><bean:write name="infoDegreeCurricularPlan" property="name" /></html:link>
 			&nbsp;&gt;&nbsp;
 			<bean:message  key="public.degree.information.label.exams" bundle="PUBLIC_DEGREE_INFORMATION" />
 		</logic:present>
@@ -56,7 +56,7 @@
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
 		<html:form action="/chooseExamsMapContextDANew.do" method="get">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
@@ -80,12 +80,12 @@
 			</table>
 		</html:form>
 
-		<logic:notPresent name="<%=SessionConstants.INFO_EXAMS_MAP%>">
+		<logic:notPresent name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
 			<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInGivenPeriod"/></em></p>
 		</logic:notPresent>
-		<logic:present name="<%=SessionConstants.INFO_EXAMS_MAP%>">
+		<logic:present name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
 			<div>
-				<app:generateNewExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="public" mapType=" "/>
+				<app:generateNewExamsMap name="<%= PresentationConstants.INFO_EXAMS_MAP %>" user="public" mapType=" "/>
 			</div>
 		</logic:present>
 	</logic:present>

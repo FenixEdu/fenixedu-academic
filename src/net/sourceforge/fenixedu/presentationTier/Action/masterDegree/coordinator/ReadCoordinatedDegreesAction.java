@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +34,7 @@ public class ReadCoordinatedDegreesAction extends FenixAction {
 	    try {
 
 		List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ReadCoordinatedDegrees.run(userView);
-		session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
+		session.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, degrees);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

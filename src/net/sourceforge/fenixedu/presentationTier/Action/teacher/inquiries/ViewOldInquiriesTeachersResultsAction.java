@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCou
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -49,7 +49,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	HttpSession session = request.getSession();
-	InfoTeacher it = (InfoTeacher) session.getAttribute(SessionConstants.INFO_TEACHER);
+	InfoTeacher it = (InfoTeacher) session.getAttribute(PresentationConstants.INFO_TEACHER);
 
 	request.setAttribute("infoTeacher", it);
 
@@ -149,7 +149,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
 	} else if ((executionPeriodId != null) && (degreeId != null) && (curricularYear != null) && (courseCode != null)) {
 
-	    InfoTeacher it = (InfoTeacher) request.getSession().getAttribute(SessionConstants.INFO_TEACHER);
+	    InfoTeacher it = (InfoTeacher) request.getSession().getAttribute(PresentationConstants.INFO_TEACHER);
 
 
 	    List oldInquiryTeachersResList = (List) ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber.run(executionPeriodId, degreeId, curricularYear, courseCode, it.getTeacherNumber());

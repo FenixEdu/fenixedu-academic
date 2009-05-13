@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 	<br/>

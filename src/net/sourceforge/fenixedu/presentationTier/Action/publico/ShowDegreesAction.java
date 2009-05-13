@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -34,7 +34,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	ActionErrors errors = new ActionErrors();
 
 	Boolean inEnglish = new Boolean(false);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	InfoExecutionYear infoExecutionYear = null;
 	if (infoExecutionPeriod != null) {
 	    infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
@@ -63,7 +63,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 	    throws Exception {
 	ActionErrors errors = new ActionErrors();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	InfoExecutionYear infoExecutionYear = null;
 	String ano = null;
 	if (infoExecutionPeriod != null) {

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
 
@@ -30,7 +30,7 @@
 		<td>
 			<strong><bean:message key="label.student.branch" /></strong>
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.branch" property="branch">
-				<html:options collection="<%= SessionConstants.BRANCH %>" property="idInternal" labelProperty="name"/>
+				<html:options collection="<%= PresentationConstants.BRANCH %>" property="idInternal" labelProperty="name"/>
 		    </html:select>
 			<!--<logic:empty name="studentCurricularPlan" property="infoBranch">
 				<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>

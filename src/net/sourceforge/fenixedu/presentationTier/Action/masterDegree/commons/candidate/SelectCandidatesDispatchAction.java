@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -53,13 +53,13 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
 	Integer executionDegree = Integer.valueOf(getFromRequest("executionDegreeID", request));
 	if (executionDegree == null) {
-	    executionDegree = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));
+	    executionDegree = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
 	}
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 
 	Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
 	if (degreeCurricularPlanID == null) {
-	    degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE));
+	    degreeCurricularPlanID = Integer.valueOf((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE));
 	}
 	if (executionYear == null) {
 	    executionYear = (String) approvalForm.get("executionYear");
@@ -84,7 +84,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("NumerusClaususNotDefined");
 	}
 
-	request.setAttribute(SessionConstants.NUMERUS_CLAUSUS, numerusClausus);
+	request.setAttribute(PresentationConstants.NUMERUS_CLAUSUS, numerusClausus);
 
 	// Create the Candidate Situation List
 	List situationsList = new ArrayList();
@@ -108,7 +108,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING,
 		SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING));
 
-	request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, situationsList);
+	request.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, situationsList);
 
 	List candidateList = null;
 
@@ -154,7 +154,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	generateToken(request);
 	saveToken(request);
 
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 	request.setAttribute("candidateList", candidateList);
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	return mapping.findForward("PrepareSuccess");
@@ -197,8 +197,8 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	request.setAttribute("remarks", remarks);
 	request.setAttribute("executionYear", executionYear);
 	request.setAttribute("degree", degree);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
-	request.getSession(false).setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+	request.getSession(false).setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
 	// Get Numerus Clausus
 	Integer numerusClausus = null;
@@ -291,13 +291,13 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	String[] substitutes = (String[]) substituteForm.get("substitutes");
 	String executionDegree = (String) request.getAttribute("executionDegreeID");
 	if (executionDegree == null)
-	    executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	    executionDegree = (String) session.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	request.setAttribute("substitutes", substitutes);
 	request.setAttribute("candidatesID", ids);
 	request.setAttribute("situations", candidateList);
 	request.setAttribute("remarks", remarks);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 
 	List result = null;
 
@@ -307,7 +307,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException(e);
 	}
 	request.setAttribute("candidateList", result);
-	session.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+	session.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 	return mapping.findForward("OrderCandidatesReady");
     }
 
@@ -326,9 +326,9 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	String[] substitutes = (String[]) resultForm.get("substitutes");
 	Integer degreeCurricularPlanID = (Integer) resultForm.get("degreeCurricularPlanID");
 
-	String executionDegree = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	String executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	if (executionDegree == null)
-	    executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	    executionDegree = (String) session.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	if (!isTokenValid(request)) {
 	    return mapping.findForward("BackError");
 	}
@@ -338,7 +338,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	request.setAttribute("candidatesID", ids);
 	request.setAttribute("remarks", remarks);
 	request.setAttribute("substitutes", substitutes);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 
 	resultForm.set("executionYear", resultForm.get("executionYear"));
 	resultForm.set("degree", resultForm.get("degree"));
@@ -510,7 +510,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("situations", candidateList);
 	    request.setAttribute("remarks", remarks);
 	    request.setAttribute("confirmation", "NO");
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
 	    return mapping.findForward("ChooseSuccess");
 	}

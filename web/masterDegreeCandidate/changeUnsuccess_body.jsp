@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
@@ -17,8 +17,8 @@
    
    <table>
    
-    <logic:present name="<%= SessionConstants.CANDIDATE_SITUATION %>">
-		<bean:define id="situation" name="<%= SessionConstants.CANDIDATE_SITUATION %>" />    
+    <logic:present name="<%= PresentationConstants.CANDIDATE_SITUATION %>">
+		<bean:define id="situation" name="<%= PresentationConstants.CANDIDATE_SITUATION %>" />    
         <!-- Situacao da Candidatura -->
         <tr>
 	        <td><h2><bean:message key="label.candidate.applicationInfoSituation" /></h2></td>

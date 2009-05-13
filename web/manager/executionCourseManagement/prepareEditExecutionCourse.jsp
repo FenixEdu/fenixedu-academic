@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <p>
@@ -11,11 +11,11 @@
 	> <bean:write name="executionDegreeName"/>
 </logic:notEmpty>
 </p>
-<logic:present name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>">
+<logic:present name="<%=PresentationConstants.EXECUTION_COURSE_LIST_KEY%>">
 	<table>
 		<tr>	
 			<td>		
-				<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>">
+				<logic:notEmpty name="<%=PresentationConstants.EXECUTION_COURSE_LIST_KEY%>">
 					<table width="100%" cellpadding="0" border="0">
 						<tr>
 							<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.executionCourseName" />
@@ -28,7 +28,7 @@
 							</th>
 						</tr>
 			
-						<logic:iterate id="executionCourse" name="<%=SessionConstants.EXECUTION_COURSE_LIST_KEY%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
+						<logic:iterate id="executionCourse" name="<%=PresentationConstants.EXECUTION_COURSE_LIST_KEY%>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 							<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 							<tr>	 			
 								<td class="listClasses" style="text-align:left"><bean:write name="executionCourse" property="nome"/>

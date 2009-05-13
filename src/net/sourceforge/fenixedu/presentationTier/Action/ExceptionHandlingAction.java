@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.EmailValidator;
@@ -90,7 +90,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public ActionForward goBack(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	ActionMapping originalMapping = (ActionMapping) request.getSession().getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
+	ActionMapping originalMapping = (ActionMapping) request.getSession().getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY);
 	sessionRemover(request);
 
 	ActionForward actionForward = originalMapping.getInputForward();
@@ -106,7 +106,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     protected void sessionRemover(HttpServletRequest request) {
 	HttpSession session = request.getSession(false);
 	session.removeAttribute(Globals.ERROR_KEY);
-	session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
+	session.removeAttribute(PresentationConstants.REQUEST_CONTEXT);
     }
 
     public ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,

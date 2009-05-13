@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionMapping;
 
@@ -120,8 +120,8 @@ public class ExceptionInformation {
 	exceptionInfo.append("[RequestURL] ").append(request.getRequestURL()).append("\n");
 	exceptionInfo.append("[QueryString] ").append(request.getQueryString()).append("\n");
 
-	if (request.getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY) != null) {
-	    ActionMapping mapping = (ActionMapping) request.getAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
+	if (request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY) != null) {
+	    ActionMapping mapping = (ActionMapping) request.getAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY);
 	    exceptionInfo.append("[Path] ").append(mapping.getPath()).append("\n");
 	    exceptionInfo.append("[Name] ").append(mapping.getName()).append("\n");
 	} else {

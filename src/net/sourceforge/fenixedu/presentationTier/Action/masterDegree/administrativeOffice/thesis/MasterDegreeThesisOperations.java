@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -43,7 +43,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 	    StudentCurricularPlan studentCurricularPlan) {
 
 	if (studentCurricularPlan != null) {
-	    request.setAttribute(SessionConstants.STUDENT, studentCurricularPlan.getRegistration());
+	    request.setAttribute(PresentationConstants.STUDENT, studentCurricularPlan.getRegistration());
 	    request.setAttribute("studentCurricularPlan", studentCurricularPlan);
 
 	    if (form != null) {

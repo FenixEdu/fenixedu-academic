@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -51,11 +51,11 @@ public class AssociateExecutionCourseToExamAction
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 	String[] executionCourseIDArray = (String[]) chooseCourseForm.get("executionCourses");
@@ -72,11 +72,11 @@ public class AssociateExecutionCourseToExamAction
 	ContextUtils.setCurricularYearsContext(request);
 
 	IUserView userView = UserView.getUser();
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Criar o bean de anos curriculares */
 	List anosCurriculares = createCurricularYearList();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
+	request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -102,12 +102,12 @@ public class AssociateExecutionCourseToExamAction
 	    licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
 	}
 
-	request.setAttribute(SessionConstants.DEGREES, licenciaturas);
+	request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
@@ -117,11 +117,11 @@ public class AssociateExecutionCourseToExamAction
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
@@ -135,7 +135,7 @@ public class AssociateExecutionCourseToExamAction
 	ContextUtils.setExecutionPeriodContext(request);
 	ContextUtils.setCurricularYearsContext(request);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
@@ -145,11 +145,11 @@ public class AssociateExecutionCourseToExamAction
     public ActionForward listExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
@@ -165,14 +165,14 @@ public class AssociateExecutionCourseToExamAction
 	    return mapping.findForward("showForm");
 	}
 	Integer executionDegreeOID = new Integer((String) chooseCourseForm.get("executionDegreeOID"));
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeOID.toString());
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegreeOID.toString());
 	ContextUtils.setExecutionDegreeContext(request);
 
 	if (chooseCourseForm.get("curricularYear").equals("") || chooseCourseForm.get("curricularYear").equals(null)) {
 	    return mapping.findForward("showForm");
 	}
 	Integer curricularYear = new Integer((String) chooseCourseForm.get("curricularYear"));
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
 	ContextUtils.setCurricularYearContext(request);
 
 	ContextUtils.setExecutionPeriodContext(request);

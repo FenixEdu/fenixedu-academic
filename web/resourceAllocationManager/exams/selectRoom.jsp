@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -36,9 +36,9 @@ function cleanSelect() {
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodOID" property="executionPeriodOID"/> 
 	
-<logic:present name="<%=SessionConstants.ROOMS_LIST%>">		
+<logic:present name="<%=PresentationConstants.ROOMS_LIST%>">		
 
-	<bean:define id="rooms" name="<%=SessionConstants.ROOMS_LIST%>"/>
+	<bean:define id="rooms" name="<%=PresentationConstants.ROOMS_LIST%>"/>
 
 	<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roomsId" property="roomsId" onclick="invertSelect()">
 	     0 </html:multibox>
@@ -87,7 +87,7 @@ function cleanSelect() {
 		</logic:iterate>
 	</table>
 </logic:present>
-<logic:notPresent name="<%=SessionConstants.ROOMS_LIST%>">
+<logic:notPresent name="<%=PresentationConstants.ROOMS_LIST%>">
 	Não existem salas com as caracteristicas especificadas.<br/>
 </logic:notPresent>
 <br/>

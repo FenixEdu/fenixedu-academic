@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
 
@@ -66,7 +66,7 @@
 					</td>
 					<td>
 					    <logic:notEmpty name="infoLesson" property="infoSala">
-							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
+							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID).toString() %>'>
 								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</a>
 						</logic:notEmpty>
@@ -100,7 +100,7 @@
 					</td>
 					<td>
 					    <logic:notEmpty name="infoLesson" property="infoSala">
-							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID).toString() %>'>
+							<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />&amp;executionPeriodOID=<%= request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID).toString() %>'>
 								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</a>
 						</logic:notEmpty>	

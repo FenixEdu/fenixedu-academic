@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -61,7 +61,7 @@ public class FenixFacesServlet implements Servlet {
 
     private void handleException(ServletRequest request, ServletResponse response, Exception e) {
 	HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-	httpServletRequest.getSession(false).setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
+	httpServletRequest.getSession(false).setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, e.getStackTrace());
     }
 
     public String getServletInfo() {

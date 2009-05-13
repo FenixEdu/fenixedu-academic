@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
 <body>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -33,7 +33,7 @@
 			<tr>
 				<td width="150px"><bean:message key="label.person.sex" /></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.sex" property="sex">
-					<html:options collection="<%= SessionConstants.SEX_LIST_KEY %>"
+					<html:options collection="<%= PresentationConstants.SEX_LIST_KEY %>"
 						property="value" labelProperty="label" />
 				</html:select></td>
 			</tr>
@@ -48,13 +48,13 @@
 				<td width="150px"><bean:message
 					key="label.person.identificationDocumentIssueDate" /></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateYear" property="idIssueDateYear">
-					<html:options collection="<%= SessionConstants.YEARS_KEY %>"
+					<html:options collection="<%= PresentationConstants.YEARS_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateMonth" property="idIssueDateMonth">
-				<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.idIssueDateDay" property="idIssueDateDay">
-				<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>"
 						property="value" labelProperty="label" />
 				</html:select></td>
 			</tr>
@@ -64,13 +64,13 @@
 					key="label.person.identificationDocumentExpirationDate" /></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateYear" property="idExpirationDateYear">
 					<html:options
-						collection="<%= SessionConstants.EXPIRATION_YEARS_KEY %>"
+						collection="<%= PresentationConstants.EXPIRATION_YEARS_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateMonth" property="idExpirationDateMonth">
-				<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.idExpirationDateDay" property="idExpirationDateDay">
-				<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>"
 						property="value" labelProperty="label" />
 				</html:select></td>
 			</tr>
@@ -111,13 +111,13 @@
 			<tr>
 				<td width="150px"><bean:message key="label.person.birth" /></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.birthYear" property="birthYear">
-					<html:options collection="<%= SessionConstants.YEARS_KEY %>"
+					<html:options collection="<%= PresentationConstants.YEARS_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.birthMonth" property="birthMonth">
-				<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>"
 					property="value" labelProperty="label" />
 			</html:select> <html:select bundle="HTMLALT_RESOURCES" altKey="select.birthDay" property="birthDay">
-				<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>"
+				<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>"
 						property="value" labelProperty="label" />
 				</html:select></td>
 			</tr>
@@ -126,7 +126,7 @@
 				<td width="150px"><bean:message key="label.person.nationality" /></td>
 				<td><html:select bundle="HTMLALT_RESOURCES" altKey="select.nationality" property="nationality">
 					<html:options
-					collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>"
+					collection="<%= PresentationConstants.NATIONALITY_LIST_KEY %>"
 							property="value" labelProperty="label" />
 					</html:select></td>
 				</tr>

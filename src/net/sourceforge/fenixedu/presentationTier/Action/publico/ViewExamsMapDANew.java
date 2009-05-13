@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -68,8 +68,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 	List lista = (List) request.getAttribute("lista");
 	request.setAttribute("lista", lista);
 
-	// SessionConstants.EXECUTION_DEGREE, infoDegreeCurricularPlan
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	infoExecutionDegree = infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null ? findLatestInfoExecutionDegree(degreeCurricularPlan) : infoExecutionDegree;
 	if (infoExecutionDegree == null || infoExecutionDegree.getExecutionDegree() == null) {
@@ -77,29 +76,26 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
 	} else {
 	    request.setAttribute("infoDegreeCurricularPlan", new InfoDegreeCurricularPlan(degreeCurricularPlan));
 	}
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
 	// indice
 	Integer indice = getFromRequest("indice", request);
 	request.setAttribute("indice", indice);
 
-	// SessionConstants.EXECUTION_PERIOD,
-	// SessionConstants.EXECUTION_PERIOD_OID
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	// executionDegreeID
 	Integer executionDegreeId = getFromRequest("executionDegreeID", request);
 	request.setAttribute("executionDegreeID", executionDegreeId);
 
-	// SessionConstants.INFO_EXAMS_MAP
-	request.removeAttribute(SessionConstants.INFO_EXAMS_MAP);
+	request.removeAttribute(PresentationConstants.INFO_EXAMS_MAP);
 	try {
 	    final IUserView userView = getUserView(request);
 	    final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 	    final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
-	    request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	    request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 	} catch (NonExistingServiceException e) {
 	    return mapping.findForward("viewExamsMap");
 	}

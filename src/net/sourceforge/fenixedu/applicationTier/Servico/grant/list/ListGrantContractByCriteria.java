@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -46,7 +46,7 @@ public class ListGrantContractByCriteria extends FenixService {
 		propertyOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy()), infoSpanByCriteriaListGrantOwner
 			.getJustActiveContract(), infoSpanByCriteriaListGrantOwner.getJustDesactiveContract(),
 		infoSpanByCriteriaListGrantOwner.getBeginContract(), infoSpanByCriteriaListGrantOwner.getEndContract(),
-		infoSpanByCriteriaListGrantOwner.getSpanNumber(), SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
+		infoSpanByCriteriaListGrantOwner.getSpanNumber(), PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN,
 		infoSpanByCriteriaListGrantOwner.getGrantTypeId(), infoSpanByCriteriaListGrantOwner.getValidToTheDate());
 
 	List<InfoListGrantOwnerByOrder> listGrantContract = null;

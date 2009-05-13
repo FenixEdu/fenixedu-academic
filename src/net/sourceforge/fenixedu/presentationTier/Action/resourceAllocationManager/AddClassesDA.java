@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAvailableClassesForShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -29,13 +29,13 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	List classes = ReadAvailableClassesForShift.run(infoShift.getIdInternal());
 
 	if (classes != null && !classes.isEmpty()) {
 	    Collections.sort(classes, new BeanComparator("nome"));
-	    request.setAttribute(SessionConstants.CLASSES, classes);
+	    request.setAttribute(PresentationConstants.CLASSES, classes);
 	}
 
 	return mapping.findForward("ListClasses");
@@ -44,7 +44,7 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	DynaActionForm addClassesForm = (DynaActionForm) form;
 	String[] selectedClasses = (String[]) addClassesForm.get("selectedItems");

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 <html>
@@ -11,7 +11,7 @@
     </head>
 
     <body>
-     <bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request" />
+     <bean:define id="reimbursementGuide" name="<%= PresentationConstants.REIMBURSEMENT_GUIDE %>" scope="request" />
    	
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
@@ -69,8 +69,8 @@
             <td> <bean:write name="reimbursementGuide" property="infoGuide.infoPerson.nome"/> </td>
           </tr>
           
-          <logic:present name="<%= SessionConstants.STUDENT %>">
-	          <bean:define id="student" name="<%= SessionConstants.STUDENT %>"/>
+          <logic:present name="<%= PresentationConstants.STUDENT %>">
+	          <bean:define id="student" name="<%= PresentationConstants.STUDENT %>"/>
 	          <tr>
 	            <td> <bean:message key="label.number"/> </td>
 	            <td> <bean:write name="student" property="number"/> </td>
@@ -205,7 +205,7 @@
      <table valign="bottom" width="100%" border="0">
        <tr>
          <td>
-			<bean:message key="label.city"/>,&nbsp;<bean:write name="<%= SessionConstants.DATE %>" />		
+			<bean:message key="label.city"/>,&nbsp;<bean:write name="<%= PresentationConstants.DATE %>" />		
          </td>
        </tr>
        

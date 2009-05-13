@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 </logic:present>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
-<logic:present name="<%= SessionConstants.DEGREE_LIST %>">
+<logic:present name="<%= PresentationConstants.DEGREE_LIST %>">
 	<logic:present name="executionYear" >
 		<b><bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:</b><bean:write name="executionYear" />
 		<br /><br />
@@ -20,7 +20,7 @@
 	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<table>
 	   <!-- MasterDegree -->
-		<logic:iterate id="masterDegreeElem" name="<%= SessionConstants.DEGREE_LIST %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree">
+		<logic:iterate id="masterDegreeElem" name="<%= PresentationConstants.DEGREE_LIST %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree">
 			<tr>
 				<td>
 					<logic:present name="jspTitle">

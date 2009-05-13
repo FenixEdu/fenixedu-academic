@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
 <html:xhtml/>
@@ -14,8 +14,8 @@
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <p><bean:message key="text.coordinator.degreeSite.editOK"/><br />
-<logic:present name="<%= SessionConstants.MASTER_DEGREE %>">
-	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>">
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
 	
 	<app:defineContentPath id="contextPathForUrl" name="infoExecutionDegree" property="infoDegreeCurricularPlan.degreeCurricularPlan.degree.site" toScope="request"/>
 	<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>

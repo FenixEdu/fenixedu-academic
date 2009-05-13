@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionError;
@@ -71,12 +71,12 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 	if (gratuitySituationId != null) {
 	    payGratuityForm.set("gratuitySituationId", new Integer(gratuitySituationId));
-	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
 	}
 
 	if (insuranceExecutionYearId != null) {
 	    payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
-	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	return mapping.findForward("chooseContributor");
@@ -96,7 +96,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 	// Read Registration
 	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
-	request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
 	if (gratuitySituationId.intValue() > 0) {
 	    // Read Gratuity Situation
@@ -118,12 +118,12 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 		InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, executionYearID);
 
-		request.setAttribute(SessionConstants.INSURANCE_VALUE_WITH_GRATUITY, infoInsuranceValue);
+		request.setAttribute(PresentationConstants.INSURANCE_VALUE_WITH_GRATUITY, infoInsuranceValue);
 
 	    }
 
-	    request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
-	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+	    request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
 
 	}
 
@@ -131,8 +131,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    // Read Insurance Value
 	    InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
-	    request.setAttribute(SessionConstants.INSURANCE_VALUE, infoInsuranceValue);
-	    request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request.setAttribute(PresentationConstants.INSURANCE_VALUE, infoInsuranceValue);
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	// Read Contributor
@@ -146,7 +146,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 	    e.printStackTrace();
 	}
-	request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 
 	return mapping.findForward("confirmPayment");
 
@@ -193,10 +193,10 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 		errors.add("invalidValue", new ActionError("error.masterDegree.gratuity.adHocValueGreater"));
 		saveErrors(request, errors);
 
-		request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
-		request.setAttribute(SessionConstants.STUDENT, infoStudent);
-		request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
-		request.setAttribute(SessionConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+		request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+		request.setAttribute(PresentationConstants.STUDENT, infoStudent);
+		request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
+		request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
 		return mapping.findForward("confirmPayment");
 
 	    } else if (adHocValue.doubleValue() > 0) {
@@ -281,7 +281,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	return mapping.findForward("paymentSuccess");
 

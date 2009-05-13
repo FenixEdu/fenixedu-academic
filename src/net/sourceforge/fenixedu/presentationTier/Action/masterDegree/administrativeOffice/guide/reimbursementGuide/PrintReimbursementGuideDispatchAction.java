@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -86,10 +86,10 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
 	String formatedDate = DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 
-	request.setAttribute(SessionConstants.DATE, formatedDate);
-	request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+	request.setAttribute(PresentationConstants.DATE, formatedDate);
+	request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
 	if (infoStudent != null) {
-	    request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	    request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 	}
 
 	return mapping.findForward("start");

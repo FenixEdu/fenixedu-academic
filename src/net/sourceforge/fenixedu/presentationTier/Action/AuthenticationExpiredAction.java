@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -76,7 +76,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 		// Store the UserView into the session and return
 		UserView.setUser(userView);
 		session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
-		session.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
+		session.setAttribute(PresentationConstants.SESSION_IS_VALID, Boolean.TRUE);
 
 		int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
 		if (numberOfSubApplications == 1 || !userView.hasRoleType(RoleType.PERSON)) {

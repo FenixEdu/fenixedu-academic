@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomOccupationWeekBean;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +34,7 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 	RoomOccupationWeekBean roomOccupationWeekBean = new RoomOccupationWeekBean();
 
 	DynaActionForm indexForm = (DynaActionForm) form;
-	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(SessionConstants.SELECTED_ROOMS);
+	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
 	InfoRoom infoRoom = infoRooms.get(((Integer) indexForm.get("index")).intValue());
 	roomOccupationWeekBean.setRoom(infoRoom);
 	fillRequestData(roomOccupationWeekBean, request);
@@ -60,8 +60,8 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
     public void fillRequestData(RoomOccupationWeekBean roomOccupationWeekBean, HttpServletRequest request)
 	    throws FenixServiceException {
-	request.setAttribute(SessionConstants.ROOM, roomOccupationWeekBean.getRoom());
-	request.setAttribute(SessionConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getIdInternal());
+	request.setAttribute(PresentationConstants.ROOM, roomOccupationWeekBean.getRoom());
+	request.setAttribute(PresentationConstants.ROOM_OID, roomOccupationWeekBean.getRoom().getIdInternal());
 	final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(roomOccupationWeekBean.getRoom()
 		.getIdInternal());
 	Calendar calendar = Calendar.getInstance();
@@ -73,7 +73,7 @@ public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 	List<InfoObject> showOccupations = ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.run(room, YearMonthDay
 		.fromCalendarFields(calendar));
 	if (showOccupations != null) {
-	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
+	    request.setAttribute(PresentationConstants.LESSON_LIST_ATT, showOccupations);
 	}
 	request.setAttribute("roomOccupationWeekBean", roomOccupationWeekBean);
     }

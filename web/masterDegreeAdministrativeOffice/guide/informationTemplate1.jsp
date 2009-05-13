@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <html>
     <head>
@@ -12,7 +12,7 @@
 
     <body>
     
-    <bean:define id="candidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />     
+    <bean:define id="candidate" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />     
     
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
@@ -91,7 +91,7 @@
             <td> <bean:write name="candidate" property="infoPerson.username"/> </td>
           </tr>
           
-          <logic:present name="<%= SessionConstants.PRINT_PASSWORD %>">
+          <logic:present name="<%= PresentationConstants.PRINT_PASSWORD %>">
 		      <tr>
 		        <td> <bean:message key="label.candidate.password"/> </td>
 		        <td> <font face="Verdana"><bean:write name="password" /> </font></td>

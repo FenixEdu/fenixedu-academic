@@ -3,11 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
-<bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
-<bean:define id="conclusionDate" name="<%= SessionConstants.CONCLUSION_DATE %>" />
-<bean:define id="date" name="<%= SessionConstants.DATE %>" />
-<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+<bean:define id="infoFinalResult" name="<%= PresentationConstants.INFO_FINAL_RESULT%>" />
+<bean:define id="conclusionDate" name="<%= PresentationConstants.CONCLUSION_DATE %>" />
+<bean:define id="date" name="<%= PresentationConstants.DATE %>" />
+<bean:define id="infoStudentCurricularPlan" name="<%= PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN%>" />
 <table class="apura-final" width="90%" cellspacing="0">
 	<tr>
 		<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição de média</td>

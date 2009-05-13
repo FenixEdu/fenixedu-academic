@@ -3,12 +3,12 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <jsp:include page="context.jsp"/>
-<logic:present name="<%= SessionConstants.EXAM_DATEANDTIME %>" scope="request">
+<logic:present name="<%= PresentationConstants.EXAM_DATEANDTIME %>" scope="request">
 	<bean:define id="examDateAndTime"
-				 name="<%= SessionConstants.EXAM_DATEANDTIME %>"
+				 name="<%= PresentationConstants.EXAM_DATEANDTIME %>"
 				 property="timeInMillis"
 				 toScope="request"
 				 scope="request"/>

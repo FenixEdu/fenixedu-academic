@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -125,7 +125,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	// )
 	// ;
 
-	request.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
+	request.setAttribute(PresentationConstants.CONCLUSION_DATE, conclusionDate);
 	try {
 	    ReadCurrentExecutionYear.run();
 
@@ -140,16 +140,16 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	}
 	String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 
-	request.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+	request.setAttribute(PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 
-	request.setAttribute(SessionConstants.DATE, formatedDate);
+	request.setAttribute(PresentationConstants.DATE, formatedDate);
 	if (infoStudentCurricularPlan.getInfoBranch() != null
 		&& infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
-	    request.setAttribute(SessionConstants.INFO_BRANCH, infoStudentCurricularPlan.getInfoBranch().getName());
-	request.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, anoLectivo);
-	request.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);
+	    request.setAttribute(PresentationConstants.INFO_BRANCH, infoStudentCurricularPlan.getInfoBranch().getName());
+	request.setAttribute(PresentationConstants.INFO_EXECUTION_YEAR, anoLectivo);
+	request.setAttribute(PresentationConstants.ENROLMENT_LIST, newEnrolmentList);
 
-	request.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
+	request.setAttribute(PresentationConstants.INFO_FINAL_RESULT, infoFinalResult);
 
 	return mapping.findForward("ChooseSuccess");
 

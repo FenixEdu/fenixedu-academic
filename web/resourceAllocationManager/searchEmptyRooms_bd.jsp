@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="title.search.empty.rooms"/></h2>
@@ -12,7 +12,7 @@
 </p>
 
 <html:form action="/searchEmptyRoomsDA">
-	<html:hidden alt="<%=SessionConstants.EXECUTION_PERIOD_OID%>" property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
+	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
     	<input alt="input.method" type="hidden" name="method" value="doSearch"/>
     	
@@ -22,7 +22,7 @@
         	<td nowrap class="formTD"><bean:message key="property.executionPeriod"/></td>
           	<td nowrap class="formTD">
           		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodIndex" property="executionPeriodIndex" size="1">
-					<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>" />
+					<html:options property="value" labelProperty="label" collection="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD%>" />
 				</html:select></td>
       	</tr>                
 -->

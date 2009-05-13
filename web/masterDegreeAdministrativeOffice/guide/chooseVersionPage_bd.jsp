@@ -6,7 +6,7 @@
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
@@ -14,9 +14,9 @@
 
    <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-    <bean:define id="versionList" name="<%= SessionConstants.GUIDE_LIST %>" scope="request" />
-    <bean:define id="guideNumber" name="<%= SessionConstants.GUIDE_NUMBER%>" scope="request" />
-    <bean:define id="guideYear" name="<%= SessionConstants.GUIDE_YEAR %>" scope="request" />
+    <bean:define id="versionList" name="<%= PresentationConstants.GUIDE_LIST %>" scope="request" />
+    <bean:define id="guideNumber" name="<%= PresentationConstants.GUIDE_NUMBER%>" scope="request" />
+    <bean:define id="guideYear" name="<%= PresentationConstants.GUIDE_YEAR %>" scope="request" />
     
 	<bean:define id="link">/chooseGuideDispatchAction.do?method=chooseVersion<%= "&" %>page=0<%= "&" %>year=<bean:write name="guideYear"/>
 		<%= "&" %>number=<bean:write name="guideNumber"/><%= "&" %>version=

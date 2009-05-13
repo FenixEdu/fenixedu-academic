@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -75,7 +75,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 	rolesForm.set("roleOIDs", roleOIDs);
 
 	request.setAttribute("person", person);
-	request.setAttribute(SessionConstants.USERNAME, username);
+	request.setAttribute(PresentationConstants.USERNAME, username);
 	return prepareAddRoleToPerson(mapping, form, request, response);
     }
 
@@ -104,7 +104,7 @@ public class ManageRolesDA extends FenixDispatchAction {
 
     public ActionForward prepareAddRoleToPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute(SessionConstants.ROLES, rootDomainObject.getRoles());
+	request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRoles());
 	return mapping.findForward("Manage");
     }
 

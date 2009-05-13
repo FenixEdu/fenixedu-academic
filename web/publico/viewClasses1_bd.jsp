@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -18,11 +18,11 @@
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 		&nbsp;&gt;&nbsp;
 
-		<logic:present name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>">
-			<bean:define id="infoDegreeCurricularPlan" name="<%=SessionConstants.INFO_DEGREE_CURRICULAR_PLAN%>"/>
+		<logic:present name="<%=PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN%>">
+			<bean:define id="infoDegreeCurricularPlan" name="<%=PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN%>"/>
 		</logic:present>
 
-		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" ><bean:write name="infoDegreeCurricularPlan" property="name" /></html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()+ "&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)  %>" ><bean:write name="infoDegreeCurricularPlan" property="name" /></html:link>
 		&nbsp;&gt;&nbsp;
 		<bean:message key="public.degree.information.label.classes" bundle="PUBLIC_DEGREE_INFORMATION" /> 
 	</logic:present>
@@ -71,7 +71,7 @@
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
 		<html:form action="/chooseContextDANew.do" method="get">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%SessionConstants.EXECUTION_PERIOD_OID%>" property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="nextPagePublic"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeID" property="degreeID" value="<%= ""+request.getAttribute("degreeID")%>" />
@@ -113,7 +113,7 @@
 					<tr>
 					    <td class="<%= rowColor %>">	
 							<html:link page="<%= "/viewClassTimeTableNew.do?executionPeriodOID="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)
+							+ pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID)
 							+ "&amp;classId="
 							+ pageContext.findAttribute("classId")
 							+ "&amp;degreeInitials="

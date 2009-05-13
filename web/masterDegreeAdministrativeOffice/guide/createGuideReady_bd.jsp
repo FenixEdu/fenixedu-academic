@@ -6,13 +6,13 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.Integer" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 
    <span class="error"><!-- Error messages go here --><html:errors /><br/></span>
 
    <table>
-    <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE%>" />
+    <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE%>" />
     <bean:define id="graduationType" name="graduationType"/>
     
        <!-- Requester Name -->
@@ -24,7 +24,7 @@
        <!-- Requester Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
-         <td><bean:write name="<%= SessionConstants.REQUESTER_NUMBER %>" /></td>
+         <td><bean:write name="<%= PresentationConstants.REQUESTER_NUMBER %>" /></td>
         </tr>
 
        <!-- Requester degree -->
@@ -102,8 +102,8 @@
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_TYPE).toString()%>'/>
-       <html:hidden alt="<%= SessionConstants.REQUESTER_NUMBER %>" property="<%= SessionConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(SessionConstants.REQUESTER_NUMBER).toString()%>'/>
+       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_TYPE).toString()%>'/>
+       <html:hidden alt="<%= PresentationConstants.REQUESTER_NUMBER %>" property="<%= PresentationConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_NUMBER).toString()%>'/>
        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>

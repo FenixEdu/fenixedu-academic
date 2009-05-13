@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -192,9 +192,9 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 			    ep.getIdInternal().toString()));
 		}
 	    }
-	    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
+	    request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
 
-	    request.setAttribute(SessionConstants.LABELLIST_WEEKS, weeksLabelValueList);
+	    request.setAttribute(PresentationConstants.LABELLIST_WEEKS, weeksLabelValueList);
 	    if (indexWeek != null) {
 		today = (Calendar) weeks.get(indexWeek.intValue());
 	    }

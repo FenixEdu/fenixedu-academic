@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTrans
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -63,7 +63,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 	if (infoStudent == null) {
 	    throw new FenixActionException("error.exception.masterDegree.nonExistentStudent");
 	}
-	request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
 	// Read Gratuity Situation
 	InfoGratuitySituation infoGratuitySituation = null;
@@ -76,7 +76,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
-	request.setAttribute(SessionConstants.GRATUITY_SITUATION, infoGratuitySituation);
+	request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
 
 	// Read Transactions
 	List infoTransactions = null;
@@ -88,7 +88,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
-	request.setAttribute(SessionConstants.TRANSACTION_LIST, infoTransactions);
+	request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactions);
 
 	Iterator it = infoTransactions.iterator();
 	InfoTransaction infoTransaction = null;
@@ -106,7 +106,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 		transactionsWithoutGuideList.add(null);
 	    }
 	}
-	request.setAttribute(SessionConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST, transactionsWithoutGuideList);
+	request.setAttribute(PresentationConstants.TRANSACTIONS_WITHOUT_GUIDE_LIST, transactionsWithoutGuideList);
 
 	return mapping.findForward("showDetails");
 

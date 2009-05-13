@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
-<bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
+<bean:define id="reimbursementGuide" name="<%= PresentationConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
 <bean:define id="number" name="reimbursementGuide" property="number" />
 	
 <center>

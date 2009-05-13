@@ -3,14 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.student.Registration" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract" %>
 
 
-<bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
-<bean:define id="dissertationTitleFromRequest" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
+<bean:define id="student" name="<%= PresentationConstants.STUDENT %>" scope="request"/>
+<bean:define id="dissertationTitleFromRequest" name="<%= PresentationConstants.DISSERTATION_TITLE %>" />
 		
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeProof"/></h2>
 <center>
@@ -72,17 +72,17 @@
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateDay" property="proofDateDay">
-			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.DAYS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateMonth" property="proofDateMonth">
-			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.proofDateYear" property="proofDateYear">
-			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.YEARS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>						
 
@@ -93,17 +93,17 @@
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateDay" property="thesisDeliveryDateDay">
-			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.DAYS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateMonth" property="thesisDeliveryDateMonth">
-			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 			<th>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.thesisDeliveryDateYear" property="thesisDeliveryDateYear">
-			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.YEARS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>	
 		</tr>
@@ -144,8 +144,8 @@
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
 		</tr>
-			<logic:present name="<%= SessionConstants.JURIES_LIST %>" scope="request">
-				<bean:define id="juriesList" name="<%= SessionConstants.JURIES_LIST %>" type="java.util.List"/>
+			<logic:present name="<%= PresentationConstants.JURIES_LIST %>" scope="request">
+				<bean:define id="juriesList" name="<%= PresentationConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
 					<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
@@ -193,8 +193,8 @@
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalJuries"/></th>				
 		</tr>
 				
-		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" scope="request">
-			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
+		<logic:present name="<%= PresentationConstants.EXTERNAL_JURIES_LIST %>" scope="request">
+			<bean:define id="externalJuriesList" name="<%= PresentationConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
 			<tr>
 				<td>&nbsp;</td>	
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
@@ -227,8 +227,8 @@
 			</tr>			
 		</logic:present>		
 
-		<logic:notPresent name="<%= SessionConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
-			<logic:notPresent name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
+		<logic:notPresent name="<%= PresentationConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
+			<logic:notPresent name="<%= PresentationConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
 				<tr>
 					<td align="left" colspan="4">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
@@ -239,7 +239,7 @@
 			</logic:notPresent>
 		</logic:notPresent>
 		
-		<logic:present name="<%= SessionConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
+		<logic:present name="<%= PresentationConstants.SEARCH_EXTERNAL_JURIES %>" scope="request">
 			<tr><td colspan="4" >
 				<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
@@ -265,8 +265,8 @@
 			</tr>
 		</logic:present>
 		<!-- External Person search results -->
-		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
-			<bean:define id="externalJuriesSearchResultsList" name="<%= SessionConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" type="java.util.List"/>
+		<logic:present name="<%= PresentationConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" scope="request">
+			<bean:define id="externalJuriesSearchResultsList" name="<%= PresentationConstants.EXTERNAL_JURIES_SEARCH_RESULTS %>" type="java.util.List"/>
 			<tr>
 				<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.searchResults"/></th>				
 			</tr>

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 <html>
@@ -12,7 +12,7 @@
     </head>
 
     <body>
-     <bean:define id="guide" name="<%= SessionConstants.GUIDE %>" scope="session" />
+     <bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" scope="session" />
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">
@@ -61,10 +61,10 @@
             <td width="20%"><strong>Processo de:</strong></td>
             <td width="80%">&nbsp;</td>
           </tr>
-          <logic:present name="<%= SessionConstants.REQUESTER_NUMBER%>">
+          <logic:present name="<%= PresentationConstants.REQUESTER_NUMBER%>">
 	          <tr>
 	            <td> <bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
-	            <td> <bean:write name="<%= SessionConstants.REQUESTER_NUMBER%>" /> </td>
+	            <td> <bean:write name="<%= PresentationConstants.REQUESTER_NUMBER%>" /> </td>
 	          </tr>
           </logic:present>
 
@@ -72,10 +72,10 @@
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="guide" property="infoPerson.nome"/> </td>
           </tr>
-          <logic:present name="<%= SessionConstants.STUDENT%>">
+          <logic:present name="<%= PresentationConstants.STUDENT%>">
 			  <tr>
 				<td> <bean:message key="label.number"/> </td>
-				<td> <bean:write name="<%= SessionConstants.STUDENT%>" /> </td>
+				<td> <bean:write name="<%= PresentationConstants.STUDENT%>" /> </td>
 			  </tr>  
           </logic:present>          
           <tr>
@@ -217,7 +217,7 @@
      <table valign="bottom" width="100%" border="0">
        <tr>
          <td>
-			<bean:write name="<%= SessionConstants.DATE %>" />			
+			<bean:write name="<%= PresentationConstants.DATE %>" />			
          </td>
        </tr>
        

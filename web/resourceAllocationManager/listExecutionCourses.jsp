@@ -1,30 +1,30 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <html:xhtml/>
 
-<logic:present name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
-	<bean:size id="numberInfoExecutionCourses" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>"/>
+<logic:present name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
+	<bean:size id="numberInfoExecutionCourses" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>"/>
 	<bean:define id="searchExecutionCourse" name="searchExecutionCourse"/>
 	<logic:notEqual name="numberInfoExecutionCourses" value="0">
 		<table class="tstyle4 tdcenter">
 			<tr>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-							+ SessionConstants.ACADEMIC_INTERVAL
+							+ PresentationConstants.ACADEMIC_INTERVAL
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+							+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ PresentationConstants.EXECUTION_DEGREE_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
+							+ pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ SessionConstants.CURRICULAR_YEAR_OID
+							+ PresentationConstants.CURRICULAR_YEAR_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
+							+ pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
 							+ "execution_course_name"
 							+ "="
@@ -35,17 +35,17 @@
 				</th>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-                            + SessionConstants.ACADEMIC_INTERVAL
+                            + PresentationConstants.ACADEMIC_INTERVAL
                             + "="
-                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+                            + pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ PresentationConstants.EXECUTION_DEGREE_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
+							+ pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ SessionConstants.CURRICULAR_YEAR_OID
+							+ PresentationConstants.CURRICULAR_YEAR_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
+							+ pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
 							+ "execution_course_name"
 							+ "="
@@ -56,17 +56,17 @@
 				</th>
 				<th>
 					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
-                            + SessionConstants.ACADEMIC_INTERVAL
+                            + PresentationConstants.ACADEMIC_INTERVAL
                             + "="
-                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+                            + pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 							+ "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ PresentationConstants.EXECUTION_DEGREE_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE_OID)
+							+ pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID)
 							+ "&amp;"
-							+ SessionConstants.CURRICULAR_YEAR_OID
+							+ PresentationConstants.CURRICULAR_YEAR_OID
 							+ "="
-							+ pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID)
+							+ pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR_OID)
 							+ "&amp;"
 							+ "execution_course_name"
 							+ "="
@@ -77,16 +77,16 @@
 				</th>
 			</tr>
 			
-			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>">
+			<logic:iterate id="executionCourse" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>">
 				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
 				<tr>
 					<td>
 						<html:link page="<%= "/manageExecutionCourse.do?method=prepare&amp;"
-	                            + SessionConstants.ACADEMIC_INTERVAL
+	                            + PresentationConstants.ACADEMIC_INTERVAL
 	                            + "="
-	                            + pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+	                            + pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 								+ "&amp;"
-								+ SessionConstants.EXECUTION_COURSE_OID
+								+ PresentationConstants.EXECUTION_COURSE_OID
 								+ "="
 								+ pageContext.findAttribute("executionCourseOID") %>">
 							<bean:write name="executionCourse" property="nome"/>

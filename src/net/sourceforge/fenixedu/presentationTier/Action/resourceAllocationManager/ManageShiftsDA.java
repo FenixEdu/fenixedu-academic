@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -104,13 +104,13 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	// try {
 	final InfoShift newInfoShift = CriarTurno.run(infoShift);
-	request.setAttribute(SessionConstants.SHIFT, newInfoShift);
+	request.setAttribute(PresentationConstants.SHIFT, newInfoShift);
 
 	// } catch (ExistingServiceException ex) {
 	// throw new ExistingActionException("O Shift", ex);
 	// }
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 
 	return mapping.findForward("EditShift");
     }
@@ -120,7 +120,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	ContextUtils.setShiftContext(request);
 
-	InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	try {
 	    DeleteShift.run(infoShiftToDelete);
@@ -174,7 +174,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException,
 	    Exception {
-	ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
+	ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
 
 	List<InfoShift> infoShifts = ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context
 		.getAcademicInterval(), new InfoExecutionDegree(context.getExecutionDegree()), new InfoCurricularYear(context
@@ -183,7 +183,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
 	if (infoShifts != null && !infoShifts.isEmpty()) {
-	    request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+	    request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
 	}
 
 	SessionUtils.getExecutionCourses(request);

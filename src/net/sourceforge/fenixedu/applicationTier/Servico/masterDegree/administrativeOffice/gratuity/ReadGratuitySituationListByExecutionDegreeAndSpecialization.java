@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -142,9 +142,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
 		     */
 
 		    if (insuranceTransactionList.size() > 0) {
-			infoGratuitySituation.setInsurancePayed(SessionConstants.PAYED_INSURANCE);
+			infoGratuitySituation.setInsurancePayed(PresentationConstants.PAYED_INSURANCE);
 		    } else {
-			infoGratuitySituation.setInsurancePayed(SessionConstants.NOT_PAYED_INSURANCE);
+			infoGratuitySituation.setInsurancePayed(PresentationConstants.NOT_PAYED_INSURANCE);
 		    }
 
 		    gratuitySituation.updateValues();

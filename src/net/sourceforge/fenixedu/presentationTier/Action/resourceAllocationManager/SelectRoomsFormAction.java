@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,8 +37,8 @@ public class SelectRoomsFormAction extends FenixAction {
 
 	if (infoRooms != null && !infoRooms.isEmpty()) {
 	    Collections.sort(infoRooms);
-	    request.removeAttribute(SessionConstants.SELECTED_ROOMS);
-	    request.setAttribute(SessionConstants.SELECTED_ROOMS, infoRooms);
+	    request.removeAttribute(PresentationConstants.SELECTED_ROOMS);
+	    request.setAttribute(PresentationConstants.SELECTED_ROOMS, infoRooms);
 	    request.removeAttribute("selectRoomCriteria_Name");
 	    request.setAttribute("selectRoomCriteria_Name", readFormValue(roomForm, "name"));
 	    request.removeAttribute("selectRoomCriteria_Building");
@@ -53,7 +53,7 @@ public class SelectRoomsFormAction extends FenixAction {
 	    request.setAttribute("selectRoomCriteria_CapacityExame", readFormValue(roomForm, "capacityExame"));
 	    request.setAttribute("executionPeriodId", executionPeriodId);
 	} else {
-	    request.removeAttribute(SessionConstants.SELECTED_ROOMS);
+	    request.removeAttribute(PresentationConstants.SELECTED_ROOMS);
 	    request.removeAttribute("selectRoomCriteria_Name");
 	    request.removeAttribute("selectRoomCriteria_Building");
 	    request.removeAttribute("selectRoomCriteria_Floor");

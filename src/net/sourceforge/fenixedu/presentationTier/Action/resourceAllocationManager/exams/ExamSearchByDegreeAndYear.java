@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,14 +43,14 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	    throws Exception {
 
 	IUserView userView = UserView.getUser();
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	List curricularYearsList = new ArrayList();
 	for (int i = 1; i <= 5; i++) {
 	    curricularYearsList.add(String.valueOf(i));
 	}
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYearsList);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -78,7 +78,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	    licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
 	}
 
-	request.setAttribute(SessionConstants.DEGREES, licenciaturas);
+	request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
 	return mapping.findForward("show");
     }
 
@@ -100,23 +100,23 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	for (int i = 0; i < selectedCurricularYears.length; i++) {
 	    curricularYears.add(new Integer(selectedCurricularYears[i]));
 	    if (selectedCurricularYears[i].equals("1")) {
-		request.setAttribute(SessionConstants.CURRICULAR_YEARS_1, "1");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_1, "1");
 	    }
 	    if (selectedCurricularYears[i].equals("2")) {
-		request.setAttribute(SessionConstants.CURRICULAR_YEARS_2, "2");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_2, "2");
 	    }
 	    if (selectedCurricularYears[i].equals("3")) {
-		request.setAttribute(SessionConstants.CURRICULAR_YEARS_3, "3");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_3, "3");
 	    }
 	    if (selectedCurricularYears[i].equals("4")) {
-		request.setAttribute(SessionConstants.CURRICULAR_YEARS_4, "4");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_4, "4");
 	    }
 	    if (selectedCurricularYears[i].equals("5")) {
-		request.setAttribute(SessionConstants.CURRICULAR_YEARS_5, "5");
+		request.setAttribute(PresentationConstants.CURRICULAR_YEARS_5, "5");
 	    }
 	}
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEARS_LIST, curricularYears);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEARS_LIST, curricularYears);
 
 	int index = -1;
 	try {
@@ -128,21 +128,21 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = null;
 	List infoExamsMap = new ArrayList();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	List executionDegreeList = (List) ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	if (index != -1) {
 	    infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(index);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 	    infoExamsMap.add(getExamsMap(request, curricularYears, infoExecutionDegree, infoExecutionPeriod));
-	    request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	    request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 	} else {
 	    // all degrees
 	    infoExamsMap = getExamsMap(request, curricularYears, executionDegreeList, infoExecutionPeriod);
-	    request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	    request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 	}
 
 	return mapping.findForward("showExamsMap");

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -34,10 +34,10 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 		.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
 
 	if (masterDegreeProofVersion.getJuries().isEmpty() == false)
-	    request.setAttribute(SessionConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
+	    request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
 
 	if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
+	    request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
 	}
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -47,12 +47,12 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 
 	if (masterDegreeProofVersion.getProofDate() != null) {
 	    proofDate = simpleDateFormat.format(masterDegreeProofVersion.getProofDate());
-	    request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
+	    request.setAttribute(PresentationConstants.PROOF_DATE, proofDate);
 	}
 
 	if (masterDegreeProofVersion.getThesisDeliveryDate() != null) {
 	    thesisDeliveryDate = simpleDateFormat.format(masterDegreeProofVersion.getThesisDeliveryDate());
-	    request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
+	    request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
 
 	}
 
@@ -60,11 +60,11 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends FenixDispat
 	simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
-	request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
+	request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
+	request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
 
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
-	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
+	request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
+	request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
 
 	return mapping.findForward("start");
 

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -61,57 +61,11 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 	request.setAttribute("public.buildings", buildings);
 	request.setAttribute("public.types", types);
 
-	final String executionPeriodString = request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodString);
+	final String executionPeriodString = request.getParameter(PresentationConstants.EXECUTION_PERIOD_OID);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, executionPeriodString);
 
 	return mapping.findForward("roomSearch");
     }
-
-    // Extremely likely to be unused. service invocation was being made with
-    // wrong argument types.
-    // public ActionForward search(ActionMapping mapping, ActionForm form,
-    // HttpServletRequest request, HttpServletResponse response)
-    // throws Exception {
-    //
-    // IUserView userView = UserView.getUser();
-    // DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
-    //
-    // String name = (String) roomExamForm.get("name");
-    // if (name.equals("")) {
-    // name = null;
-    // }
-    // String building = (String) roomExamForm.get("building");
-    // if (building.equals("")) {
-    // building = null;
-    // }
-    // Integer floor = null;
-    // Integer type = null;
-    // Integer normal = null;
-    // Integer exam = null;
-    // try {
-    // floor = Integer.valueOf((String) roomExamForm.get("floor"));
-    // } catch (NumberFormatException ex) {
-    // }
-    // try {
-    // type = Integer.valueOf((String) roomExamForm.get("type"));
-    // } catch (NumberFormatException ex) {
-    // }
-    // try {
-    // normal = Integer.valueOf((String) roomExamForm.get("normal"));
-    // } catch (NumberFormatException ex) {
-    // }
-    // try {
-    // exam = Integer.valueOf((String) roomExamForm.get("exam"));
-    // } catch (NumberFormatException ex) {
-    // }
-    //
-    // List rooms = (List) SearchRooms.run(name, building, floor, type, normal,
-    // exam);
-    // if (rooms != null && !rooms.isEmpty()) {
-    // request.setAttribute(SessionConstants.ROOMS_LIST, rooms);
-    // }
-    // return mapping.findForward("roomChoose");
-    // }
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
@@ -129,7 +83,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
 	List infoExamsMap = getExamsMap(request, infoRooms);
 
-	request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 
 	return mapping.findForward("showExamsMap");
     }
@@ -138,7 +92,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
 	IUserView userView = getUserView(request);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	List infoRoomExamsMaps;
 

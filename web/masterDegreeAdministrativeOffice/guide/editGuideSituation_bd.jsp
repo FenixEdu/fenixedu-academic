@@ -5,16 +5,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
-   		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
+   		<bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" scope="session"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		
-   		<bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="session"/>
-   		<bean:define id="months" name="<%= SessionConstants.MONTH_LIST_KEY %>" scope="session"/>
-   		<bean:define id="years" name="<%= SessionConstants.YEARS_KEY %>" scope="session"/>
+   		<bean:define id="days" name="<%= PresentationConstants.MONTH_DAYS_KEY %>" scope="session"/>
+   		<bean:define id="months" name="<%= PresentationConstants.MONTH_LIST_KEY %>" scope="session"/>
+   		<bean:define id="years" name="<%= PresentationConstants.YEARS_KEY %>" scope="session"/>
         <bean:define id="number" name="infoGuide" property="number" />
         <bean:define id="year" name="infoGuide" property="year" />
         <bean:define id="version" name="infoGuide" property="version" />
@@ -140,13 +140,13 @@
          			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
           			<td>
           				<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateYear" property="paymentDateYear">
-                			<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+                			<html:options collection="<%= PresentationConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 	             		</html:select>
     	         		<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateMonth" property="paymentDateMonth">
-        	        		<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+        	        		<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
             	 		</html:select>
              			<html:select bundle="HTMLALT_RESOURCES" altKey="select.paymentDateDay" property="paymentDateDay">
-                			<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+                			<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
              			</html:select>
 	          		</td>          
         		</tr>

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -76,7 +76,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("choose"));
 	}
 
-	request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
 	List gratuitySituations = UpdateAndReadGratuitySituationsByStudentNumber.run(studentNumber);
 
@@ -135,8 +135,8 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
 	}
 
-	request.setAttribute(SessionConstants.GRATUITY_SITUATIONS_LIST, gratuitySituations);
-	request.setAttribute(SessionConstants.INSURANCE_SITUATIONS_LIST, insuranceSituationsDTOList);
+	request.setAttribute(PresentationConstants.GRATUITY_SITUATIONS_LIST, gratuitySituations);
+	request.setAttribute(PresentationConstants.INSURANCE_SITUATIONS_LIST, insuranceSituationsDTOList);
 
 	return mapping.findForward("success");
 

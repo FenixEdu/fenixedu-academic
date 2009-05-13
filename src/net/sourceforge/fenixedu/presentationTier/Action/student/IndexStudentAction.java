@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -47,7 +47,7 @@ public class IndexStudentAction extends FenixAction {
 		throw new InvalidSessionActionException();
 	    }
 
-	    session.setAttribute(SessionConstants.INFO_STUDENT_KEY, student);
+	    session.setAttribute(PresentationConstants.INFO_STUDENT_KEY, student);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

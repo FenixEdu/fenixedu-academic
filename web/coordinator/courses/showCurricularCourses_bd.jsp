@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -11,8 +11,8 @@
 <br />
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-<logic:present name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
-	<bean:size id="numberInfoExecutionCourses" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>"/>
+<logic:present name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
+	<bean:size id="numberInfoExecutionCourses" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>"/>
 
 	<logic:notEqual name="numberInfoExecutionCourses" value="0">
 		<table>
@@ -48,7 +48,7 @@
 				</th>
 			</tr>
 
-			<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
+			<logic:iterate id="executionCourse" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse">
 				<bean:define id="executionCourseOID" name="executionCourse" property="idInternal"/>
 				<bean:define id="evaluated" name="executionCourse" property="infoSiteEvaluationStatistics.evaluated" type="java.lang.Integer"/>
 				<bean:define id="enrolled" name="executionCourse" property="infoSiteEvaluationStatistics.enrolled" type="java.lang.Integer"/>

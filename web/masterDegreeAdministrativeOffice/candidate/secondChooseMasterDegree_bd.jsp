@@ -4,14 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <br />
-<logic:present name="<%= SessionConstants.DEGREE_LIST %>">
+<logic:present name="<%= PresentationConstants.DEGREE_LIST %>">
 	<logic:present name="executionYear" >
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 	<br />
@@ -25,7 +25,7 @@
 			<tr>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.masterDegree" property="masterDegree">
-               		<html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="value" labelProperty="label"/></html:select>
+               		<html:options collection="<%= PresentationConstants.DEGREE_LIST %>" property="value" labelProperty="label"/></html:select>
 				</td>
 	   		</tr>
 	</table>

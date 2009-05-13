@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -43,7 +43,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 	final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal());
 	request.setAttribute("schoolClass", schoolClass);
 
@@ -57,7 +57,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	if (infoShifts != null && !infoShifts.isEmpty()) {
 	    Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
-	    request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+	    request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
 	}
 
 	return mapping.findForward("EditClass");
@@ -72,7 +72,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	IUserView userView = UserView.getUser();
 
-	InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClassOld = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	InfoClass infoClassNew = null;
 	try {
@@ -81,8 +81,8 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	    throw new ExistingActionException("A SchoolClass", e);
 	}
 
-	request.removeAttribute(SessionConstants.CLASS_VIEW);
-	request.setAttribute(SessionConstants.CLASS_VIEW, infoClassNew);
+	request.removeAttribute(PresentationConstants.CLASS_VIEW);
+	request.setAttribute(PresentationConstants.CLASS_VIEW, infoClassNew);
 
 	return prepare(mapping, form, request, response);
     }
@@ -92,9 +92,9 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	IUserView userView = UserView.getUser();
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+	Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
 
 	InfoShift infoShift = ReadShiftByOID.run(shiftOID);
 
@@ -106,7 +106,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
     public ActionForward prepareAddShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	// Get list of available shifts and place them in request
 
@@ -116,7 +116,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);
 
 	/* Place list of shifts in request */
-	request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+	request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
 
 	return mapping.findForward("AddShifts");
     }
@@ -126,7 +126,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
 	IUserView userView = UserView.getUser();
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	// Fill out the form with the name of the class
 	DynaActionForm classForm = (DynaActionForm) form;
@@ -137,7 +137,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	/** InfoLesson List */
 	List<InfoLesson> lessonList = LerAulasDeTurma.run(infoClass);
 
-	request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
+	request.setAttribute(PresentationConstants.LESSON_LIST_ATT, lessonList);
 
 	return mapping.findForward("ViewSchedule");
     }
@@ -160,7 +160,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 	    shiftOIDs.add(new Integer(selectedShifts[i]));
 	}
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
 	RemoveShifts.run(infoClass, shiftOIDs);
 

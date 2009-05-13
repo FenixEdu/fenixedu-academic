@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -29,7 +29,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 
 	Integer degreeCurricularPlanId = (Integer) request.getAttribute("degreeCurricularPlanID");
 	if (degreeCurricularPlanId == null) {
@@ -49,7 +49,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 	request.setAttribute("index", index);
 	indexForm.set("index", index);
 
-	request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+	request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 
 	try {
 
@@ -74,9 +74,9 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 		}
 
 		if (executionPeriodsLabelValueList.size() > 1) {
-		    request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+		    request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 		} else {
-		    request.removeAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD);
+		    request.removeAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD);
 		}
 	    }
 	} catch (FenixServiceException e) {
@@ -95,12 +95,12 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 	// If executionPeriod was previously selected,form has that value as
 	// default
 	InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 	if (selectedExecutionPeriod != null) {
 	    indexForm.set("indice", selectedExecutionPeriod.getInfoExecutionYear().getIdInternal());
 	    indexForm.set("curYear", Integer.valueOf(anosCurriculares.indexOf(anosCurriculares.get(0))));
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod.getIdInternal().toString());
 	}
 
 	InfoExecutionDegree infoExecutionDegree = ReadPublicExecutionDegreeByDCPID.run(degreeCurricularPlanId,
@@ -156,8 +156,8 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
 	List infoExecutionPeriodList = ReadExecutionPeriodsByExecutionYear.run(executionYear);
 
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriodList.get(0));
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList.get(0))
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriodList.get(0));
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList.get(0))
 		.getIdInternal().toString());
 	RequestUtils.setExecutionPeriodToRequest(request, (InfoExecutionPeriod) infoExecutionPeriodList.get(0));
 

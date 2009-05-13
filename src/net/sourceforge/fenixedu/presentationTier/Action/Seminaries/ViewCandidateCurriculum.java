@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -94,8 +94,8 @@ public class ViewCandidateCurriculum extends FenixAction {
 	}
 	ic.setCompletedCourses(new Integer(i).toString());
 	request.setAttribute("classification", ic);
-	request.setAttribute(SessionConstants.CURRICULUM, enrollments);
-	request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, selectedSCP);
+	request.setAttribute(PresentationConstants.CURRICULUM, enrollments);
+	request.setAttribute(PresentationConstants.STUDENT_CURRICULAR_PLAN, selectedSCP);
 	return mapping.findForward("viewCurriculum");
     }
 }

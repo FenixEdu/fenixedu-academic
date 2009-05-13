@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
    <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-  <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
+  <bean:define id="studentList" name="<%= PresentationConstants.STUDENT_LIST %>" scope="request" />
   
   <logic:present name="infoExecutionDegree">
   	<table>

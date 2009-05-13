@@ -47,7 +47,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
@@ -127,11 +127,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private void hackBecauseJSFareReallyReallyReallyGreatButWeDontKnowAtWhat() {
 	AcademicInterval academicInterval = null;
-	if (getRequestAttribute(SessionConstants.ACADEMIC_INTERVAL) != null) {
-	    String academicIntervalStr = (String) getRequestAttribute(SessionConstants.ACADEMIC_INTERVAL);
+	if (getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+	    String academicIntervalStr = (String) getRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL);
 	    academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
-	} else if (getRequestParameter(SessionConstants.ACADEMIC_INTERVAL) != null) {
-	    String academicIntervalStr = getRequestParameter(SessionConstants.ACADEMIC_INTERVAL);
+	} else if (getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+	    String academicIntervalStr = getRequestParameter(PresentationConstants.ACADEMIC_INTERVAL);
 	    if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
 		final String academicIntervalStrArg = academicIntervalStr.indexOf('-') > 0 ? academicIntervalStr.replaceAll("-", "_") : academicIntervalStr;
 		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStrArg);
@@ -140,7 +140,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	if (academicInterval == null) {
 	    academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
 	}
-	setRequestAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
+	setRequestAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
     }
 
     public String getAcademicIntervalEscapeFriendly() {

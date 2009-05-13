@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.Season;
@@ -54,7 +54,7 @@ public class EditExamRoomsDA extends
 	DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
 	ContextUtils.setExecutionCourseContext(request);
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -97,12 +97,12 @@ public class EditExamRoomsDA extends
 	List sortedRooms = new ArrayList();
 	sortedRooms.addAll(roomsHashTable.values());
 
-	request.setAttribute(SessionConstants.AVAILABLE_ROOMS, sortedRooms);
+	request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, sortedRooms);
 
-	request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
 
 	String input = request.getParameter("input");
-	request.setAttribute(SessionConstants.NEXT_PAGE, input);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, input);
 
 	return mapping.findForward("ViewSelectRoomsForm");
     }
@@ -114,7 +114,7 @@ public class EditExamRoomsDA extends
 	DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
 	ContextUtils.setExecutionCourseContext(request);
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -139,22 +139,22 @@ public class EditExamRoomsDA extends
 	}
 
 	infoViewExamByDayAndShift.setInfoExam(infoExam);
-	request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
 
 	List horas = Util.getExamShifts();
-	request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+	request.setAttribute(PresentationConstants.LABLELIST_HOURS, horas);
 
 	List daysOfMonth = Util.getDaysOfMonth();
-	request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+	request.setAttribute(PresentationConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
 	List monthsOfYear = Util.getMonthsOfYear();
-	request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+	request.setAttribute(PresentationConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	String input = request.getParameter("input");
-	request.setAttribute(SessionConstants.NEXT_PAGE, input);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, input);
 
 	return mapping.findForward("ViewEditExamForm");
     }

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,7 +51,7 @@ public class ReadPersonCandidatesAction extends FenixAction {
 	    return mapping.findForward("Success");
 	}
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
 	return mapping.findForward("ChooseCandidate");
 
     }

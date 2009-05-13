@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <h2><bean:message key="label.certificate.create" /></h2>
 <br/>
@@ -31,7 +31,7 @@
 		<br/>
 		<bean:message key="label.certificate.list"/>:
         <html:select bundle="HTMLALT_RESOURCES" altKey="select.certificateList" property="certificateList" >
-			<html:options collection="<%= SessionConstants.CERTIFICATE_LIST %>" property="value" labelProperty="label"  />
+			<html:options collection="<%= PresentationConstants.CERTIFICATE_LIST %>" property="value" labelProperty="label"  />
 		</html:select>     
 		<br/>
 	
@@ -39,7 +39,7 @@
 	    	<tr>
 	         	<td><h2><bean:message key="label.masterDegree.administrativeOffice.destination"/><h2></td>
 	       	</tr>
-         	<logic:iterate id="item" name="<%= SessionConstants.DOCUMENT_REASON %>" >
+         	<logic:iterate id="item" name="<%= PresentationConstants.DOCUMENT_REASON %>" >
 		      	<tr> 
 		        	<td>        
 		       			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.destination" property="destination">

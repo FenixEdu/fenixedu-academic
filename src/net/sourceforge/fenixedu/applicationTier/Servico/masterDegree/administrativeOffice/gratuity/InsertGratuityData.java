@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -138,7 +138,7 @@ public class InsertGratuityData extends FenixService {
 		    && infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE)) {
 		iterator = paymentPhasesList.listIterator();
 		InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
-		infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT_KEY);
+		infoPaymentPhase.setDescription(PresentationConstants.REGISTRATION_PAYMENT_KEY);
 	    }
 	}
 	return gratuityValue;

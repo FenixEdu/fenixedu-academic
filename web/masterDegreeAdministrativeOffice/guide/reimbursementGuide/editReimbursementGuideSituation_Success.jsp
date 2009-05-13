@@ -1,13 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <center>
 	<h2><bean:message key="message.masterDegree.reimbursementGuide.editReimbursementGuideSuccess"/></h2>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
-	<bean:define id="reimbursementGuideId" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
+	<bean:define id="reimbursementGuideId" name="<%= PresentationConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
 	<bean:define id="linkViewReimbursementGuideDetails">
 		/viewReimbursementGuideDetails.do?method=view&id=<bean:write name="reimbursementGuideId" />
 	</bean:define>

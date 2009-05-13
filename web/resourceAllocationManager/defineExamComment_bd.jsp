@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -44,34 +44,34 @@
         		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear" value='<%= request.getParameter("executionYear")%>'/>
         		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value='define'/>
 
-		<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>"
 					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+		<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_COURSE_OID %>" property="<%= PresentationConstants.EXECUTION_COURSE_OID %>"
 					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
 
-	<logic:iterate id="year" name="<%= SessionConstants.CURRICULAR_YEARS_LIST %>" scope="request">
+	<logic:iterate id="year" name="<%= PresentationConstants.CURRICULAR_YEARS_LIST %>" scope="request">
 		<logic:equal name="year" value="1">
-			<html:hidden alt="<%= SessionConstants.CURRICULAR_YEARS_1 %>" property="<%= SessionConstants.CURRICULAR_YEARS_1 %>"
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEARS_1 %>" property="<%= PresentationConstants.CURRICULAR_YEARS_1 %>"
 						 value="1"/>
 		</logic:equal>
 		<logic:equal name="year" value="2">
-			<html:hidden alt="<%= SessionConstants.CURRICULAR_YEARS_2 %>" property="<%= SessionConstants.CURRICULAR_YEARS_2 %>"
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEARS_2 %>" property="<%= PresentationConstants.CURRICULAR_YEARS_2 %>"
 						 value="2"/>
 		</logic:equal>
 		<logic:equal name="year" value="3">
-			<html:hidden alt="<%= SessionConstants.CURRICULAR_YEARS_3 %>" property="<%= SessionConstants.CURRICULAR_YEARS_3 %>"
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEARS_3 %>" property="<%= PresentationConstants.CURRICULAR_YEARS_3 %>"
 						 value="3"/>
 		</logic:equal>
 		<logic:equal name="year" value="4">
-			<html:hidden alt="<%= SessionConstants.CURRICULAR_YEARS_4 %>" property="<%= SessionConstants.CURRICULAR_YEARS_4 %>"
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEARS_4 %>" property="<%= PresentationConstants.CURRICULAR_YEARS_4 %>"
 						 value="4"/>
 		</logic:equal>
 		<logic:equal name="year" value="5">
-			<html:hidden alt="<%= SessionConstants.CURRICULAR_YEARS_5 %>" property="<%= SessionConstants.CURRICULAR_YEARS_5 %>"
+			<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEARS_5 %>" property="<%= PresentationConstants.CURRICULAR_YEARS_5 %>"
 						 value="5"/>
 		</logic:equal>
 	</logic:iterate>

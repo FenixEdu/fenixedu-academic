@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <bean:write name="executionPeriodName"/><br/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -23,7 +23,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegree" property="executionDegree" size="1">
-					<html:options collection="<%=SessionConstants.DEGREES%>" property="value" labelProperty="label"/>
+					<html:options collection="<%=PresentationConstants.DEGREES%>" property="value" labelProperty="label"/>
 				</html:select>
 				<br />
 			</td>
@@ -35,7 +35,7 @@
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.curYear" property="curYear" size="1">
-					<html:options collection="<%=SessionConstants.CURRICULAR_YEAR_LIST_KEY%>" property="value" labelProperty="label"/>
+					<html:options collection="<%=PresentationConstants.CURRICULAR_YEAR_LIST_KEY%>" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

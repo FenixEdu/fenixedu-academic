@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -47,7 +47,7 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 	try {
 	    infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
-	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide.getInfoReimbursementGuides());
+	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide.getInfoReimbursementGuides());
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 	}

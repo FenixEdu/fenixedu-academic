@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -92,7 +92,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 	Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList);
 
-	request.setAttribute(SessionConstants.DEGREES, executionDegreeLabels);
+	request.setAttribute(PresentationConstants.DEGREES, executionDegreeLabels);
 	request.setAttribute("showNextSelects", "true");
 
 	return prepareInsertChooseExecutionYear(mapping, form, request, response);
@@ -233,7 +233,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 			|| !infoPaymentPhase
 				.getDescription()
 				.equals(
-					net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants.REGISTRATION_PAYMENT)) {
+					net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
 		    return true;
 		}
 		return false;
@@ -250,7 +250,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 				&& infoPaymentPhase
 					.getDescription()
 					.equals(
-						net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants.REGISTRATION_PAYMENT)) {
+						net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
 			    return true;
 			}
 			return false;

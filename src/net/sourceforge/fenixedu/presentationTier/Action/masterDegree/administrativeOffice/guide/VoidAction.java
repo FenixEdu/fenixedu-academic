@@ -16,7 +16,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administra
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -42,9 +42,9 @@ public class VoidAction extends Action {
 	    graduationType = request.getParameter("graduationType");
 	request.setAttribute("graduationType", graduationType);
 
-	if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null)
-	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, new Integer(request
-		    .getParameter(SessionConstants.REQUESTER_NUMBER)));
+	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null)
+	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, new Integer(request
+		    .getParameter(PresentationConstants.REQUESTER_NUMBER)));
 
 	return mapping.findForward("Success");
 

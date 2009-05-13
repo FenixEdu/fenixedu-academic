@@ -44,15 +44,15 @@ public final class SessionUtils {
 
 	IUserView userView = UserView.getUser();
 	// Ler Disciplinas em Execucao
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
 	infoCourseList = LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, academicInterval,
 		infoCurricularYear.getYear());
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 
 	return infoCourseList;
 
@@ -67,9 +67,9 @@ public final class SessionUtils {
 
 	IUserView userView = UserView.getUser();
 	// Ler Disciplinas em Execucao
-	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	infoCourseList = LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, infoExecutionPeriod,
 		infoCurricularYear.getYear());
@@ -94,7 +94,7 @@ public final class SessionUtils {
 	    ignore = false;
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, newInfoCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_LIST_KEY, newInfoCourseList);
 
 	return infoCourseList;
 

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -41,7 +41,7 @@ public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExec
 	DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
 	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD);
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	final String courseInitials = (String) chooseCourseForm.get("courseInitials");
 	Integer page = (Integer) chooseCourseForm.get("page");
@@ -52,11 +52,11 @@ public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExec
 	    final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
 	    final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 
-	    request.setAttribute(SessionConstants.EXECUTION_COURSE, infoCourse);
+	    request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoCourse);
 	    return mapping.findForward("forwardChoose");
 	}
 	if (page != null && page.intValue() > 1) {
-	    request.removeAttribute(SessionConstants.EXECUTION_COURSE);
+	    request.removeAttribute(PresentationConstants.EXECUTION_COURSE);
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("label.choose.executionCourse", new ActionError("label.choose.executionCourse"));
 	    saveErrors(request, actionErrors);

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 <%@ page import="java.util.Calendar" %>
@@ -26,7 +26,7 @@
 			<bean:write name="groupProperties" property="name" />
 		</h2>
 		
-		<html:link page="<%= "/viewSite.do" + "?method=viewAllStudentsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" >
+		<html:link page="<%= "/viewSite.do" + "?method=viewAllStudentsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" >
 			<bean:message key="link.viewAllStudentsAndGroups"/>
 		</html:link>
 		<br/>
@@ -65,7 +65,7 @@
 			<tr>
 								
 						<td  class="listClasses">
-						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsWithoutShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" >
+						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsWithoutShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" >
 							Sem Turno
 						</html:link>	
 							
@@ -91,7 +91,7 @@
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 								<bean:write name="infoStudentGroup" property="groupNumber"/>
 							</html:link>
 						</logic:iterate>]
@@ -119,7 +119,7 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsByShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId")+ "&amp;shift=" + shiftCode.toString() %>" >
+						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsByShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId")+ "&amp;shift=" + shiftCode.toString() %>" >
 							<bean:write name="infoShift" property="nome"/>
 						</html:link>	
 						</td>
@@ -143,7 +143,7 @@
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupPropertiesId") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 								<bean:write name="infoStudentGroup" property="groupNumber"/>
 							</html:link>
 						</logic:iterate>]

@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -55,7 +55,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
 	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	    session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
+	    session.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 
 	    final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
 	    try {
@@ -63,7 +63,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	    } catch (Exception e) {
 		throw new FenixActionException(e);
 	    }
-	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates
+	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates
 		    .size()));
 
 	    return mapping.findForward("Success");

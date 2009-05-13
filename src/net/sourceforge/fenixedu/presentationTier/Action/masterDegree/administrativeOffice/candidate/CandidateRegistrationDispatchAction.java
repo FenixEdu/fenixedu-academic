@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValue
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -78,7 +78,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
 	    result = ReadCandidateForRegistration.run(executionDegree);
 	} catch (NonExistingServiceException e) {
-	    request.getSession(false).removeAttribute(SessionConstants.DEGREE_LIST);
+	    request.getSession(false).removeAttribute(PresentationConstants.DEGREE_LIST);
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
 	    saveErrors(request, errors);

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
@@ -56,11 +56,11 @@ public class FenixPublicExceptionHandler extends FenixExceptionHandler {
 	ActionForward forward = null;
 	ActionError error = null;
 
-	request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
+	request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
 
-	request.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
+	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
-	request.setAttribute(SessionConstants.REQUEST_CONTEXT, requestContextGetter(request));
+	request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContextGetter(request));
 
 	if (ae.getScope() != "request") {
 	    ae.setScope("request");

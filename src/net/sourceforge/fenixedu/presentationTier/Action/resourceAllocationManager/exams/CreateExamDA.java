@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -58,7 +58,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    throws Exception {
 	ContextUtils.setCurricularYearsContext(request);
 
-	Integer executionCourseOID = ((InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE))
+	Integer executionCourseOID = ((InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE))
 		.getIdInternal();
 
 	InfoExecutionCourse executionCourse;
@@ -71,13 +71,13 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	executionCourseList.add(executionCourse);
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 	String[] executionCourseIDList = { executionCourse.getIdInternal().toString() };
@@ -163,11 +163,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward associateExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionDegreeContext(request);
@@ -179,11 +179,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareAfterAssociateExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionDegreeContext(request);
@@ -205,13 +205,13 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    executionCourseList.add(executionCourse);
 	}
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	String[] scopeIDArray = (String[]) createExamForm.get("scopes");
 	List scopeIDList = CollectionUtils.toList(scopeIDArray);
@@ -246,11 +246,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareAfterDissociateExecutionCourse(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionDegreeContext(request);
@@ -272,13 +272,13 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    executionCourseList.add(executionCourse);
 	}
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	String[] scopeIDArray = (String[]) createExamForm.get("scopes");
 
@@ -304,11 +304,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward associateRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionCourseContext(request);
@@ -362,18 +362,18 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareAfterAssociateRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearContext(request);
 	ContextUtils.setExecutionDegreeContext(request);
 	ContextUtils.setExecutionPeriodContext(request);
 	ContextUtils.setCurricularYearsContext(request);
 
-	String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
+	String executionDegreeOID = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
 	request.setAttribute("executionDegreeOID", executionDegreeOID);
 
 	DynaValidatorForm createExamForm = (DynaValidatorForm) form;
@@ -391,13 +391,13 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    executionCourseList.add(executionCourse);
 	}
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	String[] scopeIDArray = (String[]) createExamForm.get("scopes");
 	request.setAttribute("scopes", scopeIDArray);
@@ -422,12 +422,12 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepareForEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Integer infoExamId = (Integer) request.getAttribute(SessionConstants.EXAM_OID);
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	Integer infoExamId = (Integer) request.getAttribute(PresentationConstants.EXAM_OID);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	ContextUtils.setCurricularYearsContext(request);
 
-	InfoExam infoExam = (InfoExam) request.getAttribute(SessionConstants.EXAM);
+	InfoExam infoExam = (InfoExam) request.getAttribute(PresentationConstants.EXAM);
 	List executionCourseList = infoExam.getAssociatedExecutionCourse();
 	Iterator iter = executionCourseList.iterator();
 	List newExecutionCourseList = new ArrayList();
@@ -444,13 +444,13 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, newExecutionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, newExecutionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List<LabelValueBean> examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
 	DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 
@@ -495,11 +495,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 
 	Integer infoExamID = Integer.valueOf(((String) createExamForm.get("exam_oid")));
-	String infoExamIdInteger = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamIdInteger = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamIdInteger == null) {
-	    infoExamIdInteger = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamIdInteger = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamIdInteger);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamIdInteger);
 
 	// exam season
 	Season season = new Season(Integer.valueOf(((String) createExamForm.get("season"))));
@@ -551,9 +551,9 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	    return prepare(mapping, form, request, response);
 	}
 
-	String date = (String) request.getAttribute(SessionConstants.DATE);
+	String date = (String) request.getAttribute(PresentationConstants.DATE);
 	if (date == null) {
-	    date = request.getParameter(SessionConstants.DATE);
+	    date = request.getParameter(PresentationConstants.DATE);
 	}
 	if (date == null) {
 	    return mapping.findForward("Sucess");
@@ -591,11 +591,11 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 	DynaActionForm examForm = (DynaActionForm) form;
 	ContextUtils.setCurricularYearsContext(request);
 
-	String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+	String infoExamId = (String) request.getAttribute(PresentationConstants.EXAM_OID);
 	if (infoExamId == null) {
-	    infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+	    infoExamId = request.getParameter(PresentationConstants.EXAM_OID);
 	}
-	request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+	request.setAttribute(PresentationConstants.EXAM_OID, infoExamId);
 
 	String[] executionCourseArray = (String[]) examForm.get("executionCourses");
 
@@ -611,16 +611,16 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
 	    executionCourseList.add(executionCourse);
 	}
-	request.setAttribute(SessionConstants.EXECUTION_COURSES_LIST, executionCourseList);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSES_LIST, executionCourseList);
 
 	String nextPage = request.getParameter("nextPage");
-	request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	List examSeasons = Util.getExamSeasons();
-	request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+	request.setAttribute(PresentationConstants.LABLELIST_SEASONS, examSeasons);
 
-	List executionCourseNames = (List) request.getAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES);
-	request.setAttribute(SessionConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
+	List executionCourseNames = (List) request.getAttribute(PresentationConstants.LIST_EXECUTION_COURSE_NAMES);
+	request.setAttribute(PresentationConstants.LIST_EXECUTION_COURSE_NAMES, executionCourseNames);
 
 	String[] executionCourse = (String[]) examForm.get("executionCourses");
 	examForm.set("executionCourses", executionCourse);

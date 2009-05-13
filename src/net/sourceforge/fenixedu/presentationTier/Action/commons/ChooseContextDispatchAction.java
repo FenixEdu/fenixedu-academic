@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -61,12 +61,12 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
-	String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+	String inputPage = request.getParameter(PresentationConstants.INPUT_PAGE);
+	String nextPage = request.getParameter(PresentationConstants.NEXT_PAGE);
 	if (inputPage != null)
-	    request.setAttribute(SessionConstants.INPUT_PAGE, inputPage);
+	    request.setAttribute(PresentationConstants.INPUT_PAGE, inputPage);
 	if (nextPage != null)
-	    request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+	    request.setAttribute(PresentationConstants.NEXT_PAGE, nextPage);
 
 	IUserView userView = UserView.getUser();
 
@@ -89,7 +89,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	anosCurriculares.add(new LabelValueBean("3 º", "3"));
 	anosCurriculares.add(new LabelValueBean("4 º", "4"));
 	anosCurriculares.add(new LabelValueBean("5 º", "5"));
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -116,9 +116,9 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
 	}
 
-	request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+	request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
 
-	request.setAttribute(SessionConstants.DEGREES, licenciaturas);
+	request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
 
 	if (inputPage != null) {
 	    return mapping.findForward(inputPage);
@@ -130,9 +130,9 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
     public ActionForward preparePublic(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	String inputPage = request.getParameter(SessionConstants.INPUT_PAGE);
+	String inputPage = request.getParameter(PresentationConstants.INPUT_PAGE);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	// TODO: this semester and curricular year list needs to be refactored
 	// in order to incorporate masters
@@ -194,12 +194,12 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
 	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-	String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
+	String nextPage = (String) request.getAttribute(PresentationConstants.NEXT_PAGE);
 	if (nextPage == null) {
-	    nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+	    nextPage = request.getParameter(PresentationConstants.NEXT_PAGE);
 	}
 
-	Integer semestre = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getSemester();
+	Integer semestre = ((InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("curricularYear");
 
 	int index = Integer.parseInt((String) escolherContextoForm.get("index"));
@@ -208,7 +208,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	request.setAttribute("semestre", semestre);
 
 	List infoExecutionDegreeList = ReadExecutionDegreesByExecutionYear.run(((InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear());
+		.getAttribute(PresentationConstants.EXECUTION_PERIOD)).getInfoExecutionYear());
 	List licenciaturas = new ArrayList();
 	licenciaturas.add(new LabelValueBean("escolher", ""));
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -219,19 +219,17 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	if (infoExecutionDegree != null) {
 	    CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(
 		    anoCurricular, semestre, infoExecutionDegree);
-	    request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+	    request.setAttribute(PresentationConstants.CONTEXT_KEY, cYSiED);
 
-	    request.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, anoCurricular);
-	    request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
-	    request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.CURRICULAR_YEAR_KEY, anoCurricular);
+	    request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, anoCurricular.toString());
+	    request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 	} else {
 	    return mapping.findForward("Licenciatura execucao inexistente");
 	}
 
-	// String nextPage = (String)
-	// request.getAttribute(SessionConstants.NEXT_PAGE);
 	if (nextPage != null) {
 	    return mapping.findForward(nextPage);
 	}
@@ -244,7 +242,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	Integer semestre = infoExecutionPeriod.getSemester();
 	Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");
@@ -266,21 +264,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index.intValue());
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-	/*
-	 * InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-	 * Iterator iterator = infoExecutionDegreeList.iterator(); while
-	 * (iterator.hasNext()) { infoExecutionDegree= (InfoExecutionDegree)
-	 * iterator.next(); if
-	 * (infoExecutionDegree.getInfoDegreeCurricularPlan()
-	 * .getIdInternal().equals(degreeCurricularPlanId)) {
-	 * request.setAttribute(SessionConstants.EXECUTION_DEGREE,
-	 * infoExecutionDegree);
-	 * request.setAttribute("executionDegreeID",infoExecutionDegree
-	 * .getIdInternal().toString());
-	 * request.setAttribute("infoDegreeCurricularPlan",
-	 * infoExecutionDegree); break; } }
-	 */
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+
 	if (infoExecutionDegree == null) {
 	    return mapping.findForward("Licenciatura execucao inexistente");
 	}
@@ -327,12 +312,12 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
 	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
-	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+	    request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}
 	return infoExecutionPeriod;
     }

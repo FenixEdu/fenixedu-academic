@@ -1,6 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
 <%@ page import="java.util.Calendar" %>
@@ -10,10 +10,10 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <br/>
-<h3><bean:write name="<%= SessionConstants.EXAM_DATEANDTIME_STR %>" scope="request"/></h3>
+<h3><bean:write name="<%= PresentationConstants.EXAM_DATEANDTIME_STR %>" scope="request"/></h3>
 <br/>
 
-<logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table align="center">
 		<tr>
 			<td>
@@ -24,7 +24,7 @@
 </logic:notPresent>
 
 
-<logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+<logic:present name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table width="100%" border="1">
 		<tr>
 			<th class="listClasses-header">Disciplina</th>
@@ -35,7 +35,7 @@
 			<th class="listClasses-header">N� Alunos</th>	
 			<th class="listClasses-header">Faltam X Lugares</th>	
 		</tr>
-		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+		<logic:iterate id="infoViewExam" indexId="index" name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 				
 			<logic:notEmpty name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
 				<logic:iterate id="infoScope" name="infoViewExam" property="infoExam.associatedCurricularCourseScope">
@@ -69,35 +69,35 @@
 					<%-- EPOCA --%>
 					
 					<html:link page="<%= "/showExamsManagement.do?method=edit&amp;"
-										+ SessionConstants.EXECUTION_COURSE_OID 
+										+ PresentationConstants.EXECUTION_COURSE_OID 
 										+ "="
 										+ pageContext.findAttribute("executionCourseOID")
 										+ "&amp;"
-										+ SessionConstants.EXECUTION_PERIOD_OID
+										+ PresentationConstants.EXECUTION_PERIOD_OID
 										+ "="
 										+ pageContext.findAttribute("executionPeriodOID")
 										+ "&amp;"
-										+ SessionConstants.EXECUTION_DEGREE_OID
+										+ PresentationConstants.EXECUTION_DEGREE_OID
 										+ "="
 										+ pageContext.findAttribute("executionDegreeOID") 
 										+ "&amp;"
-										+ SessionConstants.CURRICULAR_YEAR_OID
+										+ PresentationConstants.CURRICULAR_YEAR_OID
 										+ "="
 										+ pageContext.findAttribute("curricularYearOID")
 										+ "&amp;"
-										+ SessionConstants.EXAM_OID
+										+ PresentationConstants.EXAM_OID
 										+ "="
 										+ pageContext.findAttribute("examID") 
 										+ "&amp;"
-										+ SessionConstants.DATE
+										+ PresentationConstants.DATE
 										+ "="
 										+ pageContext.findAttribute("date") 
 										+ "&amp;"
-										+ SessionConstants.START_TIME
+										+ PresentationConstants.START_TIME
 										+ "="
 										+ pageContext.findAttribute("start_time")
 										+ "&amp;"
-										+ SessionConstants.END_TIME
+										+ PresentationConstants.END_TIME
 										+ "="
 										+ pageContext.findAttribute("end_time") %>"> 
 

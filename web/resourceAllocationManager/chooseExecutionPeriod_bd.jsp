@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page
-    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
+    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <html:xhtml />
 
@@ -17,7 +17,7 @@
 
 <fr:form action="/chooseExecutionPeriod.do?method=choose">
 	<fr:edit schema="academicIntervalSelectionBean.choosePostBack"
-		name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>">
+		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />

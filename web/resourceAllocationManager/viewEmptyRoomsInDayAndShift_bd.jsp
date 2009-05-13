@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -37,7 +37,7 @@
 						<bean:message key="property.room.capacity.exame"/>
 					</th>
                 </tr>
-	<logic:iterate id="infoRoom" name="<%= SessionConstants.INFO_EMPTY_ROOMS_KEY %>" scope="request">
+	<logic:iterate id="infoRoom" name="<%= PresentationConstants.INFO_EMPTY_ROOMS_KEY %>" scope="request">
                 <tr>
 					<td class="listClasses">
 						<bean:write name="infoRoom" property="nome"/>

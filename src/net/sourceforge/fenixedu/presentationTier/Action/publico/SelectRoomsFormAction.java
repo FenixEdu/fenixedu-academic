@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -46,7 +46,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
 		"building"), readIntegerFormValue(roomForm, "floor"), readTypeRoomFormValue(roomForm, "type"),
 		readIntegerFormValue(roomForm, "capacityNormal"), readIntegerFormValue(roomForm, "capacityExame")));
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
 

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 
 <em><bean:message key="title.manage.rooms"/></em>
@@ -28,7 +28,7 @@
 
 <bean:define id="execution_period_oid" name="roomOccupationWeekBean" property="executionSemester.idInternal" scope="request" />
 
-<logic:present name="<%= SessionConstants.ROOM%>" scope="request">
+<logic:present name="<%= PresentationConstants.ROOM%>" scope="request">
             <table class="tstyle4 tdcenter mvert15">
                 <tr>
                     <th>
@@ -52,34 +52,34 @@
                 </tr>
                 <tr>
 					<td>
-						<bean:write name="<%= SessionConstants.ROOM%>" property="nome"/>
+						<bean:write name="<%= PresentationConstants.ROOM%>" property="nome"/>
 					</td>
                     <td>
-                        <bean:write name="<%= SessionConstants.ROOM%>" property="tipo"/>
+                        <bean:write name="<%= PresentationConstants.ROOM%>" property="tipo"/>
                     </td>
 					<td>
-						<bean:write name="<%= SessionConstants.ROOM%>" property="edificio"/>
+						<bean:write name="<%= PresentationConstants.ROOM%>" property="edificio"/>
 					</td>
 					<td>
-						<bean:write name="<%= SessionConstants.ROOM%>" property="piso"/>
+						<bean:write name="<%= PresentationConstants.ROOM%>" property="piso"/>
 					</td>
                     <td>
-                         <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeNormal"/>
+                         <bean:write name="<%= PresentationConstants.ROOM%>" property="capacidadeNormal"/>
                     </td>
                     <td>
-                        <bean:write name="<%= SessionConstants.ROOM%>" property="capacidadeExame"/>
+                        <bean:write name="<%= PresentationConstants.ROOM%>" property="capacidadeExame"/>
                     </td>
                 </tr>
             </table>
 	<div align="center">
-		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
+		<app:gerarHorario name="<%= PresentationConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"
 		/>
 	</div>
 
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.ROOM%>" scope="request">
 	<p>
 		<span class="error"><!-- Error messages go here --><bean:message key="message.public.notfound.room"/></span>
 	</p>

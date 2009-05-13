@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -72,7 +72,7 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
 	    licenciaturas.add(new LabelValueBean(name, String.valueOf(index++)));
 	}
 
-	request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
+	request.setAttribute(PresentationConstants.INFO_EXECUTION_DEGREE_LIST_KEY, executionDegreeList);
 
 	request.setAttribute("licenciaturas", licenciaturas);
 
@@ -108,12 +108,12 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		.getAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
 	    IUserView userView = UserView.getUser();
 	    infoExecutionPeriod = ReadCurrentExecutionPeriod.run();
 
-	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+	    request.setAttribute(PresentationConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}
 	return infoExecutionPeriod;
     }

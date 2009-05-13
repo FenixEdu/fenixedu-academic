@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <h2><bean:message key="title.view.room"/></h2>
 <br />
@@ -30,7 +30,7 @@
  	</table>
 <br />
 <br />	
-<div align="center"><app:generateExamsMap name="<%= SessionConstants.INFO_EXAMS_MAP %>" user="sop"/></div>
+<div align="center"><app:generateExamsMap name="<%= PresentationConstants.INFO_EXAMS_MAP %>" user="sop"/></div>
 </logic:present>
 	<logic:notPresent name="publico.infoRoom" scope="request">
 		<table align="center">

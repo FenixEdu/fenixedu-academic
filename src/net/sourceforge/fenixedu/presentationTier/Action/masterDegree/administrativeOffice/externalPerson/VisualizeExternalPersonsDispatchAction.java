@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -60,7 +60,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 				.getIdInternal().toString()));
 		    }
 
-		    request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
+		    request.setAttribute(PresentationConstants.WORK_LOCATIONS_LIST, infoInstitutionsValueBeanList);
 		}
 	    }
 
@@ -102,7 +102,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 		return mapping.findForward("error");
 	    }
 
-	    request.setAttribute(SessionConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
+	    request.setAttribute(PresentationConstants.EXTERNAL_PERSONS_LIST, infoExternalPersons);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadPavillionsRoomsLessons;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -33,7 +33,7 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 	    pavillionsNamesList.add(building.getLabel());
 	}
 
-	request.setAttribute(SessionConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
+	request.setAttribute(PresentationConstants.PAVILLIONS_NAMES_LIST, pavillionsNamesList);
 
 	return mapping.findForward("choose");
     }
@@ -43,7 +43,7 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 	DynaActionForm chooseViewAllRoomsSchedulesContextForm = (DynaActionForm) form;
 
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
 
 	List<String> pavillions = new ArrayList<String>();
 	List<LabelValueBean> readExistingBuldings = Util.readExistingBuldings(null, null);
@@ -66,10 +66,10 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 	List infoViewClassScheduleList = ReadPavillionsRoomsLessons.run(selectedPavillions, academicInterval);
 
 	if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
-	    request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
+	    request.removeAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
 	} else {
-	    request.setAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE, infoViewClassScheduleList);
-	    request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval);
+	    request.setAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE, infoViewClassScheduleList);
+	    request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
 	}
 
 	return mapping.findForward("list");

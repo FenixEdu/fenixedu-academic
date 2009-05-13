@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.List"%>
 <html:xhtml/>
 
@@ -23,11 +23,11 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createShift"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-	<html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-			 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+	<html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+			 value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
 	<table class="tstyle5 thlight thright mtop05">
@@ -36,7 +36,7 @@
 				<bean:message key="property.turno.disciplina"/>:
 			</th>
 			<td>
-				<bean:define id="executionCourseList" name="<%= SessionConstants.EXECUTION_COURSE_LIST_KEY %>"/>
+				<bean:define id="executionCourseList" name="<%= PresentationConstants.EXECUTION_COURSE_LIST_KEY %>"/>
 				<html:select bundle="HTMLALT_RESOURCES" property="courseInitials" size="1" 
 					onchange="this.form.method.value='listExecutionCourseCourseLoads';this.form.submit();">
 					<html:option value=""><!-- w3c complient --></html:option>
@@ -85,16 +85,16 @@
 
 <h3 class="mtop2 mbottom05"><bean:message key="title.manage.turnos"/></h3>
 
-<logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
+<logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
   <html:form action="/deleteShifts">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteShifts"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+    <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
 	<bean:define id="deleteConfirm">
@@ -140,7 +140,7 @@
 		       	<bean:message key="property.capacity"/>
 		       </th>
 		</tr>
-		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
+		<logic:iterate id="infoShift" name="<%= PresentationConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
 			<bean:define id="infoShiftLessonList" name="infoShift" property="infoLessons"/>
@@ -171,23 +171,23 @@
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
 				<html:link page="<%= "/manageShift.do?method=prepareEditShift&amp;page=0&amp;"
-               							+ SessionConstants.SHIFT_OID
+               							+ PresentationConstants.SHIFT_OID
 			  							+ "="
                				   			+ pageContext.findAttribute("infoShiftOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.EXECUTION_COURSE_OID
+			  							+ PresentationConstants.EXECUTION_COURSE_OID
   										+ "="
   										+ pageContext.findAttribute("infoExecutionCourseOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.ACADEMIC_INTERVAL
+			  							+ PresentationConstants.ACADEMIC_INTERVAL
   										+ "="
-  										+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+  										+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
   										+ "&amp;"
-  										+ SessionConstants.CURRICULAR_YEAR_OID
+  										+ PresentationConstants.CURRICULAR_YEAR_OID
 			  							+ "="
   										+ pageContext.findAttribute("curricularYearOID")
   										+ "&amp;"
-			  							+ SessionConstants.EXECUTION_DEGREE_OID
+			  							+ PresentationConstants.EXECUTION_DEGREE_OID
   										+ "="
   										+ pageContext.findAttribute("executionDegreeOID") %>">
 						<bean:write name="infoShift" property="nome"/>
@@ -250,23 +250,23 @@
 	        	<td class="listClasses" rowspan="<%= pageContext.findAttribute("numberOfLessons") %>">
 			</logic:notEqual>
               		<html:link page="<%= "/manageShifts.do?method=deleteShift&amp;page=0&amp;"
-               							+ SessionConstants.SHIFT_OID
+               							+ PresentationConstants.SHIFT_OID
 			  							+ "="
                				   			+ pageContext.findAttribute("infoShiftOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.EXECUTION_COURSE_OID
+			  							+ PresentationConstants.EXECUTION_COURSE_OID
   										+ "="
   										+ pageContext.findAttribute("infoExecutionCourseOID")
                				   			+ "&amp;"
-			  							+ SessionConstants.ACADEMIC_INTERVAL
+			  							+ PresentationConstants.ACADEMIC_INTERVAL
   										+ "="
-  										+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+  										+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
   										+ "&amp;"
-  										+ SessionConstants.CURRICULAR_YEAR_OID
+  										+ PresentationConstants.CURRICULAR_YEAR_OID
 			  							+ "="
   										+ pageContext.findAttribute("curricularYearOID")
   										+ "&amp;"
-			  							+ SessionConstants.EXECUTION_DEGREE_OID
+			  							+ PresentationConstants.EXECUTION_DEGREE_OID
   										+ "="
   										+ pageContext.findAttribute("executionDegreeOID") %>"
   										onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
@@ -311,7 +311,7 @@
   </html:form>
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.SHIFTS %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.SHIFTS %>" scope="request">
 	<p>
 		<em><!-- Error messages go here --><bean:message key="errors.shifts.none"/></em>	
 	</p>

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
@@ -13,8 +13,8 @@
 <%@ page import="net.sourceforge.fenixedu.domain.ApplicationDocumentType"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
 
-<bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request" property="infoPerson"/>
-<bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
+<bean:define id="personalInfo" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="request" property="infoPerson"/>
+<bean:define id="masterDegreeCandidate" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:define id="link">/editCandidate.do?method=prepareEdit&candidateID=</bean:define>
 

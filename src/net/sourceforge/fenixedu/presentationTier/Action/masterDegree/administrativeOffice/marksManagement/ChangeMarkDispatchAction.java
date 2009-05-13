@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.FormataData;
 
@@ -230,11 +230,11 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	} else {
 	    studentNumberForm.set("teacherNumber", "");
 	}
-	request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType
+	request.setAttribute(PresentationConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType
 		.getLabelValues(null)));
-	request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
 
 	request.setAttribute("lastEnrolmentEavluation", newEnrolmentEvaluation);
 	request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluations);

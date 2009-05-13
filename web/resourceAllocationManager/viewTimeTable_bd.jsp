@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -14,7 +14,7 @@
     </tr>
 </table>
 <br />
-<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
+<logic:present name="<%= PresentationConstants.CLASS_VIEW %>" scope="request">
 	<table width="100%" cellspacing="0">
 		<tr>   		
 			<td nowrap="nowrap">
@@ -28,12 +28,12 @@
 	<br />
 	<h2>Horário da Turma</h2>
 	<div align="center">
-		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
+		<app:gerarHorario name="<%= PresentationConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>
 	</div>
 	<br />
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.CLASS_VIEW %>" scope="request">
 	<h2><bean:message key="label.class.create"/></h2>
 	<table cellspacing="0">
 		<tr>   		

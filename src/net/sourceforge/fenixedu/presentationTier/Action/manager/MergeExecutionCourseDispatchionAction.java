@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -48,13 +48,13 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	Integer sourceDegreeId = (Integer) degreesForm.get("sourceDegreeId");
 	Integer destinationDegreeId = (Integer) degreesForm.get("destinationDegreeId");
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) degreesForm
-		.get(SessionConstants.ACADEMIC_INTERVAL));
+		.get(PresentationConstants.ACADEMIC_INTERVAL));
 
 	getSourceAndDestinationExecutionCourses(request, sourceDegreeId, destinationDegreeId, academicInterval);
 
 	getSourceAndDestinationDegrees(request, sourceDegreeId, destinationDegreeId);
 
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval);
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
 
 	return mapping.findForward("chooseExecutionCourses");
     }
@@ -68,8 +68,8 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	ContextSelectionBean contextSelectionBean = (ContextSelectionBean) getRenderedObject();
 	RenderUtils.invalidateViewState();
 
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, contextSelectionBean.getAcademicInterval());
-	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, contextSelectionBean.getAcademicInterval());
+	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
 	request.setAttribute("sourceDegrees", degrees);
 	request.setAttribute("destinationDegrees", degrees);
 	return mapping.findForward("chooseDegreesAndExecutionPeriod");
@@ -105,9 +105,9 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 	SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readNotEmptyDegrees());
 
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, AcademicInterval
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, AcademicInterval
 		.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
-	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
+	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
 	request.setAttribute("sourceDegrees", degrees);
 	request.setAttribute("destinationDegrees", degrees);
 	return mapping.findForward("chooseDegreesAndExecutionPeriod");

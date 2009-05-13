@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -42,8 +42,8 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
 	request.setAttribute("publico.types", tipos);
 
 	// Get selected room to edit
-	List listaSalasBean = (ArrayList) request.getAttribute(SessionConstants.SELECTED_ROOMS);
-	Integer index = (Integer) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+	List listaSalasBean = (ArrayList) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
+	Integer index = (Integer) request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
 	InfoRoom roomToEdit = null;
 	if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
 	    Collections.sort(listaSalasBean);
@@ -71,7 +71,7 @@ public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexCont
 	    // request.removeAttribute()
 	}
 
-	request.removeAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+	request.removeAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
 
 	return mapping.findForward("Sucesso");
     }

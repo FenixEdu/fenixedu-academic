@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuitySituationNotRegularizedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionErrors;
@@ -64,11 +64,11 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 	}
 
 	if (!masterDegreeProofVersion.getJuries().isEmpty()) {
-	    request.setAttribute(SessionConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
+	    request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
 	}
 
 	if (!masterDegreeProofVersion.getExternalJuries().isEmpty()) {
-	    request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
+	    request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
 	}
 
 	String proofDateDay = null;
@@ -165,11 +165,11 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
     }
 
     private void putMasterDegreeThesisDataInRequest(HttpServletRequest request, MasterDegreeThesisDataVersion thesisDataVersion) {
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, thesisDataVersion.getDissertationTitle());
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, thesisDataVersion.getDissertationTitle());
 
-	request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.DAYS_LIST, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTHS_LIST, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_LIST, Data.getExpirationYears());
     }
 
     public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -181,7 +181,7 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 	transportData(form, request);
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "juriesNumbers", PresentationConstants.JURIES_LIST, actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
 	} catch (Exception e1) {
@@ -197,12 +197,12 @@ public class ChangeMasterDegreeProofDispatchAction extends FenixDispatchAction {
 	// dissertation title
 	DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
 	String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, dissertationTitle);
 
 	// dates combo boxes options
-	request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-	request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-	request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.DAYS_LIST, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTHS_LIST, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_LIST, Data.getExpirationYears());
 
     }
 

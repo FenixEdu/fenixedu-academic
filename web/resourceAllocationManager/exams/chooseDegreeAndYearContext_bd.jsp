@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.Globals" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -11,7 +11,7 @@
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	
-	<html:hidden alt="<%= SessionConstants.EXECUTION_PERIOD_OID %>" property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_PERIOD_OID %>" property="<%= PresentationConstants.EXECUTION_PERIOD_OID %>"
 				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 
     <table width="98%" border="0" cellpadding="0" cellspacing="0">
@@ -23,7 +23,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionDegree" property="executionDegree" size="1">
-       		<html:options collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+       		<html:options collection="<%= PresentationConstants.DEGREES %>" property="value" labelProperty="label"/>
        </html:select>
 	 </p>
 	 <br />
@@ -41,7 +41,7 @@
 	     </td>
 	     <td nowrap class="formTD">
 	     	<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularYear" property="curricularYear" size="1">
-       			<html:options collection="<%= SessionConstants.LABELLIST_CURRICULAR_YEARS %>" property="value" labelProperty="label"/>
+       			<html:options collection="<%= PresentationConstants.LABELLIST_CURRICULAR_YEARS %>" property="value" labelProperty="label"/>
        	 	</html:select>
        	 </td>
        </tr>

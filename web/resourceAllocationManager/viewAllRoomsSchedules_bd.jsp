@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -7,8 +7,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <br />
-<logic:present name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
-	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request" indexId="i">
+<logic:present name="<%=PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
+	<logic:iterate id="viewRoomSchedule" name="<%=PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request" indexId="i">
 
 		<logic:equal name="i" value="0">
 			<table width="100%" cellspacing="0">
@@ -78,6 +78,6 @@
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 	</logic:iterate>
 </logic:present>
-<logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
+<logic:notPresent name="<%=PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.rooms.notExisting"/></span>
 </logic:notPresent>

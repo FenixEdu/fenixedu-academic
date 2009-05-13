@@ -5,11 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
     <span class="error"><!-- Error messages go here --><html:errors /></span>
-    <bean:define id="contributorList" name="<%= SessionConstants.CONTRIBUTOR_LIST %>" scope="session" />
-    <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
+    <bean:define id="contributorList" name="<%= PresentationConstants.CONTRIBUTOR_LIST %>" scope="session" />
+    <bean:define id="title" name="<%= PresentationConstants.CONTRIBUTOR_ACTION %>" scope="session" />
         
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 	<bean:define id="link">

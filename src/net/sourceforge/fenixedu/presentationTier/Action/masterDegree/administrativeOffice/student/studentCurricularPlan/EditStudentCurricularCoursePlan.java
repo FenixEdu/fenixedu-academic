@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,7 +51,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 	}
 
 	// put request
-	request.setAttribute(SessionConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
+	request.setAttribute(PresentationConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
 	request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
 
 	request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());

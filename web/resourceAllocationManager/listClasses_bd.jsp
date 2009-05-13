@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -40,19 +40,19 @@
 		<tr>
 		  <td nowrap="nowrap" class="listClasses">
 		   		<html:link page="<%= "/ClassManagerDA.do?method=viewClass&amp;"
-					+ SessionConstants.CLASS_VIEW_OID
+					+ PresentationConstants.CLASS_VIEW_OID
 				  	+ "="
 				  	+ pageContext.findAttribute("classOID")
 				  	+ "&amp;"
-					+ SessionConstants.EXECUTION_PERIOD_OID
+					+ PresentationConstants.EXECUTION_PERIOD_OID
 				  	+ "="
 				  	+ pageContext.findAttribute("executionPeriodOID")
 				  	+ "&amp;"
-				  	+ SessionConstants.CURRICULAR_YEAR_OID
+				  	+ PresentationConstants.CURRICULAR_YEAR_OID
 					+ "="
 				  	+ pageContext.findAttribute("curricularYearOID")
 				  	+ "&amp;"
-					+ SessionConstants.EXECUTION_DEGREE_OID
+					+ PresentationConstants.EXECUTION_DEGREE_OID
 				  	+ "="
 					+ pageContext.findAttribute("executionDegreeOID") %>">
 			  <div align="center">
@@ -64,19 +64,19 @@
 			<div align="center">
 
 		   		<html:link page="<%= "/ClassManagerDA.do?method=deleteClass&amp;"
-					+ SessionConstants.CLASS_VIEW_OID
+					+ PresentationConstants.CLASS_VIEW_OID
 				  	+ "="
 				  	+ pageContext.findAttribute("classOID")
 				  	+ "&amp;"
-					+ SessionConstants.EXECUTION_PERIOD_OID
+					+ PresentationConstants.EXECUTION_PERIOD_OID
 				  	+ "="
 				  	+ pageContext.findAttribute("executionPeriodOID")
 				  	+ "&amp;"
-				  	+ SessionConstants.CURRICULAR_YEAR_OID
+				  	+ PresentationConstants.CURRICULAR_YEAR_OID
 					+ "="
 				  	+ pageContext.findAttribute("curricularYearOID")
 				  	+ "&amp;"
-					+ SessionConstants.EXECUTION_DEGREE_OID
+					+ PresentationConstants.EXECUTION_DEGREE_OID
 				  	+ "="
 					+ pageContext.findAttribute("executionDegreeOID") %>"
 					onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>

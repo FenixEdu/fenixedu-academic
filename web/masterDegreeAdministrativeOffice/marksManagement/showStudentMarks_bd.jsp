@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
 
 <logic:present name="infoSiteEnrolmentEvaluation">
@@ -141,13 +141,13 @@
 					</td>
              		<td>
              			<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateYear" property="examDateYear">
-                    		<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+                    		<html:options collection="<%= PresentationConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>
                  		<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateMonth" property="examDateMonth">
-                    		<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+                    		<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>
                  		<html:select bundle="HTMLALT_RESOURCES" altKey="select.examDateDay" property="examDateDay">
-                    		<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+                    		<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
                  		</html:select>    
              		</td>          
    				</tr>
@@ -158,13 +158,13 @@
 					</td>
 	             	<td>
 	             		<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateYear" property="gradeAvailableDateYear">
-	                    	<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+	                    	<html:options collection="<%= PresentationConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>
 	                 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateMonth" property="gradeAvailableDateMonth">
-	                    	<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+	                    	<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>
 	                 	<html:select bundle="HTMLALT_RESOURCES" altKey="select.gradeAvailableDateDay" property="gradeAvailableDateDay">
-	                    	<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+	                    	<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 	                 	</html:select>    
 	             	</td>          
    				</tr>
@@ -174,7 +174,7 @@
 					</td>
 					<td align="left">
 						<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentEvaluationType" property="enrolmentEvaluationType">
-		               		<html:options collection="<%= SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST %>"  property="value" labelProperty="label"/>
+		               		<html:options collection="<%= PresentationConstants.ENROLMENT_EVALUATION_TYPE_LIST %>"  property="value" labelProperty="label"/>
 	             		</html:select>   
 					</td>
   				</tr>

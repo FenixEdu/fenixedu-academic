@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -68,9 +68,9 @@ public class ContextUtils {
 
     @Deprecated
     public static final void setExecutionPeriodContext(HttpServletRequest request) throws FenixServiceException {
-	String executionPeriodOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
+	String executionPeriodOIDString = (String) request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID);
 	if (executionPeriodOIDString == null) {
-	    executionPeriodOIDString = request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+	    executionPeriodOIDString = request.getParameter(PresentationConstants.EXECUTION_PERIOD_OID);
 	}
 
 	Integer executionPeriodOID = null;
@@ -86,8 +86,8 @@ public class ContextUtils {
 	}
 	if (infoExecutionPeriod != null) {
 	    // Place it in request
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	    request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	    request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 	    if (infoExecutionPeriod.getInfoExecutionYear() != null) {
 		request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
 	    }
@@ -99,14 +99,14 @@ public class ContextUtils {
      */
     public static void setExecutionDegreeContext(HttpServletRequest request) throws FenixServiceException {
 
-	String executionDegreeOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
+	String executionDegreeOIDString = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID);
 
 	if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0)) {
-	    executionDegreeOIDString = request.getParameter(SessionConstants.EXECUTION_DEGREE_OID);
+	    executionDegreeOIDString = request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID);
 
 	    // No degree was chosen
 	    if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0)) {
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE, null);
+		request.setAttribute(PresentationConstants.EXECUTION_DEGREE, null);
 	    }
 	}
 
@@ -126,8 +126,8 @@ public class ContextUtils {
 
 	    if (infoExecutionDegree != null) {
 		// Place it in request
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+		request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
+		request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 	    }
 	}
     }
@@ -136,9 +136,9 @@ public class ContextUtils {
      * @param request
      */
     public static void setCurricularYearContext(HttpServletRequest request) {
-	String curricularYearOIDString = (String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID);
+	String curricularYearOIDString = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID);
 	if (curricularYearOIDString == null) {
-	    curricularYearOIDString = request.getParameter(SessionConstants.CURRICULAR_YEAR_OID);
+	    curricularYearOIDString = request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID);
 	}
 
 	Integer curricularYearOID = null;
@@ -159,8 +159,8 @@ public class ContextUtils {
 
 	    if (infoCurricularYear != null) {
 		// Place it in request
-		request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
-		request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, infoCurricularYear.getIdInternal().toString());
+		request.setAttribute(PresentationConstants.CURRICULAR_YEAR, infoCurricularYear);
+		request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, infoCurricularYear.getIdInternal().toString());
 	    }
 
 	}
@@ -170,28 +170,26 @@ public class ContextUtils {
      * @param request
      */
     public static void setCurricularYearsContext(HttpServletRequest request) {
-	// List curricularYearsB = (List)
-	// request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
 
-	String curricularYears_1 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_1);
-	String curricularYears_2 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_2);
-	String curricularYears_3 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_3);
-	String curricularYears_4 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_4);
-	String curricularYears_5 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_5);
+	String curricularYears_1 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_1);
+	String curricularYears_2 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_2);
+	String curricularYears_3 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_3);
+	String curricularYears_4 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_4);
+	String curricularYears_5 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_5);
 	if (curricularYears_1 == null) {
-	    curricularYears_1 = request.getParameter(SessionConstants.CURRICULAR_YEARS_1);
+	    curricularYears_1 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_1);
 	}
 	if (curricularYears_2 == null) {
-	    curricularYears_2 = request.getParameter(SessionConstants.CURRICULAR_YEARS_2);
+	    curricularYears_2 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_2);
 	}
 	if (curricularYears_3 == null) {
-	    curricularYears_3 = request.getParameter(SessionConstants.CURRICULAR_YEARS_3);
+	    curricularYears_3 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_3);
 	}
 	if (curricularYears_4 == null) {
-	    curricularYears_4 = request.getParameter(SessionConstants.CURRICULAR_YEARS_4);
+	    curricularYears_4 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_4);
 	}
 	if (curricularYears_5 == null) {
-	    curricularYears_5 = request.getParameter(SessionConstants.CURRICULAR_YEARS_5);
+	    curricularYears_5 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_5);
 	}
 
 	List curricularYears = new ArrayList();
@@ -227,16 +225,16 @@ public class ContextUtils {
 	    }
 	}
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEARS_LIST, curricularYears);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEARS_LIST, curricularYears);
     }
 
     /**
      * @param request
      */
     public static void setExecutionCourseContext(HttpServletRequest request) {
-	String executionCourseOIDString = (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
+	String executionCourseOIDString = (String) request.getAttribute(PresentationConstants.EXECUTION_COURSE_OID);
 	if (executionCourseOIDString == null) {
-	    executionCourseOIDString = request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
+	    executionCourseOIDString = request.getParameter(PresentationConstants.EXECUTION_COURSE_OID);
 	}
 
 	Integer executionCourseOID = null;
@@ -251,7 +249,7 @@ public class ContextUtils {
 
 	    if (infoExecutionCourse != null) {
 		// Place it in request
-		request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+		request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
 	    }
 	}
     }
@@ -260,9 +258,9 @@ public class ContextUtils {
      * @param request
      */
     public static void setShiftContext(HttpServletRequest request) {
-	String shiftOIDString = (String) request.getAttribute(SessionConstants.SHIFT_OID);
+	String shiftOIDString = (String) request.getAttribute(PresentationConstants.SHIFT_OID);
 	if (shiftOIDString == null) {
-	    shiftOIDString = request.getParameter(SessionConstants.SHIFT_OID);
+	    shiftOIDString = request.getParameter(PresentationConstants.SHIFT_OID);
 	}
 
 	Integer shiftOID = null;
@@ -277,7 +275,7 @@ public class ContextUtils {
 
 	    if (infoShift != null) {
 		// Place it in request
-		request.setAttribute(SessionConstants.SHIFT, infoShift);
+		request.setAttribute(PresentationConstants.SHIFT, infoShift);
 	    }
 	}
     }
@@ -286,9 +284,9 @@ public class ContextUtils {
      * @param request
      */
     public static void setClassContext(HttpServletRequest request) {
-	String classOIDString = (String) request.getAttribute(SessionConstants.CLASS_VIEW_OID);
+	String classOIDString = (String) request.getAttribute(PresentationConstants.CLASS_VIEW_OID);
 	if (classOIDString == null) {
-	    classOIDString = request.getParameter(SessionConstants.CLASS_VIEW_OID);
+	    classOIDString = request.getParameter(PresentationConstants.CLASS_VIEW_OID);
 	}
 
 	Integer classOID = null;
@@ -308,7 +306,7 @@ public class ContextUtils {
 	    }
 
 	    // Place it in request
-	    request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
+	    request.setAttribute(PresentationConstants.CLASS_VIEW, infoClass);
 	}
     }
 
@@ -316,9 +314,9 @@ public class ContextUtils {
      * @param request
      */
     public static void setLessonContext(HttpServletRequest request) {
-	String lessonOIDString = (String) request.getAttribute(SessionConstants.LESSON_OID);
+	String lessonOIDString = (String) request.getAttribute(PresentationConstants.LESSON_OID);
 	if (lessonOIDString == null) {
-	    lessonOIDString = request.getParameter(SessionConstants.LESSON_OID);
+	    lessonOIDString = request.getParameter(PresentationConstants.LESSON_OID);
 	}
 
 	Integer lessonOID = null;
@@ -332,7 +330,7 @@ public class ContextUtils {
 	    infoLesson = ReadLessonByOID.run(lessonOID);
 
 	    // Place it in request
-	    request.setAttribute(SessionConstants.LESSON, infoLesson);
+	    request.setAttribute(PresentationConstants.LESSON, infoLesson);
 	}
     }
 
@@ -347,7 +345,7 @@ public class ContextUtils {
 	if (selectedRooms != null && !selectedRooms.isEmpty()) {
 	    Collections.sort(selectedRooms);
 	}
-	request.setAttribute(SessionConstants.SELECTED_ROOMS, selectedRooms);
+	request.setAttribute(PresentationConstants.SELECTED_ROOMS, selectedRooms);
 
 	setRoomSearchCriteriaContext(request);
 
@@ -371,22 +369,20 @@ public class ContextUtils {
      * @param request
      */
     public static void setSelectedRoomIndexContext(HttpServletRequest request) {
-	// String selectedRoomIndexString =
-	// (String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
-	Integer selectedRoomIndex = (Integer) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+	Integer selectedRoomIndex = (Integer) request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
 
 	// if (selectedRoomIndexString == null)
 	// {
-	String selectedRoomIndexString = request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
+	String selectedRoomIndexString = request.getParameter(PresentationConstants.SELECTED_ROOM_INDEX);
 	// }
 
 	// Integer selectedRoomIndex = null;
 	if (selectedRoomIndex != null) {
 	    // Place it in request
-	    request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
+	    request.setAttribute(PresentationConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
 	} else if (selectedRoomIndexString != null) {
 	    selectedRoomIndex = new Integer(selectedRoomIndexString);
-	    request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
+	    request.setAttribute(PresentationConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
 	}
     }
 
@@ -395,11 +391,11 @@ public class ContextUtils {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Obtain a list of curricular years */
 	List labelListOfCurricularYears = getLabelListOfCurricularYears();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+	request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
 	/* Obtain a list of degrees for the specified execution year */
 	final ExecutionYear executionYear = infoExecutionPeriod.getExecutionPeriod().getExecutionYear();
@@ -440,8 +436,8 @@ public class ContextUtils {
 	    final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getIdInternal().toString());
 	    executionPeriodLabelValueBeans.add(labelValueBean);
 	}
-	request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, infoExecutionPeriods);
-	request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
+	request.setAttribute(PresentationConstants.LIST_INFOEXECUTIONPERIOD, infoExecutionPeriods);
+	request.setAttribute(PresentationConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodLabelValueBeans);
     }
 
     private static boolean duplicateDegreeInList(final Degree degree, final ExecutionYear executionYear) {
@@ -562,7 +558,7 @@ public class ContextUtils {
     public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -615,18 +611,18 @@ public class ContextUtils {
 	if (renderedObject != null && renderedObject instanceof ContextSelectionBean) {
 	    RenderUtils.invalidateViewState();
 	    context = (ContextSelectionBean) renderedObject;
-	} else if (request.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN) != null) {
-	    context = (ContextSelectionBean) request.getAttribute(SessionConstants.CONTEXT_SELECTION_BEAN);
+	} else if (request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN) != null) {
+	    context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
 	} else {
 	    AcademicInterval academicInterval = null;
 	    ExecutionDegree executionDegree = null;
 	    CurricularYear curricularYear = null;
 	    String courseName = null;
-	    if (request.getAttribute(SessionConstants.ACADEMIC_INTERVAL) != null) {
-		String academicIntervalStr = (String) request.getAttribute(SessionConstants.ACADEMIC_INTERVAL);
+	    if (request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+		String academicIntervalStr = (String) request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL);
 		academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
-	    } else if (request.getParameter(SessionConstants.ACADEMIC_INTERVAL) != null) {
-		String academicIntervalStr = request.getParameter(SessionConstants.ACADEMIC_INTERVAL);
+	    } else if (request.getParameter(PresentationConstants.ACADEMIC_INTERVAL) != null) {
+		String academicIntervalStr = request.getParameter(PresentationConstants.ACADEMIC_INTERVAL);
 		if (academicIntervalStr != null && !academicIntervalStr.equals("null")) {
 		    academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(academicIntervalStr);
 		}
@@ -634,21 +630,21 @@ public class ContextUtils {
 	    if (academicInterval == null) {
 		academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
 	    }
-	    if (request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID) != null) {
+	    if (request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
 		executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
-			Integer.parseInt((String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID)));
-	    } else if (request.getParameter(SessionConstants.EXECUTION_DEGREE_OID) != null) {
+			Integer.parseInt((String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE_OID)));
+	    } else if (request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID) != null) {
 		executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
-			Integer.parseInt(request.getParameter(SessionConstants.EXECUTION_DEGREE_OID)));
+			Integer.parseInt(request.getParameter(PresentationConstants.EXECUTION_DEGREE_OID)));
 	    }
-	    if (request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID) != null
-		    && !request.getParameter(SessionConstants.CURRICULAR_YEAR_OID).equals("null")) {
+	    if (request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID) != null
+		    && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
 		curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(
-			Integer.parseInt((String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID)));
-	    } else if (request.getParameter(SessionConstants.CURRICULAR_YEAR_OID) != null
-		    && !request.getParameter(SessionConstants.CURRICULAR_YEAR_OID).equals("null")) {
+			Integer.parseInt((String) request.getAttribute(PresentationConstants.CURRICULAR_YEAR_OID)));
+	    } else if (request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID) != null
+		    && !request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID).equals("null")) {
 		curricularYear = RootDomainObject.getInstance().readCurricularYearByOID(
-			Integer.parseInt(request.getParameter(SessionConstants.CURRICULAR_YEAR_OID)));
+			Integer.parseInt(request.getParameter(PresentationConstants.CURRICULAR_YEAR_OID)));
 	    }
 	    if (request.getAttribute("execution_course_name") != null) {
 		courseName = (String) request.getAttribute("execution_course_name");
@@ -659,10 +655,10 @@ public class ContextUtils {
 	    context = new ContextSelectionBean(academicInterval, executionDegree, curricularYear);
 	    context.setCourseName(courseName);
 	}
-	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, context);
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, context.getAcademicInterval().getResumedRepresentationInStringFormat());
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR, new InfoCurricularYear(context.getCurricularYear()));
+	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, context);
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, context.getAcademicInterval().getResumedRepresentationInStringFormat());
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR, new InfoCurricularYear(context.getCurricularYear()));
     }
 
 }

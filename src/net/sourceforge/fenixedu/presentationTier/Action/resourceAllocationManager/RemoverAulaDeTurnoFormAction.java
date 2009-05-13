@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,11 +40,11 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 
 	IUserView userView = UserView.getUser();
 
-	Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+	Integer shiftOID = new Integer(request.getParameter(PresentationConstants.SHIFT_OID));
 
 	InfoShift infoTurno = (InfoShift) ReadShiftByOID.run(shiftOID);
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 

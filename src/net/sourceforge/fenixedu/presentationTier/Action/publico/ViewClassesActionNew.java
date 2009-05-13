@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -83,11 +83,9 @@ public class ViewClassesActionNew extends FenixContextAction {
 	escolherContextoForm.set("indice", indice);
 	request.setAttribute("indice", indice);
 
-	// SessionConstants.EXECUTION_PERIOD,
-	// SessionConstants.EXECUTION_PERIOD_OID
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());
@@ -97,8 +95,7 @@ public class ViewClassesActionNew extends FenixContextAction {
 	    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	    RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 
-	    // SessionConstants.INFO_DEGREE_CURRICULAR_PLAN
-	    request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
+	    request.setAttribute(PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
 
 	    List<InfoClass> classList = LerTurmas.run(infoExecutionDegree, infoExecutionPeriod, null);
 

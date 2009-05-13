@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -37,17 +37,17 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
 		.getActiveMasterDegreeThesisDataVersion();
 
 	if (!thesisDataVersion.getGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
+	    request.setAttribute(PresentationConstants.GUIDERS_LIST, thesisDataVersion.getGuiders());
 
 	if (!thesisDataVersion.getAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion.getAssistentGuiders());
+	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, thesisDataVersion.getAssistentGuiders());
 
 	if (!thesisDataVersion.getExternalAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, thesisDataVersion
+	    request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, thesisDataVersion
 		    .getExternalAssistentGuiders());
 
 	if (!thesisDataVersion.getExternalGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion.getExternalGuiders());
+	    request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, thesisDataVersion.getExternalGuiders());
 
 	DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
 	changeMasterDegreeThesisForm.set("dissertationTitle", thesisDataVersion.getDissertationTitle());
@@ -63,13 +63,13 @@ public class ChangeMasterDegreeThesisDispatchAction extends FenixDispatchAction 
 	ActionErrors actionErrors = new ActionErrors();
 
 	try {
-	    operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST,
+	    operations.getTeachersByNumbers(form, request, "guidersNumbers", PresentationConstants.GUIDERS_LIST, actionErrors);
+	    operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", PresentationConstants.ASSISTENT_GUIDERS_LIST,
 		    actionErrors);
 	    operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 	    operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
-		    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
-	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", SessionConstants.EXTERNAL_GUIDERS_LIST,
+		    PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+	    operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs", PresentationConstants.EXTERNAL_GUIDERS_LIST,
 		    actionErrors);
 
 	} catch (Exception e1) {

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.Info
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,7 +43,7 @@ public class ViewReimbursementGuideDetailsDispatchAction extends FenixDispatchAc
 	try {
 	    infoReimbursementGuide = (InfoReimbursementGuide) ViewReimbursementGuide.run(reimbursementGuideId);
 
-	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
+	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, infoReimbursementGuide);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 	}

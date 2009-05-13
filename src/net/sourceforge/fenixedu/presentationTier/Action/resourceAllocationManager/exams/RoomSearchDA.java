@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -104,9 +104,9 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/" + roomSearchForm.get("year");
 	String startTime = roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
 	String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
-	request.setAttribute(SessionConstants.DATE, sdate);
-	request.setAttribute(SessionConstants.START_TIME, startTime);
-	request.setAttribute(SessionConstants.END_TIME, endTime);
+	request.setAttribute(PresentationConstants.DATE, sdate);
+	request.setAttribute(PresentationConstants.START_TIME, startTime);
+	request.setAttribute(PresentationConstants.END_TIME, endTime);
 
 	Integer exam = null;
 	Integer normal = null;
@@ -144,11 +144,11 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 		InfoRoom elem = iter.next();
 		availableRoomId[i] = elem.getIdInternal().toString();
 	    }
-	    request.setAttribute(SessionConstants.AVAILABLE_ROOMS_ID, availableRoomId);
+	    request.setAttribute(PresentationConstants.AVAILABLE_ROOMS_ID, availableRoomId);
 
 	}
 
-	request.setAttribute(SessionConstants.AVAILABLE_ROOMS, newAvailableInfoRoom);
+	request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, newAvailableInfoRoom);
 	return mapping.findForward("showRooms");
     }
 
@@ -186,11 +186,11 @@ public class RoomSearchDA extends FenixContextDispatchAction {
 	String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/" + roomSearchForm.get("year");
 	String startTime = roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
 	String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
-	request.setAttribute(SessionConstants.DATE, sdate);
-	request.setAttribute(SessionConstants.START_TIME, startTime);
-	request.setAttribute(SessionConstants.END_TIME, endTime);
-	request.setAttribute(SessionConstants.AVAILABLE_ROOMS, availableRooms);
-	request.setAttribute(SessionConstants.AVAILABLE_ROOMS_ID, availableRoomsId);
+	request.setAttribute(PresentationConstants.DATE, sdate);
+	request.setAttribute(PresentationConstants.START_TIME, startTime);
+	request.setAttribute(PresentationConstants.END_TIME, endTime);
+	request.setAttribute(PresentationConstants.AVAILABLE_ROOMS, availableRooms);
+	request.setAttribute(PresentationConstants.AVAILABLE_ROOMS_ID, availableRoomsId);
 
 	return mapping.findForward("showRooms");
     }

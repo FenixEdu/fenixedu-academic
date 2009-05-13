@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -57,7 +57,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionDegrees", executionDegrees);
 
 	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
 
 	return mapping.findForward("showSeperationPage");
     }

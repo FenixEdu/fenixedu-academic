@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -252,10 +252,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public int getNumberOfPages() throws FenixFilterException, FenixServiceException {
-	if ((getPersonsNumber() % SessionConstants.LIMIT_FINDED_PERSONS) != 0) {
-	    return (getPersonsNumber() / SessionConstants.LIMIT_FINDED_PERSONS) + 1;
+	if ((getPersonsNumber() % PresentationConstants.LIMIT_FINDED_PERSONS) != 0) {
+	    return (getPersonsNumber() / PresentationConstants.LIMIT_FINDED_PERSONS) + 1;
 	} else {
-	    return (getPersonsNumber() / SessionConstants.LIMIT_FINDED_PERSONS);
+	    return (getPersonsNumber() / PresentationConstants.LIMIT_FINDED_PERSONS);
 	}
     }
 
@@ -276,8 +276,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private void setIntervalPersons() throws FenixFilterException, FenixServiceException {
 	final Collection<Person> result = getPersonsList();
-	final int begin = (this.getPageIndex() - 1) * SessionConstants.LIMIT_FINDED_PERSONS;
-	final int end = begin + SessionConstants.LIMIT_FINDED_PERSONS;
+	final int begin = (this.getPageIndex() - 1) * PresentationConstants.LIMIT_FINDED_PERSONS;
+	final int end = begin + PresentationConstants.LIMIT_FINDED_PERSONS;
 	int i = 0;
 	for (final Person person : allPersonsList) {
 	    if (i >= begin && i < end) {

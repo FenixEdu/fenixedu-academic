@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -36,7 +36,7 @@ public class DefineExamCommentActionDA extends
 	    throws Exception {
 
 	InfoExamsMap infoExamsMap = getExamsMap(request);
-	request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_MAP, infoExamsMap);
 
 	Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
 
@@ -44,22 +44,22 @@ public class DefineExamCommentActionDA extends
 
 	Integer curricularYear = infoExecutionCourse.getCurricularYear();
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
 
-	request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExamsMap);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_KEY, infoExamsMap);
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, infoExecutionDegree.getIdInternal().toString());
 
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()
 		.toString());
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
-	request.setAttribute(SessionConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourse);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE_OID, infoExecutionCourse.getIdInternal().toString());
 
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
 	ContextUtils.setCurricularYearContext(request);
 
 	return mapping.findForward("defineExamComment");
@@ -72,7 +72,7 @@ public class DefineExamCommentActionDA extends
 
 	String comment = (String) defineExamCommentForm.get("comment");
 	String executionCourseCode = request.getParameter("executionCourseCode");
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	// Define comment
 
@@ -86,11 +86,11 @@ public class DefineExamCommentActionDA extends
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
-	List curricularYears = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+	List curricularYears = (List) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_LIST);
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	InfoExamsMap infoExamsMap = ReadExamsMap.run(infoExecutionDegree, curricularYears, infoExecutionPeriod);
 	return infoExamsMap;

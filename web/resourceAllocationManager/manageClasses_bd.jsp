@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,11 +15,11 @@
 
 <html:form action="/manageClasses" focus="className">
 
-    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+    <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="create"/>
@@ -43,17 +43,17 @@
 </html:form>
 
 
-<logic:present name="<%= SessionConstants.CLASSES %>" scope="request">
+<logic:present name="<%= PresentationConstants.CLASSES %>" scope="request">
   <html:form action="/deleteClasses">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteClasses"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
-    <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-                 value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+    <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+                 value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+	<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-	<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+	<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 
 <table class="tstyle2 mtop15">
@@ -70,7 +70,7 @@
 	<bean:define id="deleteConfirm">
 		return confirm('<bean:message key="message.confirm.delete.class"/>')
 	</bean:define>
-	<logic:iterate id="classView" name="<%= SessionConstants.CLASSES %>" scope="request">
+	<logic:iterate id="classView" name="<%= PresentationConstants.CLASSES %>" scope="request">
 		<bean:define id="classOID"
 					 type="java.lang.Integer"
 					 name="classView"
@@ -83,19 +83,19 @@
 			</td>
 			<td>
 				<html:link page="<%= "/manageClass.do?method=prepare&amp;"
-						+ SessionConstants.CLASS_VIEW_OID
+						+ PresentationConstants.CLASS_VIEW_OID
 						+ "="
 						+ pageContext.findAttribute("classOID")
 						+ "&amp;"
-						+ SessionConstants.ACADEMIC_INTERVAL
+						+ PresentationConstants.ACADEMIC_INTERVAL
 						+ "="
-						+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+						+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 						+ "&amp;"
-						+ SessionConstants.CURRICULAR_YEAR_OID
+						+ PresentationConstants.CURRICULAR_YEAR_OID
 						+ "="
 						+ pageContext.findAttribute("curricularYearOID")
 						+ "&amp;"
-						+ SessionConstants.EXECUTION_DEGREE_OID
+						+ PresentationConstants.EXECUTION_DEGREE_OID
 						+ "="
 						+ pageContext.findAttribute("executionDegreeOID") %>">
 					<span style="align: center;">
@@ -106,19 +106,19 @@
 			<td>
 				<div align="center">
 					<html:link page="<%= "/manageClasses.do?method=delete&amp;"
-							+ SessionConstants.CLASS_VIEW_OID
+							+ PresentationConstants.CLASS_VIEW_OID
 						  	+ "="
 						  	+ pageContext.findAttribute("classOID")
 						  	+ "&amp;"
-							+ SessionConstants.ACADEMIC_INTERVAL
+							+ PresentationConstants.ACADEMIC_INTERVAL
 						  	+ "="
-						  	+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL)
+						  	+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
 						  	+ "&amp;"
-						  	+ SessionConstants.CURRICULAR_YEAR_OID
+						  	+ PresentationConstants.CURRICULAR_YEAR_OID
 							+ "="
 						  	+ pageContext.findAttribute("curricularYearOID")
 						  	+ "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID
+							+ PresentationConstants.EXECUTION_DEGREE_OID
 						  	+ "="
 							+ pageContext.findAttribute("executionDegreeOID") %>"
 								onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
@@ -135,6 +135,6 @@
 	</html:submit>
   </html:form>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.CLASSES %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.CLASSES %>" scope="request">
 	<span class="error"><!-- Error messages go here --><bean:message key="listClasses.emptyClasses"/></span>
 </logic:notPresent>

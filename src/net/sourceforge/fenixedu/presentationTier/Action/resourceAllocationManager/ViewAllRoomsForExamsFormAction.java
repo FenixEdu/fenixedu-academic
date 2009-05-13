@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllRoomsExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,10 +29,10 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 	IUserView userView = getUserView(request);
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(
-		SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		PresentationConstants.INFO_EXECUTION_PERIOD_KEY);
 
 	List infoRoomExamsMaps = ReadAllRoomsExamsMap.run(infoExecutionPeriod);
-	request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
+	request.setAttribute(PresentationConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
 	return mapping.findForward("Sucess");
     }

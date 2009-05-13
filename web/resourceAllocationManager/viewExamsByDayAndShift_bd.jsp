@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoRoom" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -20,7 +20,7 @@
 <bean:define id="deleteConfirm">
 	return confirm('<bean:message key="message.confirm.delete.exam"/>')
 </bean:define>
-<logic:notPresent name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table align="center">
 		<tr>
 			<td>
@@ -29,7 +29,7 @@
 		</tr>
 	</table>
 </logic:notPresent>
-<logic:present name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+<logic:present name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 	<table width="100%">
 		<tr>
 			<th class="listClasses-header"><bean:message key="property.course"/></th>
@@ -39,7 +39,7 @@
 			<th class="listClasses-header"><bean:message key="property.exam.number.vacancies"/></th>
 			<th class="listClasses-header"><bean:message key="property.exam.manage"/></th>
 		</tr>
-		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="request">
+		<logic:iterate id="infoViewExam" indexId="index" name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">
 			<% int seatsReserved = 0; %>
 			<tr>
 				<td class="listClasses">
@@ -70,11 +70,11 @@
 				<td class="listClasses">
 					<html:link paramId="indexExam" paramName="index"
 							   page="<%= "/viewExamsDayAndShiftForm.do?method=edit&amp;"
-							   				+ SessionConstants.EXECUTION_PERIOD_OID
+							   				+ PresentationConstants.EXECUTION_PERIOD_OID
 											+ "="
   											+ pageContext.findAttribute("executionPeriodOID")
 											+ "&amp;"
-							   				+ SessionConstants.EXAM_DATEANDTIME
+							   				+ PresentationConstants.EXAM_DATEANDTIME
 											+ "="
   											+ pageContext.findAttribute("examDateAndTime")
   									%>">
@@ -83,11 +83,11 @@
 					<html:link paramId="indexExam" paramName="index"
 							   onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'
 							   page="<%= "/viewExamsDayAndShiftForm.do?method=delete&amp;"
-							   				+ SessionConstants.EXECUTION_PERIOD_OID
+							   				+ PresentationConstants.EXECUTION_PERIOD_OID
 											+ "="
   											+ pageContext.findAttribute("executionPeriodOID")
 											+ "&amp;"
-							   				+ SessionConstants.EXAM_DATEANDTIME
+							   				+ PresentationConstants.EXAM_DATEANDTIME
 											+ "="
   											+ pageContext.findAttribute("examDateAndTime")
   									%>">
@@ -95,11 +95,11 @@
 					</html:link>
 					<html:link paramId="indexExam" paramName="index"
 							   page="<%= "/viewExamsDayAndShiftForm.do?method=addExecutionCourse&amp;"
-							   				+ SessionConstants.EXECUTION_PERIOD_OID
+							   				+ PresentationConstants.EXECUTION_PERIOD_OID
 											+ "="
   											+ pageContext.findAttribute("executionPeriodOID")
 											+ "&amp;"
-							   				+ SessionConstants.EXAM_DATEANDTIME
+							   				+ PresentationConstants.EXAM_DATEANDTIME
 											+ "="
   											+ pageContext.findAttribute("examDateAndTime")
   									%>">
@@ -111,6 +111,6 @@
 	</table>
 	<br />
 	<br />
-	- N� de vagas para exames: <bean:write name="<%= SessionConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="request"/>
+	- N� de vagas para exames: <bean:write name="<%= PresentationConstants.AVAILABLE_ROOM_OCCUPATION %>" scope="request"/>
 <br />
 </logic:present>

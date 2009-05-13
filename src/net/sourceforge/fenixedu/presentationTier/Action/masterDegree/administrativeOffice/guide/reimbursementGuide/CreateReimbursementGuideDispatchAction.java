@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideS
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -68,7 +68,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 	try {
 	    infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
-	    request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	    request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -121,7 +121,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
 	    Integer reimbursementGuideID = (Integer) CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries, userView);
 
-	    request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
+	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));

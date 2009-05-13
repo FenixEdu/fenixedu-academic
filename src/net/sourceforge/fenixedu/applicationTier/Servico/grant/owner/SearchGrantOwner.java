@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWit
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.PresentationConstants;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -61,7 +61,7 @@ public class SearchGrantOwner extends FenixService {
 	// Search by name IF search by ID has failed
 	if (person == null && grantOwner == null) {
 	    if (!StringUtils.isEmpty(name)) {
-		Integer tempNumberOfElementInSpan = Integer.valueOf(SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
+		Integer tempNumberOfElementInSpan = Integer.valueOf(PresentationConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1);
 		if (onlyGrantOwner.booleanValue()) {
 		    grantOwnerList = GrantOwner.readGrantOwnerByName(name, startIndex, tempNumberOfElementInSpan);
 		    numberOfResultsByName = GrantOwner.countAllGrantOwnerByName(name);

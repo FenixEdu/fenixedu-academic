@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -33,21 +33,21 @@ public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAct
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+	String nextPage = request.getParameter(PresentationConstants.NEXT_PAGE);
 	if (nextPage != null)
 	    request.setAttribute("nextPage", nextPage);
 
 	List horas = Util.getExamShifts();
-	request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+	request.setAttribute(PresentationConstants.LABLELIST_HOURS, horas);
 
 	List daysOfMonth = Util.getDaysOfMonth();
-	request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+	request.setAttribute(PresentationConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
 	List monthsOfYear = Util.getMonthsOfYear();
-	request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+	request.setAttribute(PresentationConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
 	List years = Util.getYears();
-	request.setAttribute(SessionConstants.LABLELIST_YEARS, years);
+	request.setAttribute(PresentationConstants.LABLELIST_YEARS, years);
 
 	return mapping.findForward("Show Choose Form");
 
@@ -72,13 +72,13 @@ public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAct
 	examDateAndTime.set(Calendar.SECOND, 0);
 	examDateAndTime.set(Calendar.MILLISECOND, 0);
 
-	request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, "" + year + "/" + (month.intValue() + 1) + "/" + day
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, "" + year + "/" + (month.intValue() + 1) + "/" + day
 		+ "  às  " + beginning + " horas");
 
-	request.removeAttribute(SessionConstants.EXAM_DATEANDTIME);
-	request.setAttribute(SessionConstants.EXAM_DATEANDTIME, examDateAndTime);
+	request.removeAttribute(PresentationConstants.EXAM_DATEANDTIME);
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, examDateAndTime);
 
-	String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+	String nextPage = request.getParameter(PresentationConstants.NEXT_PAGE);
 	return mapping.findForward(nextPage);
 
     }

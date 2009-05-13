@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -57,7 +57,7 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 	}
 	Collections.sort(degreeList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 
-	request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
+	request.setAttribute(PresentationConstants.DEGREE_LIST, degreeList);
 
 	return mapping.findForward("PrepareSuccess");
     }

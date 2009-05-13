@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson" %>
 
 
@@ -32,7 +32,7 @@
 			</td>
             <td align="left">
                 <html:select bundle="HTMLALT_RESOURCES" altKey="select.sex" property="sex">
-                    <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
+                    <html:options collection="<%= PresentationConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
                  </html:select>          
             </td>			
 		</tr>
@@ -43,7 +43,7 @@
 			</td>
 			<td align="left">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.institutionID" property="institutionID">
-			    	<html:options collection="<%= SessionConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
+			    	<html:options collection="<%= PresentationConstants.WORK_LOCATIONS_LIST %>" property="value" labelProperty="label" />
 			   </html:select> 
 			</td>	
 		</tr>

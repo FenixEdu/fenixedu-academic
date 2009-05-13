@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
@@ -9,9 +9,9 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<logic:present name="<%=SessionConstants.EXECUTION_COURSE%>">
-	<bean:define id="executionCourseName" name="<%=SessionConstants.EXECUTION_COURSE%>" property="nome"/>
- 	<bean:define id="executionCourseId" name="<%=SessionConstants.EXECUTION_COURSE%>" property="idInternal"/>
+<logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>">
+	<bean:define id="executionCourseName" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome"/>
+ 	<bean:define id="executionCourseId" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="idInternal"/>
 
 	<bean:write name="executionPeriodName"/>	
 	<logic:present name="executionDegreeName">
@@ -29,7 +29,7 @@
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/></b>
 			</td>
 			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="nome" />
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="nome" />
 			</td>
 		</tr>
 		<tr>
@@ -37,7 +37,7 @@
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/></b>
 			</td>
 			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="sigla" />
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="sigla" />
 			</td>
 		</tr>
 		<tr>
@@ -45,7 +45,7 @@
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/></b>
 			</td>
 			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="comment" />
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="comment" />
 			</td>
 		</tr>
 		<tr>
@@ -53,13 +53,13 @@
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.available.grade.submission"/></b>
 			</td>
 			<td>
-				<bean:write name="<%=SessionConstants.EXECUTION_COURSE%>" property="availableGradeSubmission" />
+				<bean:write name="<%=PresentationConstants.EXECUTION_COURSE%>" property="availableGradeSubmission" />
 			</td>
 		</tr>
 	</table>
 	
-	<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE%>" property="courseLoads">
-		<fr:view name="<%=SessionConstants.EXECUTION_COURSE%>" property="courseLoads" schema="ExecutionCourseCourseLoadView">			
+	<logic:notEmpty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="courseLoads">
+		<fr:view name="<%=PresentationConstants.EXECUTION_COURSE%>" property="courseLoads" schema="ExecutionCourseCourseLoadView">			
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 vamiddle thlight" />
 				<fr:property name="columnClasses" value="acenter,acenter,acenter"/>					            			
@@ -80,9 +80,9 @@
 		<tr>	
 			<td>	
 				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCoursesList" /></b>
-				<logic:present name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-					<logic:notEmpty name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-						<bean:define id="curricularCourses" name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses"/>
+				<logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
+					<logic:notEmpty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
+						<bean:define id="curricularCourses" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses"/>
 								
 							<table width="100%" cellpadding="0" border="0">
 								<tr>
@@ -115,11 +115,11 @@
 					 			</logic:iterate>						
 							</table>
 					</logic:notEmpty>						
-					<logic:empty name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
+					<logic:empty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
 						<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 					</logic:empty>
 				</logic:present>
-				<logic:notPresent name="<%=SessionConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
+				<logic:notPresent name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
 					<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 				</logic:notPresent>	
 			</td>

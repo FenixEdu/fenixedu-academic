@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -57,8 +57,8 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 	String className = request.getParameter("className");
 	Integer indice = (Integer) escolherContextoForm.get("indice");
 	escolherContextoForm.set("indice", indice);
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	String classIdString = request.getParameter("classId");
 	request.setAttribute("classId", classIdString);
@@ -90,7 +90,7 @@ public class ViewClassTimeTableActionNew extends FenixAction {
 	// throw new FenixActionException(e1);
 	// }
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-	request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoDegreeCurricularPlan);
+	request.setAttribute(PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN, infoDegreeCurricularPlan);
 
 	InfoSiteTimetable component = new InfoSiteTimetable();
 

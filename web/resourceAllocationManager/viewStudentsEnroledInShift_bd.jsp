@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -36,22 +36,22 @@ function invertSelect(){
 <p class="mbottom05">O curso seleccionado &eacute;:</p>
 <strong><jsp:include page="context.jsp"/></strong>
 
-<bean:define id="shiftName" name="<%= SessionConstants.SHIFT %>" property="nome"/>
-<bean:define id="shiftId" name="<%= SessionConstants.SHIFT %>" property="idInternal"/>
-<bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
+<bean:define id="shiftName" name="<%= PresentationConstants.SHIFT %>" property="nome"/>
+<bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="idInternal"/>
+<bean:define id="shiftType" name="<%= PresentationConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
 <h3>Alunos Inscritos</h3>
 
 <p>
-	<logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
-		<bean:write name="<%= SessionConstants.EXECUTION_COURSE %>" property="nome"/>
+	<logic:present name="<%= PresentationConstants.EXECUTION_COURSE %>" scope="request">
+		<bean:write name="<%= PresentationConstants.EXECUTION_COURSE %>" property="nome"/>
 	</logic:present>
 </p>
 
 <p>Turno: <bean:write name="shiftName"/></p>
 
 
-<logic:present name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
+<logic:present name="<%= PresentationConstants.STUDENT_LIST %>" scope="request">
 <html:form action="/manageShiftStudents">
 	<table>
 		<tr>
@@ -106,20 +106,20 @@ function invertSelect(){
 	<span class="info"><bean:message key="message.transfer.students.shift.notice"/></span>
 </p>
 
-<logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
+<logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentsShift"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oldShiftId" property="oldShiftId" value="<%= pageContext.findAttribute("shiftId").toString() %>"/>
 
-        <html:hidden alt="<%= SessionConstants.ACADEMIC_INTERVAL %>" property="<%= SessionConstants.ACADEMIC_INTERVAL %>"
-                     value="<%= pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL).toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE_OID %>" property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+        <html:hidden alt="<%= PresentationConstants.ACADEMIC_INTERVAL %>" property="<%= PresentationConstants.ACADEMIC_INTERVAL %>"
+                     value="<%= pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE_OID %>" property="<%= PresentationConstants.EXECUTION_DEGREE_OID %>"
 					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.CURRICULAR_YEAR_OID %>" property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+		<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.EXECUTION_COURSE_OID %>" property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+		<html:hidden alt="<%= PresentationConstants.EXECUTION_COURSE_OID %>" property="<%= PresentationConstants.EXECUTION_COURSE_OID %>"
 					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-		<html:hidden alt="<%= SessionConstants.SHIFT_OID %>" property="<%= SessionConstants.SHIFT_OID %>"
+		<html:hidden alt="<%= PresentationConstants.SHIFT_OID %>" property="<%= PresentationConstants.SHIFT_OID %>"
 					 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 		<table>
@@ -129,7 +129,7 @@ function invertSelect(){
 				<th>
 				</th>
 			</tr>
-			<logic:iterate id="otherShift" name="<%= SessionConstants.SHIFTS %>">
+			<logic:iterate id="otherShift" name="<%= PresentationConstants.SHIFTS %>">
 				<logic:notEqual name="otherShift" property="nome" value="<%= pageContext.findAttribute("shiftName").toString() %>">
 					<bean:define id="otherShiftId" name="otherShift" property="idInternal"/>
 					<bean:define id="otherShiftType" name="otherShift" property="shiftTypesIntegerComparator"/>
@@ -154,7 +154,7 @@ function invertSelect(){
 	</html:form> 
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.STUDENT_LIST %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.STUDENT_LIST %>" scope="request">
 	<p>
 		<span class="warning0"><!-- Error messages go here --><bean:message key="errors.students.none.in.shift"/></span>	
 	</p>

@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
     <div align="center">
      <font color="#023264" size="-1">
@@ -11,7 +11,7 @@
       </font>
     </div>
     <table>
-    <bean:define id="newCandidate" name="<%= SessionConstants.NEW_MASTER_DEGREE_CANDIDATE %>" scope="request" />
+    <bean:define id="newCandidate" name="<%= PresentationConstants.NEW_MASTER_DEGREE_CANDIDATE %>" scope="request" />
       <logic:present name="newCandidate">
           <!-- Name -->
           <tr>

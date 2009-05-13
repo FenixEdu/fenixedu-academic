@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -87,7 +87,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 
 	DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
 	Integer index = (Integer) posicaoSalaFormBean.get("index");
-	request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, index);
+	request.setAttribute(PresentationConstants.SELECTED_ROOM_INDEX, index);
 
 	List edificios = Util.readExistingBuldings(null, null);
 	List tipos = Util.readTypesOfRooms(null, null);
@@ -120,7 +120,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 	DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
 	Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
 
-	List listaSalasBean = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
+	List listaSalasBean = (List) request.getAttribute(PresentationConstants.SELECTED_ROOMS);
 
 	InfoRoom sala = null;
 	if (listaSalasBean != null && !listaSalasBean.isEmpty()) {

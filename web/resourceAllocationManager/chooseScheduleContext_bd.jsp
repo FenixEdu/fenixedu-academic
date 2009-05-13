@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page
-    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%><html:xhtml />
+    import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <em><bean:message key="title.resourceAllocationManager.management" /></em>
 <h2><bean:message key="title.manage.schedule" /></h2>
@@ -17,7 +17,7 @@
 
 <fr:form action="/chooseContext.do?method=choose">
 
-	<fr:edit name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>" schema="degreeContext.choose">
+	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>" schema="degreeContext.choose">
 		<fr:destination name="degreePostBack" path="/chooseContext.do?method=choosePostBack" />
 		<fr:destination name="yearPostBack" path="/chooseContext.do?method=choosePostBack" />
 		<fr:layout name="tabular">

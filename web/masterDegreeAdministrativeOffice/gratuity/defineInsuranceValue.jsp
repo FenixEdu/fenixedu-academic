@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.gratuity.defineInsuranceValue"/></h2>
 <center>
@@ -26,13 +26,13 @@
       		</td>
       		<td>				
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.endDateDay" property="endDateDay">
-					<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.endDateMonth" property="endDateMonth">
-					<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.endDateYear" property="endDateYear">
-					<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>          
 		</tr>

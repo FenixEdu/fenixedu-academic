@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -54,7 +54,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     public ActionForward prepareEditShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 	editShiftForm.set("courseInitials", infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
@@ -82,7 +82,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
-	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShiftToEdit = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 	InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm
 		.get("courseInitials"));
 
@@ -117,7 +117,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 
-	InfoShift infoShiftOld = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShiftOld = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	InfoExecutionCourse infoExecutionCourseNew = RequestUtils.getExecutionCourseBySigla(request, (String) editShiftForm
 		.get("courseInitials"));
@@ -154,7 +154,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	}
 
-	request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourseNew);
+	request.setAttribute(PresentationConstants.EXECUTION_COURSE, infoExecutionCourseNew);
 	ContextUtils.setShiftContext(request);
 
 	return prepareEditShift(mapping, form, request, response);
@@ -165,13 +165,13 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	ContextUtils.setClassContext(request);
 
-	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	RemoverTurno.run(infoShift, infoClass);
 
 	ContextUtils.setShiftContext(request);
-	request.removeAttribute(SessionConstants.CLASS_VIEW);
+	request.removeAttribute(PresentationConstants.CLASS_VIEW);
 
 	return prepareEditShift(mapping, form, request, response);
     }
@@ -194,7 +194,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    classOIDs.add(Integer.valueOf(selectedClasses[i]));
 	}
 
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	RemoveClasses.run(infoShift, classOIDs);
 
@@ -239,7 +239,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     public ActionForward viewStudentsEnroled(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
+	InfoShift infoShift = (InfoShift) request.getAttribute(PresentationConstants.SHIFT);
 
 	ShiftKey shiftKey = new ShiftKey(infoShift.getNome(), infoShift.getInfoDisciplinaExecucao());
 
@@ -248,15 +248,15 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	Collections.sort(students, new BeanComparator("number"));
 
 	if (students != null && !students.isEmpty()) {
-	    request.setAttribute(SessionConstants.STUDENT_LIST, students);
+	    request.setAttribute(PresentationConstants.STUDENT_LIST, students);
 	}
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 
 	List<InfoShift> shifts = LerTurnosDeDisciplinaExecucao.run(infoExecutionCourse);
 
 	if (shifts != null && !shifts.isEmpty()) {
-	    request.setAttribute(SessionConstants.SHIFTS, shifts);
+	    request.setAttribute(PresentationConstants.SHIFTS, shifts);
 	}
 
 	return mapping.findForward("ViewStudentsEnroled");

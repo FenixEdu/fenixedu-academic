@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -40,7 +40,7 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
 	final List<MasterDegreeProofVersion> masterDegreeProofHistory = studentCurricularPlan
 		.readNotActiveMasterDegreeProofVersions();
 	if (!masterDegreeProofHistory.isEmpty()) {
-	    request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
 	}
 
 	final MasterDegreeThesis masterDegreeThesis = studentCurricularPlan.getMasterDegreeThesis();
@@ -52,10 +52,10 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
 	}
 
 	if (masterDegreeProofVersion.getJuries().isEmpty() == false)
-	    request.setAttribute(SessionConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
+	    request.setAttribute(PresentationConstants.JURIES_LIST, masterDegreeProofVersion.getJuries());
 
 	if (masterDegreeProofVersion.getExternalJuries().isEmpty() == false) {
-	    request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
+	    request.setAttribute(PresentationConstants.EXTERNAL_JURIES_LIST, masterDegreeProofVersion.getExternalJuries());
 	}
 
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -76,14 +76,14 @@ public class VisualizeMasterDegreeProofDispatchAction extends FenixDispatchActio
 	simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesis.getActiveMasterDegreeThesisDataVersion()
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesis.getActiveMasterDegreeThesisDataVersion()
 		.getDissertationTitle());
-	request.setAttribute(SessionConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
-	request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
-	request.setAttribute(SessionConstants.PROOF_DATE, formattedProofDate);
-	request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, formattedThesisDeliveryDate);
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
-	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
+	request.setAttribute(PresentationConstants.FINAL_RESULT, masterDegreeProofVersion.getFinalResult().name());
+	request.setAttribute(PresentationConstants.ATTACHED_COPIES_NUMBER, masterDegreeProofVersion.getAttachedCopiesNumber());
+	request.setAttribute(PresentationConstants.PROOF_DATE, formattedProofDate);
+	request.setAttribute(PresentationConstants.THESIS_DELIVERY_DATE, formattedThesisDeliveryDate);
+	request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeProofVersion.getResponsibleEmployee());
+	request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
 
 	return mapping.findForward("start");
 

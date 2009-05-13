@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomsWithNoExamsInDayAndBeginning;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -27,7 +27,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 
 	IUserView userView = UserView.getUser();
 
-	Calendar dateAndTime = (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
+	Calendar dateAndTime = (Calendar) request.getAttribute(PresentationConstants.EXAM_DATEANDTIME);
 
 	Calendar date = Calendar.getInstance();
 	Calendar time = Calendar.getInstance();
@@ -51,10 +51,10 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 	List infoRoomsList = (List) ReadRoomsWithNoExamsInDayAndBeginning.run(date, time);
 
 	if (infoRoomsList != null && infoRoomsList.isEmpty()) {
-	    request.removeAttribute(SessionConstants.INFO_EMPTY_ROOMS_KEY);
+	    request.removeAttribute(PresentationConstants.INFO_EMPTY_ROOMS_KEY);
 	} else {
-	    request.setAttribute(SessionConstants.INFO_EMPTY_ROOMS_KEY, infoRoomsList);
-	    request.setAttribute("dateAndTime", request.getAttribute(SessionConstants.EXAM_DATEANDTIME_STR));
+	    request.setAttribute(PresentationConstants.INFO_EMPTY_ROOMS_KEY, infoRoomsList);
+	    request.setAttribute("dateAndTime", request.getAttribute(PresentationConstants.EXAM_DATEANDTIME_STR));
 	}
 
 	return mapping.findForward("View");

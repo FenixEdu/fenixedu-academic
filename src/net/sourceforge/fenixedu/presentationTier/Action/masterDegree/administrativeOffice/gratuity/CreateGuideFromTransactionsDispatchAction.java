@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -66,11 +66,11 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	Integer studentId = (Integer) createGuideFromTransactionsForm.get("studentId");
 	// Read Contributor
 	InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
-	request.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 
 	// Read Registration
 	InfoStudent infoStudent = readStudent(mapping, userView, studentId);
-	request.setAttribute(SessionConstants.STUDENT, infoStudent);
+	request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 
 	// Read Transactions
 	List infoTransactions = null;
@@ -96,7 +96,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	    }
 	}
 
-	request.setAttribute(SessionConstants.TRANSACTION_LIST, infoTransactionsWithoutGuides);
+	request.setAttribute(PresentationConstants.TRANSACTION_LIST, infoTransactionsWithoutGuides);
 
 	return mapping.findForward("confirmCreate");
 
@@ -138,7 +138,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	    throw new FenixActionException(e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	return mapping.findForward("createSuccess");
 

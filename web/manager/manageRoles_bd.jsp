@@ -2,7 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.roles"/></h2>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -44,7 +44,7 @@
 
 <br />
 
-<logic:present name="<%= SessionConstants.ROLES %>" scope="request">
+<logic:present name="<%= PresentationConstants.ROLES %>" scope="request">
 
 	<table width="98%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -74,7 +74,7 @@
 				<bean:message bundle="MANAGER_RESOURCES" key="label.roleType"/>
 			</th>
 		</tr>
-		<logic:iterate id="role" name="<%= SessionConstants.ROLES %>" scope="request">
+		<logic:iterate id="role" name="<%= PresentationConstants.ROLES %>" scope="request">
 			<tr>
 				<td class="listClasses">
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.roleOIDs" property="roleOIDs">

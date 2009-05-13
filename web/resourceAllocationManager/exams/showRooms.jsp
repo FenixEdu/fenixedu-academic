@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
  
 <html:form action="/roomSearch">
@@ -11,15 +11,15 @@
 	</logic:iterate>
 
 	<em class="printhidden"><bean:message key="link.writtenEvaluationManagement"/></em>
-	<h2>Salas livres dia <bean:write name="<%=SessionConstants.DATE%>"/>
- 		das <bean:write name="<%=SessionConstants.START_TIME%>"/>
- 		às <bean:write name="<%=SessionConstants.END_TIME%>"/></h2>
+	<h2>Salas livres dia <bean:write name="<%=PresentationConstants.DATE%>"/>
+ 		das <bean:write name="<%=PresentationConstants.START_TIME%>"/>
+ 		às <bean:write name="<%=PresentationConstants.END_TIME%>"/></h2>
  
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sort"/>
 	
 	
-	<logic:present name="<%=SessionConstants.AVAILABLE_ROOMS%>">		
-		<bean:define id="availableRooms" name="<%=SessionConstants.AVAILABLE_ROOMS%>"/>
+	<logic:present name="<%=PresentationConstants.AVAILABLE_ROOMS%>">		
+		<bean:define id="availableRooms" name="<%=PresentationConstants.AVAILABLE_ROOMS%>"/>
 		<table class="tstyle4 showborder">
 			<tr>
 				<th><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sortParameter" property="sortParameter" value="name" onclick="this.form.method.value='sort';this.form.submit();"/> Nome</th>
@@ -53,7 +53,7 @@
 				</logic:iterate>
 		</table>
 	</logic:present>
-	<logic:notPresent name="<%=SessionConstants.AVAILABLE_ROOMS%>">
+	<logic:notPresent name="<%=PresentationConstants.AVAILABLE_ROOMS%>">
 		Não existem salas disponíveis.
 	</logic:notPresent>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.day" property="day" />

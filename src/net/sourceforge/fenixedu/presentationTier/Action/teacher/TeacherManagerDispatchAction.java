@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -48,13 +48,13 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	try {
 
 	    HttpSession session = getSession(request);
-	    session.removeAttribute(SessionConstants.INFO_SECTION);
+	    session.removeAttribute(PresentationConstants.INFO_SECTION);
 	    IUserView userView = getUserView(request);
-	    InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	    InfoSite infoSite = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
 	    boolean result = false;
 	    List teachers = (List) ReadTeachersByExecutionCourseProfessorship.run(infoSite.getInfoExecutionCourse());
 	    if (teachers != null && !teachers.isEmpty()) {
-		session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
+		session.setAttribute(PresentationConstants.TEACHERS_LIST, teachers);
 	    }
 
 	    List responsibleTeachers = (List) ReadTeachersByExecutionCourseResponsibility.run(infoSite.getInfoExecutionCourse());
@@ -63,7 +63,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	    if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(teacher)) {
 		result = true;
 	    }
-	    session.setAttribute(SessionConstants.IS_RESPONSIBLE, new Boolean(result));
+	    session.setAttribute(PresentationConstants.IS_RESPONSIBLE, new Boolean(result));
 
 	    return mapping.findForward("viewTeachers");
 	} catch (FenixServiceException e) {
@@ -76,9 +76,9 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	HttpSession session = getSession(request);
-	session.removeAttribute(SessionConstants.INFO_SECTION);
+	session.removeAttribute(PresentationConstants.INFO_SECTION);
 	IUserView userView = getUserView(request);
-	InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	InfoSite infoSite = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
 	String teacherNumberString = request.getParameter("teacherNumber");
 
 	Integer teacherNumber = new Integer(teacherNumberString);
@@ -98,9 +98,9 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	HttpSession session = getSession(request);
-	session.removeAttribute(SessionConstants.INFO_SECTION);
+	session.removeAttribute(PresentationConstants.INFO_SECTION);
 	IUserView userView = getUserView(request);
-	InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+	InfoSite infoSite = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
 	DynaActionForm teacherForm = (DynaActionForm) form;
 
 	Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));

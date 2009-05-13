@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -39,7 +39,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request.getAttribute(PresentationConstants.EXECUTION_COURSE);
 	ExecutionCourse executionCourse = infoExecutionCourse.getExecutionCourse();
 	readAndSetExecutionCourseClasses(request, executionCourse);
 	request.setAttribute("courseLoadBean", new CourseLoadBean(executionCourse));
@@ -124,7 +124,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
 
 	if (infoClasses != null && !infoClasses.isEmpty()) {
 	    Collections.sort(infoClasses, new BeanComparator("nome"));
-	    request.setAttribute(SessionConstants.LIST_INFOCLASS, infoClasses);
+	    request.setAttribute(PresentationConstants.LIST_INFOCLASS, infoClasses);
 	}
     }
 

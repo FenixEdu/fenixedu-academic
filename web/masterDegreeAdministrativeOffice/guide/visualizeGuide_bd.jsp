@@ -7,7 +7,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.lang.Integer" %>
 
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
@@ -15,7 +15,7 @@
 
 <%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
-     <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="request" />
+     <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" scope="request" />
      <bean:define id="number" name="infoGuide" property="number" />
      <bean:define id="year" name="infoGuide" property="year" />
      <bean:define id="version" name="infoGuide" property="version" />
@@ -224,8 +224,8 @@
     </bean:define>
 	
 
-			<% List guideList = (List) request.getAttribute(SessionConstants.GUIDE_LIST);
-			   InfoGuide guide = (InfoGuide) request.getAttribute(SessionConstants.GUIDE);
+			<% List guideList = (List) request.getAttribute(PresentationConstants.GUIDE_LIST);
+			   InfoGuide guide = (InfoGuide) request.getAttribute(PresentationConstants.GUIDE);
 			   if(guide.getVersion().equals(new Integer(guideList.size())) && guide.getInfoGuideSituation() != null && !guide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
 			
 %>	

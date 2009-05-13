@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -38,9 +38,9 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
 	if (session != null) {
 
 	    DynaActionForm studentGuideForm = (DynaActionForm) form;
-	    InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+	    InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
 
-	    List certificateList = (List) session.getAttribute(SessionConstants.CERTIFICATE_LIST);
+	    List certificateList = (List) session.getAttribute(PresentationConstants.CERTIFICATE_LIST);
 
 	    String[] quantityList = request.getParameterValues("quantityList");
 
@@ -56,10 +56,10 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
 
 	    String requester = (String) studentGuideForm.get("requester");
 	    if (requester == null)
-		requester = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
+		requester = (String) request.getAttribute(PresentationConstants.REQUESTER_TYPE);
 	    if (requester == null)
-		requester = request.getParameter(SessionConstants.REQUESTER_TYPE);
-	    request.setAttribute(SessionConstants.REQUESTER_TYPE, requester);
+		requester = request.getParameter(PresentationConstants.REQUESTER_TYPE);
+	    request.setAttribute(PresentationConstants.REQUESTER_TYPE, requester);
 
 	    String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
 	    Integer othersGratuityAmount = null;
@@ -139,10 +139,10 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
 	    generateToken(request);
 	    saveToken(request);
 
-	    request.setAttribute(SessionConstants.GUIDE, infoGuide);
+	    request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	    Integer number = new Integer(request.getParameter("number"));
-	    request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
+	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, number);
 
 	    return mapping.findForward("CreateStudentGuideReady");
 

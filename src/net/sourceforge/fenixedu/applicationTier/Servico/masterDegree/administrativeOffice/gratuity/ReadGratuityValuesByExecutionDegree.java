@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -48,7 +48,7 @@ public class ReadGratuityValuesByExecutionDegree extends FenixService {
 		public boolean evaluate(Object input) {
 		    InfoPaymentPhase aInfoPaymentPhase = (InfoPaymentPhase) input;
 		    if (aInfoPaymentPhase.getDescription() != null
-			    && aInfoPaymentPhase.getDescription().equals(SessionConstants.REGISTRATION_PAYMENT)) {
+			    && aInfoPaymentPhase.getDescription().equals(PresentationConstants.REGISTRATION_PAYMENT)) {
 			return true;
 		    }
 		    return false;

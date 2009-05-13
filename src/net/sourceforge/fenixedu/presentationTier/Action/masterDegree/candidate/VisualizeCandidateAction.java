@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,7 +33,7 @@ public class VisualizeCandidateAction extends FenixAction {
 
 	InfoMasterDegreeCandidate masterDegreeCandidate = ReadMasterDegreeCandidateByID.run(candidateID);
 
-	request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
 
 	return mapping.findForward("Success");
 

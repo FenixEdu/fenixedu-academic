@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -74,7 +74,7 @@
 </logic:notEmpty>
 
 <p class="mtop15 mbottom05"><bean:message key="label.execution.course.classes"/>:</p>
-<logic:present name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
+<logic:present name="<%= PresentationConstants.LIST_INFOCLASS %>" scope="request">
 	<table class="tstyle2 tdcenter mtop05">
 		<tr>
 			<th>
@@ -84,7 +84,7 @@
 				<bean:message key="label.name"/>
 			</th>
 		</tr>
-		<logic:iterate id="infoClass" name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
+		<logic:iterate id="infoClass" name="<%= PresentationConstants.LIST_INFOCLASS %>" scope="request">
 			<bean:define id="classOID" name="infoClass" property="idInternal"/>
 			<bean:define id="curricularYearOID" name="infoClass" property="anoCurricular"/>
 			<bean:define id="executionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
@@ -94,13 +94,13 @@
 				</td>
 				<td>
 					<html:link page="<%= "/manageClass.do?method=prepare&amp;"
-							+ SessionConstants.CLASS_VIEW_OID + "="
+							+ PresentationConstants.CLASS_VIEW_OID + "="
 							+ pageContext.findAttribute("classOID")	+ "&amp;"
-							+ SessionConstants.ACADEMIC_INTERVAL + "="
-							+ pageContext.findAttribute(SessionConstants.ACADEMIC_INTERVAL) + "&amp;"
-							+ SessionConstants.CURRICULAR_YEAR_OID + "="
+							+ PresentationConstants.ACADEMIC_INTERVAL + "="
+							+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL) + "&amp;"
+							+ PresentationConstants.CURRICULAR_YEAR_OID + "="
 							+ pageContext.findAttribute("curricularYearOID") + "&amp;"
-							+ SessionConstants.EXECUTION_DEGREE_OID	+ "="
+							+ PresentationConstants.EXECUTION_DEGREE_OID	+ "="
 							+ pageContext.findAttribute("executionDegreeOID") %>">
 						<bean:write name="infoClass" property="nome"/>
 					</html:link>
@@ -110,6 +110,6 @@
 	</table>
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.LIST_INFOCLASS %>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.LIST_INFOCLASS %>" scope="request">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.executionCourse.classes.none"/></span>
 </logic:notPresent>

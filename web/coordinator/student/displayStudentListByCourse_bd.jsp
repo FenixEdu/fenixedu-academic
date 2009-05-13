@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
  <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 
@@ -55,8 +55,8 @@
      	<logic:iterate id="enrolment" name="enrolmentList">
         	<bean:define id="studentLink">
         		<bean:write name="link"/><bean:write name="enrolment" property="infoStudentCurricularPlan.idInternal"/>&amp;
-				<logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-					<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&degreeCurricularPlanID=<%=degreeCurricularPlanID%>
+				<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
+					<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&degreeCurricularPlanID=<%=degreeCurricularPlanID%>
 	    		</logic:present>
         	</bean:define>
         <tr>

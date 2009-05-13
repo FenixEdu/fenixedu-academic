@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -50,11 +50,11 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 
 	IUserView userView = UserView.getUser();
 
-	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
 
 	/* Criar o bean de anos curriculares */
 	List anosCurriculares = createCurricularYearList();
-	request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
+	request.setAttribute(PresentationConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
 
@@ -80,7 +80,7 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 	    licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
 	}
 
-	request.setAttribute(SessionConstants.DEGREES, licenciaturas);
+	request.setAttribute(PresentationConstants.DEGREES, licenciaturas);
 
 	return mapping.findForward("chooseDegreeAndYearContext");
     }
@@ -93,8 +93,8 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 	String executionDegree = (String) chooseDegreeAndYearForm.get("executionDegree");
 	String curricularYear = (String) chooseDegreeAndYearForm.get("curricularYear");
 
-	request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegree);
-	request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE_OID, executionDegree);
+	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_OID, curricularYear);
 
 	ContextUtils.setExecutionDegreeContext(request);
 	ContextUtils.setCurricularYearContext(request);

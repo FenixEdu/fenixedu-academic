@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <br/>
 <bean:message key="message.copySite.information.destination" />
@@ -16,7 +16,7 @@
 <bean:message key="message.copySite.information.whatIsCopied" />
 <br/><br/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
+<logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/copySiteExecutionCourse">  
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareChooseExecDegreeAndCurYear"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
@@ -31,7 +31,7 @@
 						<html:option value="" key="label.copySite.select.one">
 							<bean:message key="label.copySite.select.one"/>
 						</html:option>
-						<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>
+						<html:optionsCollection name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>"/>
 					</html:select>
 				</td>
 			</tr>
@@ -40,7 +40,7 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.continue"/></html:submit>
 	</html:form>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
+<logic:notPresent name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 	<span class="error"><!-- Error messages go here -->
 		<html:errors /><bean:message key="error.copySite.noExecutionPeriods"/>
 	</span>

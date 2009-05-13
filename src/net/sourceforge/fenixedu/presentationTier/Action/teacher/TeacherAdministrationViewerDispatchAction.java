@@ -73,7 +73,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
@@ -186,7 +186,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
 	HttpSession session = request.getSession(false);
-	session.removeAttribute(SessionConstants.INFO_SECTION);
+	session.removeAttribute(PresentationConstants.INFO_SECTION);
 	Integer objectCode = getObjectCode(request);
 	String alternativeSite = (String) alternativeSiteForm.get("siteAddress");
 	String mail = (String) alternativeSiteForm.get("mail");
@@ -874,8 +874,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(objectCode);
 	InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-	request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+	request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal().toString());
 
 	ISiteComponent shiftsAndGroupsView = new InfoSiteShiftsAndGroups();
 	readSiteView(request, shiftsAndGroupsView, null, groupPropertiesCode, null);

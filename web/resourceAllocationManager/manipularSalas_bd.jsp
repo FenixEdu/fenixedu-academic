@@ -3,7 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:form action="/manipularSalas">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_Name" property="selectRoomCriteria_Name" value="<%= ""+request.getAttribute("selectRoomCriteria_Name")%>"/>            
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_Building" property="selectRoomCriteria_Building" value="<%= ""+request.getAttribute("selectRoomCriteria_Building")%>"/>
@@ -20,11 +20,11 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-<logic:present name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
+<logic:present name="<%= PresentationConstants.SELECTED_ROOMS%>" scope="request">
 	<table class="tstyle2">
 	<%! int i; %>
 	<% i = 0; %>
-		<logic:iterate id="infoRoom" name="<%= SessionConstants.SELECTED_ROOMS%>">
+		<logic:iterate id="infoRoom" name="<%= PresentationConstants.SELECTED_ROOMS%>">
 			<tr align="center">
 				<td>
 					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.index" property="index" value="<%= (new Integer(i)).toString()%>"/>
@@ -44,7 +44,7 @@
 
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.SELECTED_ROOMS%>" scope="request">
+<logic:notPresent name="<%= PresentationConstants.SELECTED_ROOMS%>" scope="request">
 <p>
 	<span class="error"><!-- Error messages go here --><bean:message key="manipularSalas.titleInsuccess"/></span>
 </p>

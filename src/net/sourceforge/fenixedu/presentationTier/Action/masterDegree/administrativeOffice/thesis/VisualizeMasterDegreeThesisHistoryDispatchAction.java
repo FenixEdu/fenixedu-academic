@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -35,26 +35,26 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends FenixDispa
 		.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
 
 	if (!masterDegreeThesisDataVersion.getGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
+	    request.setAttribute(PresentationConstants.GUIDERS_LIST, masterDegreeThesisDataVersion.getGuiders());
 
 	if (!masterDegreeThesisDataVersion.getAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
+	    request.setAttribute(PresentationConstants.ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion.getAssistentGuiders());
 
 	if (!masterDegreeThesisDataVersion.getExternalAssistentGuiders().isEmpty())
-	    request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
+	    request.setAttribute(PresentationConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, masterDegreeThesisDataVersion
 		    .getExternalAssistentGuiders());
 
 	if (!masterDegreeThesisDataVersion.getExternalGuiders().isEmpty()) {
-	    request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
+	    request.setAttribute(PresentationConstants.EXTERNAL_GUIDERS_LIST, masterDegreeThesisDataVersion.getExternalGuiders());
 	}
 
 	Date lastModification = new Date(masterDegreeThesisDataVersion.getLastModification().getTime());
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy k:mm:ss");
 	String formattedLastModification = simpleDateFormat.format(lastModification);
 
-	request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
-	request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
-	request.setAttribute(SessionConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
+	request.setAttribute(PresentationConstants.RESPONSIBLE_EMPLOYEE, masterDegreeThesisDataVersion.getResponsibleEmployee());
+	request.setAttribute(PresentationConstants.LAST_MODIFICATION, formattedLastModification);
+	request.setAttribute(PresentationConstants.DISSERTATION_TITLE, masterDegreeThesisDataVersion.getDissertationTitle());
 
 	return mapping.findForward("start");
 

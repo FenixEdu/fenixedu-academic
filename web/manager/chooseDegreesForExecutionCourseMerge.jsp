@@ -7,7 +7,7 @@
 
 
 <%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%>
 
 <xhtml />
@@ -19,7 +19,7 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <fr:form action="/chooseDegreesForExecutionCourseMerge.do?method=academicIntervalPostBack">
-	<fr:edit name="<%=SessionConstants.CONTEXT_SELECTION_BEAN%>"
+	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>"
 		schema="academicInterval.chooseWithPostBack">
 		<fr:destination name="academicIntervalPostBack"
 			path="/chooseDegreesForExecutionCourseMerge.do?method=academicIntervalPostBack" />
@@ -33,8 +33,8 @@
 <html:form action="/chooseDegreesForExecutionCourseMerge.do?method=chooseDegreesAndExecutionPeriod">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page"
-		property="<%=SessionConstants.ACADEMIC_INTERVAL%>"
-		value="<%=((AcademicInterval) request.getAttribute(SessionConstants.ACADEMIC_INTERVAL))
+		property="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
+		value="<%=((AcademicInterval) request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL))
 				.getResumedRepresentationInStringFormat()%>" />
 	<br />
 

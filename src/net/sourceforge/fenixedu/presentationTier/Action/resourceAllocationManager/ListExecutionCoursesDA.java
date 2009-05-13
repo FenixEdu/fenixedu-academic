@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,7 +43,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
+	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
 	return mapping.findForward("show-choose-execution-period-page");
     }
 
@@ -56,7 +56,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	if (contextSelectionBean == null)
 	    return prepare(mapping, form, request, response);
 
-	request.setAttribute(SessionConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
+	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
 	return mapping.findForward("show-choose-execution-period-page");
     }
 
@@ -64,7 +64,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
-		.getParameter(SessionConstants.ACADEMIC_INTERVAL));
+		.getParameter(PresentationConstants.ACADEMIC_INTERVAL));
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings_"

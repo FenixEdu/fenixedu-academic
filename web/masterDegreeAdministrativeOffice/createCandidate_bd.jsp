@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
@@ -13,10 +13,10 @@
 	<span class="error"><!-- Error messages go here --><html:errors /></span>  
 </p>
 
-    <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
-    	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
+    <logic:present name="<%= PresentationConstants.EXECUTION_DEGREE %>">
+    	<bean:define id="executionDegree" name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request"/>
     </logic:present>
-     <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
+     <bean:define id="executionYearName" name="<%= PresentationConstants.EXECUTION_YEAR %>"/>
     <html:form action="/createCandidateDispatchAction?method=create">
 	   <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
@@ -24,7 +24,7 @@
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularPlanID" property="curricularPlanID" value="<%= pageContext.findAttribute("curricularPlanID").toString() %>"/>
 		</logic:present>
 		<logic:present name="executionDegree">
-			<html:hidden alt="<%= SessionConstants.EXECUTION_DEGREE %>" property="<%= SessionConstants.EXECUTION_DEGREE %>" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />			
+			<html:hidden alt="<%= PresentationConstants.EXECUTION_DEGREE %>" property="<%= PresentationConstants.EXECUTION_DEGREE %>" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />			
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
 		</logic:present>
 

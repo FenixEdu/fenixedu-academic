@@ -6,13 +6,13 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 <%@ page import="net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
-<bean:define id="days" name="<%= SessionConstants.MONTH_DAYS_KEY %>" scope="request"/>
-<bean:define id="months" name="<%= SessionConstants.MONTH_LIST_KEY %>" scope="request"/>
-<bean:define id="years" name="<%= SessionConstants.YEARS_KEY %>" scope="request"/>
-<bean:define id="reimbursementGuideStates" name="<%= SessionConstants.REIMBURSEMENT_GUIDE_STATES_LIST %>" scope="request"/>
+<bean:define id="reimbursementGuide" name="<%= PresentationConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>
+<bean:define id="days" name="<%= PresentationConstants.MONTH_DAYS_KEY %>" scope="request"/>
+<bean:define id="months" name="<%= PresentationConstants.MONTH_LIST_KEY %>" scope="request"/>
+<bean:define id="years" name="<%= PresentationConstants.YEARS_KEY %>" scope="request"/>
+<bean:define id="reimbursementGuideStates" name="<%= PresentationConstants.REIMBURSEMENT_GUIDE_STATES_LIST %>" scope="request"/>
 <bean:define id="number" name="reimbursementGuide" property="number" />
 	
 <center>
@@ -56,13 +56,13 @@
       		</td>
       		<td>				
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateDay" property="officialDateDay">
-					<html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateMonth" property="officialDateMonth">
-					<html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
 				</html:select>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.officialDateYear" property="officialDateYear">
-					<html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+					<html:options collection="<%= PresentationConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>          
 		</tr>

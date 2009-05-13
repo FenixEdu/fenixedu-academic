@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +34,7 @@ public class ReadDelegateDegreeDispatchAction extends FenixAction {
 		    final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan()
 			    .getMostRecentExecutionDegree();
 		    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-		    session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
+		    session.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 		}
 	    }
 	}

@@ -1,5 +1,5 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="java.util.List" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -7,17 +7,17 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 
-<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>"  >
+<logic:present name="<%= PresentationConstants.INFO_EXAMS_KEY %>"  >
 
-	<bean:define id="executionCoursesList" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExecutionCourses" scope="request"/>
-	<bean:define id="degreesList" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoDegrees" scope="request"/>
+	<bean:define id="executionCoursesList" name="<%= PresentationConstants.INFO_EXAMS_KEY %>" property="infoExecutionCourses" scope="request"/>
+	<bean:define id="degreesList" name="<%= PresentationConstants.INFO_EXAMS_KEY %>" property="infoDegrees" scope="request"/>
 
 	<% if (((List) executionCoursesList).size() == 1) { %>
 		<bean:message key="property.course"/>
 	<% } else {%>
 		<bean:message key="property.courses"/>		
 	<% } %>: <br/>
-	<logic:iterate id="infoDisciplinaExecucao" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExecutionCourses" scope="request">
+	<logic:iterate id="infoDisciplinaExecucao" name="<%= PresentationConstants.INFO_EXAMS_KEY %>" property="infoExecutionCourses" scope="request">
    			<strong><jsp:getProperty name="infoDisciplinaExecucao" property="nome" /></strong>
 			<br/>
 	</logic:iterate>
@@ -27,7 +27,7 @@
 	<% } else {%>
 		<bean:message key="property.degrees"/>
 	<% } %>: <br/>	
-	<logic:iterate id="infoDegree" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoDegrees" scope="request">
+	<logic:iterate id="infoDegree" name="<%= PresentationConstants.INFO_EXAMS_KEY %>" property="infoDegrees" scope="request">
 			<strong><jsp:getProperty name="infoDegree" property="degree.presentationName" /></strong>
 			<br/>
 	</logic:iterate>

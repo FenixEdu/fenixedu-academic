@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <em><bean:message key="title.manage.rooms"/></em>
 <h2><bean:message key="title.editarSala"/></h2>
@@ -18,7 +18,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_Type" property="selectRoomCriteria_Type" value="<%= ""+request.getAttribute("selectRoomCriteria_Type")%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_CapacityNormal" property="selectRoomCriteria_CapacityNormal" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityNormal")%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectRoomCriteria_CapacityExame" property="selectRoomCriteria_CapacityExame" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityExame")%>"/>
-	<html:hidden alt="<%= SessionConstants.SELECTED_ROOM_INDEX%>" property="<%= SessionConstants.SELECTED_ROOM_INDEX%>" value="<%= ""+request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX)%>"/>	
+	<html:hidden alt="<%= PresentationConstants.SELECTED_ROOM_INDEX%>" property="<%= PresentationConstants.SELECTED_ROOM_INDEX%>" value="<%= ""+request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX)%>"/>	
 	
   <table class="tstyle5 thlight thright">
     <tr>

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.Globals;
@@ -36,15 +36,15 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 	    throws Exception {
 	HttpSession session = request.getSession(false);
 	// Clear the Session
-	session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
-	session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
-	session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
-	session.removeAttribute(SessionConstants.SEX_LIST_KEY);
-	session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
-	session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
-	session.removeAttribute(SessionConstants.YEARS_KEY);
-	session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
-	session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
+	session.removeAttribute(PresentationConstants.NATIONALITY_LIST_KEY);
+	session.removeAttribute(PresentationConstants.MARITAL_STATUS_LIST_KEY);
+	session.removeAttribute(PresentationConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
+	session.removeAttribute(PresentationConstants.SEX_LIST_KEY);
+	session.removeAttribute(PresentationConstants.MONTH_DAYS_KEY);
+	session.removeAttribute(PresentationConstants.MONTH_LIST_KEY);
+	session.removeAttribute(PresentationConstants.YEARS_KEY);
+	session.removeAttribute(PresentationConstants.EXPIRATION_YEARS_KEY);
+	session.removeAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST);
 
 	Integer studentNumber = new Integer(getFromRequest("studentNumber", request));
 	// String graduationType = getFromRequest("graduationType",
@@ -81,13 +81,13 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 	    nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
 	}
 
-	session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-	session.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	session.setAttribute(PresentationConstants.NATIONALITY_LIST_KEY, nationalityList);
+	session.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		.getAttribute(Globals.LOCALE_KEY)));
-	session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-	session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
-	session.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+	session.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	session.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	session.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	session.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
 	return mapping.findForward("Success");
 

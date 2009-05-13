@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
@@ -84,8 +84,8 @@ public final class RenderTimeTableTag extends TagSupport {
     public int doStartTag() throws JspException {
 
 	try {
-	    infoCurricularYear = (InfoCurricularYear) pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR);
-	    infoExecutionDegree = (InfoExecutionDegree) pageContext.findAttribute(SessionConstants.EXECUTION_DEGREE);
+	    infoCurricularYear = (InfoCurricularYear) pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR);
+	    infoExecutionDegree = (InfoExecutionDegree) pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	} catch (ClassCastException e) {
 	    infoCurricularYear = null;

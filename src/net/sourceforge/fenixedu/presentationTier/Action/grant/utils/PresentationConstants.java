@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.grant.utils;
  * @author Pica
  * 
  */
-public abstract class SessionConstants {
+public abstract class PresentationConstants {
 
     public final static Integer NUMBER_OF_ELEMENTS_IN_SPAN = new Integer(100);
 }

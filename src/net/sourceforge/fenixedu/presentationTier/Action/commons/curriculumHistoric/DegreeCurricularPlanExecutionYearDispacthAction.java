@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.Ex
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -76,7 +76,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
 	    request.setAttribute("degreeModuleScopes", degreeModuleScopes);
 	}
 
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, executionDegreeBean.getAcademicInterval());
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, executionDegreeBean.getAcademicInterval());
 	request.setAttribute("degreeCurricularPlan", executionDegreeBean.getDegreeCurricularPlan());
 
 	return mapping.findForward("showActiveCurricularCourses");

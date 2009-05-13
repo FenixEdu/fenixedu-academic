@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -39,8 +39,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	    throws Exception {
 
 	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString((String) request
-		.getAttribute(SessionConstants.ACADEMIC_INTERVAL));
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
+		.getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
 
 	final MessageResources enumMessages = MessageResources.getMessageResources("resources/EnumerationResources");
 	final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
@@ -84,8 +84,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
 	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
-		.getString(SessionConstants.ACADEMIC_INTERVAL));
-	request.setAttribute(SessionConstants.ACADEMIC_INTERVAL, academicInterval);
+		.getString(PresentationConstants.ACADEMIC_INTERVAL));
+	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
 
 	final Boolean selectAllCurricularYears = (Boolean) dynaActionForm.get("selectAllCurricularYears");
 	final String[] selectedCurricularYears = (String[]) dynaActionForm.get("selectedCurricularYears");

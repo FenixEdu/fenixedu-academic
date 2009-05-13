@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants"%>
+	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <h2><bean:message bundle="MANAGER_RESOURCES"
 	key="title.manage.execution.periods" /></h2>
 <br />
@@ -16,7 +16,7 @@ processar.
 <br />
 
 
-<logic:present name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"
+<logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>"
 	scope="request">
 	<%--
 	<html:form action="/createExecutionPeriodForm">
@@ -86,7 +86,7 @@ processar.
 			<th class="listClasses-header"></th>			
 			<th class="listClasses-header"></th>			
 		</tr>
-		<logic:iterate id="infoExecutionPeriod"	name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
+		<logic:iterate id="infoExecutionPeriod"	name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 			<bean:define id="year" name="infoExecutionPeriod"
 				property="infoExecutionYear.year" />
 			<bean:define id="semester" name="infoExecutionPeriod"
@@ -168,7 +168,7 @@ processar.
 	</table>
 </logic:present>
 
-<logic:notPresent name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"
+<logic:notPresent name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>"
 	scope="request">
 	<span class="error"><!-- Error messages go here --> <html:errors /><bean:message
 		bundle="MANAGER_RESOURCES" key="errors.execution.period.none" /> </span>

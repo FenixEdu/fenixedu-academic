@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -70,7 +70,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("A Guia", e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, result);
 
 	return mapping.findForward("ShowGuideList");
 
@@ -92,14 +92,14 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("A Guia", e);
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, result);
 	if (result.size() == 1) {
-	    request.setAttribute(SessionConstants.GUIDE, result.get(0));
+	    request.setAttribute(PresentationConstants.GUIDE, result.get(0));
 	    return mapping.findForward("ActionReady");
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
-	request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
+	request.setAttribute(PresentationConstants.GUIDE_YEAR, guideYear);
+	request.setAttribute(PresentationConstants.GUIDE_NUMBER, guideNumber);
 
 	return mapping.findForward("ShowVersionList");
 
@@ -156,7 +156,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 	comparator.addComparator(new BeanComparator("year"), false);
 	Collections.sort(result, comparator);
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, result);
 
 	return mapping.findForward("ShowGuideList");
     }
@@ -180,7 +180,7 @@ public class GuideListingDispatchAction extends FenixDispatchAction {
 	    throw new NonExistingActionException("error.exception.noGuidesForPerson", "Guias para esta pessoa");
 	}
 
-	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+	request.setAttribute(PresentationConstants.GUIDE_LIST, result);
 
 	return mapping.findForward("ShowGuideList");
 

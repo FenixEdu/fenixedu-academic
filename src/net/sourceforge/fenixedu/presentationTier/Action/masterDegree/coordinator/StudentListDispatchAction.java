@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -53,7 +53,7 @@ public class StudentListDispatchAction extends FenixDispatchAction {
 	BeanComparator numberComparator = new BeanComparator("infoStudent.number");
 	Collections.sort(result, numberComparator);
 
-	request.setAttribute(SessionConstants.STUDENT_LIST, result);
+	request.setAttribute(PresentationConstants.STUDENT_LIST, result);
 
 	String value = request.getParameter("viewPhoto");
 	if (value != null && value.equals("true")) {

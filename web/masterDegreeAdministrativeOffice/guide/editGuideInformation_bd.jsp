@@ -4,12 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 <%@ page import="net.sourceforge.fenixedu.domain.DocumentType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 
-   	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session" type="net.sourceforge.fenixedu.dataTransferObject.InfoGuide"/>  		
+   	  <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" scope="session" type="net.sourceforge.fenixedu.dataTransferObject.InfoGuide"/>  		
       <bean:define id="number" name="infoGuide" property="number" />
       <bean:define id="year" name="infoGuide" property="year" />
       <bean:define id="version" name="infoGuide" property="version" />
@@ -102,7 +102,7 @@
 		<td>	
          <html:select bundle="HTMLALT_RESOURCES" altKey="select.contributor" property="contributor">
            <option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
-           <html:options collection="<%= SessionConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
+           <html:options collection="<%= PresentationConstants.CONTRIBUTOR_LIST %>" property="value" labelProperty="label"/>
     	 </html:select>        
         </td>
       </tr> 
