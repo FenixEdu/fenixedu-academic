@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 public class Scheduleing extends Scheduleing_Base {
 
@@ -157,6 +158,52 @@ public class Scheduleing extends Scheduleing_Base {
     public void delete() {
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public Interval getProposalInterval() {
+	final Date startDate = getStartOfProposalPeriodDate();
+	final Date startTime = getStartOfProposalPeriodTime();
+	final Date endDate = getEndOfProposalPeriodDate();
+	final Date endTime = getEndOfProposalPeriodTime();
+
+	return getInterval(startDate, startTime, endDate, endTime);
+    }
+
+    public Interval getCandidacyInterval() {
+	final Date startDate = getStartOfCandidacyPeriodDate();
+	final Date startTime = getStartOfCandidacyPeriodTime();
+	final Date endDate = getEndOfCandidacyPeriodDate();
+	final Date endTime = getEndOfCandidacyPeriodTime();
+
+	return getInterval(startDate, startTime, endDate, endTime);
+    }
+
+    private Interval getInterval(final Date startDate, final Date startTime, final Date endDate, final Date endTime) {
+	if (startDate != null && startTime != null && endDate != null && endTime != null) {
+	    final DateTime start = newDateTime(startDate, startTime);
+	    final DateTime end = newDateTime(endDate, endTime);
+	    if (start != null && end != null) {
+		return new Interval(start, end);
+	    }
+	}
+	return null;
+    }
+
+    private DateTime newDateTime(final Date date, final Date time) {
+	if (date != null && time != null) {
+	    return new DateTime(date.getTime())
+	    		.withHourOfDay(time.getHours())
+	    		.withMinuteOfHour(time.getMinutes())
+	    		.withSecondOfMinute(0)
+	    		.withMillisOfSecond(0);
+	}
+	return null;
+    }
+
+    public boolean getAreCandidacyConditionsDefined() {
+	return getMinimumCompletedCreditsFirstCycle() != null
+		&& getMinimumCompletedCreditsSecondCycle() != null
+		&& getMaximumNumberOfProposalCandidaciesPerGroup() != null;
     }
 
 }

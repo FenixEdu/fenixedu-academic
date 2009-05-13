@@ -257,10 +257,18 @@
         		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
         </logic:present>
         <%-- end of isCoordinator logic --%>
+
+        <%--
+		<li class="navheader">
+			<html:link page="<%= "/thesisProcess.do?method=showInformation&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+				<bean:message key="label.coordinator.thesis"/>
+			</html:link>
+		</li>
+		--%>
         
         <logic:present name="isScientificCommissionMember">
             <li class="navheader">
-                <bean:message key="label.coordinator.thesis"/>
+               	<bean:message key="label.coordinator.thesis"/>
             </li>
             <li>
               <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">

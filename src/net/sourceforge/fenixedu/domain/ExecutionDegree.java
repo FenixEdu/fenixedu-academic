@@ -63,6 +63,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
     };
 
+    static final public Comparator<ExecutionDegree> REVERSE_EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
+	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
+	}
+    };
+
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new Comparator<ExecutionDegree>() {
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
