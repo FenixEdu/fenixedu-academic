@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
@@ -99,15 +100,19 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     static public List<SibsPaymentFileProcessReport> readAllBetween(final YearMonthDay startDate, final YearMonthDay endDate) {
+	return readAllBetween(startDate.toLocalDate(), endDate.toLocalDate());
+    }
+
+    static public List<SibsPaymentFileProcessReport> readAllBetween(final LocalDate startDate, final LocalDate endDate) {
 	final List<SibsPaymentFileProcessReport> result = new ArrayList<SibsPaymentFileProcessReport>();
-	for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : RootDomainObject.getInstance()
-		.getSibsPaymentFileProcessReportsSet()) {
-	    if (sibsPaymentFileProcessReport.getWhenProcessedBySibs().compareTo(startDate) >= 0
-		    && sibsPaymentFileProcessReport.getWhenProcessedBySibs().compareTo(endDate) <= 0) {
-		result.add(sibsPaymentFileProcessReport);
+	for (final SibsPaymentFileProcessReport report : RootDomainObject.getInstance().getSibsPaymentFileProcessReportsSet()) {
+	    if (report.getWhenProcessedBySibs().compareTo(startDate) >= 0
+		    && report.getWhenProcessedBySibs().compareTo(endDate) <= 0) {
+		result.add(report);
 	    }
 	}
-
 	return result;
+
     }
+
 }
