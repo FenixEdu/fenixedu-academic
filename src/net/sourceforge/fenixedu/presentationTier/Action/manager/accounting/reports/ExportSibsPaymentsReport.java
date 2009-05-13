@@ -22,9 +22,9 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.excel.CellConverter;
 import pt.utl.ist.fenix.tools.excel.SimplifiedSpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.excel.WorkbookExportFormat;
+import pt.utl.ist.fenix.tools.excel.converters.CellConverter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/sibsReports", module = "manager")
