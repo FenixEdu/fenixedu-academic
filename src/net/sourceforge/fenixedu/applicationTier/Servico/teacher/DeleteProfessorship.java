@@ -43,7 +43,7 @@ public class DeleteProfessorship extends FenixService {
 	}
 
 	if (!hasCredits) {
-	    professorshipToDelete.getPerson().getProfessorships().remove(professorshipToDelete);
+	    professorshipToDelete.delete();
 	} else {
 	    if (hasCredits) {
 		throw new ExistingAssociatedCredits("error.remove.professorship");
