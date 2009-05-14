@@ -17,7 +17,7 @@ BuildVersion: <%= FileUtils.readFile(inputStream).toString() %>
 	<br/>
 	<bean:message bundle="MANAGER_RESOURCES" key="label.real.server.name"/><%= System.getenv("HOSTNAME") %>
 	<br/>
-	<strong><bean:message bundle="MANAGER_RESOURCES" key="label.note"/></strong>
+	<br/>	<bean:write name="startMillis"/>	<br/>	<bean:write name="endMillis"/>	<br/>	<bean:write name="chronology"/>	<br/>	<br/>	<strong><bean:message bundle="MANAGER_RESOURCES" key="label.note"/></strong>
 	<bean:message bundle="MANAGER_RESOURCES" key="message.memory.units"/>	<table>		<tr>			<th class="listClasses-header">				<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.availableProcessors"/>			</th>			<th class="listClasses-header">				<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.freeMemory"/>			</th>			<th class="listClasses-header">				<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.totalMemory"/>			</th>			<th class="listClasses-header">				<bean:message bundle="MANAGER_RESOURCES" key="manager.monitor.system.maxMemory"/>			</th>		</tr>		<tr>			<td class="listClasses">							<bean:write name="systemInfoApplicationServer" property="availableProcessors"/>			</td>			<td class="listClasses">				<bean:write name="systemInfoApplicationServer" property="freeMemory"/>			</td>			<td class="listClasses">				<bean:write name="systemInfoApplicationServer" property="totalMemory"/>			</td>			<td class="listClasses">				<bean:write name="systemInfoApplicationServer" property="maxMemory"/>			</td>		</tr>	</table>
 	<br/>
 	<strong><bean:message bundle="MANAGER_RESOURCES" key="label.system.properties"/></strong>

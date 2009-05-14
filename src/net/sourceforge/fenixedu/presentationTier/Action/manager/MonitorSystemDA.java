@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -33,6 +34,13 @@ public class MonitorSystemDA extends FenixDispatchAction {
 
 	SystemInfo systemInfoWebContainer = ServiceManagerServiceFactory.getSystemInfo(userView);
 	request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
+
+	request.setAttribute("startMillis", ""
+		+ ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getStartMillis());
+	request.setAttribute("endMillis", ""
+		+ ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getEndMillis());
+	request.setAttribute("chronology", ""
+		+ ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getChronology().toString());
 
 	return mapping.findForward("Show");
     }
