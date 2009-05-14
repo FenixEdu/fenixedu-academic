@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Rename the tables of the transactional system" rename-system-tables.sql
