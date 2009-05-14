@@ -689,11 +689,11 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/seminariesIndex.do" forward="/seminariesIndex.jsp"/>
     
-        <action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
+        <action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm" scope="request">
             <!-- form is not used -->
             <forward name="Success" path="/teacherInformation.do?method=prepareEdit&amp;page=0" />
         </action>
-        <action path="/alternativeSite" parameter="method" scope="session" name="customOptionsForm" 
+        <action path="/alternativeSite" parameter="method" scope="request" name="customOptionsForm" 
             input="/alternativeSite.do?method=prepareCustomizationOptions&amp;page=0" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true">
@@ -711,7 +711,7 @@
             <set-property property="inputForwardName" value="viewTeachers"/>           
             <forward name="viewTeachers" path="/viewTeachers.jsp"/>
         </action>
-        <action path="/teacherManagerDA" name="teacherForm" parameter="method" 
+        <action path="/teacherManagerDA" name="teacherForm" parameter="method" scope="request" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
             <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers"/>
@@ -886,7 +886,7 @@
             <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
         </action>
         <action path="/examEnrollmentManager" input="/viewEvaluation.do?method=viewEvaluation" 
-            name="voidForm" parameter="method" 
+            name="voidForm" parameter="method" scope="request"
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExamEnrollmentDispatchAction" scope="request" 
             validate="false" >
             <forward name="viewEvaluationEnrolmentManagementMenu" 
@@ -1236,6 +1236,7 @@
 		name="chooseExecutionCourseFormTeacher"
 		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
+		scope="request"
         type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction">    
      		<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/> 
    	</action>
@@ -1420,7 +1421,7 @@
             <forward name="xpto1" path="/xpto1.jsp"/>
         </action>
         <!-- by gedl, 1-9-2003 -->
-        <action path="/showCandidacies" name="showCandidacies" 
+        <action path="/showCandidacies" name="showCandidacies" scope="request"
             type="net.sourceforge.fenixedu.presentationTier.Action.Seminaries.ShowCandidacies">
             <forward name="allCandidaciesGrid" path="candidaciesGrid"/>
         </action>
