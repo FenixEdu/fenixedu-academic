@@ -59,7 +59,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	professorShip.setResponsibleFor(responsibleFor);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
-	// professorShip.setTeacher(teacher);
 
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
 
@@ -69,7 +68,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public void delete() {
 	if (canBeDeleted()) {
 	    removeExecutionCourse();
-	    removeTeacher();
+	    removePerson();
 	    removeRootDomainObject();
 	    deleteDomainObject();
 	}
@@ -228,7 +227,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void setTeacher(Teacher teacher) {
-	getPerson().setTeacher(teacher);
+	setPerson(teacher.getPerson());
     }
 
     public boolean hasTeacher() {
@@ -236,7 +235,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     public void removeTeacher() {
-	getPerson().removeTeacher();
+	removePerson();
     }
 
 }
