@@ -40,7 +40,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -250,7 +249,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 		label.append(" - ").append(enumerationResources.getString(studentCurricularPlan.getSpecialization().name()));
 	    }
 
-	    label.append(" - ").append(DateFormatUtil.format("dd.MM.yyyy", studentCurricularPlan.getStartDate()));
+	    label.append(" - ").append(studentCurricularPlan.getStartDateYearMonthDay());
 
 	    result.add(new LabelValueBean(label.toString(), String.valueOf(studentCurricularPlan.getIdInternal())));
 	}

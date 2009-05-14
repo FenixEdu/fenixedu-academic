@@ -5541,6 +5541,8 @@ class DomainObject {
 	class util.email.PersonFunctionSender extends util.email.Sender {}
 	
 	class util.email.PersonSender extends util.email.Sender {}
+	
+	class util.email.SystemSender extends util.email.Sender {}
 
 	class util.FunctionalityPrinters extends DomainObject {
 		String functionality;
@@ -15106,6 +15108,11 @@ relation RootDomainObjectUtilEmailSender {
 	util.email.Sender playsRole utilEmailSenders {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectSystemSender {
+	RootDomainObject playsRole systemRootDomainObject;
+	util.email.SystemSender playsRole systemSender;
 }
 
 relation UtilEmailSenderUtilEmailMessage {

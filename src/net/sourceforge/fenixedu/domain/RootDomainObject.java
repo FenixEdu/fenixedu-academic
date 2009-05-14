@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class RootDomainObject extends RootDomainObject_Base {
@@ -35,7 +36,10 @@ public class RootDomainObject extends RootDomainObject_Base {
 	instance = new RootDomainObject();
     }
 
+    @Override
     protected RootDomainObject getRootDomainObject() {
 	return this;
     }
+
+
 }
