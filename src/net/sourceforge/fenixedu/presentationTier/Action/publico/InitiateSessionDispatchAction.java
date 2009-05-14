@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedPublicExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -31,10 +30,6 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-
-	HttpSession sessao = request.getSession(true);
-
-	sessao.setAttribute(PresentationConstants.SESSION_IS_VALID, new Boolean(true));
 
 	/* Set in request ExecutionPeriods bean */
 

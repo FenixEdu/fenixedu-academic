@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -185,7 +183,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	// Store the UserView into the session and return
 	UserView.setUser(userView);
 	newSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
-	newSession.setAttribute(PresentationConstants.SESSION_IS_VALID, Boolean.TRUE);
 
 	I18NFilter.setDefaultLocale(request, newSession);
 

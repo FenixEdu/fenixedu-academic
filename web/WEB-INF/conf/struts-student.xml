@@ -331,10 +331,6 @@
 
 
       <!-- SHIFT ENROLMENT -->
-      <action type="net.sourceforge.fenixedu.presentationTier.Action.student.ViewEnrolmentAction" path="/viewEnrolment">
-        <forward name="sucess" path="/viewEnrolment.jsp"/>
-      </action>
-
       <action name="selectShiftEnrolmentForm"
               type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowShiftListAction"
               path="/viewShiftsList"

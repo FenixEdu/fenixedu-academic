@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByOID;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByStudentIdAndExecutionPeriodId;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -28,6 +24,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.ReadInquir
 import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteInquiry;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadCurricularCourseListOfExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeDisciplinaExecucao;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByOID;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByStudentIdAndExecutionPeriodId;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;

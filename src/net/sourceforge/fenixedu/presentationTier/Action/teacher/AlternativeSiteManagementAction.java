@@ -6,9 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
@@ -31,9 +29,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	HttpSession session = request.getSession(false);
-	session.removeAttribute(PresentationConstants.INFO_SECTION);
-	InfoSite site = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
+	InfoSite site = (InfoSite) request.getAttribute(PresentationConstants.INFO_SITE);
 	String alternativeSite = site.getAlternativeSite();
 	String mail = site.getMail();
 	String initialStatement = site.getMail();
@@ -51,25 +47,22 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 
 	DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
 
-	HttpSession session = request.getSession(false);
-	session.removeAttribute(PresentationConstants.INFO_SECTION);
-	InfoSite infoSite = (InfoSite) session.getAttribute(PresentationConstants.INFO_SITE);
+	InfoSite infoSite = (InfoSite) request.getAttribute(PresentationConstants.INFO_SITE);
 
 	String alternativeSite = (String) alternativeSiteForm.get("siteAddress");
 	String mail = (String) alternativeSiteForm.get("mail");
 	String initialStatement = (String) alternativeSiteForm.get("initialStatement");
 	String introduction = (String) alternativeSiteForm.get("introduction");
 
-	IUserView userView = getUserView(request);
 	Object args[] = { infoSite, alternativeSite, mail, initialStatement, introduction };
 	try {
 	    ServiceManagerServiceFactory.executeService("EditSite", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(PresentationConstants.INFO_SITE, InfoSite.newInfoFromDomain(ExecutionCourseSite
+	request.setAttribute(PresentationConstants.INFO_SITE, InfoSite.newInfoFromDomain(ExecutionCourseSite
 		.readExecutionCourseSiteByOID(infoSite.getIdInternal())));
-	session.setAttribute("alternativeSiteForm", alternativeSiteForm);
+	request.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
 	return mapping.findForward("viewSite");
     }

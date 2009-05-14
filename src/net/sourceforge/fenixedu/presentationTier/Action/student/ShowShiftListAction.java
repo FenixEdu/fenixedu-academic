@@ -1,18 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsByTypeFromExecutionCourse;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsByTypeFromExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -20,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.dataTransferObject.TypeLessonAndInfoShift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
@@ -28,8 +23,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author João Mota
@@ -40,16 +33,12 @@ public class ShowShiftListAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = UserView.getUser();
-
-	HttpSession session = request.getSession(false);
-
 	String indexes = request.getParameter("index");
 	String[] indexij = indexes.split("-");
 	Integer indexi = new Integer(indexij[0]);
 	Integer indexj = new Integer(indexij[1]);
 
-	InfoShiftEnrolment iSE = (InfoShiftEnrolment) session.getAttribute("infoShiftEnrolment");
+	InfoShiftEnrolment iSE = (InfoShiftEnrolment) request.getAttribute("infoShiftEnrolment");
 	InfoExecutionCourse executionCourse = null;
 	ShiftType lessonType = null;
 
