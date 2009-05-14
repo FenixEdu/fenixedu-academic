@@ -887,7 +887,7 @@
         </action>
         <action path="/examEnrollmentManager" input="/viewEvaluation.do?method=viewEvaluation" 
             name="voidForm" parameter="method" scope="request"
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExamEnrollmentDispatchAction" scope="request" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExamEnrollmentDispatchAction" 
             validate="false" >
             <forward name="viewEvaluationEnrolmentManagementMenu" 
                 path="/viewEvaluationEnrolmentManagementMenu.jsp"/>
