@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +22,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -43,14 +47,15 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
     public ActionForward searchByKeyword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	VariantBean bean = getBean("keywordSearch");
 
 	String keywords = bean.getString();
 	if (keywords != null) {
+	    String[] keywordsArray = filterKeywords(keywords.split(" "));
+	    
 	    List<Researcher> results = new ArrayList<Researcher>();
 	    for (Researcher researcher : rootDomainObject.getResearchers()) {
-		if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywords.split(" "))) {
+		if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
 		    results.add(researcher);
 		}
 	    }
@@ -59,6 +64,21 @@ public class SearchResearchersAction extends FenixDispatchAction {
 
 	}
 	return search(mapping, form, request, response);
+    }
+    
+    private static final int MIN_KEYWORD_LENGTH = 1;
+    
+    private String[] filterKeywords(String[] keywords) {
+	Collection<String> keywordsList = Arrays.asList(keywords);
+	CollectionUtils.filter(keywordsList, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((String) arg0).length() > MIN_KEYWORD_LENGTH;
+	    }
+	});
+	
+	return keywordsList.toArray(new String[0]);
     }
 
     public ActionForward searchByName(ActionMapping mapping, ActionForm form, HttpServletRequest request,

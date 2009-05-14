@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 
@@ -49,15 +50,18 @@ public class Researcher extends Researcher_Base {
     }
 
     public boolean hasKeyword(String keyword) {
-	String trimmedKeyword = keyword.trim();
+	String trimmedKeyword = StringUtils.normalize(keyword.trim());
+	
 	for (String reseacherKeyword : getKeywordsPt().split(",")) {
-	    if (trimmedKeyword.equalsIgnoreCase(reseacherKeyword.trim())) {
+	    // Instead of equalsIgoneCase we'll use indexOf
+	    if (StringUtils.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
 		return true;
 	    }
 	}
 
 	for (String reseacherKeyword : getKeywordsEn().split(",")) {
-	    if (trimmedKeyword.equalsIgnoreCase(reseacherKeyword.trim())) {
+	    // Instead of equalsIgoneCase we'll use indexOf
+	    if (StringUtils.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
 		return true;
 	    }
 	}

@@ -1,43 +1,44 @@
 package net.sourceforge.fenixedu.webServices;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import javax.servlet.ServletRequest;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.ResearcherDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
+import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.codehaus.xfire.MessageContext;
 
 public class SearchResearcher implements ISearchResearcher {
 
+    private static final String storedPassword;
+    private static final String storedUsername;
+
+    static {
+	storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
+	storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+    }
+
     @Override
-    public ResearcherDTO[] seacherByName(String name) {
-	SearchParameters parameters = new SearchPerson.SearchParameters(name, null, null, null, null, RoleType.RESEARCHER
-		.toString(), null, null, null, Boolean.TRUE, null, Boolean.FALSE, Boolean.TRUE);
-
-	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
-
-	CollectionPager<Person> result = null;
-	try {
-	    result = (CollectionPager<Person>) ServiceUtils
-		    .executeService("SearchPerson", new Object[] { parameters, predicate });
-	} catch (FenixFilterException e) {
-	    e.printStackTrace();
-	} catch (FenixServiceException e) {
-	    e.printStackTrace();
-	}
+    public ResearcherDTO[] searchByName(String username, String password, String name, MessageContext context) throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	
+	Collection<Person> result = Person.findInternalPersonByNameAndRole(name, RoleType.RESEARCHER);
 
 	List<Researcher> results = new ArrayList<Researcher>();
-	for (Person person : result.getCollection()) {
+	for (Person person : result) {
 	    results.add(person.getResearcher());
 	}
 	Collections.sort(results, Researcher.PUBLICATION_VOLUME_COMPARATOR);
@@ -46,11 +47,15 @@ public class SearchResearcher implements ISearchResearcher {
     }
 
     @Override
-    public ResearcherDTO[] searchByKeyword(String keywords) {
+    public ResearcherDTO[] searchByKeyword(String username, String password, String keywords, MessageContext context) throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	
 	if (keywords != null) {
+	    String[] keywordsArray = filterKeywords(keywords.split(" "));
+	    
 	    List<Researcher> results = new ArrayList<Researcher>();
 	    for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
-		if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywords.split(" "))) {
+		if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
 		    results.add(researcher);
 		}
 	    }
@@ -60,6 +65,21 @@ public class SearchResearcher implements ISearchResearcher {
 
 	return new ResearcherDTO[0];
     }
+    
+    private static final int MIN_KEYWORD_LENGTH = 1;
+    
+    private String[] filterKeywords(String[] keywords) {
+	Collection<String> keywordsList = Arrays.asList(keywords);
+	CollectionUtils.filter(keywordsList, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((String) arg0).length() > MIN_KEYWORD_LENGTH;
+	    }
+	});
+	
+	return keywordsList.toArray(new String[0]);
+    }
 
     private ResearcherDTO[] getArrayFromResearchersList(List<Researcher> results) {
 	ResearcherDTO[] returnResults = new ResearcherDTO[results.size()];
@@ -68,6 +88,18 @@ public class SearchResearcher implements ISearchResearcher {
 	    returnResults[i++] = new ResearcherDTO(researcher);
 
 	return returnResults;
+    }
+
+    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+	// check user/pass
+	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+	    throw new NotAuthorizedException();
+	}
+
+	// check hosts accessing this service
+	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+	    throw new NotAuthorizedException();
+	}
     }
 
 }

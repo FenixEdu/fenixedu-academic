@@ -20,8 +20,8 @@ public class ResearcherDTO {
     public ResearcherDTO(Researcher researcher) {
 	this.username = researcher.getPerson().getUsername();
 	this.name = researcher.getPerson().getName();
-	this.setKeywordsPortuguese(researcher.getKeywordsPt());
-	this.setKeywordsEnglish(researcher.getKeywordsEn());
+	this.setKeywordsPortuguese(researcher.getKeywordsPt() != null ? researcher.getKeywordsPt() : "");
+	this.setKeywordsEnglish(researcher.getKeywordsEn() != null ? researcher.getKeywordsEn() : "");
 	this.units = getAssociatedUnitNames(researcher.getPerson().getAssociatedResearchOrDepartmentUnits());
 	
 	if(researcher.getAllowsContactByMedia()) {

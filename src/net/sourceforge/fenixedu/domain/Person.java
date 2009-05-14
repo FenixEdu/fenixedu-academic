@@ -2612,6 +2612,18 @@ public class Person extends Person_Base {
 	return people;
     }
 
+    public static Collection<Person> findInternalPersonByNameAndRole(final String name, final RoleType roleType) {
+	final Role role = (Role) Role.getRoleByRoleType(roleType);
+	return CollectionUtils.select(findInternalPerson(name), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((Person) arg0).hasPersonRoles(role);
+	    }
+	    
+	});
+    }
+
     public static Collection<Person> findInternalPersonMatchingFirstAndLastName(final String completeName) {
 	if (completeName != null) {
 	    String[] splittedName = completeName.split(" ");
@@ -2746,7 +2758,7 @@ public class Person extends Person_Base {
 	    if (accountability.isActive(currentDate)
 		    && (((Unit) accountability.getParentParty()).isResearchUnit() || ((Unit) accountability.getParentParty())
 			    .isDepartmentUnit())) {
-		units.add((ResearchUnit) accountability.getParentParty());
+		units.add((Unit) accountability.getParentParty());
 	    }
 	}
 
