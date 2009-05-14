@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -22,20 +21,14 @@ public class ReadDelegateDegreeDispatchAction extends FenixAction {
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) throws FenixActionException {
-
-	final HttpSession session = request.getSession(false);
-
-	if (session != null) {
-	    final Person person = getLoggedPerson(request);
-	    if (person.hasStudent()) {
-		final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
-		if (lastActiveRegistration != null) {
-		    final Degree degree = lastActiveRegistration.getDegree();
-		    final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan()
-			    .getMostRecentExecutionDegree();
-		    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-		    session.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
-		}
+	final Person person = getLoggedPerson(request);
+	if (person.hasStudent()) {
+	    final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
+	    if (lastActiveRegistration != null) {
+		final Degree degree = lastActiveRegistration.getDegree();
+		final ExecutionDegree executionDegree = degree.getMostRecentDegreeCurricularPlan().getMostRecentExecutionDegree();
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
 	    }
 	}
 	return mapping.findForward("success");

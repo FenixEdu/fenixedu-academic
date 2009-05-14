@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateListByPersonAndExecutionDegree;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadMasterDegreeCandidate;
-
 import java.text.DateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -11,9 +7,10 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateListByPersonAndExecutionDegree;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -22,8 +19,8 @@ import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,9 +34,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
+	InfoGuide infoGuide = (InfoGuide) request.getAttribute(PresentationConstants.GUIDE);
 	String graduationType = (String) request.getAttribute("graduationType");
 	if (graduationType == null) {
 	    graduationType = request.getParameter("graduationType");
@@ -55,36 +50,34 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 	    // Read The Candidate
 	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 	    try {
-		if (session.getAttribute(PresentationConstants.REQUESTER_NUMBER) == null) {
+		if (request.getAttribute(PresentationConstants.REQUESTER_NUMBER) == null) {
 
 		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadMasterDegreeCandidate.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson());
 		} else {
-		    Integer number = (Integer) session.getAttribute(PresentationConstants.REQUESTER_NUMBER);
+		    Integer number = (Integer) request.getAttribute(PresentationConstants.REQUESTER_NUMBER);
 
 		    infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ReadCandidateListByPersonAndExecutionDegree.run(infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number);
 		}
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
-	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 	}
 
 	Locale locale = new Locale("pt", "PT");
 	String formatedDate = "Lisboa, "
 		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(infoGuide.getCreationDate());
-	session.setAttribute(PresentationConstants.DATE, formatedDate);
+	request.setAttribute(PresentationConstants.DATE, formatedDate);
 	return mapping.findForward("PrintReady");
 
     }
 
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	HttpSession session = request.getSession(false);
-
 	Integer number = new Integer(request.getParameter("number"));
 	Integer year = new Integer(request.getParameter("year"));
 	Integer version = new Integer(request.getParameter("version"));
-	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE);
+	request.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE);
 	Integer numberRequester = null;
 	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
 	    numberRequester = new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER));
@@ -127,8 +120,8 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
 	Locale locale = new Locale("pt", "PT");
 	String formatedDate = "Lisboa, "
 		+ DateFormat.getDateInstance(DateFormat.LONG, locale).format(infoGuide.getCreationDate());
-	session.setAttribute(PresentationConstants.DATE, formatedDate);
-	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.DATE, formatedDate);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	String copies = request.getParameter("copies");
 	if (copies != null && copies.equals("2")) {

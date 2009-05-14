@@ -45,7 +45,6 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
 	final HttpSession session = request.getSession(false);
 	if (session != null) {
-	    IUserView userView = getUserView(request);
 	    session.removeAttribute(PresentationConstants.MATRICULA);
 	    session.removeAttribute(PresentationConstants.MATRICULA_ENROLMENT);
 	    session.removeAttribute(PresentationConstants.DURATION_DEGREE);

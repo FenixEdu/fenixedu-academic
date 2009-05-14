@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
@@ -23,14 +22,10 @@ public class EscolherDisciplinaETipoFormAction extends FenixAction {
 
 	DynaActionForm escolherDisciplinaETipoForm = (DynaActionForm) form;
 
-	HttpSession sessao = request.getSession(false);
-	if (sessao != null) {
-	    List infoDisciplinasExecucao = (ArrayList) sessao.getAttribute("infoDisciplinasExecucao");
-	    int i = ((Integer) escolherDisciplinaETipoForm.get("indexDisciplinaExecucao")).intValue() - 1;
-	    sessao.setAttribute("infoDisciplinaExecucao", infoDisciplinasExecucao.get(i));
-	    return mapping.findForward("Sucesso");
-	}
-	throw new Exception();
+	List infoDisciplinasExecucao = (ArrayList) request.getAttribute("infoDisciplinasExecucao");
+	int i = ((Integer) escolherDisciplinaETipoForm.get("indexDisciplinaExecucao")).intValue() - 1;
+	request.setAttribute("infoDisciplinaExecucao", infoDisciplinasExecucao.get(i));
+	return mapping.findForward("Sucesso");
     }
 
 }

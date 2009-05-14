@@ -4,23 +4,18 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.CreateMasterDegreeCandidate;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.CreateMasterDegreeCandidate;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -41,8 +36,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  *         This is the Action to create a Master Degree Candidate
@@ -52,59 +45,42 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
+	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-	if (session != null) {
-
-	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_LIST);
-
-	    IUserView userView = getUserView(request);
-
-	    DegreeType degreeType = DegreeType.MASTER_DEGREE;
-
-
-	    List result = null;
-	    try {
-		result = (List) ReadAllMasterDegrees.run(degreeType);
-	    } catch (NonExistingServiceException e) {
-		throw new NonExistingActionException("O Degree de Mestrado", e);
-	    }
-
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
-
-	    return mapping.findForward("DisplayMasterDegreeList");
+	List result = null;
+	try {
+	    result = (List) ReadAllMasterDegrees.run(degreeType);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("O Degree de Mestrado", e);
 	}
-	throw new Exception();
+
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_LIST, result);
+
+	return mapping.findForward("DisplayMasterDegreeList");
     }
 
     public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
-
-	    // Get the Chosen Master Degree
-	    Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-	    if (masterDegreeID == null) {
-		masterDegreeID = (Integer) request.getAttribute("degreeID");
-	    }
-
-	    List result = null;
-
-	    try {
-
-		result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
-
-	    } catch (NonExistingServiceException e) {
-		throw new NonExistingActionException("O plano curricular ", e);
-	    }
-
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
-
-	    return mapping.findForward("MasterDegreeReady");
+	// Get the Chosen Master Degree
+	Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+	if (masterDegreeID == null) {
+	    masterDegreeID = (Integer) request.getAttribute("degreeID");
 	}
-	throw new Exception();
+
+	List result = null;
+
+	try {
+
+	    result = (List) ReadCPlanFromChosenMasterDegree.run(masterDegreeID);
+
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("O plano curricular ", e);
+	}
+
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+
+	return mapping.findForward("MasterDegreeReady");
     }
 
     public ActionForward prepareChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -136,9 +112,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	session.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
+	request.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
 	Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
 	if (curricularPlanID == null) {
@@ -155,15 +129,13 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	// Create the Degree Type List
 
 	String executionDegreeId = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	if (executionDegreeId == null) {
 	    executionDegreeId = request.getParameter(PresentationConstants.EXECUTION_DEGREE);
 	}
-	session.setAttribute(PresentationConstants.EXECUTION_YEAR, session.getAttribute(PresentationConstants.EXECUTION_YEAR));
+	request.setAttribute(PresentationConstants.EXECUTION_YEAR, request.getAttribute(PresentationConstants.EXECUTION_YEAR));
 
 	Integer curricularPlanID = null;
 	String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
@@ -183,8 +155,6 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = UserView.getUser();
-
 	// Get the Information
 	DynaActionForm createCandidateForm = (DynaActionForm) form;
 	String degreeType = (String) createCandidateForm.get("specialization");
@@ -193,11 +163,10 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 	String identificationDocumentNumber = (String) createCandidateForm.get("identificationDocumentNumber");
 	String identificationDocumentType = (String) createCandidateForm.get("identificationDocumentType");
 
-
 	InfoMasterDegreeCandidate createdCandidate = null;
 	try {
-	    createdCandidate = (InfoMasterDegreeCandidate) CreateMasterDegreeCandidate.run(Specialization.valueOf(degreeType), executionDegreeOID, name, identificationDocumentNumber,
-		IDDocumentType.valueOf(identificationDocumentType));
+	    createdCandidate = (InfoMasterDegreeCandidate) CreateMasterDegreeCandidate.run(Specialization.valueOf(degreeType),
+		    executionDegreeOID, name, identificationDocumentNumber, IDDocumentType.valueOf(identificationDocumentType));
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException("O Candidato", e);
 	}

@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.ReadStudentByNumberAndType;
@@ -34,17 +33,6 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	HttpSession session = request.getSession(false);
-	// Clear the Session
-	session.removeAttribute(PresentationConstants.NATIONALITY_LIST_KEY);
-	session.removeAttribute(PresentationConstants.MARITAL_STATUS_LIST_KEY);
-	session.removeAttribute(PresentationConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
-	session.removeAttribute(PresentationConstants.SEX_LIST_KEY);
-	session.removeAttribute(PresentationConstants.MONTH_DAYS_KEY);
-	session.removeAttribute(PresentationConstants.MONTH_LIST_KEY);
-	session.removeAttribute(PresentationConstants.YEARS_KEY);
-	session.removeAttribute(PresentationConstants.EXPIRATION_YEARS_KEY);
-	session.removeAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST);
 
 	Integer studentNumber = new Integer(getFromRequest("studentNumber", request));
 	// String graduationType = getFromRequest("graduationType",
@@ -81,13 +69,13 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 	    nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
 	}
 
-	session.setAttribute(PresentationConstants.NATIONALITY_LIST_KEY, nationalityList);
-	session.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
+	request.setAttribute(PresentationConstants.NATIONALITY_LIST_KEY, nationalityList);
+	request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
 		.getAttribute(Globals.LOCALE_KEY)));
-	session.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	session.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
-	session.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
-	session.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
 	return mapping.findForward("Success");
 

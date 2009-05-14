@@ -78,7 +78,6 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
 	    result = ReadCandidateForRegistration.run(executionDegree);
 	} catch (NonExistingServiceException e) {
-	    request.getSession(false).removeAttribute(PresentationConstants.DEGREE_LIST);
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
 	    saveErrors(request, errors);

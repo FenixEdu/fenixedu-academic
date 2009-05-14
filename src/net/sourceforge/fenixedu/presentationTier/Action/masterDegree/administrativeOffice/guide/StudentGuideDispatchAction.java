@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
@@ -33,14 +32,10 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
     public ActionForward createReady(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
-
 	    DynaActionForm studentGuideForm = (DynaActionForm) form;
-	    InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
+	    InfoGuide infoGuide = (InfoGuide) request.getAttribute(PresentationConstants.GUIDE);
 
-	    List certificateList = (List) session.getAttribute(PresentationConstants.CERTIFICATE_LIST);
+	    List certificateList = (List) request.getAttribute(PresentationConstants.CERTIFICATE_LIST);
 
 	    String[] quantityList = request.getParameterValues("quantityList");
 
@@ -145,9 +140,6 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(PresentationConstants.REQUESTER_NUMBER, number);
 
 	    return mapping.findForward("CreateStudentGuideReady");
-
-	}
-	throw new Exception();
     }
 
 }

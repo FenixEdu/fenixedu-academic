@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
@@ -46,16 +45,13 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChoice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	HttpSession session = request.getSession(false);
-	IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-
 	Integer degreeCurricularPlanID = null;
 	if (request.getParameter("degreeCurricularPlanID") != null) {
 	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	List executionPeriods = (List) ReadExecutionPeriodsByExecutionYear.run(infoExecutionDegree.getInfoExecutionYear()
 		.getIdInternal());
@@ -117,11 +113,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
     public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	IUserView userView = getUserView(request);
-
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
@@ -294,8 +286,6 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
 	Integer degreeCurricularPlanID = null;
 	if (request.getParameter("degreeCurricularPlanID") != null) {

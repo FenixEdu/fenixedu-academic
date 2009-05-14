@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
@@ -26,14 +24,6 @@ public abstract class FenixAction extends Action {
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
-
-    protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
-	HttpSession result = request.getSession(false);
-	if (result == null) {
-	    throw new ExcepcaoSessaoInexistente();
-	}
-	return result;
-    }
 
     protected IUserView getUserView(HttpServletRequest request) {
 	return UserView.getUser();

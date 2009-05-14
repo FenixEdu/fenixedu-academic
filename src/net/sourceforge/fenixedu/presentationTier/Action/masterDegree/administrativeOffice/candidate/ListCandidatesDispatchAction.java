@@ -4,12 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.EditMasterDegreeCandidate;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByPerson;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateList;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -20,14 +14,16 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadMasterDegrees;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.EditMasterDegreeCandidate;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.GetCandidatesByPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadCandidateList;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateNewPasswordService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
@@ -76,23 +72,19 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
 	String action = request.getParameter("action");
 
 	if (action.equals("visualize")) {
-	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
 	} else if (action.equals("edit")) {
-	    session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION);
-	    session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
 
 	}
 
 	// Get the chosen exectionYear
-	String executionYear = (String) session.getAttribute(PresentationConstants.EXECUTION_YEAR);
+	String executionYear = (String) request.getAttribute(PresentationConstants.EXECUTION_YEAR);
 	listCandidatesForm.set("executionYear", executionYear);
 
 	// Get the Degree List
@@ -112,11 +104,11 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	List newDegreeList = degreeList;
 	List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
 
-	session.setAttribute(PresentationConstants.DEGREE_LIST, executionDegreeLabels);
+	request.setAttribute(PresentationConstants.DEGREE_LIST, executionDegreeLabels);
 
 	// Create the Candidate Situation List
 
-	session.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	request.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
 	return mapping.findForward("PrepareReady");
 
@@ -124,8 +116,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
     public ActionForward getCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
 
 	DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
@@ -187,10 +177,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 		query += "  - N�mero de Candidato: " + candidateNumber + "<br />";
 	}
 
-	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST);
-	session.removeAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_QUERY);
-	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
-	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
 
 	return mapping.findForward("ChooseCandidate");
 
@@ -442,8 +430,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward changePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	// Read the Candidate
 
 	final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
@@ -464,8 +450,8 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException();
 	}
 	request.setAttribute("password", pass);
-	session.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-	session.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
+	request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+	request.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
 	return mapping.findForward("ChangePasswordSuccess");
 
     }

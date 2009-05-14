@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.certificate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -20,15 +19,7 @@ public class PrintDeclarationDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-
-	HttpSession session = request.getSession(false);
-
-	if (session != null) {
-
-	    return mapping.findForward("PrintReady");
-	}
-	throw new Exception();
-
+	return mapping.findForward("PrintReady");
     }
 
 }

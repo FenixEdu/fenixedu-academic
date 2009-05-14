@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -206,8 +205,6 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSelectCourseList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession();
-
 	DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
 	String executionYear = getFromRequest("executionYear", request);
@@ -220,7 +217,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	String degree = getFromRequest("degree", request);
 	String candidateID = getFromRequest("candidateID", request);
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(PresentationConstants.MASTER_DEGREE);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
 
 	if (((degree == null) || (degree.length() == 0)) && infoExecutionDegree != null) {
 	    degree = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
@@ -485,9 +482,6 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-
-	HttpSession session = request.getSession(false);
-	IUserView userView = getUserView(request);
 
 	Integer candidateID = new Integer(request.getParameter("candidateID"));
 

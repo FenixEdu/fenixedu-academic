@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -36,8 +35,6 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm createContributorForm = (DynaActionForm) form;
 
 	// Clean the form
@@ -46,11 +43,9 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	String action = request.getParameter("action");
 
 	if (action.equals("visualize")) {
-	    session.removeAttribute(PresentationConstants.CONTRIBUTOR_ACTION);
-	    session.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
+	    request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
 	} else if (action.equals("edit")) {
-	    session.removeAttribute(PresentationConstants.CONTRIBUTOR_ACTION);
-	    session.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
+	    request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
 	}
 
 	return mapping.findForward("PrepareReady");
@@ -60,7 +55,6 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
     public ActionForward getContributors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) throws Exception {
 
-	final HttpSession session = request.getSession(false);
 	final Integer contributorNumber = getIntegerFromRequestOrForm(request, (DynaActionForm) form, "contributorNumber");
 
 	List<InfoContributor> contributors = Collections.singletonList(InfoContributor.newInfoFromDomain(Party
@@ -68,29 +62,24 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
 	if (contributors.size() == 1) {
 	    InfoContributor infoContributor = (InfoContributor) contributors.get(0);
-	    session.removeAttribute(PresentationConstants.CONTRIBUTOR);
-	    session.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+	    request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 	    return mapping.findForward("ActionReady");
 	}
 
-	session.removeAttribute(PresentationConstants.CONTRIBUTOR_LIST);
-	session.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributors);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributors);
 	return mapping.findForward("ChooseContributor");
     }
 
     public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
-	List contributorList = (List) session.getAttribute(PresentationConstants.CONTRIBUTOR_LIST);
+	List contributorList = (List) request.getAttribute(PresentationConstants.CONTRIBUTOR_LIST);
 
 	Integer choosenContributorPosition = Integer.valueOf(request.getParameter("contributorPosition"));
 
-	// Put the selected Contributor in Session
 	InfoContributor infoContributor = (InfoContributor) contributorList.get(choosenContributorPosition.intValue());
 
-	session.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 	return mapping.findForward("ActionReady");
 
     }
@@ -98,11 +87,9 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
-	InfoContributor infoContributor = (InfoContributor) session.getAttribute(PresentationConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
 
 	editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
 	editContributorForm.set("contributorName", infoContributor.getContributorName());
@@ -121,12 +108,10 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm editContributorForm = (DynaActionForm) form;
 
 	IUserView userView = getUserView(request);
-	InfoContributor infoContributor = (InfoContributor) session.getAttribute(PresentationConstants.CONTRIBUTOR);
+	InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
 
 	// Get the Information
 	String contributorNumberString = (String) editContributorForm.get("contributorNumber");
@@ -149,7 +134,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException("O Contribuinte", e);
 	}
 
-	session.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
 	return mapping.findForward("EditSuccess");
 
     }

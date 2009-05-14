@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -34,19 +33,13 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	String action = request.getParameter("action");
 	DynaActionForm chooseGuide = (DynaActionForm) form;
 
-	session.removeAttribute(PresentationConstants.GUIDE);
-	session.removeAttribute(PresentationConstants.GUIDE_LIST);
-	session.removeAttribute(PresentationConstants.REQUESTER_NUMBER);
-
 	if (action.equals("visualize")) {
-	    session.setAttribute(PresentationConstants.ACTION, "label.action.visualizeGuide");
+	    request.setAttribute(PresentationConstants.ACTION, "label.action.visualizeGuide");
 	} else if (action.equals("edit")) {
-	    session.setAttribute(PresentationConstants.ACTION, "label.action.editGuide");
+	    request.setAttribute(PresentationConstants.ACTION, "label.action.editGuide");
 	}
 
 	chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
@@ -87,8 +80,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseVersion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
 
 	// Get the Information
 	Integer guideNumber = new Integer(request.getParameter("number"));

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
@@ -198,7 +197,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionYear", executionYear);
 	request.setAttribute("degree", degree);
 	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
-	request.getSession(false).setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
 	// Get Numerus Clausus
 	Integer numerusClausus = null;
@@ -272,11 +271,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward getSubstituteCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm substituteForm = (DynaActionForm) form;
-
-	IUserView userView = getUserView(request);
 
 	if (!isTokenValid(request)) {
 	    return mapping.findForward("BackError");
@@ -291,7 +286,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	String[] substitutes = (String[]) substituteForm.get("substitutes");
 	String executionDegree = (String) request.getAttribute("executionDegreeID");
 	if (executionDegree == null)
-	    executionDegree = (String) session.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+	    executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 
 	request.setAttribute("substitutes", substitutes);
 	request.setAttribute("candidatesID", ids);
@@ -307,18 +302,14 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	    throw new ExistingActionException(e);
 	}
 	request.setAttribute("candidateList", result);
-	session.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
+	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, executionDegree);
 	return mapping.findForward("OrderCandidatesReady");
     }
 
     public ActionForward preparePresentation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm resultForm = (DynaActionForm) form;
-
-	IUserView userView = getUserView(request);
 
 	String[] candidateList = (String[]) resultForm.get("situations");
 	String[] ids = (String[]) resultForm.get("candidatesID");
@@ -327,8 +318,6 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 	Integer degreeCurricularPlanID = (Integer) resultForm.get("degreeCurricularPlanID");
 
 	String executionDegree = (String) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
-	if (executionDegree == null)
-	    executionDegree = (String) session.getAttribute(PresentationConstants.EXECUTION_DEGREE);
 	if (!isTokenValid(request)) {
 	    return mapping.findForward("BackError");
 	}

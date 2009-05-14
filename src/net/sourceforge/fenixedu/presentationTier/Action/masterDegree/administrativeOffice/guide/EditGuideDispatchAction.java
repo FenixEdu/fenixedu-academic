@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.EditGuideInformation;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChangeGuideSituation;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -11,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -20,6 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.ChangeGuideSituation;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.EditGuideInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -52,8 +49,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm editGuideForm = (DynaActionForm) form;
 
 	// Get the Information
@@ -73,10 +68,10 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	editGuideForm.set("paymentDateDay", Data.OPTION_DEFAULT);
 	editGuideForm.set("paymentDateMonth", Data.OPTION_DEFAULT);
 	editGuideForm.set("paymentDateYear", Data.OPTION_DEFAULT);
-	session.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-	session.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
-	session.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
-	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
+	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	return mapping.findForward("EditReady");
 
@@ -84,8 +79,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward editGuideSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
 
 	IUserView userView = getUserView(request);
 	Integer guideYear = new Integer(request.getParameter("year"));
@@ -149,21 +142,12 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	    return mapping.getInputForward();
 	}
 
-	session.removeAttribute(PresentationConstants.GUIDE);
-	session.removeAttribute(PresentationConstants.MONTH_DAYS_KEY);
-	session.removeAttribute(PresentationConstants.MONTH_LIST_KEY);
-	session.removeAttribute(PresentationConstants.YEARS_KEY);
-	session.removeAttribute(PresentationConstants.PAYMENT_TYPE);
-	session.removeAttribute(PresentationConstants.GUIDE_SITUATION_LIST);
-
 	return mapping.findForward("SituationChanged");
 
     }
 
     public ActionForward prepareEditInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	HttpSession session = request.getSession(false);
 
 	Integer guideYear = new Integer(request.getParameter("year"));
 	Integer guideNumber = new Integer(request.getParameter("number"));
@@ -187,8 +171,8 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 		    + infoContributor.getContributorName(), infoContributor.getContributorNumber()));
 	}
 
-	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
-	session.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributorList);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.CONTRIBUTOR_LIST, contributorList);
 
 	request.setAttribute("othersQuantity", new Integer(0));
 	request.setAttribute("othersPrice", new Double(0));

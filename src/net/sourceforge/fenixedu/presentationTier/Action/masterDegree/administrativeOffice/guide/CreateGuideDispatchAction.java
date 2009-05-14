@@ -9,9 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -67,11 +65,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	DynaActionForm createGuideForm = (DynaActionForm) form;
-
-	IUserView userView = getUserView(request);
 
 	// Transport chosen Execution Degree
 	String executionDegreeIDParam = getFromRequest(PresentationConstants.EXECUTION_DEGREE_OID, request);
@@ -84,9 +78,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	if (infoExecutionDegree != null) {
 	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, infoExecutionDegree);
 	}
-
-	session.removeAttribute(PresentationConstants.PRINT_PASSWORD);
-	session.removeAttribute(PresentationConstants.PRINT_INFORMATION);
 
 	// Contributor
 	String unexistinngContributor = getFromRequest(PresentationConstants.UNEXISTING_CONTRIBUTOR, request);
@@ -102,8 +93,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward requesterChosen(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-	HttpSession session = request.getSession(false);
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
 
@@ -142,7 +131,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(PresentationConstants.CERTIFICATE_LIST, studentGuideList);
+	request.setAttribute(PresentationConstants.CERTIFICATE_LIST, studentGuideList);
 
 	final CreateReceiptBean chooseContributorBean = (CreateReceiptBean) RenderUtils.getViewState("chooseContributorBean")
 		.getMetaObject().getObject();
@@ -174,14 +163,14 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	    throw new FenixActionException(e);
 	}
-	session.setAttribute(PresentationConstants.GUIDE, infoGuide);
+	request.setAttribute(PresentationConstants.GUIDE, infoGuide);
 
 	request.setAttribute(PresentationConstants.REQUESTER_NUMBER, number);
 	request.setAttribute("graduationType", graduationType);
 	request.setAttribute(PresentationConstants.REQUESTER_TYPE, requesterType);
 
 	if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
-	    session.removeAttribute(PresentationConstants.REQUESTER_TYPE);
+	    request.removeAttribute(PresentationConstants.REQUESTER_TYPE);
 	    generateToken(request);
 	    saveToken(request);
 
@@ -189,8 +178,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	if (requesterType.equals(GuideRequester.STUDENT.name())) {
-
-	    session.removeAttribute(PresentationConstants.REQUESTER_TYPE);
 	    return mapping.findForward("CreateStudentGuide");
 	}
 
@@ -200,8 +187,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	HttpSession session = request.getSession(false);
-
 	if (!isTokenValid(request)) {
 	    return mapping.findForward("BackError");
 	}
@@ -209,9 +194,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	saveToken(request);
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
-
-	session.removeAttribute(PresentationConstants.PRINT_PASSWORD);
-	session.removeAttribute(PresentationConstants.PRINT_INFORMATION);
 
 	// Get the information
 	String othersRemarks = (String) createGuideForm.get("othersRemarks");
@@ -250,7 +232,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	}
 
 	GuideState situationOfGuide = GuideState.valueOf(guideSituationString);
-	InfoGuide infoGuide = (InfoGuide) session.getAttribute(PresentationConstants.GUIDE);
+	InfoGuide infoGuide = (InfoGuide) request.getAttribute(PresentationConstants.GUIDE);
 
 	InfoGuide newInfoGuide = null;
 
@@ -296,17 +278,14 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException();
 		    }
 
-		    // Put variable in Session to Inform that it's necessary to
-		    // print the password
-		    session.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
+		    request.setAttribute(PresentationConstants.PRINT_PASSWORD, Boolean.TRUE);
 
 		} else {
-		    session.setAttribute(PresentationConstants.PRINT_INFORMATION, Boolean.TRUE);
+		    request.setAttribute(PresentationConstants.PRINT_INFORMATION, Boolean.TRUE);
 		}
 	    }
 	}
-	session.removeAttribute(PresentationConstants.GUIDE);
-	session.setAttribute(PresentationConstants.GUIDE, newInfoGuide);
+	request.setAttribute(PresentationConstants.GUIDE, newInfoGuide);
 
 	if (request.getParameter(PresentationConstants.REQUESTER_NUMBER) != null) {
 	    Integer numberRequester = new Integer(request.getParameter(PresentationConstants.REQUESTER_NUMBER));

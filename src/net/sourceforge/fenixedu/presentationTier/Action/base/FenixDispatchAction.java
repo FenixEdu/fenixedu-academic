@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
@@ -101,14 +99,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected Person getLoggedPerson(HttpServletRequest request) {
 	final IUserView userView = getUserView(request);
 	return (userView == null) ? null : userView.getPerson();
-    }
-
-    protected HttpSession getSession(HttpServletRequest request) throws InvalidSessionActionException {
-	HttpSession result = request.getSession(false);
-	if (result == null)
-	    throw new InvalidSessionActionException();
-
-	return result;
     }
 
     /*
