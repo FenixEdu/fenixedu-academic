@@ -53,7 +53,8 @@
         <action path="/manageSpaces"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
         		parameter="method"
-        		name="spaceContextForm">
+        		name="spaceContextForm"
+        		scope="request">
             <forward name="ShowSpaces" path="index"/>
             <forward name="ManageSpace" path="show-manage-space-form"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
@@ -70,7 +71,8 @@
         <action path="/managePersonSpaceOccupations"
         		name="managePersonSpaceOccupationsForm"
         		type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManagePersonSpaceOccupationsDA"
-        		parameter="method">                		
+        		parameter="method"
+        		scope="request">
        		<forward name="showSpaceOccupations" path="show-person-space-occupations"/>   
         	<forward name="ManageSpace" path="/manageSpaces.do?method=manageSpace"/>   
         </action>

@@ -141,6 +141,7 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices.DocumentRequestDispatchAction"
 			parameter="method"
 			name="documentRequestCreateForm"
+			scope="request"
 			input="/administrativeOfficeServicesSection.do">
 			<forward name="chooseRegistration" path="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" />
 			<forward name="createDocumentRequests" path="alumni.administrativeOfficeServices.documentRequests.createDocumentRequests"/>

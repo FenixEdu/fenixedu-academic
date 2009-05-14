@@ -624,7 +624,7 @@
       		  input="/manipularSalas.jsp"
               name="indexForm"
               path="/manipularSalas"
-              scope="session"
+              scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ManipularSalasAction">
         <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException"
          	   key="resources.Action.exceptions.notAuthorizedActionDeleteException"
@@ -669,7 +669,7 @@
               input="/manipularSalas.jsp"
               name="indexForm"
       		  path="/viewRoom"
-              scope="session"
+      		  scope="request"
               parameter="method"
               type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewRoomFormActionPostBack">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
@@ -775,6 +775,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             name="examForm"
+            scope="request"
             validate="false"
             >
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
@@ -842,6 +843,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsMapDA"
             parameter="method"
             name="examForm"
+            scope="request"
             validate="false"
             >
 		<forward name="viewExamsMap" path="/viewExamsMap.jsp"/>

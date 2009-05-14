@@ -1384,6 +1384,7 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageCacheDA"
               parameter="method"
 			  name="cacheForm"
+			  scope="request"
               >
           <forward name="Manage" path="df.page.manage-cache"/>
           <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>
@@ -1457,6 +1458,7 @@
               parameter="method"
 			  name="monitorRequestLogsPathForm"
               validate="false"
+              scope="request"
               >
           <forward name="ShowSelectionForm" path="df.page.monitor-request"/>
 		  <forward name="ShowRequestAnalysisLog" path="df.page.analyseRequestsLog"/>
@@ -2095,6 +2097,7 @@
 	<action path="/recoverInactivePerson"
 			input="/recoverInactivePerson.do?method=prepare&amp;page=0"
 			parameter="method"
+			scope="request"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.RecoverInactivePersonDA">
 		<forward name="showSearchForm" path="df.recover.inactive.person.search.form" />
 	</action>
@@ -2102,6 +2105,7 @@
 	<action path="/manageHolidays"
 			input="/manageHolidays.do?method=prepare&amp;page=0"
 			parameter="method"
+			scope="request"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA">
 		<forward name="showHolidays" path="df.show.holidays" />
 	</action>
@@ -2109,6 +2113,7 @@
 	<action path="/cron"
 			input="/cron.do?method=showScripts&amp;page=0"
 			parameter="method"
+			scope="request"
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.CronDA">
 		<forward name="showCronScripts" path="df.show.cron.scripts"/>
 		<forward name="showCronScript" path="df.show.cron.script"/>
@@ -2304,6 +2309,7 @@
         <action path="/bolonhaTransitionManagement" 
         		type="net.sourceforge.fenixedu.presentationTier.Action.manager.transition.BolonhaTransitionManagementDA" 
         		parameter="method"
+        		scope="request"
         		name="bolonhaTransitionManagementForm">
         	<forward name="chooseStudent" path="transition.bolonha.chooseStudent" />
         	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />

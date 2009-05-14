@@ -434,6 +434,7 @@
           input="/candidate/indexCandidate.jsp"
 	      validate="true"
 		 parameter="method"
+		 scope="request"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CandidateOperationDispatchAction">
      		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="resources.Action.exceptions.NonExistingActionException"
@@ -449,6 +450,7 @@
           input="/student/indexStudent.jsp"
 	      validate="true"
 		 parameter="method"
+		 scope="request"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.StudentListDispatchAction">
      		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
 		                key="resources.Action.exceptions.NonExistingActionException"
@@ -463,8 +465,8 @@
  	  <!-- Action for the Coordinator to List the Students -->
 	  <action path="/listStudentsForCoordinator"
 		      parameter="method"
-	          input="/student/indexStudent.jsp"		      
-		      scope="session"
+	          input="/student/indexStudent.jsp"
+	          scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.StudentListDispatchAction"
 			  >
      		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
@@ -539,7 +541,7 @@
 		      attribute="chooseCandidateSituationForm"
 		      name="chooseCandidateSituationForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.SelectCandidatesDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListBySituation.jsp"/>  
@@ -567,7 +569,7 @@
        		  attribute="chooseSecondMasterDegreeForm"
 		      name="chooseSecondMasterDegreeForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
 		      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
@@ -919,6 +921,7 @@
 		        input="/candidate/indexCandidate.jsp"
 				name = "printAllCandidatesForm"
 				attribute = "printAllCandidatesForm"
+				scope="request"
 		        validate="true"
 		        parameter="method"
 		        type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.PrintAllCandidatesListDispatchAction">
@@ -975,6 +978,7 @@
         <action path="/bolonhaTransitionManagement" 
         		type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition.BolonhaTransitionManagementDA" 
         		parameter="method"
+        		scope="request"
         		name="bolonhaTransitionManagementForm">
         	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />
         	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />

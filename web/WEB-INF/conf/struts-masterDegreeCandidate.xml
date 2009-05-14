@@ -154,6 +154,7 @@
 	         input="/changeApplicationInfoDispatchAction.do?method=prepare&amp;page=0&amp;error=1"
 	      validate="true"
 		 parameter="method"
+		 scope="request"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
       	  <forward name="Success" path="/changeSuccess.jsp"/>
       	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
@@ -177,6 +178,7 @@
 	      input="/showApplicationDocuments.do"
 	      validate="true"
 	      parameter="method"
+	      scope="request"
    	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowApplicationDocumentDispatchAction">
       	  <forward name="showApplicationDocumentsList" path="/showApplicationDocuments.jsp"/>
       	  <forward name="notOK" path="/showApplicationDocuments.do?method=prepare"/>
@@ -186,6 +188,7 @@
       <action path="/showStudyPlanForCandidate"
 	      input="/showStudyPlanForCandidate.do"
 	      validate="true"
+	      scope="request"
    	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowStudyPlanForCandidateAction">
    	      <forward name="Sucess" path="/showStudyPlanForCandidate.jsp"/>
       </action>

@@ -332,6 +332,7 @@
 
       <!-- SHIFT ENROLMENT -->
       <action name="selectShiftEnrolmentForm"
+      		  scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowShiftListAction"
               path="/viewShiftsList"
               input="/viewEnrolment.jsp"
@@ -999,6 +1000,7 @@
         <action path="/bolonhaTransitionManagement" 
         		type="net.sourceforge.fenixedu.presentationTier.Action.student.transition.BolonhaTransitionManagementDA" 
         		parameter="method"
+        		scope="request"
         		name="bolonhaTransitionManagementForm">
         	<forward name="chooseRegistration" path="transition.bolonha.chooseRegistration" />
         	<forward name="showStudentCurricularPlan" path="transition.bolonha.showStudentCurricularPlan" />

@@ -1376,7 +1376,7 @@
 		      attribute="chooseCandidateSituationForm"
 		      name="chooseCandidateSituationForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.SelectCandidatesDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListBySituation.jsp"/>  
@@ -1435,7 +1435,7 @@
        		  attribute="chooseSecondMasterDegreeForm"
 		      name="chooseSecondMasterDegreeForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
 		      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
@@ -1717,6 +1717,7 @@
       		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
@@ -1727,6 +1728,7 @@
       		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
+		      scope="request"
    		      type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction"
 			  >
 			 <forward name="DisplayMasterDegreeList" path="/candidate/displayMasterDegreesToEditCandidates.jsp"/>
@@ -1741,6 +1743,7 @@
       		  input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      parameter="method"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
@@ -1752,7 +1755,7 @@
       		  input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
       	      name="candidateRegistrationForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
 
 			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
@@ -1779,7 +1782,7 @@
       		  input="/candidate/confirmCandidateRegistration.jsp"
       	      name="candidateRegistrationForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
               type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
 
 			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException"

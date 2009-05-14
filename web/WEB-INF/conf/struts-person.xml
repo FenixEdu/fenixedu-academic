@@ -140,7 +140,7 @@
 -->
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
 
-	<action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
+	<action path="/voidAction" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm" scope="request">
       <!-- form is not used -->
 		<forward name="Success" path="/teacher/teacherInformation.do?method=prepareEdit&amp;page=0" contextRelative="true" redirect="true"/>
 	</action>
@@ -156,7 +156,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
             	parameter="/person/personMainPage.jsp" />
 
-	<action path="/uploadPhoto" parameter="method" validate="true" name="voidForm"
+	<action path="/uploadPhoto" parameter="method" validate="true" name="voidForm" scope="request"
 		type="net.sourceforge.fenixedu.presentationTier.Action.person.UploadPhotoDA">
 		<forward name="upload" path="person.upload.photo" />
 		<forward name="confirm" path="person.upload.photo" />

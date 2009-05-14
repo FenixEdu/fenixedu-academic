@@ -257,6 +257,7 @@
 	    <action path="/changeLocaleTo"
 	    		name="changeLocaleForm"
 	    		validate="false"
+	    		scope="request"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChangeLocale">
 		    <forward name="something" path="/lalaland"/>
 	    </action>
@@ -324,6 +325,7 @@
       <action path="/viewClassesNew"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassesActionNew"
               name="chooseSearchContextForm"
+              scope="request"
               validate="false"
               >
           <forward name="Sucess" path="viewClasses"/>
@@ -333,6 +335,7 @@
 			name="classTimeTableWithClassNameAndDegreeInitialsForm"
 			type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableWithClassNameAndDegreeInitialsAction"
 			validate="false"
+			scope="request"
 			>
 		<forward name="Sucess" path="/viewClassTimeTable.do"/>
 	</action>
@@ -349,6 +352,7 @@
 		name="chooseExecutionCourseFormWithDynamicMailDistribution"
 		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
+		scope="request"
         type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
      		<forward name="sucess" path="/executionCourseSite.jsp"/> 
    	</action>
@@ -397,6 +401,7 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultRoomsDispatchAction"
               name="chooseContextForm"
               parameter="method"
+              scope="request"
               >
           <forward name="Sucess" path="consultRooms"/>
           <forward name="choose" path="/prepareConsultRoomsNew.do?method=prepare&amp;page=0"/>
@@ -449,6 +454,7 @@
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableActionNew"
               name="chooseSearchContextForm"
               validate="false"
+              scope="request"
               >
           <forward name="Sucess" path="viewClassTimeTable"/>
       </action>
@@ -468,6 +474,7 @@
 	<action 
 		path="/viewSite"
 		name="showSummaryForm"
+		scope="request"
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
@@ -479,6 +486,7 @@
    	<action 
 		path="/viewSiteNew"
 		name="showSummaryForm"
+		scope="request"
 		input="/executionCourseNotFoundNew.jsp"
 		parameter="method"
 		validate="true"
@@ -490,6 +498,7 @@
 	<action 
 		path="/viewSiteSummaries"
 		name="showSummaryForm"
+		scope="request"
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
@@ -518,6 +527,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
             name="examForm"
+            scope="request"
             validate="false"
             >
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
@@ -565,6 +575,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewExamsMapDANew"
             parameter="method"
             name="examForm"
+            scope="request"
             validate="false"
 			input="/notFound.do"
             >
@@ -609,6 +620,7 @@
 			path="/viewExecutionCourse"
 			parameter="method"
 			validate="true"
+			scope="request"
             type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
@@ -695,7 +707,7 @@
      		parameter="method"
      		 name="chooseContextDegreeForm"
      		input="showDegreeCurricularPlanNew"
-     
+     		scope="request"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlanNew"/>  		  
      </action>
@@ -704,6 +716,7 @@
 	     type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowCourseSiteAction"
 	     parameter="method"
 	     name="chooseContextDegreeForm"
+	     scope="request"
 	     validate="false"
 	     input="showCurricularCourseSite">
 	     	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
@@ -714,6 +727,7 @@
      <action path="/degreeSite/showCourseSite"
      		type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"	        
 		    name="chooseContextDegreeForm"
+		    scope="request"
 		    parameter="/publico/showCourseSite.do?method=showCurricularCourseSite"
 	/>
               
@@ -763,6 +777,7 @@
       <action path="/prepareConsultCurricularPlanNew"
               type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareConsultCurricularPlanDispatchAction"
               name="chooseContextDegreeForm"
+              scope="request"
               parameter="method"
               >    
           <forward name="Sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>
@@ -1380,6 +1395,7 @@
 	 <action path="/findSpaces"
              parameter="method"
              name="findSpacesForm"
+             scope="request"
              type="net.sourceforge.fenixedu.presentationTier.Action.publico.spaces.FindSpacesDA">
          
          <forward name="listFoundSpaces" path="list-found-spaces"/>
