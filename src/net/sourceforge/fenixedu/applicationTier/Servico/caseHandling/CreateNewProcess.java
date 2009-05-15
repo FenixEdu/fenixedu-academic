@@ -11,4 +11,9 @@ public class CreateNewProcess extends FenixService {
     public static Process run(String processName, Object object) {
 	return Process.createNewProcess(AccessControl.getUserView(), processName, object);
     }
+
+    @Service
+    public static Process run(Class<? extends Process> processClass, Object object) {
+	return Process.createNewProcess(AccessControl.getUserView(), processClass, object);
+    }
 }
