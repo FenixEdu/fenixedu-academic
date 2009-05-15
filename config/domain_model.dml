@@ -6373,11 +6373,26 @@ class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
 	PhdProgramCandidacyProcessState state;
 }
 
+class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
+	PhdIndividualProgramDocumentType documentType;	
+}
+
 class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
+}
+
+class phd.candidacy.PhdProgramCandidacyPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
+
+}
+
+class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
+
 }
 
 class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
+
+
+
 
 /* End of Phd Module */
 
@@ -6454,7 +6469,29 @@ relation PhdIndividualProgramProcessExecutionYear {
 }
 
 
+relation PhdProgramServiceAgreementTemplatePhdProgram {
+	
+	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
+		
+	phd.PhdProgram playsRole phdProgram;
+}
+
+relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
+
+	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
+
+	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
+		multiplicity *;
+	}
+	
+}
+
+
+
+
 /* End of Phd Module */
+
+
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
 	time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
