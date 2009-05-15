@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:html xhtml="true" locale="true">
+<html:html xhtml="true">
 	<head>
 		<title>
 			<bean:message key="dot.title" bundle="GLOBAL_RESOURCES" /> - <bean:message key="message.gratuity.payments.reminder.title" bundle="APPLICATION_RESOURCES"/>

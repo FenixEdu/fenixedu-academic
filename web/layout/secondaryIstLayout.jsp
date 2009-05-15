@@ -6,7 +6,7 @@
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 
-<html:html xhtml="true" locale="true">
+<html:html xhtml="true">
 <head>
 
 <title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
