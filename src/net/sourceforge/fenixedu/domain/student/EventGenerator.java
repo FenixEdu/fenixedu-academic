@@ -18,19 +18,17 @@ public class EventGenerator {
 	switch (studentCurricularPlan.getDegree().getDegreeType()) {
 
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    if (!studentCurricularPlan.getDegree().getSigla().equalsIgnoreCase("POSI")) {
 
-		final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
-		final ExecutionYear executionYearToCreateEvents = executionYear != null ? executionYear : ExecutionYear
-			.readCurrentExecutionYear();
+	    final AccountingEventsManager accountingEventsManager = new AccountingEventsManager();
+	    final ExecutionYear executionYearToCreateEvents = executionYear != null ? executionYear : ExecutionYear
+		    .readCurrentExecutionYear();
 
-		accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
+	    accountingEventsManager.createGratuityEvent(studentCurricularPlan, executionYearToCreateEvents, false);
 
-		new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
+	    new DfaRegistrationEvent(administrativeOffice, person, studentCurricularPlan.getRegistration());
 
-		accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
+	    accountingEventsManager.createInsuranceEvent(studentCurricularPlan, executionYearToCreateEvents, false);
 
-	    }
 	    break;
 	default:
 	    break;

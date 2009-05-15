@@ -89,13 +89,10 @@ public class DFACandidacy extends DFACandidacy_Base {
 	addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
 	addCandidacyDocuments(new CandidacyDocument("interest.letter"));
 
-	if (!executionDegree.getDegree().getSigla().equalsIgnoreCase("POSI")) {
-	    final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-	    new DFACandidacyEvent(administrativeOffice, person, this);
-	    new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan()
-		    .getServiceAgreementTemplate());
-	}
+	final AdministrativeOffice administrativeOffice = AdministrativeOffice
+		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+	new DFACandidacyEvent(administrativeOffice, person, this);
+	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
 
     public DFACandidacy(Person person, ExecutionDegree executionDegree, YearMonthDay startDate) {
