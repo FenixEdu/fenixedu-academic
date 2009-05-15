@@ -8,7 +8,7 @@ public enum PhdIndividualProgramDocumentType {
 
     CV,
 
-    CERTIFICATE,
+    DEGREE_FINALIZATION_CERTIFICATE,
 
     ID_DOCUMENT,
 

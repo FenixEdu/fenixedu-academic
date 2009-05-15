@@ -32,6 +32,7 @@ public class PhdProgram extends PhdProgram_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setWhenCreated(new DateTime());
 	setCreator(getCurrentUser());
+	new PhdProgramServiceAgreementTemplate(this);
     }
 
     private PhdProgram(final Degree degree, final MultiLanguageString name, final String acronym) {

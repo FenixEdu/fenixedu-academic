@@ -84,28 +84,34 @@ public abstract class DomainObject extends DomainObject_Base {
     public MetaDomainObject getMeta() {
 	return MetaDomainObject.getMeta(getClass());
     }
-    
-    protected void check(final Object obj, final String message, final String ...args) {
+
+    protected void check(final Object obj, final String message, final String... args) {
 	if (obj == null) {
 	    throw new DomainException(message, args);
 	}
     }
-    
-    protected void check(final String obj, final String message, final String ...args) {
+
+    protected void check(final String obj, final String message, final String... args) {
 	if (obj == null || obj.isEmpty()) {
 	    throw new DomainException(message, args);
 	}
     }
 
+    protected void check(final Object[] obj, final String message, final String... args) {
+	if (obj == null || obj.length == 0) {
+	    throw new DomainException(message, args);
+	}
+    }
+
     public final String getExternalId() {
-        return String.valueOf(getOID());
+	return String.valueOf(getOID());
     }
 
     public static <T extends DomainObject> T fromExternalId(String extId) {
-        if (extId == null) {
-            return null;
-        } else {
-            return (T) Transaction.getObjectForOID(Long.parseLong(extId));
-        }
+	if (extId == null) {
+	    return null;
+	} else {
+	    return (T) Transaction.getObjectForOID(Long.parseLong(extId));
+	}
     }
 }

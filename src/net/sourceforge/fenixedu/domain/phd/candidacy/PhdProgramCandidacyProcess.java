@@ -2,13 +2,19 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 
@@ -25,7 +31,39 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    return new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) object);
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) object);
+
+	    result.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
+
+	    return result;
+
+	}
+
+    }
+
+    public static class UploadDocuments extends Activity<PhdProgramCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    // no precondition to check
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    final List<PhdCandidacyDocumentUploadBean> documents = (List<PhdCandidacyDocumentUploadBean>) object;
+
+	    for (final PhdCandidacyDocumentUploadBean each : documents) {
+		if (each.isValid()) {
+		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getFileContent(), each.getFilename());
+		}
+	    }
+
+	    return process;
+
 	}
 
     }
@@ -37,43 +75,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-
+	activities.add(new UploadDocuments());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean candidacyProcessBean) {
-	setCandidacy(new PHDProgramCandidacy(candidacyProcessBean.getOrCreatePersonFromBean()));
+	final Person person = candidacyProcessBean.getOrCreatePersonFromBean();
+	new Student(person);
+	person.setIstUsername();
+
+	setCandidacy(new PHDProgramCandidacy(person));
 
 	if (candidacyProcessBean.hasDegree()) {
 	    getCandidacy().setExecutionDegree(candidacyProcessBean.getExecutionDegree());
 	}
-    }
 
-    public void insertCandidacy() {
-	setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
-    }
+	new PhdProgramCandidacyEvent(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE),
+		candidacyProcessBean.getOrCreatePersonFromBean(), this);
 
-    public void fillMissingInformation() {
-	setState(PhdProgramCandidacyProcessState.STAND_BY_COMPLETE_INFORMATION);
-    }
-
-    public void validateCandidacy() {
-	setState(PhdProgramCandidacyProcessState.VALIDATED);
-    }
-
-    public void sentToApproval() {
-	setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
-    }
-
-    public void issueCoordinatorOpinion() {
-	setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
-    }
-
-    public void ratifyCandidacy() {
-	setState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL);
-    }
-
-    public void formalizeRegistration() {
-	setState(PhdProgramCandidacyProcessState.CONCLUDED);
     }
 
     @Override
@@ -89,8 +107,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     @Override
     public String getDisplayName() {
-	// TODO Auto-generated method stub
-	return null;
+	return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
     }
-
 }

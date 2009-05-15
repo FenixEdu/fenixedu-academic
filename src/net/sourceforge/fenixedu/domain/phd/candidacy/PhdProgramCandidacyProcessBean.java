@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
 public class PhdProgramCandidacyProcessBean implements Serializable {
@@ -26,6 +28,12 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private DomainReference<Degree> degree;
 
     private String thesisTitle;
+
+    private PhdIndividualProgramCollaborationType collaborationType;
+
+    private String otherCollaborationType;
+
+    private ChoosePersonBean choosePersonBean;
 
     public static class GuiderBean {
 
@@ -103,6 +111,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public PhdProgramCandidacyProcessBean() {
 	setPersonBean(new PersonBean());
+	setChoosePersonBean(new ChoosePersonBean());
     }
 
     public PhdProgram getProgram() {
@@ -154,6 +163,38 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     public ExecutionDegree getExecutionDegree() {
 	return hasDegree() ? null : getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
 		getExecutionYear().getAcademicInterval());
+    }
+
+    public String getThesisTitle() {
+	return thesisTitle;
+    }
+
+    public void setThesisTitle(String thesisTitle) {
+	this.thesisTitle = thesisTitle;
+    }
+
+    public PhdIndividualProgramCollaborationType getCollaborationType() {
+	return collaborationType;
+    }
+
+    public void setCollaborationType(PhdIndividualProgramCollaborationType collaborationType) {
+	this.collaborationType = collaborationType;
+    }
+
+    public String getOtherCollaborationType() {
+	return otherCollaborationType;
+    }
+
+    public void setOtherCollaborationType(String otherCollaborationType) {
+	this.otherCollaborationType = otherCollaborationType;
+    }
+
+    public ChoosePersonBean getChoosePersonBean() {
+	return choosePersonBean;
+    }
+
+    public void setChoosePersonBean(ChoosePersonBean choosePersonBean) {
+	this.choosePersonBean = choosePersonBean;
     }
 
 }

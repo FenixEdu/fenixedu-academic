@@ -478,6 +478,13 @@ padding: 4px 5px 5px 5px;
 .success2 p { padding: 0.5em 0.5em;}
 .success3 { padding: 0.2em 0.5em 0.2em 28px; background: #efe; }
 .success4 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 28px; background: #dfd; color: #070; }
+.success5 {
+background-color: #e2f5e2;
+color: #146e14;
+border-top: 1px solid #0a0;
+border-bottom: 1px solid #0a0;
+padding: 4px 5px 5px 5px;
+}
 
 .warning0 { /*margin: 1em 0; padding: 0.1em 0.3em 0.15em 0.3em;*/ background-color: #fbf8cc; color: #805500; }
 .warning0 table { color: #805500; }
@@ -2520,3 +2527,18 @@ div.announcement_gallery table * {
 border:none;
 }
 
+
+
+/* Operations */
+
+ul.operations {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+ul.operations li {
+background: url(../images/dotist_post.gif) 0 7px no-repeat;
+padding-left: 1.2em;
+margin-bottom: 0.5em;
+margin-left: 1.5em;
+}

@@ -8,7 +8,7 @@
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.manageProcesses.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES" /></h2>
 
 <%-- ### End of Title ### --%>
@@ -23,23 +23,7 @@
 
 
 <%--  ### Error Messages  ### --%>
-<logic:messagesPresent message="true">
-	<ul class="nobullet list6">
-		<html:messages id="messages" message="true" bundle="messages_bundle">
-			<li><span class="error0"><bean:write name="messages" /></span></li>
-		</html:messages>
-	</ul>
-</logic:messagesPresent>
-
-<%--
-<fr:hasMessages type="conversion" for="##FR_EDIT_ID##">
-	<ul class="nobullet list6">
-		<fr:messages>
-			<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
-		</fr:messages>
-	</ul>
-</fr:hasMessages>
---%>
+<jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
 
@@ -52,16 +36,16 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <br/>
-<html:link action="/phdProgramCandidacyProcess.do?method=prepareCreateCandidacy">
+<html:link action="/phdProgramCandidacyProcess.do?method=prepareSearchPerson">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.createCandidacy"/>
 </html:link>
-<br/>
-<br/>
-<strong><bean:message  key="label.phd.processes" bundle="PHD_RESOURCES"/></strong>
 <logic:notEmpty name="processes">
 	<fr:view schema="PhdIndividualProgramProcess.view" name="processes">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 mtop15" />
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+			<fr:property name="linkFormat(view)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
+			<fr:property name="key(view)" value="label.view"/>
+			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
@@ -70,7 +54,6 @@
 	<em><bean:message key="label.phd.no.processes" bundle="PHD_RESOURCES" /></em>
 	<br/>
 </logic:empty>
- 
 
 <%--  ### End of Operation Area  ### --%>
 

@@ -1,42 +1,126 @@
-<schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.caseHandling.Process" bundle="PHD_RESOURCES">
-	<slot name="displayName" key="label.name" />
+<schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="phdProgram"/>
+	<slot name="state"/>
+	<slot name="executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="whenCreated" />
+	<slot name="person.name" />
+</schema>
+
+<schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
+	<slot name="state"/>
+	<slot name="whenCreated" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editProgramInformation" 
 		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
 		bundle="PHD_RESOURCES">
-	<slot name="program" />
-	<slot name="executionYear" />
+	<slot name="program" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+		<property name="format" value="${name}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+</schema>
+
+<schema name="PhdProgramCandidacyProcessBean.editPersonalInformation.simplified" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="75"/>
+		<property name="maxLength" value="255"/>
+	</slot>
+	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="dateOfBirth">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>	
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="documentIdEmissionDate">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+<!--		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />-->
+	</slot>
+	<slot name="documentIdEmissionLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="socialSecurityNumber">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="9"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{9})?"/>
+            <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
+        </validator>
+    </slot>
+	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator" />
+	</slot>
+	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editPersonalInformation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
-	<slot name="name" />
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="75"/>
+		<property name="maxLength" value="255"/>
+	</slot>
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="UNKNOWN" />
 	</slot>
 	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="documentIdEmissionDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="documentIdEmissionDate">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+<!--		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />-->
 	</slot>
 	<slot name="documentIdEmissionLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="socialSecurityNumber">
-		<property name="size" value="9" />
-		<property name="maxLength" value="9" />
-	</slot>
-	<slot name="dateOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="9"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{9})?"/>
+            <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
+        </validator>
+    </slot>
+	<slot name="dateOfBirth">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+<!--		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />-->
 	</slot>	
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
 		<property name="format" value="${nationality}" />
 		<property name="sortBy" value="nationality"/>
 	</slot>
-	<slot name="fatherName" />
-	<slot name="motherName" />
+	<slot name="fatherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="75"/>
+		<property name="maxLength" value="255"/>
+	</slot>
+	<slot name="motherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="75"/>
+		<property name="maxLength" value="255"/>
+	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
@@ -49,6 +133,7 @@
             <property name="regexp" value="\d{4}-\d{3}"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
         </validator>
 	</slot>
 	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -61,15 +146,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
-        </validator>
-    </slot>
-    <slot name="workPhone">
-    	<property name="size" value="15"/>
-		<property name="maxLength" value="15"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
-            <property name="message" value="error.phone.invalidFormat"/>
-            <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
         </validator>
     </slot>
 	<slot name="mobile">
@@ -79,6 +156,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
         </validator>
     </slot>
 	<slot name="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
@@ -176,6 +254,15 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="otherSchoolLevel" />
+</schema>
+
+
+<schema name="PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="type"/>
+	<slot name="file">
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="60"/>
+	</slot>
 </schema>
 
 

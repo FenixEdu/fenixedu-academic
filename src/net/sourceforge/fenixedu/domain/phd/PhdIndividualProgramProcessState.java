@@ -6,11 +6,13 @@ public enum PhdIndividualProgramProcessState {
 
     REJECTED,
 
-    WORK,
+    WORK_DEVELOPMENT,
 
     SUSPENDED,
 
-    THESIS,
+    THESIS_DISCUSSION,
+
+    FLUNKED,
 
     CONCLUDED;
 

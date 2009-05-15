@@ -1,34 +1,71 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
+import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramUnit;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
-    public PhdProgramCandidacyEvent() {
+    protected PhdProgramCandidacyEvent() {
 	super();
+    }
+
+    public PhdProgramCandidacyEvent(AdministrativeOffice administrativeOffice, Person person,
+	    PhdProgramCandidacyProcess candidacyProcess) {
+	this();
+	init(administrativeOffice, person, candidacyProcess);
+    }
+
+    private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {
+	super.init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
+
+	check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyEvent.candidacyProcess.cannot.be.null");
+
+	super.setCandidacyProcess(candidacyProcess);
+    }
+
+    @Override
+    public void setCandidacyProcess(PhdProgramCandidacyProcess candidacyProcess) {
+	throw new DomainException("error.phd.candidacy.PhdProgramCandidacyEvent.cannot.modify.candidacyProcess");
     }
 
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
-	throw new RuntimeException("Not implemented");
-    }
+	final LabelFormatter labelFormatter = new LabelFormatter();
+	labelFormatter.appendLabel("METER DESCRIÇÃO!!");
 
-    @Override
-    protected Account getFromAccount() {
-	throw new RuntimeException("Not implemented");
+	return labelFormatter;
     }
 
     @Override
     public PostingRule getPostingRule() {
-	throw new RuntimeException("Not implemented");
+	return getPhdProgram().getServiceAgreementTemplate().findPostingRuleByEventTypeAndDate(getEventType(), getWhenOccured());
+    }
+
+    private PhdProgram getPhdProgram() {
+	return getCandidacyProcess().getIndividualProgramProcess().getPhdProgram();
     }
 
     @Override
     public Account getToAccount() {
-	throw new RuntimeException("Not implemented");
+	return getUnit().getAccountBy(AccountType.INTERNAL);
+    }
+
+    @Override
+    protected Account getFromAccount() {
+	return getPerson().getAccountBy(AccountType.EXTERNAL);
+    }
+
+    private PhdProgramUnit getUnit() {
+	return getPhdProgram().getPhdProgramUnit();
     }
 
 }
