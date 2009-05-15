@@ -258,6 +258,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
  
+    @Service
     public void delete() {
 	removeCardGenerationBatch();
 	removePerson();
