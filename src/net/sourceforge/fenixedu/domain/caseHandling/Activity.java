@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.caseHandling.ProcessLog;
 
 public abstract class Activity<P extends Process> {
 

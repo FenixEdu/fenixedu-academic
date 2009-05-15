@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.caseHandling;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 
@@ -117,6 +121,10 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	    }
 	}
 	return result;
+    }
+
+    public DateTime getWhenCreated() {
+	return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
     }
 
     public abstract boolean canExecuteActivity(IUserView userView);
