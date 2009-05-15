@@ -165,8 +165,8 @@ public class GenerateStudentReport implements Serializable {
 	row.setCell(person.getArea());
 	row.setCell(person.getAreaCode());
 	row.setCell(person.getAreaOfAreaCode());
-	row.setCell(person.getPhone());
-	row.setCell(person.getMobile());
+	row.setCell(person.getDefaultPhoneNumber());
+	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getEmail());
 	row.setCell(resourceBundle.getString(spdac));
     }

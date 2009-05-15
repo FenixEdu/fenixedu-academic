@@ -32,8 +32,8 @@ public class ContactsForm extends Form {
 	final boolean availableWebSite = person.isDefaultWebAddressVisible();
 	final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person.getAvailablePhoto();
 
-	return new ContactsForm(person.getEmail(), person.getWebAddress(), availableEmail, availableWebSite, availablePhoto,
-		person.getMobile(), person.getPhone());
+	return new ContactsForm(person.getEmail(), person.getDefaultWebAddressUrl(), availableEmail, availableWebSite,
+		availablePhoto, person.getDefaultMobilePhoneNumber(), person.getDefaultPhoneNumber());
     }
 
     private ContactsForm(String email, String homepage, boolean isEmailAvailable, boolean isHomepageAvailable,

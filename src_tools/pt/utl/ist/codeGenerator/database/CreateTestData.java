@@ -84,7 +84,8 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurric
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -358,8 +359,7 @@ public class CreateTestData {
 	private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
 	    return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null,
 		    null, new YearMonthDay(), null, parentUnit, AccountabilityType
-			    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null,
-		    Boolean.FALSE, null);
+			    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE, null);
 	}
 
 	private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
@@ -372,8 +372,7 @@ public class CreateTestData {
 	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
 	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
 		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, new YearMonthDay(), null,
-		    serviceUnits, AccountabilityType
-			    .readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
+		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
 		    administrativeOffice, Boolean.FALSE, null);
 	}
 
@@ -405,13 +404,11 @@ public class CreateTestData {
 	    final ScientificAreaUnit scientificAreaUnit = ScientificAreaUnit.createNewInternalScientificArea(
 		    new MultiLanguageString(Language.getDefaultLanguage(), "Scientific Area"), null, "Code" + areaCounter++,
 		    new YearMonthDay(), null, departmentUnit, AccountabilityType
-			    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE,
-		    null);
+			    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
 
 	    CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(Language
 		    .getDefaultLanguage(), "Competence Courses"), null, null, new YearMonthDay(), null, scientificAreaUnit,
-		    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null,
-		    Boolean.FALSE, null);
+		    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
 	}
 
 	private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
@@ -419,8 +416,7 @@ public class CreateTestData {
 	    return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Language.getDefaultLanguage(),
 		    "Department Name " + someNumber), Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay()
 		    .minusMonths(1), null, departmentUnits, AccountabilityType
-		    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null,
-		    Boolean.FALSE, null);
+		    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, Boolean.FALSE, null);
 	}
 
 	private Group getCompetenceCourseMembersGroup() {
@@ -464,8 +460,7 @@ public class CreateTestData {
 
 			DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(Language.getDefaultLanguage(), degree
 				.getName()), null, degree.getSigla(), new YearMonthDay(), null, unit, AccountabilityType
-				.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, degree, null,
-				Boolean.FALSE, null);
+				.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, degree, null, Boolean.FALSE, null);
 		    }
 		}
 	    }
@@ -1120,7 +1115,7 @@ public class CreateTestData {
 	person.setIdDocumentType(IDDocumentType.IDENTITY_CARD);
 	person.setDocumentIdNumber(person.getIdInternal().toString());
 
-	PartyContact.createDefaultPersonalEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com");
+	EmailAddress.createEmailAddress(person, "abc" + person.getIdInternal() + "@gmail.com", PartyContactType.PERSONAL, true);
 
 	final User user = person.getUser();
 	final Login login = user.readUserLoginIdentification();

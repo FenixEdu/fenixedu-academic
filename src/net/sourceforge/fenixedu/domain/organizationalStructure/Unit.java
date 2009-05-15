@@ -101,7 +101,7 @@ public class Unit extends Unit_Base {
 	setClassification(classification);
 	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
 	setCampus(campus);
-	updateDefaultWebAddress(webAddress);
+	setDefaultWebAddressUrl(webAddress);
     }
 
     @Override

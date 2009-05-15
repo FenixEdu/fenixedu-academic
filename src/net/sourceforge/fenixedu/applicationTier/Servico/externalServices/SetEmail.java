@@ -64,7 +64,7 @@ public class SetEmail extends FenixService {
 	    throw new UserDoesNotExistException();
 	}
 	final String newEmail = StringUtils.isEmpty(email) ? null : email;
-	person.updateInstitutionalEmail(newEmail);
+	person.setInstitutionalEmailAddressValue(newEmail);
     }
 
     @Service

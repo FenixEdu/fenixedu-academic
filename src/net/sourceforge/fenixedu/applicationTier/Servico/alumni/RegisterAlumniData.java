@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniManager;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -62,8 +62,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
     public static void run(Alumni alumni, final String emailAddress) throws FenixServiceException {
 	try {
 	    if (!alumni.hasEmailAddress(emailAddress)) {
-		PartyContact.createEmailAddress(alumni.getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE,
-			emailAddress);
+		EmailAddress.createEmailAddress(alumni.getStudent().getPerson(), emailAddress, PartyContactType.PERSONAL, false);
 	    }
 	} catch (DomainException e) {
 	    throw new FenixServiceException(e.getMessage());
@@ -178,7 +177,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
     private static void processAlumniPhone(final AlumniPublicAccessBean alumniBean, final Person person) {
 
 	if (alumniBean.getCurrentPhone() == null) {
-	    person.addPartyContacts(new Phone(person, PartyContactType.PERSONAL, Boolean.TRUE, alumniBean.getPhone()));
+	    Phone.createPhone(person, alumniBean.getPhone(), PartyContactType.PERSONAL, true);
 	} else {
 	    alumniBean.getCurrentPhone().setNumber(alumniBean.getPhone());
 	}

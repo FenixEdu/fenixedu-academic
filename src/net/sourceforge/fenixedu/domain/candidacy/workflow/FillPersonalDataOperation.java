@@ -237,14 +237,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	    person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
 	}
 
-	person.setPhone(getContactsForm().getPhoneNumber());
+	person.setDefaultPhoneNumber(getContactsForm().getPhoneNumber());
 
-	person.setWebAddress(getContactsForm().getWebAddress());
+	person.setDefaultWebAddressUrl(getContactsForm().getWebAddress());
 	if (person.hasDefaultWebAddress()) {
 	    person.getDefaultWebAddress().setVisibleToPublic(getContactsForm().isHomepageAvailable());
 	}
 
-	person.setMobile(getContactsForm().getMobileNumber());
+	person.setDefaultMobilePhoneNumber(getContactsForm().getMobileNumber());
 
 	person.setAvailablePhoto(getContactsForm().isPhotoAvailable());
 
@@ -314,6 +314,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     protected void fillPersonalInformation() {
 
 	getStudentCandidacy().setGrantOwnerType(getPersonalInformationForm().getGrantOwnerType());
+//	getStudentCandidacy().setGrantOwnerProvider(getPersonalInformationForm().getGrantOwnerProvider());
 	getStudentCandidacy().setProfessionalCondition(getPersonalInformationForm().getProfessionalCondition());
 	getStudentCandidacy().setProfessionType(getPersonalInformationForm().getProfessionType());
 	getStudentCandidacy().setMaritalStatus(getPersonalInformationForm().getMaritalStatus());

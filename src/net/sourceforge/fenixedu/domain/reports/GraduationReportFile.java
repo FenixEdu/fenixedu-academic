@@ -105,8 +105,8 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 	row.setCell(defaultPhysicalAddress.getCountryOfResidence() == null ? StringUtils.EMPTY : defaultPhysicalAddress
 		.getCountryOfResidence().getName());
 
-	row.setCell(person.getPhone());
-	row.setCell(person.getMobile());
+	row.setCell(person.getDefaultPhoneNumber());
+	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
 	row.setCell(person.getGender().toLocalizedString());
     }

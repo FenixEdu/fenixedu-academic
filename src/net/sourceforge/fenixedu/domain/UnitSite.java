@@ -123,7 +123,7 @@ public class UnitSite extends UnitSite_Base {
 	if (address != null) {
 	    return address;
 	} else {
-	    return getUnit().getWebAddress();
+	    return getUnit().getDefaultWebAddressUrl();
 	}
     }
 

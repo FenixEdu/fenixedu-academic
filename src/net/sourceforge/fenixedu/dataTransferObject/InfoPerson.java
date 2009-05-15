@@ -17,18 +17,20 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class InfoPerson extends InfoObject {
 
-    private DomainReference<Person> person;
+    private final DomainReference<Person> person;
 
     public InfoPerson(Person person) {
 	this.person = new DomainReference<Person>(person);
     }
 
+    @Override
     public boolean equals(Object o) {
 	return ((o instanceof InfoPerson)
 		&& (getNumeroDocumentoIdentificacao().equals(((InfoPerson) o).getNumeroDocumentoIdentificacao())) && (getTipoDocumentoIdentificacao()
 		.equals(((InfoPerson) o).getTipoDocumentoIdentificacao())));
     }
 
+    @Override
     public String toString() {
 	return getPerson().toString();
     }
@@ -70,7 +72,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public String getEnderecoWeb() {
-	return getPerson().getWebAddress();
+	return getPerson().getDefaultWebAddressUrl();
     }
 
     public MaritalStatus getMaritalStatus() {
@@ -146,11 +148,11 @@ public class InfoPerson extends InfoObject {
     }
 
     public String getTelefone() {
-	return getPerson().getPhone();
+	return getPerson().getDefaultPhoneNumber();
     }
 
     public String getTelemovel() {
-	return getPerson().getMobile();
+	return getPerson().getDefaultMobilePhoneNumber();
     }
 
     public IDDocumentType getTipoDocumentoIdentificacao() {

@@ -6,6 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
@@ -26,18 +29,37 @@ public class EmailAddress extends EmailAddress_Base {
 	}
     };
 
+    public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, Boolean isDefault,
+	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
+	    Boolean visibleToAlumni) {
+	for (EmailAddress emailAddress : party.getEmailAddresses()) {
+	    if (emailAddress.getValue().equals(email))
+		return emailAddress;
+	}
+	return (!StringUtils.isEmpty(email)) ? new EmailAddress(party, type, visibleToPublic, visibleToStudents,
+		visibleToTeachers, visibleToEmployees, visibleToAlumni, isDefault, email) : null;
+    }
+
+    public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, boolean isDefault) {
+	for (EmailAddress emailAddress : party.getEmailAddresses()) {
+	    if (emailAddress.getValue().equals(email))
+		return emailAddress;
+	}
+	return (!StringUtils.isEmpty(email)) ? new EmailAddress(party, type, isDefault, email) : null;
+    }
+
     protected EmailAddress() {
 	super();
     }
 
-    public EmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
+    protected EmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
 	this();
 	super.init(party, type, defaultContact);
 	checkParameters(value);
 	super.setValue(value);
     }
 
-    public EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
+    protected EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
 	    final boolean visibleToAlumni, final boolean defaultContact, final String value) {
 	this();

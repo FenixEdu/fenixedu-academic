@@ -121,8 +121,8 @@ public class ReadStudentExternalInformation extends FenixService {
 			    if (enrolment instanceof OptionalEnrolment) {
 				addCurricularCourse(info.getDegree(), enrolment.getCurricularCourse(), cycleCurriculumGroup);
 			    } else {
-				addCurricularCourse(info.getDegree(), ((OptionalEnrolment) enrolment).getOptionalCurricularCourse(),
-					cycleCurriculumGroup);
+				addCurricularCourse(info.getDegree(), ((OptionalEnrolment) enrolment)
+					.getOptionalCurricularCourse(), cycleCurriculumGroup);
 			    }
 			} else {
 			    addCurricularCourse(info.getDegree(), curriculumLine.getCurricularCourse(), cycleCurriculumGroup);
@@ -220,7 +220,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	    CurricularCourse curricularCourse, CycleCurriculumGroup cycleCurriculumGroup) {
 	if (!curricularCourse.isOptional()) {
 	    final InfoExternalCurricularCourseInfo infoExternalCurricularCourseInfo = InfoExternalCurricularCourseInfo
-			.newFromDomain(curricularCourse);
+		    .newFromDomain(curricularCourse);
 	    infoExternalCurricularCourseInfo.setName("" + curricularCourse.getIdInternal() + " " + curricularCourse.getName());
 	    if (cycleCurriculumGroup.getCycleType() == CycleType.SECOND_CYCLE
 		    && cycleCurriculumGroup.getStudentCurricularPlan().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
@@ -606,7 +606,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 	info.setAddress(buildInfoExternalAdressInfo(person));
 	info.setBirthday(DateFormatUtil.format("yyyy-MM-dd", person.getDateOfBirth()));
-	info.setCelularPhone(person.getMobile());
+	info.setCelularPhone(person.getDefaultMobilePhoneNumber());
 	info.setCitizenship(builsExternalCitizenshipInfo(person));
 	StringBuilder emails = new StringBuilder();
 	Iterator<EmailAddress> iterator = person.getEmailAddresses().iterator();
@@ -621,7 +621,7 @@ public class ReadStudentExternalInformation extends FenixService {
 	info.setIdentification(buildExternalIdentificationInfo(person));
 	info.setName(person.getName());
 	info.setNationality(person.getCountry().getCode());
-	info.setPhone(person.getPhone());
+	info.setPhone(person.getDefaultPhoneNumber());
 	info.setSex(person.getGender().toString());
 	info.setUsername(person.getUsername());
 	return info;

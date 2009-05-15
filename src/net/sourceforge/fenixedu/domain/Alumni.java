@@ -305,10 +305,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public void addIfNotExistsEmail(String email) {
-	if (!hasEmailAddress(email)) {
-	    PartyContact.createEmailAddress(getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE, email);
-	}
-
+	EmailAddress.createEmailAddress(getStudent().getPerson(), email, PartyContactType.PERSONAL, false);
     }
 
     public boolean isRegistered() {

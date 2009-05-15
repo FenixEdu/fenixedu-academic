@@ -52,7 +52,6 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
-import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
@@ -265,10 +264,10 @@ public class Person extends Person_Base {
 	setIsPassInKerberos(Boolean.FALSE);
 
 	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-	createDefaultPhone(personBean.getPhone());
-	createDefaultMobilePhone(personBean.getMobile());
-	createDefaultWebAddress(personBean.getWebAddress());
-	createDefaultEmailAddress(personBean.getEmail());
+	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
+	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
+	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, true);
+	WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, true);
     }
 
     private Person(final String name, final Gender gender, final PhysicalAddressData data, final String phone,
@@ -282,10 +281,10 @@ public class Person extends Person_Base {
 	setIdentification(documentIDNumber, documentType);
 
 	createDefaultPhysicalAddress(data);
-	createDefaultPhone(phone);
-	createDefaultMobilePhone(mobile);
-	createDefaultWebAddress(homepage);
-	createDefaultEmailAddress(email);
+	Phone.createPhone(this, phone, PartyContactType.PERSONAL, true);
+	MobilePhone.createMobilePhone(this, mobile, PartyContactType.PERSONAL, true);
+	EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
+	WebAddress.createWebAddress(this, homepage, PartyContactType.PERSONAL, true);
     }
 
     static public Person createExternalPerson(final String name, final Gender gender, final PhysicalAddressData data,
@@ -317,10 +316,10 @@ public class Person extends Person_Base {
     public Person edit(PersonBean personBean) {
 	setProperties(personBean);
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-	updateDefaultPhone(personBean.getPhone());
-	updateDefaultMobilePhone(personBean.getMobile());
-	updateDefaultWebAddress(personBean.getWebAddress());
-	updateDefaultEmailAddress(personBean.getEmail());
+	setDefaultPhoneNumber(personBean.getPhone());
+	setDefaultMobilePhoneNumber(personBean.getMobile());
+	setDefaultWebAddressUrl(personBean.getWebAddress());
+	setDefaultEmailAddressValue(personBean.getEmail());
 	return this;
     }
 
@@ -383,10 +382,10 @@ public class Person extends Person_Base {
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setName(name);
 	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
-	updateDefaultPhone(phone);
-	updateDefaultMobilePhone(mobile);
-	updateDefaultEmailAddress(email);
-	updateDefaultWebAddress(homepage);
+	setDefaultPhoneNumber(phone);
+	setDefaultMobilePhoneNumber(mobile);
+	setDefaultEmailAddressValue(email);
+	setDefaultWebAddressUrl(homepage);
     }
 
     public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
@@ -400,18 +399,11 @@ public class Person extends Person_Base {
     public void editPersonWithExternalData(PersonBean personBean) {
 	setProperties(personBean);
 	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-	if (!hasDefaultPhone()) {
-	    updateDefaultPhone(personBean.getPhone());
-	}
-	if (!hasDefaultMobilePhone()) {
-	    updateDefaultMobilePhone(personBean.getMobile());
-	}
-	if (!hasDefaultWebAddress()) {
-	    updateDefaultWebAddress(personBean.getWebAddress());
-	}
-	if (!hasDefaultEmailAddress()) {
-	    updateDefaultEmailAddress(personBean.getEmail());
-	}
+
+	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, !hasDefaultPhone());
+	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, !hasDefaultMobilePhone());
+	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, !hasDefaultEmailAddress());
+	WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, !hasDefaultWebAddress());
     }
 
     @Deprecated
@@ -753,12 +745,12 @@ public class Person extends Person_Base {
 	setFiscalCode(infoPerson.getCodigoFiscal());
 
 	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
-	updateDefaultWebAddress(infoPerson.getEnderecoWeb());
-	updateDefaultPhone(infoPerson.getTelefone());
-	updateDefaultMobilePhone(infoPerson.getTelemovel());
-	updateDefaultEmailAddress(infoPerson.getEmail());
+	setDefaultWebAddressUrl(infoPerson.getEnderecoWeb());
+	setDefaultPhoneNumber(infoPerson.getTelefone());
+	setDefaultMobilePhoneNumber(infoPerson.getTelemovel());
+	setDefaultEmailAddressValue(infoPerson.getEmail());
 
-	setWorkPhone(infoPerson.getWorkPhone());
+	setWorkPhoneNumber(infoPerson.getWorkPhone());
 
 	setDistrictSubdivisionOfBirth(infoPerson.getConcelhoNaturalidade());
 	if (infoPerson.getDataEmissaoDocumentoIdentificacao() != null) {
@@ -831,26 +823,18 @@ public class Person extends Person_Base {
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
 
 	if (!hasAnyPartyContact(Phone.class)) {
-	    if (!StringUtils.isEmpty(infoPerson.getTelefone()))
-		new Phone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelefone());
-	    if (!StringUtils.isEmpty(infoPerson.getWorkPhone()))
-		new Phone(this, PartyContactType.WORK, Boolean.TRUE, infoPerson.getWorkPhone());
+	    Phone.createPhone(this, infoPerson.getTelefone(), PartyContactType.PERSONAL, true);
+	    Phone.createPhone(this, infoPerson.getWorkPhone(), PartyContactType.WORK, true);
 	}
-	if (!hasAnyPartyContact(MobilePhone.class) && !StringUtils.isEmpty(infoPerson.getTelemovel()))
-	    new MobilePhone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelemovel());
-	if (!hasAnyPartyContact(EmailAddress.class) && EmailSender.emailAddressFormatIsValid(infoPerson.getEmail()))
-	    new EmailAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEmail());
-	if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb()))
-	    new WebAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEnderecoWeb());
-    }
-
-    private String valueToUpdate(String actualValue, String newValue) {
-
-	if (actualValue == null || actualValue.length() == 0) {
-	    return newValue;
+	if (!hasAnyPartyContact(MobilePhone.class)) {
+	    MobilePhone.createMobilePhone(this, infoPerson.getTelemovel(), PartyContactType.PERSONAL, false);
 	}
-	return actualValue;
-
+	if (!hasAnyPartyContact(EmailAddress.class) && EmailSender.emailAddressFormatIsValid(infoPerson.getEmail())) {
+	    EmailAddress.createEmailAddress(this, infoPerson.getEmail(), PartyContactType.PERSONAL, false);
+	}
+	if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb())) {
+	    WebAddress.createWebAddress(this, infoPerson.getEnderecoWeb(), PartyContactType.PERSONAL, false);
+	}
     }
 
     private String valueToUpdateIfNewNotNull(String actualValue, String newValue) {
@@ -2535,65 +2519,6 @@ public class Person extends Person_Base {
     public String getMostImportantAlias() {
 	final Login login = getLoginIdentification();
 	return (login != null) ? login.getMostImportantAlias() : "";
-    }
-
-    // Currently, a Person can only have one WorkPhone (so use get(0) -
-    // after
-    // interface updates remove these methods)
-    public Phone getPersonWorkPhone() {
-	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
-	// actually exists only one
-	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0);
-    }
-
-    @Deprecated
-    public String getWorkPhone() {
-	final Phone workPhone = getPersonWorkPhone();
-	return workPhone != null ? workPhone.getNumber() : null;
-    }
-
-    @Deprecated
-    public void setWorkPhone(String workPhone) {
-	final Phone phone = getPersonWorkPhone();
-	if (phone == null) {
-	    if (!StringUtils.isEmpty(workPhone)) {
-		PartyContact.createPhone(this, PartyContactType.WORK, true, false, workPhone);
-	    }
-	} else {
-	    phone.setNumber(workPhone);
-	}
-    }
-
-    /**
-     * @use getInstitutionalOrDefaultEmailAddress()
-     */
-    @Override
-    @Deprecated
-    public String getEmail() {
-	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
-    }
-
-    public String getInstitutionalEmail() {
-	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
-	return institutionalEmailAddress != null ? institutionalEmailAddress.getValue() : null;
-    }
-
-    public void updateInstitutionalEmail(final String institutionalEmailString) {
-	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
-	if (institutionalEmailAddress == null) {
-	    PartyContact.createInstitutionalEmailAddress(this, institutionalEmailString);
-	} else {
-	    institutionalEmailAddress.setValue(institutionalEmailString);
-	}
-    }
-
-    public Boolean getHasInstitutionalEmail() {
-	return Boolean.valueOf(hasInstitutionalEmail());
-    }
-
-    public boolean hasInstitutionalEmail() {
-	final String institutionalEmail = getInstitutionalEmail();
-	return institutionalEmail != null && institutionalEmail.length() > 0;
     }
 
     public static Collection<Person> findPerson(final String name) {

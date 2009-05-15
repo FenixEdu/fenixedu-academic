@@ -25,22 +25,42 @@ public class WebAddress extends WebAddress_Base {
 	}
     };
 
+    public static WebAddress createWebAddress(Party party, String url, PartyContactType type, Boolean isDefault,
+	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
+	    Boolean visibleToAlumni) {
+	for (WebAddress emailAddress : party.getWebAddresses()) {
+	    if (emailAddress.getUrl().equals(url))
+		return emailAddress;
+	}
+	return (!StringUtils.isEmpty(url)) ? new WebAddress(party, type, visibleToPublic, visibleToStudents, visibleToTeachers,
+		visibleToEmployees, visibleToAlumni, isDefault, url) : null;
+    }
+
+    public static WebAddress createWebAddress(Party party, String url, PartyContactType type, boolean isDefault) {
+	for (WebAddress webAddress : party.getWebAddresses()) {
+	    if (webAddress.getUrl().equals(url))
+		return webAddress;
+	}
+	return (!StringUtils.isEmpty(url)) ? new WebAddress(party, type, isDefault, url) : null;
+    }
+
     protected WebAddress() {
 	super();
     }
 
-    public WebAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String url) {
+    protected WebAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String url) {
 	this();
 	super.init(party, type, defaultContact);
 	checkParameters(url);
 	super.setUrl(url);
     }
 
-    public WebAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
+    protected WebAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
 	    final boolean visibleToAlumni, final boolean defaultContact, final String url) {
 	this();
-	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
+		defaultContact);
 	checkParameters(url);
 	super.setUrl(url);
     }

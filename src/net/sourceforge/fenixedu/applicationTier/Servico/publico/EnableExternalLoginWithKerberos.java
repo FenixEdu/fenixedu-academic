@@ -15,7 +15,7 @@ public class EnableExternalLoginWithKerberos extends FenixService {
 	if (person.getUser().getLoginRequest() != null) {
 	    // try {
 	    person.setGender(bean.getGender());
-	    person.setPhone(bean.getPhone());
+	    person.setDefaultPhoneNumber(bean.getPhone());
 	    person.setPassword(PasswordEncryptor.encryptPassword(bean.getPassword()));
 	    // Script.createUser(person.getIstUsername(),
 	    // bean.getPassword());

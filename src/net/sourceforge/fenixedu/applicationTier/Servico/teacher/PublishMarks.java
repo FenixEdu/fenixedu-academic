@@ -49,9 +49,10 @@ public class PublishMarks extends FenixService {
 		// update published mark
 		mark.setPublishedMark(mark.getMark());
 		if (sendSMS != null && sendSMS) {
-		    if (mark.getAttend().getRegistration().getPerson().getMobile() != null
-			    || mark.getAttend().getRegistration().getPerson().getMobile().length() == MOBILE_NUMBER_LENGHT) {
-			String StringDestinationNumber = mark.getAttend().getRegistration().getPerson().getMobile();
+		    if (mark.getAttend().getRegistration().getPerson().getDefaultMobilePhoneNumber() != null
+			    || mark.getAttend().getRegistration().getPerson().getDefaultMobilePhoneNumber().length() == MOBILE_NUMBER_LENGHT) {
+			String StringDestinationNumber = mark.getAttend().getRegistration().getPerson()
+				.getDefaultMobilePhoneNumber();
 
 			if (StringDestinationNumber.startsWith(TMN_NETWORK_PREFIX)
 				|| StringDestinationNumber.startsWith(VODAFONE_NETWORK_PREFIX)

@@ -912,7 +912,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getUnitWebAddress() throws FenixFilterException, FenixServiceException {
 	if (this.unitWebAddress == null && this.getChooseUnit() != null) {
-	    this.unitWebAddress = this.getChooseUnit().getWebAddress();
+	    this.unitWebAddress = this.getChooseUnit().getDefaultWebAddressUrl();
 	}
 	return unitWebAddress;
     }

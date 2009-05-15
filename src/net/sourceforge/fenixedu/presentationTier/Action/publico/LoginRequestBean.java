@@ -111,7 +111,7 @@ public class LoginRequestBean implements Serializable {
 	this.gender = null;
 	this.username = person.getUser().readUserLoginIdentification().getUsername();
 	this.password = null;
-	this.phone = person.getPhone();
+	this.phone = person.getDefaultPhoneNumber();
     }
 
     public String getPhone() {

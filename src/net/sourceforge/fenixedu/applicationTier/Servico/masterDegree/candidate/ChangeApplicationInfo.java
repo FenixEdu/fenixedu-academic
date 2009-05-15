@@ -61,9 +61,9 @@ public class ChangeApplicationInfo extends FenixService {
 	    person.edit(infoPersonEditor, country);
 
 	} else {
-	    userView.getPerson().updateDefaultMobilePhone(infoPersonEditor.getTelemovel());
-	    userView.getPerson().updateDefaultWebAddress(infoPersonEditor.getEnderecoWeb());
-	    userView.getPerson().updateDefaultEmailAddress(infoPersonEditor.getEmail());
+	    userView.getPerson().setDefaultMobilePhoneNumber(infoPersonEditor.getTelemovel());
+	    userView.getPerson().setDefaultWebAddressUrl(infoPersonEditor.getEnderecoWeb());
+	    userView.getPerson().setDefaultEmailAddressValue(infoPersonEditor.getEmail());
 	}
 
 	// Change Candidate Information

@@ -227,12 +227,12 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public void setEmail(String email) {
-	this.getPerson().updateDefaultEmailAddress(email);
+	this.getPerson().setDefaultEmailAddressValue(email);
     }
 
     @Override
     public void setTelephoneContact(String telephoneContact) {
-	this.getPerson().updateDefaultPhone(telephoneContact);	
+	this.getPerson().setDefaultPhoneNumber(telephoneContact);	
     }
     
     @Override

@@ -25,18 +25,37 @@ public class MobilePhone extends MobilePhone_Base {
 	}
     };
 
+    public static MobilePhone createMobilePhone(Party party, String number, PartyContactType type, Boolean isDefault,
+	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
+	    Boolean visibleToAlumni) {
+	for (MobilePhone phone : party.getMobilePhones()) {
+	    if (phone.getNumber().equals(number))
+		return phone;
+	}
+	return (!StringUtils.isEmpty(number)) ? new MobilePhone(party, type, visibleToPublic, visibleToStudents,
+		visibleToTeachers, visibleToEmployees, visibleToAlumni, isDefault, number) : null;
+    }
+
+    public static MobilePhone createMobilePhone(Party party, String number, PartyContactType type, boolean isDefault) {
+	for (MobilePhone phone : party.getMobilePhones()) {
+	    if (phone.getNumber().equals(number))
+		return phone;
+	}
+	return (!StringUtils.isEmpty(number)) ? new MobilePhone(party, type, isDefault, number) : null;
+    }
+
     protected MobilePhone() {
 	super();
     }
 
-    public MobilePhone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
+    protected MobilePhone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
 	this();
 	super.init(party, type, defaultContact);
 	checkParameters(number);
 	super.setNumber(number);
     }
 
-    public MobilePhone(final Party party, final PartyContactType type, final boolean visibleToPublic,
+    protected MobilePhone(final Party party, final PartyContactType type, final boolean visibleToPublic,
 	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
 	    final boolean visibleToAlumni, final boolean defaultContact, final String number) {
 	this();

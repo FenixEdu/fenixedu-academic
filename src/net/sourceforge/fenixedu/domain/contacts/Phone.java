@@ -25,20 +25,39 @@ public class Phone extends Phone_Base {
 	}
     };
 
+    public static Phone createPhone(Party party, String number, PartyContactType type, Boolean isDefault,
+	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
+	    Boolean visibleToAlumni) {
+	for (Phone phone : party.getPhones()) {
+	    if (phone.getNumber().equals(number))
+		return phone;
+	}
+	return (!StringUtils.isEmpty(number)) ? new Phone(party, type, visibleToPublic, visibleToStudents, visibleToTeachers,
+		visibleToEmployees, visibleToAlumni, isDefault, number) : null;
+    }
+
+    public static Phone createPhone(Party party, String number, PartyContactType type, boolean isDefault) {
+	for (Phone phone : party.getPhones()) {
+	    if (phone.getNumber().equals(number))
+		return phone;
+	}
+	return (!StringUtils.isEmpty(number)) ? new Phone(party, type, isDefault, number) : null;
+    }
+
     protected Phone() {
 	super();
     }
 
-    public Phone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
+    protected Phone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
 	this();
 	super.init(party, type, defaultContact);
 	checkParameters(number);
 	super.setNumber(number);
     }
 
-    public Phone(final Party party, final PartyContactType type, final boolean visibleToPublic, final boolean visibleToStudents,
-	    final boolean visibleToTeachers, final boolean visibleToEmployees, final boolean visibleToAlumni,
-	    final boolean defaultContact, final String number) {
+    protected Phone(final Party party, final PartyContactType type, final boolean visibleToPublic,
+	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
+	    final boolean visibleToAlumni, final boolean defaultContact, final String number) {
 	this();
 	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, visibleToAlumni,
 		defaultContact);

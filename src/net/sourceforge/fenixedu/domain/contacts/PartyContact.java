@@ -214,43 +214,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    static public WebAddress createDefaultPersonalWebAddress(final Party party, final String url) {
-	return new WebAddress(party, PartyContactType.PERSONAL, true, url);
-    }
-
     static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
 	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, null);
     }
 
     static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data) {
 	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, data);
-    }
-
-    static public Phone createDefaultPersonalPhone(final Party party, final String number) {
-	return new Phone(party, PartyContactType.PERSONAL, true, number);
-    }
-
-    @Deprecated
-    static public Phone createPhone(final Party party, final PartyContactType type, boolean visible, boolean defaultContact,
-	    final String number) {
-	return new Phone(party, type, defaultContact, number);
-    }
-
-    @Deprecated
-    static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean defaultContact,
-	    final String value) {
-	return new EmailAddress(party, type, defaultContact, value);
-    }
-
-    static public MobilePhone createDefaultPersonalMobilePhone(final Party party, final String number) {
-	return new MobilePhone(party, PartyContactType.PERSONAL, true, number);
-    }
-
-    static public EmailAddress createDefaultPersonalEmailAddress(final Party party, final String value) {
-	return new EmailAddress(party, PartyContactType.PERSONAL, true, value);
-    }
-
-    static public EmailAddress createInstitutionalEmailAddress(final Party party, final String value) {
-	return new EmailAddress(party, PartyContactType.INSTITUTIONAL, false, value);
     }
 }

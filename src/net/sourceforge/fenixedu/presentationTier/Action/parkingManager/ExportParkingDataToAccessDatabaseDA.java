@@ -132,7 +132,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	row.setCell(vehicle2PlateNumber); // licenseAlt
 
 	row.setCell(person != null && person.getWorkPhone() != null ? person.getWorkPhone() : ""); // registration
-	row.setCell(person != null && person.getMobile() != null ? person.getMobile() : ""); // registrationAlt
+	row.setCell(person != null && person.getDefaultMobilePhoneNumber() != null ? person.getDefaultMobilePhoneNumber() : ""); // registrationAlt
 	row.setCell((String) accessTableRow.get("ClientRef"));
 	row.setCell((String) accessTableRow.get("Comment"));
 	row.setCell(((Integer) accessTableRow.get("Price")).toString());
@@ -201,7 +201,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	row.setCell(vehicle1PlateNumber); // license
 	row.setCell(vehicle2PlateNumber); // licenseAlt
 	row.setCell(person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : ""); // registration
-	row.setCell(person != null && person.getMobile() != null ? getString(person.getMobile(), 19) : ""); // registrationAlt
+	row.setCell(person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
+		.getDefaultMobilePhoneNumber(), 19) : ""); // registrationAlt
 	row.setCell(""); // clientRef
 	row.setCell(""); // comment
 	row.setCell("0"); // price
@@ -423,7 +424,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	newRow[12] = vehicle1PlateNumber;
 	newRow[13] = vehicle2PlateNumber;
 	newRow[14] = person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : "";
-	newRow[15] = person != null && person.getMobile() != null ? getString(person.getMobile(), 19) : "";
+	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
+		.getDefaultMobilePhoneNumber(), 19) : "";
 	newRow[16] = accessTableRow.get("ClientRef");
 	newRow[17] = accessTableRow.get("Comment");
 	newRow[18] = accessTableRow.get("Price");
@@ -474,7 +476,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	newRow[12] = vehicle1PlateNumber;
 	newRow[13] = vehicle2PlateNumber;
 	newRow[14] = person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : "";
-	newRow[15] = person != null && person.getMobile() != null ? getString(person.getMobile(), 19) : "";
+	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
+		.getDefaultMobilePhoneNumber(), 19) : "";
 	newRow[16] = "";
 	newRow[17] = "";
 	newRow[18] = 0;

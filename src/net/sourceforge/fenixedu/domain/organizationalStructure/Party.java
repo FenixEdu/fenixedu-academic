@@ -761,163 +761,182 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     /*
      * WebAddress
      */
-    public WebAddress getDefaultWebAddress() {
-	return (WebAddress) getDefaultPartyContact(WebAddress.class);
+    public List<WebAddress> getWebAddresses() {
+	return (List<WebAddress>) getPartyContacts(WebAddress.class);
     }
 
     public boolean hasDefaultWebAddress() {
 	return hasDefaultPartyContact(WebAddress.class);
     }
 
-    public List<WebAddress> getWebAddresses() {
-	return (List<WebAddress>) getPartyContacts(WebAddress.class);
+    public WebAddress getDefaultWebAddress() {
+	return (WebAddress) getDefaultPartyContact(WebAddress.class);
     }
 
-    @Deprecated
-    private WebAddress getOrCreateDefaultWebAddress() {
-	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this, null);
+    public String getDefaultWebAddressUrl() {
+	return hasDefaultWebAddress() ? getDefaultWebAddress().getUrl() : StringUtils.EMPTY;
     }
 
-    protected WebAddress createDefaultWebAddress(final String url) {
-	return (!StringUtils.isEmpty(url)) ? PartyContact.createDefaultPersonalWebAddress(this, url) : null;
-    }
-
-    public void updateDefaultWebAddress(final String url) {
+    public void setDefaultWebAddressUrl(final String url) {
 	if (hasDefaultWebAddress()) {
 	    getDefaultWebAddress().edit(url);
 	} else {
-	    createDefaultWebAddress(url);
+	    WebAddress.createWebAddress(this, url, PartyContactType.PERSONAL, true);
 	}
     }
 
+    /**
+     * @use {@link #getDefaultWebAddressUrl()}
+     */
     @Deprecated
     public String getWebAddress() {
-	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress.getUrl() : StringUtils.EMPTY;
+	return getDefaultWebAddressUrl();
     }
 
+    /**
+     * @use {@link #setDefaultWebAddressUrl(String)}
+     */
     @Deprecated
     public void setWebAddress(String webAddress) {
-	updateDefaultWebAddress(webAddress);
+	setDefaultWebAddressUrl(webAddress);
     }
 
     /*
      * Phone
      */
-    public Phone getDefaultPhone() {
-	return (Phone) getDefaultPartyContact(Phone.class);
+    public List<Phone> getPhones() {
+	return (List<Phone>) getPartyContacts(Phone.class);
     }
 
     public boolean hasDefaultPhone() {
 	return hasDefaultPartyContact(Phone.class);
     }
 
-    public List<Phone> getPhones() {
-	return (List<Phone>) getPartyContacts(Phone.class);
+    public Phone getDefaultPhone() {
+	return (Phone) getDefaultPartyContact(Phone.class);
     }
 
-    @Deprecated
-    private Phone getOrCreateDefaultPhone() {
-	final Phone phone = getDefaultPhone();
-	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this, null);
+    public String getDefaultPhoneNumber() {
+	return hasDefaultPhone() ? getDefaultPhone().getNumber() : StringUtils.EMPTY;
     }
 
-    protected Phone createDefaultPhone(final String number) {
-	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalPhone(this, number) : null;
-    }
-
-    public void updateDefaultPhone(final String number) {
+    public void setDefaultPhoneNumber(final String number) {
 	if (hasDefaultPhone()) {
 	    getDefaultPhone().edit(number);
 	} else {
-	    createDefaultPhone(number);
+	    Phone.createPhone(this, number, PartyContactType.PERSONAL, true);
 	}
     }
 
+    /**
+     * This should not be used because assumes that there is only one work
+     * phone.
+     */
+    @Deprecated
+    public void setWorkPhoneNumber(final String number) {
+	if (hasAnyPartyContact(Phone.class, PartyContactType.WORK)) {
+	    ((Phone) getPartyContacts(Phone.class, PartyContactType.WORK).get(0)).edit(number);
+	} else {
+	    Phone.createPhone(this, number, PartyContactType.WORK, false);
+	}
+    }
+
+    /**
+     * @use {@link #getDefaultPhoneNumber()}
+     */
     @Deprecated
     public String getPhone() {
-	final Phone phone = getDefaultPhone();
-	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
+	return getDefaultPhoneNumber();
+    }
+
+    /**
+     * @use {@link #setDefaultPhoneNumber(String)}
+     */
+    @Deprecated
+    public void setPhone(String phone) {
+	setDefaultPhoneNumber(phone);
+    }
+
+    // Currently, a Person can only have one WorkPhone (so use get(0) -
+    // after
+    // interface updates remove these methods)
+    public Phone getPersonWorkPhone() {
+	final List<Phone> partyContacts = (List<Phone>) getPartyContacts(Phone.class, PartyContactType.WORK);
+	// actually exists only one
+	return partyContacts.isEmpty() ? null : (Phone) partyContacts.get(0);
     }
 
     @Deprecated
-    public void setPhone(String phone) {
-	updateDefaultPhone(phone);
+    public String getWorkPhone() {
+	final Phone workPhone = getPersonWorkPhone();
+	return workPhone != null ? workPhone.getNumber() : null;
+    }
+
+    @Deprecated
+    public void setWorkPhone(String workPhone) {
+	setWorkPhoneNumber(workPhone);
     }
 
     /*
      * MobilePhone
      */
-    public MobilePhone getDefaultMobilePhone() {
-	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
+    public List<MobilePhone> getMobilePhones() {
+	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
     }
 
     public boolean hasDefaultMobilePhone() {
 	return hasDefaultPartyContact(MobilePhone.class);
     }
 
-    public List<MobilePhone> getMobilePhones() {
-	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
+    public MobilePhone getDefaultMobilePhone() {
+	return (MobilePhone) getDefaultPartyContact(MobilePhone.class);
     }
 
-    @Deprecated
-    private MobilePhone getOrCreateDefaultMobilePhone() {
-	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this, null);
+    public String getDefaultMobilePhoneNumber() {
+	return hasDefaultMobilePhone() ? getDefaultMobilePhone().getNumber() : StringUtils.EMPTY;
     }
 
-    protected MobilePhone createDefaultMobilePhone(final String number) {
-	return (!StringUtils.isEmpty(number)) ? PartyContact.createDefaultPersonalMobilePhone(this, number) : null;
-    }
-
-    public void updateDefaultMobilePhone(final String number) {
+    public void setDefaultMobilePhoneNumber(final String number) {
 	if (hasDefaultMobilePhone()) {
 	    getDefaultMobilePhone().edit(number);
 	} else {
-	    createDefaultMobilePhone(number);
+	    MobilePhone.createMobilePhone(this, number, PartyContactType.PERSONAL, true);
 	}
     }
 
+    /**
+     * @use {@link getDefaultMobilePhoneNumber}
+     */
     @Deprecated
     public String getMobile() {
-	final MobilePhone phone = getDefaultMobilePhone();
-	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
+	return getDefaultMobilePhoneNumber();
     }
 
+    /**
+     * @use {@link setDefaultMobilePhoneNumber}
+     */
     @Deprecated
     public void setMobile(String mobile) {
-	updateDefaultMobilePhone(mobile);
+	setDefaultMobilePhoneNumber(mobile);
     }
 
     /*
      * EmailAddress
      */
+    public List<EmailAddress> getEmailAddresses() {
+	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
+    }
 
     public boolean hasDefaultEmailAddress() {
 	return hasDefaultPartyContact(EmailAddress.class);
     }
 
-    protected EmailAddress createDefaultEmailAddress(final String value) {
-	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this, value) : null;
-    }
-
-    @Deprecated
-    private EmailAddress getOrCreateDefaultEmailAddress() {
-	final EmailAddress emailAddress = getDefaultEmailAddress();
-	return emailAddress != null ? emailAddress : PartyContact.createDefaultPersonalEmailAddress(this, null);
-    }
-
-    public void updateDefaultEmailAddress(final String email) {
-	if (hasDefaultEmailAddress()) {
-	    getDefaultEmailAddress().edit(email);
-	} else {
-	    createDefaultEmailAddress(email);
-	}
-    }
-
     public EmailAddress getDefaultEmailAddress() {
 	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
+    }
+
+    public boolean hasInstitutionalEmailAddress() {
+	return hasInstitutionalPartyContact(EmailAddress.class);
     }
 
     public EmailAddress getInstitutionalEmailAddress() {
@@ -928,31 +947,49 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return hasInstitutionalEmailAddress() ? getInstitutionalEmailAddress() : getDefaultEmailAddress();
     }
 
+    public String getDefaultEmailAddressValue() {
+	return hasDefaultEmailAddress() ? getDefaultEmailAddress().getValue() : StringUtils.EMPTY;
+    }
+
+    public void setDefaultEmailAddressValue(final String email) {
+	if (hasDefaultEmailAddress()) {
+	    getDefaultEmailAddress().setValue(email);
+	} else {
+	    EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
+	}
+    }
+
+    public String getInstitutionalEmailAddressValue() {
+	return hasInstitutionalEmailAddress() ? getInstitutionalEmailAddress().getValue() : StringUtils.EMPTY;
+    }
+
+    public void setInstitutionalEmailAddressValue(final String email) {
+	if (hasInstitutionalEmailAddress()) {
+	    getInstitutionalEmailAddress().setValue(email);
+	} else {
+	    EmailAddress.createEmailAddress(this, email, PartyContactType.INSTITUTIONAL, false);
+	}
+    }
+
     public String getInstitutionalOrDefaultEmailAddressValue() {
 	EmailAddress email = getInstitutionalOrDefaultEmailAddress();
-	return (email != null ? email.getValue() : "");
-    }
-
-    public boolean hasInstitutionalEmailAddress() {
-	return hasInstitutionalPartyContact(EmailAddress.class);
-    }
-
-    public List<EmailAddress> getEmailAddresses() {
-	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
+	return (email != null ? email.getValue() : StringUtils.EMPTY);
     }
 
     /**
-     * @deprecated Use {@link getDefaultEmailAddress}
+     * @use {@link #getDefaultEmailAddressValue()}
      */
     @Deprecated
     public String getEmail() {
-	final EmailAddress emailAddress = getDefaultEmailAddress();
-	return emailAddress != null ? emailAddress.getValue() : StringUtils.EMPTY;
+	return getDefaultEmailAddressValue();
     }
 
+    /**
+     * @use {@link #setDefaultEmailAddressValue(String)}
+     */
     @Deprecated
     public void setEmail(String email) {
-	updateDefaultEmailAddress(email);
+	setDefaultEmailAddressValue(email);
     }
 
     /*

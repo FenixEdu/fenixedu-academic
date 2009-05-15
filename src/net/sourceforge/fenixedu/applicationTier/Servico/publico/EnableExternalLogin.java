@@ -14,7 +14,7 @@ public class EnableExternalLogin extends FenixService {
 	Person person = bean.getPerson();
 	if (person.getUser().getLoginRequest() != null) {
 	    person.setGender(bean.getGender());
-	    person.setPhone(bean.getPhone());
+	    person.setDefaultPhoneNumber(bean.getPhone());
 	    person.setPassword(PasswordEncryptor.encryptPassword(bean.getPassword()));
 	    person.getUser().getLoginRequest().delete();
 	} else {
