@@ -159,7 +159,7 @@ public class LibraryCardSearch implements Serializable {
 	    case BOLONHA_INTEGRATED_MASTER_DEGREE:
 		getPersonsFromDegreeType(resultSet, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 		break;
-	    case BOLONHA_PHD_PROGRAM:
+	    case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
 		getPersonsFromDegreeType(resultSet, DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
 		break;
 	    case BOLONHA_SPECIALIZATION_DEGREE:

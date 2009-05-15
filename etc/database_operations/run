@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Add Fenix System Sender" addSystemSender.sql
 execute "Rename the tables of the transactional system" rename-system-tables.sql
+execute "Update PartyClassification" updatePartyClassification.sql

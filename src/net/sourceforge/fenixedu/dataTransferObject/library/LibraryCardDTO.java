@@ -408,7 +408,7 @@ public class LibraryCardDTO implements Serializable {
 		|| partyClassification.equals(PartyClassification.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
 		|| partyClassification.equals(PartyClassification.BOLONHA_MASTER_DEGREE)
 		|| partyClassification.equals(PartyClassification.BOLONHA_INTEGRATED_MASTER_DEGREE)
-		|| partyClassification.equals(PartyClassification.BOLONHA_PHD_PROGRAM)
+		|| partyClassification.equals(PartyClassification.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)
 		|| partyClassification.equals(PartyClassification.BOLONHA_DEGREE)) {
 	    Student student = getPerson().getStudent();
 	    if (student != null) {
