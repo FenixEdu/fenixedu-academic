@@ -36,6 +36,8 @@ public class AnnouncementDTO {
     private String place;
     private String visible;
     private String id;
+    private String photoUrl;
+    private String campus;
 
     public AnnouncementDTO() {
     }
@@ -62,6 +64,8 @@ public class AnnouncementDTO {
 
 	setVisible(announcement.getVisible().toString());
 	setId(announcement.getIdInternal().toString());
+	setPhotoUrl(announcement.getPhotoUrl());
+	setCampus(announcement.getCampusCode());
     }
 
     private String getFormattedDate(final DateTime dateTime) {
@@ -194,5 +198,21 @@ public class AnnouncementDTO {
 
     public void setVisible(String visible) {
 	this.visible = visible;
+    }
+    
+    public String getPhotoUrl() {
+	return this.photoUrl;
+    }
+    
+    public void setPhotoUrl(String value)  {
+	this.photoUrl = value;
+    }
+    
+    public String getCampus() {
+	return this.campus;
+    }
+    
+    public void setCampus(String value) {
+	this.campus = value;
     }
 }

@@ -261,4 +261,15 @@ public class Announcement extends Announcement_Base {
 	    this.addCategories(category);
 	}
     }
+    
+    private static final String CAMPUS_ALAMEDA = "ALAMEDA";
+    private static final String CAMPUS_TAGUSPARK = "TAGUSPARK";
+    private static final String CAMPUS_EXTERNAL = "EXTERNAL";
+    
+    public String getCampusCode() {
+	if(this.getCampus() != null && this.getCampus().isCampusAlameda()) return CAMPUS_ALAMEDA;
+	else if(this.getCampus() != null && this.getCampus().isCampusTaguspark()) return CAMPUS_TAGUSPARK;
+	
+	return CAMPUS_EXTERNAL;
+    }
 }
