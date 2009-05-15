@@ -432,17 +432,17 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     static public class CurriculumModulePredicateByExecutionSemester extends Predicate<CurriculumModule> {
 
-	private final ExecutionSemester executionYear;
+	private final ExecutionSemester executionSemester;
 
-	public CurriculumModulePredicateByExecutionSemester(final ExecutionSemester executionYear) {
-	    this.executionYear = executionYear;
+	public CurriculumModulePredicateByExecutionSemester(final ExecutionSemester executionSemester) {
+	    this.executionSemester = executionSemester;
 	}
 
 	@Override
 	public boolean eval(final CurriculumModule curriculumModule) {
 	    if (curriculumModule.isCurriculumLine()) {
 		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
-		if (curriculumLine.getExecutionPeriod().equals(executionYear)) {
+		if (curriculumLine.getExecutionPeriod().equals(executionSemester)) {
 		    return true;
 		}
 	    }
