@@ -22,7 +22,7 @@
 			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
-		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 		<p class="mvert025">
 			<b><bean:message key="label.masterDegree.coordinator.executionYear"/></b>
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
@@ -56,6 +56,7 @@
 		<br />
 		<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.changeEndDates.allTutorships.help" /></p>
 		<fr:form action="/changeTutorship.do?method=changeAllTutorshipsEndDates">
+			<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 			<fr:edit id="allTutorshipsByEntryYearBeans" name="allTutorshipsByEntryYearBeans" visible="false"/>
 			<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" schema="coordinator.tutor.endDate">
 				<fr:destination name="invalid" path="<%= "/changeTutorship.do?method=prepareChangeTutorshipsEndDates&" +  parameters %>" />
@@ -84,6 +85,7 @@
 				<p><b><bean:message key="label.coordinator.tutor.changeEndDates.activeTutorships" /></b></p>
 				<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.changeEndDates.activeTutorships.help" /></p>
 				<fr:form action="/changeTutorship.do?method=changeTutorshipsEndDates">
+					<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 					<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" visible="false"/>
 					<logic:iterate id="changeActiveTutorshipByEntryYearBean" name="activeTutorshipsByEntryYearBeans" indexId="i">
 						<ul>
@@ -117,6 +119,7 @@
 				<p class="mtop3"><b><bean:message key="label.coordinator.tutor.changeEndDates.pastTutorships" /></b></p>
 				<p class="color888 mvert05"><bean:message key="label.coordinator.tutor.changeEndDates.pastTutorships.help" /></p>
 				<fr:form action="/changeTutorship.do?method=changeTutorshipsEndDates">
+					<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 					<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" visible="false"/>
 					<logic:iterate id="changePastTutorshipByEntryYearBean" name="pastTutorshipsByEntryYearBeans" indexId="i">
 						<ul>

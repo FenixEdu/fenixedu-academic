@@ -18,7 +18,7 @@ if (degreeCurricularPlanID == null) {
 %>
 
 <logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" type="InfoExecutionDegree" />
 	<br/>
 	<ul>
 		<li class="navheader">

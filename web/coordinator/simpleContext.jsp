@@ -9,7 +9,7 @@
 	<tr>
 		<td align="center" class="infoselected">
 				<logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
-					<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+					<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 					<p>
 						<strong><bean:message key="label.masterDegree.coordinator.selectedDegree"/></strong> 
 						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />

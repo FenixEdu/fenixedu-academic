@@ -10,11 +10,11 @@
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
-   		<bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" scope="session"/>  		
+   		<bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		
-   		<bean:define id="days" name="<%= PresentationConstants.MONTH_DAYS_KEY %>" scope="session"/>
-   		<bean:define id="months" name="<%= PresentationConstants.MONTH_LIST_KEY %>" scope="session"/>
-   		<bean:define id="years" name="<%= PresentationConstants.YEARS_KEY %>" scope="session"/>
+   		<bean:define id="days" name="<%= PresentationConstants.MONTH_DAYS_KEY %>"/>
+   		<bean:define id="months" name="<%= PresentationConstants.MONTH_LIST_KEY %>"/>
+   		<bean:define id="years" name="<%= PresentationConstants.YEARS_KEY %>"/>
         <bean:define id="number" name="infoGuide" property="number" />
         <bean:define id="year" name="infoGuide" property="year" />
         <bean:define id="version" name="infoGuide" property="version" />

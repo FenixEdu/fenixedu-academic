@@ -29,6 +29,7 @@
 <p class="color888 mvert05"><bean:message key="message.coordinator.tutor.chooseTutor.help" bundle="APPLICATION_RESOURCES" /></p>
 <logic:present name="tutorshipManagementBean">
 	<fr:form action="/tutorManagement.do?method=prepare&forwardTo=readTutor">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<fr:edit id="choosetutorshipManagementBean" name="tutorshipManagementBean" schema="coordinator.tutor.tutorNumber">
 			<fr:destination name="invalid" path="<%= "/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutor&" +  parameters %>"/>
 			<fr:layout name="tabular">

@@ -7,7 +7,7 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<bean:define id="coordinatedInfoDegreeCurricularPlans" name="master_degree_list" scope="session" />
+<bean:define id="coordinatedInfoDegreeCurricularPlans" name="master_degree_list" />
 <bean:define id="link">/chooseDegree.do?degreeCurricularPlanID=</bean:define>
 
 <h2><bean:message key="title.coordinator.main"/></h2>

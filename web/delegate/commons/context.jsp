@@ -10,7 +10,7 @@
 
 <logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
 
-	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 	<em>
 		<bean:message bundle="ENUMERATION_RESOURCES" key="<%=((InfoExecutionDegree)infoExecutionDegree).getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString()%>" />
 		<bean:message bundle="GLOBAL_RESOURCES" key="in"/>

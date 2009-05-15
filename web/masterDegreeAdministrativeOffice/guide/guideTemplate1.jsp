@@ -12,7 +12,7 @@
     </head>
 
     <body>
-     <bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" scope="session" />
+     <bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" />
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>
      <table width="100%" border="0" valign="top">

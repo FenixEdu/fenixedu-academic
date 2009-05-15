@@ -9,7 +9,7 @@
 <h2><bean:message key="label.action.contributors.visualize" /></h2>
 
     <table class="tstyle2 thlight thright">
-     <bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>" scope="session"/>
+     <bean:define id="contributor" name="<%= PresentationConstants.CONTRIBUTOR %>"/>
         <logic:present name="contributor">
           <!-- Contributor Number -->
           <tr>

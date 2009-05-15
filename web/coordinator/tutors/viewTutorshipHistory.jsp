@@ -23,7 +23,7 @@
 			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
-		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 		<p class="mvert025">
 			<b><bean:message key="label.masterDegree.coordinator.executionYear"/></b>
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />

@@ -15,7 +15,7 @@
 
 <p><bean:message key="text.coordinator.degreeSite.editOK"/><br />
 <logic:present name="<%= PresentationConstants.MASTER_DEGREE %>">
-	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 	
 	<app:defineContentPath id="contextPathForUrl" name="infoExecutionDegree" property="infoDegreeCurricularPlan.degreeCurricularPlan.degree.site" toScope="request"/>
 	<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>

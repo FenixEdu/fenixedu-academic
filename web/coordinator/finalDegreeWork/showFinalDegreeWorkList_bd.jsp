@@ -305,13 +305,13 @@
 </html:form>
 
 <p>
-	<html:link page="/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	<html:link page="<%= "/finalDegreeWorkProposal.do?method=proposalsXLS&amp;page=0" + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" paramId="executionDegreeOID" paramName="executionDegreeOID">
 		Listagem em excel
 	</html:link>
 </p>
 
 <p>
-	<html:link page="/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0" paramId="executionDegreeOID" paramName="executionDegreeOID">
+	<html:link page="<%= "/finalDegreeWorkProposal.do?method=detailedProposalList&amp;page=0"  + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" paramId="executionDegreeOID" paramName="executionDegreeOID">
 		Listagem para imprimir
 	</html:link>
 </p>

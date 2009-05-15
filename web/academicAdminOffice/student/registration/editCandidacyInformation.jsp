@@ -8,7 +8,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message  key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" scope="session" ></bean:define>
+<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" ></bean:define>
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
 	<br/>

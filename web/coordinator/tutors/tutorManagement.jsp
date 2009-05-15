@@ -22,7 +22,7 @@
 			(<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />)
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
-		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 		<p class="mvert025">
 			<bean:message key="label.masterDegree.coordinator.executionYear"/> 
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
@@ -68,6 +68,7 @@
 
 <p class="color888 mvert05"><bean:message key="message.coordinator.tutor.associateOneStudent.help" bundle="APPLICATION_RESOURCES" /></p>
 <fr:form action="/tutorshipManagement.do?method=insertTutorshipWithOneStudent">
+	<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 	<fr:edit id="associateOneStudentBean" name="tutorshipManagementBean" schema="coordinator.tutor.addTutorship">
 		<fr:destination name="invalid" path="<%= "/tutorManagement.do?method=prepare&forwardTo=readTutor&" +  parameters %>" />
 		<fr:layout name="tabular">
@@ -105,6 +106,7 @@
 
 <logic:present name="tutorshipManagementBeansByEntryYear">
 	<fr:form action="/tutorshipManagement.do?method=manageTutorships">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" visible="false"/>
 		<logic:iterate id="manageTutorshipBean" name="tutorshipManagementBeansByEntryYear" indexId="i">
 			<bean:message key="label.studentsEntryYear" bundle="APPLICATION_RESOURCES" />&nbsp;

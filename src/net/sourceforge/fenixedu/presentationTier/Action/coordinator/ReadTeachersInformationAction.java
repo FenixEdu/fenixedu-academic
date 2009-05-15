@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -41,8 +42,7 @@ public class ReadTeachersInformationAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = UserView.getUser();
-
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
 	DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
 	Integer degreeCurricularPlanID = null;
 	if (request.getParameter("degreeCurricularPlanID") != null) {

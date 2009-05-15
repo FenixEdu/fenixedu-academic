@@ -14,6 +14,7 @@
 	</div>
 	
 	<fr:form action="/searchECAttends.do?method=search">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<fr:edit id="searchBean" name="searchBean" layout="search-execution-course-attends">
 			<fr:layout>
 				<fr:property name="searchTableClasses" value="tstyle4 mtop15 tdtop inobullet"/>

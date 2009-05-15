@@ -12,7 +12,7 @@
 
     <body>
     
-    <bean:define id="candidate" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />     
+    <bean:define id="candidate" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE %>" />     
     
     <table width="100%" height="100%" border="0">
     <tr height="30"><td>

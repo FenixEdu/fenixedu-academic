@@ -47,6 +47,7 @@
 
 <bean:define id="registrationId" name="registrationCurriculumBean" property="registration.idInternal" />
 <fr:form action="/registration.do?method=chooseCycleForViewRegistrationCurriculum">
+	<html:hidden property="degreeCurricularPlanID" value="<%= "" + request.getAttribute("degreeCurricularPlanID") %>"/>
 	<fr:edit id="registrationCurriculumBean"
 		name="registrationCurriculumBean"
 		schema="IRegistrationBean.edit-cycleCurriculumGroup">

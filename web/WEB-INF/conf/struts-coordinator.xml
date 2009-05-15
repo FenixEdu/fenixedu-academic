@@ -497,7 +497,7 @@
         <!-- List Student Curriculum -->
 		<action path="/registration"
 				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CoordinatorRegistrationDA"
 				scope="request">
 			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>

@@ -9,9 +9,9 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <bean:define id="executionDegree" name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request"/>
      <bean:define id="executionYearName" name="<%= PresentationConstants.EXECUTION_YEAR %>"/>
-    <bean:define id="degreeList" name="<%= PresentationConstants.DEGREE_LIST %>" scope="session" />
-    <bean:define id="situationList" name="<%= PresentationConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
-    <bean:define id="title" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
+    <bean:define id="degreeList" name="<%= PresentationConstants.DEGREE_LIST %>" />
+    <bean:define id="situationList" name="<%= PresentationConstants.CANDIDATE_SITUATION_LIST %>" />
+    <bean:define id="title" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" />
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>

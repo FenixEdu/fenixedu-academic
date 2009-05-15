@@ -35,7 +35,7 @@
 <logic:iterate id="executionCourse" name="executionCoursesToImproove">
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID%>" >
+    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
         <bean:write name="executionCourse" property="nome"/><br/>
     </html:link>
 </logic:iterate>
@@ -44,7 +44,7 @@
 <logic:iterate id="executionCourse" name="excelentExecutionCourses">
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID%>" >
+    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
         <bean:write name="executionCourse" property="nome"/><br/>
     </html:link>
 </logic:iterate>
@@ -53,7 +53,7 @@
 <logic:iterate id="executionCourse" name="otherExecutionCourses">
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID%>" >
+    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
         <bean:write name="executionCourse" property="nome"/><br/>
     </html:link>
 </logic:iterate>

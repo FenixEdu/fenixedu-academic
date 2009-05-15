@@ -29,6 +29,7 @@
 		<fr:create
 				type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
 				schema="final.degree.work.scheduleing">
+			<html:hidden property="degreeCurricularPlanID" value="<%= "" + request.getAttribute("degreeCurricularPlanID") %>"/>
 			<fr:hidden slot="currentProposalNumber" value="1" />
 			<fr:hidden slot="executionDegrees" multiple="true" name="executionDegree"/>
 			<fr:layout name="tabular">
@@ -41,6 +42,7 @@
 		<fr:edit name="executionDegree" property="scheduling"
 				type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
 				schema="final.degree.work.scheduleing">
+			<html:hidden property="degreeCurricularPlanID" value="<%= "" + request.getAttribute("degreeCurricularPlanID") %>"/>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="style1" />
 				<fr:property name="columnClasses" value="listClasses,," />

@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.DocumentType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 
-   	  <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" scope="session" type="net.sourceforge.fenixedu.dataTransferObject.InfoGuide"/>  		
+   	  <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE %>" type="net.sourceforge.fenixedu.dataTransferObject.InfoGuide"/>  		
       <bean:define id="number" name="infoGuide" property="number" />
       <bean:define id="year" name="infoGuide" property="year" />
       <bean:define id="version" name="infoGuide" property="version" />

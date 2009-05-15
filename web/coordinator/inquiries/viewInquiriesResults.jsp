@@ -120,7 +120,7 @@
 		<li>
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
-				<html:link page="<%= "/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID %>" target="_blank">
+				<html:link page="<%= "/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
 					<bean:write name="professorship" property="teacher.person.name"/> 
 				</html:link>
 			</logic:notEmpty>
@@ -149,7 +149,7 @@
     <logic:iterate id="delegateInquiry" name="executionCourse" property="yearDelegateCourseInquiries">
         <li>
             <bean:define id="delegateInquiryID" name="delegateInquiry" property="idInternal" />
-            <html:link page="<%= "/viewInquiriesResults.do?method=showFilledYearDelegateInquiry&filledYearDelegateInquiryId=" + delegateInquiryID %>" target="_blank">
+            <html:link page="<%= "/viewInquiriesResults.do?method=showFilledYearDelegateInquiry&filledYearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
                 <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/> 
             </html:link>            
         </li>

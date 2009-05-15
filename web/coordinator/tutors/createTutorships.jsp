@@ -74,6 +74,7 @@
 		
 	<!-- Specify a number of students to select -->
 	<fr:form action="/createTutorship.do?method=prepareSelectGivenNumberOfTutorships">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<fr:edit id="studentsWithoutTutor" name="studentsWithoutTutor" visible="false" />
 		<fr:edit id="filteredStudentsBean" name="filteredStudentsBean" visible="false" />
 		<fr:edit id="numberOfStudentsBean" name="filteredStudentsBean" schema="coordinator.createTutorship.randomNumber">
@@ -95,6 +96,7 @@
 	<br />
 	<!-- Select, one by one, each student -->
 	<fr:form action="/createTutorship.do?method=selectStudentsToCreateTutorships">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<html:submit><bean:message key="button.coordinator.tutor.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 		<html:submit property="clearSelection"><bean:message key="button.coordinator.tutor.clear" bundle="APPLICATION_RESOURCES" /></html:submit>
 		<fr:edit id="studentsWithoutTutor" name="studentsWithoutTutor" visible="false" />
@@ -149,6 +151,7 @@
 	
 	<!-- CHOOSE TUTOR -->
 	<fr:form action="/createTutorship.do?method=prepareCreateTutorshipForSelectedStudents#confirmTutor">
+		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<fr:edit id="selectedStudentsBean" name="selectedStudentsBean" schema="coordinator.createTutorship.tutorNumber">
 			<fr:destination name="invalid" path="/createTutorship.do?method=prepareSelectTutor"/>
 			<fr:layout name="tabular">
@@ -171,6 +174,7 @@
 		<p class="mbottom05"><span class="warning0" id="confirmTutor">
 			<bean:message key="label.coordinator.tutor.createTutorship.confirmTutor" bundle="APPLICATION_RESOURCES"/></span></p>
 		<fr:form action="/createTutorship.do?method=createTutorshipForSelectedStudentsAndTutor">
+			<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 			<fr:edit id="selectedStudentsAndTutorBean" name="selectedStudentsBean" schema="coordinator.createTutorship.tutorName">
 				<fr:destination name="invalid" path="/createTutorship.do?method=prepareSelectTutor"/>
 				<fr:layout name="tabular">

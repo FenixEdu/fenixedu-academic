@@ -13,6 +13,7 @@
 </p>
 
 <html:form action="/executionCoursesInformation" >
+	<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 
 <div class="infoop2">
 	Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da disciplina.<br/>

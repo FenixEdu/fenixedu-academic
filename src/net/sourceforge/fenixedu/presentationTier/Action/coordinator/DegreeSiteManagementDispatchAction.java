@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionError;
@@ -34,6 +35,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	if (degreeCurricularPlan != null) {
 	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);

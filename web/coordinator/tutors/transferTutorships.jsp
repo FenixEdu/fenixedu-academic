@@ -22,7 +22,7 @@
 			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
-		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 		<p class="mvert025">
 			<b><bean:message key="label.masterDegree.coordinator.executionYear"/></b>
 			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
@@ -76,6 +76,7 @@
 <br />
 <p class="color888 mvert05"><bean:message key="label.coordinator.tutor.transferTutorship.help" /></p>
 <fr:form action="/tutorshipManagement.do?method=transferTutorship">
+	<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 	<fr:edit id="tutorshipsToTransferBean" name="tutorshipsToTransfer" visible="false" />
 	<fr:edit id="tutorshipManagementBean" name="tutorshipManagementBean" visible="false" />
 	<fr:edit id="targetTutorBean" name="targetTutorManagementBean" schema="coordinator.tutor.transferTutorship">

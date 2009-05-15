@@ -11,7 +11,7 @@
   </head>
   <body>
    <span class="error"><!-- Error messages go here --><html:errors /></span>
-     <bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" scope="session" />
+     <bean:define id="guide" name="<%= PresentationConstants.GUIDE %>" />
 	<h2><bean:message key="label.masterDegree.administrativeOffice.guideCreationSuccess" /></h2>
    <table>
    <tr>

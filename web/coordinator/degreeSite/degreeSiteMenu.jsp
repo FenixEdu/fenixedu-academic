@@ -7,7 +7,7 @@
 <html:xhtml/>
 
 <logic:present name="<%= PresentationConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>" scope="session"/>
+	<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>
 	<bean:define id="infoExecutionDegreeID" name="infoExecutionDegree" property="idInternal"/>
 	<bean:define id="infoDegreeID" name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.idInternal"/>
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal" scope="request" />
