@@ -8,8 +8,18 @@
 <em><bean:message key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.projectSubmissions.viewProjectsWithOnlineSubmission.title" /></h2>
 
-<logic:notEmpty name="attendsForCurrentExecutionPeriod">
-	<logic:iterate id="attend" name="attendsForCurrentExecutionPeriod">
+<fr:form action="/projectSubmission.do?method=viewProjectsWithOnlineSubmission">
+	<fr:edit id="studentBean" name="studentBean" schema="list.student.execution.periods">
+		<fr:destination name="postBack" path="/projectSubmission.do?method=viewProjectsWithOnlineSubmission"/>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>
+			<fr:property name="columnClasses" value=",,tdclear"/>
+		</fr:layout>
+	</fr:edit>
+</fr:form>
+
+<logic:notEmpty name="attends">
+	<logic:iterate id="attend" name="attends">
 		<bean:define id="executionCourse" name="attend" property="disciplinaExecucao" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
 		<bean:define id="attendsId" name="attend" property="idInternal" />
 		<bean:define id="projectsWithOnlineSubmission" name="executionCourse" property="projectsWithOnlineSubmission" />
@@ -36,7 +46,7 @@
 		</logic:empty>
 	</logic:iterate>
 </logic:notEmpty>
-<logic:empty name="attendsForCurrentExecutionPeriod">
+<logic:empty name="attends">
 	<p class="mtop15">
 		<em><bean:message  key="label.projectSubmissions.viewProjectsWithOnlineSubmission.noAttendsForExecutionPeriod" bundle="STUDENT_RESOURCES"/></em>
 	</p>

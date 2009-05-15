@@ -1,27 +1,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission.CreateProjectSubmission;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission.CreateProjectSubmission;
 import net.sourceforge.fenixedu.dataTransferObject.projectSubmission.CreateProjectSubmissionBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -46,11 +45,14 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
     public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	SortedSet<Attends> attendsForCurrentExecutionPeriod = new TreeSet<Attends>(
-		Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
-	attendsForCurrentExecutionPeriod.addAll(getUserView(request).getPerson().getCurrentAttends());
+	Student student = getUserView(request).getPerson().getStudent();
+	ManageStudentStatuteBean bean = (ManageStudentStatuteBean) getRenderedObject("studentBean");
+	if (bean == null) {
+	    bean = new ManageStudentStatuteBean(student);
+	}
 
-	request.setAttribute("attendsForCurrentExecutionPeriod", attendsForCurrentExecutionPeriod);
+	request.setAttribute("studentBean", bean);
+	request.setAttribute("attends", student.getAttendsForExecutionPeriod(bean.getExecutionPeriod()));
 
 	return mapping.findForward("viewProjectsWithOnlineSubmission");
 
@@ -176,7 +178,7 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 	Integer projectSubmissionId = getRequestParameterAsInteger(request, "projectSubmissionId");
 
 	if (projectSubmissionId != null) {
-	    return (ProjectSubmission) rootDomainObject.readProjectSubmissionByOID(projectSubmissionId);
+	    return rootDomainObject.readProjectSubmissionByOID(projectSubmissionId);
 	} else {
 	    return null;
 	}

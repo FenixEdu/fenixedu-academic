@@ -21,6 +21,8 @@ public class ManageStudentStatuteBean implements Serializable {
 
     private DomainReference<ExecutionSemester> beginExecutionPeriod;
 
+    private DomainReference<ExecutionSemester> executionPeriod;
+
     private DomainReference<ExecutionSemester> endExecutionPeriod;
 
     private DomainReference<Student> student;
@@ -28,6 +30,15 @@ public class ManageStudentStatuteBean implements Serializable {
     public ManageStudentStatuteBean(Student student) {
 	super();
 	this.student = new DomainReference<Student>(student);
+	this.executionPeriod = new DomainReference<ExecutionSemester>(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public ExecutionSemester getExecutionPeriod() {
+	return (executionPeriod != null) ? executionPeriod.getObject() : null;
+    }
+
+    public void setExecutionPeriod(ExecutionSemester executionSemester) {
+	executionPeriod = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
     public ExecutionSemester getBeginExecutionPeriod() {

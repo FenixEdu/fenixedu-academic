@@ -588,6 +588,14 @@
    	    <slot name="grouping.name" />
 	</schema>
 	
+	<schema name="list.student.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
+	<slot name="executionPeriod" key="label.net.sourceforge.fenixedu.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider"/>
+    	<property name="format" value="${year} - ${semester}º Sem."/>	
+    	<property name="destination" value="postBack"/>
+    </slot>
+	</schema>
+	
 	<schema name="projectSubmission.view-full" type="net.sourceforge.fenixedu.domain.ProjectSubmission" bundle="APPLICATION_RESOURCES">
 	    <slot name="studentGroup.groupNumber" />
    	    <slot name="attends.aluno.person.firstAndLastName" key="label.name"/>

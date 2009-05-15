@@ -697,6 +697,14 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    public SortedSet<Attends> getAttendsForExecutionPeriod(ExecutionSemester executionSemester) {
+	SortedSet<Attends> attends = new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);
+	for (Registration registration : getRegistrations()) {
+	    attends.addAll(registration.getAttendsForExecutionPeriod(executionSemester));
+	}
+	return attends;
+    }
+
     public List<Registration> getRegistrationsToEnrolByStudent() {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
