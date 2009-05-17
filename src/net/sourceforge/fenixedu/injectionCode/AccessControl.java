@@ -69,9 +69,10 @@ public class AccessControl {
 
 	if (!result) {
 	    StringBuilder message = new StringBuilder();
-	    message.append("User ").append(requester.getUsername()).append(
-		    " tried to execute method but he/she is not authorized to do so");
-
+	    final String username = requester == null ? "<nobody>" : requester.getUsername();
+	    message.append("User ");
+	    message.append(username);
+	    message.append(" tried to execute method but he/she is not authorized to do so");
 	    throw new IllegalDataAccessException(message.toString(), requester);
 	}
     }
