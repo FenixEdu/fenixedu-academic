@@ -21,15 +21,12 @@ import net.sourceforge.fenixedu.util.State;
 
 public class ReadDegreeCandidates extends FenixService {
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
     public static List run(InfoExecutionDegree infoExecutionDegree) {
-
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 	return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
-    @Checked("RolePredicates.COORDINATOR_PREDICATE")
     @Service
     public static List run(Integer degreeCurricularPlanId) {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
