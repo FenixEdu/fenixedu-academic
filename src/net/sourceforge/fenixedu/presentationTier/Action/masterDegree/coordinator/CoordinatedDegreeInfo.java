@@ -38,13 +38,15 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
 	if (degreeCurricularPlanOID != null) {
 	    final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
-	    final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+	    if (degreeCurricularPlan != null) {
+		final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
-	    final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
-
-	    final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates = (List) ReadDegreeCandidates.run(degreeCurricularPlanOID);
-	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates.size()));
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
+		
+		final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates = (List) ReadDegreeCandidates.run(degreeCurricularPlanOID);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates.size()));
+	    }
 	}
     }
 
