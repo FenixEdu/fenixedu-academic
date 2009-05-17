@@ -14,17 +14,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegreeCandidates extends FenixService {
 
-    @Service
     public static List run(InfoExecutionDegree infoExecutionDegree) {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 	return createInfoMasterDegreeCandidates(executionDegree.getMasterDegreeCandidatesSet());
     }
 
-    @Service
     public static List run(Integer degreeCurricularPlanId) {
 	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 	return createInfoMasterDegreeCandidates(degreeCurricularPlan.readMasterDegreeCandidates());
