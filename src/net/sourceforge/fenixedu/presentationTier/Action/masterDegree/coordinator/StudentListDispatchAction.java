@@ -28,10 +28,15 @@ import org.apache.struts.action.ActionMapping;
 
 public class StudentListDispatchAction extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
     public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = getUserView(request);
 
 	Integer degreeCurricularPlanID = null;
 	if (request.getParameter("degreeCurricularPlanID") != null) {

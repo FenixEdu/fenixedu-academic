@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -22,8 +21,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -43,24 +40,13 @@ public class ReadTeachersInformationAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	CoordinatedDegreeInfo.setCoordinatorContext(request);
-	DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
-	Integer degreeCurricularPlanID = null;
-	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	}
+	Integer degreeCurricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
 
 	Integer executionDegreeID = new Integer(request.getParameter("executionDegreeId"));
 	request.setAttribute("executionDegreeId", executionDegreeID);
 
 	// Lists all years attatched to the degree curricular plan
-	List executionYearList = null;
-	try {
-
-	    executionYearList = (List) ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+	List executionYearList = (List) ReadExecutionYearsByDegreeCurricularPlanID.run(degreeCurricularPlanID);
 
 	List executionYearsLabelValueList = new ArrayList();
 	for (int i = 0; i < executionYearList.size(); i++) {
@@ -70,6 +56,7 @@ public class ReadTeachersInformationAction extends FenixAction {
 
 	request.setAttribute("executionYearList", executionYearsLabelValueList);
 
+	DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
 	String yearString = (String) teacherInformationForm.get("yearString");
 	List infoSiteTeachersInformation = null;
 

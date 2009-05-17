@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinato
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -14,14 +13,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	IUserView userView = UserView.getUser();
 
 	InfoExecutionDegree infoExecutionDegree;
 	Integer degreeCurricularPlanID = null;

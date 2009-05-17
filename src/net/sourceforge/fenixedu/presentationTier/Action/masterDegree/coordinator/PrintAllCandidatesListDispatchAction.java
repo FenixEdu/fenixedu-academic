@@ -63,6 +63,13 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("Prepare");
     }
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
     /** prepara o segundo filtro */
     public ActionForward prepareSecondFilter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

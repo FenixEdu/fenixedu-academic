@@ -24,6 +24,13 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
     /** request params * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 

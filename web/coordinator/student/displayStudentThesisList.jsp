@@ -1,11 +1,16 @@
 <%@ taglib uri="/WEB-INF/jsf_core.tld" prefix="f"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo"%>
 
 <ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
 
 <f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 <f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
+
+<%
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+%>
 
 	<h:dataTable value="#{listStudentThesis.masterDegreeThesisDataVersions}" var="masterDegreeThesisDataVersion" cellpadding="0">
 		<h:column>

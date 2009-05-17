@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -52,6 +53,13 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
     /**
      * @param mapping
      * @param form
@@ -63,7 +71,6 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = getUserView(request);
 	Integer degreeCurricularPlanID = Integer.valueOf(getFromRequest("degreeCurricularPlanID", request));
 	Integer executionDegreeID = Integer.valueOf(getFromRequest("executionDegreeID", request));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
