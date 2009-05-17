@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
@@ -225,6 +226,7 @@ public class RolePredicates {
     };
 
     private static boolean hasRole(final RoleType roleType) {
-	return AccessControl.getPerson().hasRole(roleType);
+	final Person person = AccessControl.getPerson();
+	return person != null && person.hasRole(roleType);
     }
 }
