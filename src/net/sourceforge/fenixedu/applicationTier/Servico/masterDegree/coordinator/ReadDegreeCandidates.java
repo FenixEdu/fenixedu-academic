@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadDegreeCandidates extends FenixService {
 
