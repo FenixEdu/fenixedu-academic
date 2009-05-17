@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.cardGeneration.DeleteCardGenerationEntryService;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -273,7 +274,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	final CardGenerationEntry cardGenerationEntry = getDomainObject(request, "cardGenerationEntryId");
 	if (cardGenerationEntry != null) {
-	    cardGenerationEntry.delete();
+	    DeleteCardGenerationEntryService.run(cardGenerationEntry);
 	}
 	return firstPage(mapping, actionForm, request, response);
     }

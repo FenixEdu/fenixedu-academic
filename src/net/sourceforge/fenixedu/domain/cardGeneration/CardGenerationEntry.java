@@ -257,8 +257,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return Category.valueOf(code);
     }
 
- 
-    @Service
     public void delete() {
 	removeCardGenerationBatch();
 	removePerson();
