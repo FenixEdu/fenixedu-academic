@@ -12,6 +12,10 @@ public class Email extends Email_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public Email(final String fromName, final String fromAddress, final String subject, final String body, String... toAddresses) {
+	this(fromName, fromAddress, null, Arrays.asList(toAddresses), null, null, subject, body);  
+    }
+    
     public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
 	    final Collection<String> ccAddresses, final Collection<String> bccAddresses, final String subject, final String body) {
 
