@@ -437,8 +437,9 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<MissingClocking> getMissingClockings(LocalDate beginDate, LocalDate endDate) {
-	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
-		.toDateTimeAtStartOfDay().plusDays(1)));
+	final DateTime beginDateTime = beginDate.toDateTimeAtStartOfDay();
+	final DateTime endDateTime = endDate.toDateTime(defaultEndWorkDay);
+	Interval interval = new Interval(beginDateTime, endDateTime);
 	final List<AssiduousnessRecord> assiduousnessRecords = getAssiduousnessRecordBetweenDates(interval.getStart(), interval
 		.getEnd());
 	List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
