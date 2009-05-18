@@ -16,6 +16,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/students", module = "academicAdminOffice", formBean = "studentManagementForm")
+@Forwards( {
+	@Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
+	@Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp")
+
+})
 public class SearchForStudentsDA extends FenixDispatchAction {
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
