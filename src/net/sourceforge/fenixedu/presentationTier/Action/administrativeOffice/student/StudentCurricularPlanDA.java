@@ -28,9 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/addNewStudentCurricularPlan", module = "academicAdminOffice")
 @Forwards( {
 	@Forward(name = "showCreateNewStudentCurricularPlan", path = "/academicAdminOffice/createStudentCurricularPlan.jsp"),
-	// Once tiles definition is deleted, below should be:
-	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
-	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails")
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
 
 })
 public class StudentCurricularPlanDA extends FenixDispatchAction {

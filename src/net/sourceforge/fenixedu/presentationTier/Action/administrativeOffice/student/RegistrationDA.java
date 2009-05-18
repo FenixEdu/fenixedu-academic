@@ -43,9 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/registration", module = "academicAdminOffice")
 @Forwards( {
-	// Once tiles definition is deleted, below should be:
-	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
-	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails"),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 	@Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),
 	@Forward(name = "chooseCycleForRegistrationConclusion", path = "/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"),
 	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"),

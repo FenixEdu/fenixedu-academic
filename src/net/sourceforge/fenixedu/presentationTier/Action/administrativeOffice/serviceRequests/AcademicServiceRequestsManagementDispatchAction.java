@@ -52,9 +52,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 @Forwards( {
 	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"),
 	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"),
-	// Once tiles definition is deleted, below should be:
-	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
-	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails"),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 	@Forward(name = "confirmCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"),
 	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"),
 	@Forward(name = "prepareSendAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"),

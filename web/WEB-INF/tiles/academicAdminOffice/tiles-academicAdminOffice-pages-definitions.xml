@@ -25,9 +25,6 @@
     </definition>
     <definition name="students.manageStatutes" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageStatutes.jsp"></put>
-    </definition> 
-    <definition name="student.viewRegistrationDetails" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"></put>
     </definition>
     <definition name="student.createPartyContact" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/createPartyContact.jsp"></put>
@@ -40,22 +37,10 @@
 	</definition>    
     <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
-    </definition> 
-    <definition name="student.externalEnrolment.manageExternalEnrolments" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"/>
-    </definition>
-    <definition name="student.externalEnrolment.editExternalEnrolment" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"/>
     </definition>
     <definition name="student.externalEnrolment.chooseExternalUnit" extends="academicAdminOffice.masterPage">
 		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"/>
-    </definition>
-    <definition name="student.externalEnrolment.chooseExternalCurricularCourses" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"/>
-    </definition>
-    <definition name="student.externalEnrolment.createExternalEnrolments" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"/>
     </definition>
     <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>

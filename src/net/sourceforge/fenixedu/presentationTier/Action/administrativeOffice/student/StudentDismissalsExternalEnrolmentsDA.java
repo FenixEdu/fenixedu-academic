@@ -10,6 +10,22 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
+@Forwards( {
+	// Once tiles definition is deleted, below should be:
+	// "/academicAdminOffice/dismissal/managementDismissals.jsp"
+	@Forward(name = "manageDismissals", path = "studentDismissal.management"),
+	// Complex tiles definition; cannot refactor header (yet?)
+	@Forward(name = "chooseExternalUnit", path = "student.externalEnrolment.chooseExternalUnit"),
+	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
+	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
+	@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
+
+})
 public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolmentsDA {
 
     @Override

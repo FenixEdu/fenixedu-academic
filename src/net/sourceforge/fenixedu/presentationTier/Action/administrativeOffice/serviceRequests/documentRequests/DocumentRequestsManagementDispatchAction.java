@@ -46,9 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"),
 	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"),
 	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
-	// Once tiles definition is deleted, below should be:
-	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
-	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails"),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
 
 })
@@ -206,7 +204,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
 	}
-	
+
 	schemaName.append(".AdditionalInformation");
 	request.setAttribute("additionalInformationSchemaName", schemaName.toString());
 
