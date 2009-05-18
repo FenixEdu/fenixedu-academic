@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -143,12 +144,15 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
     public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("candidacyDocuments", getProcess(request).getDocuments());
+	prepareDocumentsToUpload(request);
+
+	return mapping.findForward("manageCandidacyDocuments");
+    }
+
+    private void prepareDocumentsToUpload(HttpServletRequest request) {
 	request.setAttribute("documentsToUpload", Arrays.asList(new PhdCandidacyDocumentUploadBean(),
 		new PhdCandidacyDocumentUploadBean(), new PhdCandidacyDocumentUploadBean(), new PhdCandidacyDocumentUploadBean(),
 		new PhdCandidacyDocumentUploadBean()));
-
-	return mapping.findForward("manageCandidacyDocuments");
     }
 
     public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -162,13 +166,52 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	return executeActivity(PhdProgramCandidacyProcess.UploadDocuments.class, getDocumentsToUpload(), request, mapping,
-		"manageCandidacyDocuments", "manageCandidacyDocuments", "message.documents.uploaded.with.success");
+	if (!hasAnyDocumentToUpload()) {
+	    request.setAttribute("documentsToUpload", getDocumentsToUpload());
+
+	    addErrorMessage(request, "message.no.documents.to.upload");
+
+	    return mapping.findForward("manageCandidacyDocuments");
+	}
+
+	final ActionForward result = executeActivity(PhdProgramCandidacyProcess.UploadDocuments.class, getDocumentsToUpload(),
+		request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
+		"message.documents.uploaded.with.success");
+
+	RenderUtils.invalidateViewState("documentsToUpload");
+
+	prepareDocumentsToUpload(request);
+
+	return result;
+
+    }
+
+    private boolean hasAnyDocumentToUpload() {
+	for (final PhdCandidacyDocumentUploadBean each : getDocumentsToUpload()) {
+	    if (each.hasAnyInformation()) {
+		return true;
+	    }
+	}
+
+	return false;
 
     }
 
     private List<PhdCandidacyDocumentUploadBean> getDocumentsToUpload() {
 	return (List<PhdCandidacyDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    }
+
+    public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	prepareDocumentsToUpload(request);
+
+	return executeActivity(PhdProgramCandidacyProcess.DeleteDocument.class, getDocument(request), request, mapping,
+		"manageCandidacyDocuments", "manageCandidacyDocuments", "message.document.deleted.successfuly");
+    }
+
+    private PhdProgramCandidacyProcessDocument getDocument(HttpServletRequest request) {
+	return getDomainObject(request, "documentId");
     }
 
 }

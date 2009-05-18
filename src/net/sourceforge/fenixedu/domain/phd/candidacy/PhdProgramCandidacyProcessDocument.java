@@ -3,8 +3,12 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -33,10 +37,14 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 
     private void checkParameters(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
 	    byte[] content, String filename) {
+
 	check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.candidacyProcess.cannot.be.null");
-	check(documentType, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.documentType.cannot.be.null");
-	check(content, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.content.cannot.be.null");
-	check(filename, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.field_name.cannot.be.null");
+
+	if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
+	    throw new DomainException(
+		    "error.phd.candidacy.PhdProgramCandidacyProcessDocument.documentType.and.file.cannot.be.null");
+	}
+
     }
 
     /**
@@ -54,6 +62,11 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 	filePath.addNode(new VirtualPathNode("CandidacyDocuments", "CandidacyDocuments"));
 
 	return filePath;
+    }
+
+    public void delete() {
+	removePhdCandidacyProcess();
+	super.delete();
     }
 
 }

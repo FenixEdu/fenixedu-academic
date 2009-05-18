@@ -47,16 +47,24 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	    ExecuteProcessActivity.run(getProcess(request), activityClass.getSimpleName(), activityParameter);
 
 	    if (!StringUtils.isEmpty(sucessMessage)) {
-		addActionMessage("success", request, sucessMessage, sucessMessageArgs);
+		addSuccessMessage(request, sucessMessage, sucessMessageArgs);
 	    }
 
 	    return mapping.findForward(sucessForward);
 
 	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    addErrorMessage(request, e.getKey(), e.getArgs());
 
 	    return mapping.findForward(errorForward);
 	}
+    }
+
+    protected void addErrorMessage(HttpServletRequest request, String key, String... args) {
+	addActionMessage("error", request, key, args);
+    }
+
+    protected void addSuccessMessage(HttpServletRequest request, String key, String... args) {
+	addActionMessage("success", request, key, args);
     }
 
 }

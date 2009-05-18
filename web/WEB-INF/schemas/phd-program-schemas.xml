@@ -265,4 +265,11 @@
 	</slot>
 </schema>
 
+<schema name="PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">
+	<slot name="documentType"/>
+	<slot name="filename" />
+</schema>
+
+
+
 

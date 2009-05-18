@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -20,20 +20,14 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 
     private PhdIndividualProgramDocumentType type;
 
-    private transient FileInputStream file;
+    private transient InputStream file;
+
+    private byte[] fileContent;
 
     private String filename;
 
     public byte[] getFileContent() {
-	final ByteArrayOutputStream result = new ByteArrayOutputStream();
-	try {
-	    FileUtils.copy(this.file, result);
-	} catch (IOException e) {
-	    throw new RuntimeException(e);
-	}
-
-	return result.toByteArray();
-
+	return this.fileContent;
     }
 
     public PhdIndividualProgramDocumentType getType() {
@@ -44,12 +38,25 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 	this.type = type;
     }
 
-    public FileInputStream getFile() {
+    public InputStream getFile() {
 	return file;
     }
 
-    public void setFile(FileInputStream file) {
+    public void setFile(InputStream file) {
 	this.file = file;
+
+	if (file != null) {
+	    final ByteArrayOutputStream result = new ByteArrayOutputStream();
+	    try {
+		FileUtils.copy(this.file, result);
+	    } catch (IOException e) {
+		throw new RuntimeException(e);
+	    }
+
+	    this.fileContent = result.toByteArray();
+	} else {
+	    this.fileContent = null;
+	}
     }
 
     public String getFilename() {
@@ -60,7 +67,7 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 	this.filename = filename;
     }
 
-    public boolean isValid() {
-	return this.type != null && !StringUtils.isEmpty(this.filename) && this.file != null;
+    public boolean hasAnyInformation() {
+	return this.type != null || !StringUtils.isEmpty(this.filename) || this.fileContent != null;
     }
 }

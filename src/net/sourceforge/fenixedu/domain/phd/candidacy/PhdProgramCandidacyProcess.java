@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
@@ -57,15 +56,35 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    final List<PhdCandidacyDocumentUploadBean> documents = (List<PhdCandidacyDocumentUploadBean>) object;
 
 	    for (final PhdCandidacyDocumentUploadBean each : documents) {
-		if (each.isValid()) {
+		if (each.hasAnyInformation()) {
 		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getFileContent(), each.getFilename());
 		}
+
 	    }
 
 	    return process;
 
 	}
 
+    }
+
+    public static class DeleteDocument extends Activity<PhdProgramCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    // no precondition to check
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    ((PhdProgramCandidacyProcessDocument) object).delete();
+
+	    return process;
+	}
     }
 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -76,6 +95,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new UploadDocuments());
+	activities.add(new DeleteDocument());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean candidacyProcessBean) {
