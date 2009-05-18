@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.StringUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
@@ -247,16 +246,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return normalizedName;
     }
 
-    public Category getCategory() {
-	return readCategory(getLine());
-    }
-
-    public static Category readCategory(final String line) {
-	final String codeString = line.substring(11, 13);
-	final int code = Integer.valueOf(codeString);
-	return Category.valueOf(code);
-    }
-
     public void delete() {
 	removeCardGenerationBatch();
 	removePerson();
@@ -264,4 +253,105 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	deleteDomainObject();
     }
 
+    public Category getCategory() {
+	final String codeString = getLine().substring(11, 13);
+	final int code = Integer.valueOf(codeString);
+	return Category.valueOf(code);
+    }
+
+    public String getCampusCode() {
+	return this.getLine().substring(0, 4);
+    }
+
+    public String getCourseCode() {
+	return this.getLine().substring(4, 8);
+    }
+
+    public String getEntityCode() {
+	return this.getLine().substring(8, 11);
+    }
+
+    public String getCategoryCode() {
+	return this.getLine().substring(11, 13);
+    }
+
+    public String getMemberNumber() {
+	return this.getLine().substring(13, 21);
+    }
+
+    public String getRegisterPurpose() {
+	return this.getLine().substring(21, 22);
+    }
+
+    public String getExpirationDate() {
+	return this.getLine().substring(22, 26);
+    }
+
+    public String getReservedField1() {
+	return this.getLine().substring(26, 27);
+    }
+
+    public String getReservedField2() {
+	return this.getLine().substring(27, 28);
+    }
+
+    public String getSubClassCode() {
+	return this.getLine().substring(28, 30);
+    }
+
+    public String getCardViaNumber() {
+	return this.getLine().substring(30, 32);
+    }
+
+    public String getCourseCode2() {
+	return this.getLine().substring(32, 34);
+    }
+
+    public String getSecondaryCategoryCode() {
+	return this.getLine().substring(34, 36);
+    }
+
+    public String getSecondaryMemberNumber() {
+	return this.getLine().substring(36, 44);
+    }
+
+    public String getCourse() {
+	return this.getLine().substring(44, 67);
+    }
+
+    public String getEditedStudentNumber() {
+	return this.getLine().substring(67, 75);
+    }
+
+    public String getEditedSecondaryMemberNumber() {
+	return this.getLine().substring(75, 83);
+    }
+
+    public String getLevelOfEducation() {
+	return this.getLine().substring(83, 95);
+    }
+
+    public String getRegistrationYear() {
+	return this.getLine().substring(95, 100);
+    }
+
+    public String getIssueDate() {
+	return this.getLine().substring(100, 108);
+    }
+
+    public String getSecondaryCategory() {
+	return this.getLine().substring(108, 131);
+    }
+
+    public String getWorkPlace() {
+	return this.getLine().substring(131, 173);
+    }
+
+    public String getExtraInformation() {
+	return this.getLine().substring(173, 178);
+    }
+
+    public String getStudentCompleteName() {
+	return this.getLine().substring(178, 262);
+    }
 }

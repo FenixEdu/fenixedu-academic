@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 
 public class ManageCardGenerationDA extends FenixDispatchAction {
 
@@ -81,6 +82,14 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     public ActionForward manageCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatch");
+    }
+
+    public ActionForward setCardDate(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	cardGenerationBatch.setSent(new DateTime());
 	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
 	return mapping.findForward("manageCardGenerationBatch");
     }

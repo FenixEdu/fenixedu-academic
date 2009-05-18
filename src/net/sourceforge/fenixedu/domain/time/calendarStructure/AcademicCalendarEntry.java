@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 import net.sourceforge.fenixedu.domain.time.chronologies.dateTimeFields.AcademicSemesterDateTimeFieldType;
@@ -668,6 +669,26 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public String getGanttDiagramEventIdentifier() {
 	return getIdInternal().toString();
+    }
+
+    public Integer getGanttDiagramEventMonth() {
+	return null;
+    }
+
+    public String getGanttDiagramEventUrlAddOns() {
+	return null;
+    }
+
+    public boolean isGanttDiagramEventIntervalsLongerThanOneDay() {
+	return false;
+    }
+
+    public boolean isGanttDiagramEventToMarkWeekendsAndHolidays() {
+	return false;
+    }
+
+    public DayType getGanttDiagramEventDayType(Interval interval) {
+	return null;
     }
 
     public abstract boolean isOfType(AcademicPeriod period);

@@ -5,34 +5,47 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<h2>
-	<bean:message key="link.manage.card.generation" />
-</h2>
+<em>Cartões de Identificação</em>
+<h2><bean:message key="link.manage.card.generation" /></h2>
 
-<br/>
+<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
 
-<table class="tstyle4 thlight mtop05">
+<div class="mtop15 mbottom05">
+	<bean:define id="urlDownloadBatchFile" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+	<html:link page="<%= urlDownloadBatchFile %>">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.download"/>
+	</html:link>
+	
+	<logic:notPresent name="cardGenerationBatch" property="sent">
+	|
+		<bean:define id="setCardDate" type="java.lang.String">/manageCardGeneration.do?method=setCardDate&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+		<html:link page="<%= setCardDate %>">
+			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.set.card"/>
+		</html:link>
+	</logic:notPresent>
+</div>
+
+
+<table class="tstyle4 thlight tdcenter mtop05">
 	<tr>
 		<jsp:include page="cardGenerationBatchHeader.jsp"></jsp:include>
-		<th></th>
+		<logic:notPresent name="cardGenerationBatch" property="peopleForEntryCreation">
+			<logic:notEmpty name="cardGenerationBatch" property="cardGenerationProblems">
+				<th></th>
+			</logic:notEmpty>
+		</logic:notPresent>
 	</tr>
 	<tr>
 		<jsp:include page="cardGenerationBatchRow.jsp"></jsp:include>
-   		<td>
-			<logic:notPresent name="cardGenerationBatch" property="peopleForEntryCreation">
-				<logic:notEmpty name="cardGenerationBatch" property="cardGenerationProblems">
+		<logic:notPresent name="cardGenerationBatch" property="peopleForEntryCreation">
+			<logic:notEmpty name="cardGenerationBatch" property="cardGenerationProblems">
+		   		<td>
 					<bean:define id="urlResolveProblems" type="java.lang.String">/manageCardGeneration.do?method=manageCardGenerationBatchProblems&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
 					<html:link page="<%= urlResolveProblems %>">
 						<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.resolve.problems"/>
 					</html:link>
-				</logic:notEmpty>
-			</logic:notPresent>
-		</td>
+				</td>
+			</logic:notEmpty>
+		</logic:notPresent>
 	</tr>
 </table>
-
-<br/>
-<bean:define id="urlDownloadBatchFile" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
-<html:link page="<%= urlDownloadBatchFile %>">
-	<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.download"/>
-</html:link>

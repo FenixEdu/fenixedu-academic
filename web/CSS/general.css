@@ -2528,6 +2528,84 @@ border:none;
 }
 
 
+/* -------------------------
+--------- Calendar --------
+-------------------------- */
+
+.tcalendar {
+border-collapse: collapse;
+border: 1px solid #ccc;
+}
+.tcalendar th {
+border: 1px solid #ccc;
+overflow: hidden;
+}
+.tcalendar td {
+border: 1px solid #ccc;
+}
+.tcalendar th {
+text-align: center;
+background-color: #f5f5f5;
+padding: 3px 4px;
+}
+.tcalendar td {
+background-color: #fff;
+padding: 0;
+}
+.tcalendar td.padded {
+padding: 2px 6px;
+border: 1px solid #ccc;
+}
+td.padded { }
+.tdbar {
+background: #a3d1d9 !important;
+text-align: center;
+}
+.tdnomark {
+text-align: center;
+}
+.emptytdbar {
+background: #eee !important;
+border: none !important;
+}
+tr.active td {
+background-color: #fefeea;
+}
+.color555 {
+color: #555;
+}
+tr.selected td {
+background-color: #fdfdde;
+}
+td.tcalendarlinks {
+padding: 0.5em 0;
+border-bottom: none;
+border-left: none;
+border-right: none;
+}
+td.tcalendarlinks span { color: #888; }
+td.tcalendarlinks span a { color: #888; }
+
+
+div.vacation table.tcalendar {
+width: auto;
+}
+div.vacation table.tcalendar th {
+padding-left: 0em !important;
+padding-right: 0em !important;
+}
+div.vacation th {
+padding: 0;
+}
+div.vacation table.tcalendar tr td.tdnomark {
+width: 20px !important;
+}
+div.vacation table.tcalendar tr td.tdbar {
+width: 20px !important;
+}
+div.vacation table.tcalendar tr td.padded {
+width: 9em;
+}
 
 /* Operations */
 

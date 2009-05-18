@@ -3812,7 +3812,14 @@
             <chain name="SearchPersonAuthorization"/>
         </filterChains>
     </service>
-
+    <service>
+        <name>SearchPersonWithCard</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonWithCard</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="SearchPersonAuthorization"/>
+        </filterChains>
+    </service>
     <service>
         <name>SearchPersonsForParticipations</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.SearchPersonsForParticipations</implementationClass>

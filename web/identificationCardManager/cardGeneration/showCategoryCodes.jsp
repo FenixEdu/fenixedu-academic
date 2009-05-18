@@ -3,13 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <html:xhtml/>
 
-<h2>
-	<bean:message key="link.manage.card.generation.consult.category.codes"/>
-</h2>
+<em>Cartões de Identificação</em>
+<h2><bean:message key="link.manage.card.generation.consult.category.codes"/></h2>
 
-<br/>
+<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
 
-<table class="tstyle4 thlight mtop05">
+<table class="tstyle4 tdtop thlight mtop05">
   <tr>
     <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.category.code"/></th>
     <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.line.format"/></th>
@@ -18,7 +17,7 @@
   </tr>
 	<logic:iterate id="category" name="categories">
 	  	<tr>
-    		<td><bean:write name="category" property="code"/></td>
+    		<td class="acenter"><bean:write name="category" property="code"/></td>
     		<td><bean:message bundle="ENUMERATION_RESOURCES" name="category" property="lineLayout.name"/></td>
     		<td><bean:message bundle="ENUMERATION_RESOURCES" name="category" property="name"/></td>
     		<td>

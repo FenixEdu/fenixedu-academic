@@ -26,6 +26,8 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public static final Comparator<CardGenerationBatch> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationBatch>() {
@@ -93,6 +95,12 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	deleteDomainObject();
     }
 
+    @Override
+    @Service
+    public void setSent(DateTime dateTime) {
+	super.setSent(dateTime);
+    }
+
     protected String getAllPeopleForEntryCreation() {
 	return "ALL";
     }
@@ -109,7 +117,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 		    if (!degreeType.isEmpty()) {
 			if (degreeType.compareTo(maxDegreeType) >= 0) {
 			    // System.out.println("Using: " + degreeType +
-			// " same as " + maxDegreeType);
+			    // " same as " + maxDegreeType);
 			    createCardGenerationEntry(person, studentCurricularPlan);
 			} else {
 			    System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);

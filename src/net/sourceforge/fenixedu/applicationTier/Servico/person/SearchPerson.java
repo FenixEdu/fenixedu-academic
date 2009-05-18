@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -57,6 +58,8 @@ public class SearchPerson extends FenixService {
 
 	private Integer studentNumber;
 
+	private Integer mechanoGraphicalNumber;
+
 	public SearchParameters() {
 	}
 
@@ -83,7 +86,7 @@ public class SearchPerson extends FenixService {
 	    setExternalPersons(externalPersons);
 
 	    if (roleType != null && roleType.length() > 0) {
-		role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
+		role = Role.getRoleByRoleType(RoleType.valueOf(roleType));
 	    }
 
 	    if (degreeId != null) {
@@ -103,7 +106,8 @@ public class SearchPerson extends FenixService {
 	    return StringUtils.isEmpty(this.email) && StringUtils.isEmpty(this.username)
 		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
 		    && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
-		    && this.idDocumentType == null && this.showOnlySearchableResearchers == null;
+		    && this.mechanoGraphicalNumber == null && this.idDocumentType == null
+		    && this.showOnlySearchableResearchers == null;
 	}
 
 	private static String[] getNameWords(String name) {
@@ -167,6 +171,10 @@ public class SearchPerson extends FenixService {
 	    return externalPersons;
 	}
 
+	public Integer getMechanoGraphicalNumber() {
+	    return mechanoGraphicalNumber;
+	}
+
 	public void setEmail(String email) {
 	    this.email = (email != null && !email.equals("")) ? StringNormalizer.normalize(email.trim()) : null;
 	}
@@ -216,6 +224,10 @@ public class SearchPerson extends FenixService {
 	    this.studentNumber = studentNumber;
 	}
 
+	public void setMechanoGraphicalNumber(Integer mechanoGraphicalNumber) {
+	    this.mechanoGraphicalNumber = mechanoGraphicalNumber;
+	}
+
 	public Boolean getShowOnlySearchableResearchers() {
 	    return showOnlySearchableResearchers;
 	}
@@ -261,6 +273,21 @@ public class SearchPerson extends FenixService {
 		persons.add(person);
 	    }
 
+	} else if (searchParameters.getMechanoGraphicalNumber() != null) {
+	    final Teacher teacher = Teacher.readByNumber(searchParameters.getMechanoGraphicalNumber());
+	    final Employee employee = Employee.readByNumber(searchParameters.getMechanoGraphicalNumber());
+	    final Student student = Student.readStudentByNumber(searchParameters.getMechanoGraphicalNumber());
+	    persons = new ArrayList<Person>();
+	    if (teacher != null) {
+		persons.add(teacher.getPerson());
+	    }
+	    if (employee != null) {
+		persons.add(employee.getPerson());
+	    }
+	    if (student != null) {
+		persons.add(student.getPerson());
+	    }
+
 	} else if (searchParameters.getName() != null) {
 
 	    persons = new ArrayList<Person>();
@@ -304,7 +331,7 @@ public class SearchPerson extends FenixService {
 
     public static class SearchPersonPredicate implements Predicate {
 
-	private SearchParameters searchParameters;
+	private final SearchParameters searchParameters;
 
 	public SearchPersonPredicate(SearchParameters searchParameters) {
 	    this.searchParameters = searchParameters;
@@ -321,6 +348,7 @@ public class SearchPerson extends FenixService {
 		    && verifyParameter(person.getInstitutionalOrDefaultEmailAddressValue(), searchParameters.getEmail())
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
 		    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
+		    && verifyMechanoGraphicalNumber(searchParameters.getMechanoGraphicalNumber(), person)
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
 	}
 
@@ -330,6 +358,13 @@ public class SearchPerson extends FenixService {
 
 	private boolean verifyStudentNumber(Integer studentNumber, Person person) {
 	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber)));
+	}
+
+	private boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
+	    return (mechanoGraphicalNumber == null
+		    || (person.hasStudent() && person.getStudent().getNumber().equals(mechanoGraphicalNumber))
+		    || (person.hasEmployee() && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)) || (person
+		    .hasTeacher() && person.getTeacher().getTeacherNumber().equals(mechanoGraphicalNumber)));
 	}
 
 	private boolean verifyActiveState(Boolean activePersons, Person person) {

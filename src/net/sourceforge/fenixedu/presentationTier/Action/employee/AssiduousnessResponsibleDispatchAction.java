@@ -25,9 +25,11 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.VacationsEvent;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
+import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -41,26 +43,32 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
 
     private final LocalDate firstMonth = new LocalDate(2006, 9, 1);
 
     public ActionForward showEmployeeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
 	final IUserView userView = UserView.getUser();
 	final YearMonth yearMonth = getYearMonth(request);
 	if (yearMonth == null) {
@@ -71,6 +79,9 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
 		.getMaximumValue());
 	HashMap<Unit, UnitEmployees> unitEmployeesMap = new HashMap<Unit, UnitEmployees>();
+
+	List<VacationsEvent> vacations = new ArrayList<VacationsEvent>();
+
 	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(
 		AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE, beginDate, endDate)) {
 	    if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE) {
@@ -93,11 +104,66 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 		}
 	    }
 	}
+	String unitIDInternal = request.getParameter("idInternal");
+	if (unitIDInternal != null && unitEmployeesMap != null) {
+	    Integer unitID = Integer.parseInt(request.getParameter("idInternal"));
+
+	    for (UnitEmployees unitEmployees : unitEmployeesMap.values()) {
+		if (unitEmployees.getUnit().getIdInternal().intValue() != unitID.intValue()) {
+		    continue;
+		}
+		for (Employee employee : unitEmployees.getEmployeeList()) {
+		    vacations.add(VacationsEventByMonth(employee, yearMonth));
+		}
+	    }
+	}
+
+	Collections.sort(vacations, new BeanComparator("title"));
+	GanttDiagram diagram = GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
+	request.setAttribute("ganttDiagramByMonth", diagram);
+
 	List<UnitEmployees> unitEmployeesList = new ArrayList<UnitEmployees>(unitEmployeesMap.values());
 	Collections.sort(unitEmployeesList, new BeanComparator("unitCode"));
 	request.setAttribute("unitEmployeesList", unitEmployeesList);
 	request.setAttribute("unitToShow", request.getParameter("idInternal"));
 	return mapping.findForward("show-employee-list");
+    }
+
+    private boolean isJustificationNotAnulatedAndInVacationGroup(Justification justification) {
+	return (justification.hasJustificationMotive()) && (!justification.isAnulated())
+		&& (justification.getJustificationMotive().getJustificationGroup() != null)
+		&& (justification.getJustificationMotive().getJustificationGroup().isVacation());
+    }
+
+    public VacationsEvent VacationsEventByMonth(Employee employee, YearMonth yearMonth) throws FenixServiceException,
+	    FenixFilterException, InvalidArgumentException {
+
+	YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), yearMonth.getPartial()
+		.get(DateTimeFieldType.monthOfYear()), 1);
+	DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
+	DateTime LastMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
+	Interval monthInterval = new Interval(FirstMomentOfMonth, LastMomentOfMonth);
+
+	VacationsEvent vacationsEvent = VacationsEvent.create(new MultiLanguageString(employee.getEmployeeNumber().toString()
+		.concat(" - ").concat(employee.getPerson().getFirstAndLastName())), yearMonth.getNumberOfMonth(), monthInterval,
+		employee.getEmployeeNumber());
+
+	for (AssiduousnessRecord assiduousnessRecord : employee.getAssiduousness().getAssiduousnessRecords()) {
+	    if (assiduousnessRecord.isLeave()) {
+
+		if (isJustificationNotAnulatedAndInVacationGroup((Justification) assiduousnessRecord)) {
+		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord)
+			    .getEndDate());
+
+		    if (leaveInterval.overlaps(monthInterval)) {
+			vacationsEvent.addNewInterval(leaveInterval, ((Justification) assiduousnessRecord)
+				.getJustificationMotive().getDayType());
+		    }
+		}
+	    }
+	}
+
+	return vacationsEvent;
     }
 
     private List<Employee> getAllWorkingEmployeesWithActiveStatus(Unit unit, YearMonthDay begin, YearMonthDay end) {

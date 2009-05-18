@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -281,9 +282,9 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), yearMonth
 		    .getPartial().get(DateTimeFieldType.monthOfYear()), 1);
-	    DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
-	    DateTime LastMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
-	    Interval monthInterval = new Interval(FirstMomentOfMonth, LastMomentOfMonth);
+	    DateTime firstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
+	    DateTime lastMomentOfMonth = firstMomentOfMonth.plusMonths(1);
+	    Interval monthInterval = new Interval(firstMomentOfMonth, lastMomentOfMonth);
 
 	    for (AssiduousnessRecord assiduousnessRecord : employee.getAssiduousness().getAssiduousnessRecords()) {
 		if (assiduousnessRecord.isLeave()) {
@@ -291,32 +292,34 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
 			DateTime leaveBeginDate = assiduousnessRecord.getDate();
-			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
-			Interval leaveInterval = new Interval(leaveBeginDate, leaveEndDate.plusDays(1));
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate().plusDays(1).minusMillis(1);
+			;
+			Interval leaveInterval = new Interval(leaveBeginDate, leaveEndDate);
 
 			if (leaveInterval.overlaps(monthInterval)) {
 			    boolean vacationsEventFound = false;
 			    for (VacationsEvent vacationsEvent : vacations) {
 				if (vacationsEvent.getGanttDiagramEventName().equalInAnyLanguage(
 					justification.getJustificationMotive().getDescription())) {
-				    vacationsEvent.addNewInterval(leaveInterval);
+				    vacationsEvent.addNewInterval(leaveInterval, justification.getJustificationMotive()
+					    .getDayType());
 				    vacationsEventFound = true;
 				}
 			    }
 			    if (vacationsEventFound == false) {
 				VacationsEvent vacationsEvent = VacationsEvent.create(new MultiLanguageString(justification
-					.getJustificationMotive().getDescription()), yearMonth.getNumberOfMonth(), monthInterval);
+					.getJustificationMotive().getDescription()), yearMonth.getNumberOfMonth(), monthInterval,
+					null);
 				vacations.add(vacationsEvent);
-				vacationsEvent.addNewInterval(leaveInterval);
+				vacationsEvent.addNewInterval(leaveInterval, justification.getJustificationMotive().getDayType());
 			    }
 			}
 		    }
 		}
 	    }
 	    Collections.sort(vacations, new BeanComparator("title"));
-	    // GanttDiagram diagram =
-	    // GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
-	    // request.setAttribute("ganttDiagramByMonth", diagram);
+	    GanttDiagram diagram = GanttDiagram.getNewMonthlyGanttDiagram(vacations, beginDate);
+	    request.setAttribute("ganttDiagramByMonth", diagram);
 	}
 
 	request.setAttribute("yearMonth", yearMonth);
@@ -347,7 +350,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		LastMomentOfMonth = LastMomentOfMonth.plusMonths(1);
 		final String label = RenderUtils.getResourceString("ENUMERATION_RESOURCES", Month.values()[i].toString());
 		vacations.add(VacationsEvent.create(new MultiLanguageString(label), i + 1, new Interval(FirstMomentOfMonth,
-			LastMomentOfMonth)));
+			LastMomentOfMonth), null));
 	    }
 
 	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), 1, 1);
@@ -358,20 +361,17 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
 			DateTime leaveBeginDate = assiduousnessRecord.getDate();
-			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
-			if (leaveBeginDate.getYear() == beginDate.getYear()) {
-			    for (VacationsEvent vacationsEvent : vacations) {
-				vacationsEvent.addNewInterval(new Interval(leaveBeginDate, leaveEndDate.plusHours(23)
-					.plusMinutes(59).plusSeconds(59)));
-			    }
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate().plusDays(1).minusMillis(1);
+			for (VacationsEvent vacationsEvent : vacations) {
+			    vacationsEvent.addNewInterval(new Interval(leaveBeginDate, leaveEndDate), justification
+				    .getJustificationMotive().getDayType());
 			}
 		    }
 		}
 	    }
 
-	    // GanttDiagram diagram =
-	    // GanttDiagram.getNewYearDailyGanttDiagram(vacations, beginDate);
-	    // request.setAttribute("ganttDiagram", diagram);
+	    GanttDiagram diagram = GanttDiagram.getNewYearDailyGanttDiagram(vacations, beginDate);
+	    request.setAttribute("ganttDiagram", diagram);
 	}
 
 	request.setAttribute("yearMonth", yearMonth);

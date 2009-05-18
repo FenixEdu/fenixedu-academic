@@ -15,16 +15,17 @@
 		<property name="size" value="42" />
 	</slot>
 </schema>
-<schema name="card.generation.search.person.form" type="net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson$SearchParameters">
+<schema name="card.generation.search.person.form" type="net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson$SearchParameters" bundle="CARD_GENERATION_RESOURCES">
 	<slot name="name"/>
 	<slot name="email"/>
-	<slot name="username"/>
+	<slot name="username" key="label.istid"/>
 	<slot name="documentIdNumber"/>
+	<slot name="mechanoGraphicalNumber"/>
 </schema>
-<schema name="card.generation.search.person.list" type="net.sourceforge.fenixedu.domain.Person">
+<schema name="card.generation.search.person.list" type="net.sourceforge.fenixedu.domain.Person" bundle="CARD_GENERATION_RESOURCES">
 	<slot name="name"/>
 	<slot name="email"/>
-	<slot name="username"/>
+	<slot name="username" key="label.istid"/>
 	<slot name="documentIdNumber"/>
 	<slot name="numberOfCardGenerationEntries"/>
 </schema>

@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
@@ -82,9 +83,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
     public void edit(MultiLanguageString title, MultiLanguageString description, List<AllocatableSpace> newRooms,
 	    List<GenericEventSpaceOccupation> roomOccupationsToRemove) {
 
-//	if (getLastInstant().isBeforeNow()) {
-//	    throw new DomainException("error.edit.GenericEvent.because.was.old.event");
-//	}
+	// if (getLastInstant().isBeforeNow()) {
+	// throw new
+	// DomainException("error.edit.GenericEvent.because.was.old.event");
+	// }
 
 	if (getPunctualRoomsOccupationRequest() != null
 		&& getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
@@ -109,9 +111,10 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 
     public void delete() {
 
-//	if (getLastInstant().isBeforeNow()) {
-//	    throw new DomainException("error.GenericEvent.impossible.delete.because.was.old.event");
-//	}
+	// if (getLastInstant().isBeforeNow()) {
+	// throw new
+	// DomainException("error.GenericEvent.impossible.delete.because.was.old.event");
+	// }
 
 	if (getPunctualRoomsOccupationRequest() != null
 		&& getPunctualRoomsOccupationRequest().getCurrentState().equals(RequestState.RESOLVED)) {
@@ -289,6 +292,26 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    return getGenericEventSpaceOccupations().get(0).getEventSpaceOccupationIntervals(null, null);
 	}
 	return Collections.emptyList();
+    }
+
+    public Integer getGanttDiagramEventMonth() {
+	return null;
+    }
+
+    public String getGanttDiagramEventUrlAddOns() {
+	return null;
+    }
+
+    public boolean isGanttDiagramEventIntervalsLongerThanOneDay() {
+	return false;
+    }
+
+    public boolean isGanttDiagramEventToMarkWeekendsAndHolidays() {
+	return false;
+    }
+
+    public DayType getGanttDiagramEventDayType(Interval interval) {
+	return null;
     }
 
     public String getGanttDiagramEventPeriod() {

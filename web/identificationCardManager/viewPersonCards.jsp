@@ -14,16 +14,17 @@
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch"%>
 <%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%><html:xhtml/>
 
-<h2>
-	<bean:message key="link.card.generation.search.people" />
-</h2>
+<em>Cartões de Identificação</em>
+<h2><bean:message key="link.card.generation.search.people" /></h2>
 
-<br/>
+<p><html:link page="/searchPeople.do?method=search">« Voltar</html:link></p>
 
 <logic:present name="person">
 	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<fr:view name="person" schema="card.generation.search.person.list">
 		<fr:layout name="tabular">
+<%--			<fr:property name="classes" value="tstyle1 thlight thleft thtop"/>
+--%>
 			<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
 			<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 			<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
@@ -77,11 +78,115 @@
 		</fr:view>
 	</logic:notPresent>
 
-	<br/>
-	<br/>
 
 	<logic:present name="cardGenerationEntry">
+	
+	<!-- 
 		<bean:write name="cardGenerationEntry" property="line"/>
+	 -->
+	
+		<table class="tstyle1 thlight tdcenter">
+			<tr>
+				<th>Nome</th>
+				<th>Conteúdo</th>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.campusCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="campusCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.courseCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="courseCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.entityCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="entityCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.categoryCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="categoryCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.memberNumber"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="memberNumber"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.registerPurpose"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="registerPurpose"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.expirationDate"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="expirationDate"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.reservedField1"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="reservedField1"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.reservedField2"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="reservedField2"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.subClassCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="subClassCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.cardViaNumber"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="cardViaNumber"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.courseCode2"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="courseCode2"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.secondaryCategoryCode"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryCategoryCode"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.secondaryMemberNumber"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryMemberNumber"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.course"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="course"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.editedStudentNumber"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="editedStudentNumber"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.editedSecondaryMemberNumber"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="editedSecondaryMemberNumber"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.levelOfEducation"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="levelOfEducation"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.registrationYear"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="registrationYear"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.issueDate"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="issueDate"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.secondaryCategory"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryCategory"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.workPlace"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="workPlace"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.extraInformation"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="extraInformation"/></td>
+			</tr>
+			<tr>
+				<td class="aleft"><bean:message key="cardGeneration.studentCompleteName"/></td>
+				<td class="aleft"><bean:write name="cardGenerationEntry" property="studentCompleteName"/></td>
+			</tr>
+		</table>
 	</logic:present>
 
 	<br/>

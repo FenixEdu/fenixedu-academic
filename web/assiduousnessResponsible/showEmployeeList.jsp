@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/ganttDiagrams.tld" prefix="gd" %>
 
 <em class="invisible"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></em>
 <h2><bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/></h2>
@@ -39,41 +40,41 @@
 		</p>
 	</div>
 
-
-<logic:present name="unitEmployeesList">
-	<logic:empty name="unitEmployeesList">
-		<p><em><bean:message key="message.assiduousness.noEmployees" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
-	</logic:empty>
-	<logic:notEmpty name="unitEmployeesList">
-		<logic:iterate id="unitEmployees" name="unitEmployeesList">
-			<p class="mtop1 mbottom05">
-				<fr:view name="unitEmployees" property="unit">
-					<fr:layout name="link">
-						<fr:property name="classes" value="bold"/>
-						<fr:property name="linkFormat" value="<%="/assiduousnessResponsible.do?idInternal=${idInternal}&method=showEmployeeList&month="+month.toString()+"&year="+year.toString()%>"/>
-						<fr:property name="moduleRelative" value="true"/>
-						<fr:property name="contextRelative" value="true"/>
-						<fr:property name="subSchema" value="unit.name"/>
-						<fr:property name="subLayout" value="values"/>
-					</fr:layout>
-				</fr:view>
-			</p>
-			<logic:present name="unitToShow">
-				<bean:define id="unitToShow" name="unitToShow"/>
-				<logic:equal name="unitEmployees" property="unit.idInternal" value="<%=unitToShow.toString()%>">
-					<fr:view name="unitEmployees" property="employeeList" schema="show.employeePersonalInformation.toList">
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle1 printborder" />
-							<fr:property name="columnClasses" value="acenter,,"/>
-							<fr:property name="link(view)" value="<%="/assiduousnessResponsible.do?method=showEmployeeWorkSheet&month="+month.toString()+"&year="+year.toString()%>"/>
-							<fr:property name="key(view)" value="link.workSheet"/>
-							<fr:property name="param(view)" value="employeeNumber"/>
-							<fr:property name="bundle(view)" value="ASSIDUOUSNESS_RESOURCES"/>
+	<logic:present name="unitEmployeesList">
+		<logic:empty name="unitEmployeesList">
+			<p><em><bean:message key="message.assiduousness.noEmployees" bundle="ASSIDUOUSNESS_RESOURCES"/></em></p>
+		</logic:empty>
+		<logic:notEmpty name="unitEmployeesList">
+			<logic:iterate id="unitEmployees" name="unitEmployeesList">
+				<p class="mtop1 mbottom05">
+					<fr:view name="unitEmployees" property="unit">
+						<fr:layout name="link">
+							<fr:property name="classes" value="bold"/>
+							<fr:property name="linkFormat" value="<%="/assiduousnessResponsible.do?idInternal=${idInternal}&method=showEmployeeList&month="+month.toString()+"&year="+year.toString()%>"/>
+							<fr:property name="moduleRelative" value="true"/>
+							<fr:property name="contextRelative" value="true"/>
+							<fr:property name="subSchema" value="unit.name"/>
+							<fr:property name="subLayout" value="values"/>
 						</fr:layout>
 					</fr:view>
-				</logic:equal>
-			</logic:present>
-		</logic:iterate>
-	</logic:notEmpty>
-</logic:present>
+				</p>
+				<logic:present name="unitToShow">
+					<bean:define id="unitToShow" name="unitToShow"/>
+					<logic:equal name="unitEmployees" property="unit.idInternal" value="<%=unitToShow.toString()%>">
+						<logic:notEmpty name="ganttDiagramByMonth">
+							<logic:present name="yearMonth">
+								<bean:define id="month" name="yearMonth" property="month" />
+								<bean:define id="year" name="yearMonth" property="year" />
+								<bean:define id="yearMonth" name="yearMonth"/>
+								<%request.setAttribute("yearMonth", yearMonth);%>
+								<div class="vacation">									
+									<gd:ganttDiagram ganttDiagram="ganttDiagramByMonth" eventParameter="entryMonthID" eventUrl="<%= "/departmentMember/assiduousnessResponsible.do?method=showEmployeeWorkSheet&amp;month=" + month + "&amp;year=" + year %>" showPeriod="false" showObservations="false" bundle="ASSIDUOUSNESS_RESOURCES"/>
+								</div>
+							</logic:present>
+						</logic:notEmpty>
+					</logic:equal>
+				</logic:present>
+			</logic:iterate>
+		</logic:notEmpty>
+	</logic:present>		
 </logic:present>

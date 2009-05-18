@@ -5,9 +5,10 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<h2>
-	<bean:message key="link.manage.card.generation" />
-</h2>
+<em>Cartões de Identificação</em>
+<h2><bean:message key="link.manage.card.generation" /></h2>
+
+<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
 
 <br/>
 

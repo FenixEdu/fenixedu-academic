@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
@@ -24,7 +25,7 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     private int diaSemana;
 
-    private DomainReference<GenericEvent> genericEventReference;
+    private final DomainReference<GenericEvent> genericEventReference;
 
     public InfoGenericEvent(GenericEvent genericEvent) {
 	genericEventReference = new DomainReference<GenericEvent>(genericEvent);
@@ -48,6 +49,7 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 	return genericEventReference == null ? null : genericEventReference.getObject();
     }
 
+    @Override
     public Integer getIdInternal() {
 	final GenericEvent genericEvent = getGenericEvent();
 	return genericEvent == null ? null : genericEvent.getIdInternal();
@@ -81,8 +83,8 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     @Override
     public InfoRoomOccupation getInfoRoomOccupation() {
 	final GenericEvent genericEvent = getGenericEvent();
-	return (genericEvent == null || genericEvent.getGenericEventSpaceOccupations().isEmpty()) ?
-		null : InfoRoomOccupation.newInfoFromDomain(genericEvent.getGenericEventSpaceOccupations().get(0));
+	return (genericEvent == null || genericEvent.getGenericEventSpaceOccupations().isEmpty()) ? null : InfoRoomOccupation
+		.newInfoFromDomain(genericEvent.getGenericEventSpaceOccupations().get(0));
     }
 
     @Override
@@ -97,15 +99,15 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     public String getGanttDiagramEventIdentifier() {
 	final GenericEvent genericEvent = getGenericEvent();
-	final PunctualRoomsOccupationRequest punctualRoomsOccupationRequest = genericEvent == null ?
-		null : getGenericEvent().getPunctualRoomsOccupationRequest();
+	final PunctualRoomsOccupationRequest punctualRoomsOccupationRequest = genericEvent == null ? null : getGenericEvent()
+		.getPunctualRoomsOccupationRequest();
 	return punctualRoomsOccupationRequest == null ? null : punctualRoomsOccupationRequest.getIdInternal().toString();
     }
 
     public MultiLanguageString getGanttDiagramEventName() {
 	final GenericEvent genericEvent = getGenericEvent();
-	final PunctualRoomsOccupationComment punctualRoomsOccupationComment = genericEvent == null ?
-		null : getGenericEvent().getPunctualRoomsOccupationRequest().getFirstComment();
+	final PunctualRoomsOccupationComment punctualRoomsOccupationComment = genericEvent == null ? null : getGenericEvent()
+		.getPunctualRoomsOccupationRequest().getFirstComment();
 	return punctualRoomsOccupationComment == null ? null : punctualRoomsOccupationComment.getSubject();
     }
 
@@ -126,5 +128,25 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
     public List<Interval> getGanttDiagramEventSortedIntervals() {
 	final GenericEvent genericEvent = getGenericEvent();
 	return genericEvent == null ? null : genericEvent.getGanttDiagramEventSortedIntervals();
+    }
+
+    public Integer getGanttDiagramEventMonth() {
+	return null;
+    }
+
+    public String getGanttDiagramEventUrlAddOns() {
+	return null;
+    }
+
+    public boolean isGanttDiagramEventIntervalsLongerThanOneDay() {
+	return false;
+    }
+
+    public boolean isGanttDiagramEventToMarkWeekendsAndHolidays() {
+	return false;
+    }
+
+    public DayType getGanttDiagramEventDayType(Interval interval) {
+	return null;
     }
 }

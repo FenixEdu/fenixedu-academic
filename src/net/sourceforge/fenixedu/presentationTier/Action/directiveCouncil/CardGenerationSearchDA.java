@@ -42,14 +42,18 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	    if (documentIdNumber != null && documentIdNumber.length() > 0) {
 		searchParameters.setDocumentIdNumber(documentIdNumber);
 	    }
+	    final String mechanoGraphicalNumber = request.getParameter("mechanoGraphicalNumber");
+	    if (mechanoGraphicalNumber != null && mechanoGraphicalNumber.length() > 0 && mechanoGraphicalNumber.matches("[0-9]+")) {
+		searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
+	    }
 	}
 	request.setAttribute("searchParameters", searchParameters);
 
 	if (!searchParameters.emptyParameters()) {
 	    final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	    final Object[] args = { searchParameters, predicate };
-	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService("SearchPerson",
-		    args);
+	    final CollectionPager<Person> searchPersonCollectionPager = (CollectionPager<Person>) executeService(
+		    "SearchPersonWithCard", args);
 	    request.setAttribute("searchPersonCollectionPager", searchPersonCollectionPager);
 	    request.setAttribute("numberOfPages", searchPersonCollectionPager.getNumberOfPages());
 	    final String pageNumberString = request.getParameter("pageNumber");
