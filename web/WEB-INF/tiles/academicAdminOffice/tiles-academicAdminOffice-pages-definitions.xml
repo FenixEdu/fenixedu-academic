@@ -68,10 +68,7 @@
     </definition>      
     <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp"></put>
-    </definition>      
-    <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
-    </definition>      
+    </definition>
 
 	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>

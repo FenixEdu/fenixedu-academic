@@ -213,17 +213,7 @@
 			validate="true"
 			input="/manageExternalRegistrationData.do?method=prepare">
 	        	<forward name="manageExternalRegistrationData" path="student.manageExternalRegistrationData"/>
-	    </action>		    		
-	    
-	    <action path="/addNewStudentCurricularPlan"
-		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentCurricularPlanDA"
-	        parameter="method"
-			scope="request"
-			validate="true" >
-	        	<forward name="showCreateNewStudentCurricularPlan" path="student.showCreateNewStudentCurricularPlan"/>
-	        	<forward name="viewRegistrationDetails" path="student.viewRegistrationDetails"/>	
-	    </action>		    		
-	    
+	    </action>
 	    
 		<action path="/studentEnrolments"
 				scope="request"		

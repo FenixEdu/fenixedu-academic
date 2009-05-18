@@ -17,10 +17,22 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(path = "/addNewStudentCurricularPlan", module = "academicAdminOffice")
+@Forwards( {
+	@Forward(name = "showCreateNewStudentCurricularPlan", path = "/academicAdminOffice/createStudentCurricularPlan.jsp"),
+	// Once tiles definition is deleted, below should be:
+	// "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"
+	@Forward(name = "viewRegistrationDetails", path = "student.viewRegistrationDetails")
+
+})
 public class StudentCurricularPlanDA extends FenixDispatchAction {
 
     public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
