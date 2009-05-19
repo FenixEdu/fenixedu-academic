@@ -194,7 +194,7 @@ candidato pretenda aceder.</p>
 </table>
 
 <h2 id="prop">Propinas</h2>
-<p>Para o ano lectivo de 2009/2010 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados está prevista no valor de <b>996,85 Euros</b>.</p>
+<p>Para o ano lectivo de 2009/2010 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados é de <b>996,85 Euros</b>.</p>
 
 
 <h2 id="praz">Prazos</h2>
