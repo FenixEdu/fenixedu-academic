@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;

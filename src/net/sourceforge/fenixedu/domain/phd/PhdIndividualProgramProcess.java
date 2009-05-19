@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -21,10 +23,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditPersonalInformation());
+	activities.add(new AddQualification());
+	activities.add(new DeleteQualification());
+	activities.add(new EditJobsInformation());
     }
 
     @StartActivity
-    public static class CreateCandidacy extends Activity<PhdIndividualProgramProcess> {
+    static public class CreateCandidacy extends Activity<PhdIndividualProgramProcess> {
 
 	@Override
 	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
@@ -52,7 +57,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
-    public static class EditPersonalInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class EditPersonalInformation extends Activity<PhdIndividualProgramProcess> {
 
 	@Override
 	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
@@ -65,11 +70,66 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-
 	    process.getPerson().edit((PersonBean) object);
-
 	    return process;
+	}
+    }
 
+    static public class AddQualification extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.addQualification((QualificationBean) object);
+	}
+
+    }
+
+    static public class DeleteQualification extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    final Qualification qualification = (Qualification) object;
+	    if (process.getPerson().hasAssociatedQualifications(qualification)) {
+		qualification.delete();
+	    }
+	    return process;
+	}
+    }
+
+    static public class EditJobsInformation extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 
     }
@@ -100,6 +160,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
+    }
+
+    private PhdIndividualProgramProcess addQualification(final QualificationBean bean) {
+	new Qualification(getPerson(), bean);
+	return this;
     }
 
 }

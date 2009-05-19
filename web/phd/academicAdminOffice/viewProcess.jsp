@@ -55,7 +55,12 @@
 				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.manageCandidacyDocuments"/>
 				</html:link>
-			</li>	
+			</li>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=prepareEditQualificationsAndJobsInformation" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.editQualificationsAndJobsInformation"/>
+				</html:link>
+			</li>
 		</ul>
   
     </td>

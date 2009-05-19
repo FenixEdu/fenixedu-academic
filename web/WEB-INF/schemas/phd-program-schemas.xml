@@ -270,6 +270,22 @@
 	<slot name="filename" />
 </schema>
 
+<schema name="Phd.Qualification.view" type="net.sourceforge.fenixedu.domain.Qualification" bundle="PHD_RESOURCES">
+	<slot name="type" />
+	<slot name="degree" />
+	<slot name="school" />
+	<slot name="mark" />
+	<slot name="dateYearMonthDay">
+		<property name="format" value="${year}"/>
+	</slot>
+</schema>
 
-
-
+<schema name="Phd.Qualification.manage" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />
+	</slot>
+	<slot name="degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="mark" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>

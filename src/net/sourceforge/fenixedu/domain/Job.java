@@ -15,6 +15,11 @@ public class Job extends Job_Base {
 	}
     };
 
+    private Job() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, ContractType contractType) {
 	this(person, employerName, city, country, businessArea, position, beginDate, endDate, null, contractType, null);
@@ -23,8 +28,8 @@ public class Job extends Job_Base {
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, JobApplicationType applicationType, ContractType contractType,
 	    SalaryType salaryType) {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	
+	this();
 
 	checkParameters(person, employerName, city, country, businessArea, position, beginDate, endDate);
 

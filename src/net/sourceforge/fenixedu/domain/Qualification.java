@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 import org.joda.time.YearMonthDay;
@@ -37,16 +36,29 @@ public class Qualification extends Qualification_Base {
 	setCountry(precedentDegreeInformation.getCountry() == null ? null : precedentDegreeInformation.getCountry());
     }
 
+    public Qualification(final Person person, final QualificationBean bean) {
+	this();
+
+	check(person, "error.Qualification.invalid.person");
+
+	setPerson(person);
+	setType(bean.getType());
+	setSchool(bean.getSchool());
+	setDegree(bean.getDegree());
+	setDateYearMonthDay(new YearMonthDay(Integer.valueOf(bean.getYear()), 1, 1));
+	setMark(bean.getMark());
+    }
+
     @Override
     public void setPerson(Person person) {
 	/*
-	 * 21/04/2009 - A Qualification may be associated with a IndividualCandidacy. So the person may be
-	 * null
+	 * 21/04/2009 - A Qualification may be associated with a
+	 * IndividualCandidacy. So the person may be null
 	 */
 	/*
-	if (person == null) {
-	    throw new DomainException("The person should not be null!");
-	}*/
+	 * if (person == null) { throw new
+	 * DomainException("The person should not be null!"); }
+	 */
 	super.setPerson(person);
     }
 
