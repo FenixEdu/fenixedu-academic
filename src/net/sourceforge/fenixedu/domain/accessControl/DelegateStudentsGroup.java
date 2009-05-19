@@ -32,7 +32,7 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     public DelegateStudentsGroup(PersonFunction delegateFunction) {
-	this(delegateFunction, null);
+	this(delegateFunction, delegateFunction.getFunction().getFunctionType());
     }
 
     @Override
@@ -118,7 +118,8 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     public PersonFunction getPersonFunction() {
-	return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(personFunctionId) : null;
+	return personFunctionId != null ? (PersonFunction) RootDomainObject.getInstance().readAccountabilityByOID(
+		personFunctionId) : null;
     }
 
     public Student getStudent() {

@@ -262,7 +262,6 @@
 		<slot name="selected" layout="option-select" bundle="MESSAGING_RESOURCES" key="label.receiversGroup">
 			<property name="saveOptions" value="true"/>
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DelegatesGroupsProvider"/>
-			<!-- <property name="format" value="${name}"/> -->
 			<property name="eachSchema" value="delegates.show.eachGroup"/>
 			<property name="eachLayout" value="values"/>
 			<property name="classes" value="nobullet noindent"/>
