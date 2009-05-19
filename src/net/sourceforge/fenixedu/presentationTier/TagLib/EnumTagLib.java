@@ -34,6 +34,7 @@ public class EnumTagLib extends BodyTagSupport {
     protected static MessageResources messages = MessageResources
 	    .getMessageResources("org.apache.struts.taglib.bean.LocalStrings");
 
+    @Override
     public int doStartTag() throws JspException {
 	Collection<LabelValueBean> labelValueBeans = getLabelValues();
 	pageContext.getRequest().setAttribute(id, labelValueBeans);
@@ -49,6 +50,7 @@ public class EnumTagLib extends BodyTagSupport {
 	this.enumeration = enumeration;
     }
 
+    @Override
     public void setId(String id) {
 	this.id = id;
     }
@@ -133,7 +135,7 @@ public class EnumTagLib extends BodyTagSupport {
 	if (fieldNamesString != null && fieldNamesString.length() > 0) {
 	    String[] fieldsNamesArray = fieldNamesString.split(",");
 	    for (String fieldName : fieldsNamesArray) {
-		fieldsNamesSet.add(fieldName);
+		fieldsNamesSet.add(fieldName.trim());
 	    }
 	}
     }
