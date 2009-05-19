@@ -54,7 +54,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -138,11 +137,9 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
     public VacationsEvent VacationsEventByMonth(Employee employee, YearMonth yearMonth) throws FenixServiceException,
 	    FenixFilterException, InvalidArgumentException {
 
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), yearMonth.getPartial()
-		.get(DateTimeFieldType.monthOfYear()), 1);
-	DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
-	DateTime LastMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
-	Interval monthInterval = new Interval(FirstMomentOfMonth, LastMomentOfMonth);
+	DateTime firstMomentOfMonth = new DateTime(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 1, 0, 0, 0, 0);
+	DateTime lastMomentOfMonth = firstMomentOfMonth.plusMonths(1);
+	Interval monthInterval = new Interval(firstMomentOfMonth, lastMomentOfMonth);
 
 	VacationsEvent vacationsEvent = VacationsEvent.create(new MultiLanguageString(employee.getEmployeeNumber().toString()
 		.concat(" - ").concat(employee.getPerson().getFirstAndLastName())), yearMonth.getNumberOfMonth(), monthInterval,

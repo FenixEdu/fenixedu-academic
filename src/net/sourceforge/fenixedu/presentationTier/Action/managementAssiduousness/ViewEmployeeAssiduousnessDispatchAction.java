@@ -292,8 +292,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
 			DateTime leaveBeginDate = assiduousnessRecord.getDate();
-			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate().plusDays(1).minusMillis(1);
-			;
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
 			Interval leaveInterval = new Interval(leaveBeginDate, leaveEndDate);
 
 			if (leaveInterval.overlaps(monthInterval)) {
@@ -340,17 +339,17 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	    return mapping.findForward("show-vacations-map");
 	}
 
-	DateTime FirstMomentOfMonth = new DateTime(yearMonth.getYear() - 1, 12, 1, 0, 0, 0, 0);
-	DateTime LastMomentOfMonth = new DateTime(yearMonth.getYear(), 1, 1, 0, 0, 0, 0);
+	DateTime firstMomentOfMonth = new DateTime(yearMonth.getYear() - 1, 12, 1, 0, 0, 0, 0);
+	DateTime lastMomentOfMonth = new DateTime(yearMonth.getYear(), 1, 1, 0, 0, 0, 0);
 
 	if (employee.getAssiduousness() != null) {
 	    List<VacationsEvent> vacations = new ArrayList<VacationsEvent>();
 	    for (int i = 0; i < 12; i++) {
-		FirstMomentOfMonth = FirstMomentOfMonth.plusMonths(1);
-		LastMomentOfMonth = LastMomentOfMonth.plusMonths(1);
+		firstMomentOfMonth = firstMomentOfMonth.plusMonths(1);
+		lastMomentOfMonth = lastMomentOfMonth.plusMonths(1);
 		final String label = RenderUtils.getResourceString("ENUMERATION_RESOURCES", Month.values()[i].toString());
-		vacations.add(VacationsEvent.create(new MultiLanguageString(label), i + 1, new Interval(FirstMomentOfMonth,
-			LastMomentOfMonth), null));
+		vacations.add(VacationsEvent.create(new MultiLanguageString(label), i + 1, new Interval(firstMomentOfMonth,
+			lastMomentOfMonth), null));
 	    }
 
 	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getPartial().get(DateTimeFieldType.year()), 1, 1);
@@ -361,7 +360,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 		    if (isJustificationNotAnulatedAndInVacationGroup(justification)) {
 			DateTime leaveBeginDate = assiduousnessRecord.getDate();
-			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate().plusDays(1).minusMillis(1);
+			DateTime leaveEndDate = ((Leave) assiduousnessRecord).getEndDate();
 			for (VacationsEvent vacationsEvent : vacations) {
 			    vacationsEvent.addNewInterval(new Interval(leaveBeginDate, leaveEndDate), justification
 				    .getJustificationMotive().getDayType());
