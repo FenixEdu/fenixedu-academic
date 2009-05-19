@@ -173,23 +173,8 @@ public class TSDProcessPhase extends TSDProcessPhase_Base {
 
     @Override
     @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setKeyNextTSDProcessPhase(Integer keyNextTSDProcessPhase) {
-
-	super.setKeyNextTSDProcessPhase(keyNextTSDProcessPhase);
-    }
-
-    @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setKeyPreviousTSDProcessPhase(Integer keyPreviousTSDProcessPhase) {
-
-	super.setKeyPreviousTSDProcessPhase(keyPreviousTSDProcessPhase);
-    }
-
-    @Override
-    @Checked("TSDProcessPhasePredicates.writePredicate")
-    public void setKeyTSDProcess(Integer keyTSDProcess) {
-
-	super.setKeyTSDProcess(keyTSDProcess);
+    public void setTSDProcess(TSDProcess tsdProcess) {
+	super.setTSDProcess(tsdProcess);
     }
 
     @Override

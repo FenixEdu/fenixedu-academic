@@ -86,10 +86,6 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
 		String slotName = slot.getName();
 
-		if (slotName.startsWith("key")) {
-		    continue;
-		}
-
 		Object objProperty1 = null;
 		Object objProperty2 = null;
 		try {

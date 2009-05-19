@@ -393,7 +393,7 @@
 			<arg value="net.sourceforge.fenixedu.injectionCode.AccessControl.check(net.sourceforge.fenixedu.predicates." />
 			<arg value=");" />
 			<arg value="${build.home.webinf.classes}" />
-			<arg value="${build.home.webinf.libs}/dml-20090306.jar" />
+			<arg value="${build.home.webinf.libs}/dml-20090519.jar" />
 			<arg value="${build.home.webinf.libs}/jvstm.jar" />
                         <!-- arg value="${build.home.webinf.libs}/fenix-framework.jar" / -->
 			<arg value="${build.home.webinf.libs}/fenix-web-framework.jar" />
