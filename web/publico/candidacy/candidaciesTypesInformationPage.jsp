@@ -120,8 +120,8 @@
 	<ul class="cycles">
 		<li class="btt_one"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas (1&ordm; Ciclo)</a></li>
 		<li class="btt_two"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/mestrados" %>">Mestrados (2&ordm; Ciclo)</a></li>
-		<li class="btt_three"><a href="http://www.ist.utl.pt/html/perfil/candidato/fa/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
-		<li class="btt_four"><a href="http://www.ist.utl.pt/html/perfil/candidato/pd/">Programas Doutorais (3&ordm; Ciclo)</a></li>
+		<li class="btt_three"><a href="http://www.ist.utl.pt/html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
+		<li class="btt_four"><a href="http://www.ist.utl.pt/html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
 	</ul>
 
 	<div style="clear: both;"></div>
