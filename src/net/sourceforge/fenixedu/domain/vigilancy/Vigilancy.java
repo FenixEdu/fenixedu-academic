@@ -9,10 +9,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -140,34 +138,22 @@ public abstract class Vigilancy extends Vigilancy_Base {
 
     }
 
-    public static List<String> getEmailsThatShouldBeContactedFor(WrittenEvaluation writtenEvaluation) {
-	List<String> emails = getEmailsBySite(writtenEvaluation);
-	if (emails.size() == 0) {
-	    emails = getEmailsByTeachers(writtenEvaluation);
+    public Set<String> getSitesAndGroupEmails() {
+	Set<String> emails = new HashSet<String>();
+	String groupEmail = getAssociatedVigilantGroup().getContactEmail();
+	if (groupEmail != null)
+	    emails.add(groupEmail);
+	for (ExecutionCourse course : getWrittenEvaluation().getAssociatedExecutionCourses()) {
+	    String mail = course.getSite().getMail();
+	    if (mail != null) {
+		emails.add(mail);
+	    }
 	}
 	return emails;
     }
 
-    private static List<String> getEmailsBySite(WrittenEvaluation writtenEvaluation) {
-	Set<String> emails = new HashSet<String>();
-	for (ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
-	    String mail = course.getSite().getMail();
-	    if (mail != null) {
-		emails.add(course.getSite().getMail());
-	    }
-	}
-	return new ArrayList<String>(emails);
-    }
-
-    private static List<String> getEmailsByTeachers(WrittenEvaluation writtenEvaluation) {
-	Set<String> emails = new HashSet<String>();
-	for (ExecutionCourse course : writtenEvaluation.getAssociatedExecutionCourses()) {
-	    for (Professorship professorship : course.getProfessorships()) {
-		String mail = professorship.getTeacher().getPerson().getEmail();
-		emails.add(mail);
-	    }
-	}
-	return new ArrayList<String>(emails);
+    public Set<Person> getTeachers() {
+	return getWrittenEvaluation().getTeachers();
     }
 
     public void delete() {

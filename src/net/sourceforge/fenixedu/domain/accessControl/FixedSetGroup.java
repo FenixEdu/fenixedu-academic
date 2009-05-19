@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +25,20 @@ public class FixedSetGroup extends LeafGroup {
 	super();
 
 	this.persons = new ArrayList<DomainReference<Person>>();
+    }
+
+    @Override
+    public String getName() {
+	Iterator<DomainReference<Person>> iter = persons.iterator();
+	Person person;
+	String name = new String();
+	while (iter.hasNext()) {
+	    person = iter.next().getObject();
+	    name += person.getName();
+	    if (iter.hasNext())
+		name += "\n";
+	}
+	return name;
     }
 
     public FixedSetGroup(Person... persons) {

@@ -86,7 +86,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	Group teachersGroup = new TeachersWithMarkSheetsToConfirm(bean.getExecutionPeriod(), bean.getDegree(), bean
 		.getDegreeCurricularPlan());
 	String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.markSheets.to.confirm.send.mail");
-	Recipient recipient = Recipient.createNewRecipient(message, teachersGroup);
+	Recipient recipient = Recipient.newInstance(message, teachersGroup);
 	UnitBasedSender sender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSenderIterator().next();
 	return EmailsDA.sendEmail(request, sender, recipient);
     }
@@ -97,7 +97,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	Group teachersGroup = new TeachersWithGradesToSubmit(bean.getExecutionPeriod(), bean.getDegree(), bean
 		.getDegreeCurricularPlan());
 	String message = getResources(request, "ACADEMIC_OFFICE_RESOURCES").getMessage("label.grades.to.submit.send.mail");
-	Recipient recipient = Recipient.createNewRecipient(message, teachersGroup);
+	Recipient recipient = Recipient.newInstance(message, teachersGroup);
 	UnitBasedSender sender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSenderIterator().next();
 	return EmailsDA.sendEmail(request, sender, recipient);
     }

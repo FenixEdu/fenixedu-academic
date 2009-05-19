@@ -84,7 +84,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
 	String message = MessageResources.getMessageResources("resources.PedagogicalCouncilResources").getMessage(
 		"label.mail.student.year.degree", curricularYear.getYear().toString(), degree.getSigla());
 
-	Recipient recipient = Recipient.createNewRecipient(message, studentsByDegreeAndCurricularYear);
+	Recipient recipient = Recipient.newInstance(message, studentsByDegreeAndCurricularYear);
 	EmailBean bean = new EmailBean();
 	bean.setRecipients(Collections.singletonList(recipient));
 	bean.setSender(PedagogicalCouncilUnit.getPedagogicalCouncilUnit().getUnitBasedSender().iterator().next());

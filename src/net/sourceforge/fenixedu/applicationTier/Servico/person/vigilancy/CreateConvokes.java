@@ -7,9 +7,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.PersonSender;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
-import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
@@ -24,24 +27,26 @@ public class CreateConvokes extends FenixService {
     public static void run(List<VigilantWrapper> vigilants, WrittenEvaluation writtenEvaluation, VigilantGroup group,
 	    ExamCoordinator coordinator, String emailMessage) {
 	group.convokeVigilants(vigilants, writtenEvaluation);
+
+	Set<Person> recievers = new HashSet<Person>();
+	Set<String> bccs = new HashSet<String>();
+
 	if (emailMessage.length() != 0) {
 	    Person person = coordinator.getPerson();
-	    final Set<String> tos = new HashSet<String>();
 	    for (VigilantWrapper vigilant : vigilants) {
-		String emailTo = vigilant.getEmail();
-		tos.add(emailTo);
+		recievers.add(vigilant.getPerson());
 	    }
 
 	    String groupEmail = group.getContactEmail();
-	    String[] replyTo;
+	    String replyTo;
 
-	    tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(writtenEvaluation));
+	    recievers.addAll(writtenEvaluation.getTeachers());
 
 	    if (groupEmail != null) {
-		tos.add(groupEmail);
-		replyTo = new String[] { groupEmail };
+		bccs.add(groupEmail);
+		replyTo = groupEmail;
 	    } else {
-		replyTo = new String[] { person.getEmail() };
+		replyTo = person.getEmail();
 	    }
 
 	    DateTime date = writtenEvaluation.getBeginningDateTime();
@@ -50,9 +55,8 @@ public class CreateConvokes extends FenixService {
 	    String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
 		    group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
 
-	    new Email(person.getName(), (groupEmail == null) ? person.getEmail() : groupEmail, replyTo, tos, null, null, subject,
-		    emailMessage);
+	    new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo), new Recipient(
+		    new FixedSetGroup(recievers)), subject, emailMessage, bccs);
 	}
     }
-
 }

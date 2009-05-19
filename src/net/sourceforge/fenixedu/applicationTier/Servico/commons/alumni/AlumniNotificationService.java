@@ -1,24 +1,33 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni;
 
 import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlumniNotificationService extends FenixService {
 
-    private static void sendEmail(final String subject, final String body, Alumni alumni) {
-	sendEmail(subject, body, alumni.getStudent().getPerson().getDefaultEmailAddress().getValue());
+    private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
+	    final String bccs) {
+	RootDomainObject.getInstance().getSystemSender().newMessage(recipients, subject, body, bccs);
     }
 
-    private static void sendEmail(final String subject, final String body, String alumniEmail) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
-	new Email(bundle.getString("alumni.public.registration.mail.sender.name"), bundle
-		.getString("alumni.public.registration.mail.sender.email"), subject, body, alumniEmail);
+    private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body) {
+	RootDomainObject.getInstance().getSystemSender().newMessage(recipients, subject, body, "");
+    }
+
+    private static List<Recipient> getAlumniRecipients(Alumni alumni) {
+	return Collections.singletonList(Recipient.newInstance(new PersonGroup(alumni.getStudent().getPerson())));
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni) {
@@ -26,11 +35,12 @@ public class AlumniNotificationService extends FenixService {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
 	final String subject = bundle.getString("alumni.public.registration.mail.subject");
-	final String body = MessageFormat.format(bundle.getString("alumni.public.registration.url"), alumni.getStudent()
-		.getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
-		ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
+	final Person person = alumni.getStudent().getPerson();
+	final String body = MessageFormat.format(bundle.getString("alumni.public.registration.url"),
+		person.getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(), ResourceBundle
+			.getBundle("resources.GlobalResources").getString("fenix.url"));
 
-	sendEmail(subject, body, alumni);
+	sendEmail(getAlumniRecipients(alumni), subject, body);
     }
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
@@ -68,16 +78,18 @@ public class AlumniNotificationService extends FenixService {
 
 	body = body + " " + request.getComment();
 
-	sendEmail(subject, body, request.getContactEmail());
+	sendEmail(Collections.EMPTY_LIST, subject, body, request.getContactEmail());
     }
 
     protected static void sendRegistrationSuccessMail(final Alumni alumni) {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+
 	final String subject = bundle.getString("alumni.public.success.mail.subject");
 	final String body = MessageFormat.format(bundle.getString("alumni.public.username.login.url"), alumni.getStudent()
 		.getPerson().getFirstAndLastName(), alumni.getLoginUsername());
-	sendEmail(subject, body, alumni);
+
+	sendEmail(getAlumniRecipients(alumni), subject, body);
     }
 
 }

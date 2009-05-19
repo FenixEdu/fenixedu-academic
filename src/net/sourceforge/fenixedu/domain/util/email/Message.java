@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -21,7 +22,17 @@ public class Message extends Message_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Message(final Sender sender, final Collection<ReplyTo> replyTos, final Collection<Recipient> recipients,
+    public Message(final Sender sender, ReplyTo replyTo, Recipient recipient, final String subject, final String body,
+	    final Set<String> bccs) {
+	this(sender, Collections.singletonList(replyTo), Collections.singletonList(recipient), subject, body, bccs);
+    }
+
+    public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
+	    final String subject, final String body, final Set<String> bccs) {
+	this(sender, replyTos, recipients, subject, body, new EmailAddressList(bccs).toString());
+    }
+
+    public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
 	    final String subject, final String body, final String bccs) {
 	super();
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();

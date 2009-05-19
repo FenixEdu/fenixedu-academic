@@ -29,9 +29,12 @@ public class Recipient extends Recipient_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public Recipient(final Group group) {
+	this(group.getName(), group);
+    }
+
     public Recipient(final String toName, final Group members) {
 	this();
-	setRootDomainObject(RootDomainObject.getInstance());
 	setToName(toName);
 	setMembers(members);
     }
@@ -90,14 +93,20 @@ public class Recipient extends Recipient_Base {
     }
 
     @Service
-    public static Recipient createNewRecipient(final String toName, final Group members) {
+    public static Recipient newInstance(final String toName, final Group members) {
 	return new Recipient(toName, members);
     }
 
-    public static List<Recipient> createNewRecipient(final List<? extends Group> groups) {
+    @Service
+    public static Recipient newInstance(Group group) {
+	return new Recipient(group);
+    }
+
+    @Service
+    public static List<Recipient> newInstance(final List<? extends Group> groups) {
 	List<Recipient> recipients = new ArrayList<Recipient>();
 	for (Group group : groups) {
-	    recipients.add(Recipient.createNewRecipient(group.getName(), group));
+	    recipients.add(new Recipient(group));
 	}
 	return recipients;
     }

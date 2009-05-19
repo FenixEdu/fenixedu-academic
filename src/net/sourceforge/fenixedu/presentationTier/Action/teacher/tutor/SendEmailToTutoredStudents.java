@@ -38,7 +38,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
 	if (receivers != null) {
 	    for (Tutorship tutorship : receivers.getStudentsList()) {
 		Person person = tutorship.getStudent().getPerson();
-		recipients.add(Recipient.createNewRecipient(person.getName(), new PersonGroup(person)));
+		recipients.add(Recipient.newInstance(person.getName(), new PersonGroup(person)));
 	    }
 	}
 

@@ -153,7 +153,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	String subject = (String) form.get("bodyTextSubject");
 
-	Recipient recipient = Recipient.createNewRecipient(student.getPerson().getName(), new PersonGroup(student.getPerson()));
+	Recipient recipient = Recipient.newInstance(student.getPerson().getName(), new PersonGroup(student.getPerson()));
 	final List<Recipient> recipients = Collections.singletonList(recipient);
 	Sender sender = getGEPSender();
 	if (sender == null) {

@@ -31,7 +31,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 	setFromAddress("noreply@ist.utl.pt");
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new PersonGroup(person));
-	getRecipients().addAll(Recipient.createNewRecipient(getPossibleReceivers(person)));
+	getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));
     }
 
     public static List<Group> getPossibleReceivers(Person person) {

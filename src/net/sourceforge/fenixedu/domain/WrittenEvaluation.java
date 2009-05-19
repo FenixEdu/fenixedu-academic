@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
-import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -830,10 +829,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
 	if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
-	    DateTime enrollmentBegin = convertTimes(this.getEnrollmentBeginDayDateYearMonthDay(),
-		    this.getEnrollmentBeginTimeDateHourMinuteSecond());
-	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(),
-		    this.getEnrollmentEndTimeDateHourMinuteSecond());
+	    DateTime enrollmentBegin = convertTimes(this.getEnrollmentBeginDayDateYearMonthDay(), this
+		    .getEnrollmentBeginTimeDateHourMinuteSecond());
+	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this
+		    .getEnrollmentEndTimeDateHourMinuteSecond());
 
 	    result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
 		    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
@@ -848,7 +847,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    room = registration.getRoomFor(this).getName();
 	} else {
 	    for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupations()) {
-		if (!room.isEmpty()){
+		if (!room.isEmpty()) {
 		    room += "; ";
 		}
 		room += weSpaceOcupation.getRoom().getName();
@@ -861,5 +860,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	return result;
     }
 
+    public Set<Person> getTeachers() {
+	Set<Person> persons = new HashSet<Person>();
+	for (ExecutionCourse course : getAssociatedExecutionCourses()) {
+	    for (Professorship professorship : course.getProfessorships()) {
+		persons.add(professorship.getTeacher().getPerson());
+	    }
+	}
+	return persons;
+    }
+
     public abstract List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort);
+
 }

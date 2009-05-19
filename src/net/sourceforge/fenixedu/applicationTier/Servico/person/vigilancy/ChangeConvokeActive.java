@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.PersonSender;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
 import org.joda.time.DateTime;
 
@@ -26,28 +27,18 @@ public class ChangeConvokeActive extends FenixService {
 
     private static void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
 
-	VigilantWrapper vigilant = convoke.getVigilantWrapper();
-	String emailTo = vigilant.getEmail();
-	final ArrayList<String> tos = new ArrayList<String>();
-	tos.add(emailTo);
+	String replyTo = person.getEmail();
 
 	VigilantGroup group = convoke.getAssociatedVigilantGroup();
 	String groupEmail = group.getContactEmail();
-	String[] replyTo;
 
 	if (groupEmail != null) {
-	    tos.add(groupEmail);
 	    if (person.isExamCoordinatorForVigilantGroup(group)) {
-		replyTo = new String[] { groupEmail };
-	    } else {
-		replyTo = new String[] { person.getEmail() };
+		replyTo = groupEmail;
 	    }
-	} else {
-	    replyTo = new String[] { person.getEmail() };
 	}
 
 	WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
-	tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(writtenEvaluation));
 
 	String emailMessage = generateMessage(bool, convoke);
 	DateTime date = writtenEvaluation.getBeginningDateTime();
@@ -56,8 +47,10 @@ public class ChangeConvokeActive extends FenixService {
 
 	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
 		writtenEvaluation.getName(), group.getName(), beginDateString, time });
-	new Email(person.getName(), (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) ? groupEmail : person
-		.getEmail(), replyTo, tos, null, null, subject, emailMessage);
+
+	new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo), new Recipient(new VigilancyGroup(convoke)),
+		subject, emailMessage, convoke.getSitesAndGroupEmails());
+
     }
 
     private static String generateMessage(Boolean bool, Vigilancy convoke) {

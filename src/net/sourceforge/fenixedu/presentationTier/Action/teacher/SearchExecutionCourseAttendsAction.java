@@ -47,7 +47,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 	SearchExecutionCourseAttendsBean bean = (SearchExecutionCourseAttendsBean) getRenderedObject("mailViewState");
 	ExecutionCourse executionCourse = bean.getExecutionCourse();
 	Group studentsGroup = bean.getAttendsGroup();
-	Recipient recipient = Recipient.createNewRecipient(bean.getLabel(), studentsGroup);
+	Recipient recipient = Recipient.newInstance(bean.getLabel(), studentsGroup);
 	Sender sender = ExecutionCourseSender.newInstance(executionCourse);
 	return EmailsDA.sendEmail(request, sender, recipient);
     }

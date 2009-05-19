@@ -47,7 +47,7 @@ public abstract class ThesisServiceWithMailNotification extends FenixService {
     private Set<Recipient> getRecipients(Thesis thesis) {
 	Set<Recipient> recipients = new HashSet<Recipient>();
 	for (Person person : getReceivers(thesis)) {
-	    recipients.add(Recipient.createNewRecipient(person.getName(), new PersonGroup(person)));
+	    recipients.add(Recipient.newInstance(new PersonGroup(person)));
 	}
 	return recipients;
     }
