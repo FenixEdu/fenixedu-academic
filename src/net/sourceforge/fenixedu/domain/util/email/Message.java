@@ -129,10 +129,4 @@ public class Message extends Message_Base {
 	setSent(new DateTime());
     }
 
-    @Service
-    public static Message newInstance(final Sender sender, final Collection<ReplyTo> replyTos,
-	    final Collection<Recipient> recipients, final String subject, final String body, final String bccs) {
-	return new Message(sender, replyTos, recipients, subject, body, bccs);
-    }
-
 }

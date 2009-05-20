@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.messaging.NewMessageService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
@@ -159,7 +159,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	if (sender == null) {
 	    return false;
 	}
-	Message.newInstance(sender, null, recipients, subject, body.toString(), "");
+	NewMessageService.run(sender, null, recipients, subject, body.toString(), "");
 	return true;
     }
 
