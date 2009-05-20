@@ -479,22 +479,6 @@
        		parameter="method">
 		<forward name="show-report" path="view-curriculum-historic"/>
 	</action>
-
-  	 <action path="/studentDismissals"
-				scope="request"		
-		        parameter="method"
-		        name="studentDismissalForm"
-			    type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDismissalsDA">
-			
-			<forward name="manage" path="studentDismissal.management"/>
-			<forward name="chooseEquivalents" path="studentDismissal.chooseEquivalents"/>
-			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
-			<forward name="chooseDismissalEnrolments" path="studentDismissal.chooseDismissalEnrolments"/>
-			<forward name="confirmCreateDismissals" path="studentDismissal.confirmCreateDismissals"/>
-
-			<forward name="chooseExternalCurricularCourse" path="studentDismissal.chooseExternalCurricularCourse"/>
-			<forward name="prepareCreateExternalEnrolment" path="studentDismissal.prepareCreateExternalEnrolment"/>
-	  </action>
 	  
   	 <action path="/studentSubstitutions"
 				scope="request"		

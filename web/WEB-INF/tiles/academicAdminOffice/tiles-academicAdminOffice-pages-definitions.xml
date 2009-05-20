@@ -97,9 +97,6 @@
 	</definition>
 		
 	<!-- ************* Student Dismissals ************* -->
-	<definition name="studentDismissal.chooseEquivalents" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalents.jsp"/>
-	</definition>
 	<definition name="studentSubstitution.chooseEquivalents" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"/>
 	</definition>
@@ -108,9 +105,6 @@
 	</definition>
 	<definition name="studentCredit.chooseEquivalents" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditEquivalents.jsp"/>
-	</definition>	
-	<definition name="studentDismissal.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"/>
 	</definition>
 	<definition name="studentSubstitution.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEnrolments.jsp"/>
@@ -124,9 +118,6 @@
 	
 	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
-	</definition>
-	<definition name="studentDismissal.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"/>
 	</definition>
 	<definition name="studentSubstitution.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateSubstitution.jsp"/>

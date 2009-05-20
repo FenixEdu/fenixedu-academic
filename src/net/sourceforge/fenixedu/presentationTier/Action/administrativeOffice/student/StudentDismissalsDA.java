@@ -33,7 +33,21 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/studentDismissals", module = "academicAdminOffice", formBean = "studentDismissalForm")
+@Forwards( {
+	// Once tiles definition is deleted, below should be:
+	// "/academicAdminOffice/dismissal/managementDismissals.jsp"
+	@Forward(name = "manage", path = "studentDismissal.management"),
+	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
+	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
+	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
+	@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
+
+})
 public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {
@@ -220,7 +234,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	    executeService("DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage(request, "error.notAuthorized");
-	    
+
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
