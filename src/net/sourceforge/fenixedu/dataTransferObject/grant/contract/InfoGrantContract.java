@@ -8,7 +8,9 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 
 /**
  * @author Barbosa
@@ -187,7 +189,9 @@ public class InfoGrantContract extends InfoObject {
 	grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
 	grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
 	if (infoGrantContract.getGrantCostCenterInfo() != null) {
-	    grantContract.setKeyGrantCostCenter(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+	    final InfoGrantCostCenter infoGrantCostCenter = infoGrantContract.getGrantCostCenterInfo();
+	    final GrantCostCenter grantCostCenter = (GrantCostCenter) RootDomainObject.getInstance().readGrantPaymentEntityByOID(infoGrantCostCenter.getIdInternal());
+	    grantContract.setGrantCostCenter(grantCostCenter);
 	}
     }
 

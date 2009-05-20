@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,9 +27,10 @@ public class ReadStudentTestQuestionImage extends FenixService {
     @Service
     public static String run(Registration registration, DistributedTest distributedTest, Integer questionId, Integer imageId,
 	    String feedbackId, Integer itemIndex, String path) throws FenixServiceException {
+	final Question question = rootDomainObject.readQuestionByOID(questionId);
 	for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
-	    if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
-		    && studentTestQuestion.getKeyQuestion().equals(questionId)) {
+	    if (studentTestQuestion.getDistributedTest() == distributedTest
+		    && studentTestQuestion.getQuestion() == question) {
 		ParseSubQuestion parse = new ParseSubQuestion();
 		try {
 		    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
