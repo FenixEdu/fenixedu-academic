@@ -43,3 +43,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Fenix System Sender" addSystemSender.sql
+execute "Rename the tables of the transactional system" rename-system-tables.sql
+execute "Update PartyClassification" updatePartyClassification.sql
+execute "Adding Phd Program Service Agreemente Template keys" AddPhdProgramServiceAgreementTemplateKeys.sql
+execute "Adding phd program candidacy process document keys" AddPhdCandidacyProcessDocumentKeys.sql
+
+
