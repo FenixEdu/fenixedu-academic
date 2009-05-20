@@ -196,7 +196,7 @@
 
 <h2 id="prop">Propinas</h2>
 
-<p>Para o ano lectivo de 2009/2010 a propina para os Mestrados de 2º ciclo e 2º ciclo de Mestrados Integrados é de <b>996,85 Euros</b>, com excepção do curso "Mestrados em Engenharia Farmacêutica" em que a propina está fixada no valor de <b>5000 Euros</b>. Relativamente ao "Mestrado em Sistemas Complexos de Infra-estruturas de Transportes" é favor consultar o <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">site próprio</a>.</p>
+<p>Para o ano lectivo de 2009/2010 a propina para os Mestrados de 2º ciclo e 2º ciclo de Mestrados Integrados é de <b>996,85 Euros</b>, com excepção do curso "Mestrado em Engenharia Farmacêutica" em que a propina está fixada no valor de <b>5000 Euros</b>. Relativamente ao "Mestrado em Sistemas Complexos de Infra-estruturas de Transportes" é favor consultar o <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">site próprio</a>.</p>
 
 
 <h2 id="praz">Prazos</h2>
