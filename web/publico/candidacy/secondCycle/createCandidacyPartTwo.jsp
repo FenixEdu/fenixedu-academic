@@ -298,7 +298,7 @@
 		  </fr:layout>
 		</fr:edit>
 
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.vat.card.copy" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.vat.card.copy" bundle="CANDIDATE_RESOURCES"/>: </p>
 		<fr:edit id="individualCandidacyProcessBean.document.file.vat.card.copy"
 			name="individualCandidacyProcessBean"
 			property="vatCatCopyDocument" 
