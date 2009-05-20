@@ -280,7 +280,7 @@
 	</slot>
 </schema>
 
-<schema name="Phd.Qualification.manage" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
+<schema name="Phd.QualificationBean.manage" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />
 	</slot>
@@ -288,4 +288,42 @@
 	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="mark" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="Phd.Job.view" type="net.sourceforge.fenixedu.domain.Job" bundle="PHD_RESOURCES">
+	<slot name="employerName" />
+	<slot name="position" />
+	<slot name="city" />
+	<slot name="beginDate" />
+	<slot name="endDate" />
+	<slot name="country" layout="format">
+		<property name="format" value="${name}"/>
+	</slot>
+	<slot name="businessArea" layout="format">
+		<property name="format" value="${description}"/>
+	</slot>
+</schema>
+
+<schema name="Phd.JobBean.manage" type="net.sourceforge.fenixedu.domain.JobBean" bundle="PHD_RESOURCES">
+	<slot name="parentBusinessArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${description}"/>
+		<property name="sortBy" value="description=asc" />
+		<property name="destination" value="searchChilds" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaParentProvider" />		
+	</slot>
+	<slot name="childBusinessArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${description}"/>
+		<property name="sortBy" value="description=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaChildProvider" />
+	</slot>
+	<slot name="city" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="employerName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="position" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="endDate" />
+	<slot name="country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
 </schema>

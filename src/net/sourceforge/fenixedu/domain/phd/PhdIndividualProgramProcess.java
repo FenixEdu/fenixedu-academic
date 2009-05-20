@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Job;
+import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
@@ -25,7 +27,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new EditPersonalInformation());
 	activities.add(new AddQualification());
 	activities.add(new DeleteQualification());
-	activities.add(new EditJobsInformation());
+	activities.add(new AddJobInformation());
+	activities.add(new DeleteJobInformation());
     }
 
     @StartActivity
@@ -114,7 +117,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class EditJobsInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class AddJobInformation extends Activity<PhdIndividualProgramProcess> {
 
 	@Override
 	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
@@ -127,11 +130,29 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
+	    return process.addJobInformation((JobBean) object);
+	}
+    }
 
-	    // TODO Auto-generated method stub
-	    return null;
+    static public class DeleteJobInformation extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    final Job job = (Job) object;
+	    if (process.getPerson().hasJobs(job)) {
+		job.delete();
+	    }
+	    return process;
+	}
     }
 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -164,6 +185,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdIndividualProgramProcess addQualification(final QualificationBean bean) {
 	new Qualification(getPerson(), bean);
+	return this;
+    }
+
+    private PhdIndividualProgramProcess addJobInformation(final JobBean bean) {
+	new Job(getPerson(), bean);
 	return this;
     }
 

@@ -13,7 +13,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=editPersonalInformationBean" />
+<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=qualification&amp;viewStateId=job" />
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
@@ -38,7 +38,7 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 
-<%-- ### Qualifications ### --%>
+	<%-- ### Qualifications ### --%>
 	<br/>
 	<strong><bean:message key="label.phd.academicAdminOffice.editQualificationsInformation" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="qualification">
@@ -49,11 +49,13 @@
 	
 	<logic:present name="qualification">
 		<fr:form action="<%= "/phdIndividualProgramProcess.do?method=addQualification&amp;processId=" + processId %>">
-			<fr:edit id="qualification" name="qualification" schema="Phd.Qualification.manage">
+			<fr:edit id="qualification" name="qualification" schema="Phd.QualificationBean.manage">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle2 thlight mtop15" />
 					<fr:property name="columnClasses" value=",,error0" />
+					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
+				<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=addQualificationInvalid&amp;processId=" + processId %>" />
 				<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareEditQualificationsAndJobsInformation&amp;processId=" + processId %>" />
 			</fr:edit>
 			<html:submit><bean:message key="label.add" bundle="PHD_RESOURCES" /></html:submit>
@@ -64,6 +66,8 @@
 	<fr:view name="qualifications" schema="Phd.Qualification.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+
+			<fr:property name="sortBy" value="type=asc,degree=asc,school=asc" />
 	
 			<fr:property name="link(delete)" value="<%= "/phdIndividualProgramProcess.do?method=deleteQualification&amp;processId=" + processId %>" />
 			<fr:property name="param(delete)" value="externalId/qualificationId" />
@@ -71,12 +75,11 @@
 			<fr:property name="bundle(delete)" value="PHD_RESOURCES" />
 			<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
 			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-	
 		</fr:layout>
 	</fr:view>
-<%-- ### End of Qualifications ### --%>
+	<%-- ### End of Qualifications ### --%>
 
-<%-- ### Jobs ### --%>
+	<%-- ### Jobs ### --%>
 	<br/>
 	<strong><bean:message key="label.phd.academicAdminOffice.editJobsInformation" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="job">
@@ -85,7 +88,38 @@
 		</html:link>
 	</logic:notPresent>
 
-<%-- ### End of Jobs ### --%>
+	<logic:present name="job">
+		<fr:form action="<%= "/phdIndividualProgramProcess.do?method=addJobInformation&amp;processId=" + processId %>">
+			<fr:edit id="job" name="job" schema="Phd.JobBean.manage">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="columnClasses" value=",,error0" />
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+				<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=prepareEditQualificationsAndJobsInformation&amp;processId=" + processId %>" />
+				<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=addJobInformationInvalid&amp;processId=" + processId %>" />
+				<fr:destination name="searchChilds" path="<%= "/phdIndividualProgramProcess.do?method=addJobInformationPostback&amp;processId=" + processId %>" />
+			</fr:edit>
+			<html:submit><bean:message key="label.add" bundle="PHD_RESOURCES" /></html:submit>
+			<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
+		</fr:form>
+	</logic:present>
+
+	<fr:view name="jobs" schema="Phd.Job.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+
+			<fr:property name="sortBy" value="employerName=asc,position=asc" />
+	
+			<fr:property name="link(delete)" value="<%= "/phdIndividualProgramProcess.do?method=deleteJobInformation&amp;processId=" + processId %>" />
+			<fr:property name="param(delete)" value="externalId/jobId" />
+			<fr:property name="key(delete)" value="label.delete" />
+			<fr:property name="bundle(delete)" value="PHD_RESOURCES" />
+			<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
+			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+		</fr:layout>
+	</fr:view>
+	<%-- ### End of Jobs ### --%>
 
 <%--  ### End of Operation Area  ### --%>
 

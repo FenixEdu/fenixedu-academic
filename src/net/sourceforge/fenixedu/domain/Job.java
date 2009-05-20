@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class Job extends Job_Base {
@@ -28,10 +27,11 @@ public class Job extends Job_Base {
     public Job(Person person, String employerName, String city, Country country, BusinessArea businessArea, String position,
 	    LocalDate beginDate, LocalDate endDate, JobApplicationType applicationType, ContractType contractType,
 	    SalaryType salaryType) {
-	
+
 	this();
 
-	checkParameters(person, employerName, city, country, businessArea, position, beginDate, endDate);
+	checkParameters(person, employerName, city, country, businessArea, position);
+	checkDates(beginDate, endDate);
 
 	setPerson(person);
 	setEmployerName(employerName);
@@ -47,32 +47,18 @@ public class Job extends Job_Base {
     }
 
     private void checkParameters(Person person, String employerName, String city, Country country, BusinessArea businessArea,
-	    String position, LocalDate beginDate, LocalDate endDate) {
+	    String position) {
 
-	if (person == null) {
-	    throw new DomainException("job.creation.person.null");
-	}
+	check(person, "job.creation.person.null");
+	check(country, "job.creation.country.null");
+	check(businessArea, "job.creation.businessArea.null");
 
-	if (StringUtils.isEmpty(employerName)) {
-	    throw new DomainException("job.creation.employerName.null");
-	}
+	check(employerName, "job.creation.employerName.null");
+	check(city, "job.creation.city.null");
+	check(position, "job.creation.position.null");
+    }
 
-	if (StringUtils.isEmpty(city)) {
-	    throw new DomainException("job.creation.city.null");
-	}
-
-	if (country == null) {
-	    throw new DomainException("job.creation.country.null");
-	}
-
-	if (businessArea == null) {
-	    throw new DomainException("job.creation.businessArea.null");
-	}
-
-	if (StringUtils.isEmpty(position)) {
-	    throw new DomainException("job.creation.position.null");
-	}
-
+    private void checkDates(LocalDate beginDate, LocalDate endDate) {
 	if (beginDate == null) {
 	    throw new DomainException("job.creation.beginDate.null");
 	}
@@ -82,6 +68,23 @@ public class Job extends Job_Base {
 		throw new DomainException("job.creation.beginDate.after.endDate");
 	    }
 	}
+    }
+
+    public Job(final Person person, final JobBean bean) {
+	this();
+
+	checkParameters(person, bean.getEmployerName(), bean.getCity(), bean.getCountry(), bean.getChildBusinessArea(), bean
+		.getPosition());
+	checkDates(bean.getBeginDate(), bean.getEndDate());
+
+	setPerson(person);
+	setBusinessArea(bean.getChildBusinessArea());
+	setEmployerName(bean.getEmployerName());
+	setCity(bean.getCity());
+	setPosition(bean.getPosition());
+	setBeginDate(bean.getBeginDate());
+	setEndDate(bean.getEndDate());
+	setCountry(bean.getCountry());
     }
 
     public void delete() {

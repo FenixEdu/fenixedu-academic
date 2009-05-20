@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,6 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -76,7 +78,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("editPersonalInformationBean", getEditPersonalInformationBean());
-
 	return executeActivity(PhdIndividualProgramProcess.EditPersonalInformation.class, getEditPersonalInformationBean(),
 		request, mapping, "editPersonalInformation", "viewProcess", "message.personal.data.edited.with.success");
     }
@@ -89,13 +90,16 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     // End of Edit Personal Information
 
     // Edit Qualifications and Jobs information
-    public ActionForward prepareEditQualificationsAndJobsInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
+    private void addQualificationsAndJobsContextInformation(HttpServletRequest request) {
 	final Person person = getProcess(request).getPerson();
 	request.setAttribute("qualifications", person.getAssociatedQualifications());
 	request.setAttribute("jobs", person.getJobs());
+    }
 
+    public ActionForward prepareEditQualificationsAndJobsInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	addQualificationsAndJobsContextInformation(request);
 	return mapping.findForward("editQualificationsAndJobsInformation");
     }
 
@@ -103,40 +107,39 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Person person = getProcess(request).getPerson();
-	request.setAttribute("qualifications", person.getAssociatedQualifications());
-	request.setAttribute("jobs", person.getJobs());
+	addQualificationsAndJobsContextInformation(request);
 	request.setAttribute("qualification", new QualificationBean());
-
 	return mapping.findForward("editQualificationsAndJobsInformation");
     }
 
     public ActionForward addQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Person person = getProcess(request).getPerson();
-	request.setAttribute("qualifications", person.getAssociatedQualifications());
-	request.setAttribute("jobs", person.getJobs());
-
+	addQualificationsAndJobsContextInformation(request);
 	final Object bean = getRenderedObject("qualification");
+
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), "AddQualification", bean);
-	    addActionMessage("success", request, "message.qualification.information.create.success");
+	    addSuccessMessage(request, "message.qualification.information.create.success");
 
 	} catch (DomainException e) {
-	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("qualification", bean);
 	}
+	return mapping.findForward("editQualificationsAndJobsInformation");
+    }
+
+    public ActionForward addQualificationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	addQualificationsAndJobsContextInformation(request);
+	request.setAttribute("qualification", getRenderedObject("qualification"));
 	return mapping.findForward("editQualificationsAndJobsInformation");
     }
 
     public ActionForward deleteQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Person person = getProcess(request).getPerson();
-	request.setAttribute("qualifications", person.getAssociatedQualifications());
-	request.setAttribute("jobs", person.getJobs());
-
+	addQualificationsAndJobsContextInformation(request);
 	return executeActivity(PhdIndividualProgramProcess.DeleteQualification.class,
 		getDomainObject(request, "qualificationId"), request, mapping, "editQualificationsAndJobsInformation",
 		"editQualificationsAndJobsInformation", "message.qualification.information.delete.success");
@@ -146,25 +149,51 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareAddJobInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final Person person = getProcess(request).getPerson();
-	request.setAttribute("qualifications", person.getAssociatedQualifications());
-	request.setAttribute("jobs", person.getJobs());
-	request.setAttribute("job", new JobBean());
-
+	addQualificationsAndJobsContextInformation(request);
+	final JobBean bean = new JobBean();
+	bean.setCountry(Country.readDefault());
+	request.setAttribute("job", bean);
 	return mapping.findForward("editQualificationsAndJobsInformation");
     }
 
     public ActionForward addJobInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	// add code
-	return null;
+
+	addQualificationsAndJobsContextInformation(request);
+	final Object bean = getRenderedObject("job");
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), "AddJobInformation", bean);
+	    addSuccessMessage(request, "message.job.information.create.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("job", bean);
+	}
+	return mapping.findForward("editQualificationsAndJobsInformation");
+    }
+
+    public ActionForward addJobInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	addQualificationsAndJobsContextInformation(request);
+	request.setAttribute("job", getRenderedObject("job"));
+	return mapping.findForward("editQualificationsAndJobsInformation");
+    }
+
+    public ActionForward addJobInformationPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	addQualificationsAndJobsContextInformation(request);
+	request.setAttribute("job", getRenderedObject("job"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("editQualificationsAndJobsInformation");
     }
 
     public ActionForward deleteJobInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	// add code
-	return null;
+	addQualificationsAndJobsContextInformation(request);
+	return executeActivity(PhdIndividualProgramProcess.DeleteJobInformation.class, getDomainObject(request, "jobId"), request, mapping,
+		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
+		"message.job.information.delete.success");
     }
-
     // End of Qualifications and Jobs information
 }
