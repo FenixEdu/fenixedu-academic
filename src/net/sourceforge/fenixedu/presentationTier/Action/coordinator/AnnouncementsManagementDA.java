@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
@@ -23,10 +24,11 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	final Integer degreeCurricularPlanOID = (Integer) request.getAttribute("degreeCurricularPlanID");
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
 	if (degreeCurricularPlan != null) {
 	    request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
 	}
 
 	return super.execute(mapping, actionForm, request, response);
