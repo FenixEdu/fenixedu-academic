@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -34,6 +36,15 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     public CardGenerationEntry() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    public static CardGenerationEntry readByEntityCodeAndCategoryCodeAndMemberNumber(final String subline) {
+	for (final CardGenerationEntry cardGenerationEntry : RootDomainObject.getInstance().getCardGenerationEntries()) {
+	    if (cardGenerationEntry.getEntityCodeAndCategoryCodeAndMemberNumber().equals(subline)) {
+		return cardGenerationEntry;
+	    }
+	}
+	return null;
     }
 
     public static String createLine(final StudentCurricularPlan studentCurricularPlan) {
@@ -277,6 +288,10 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
     public String getMemberNumber() {
 	return this.getLine().substring(13, 21);
+    }
+
+    public String getEntityCodeAndCategoryCodeAndMemberNumber() {
+	return this.getLine().substring(8, 21);
     }
 
     public String getRegisterPurpose() {
