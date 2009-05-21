@@ -139,21 +139,23 @@
 				</td>
 				<td>
 					<logic:iterate id="studentCurricularPlan" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
-						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" target="_blank">
-							<logic:present name="studentCurricularPlan" property="specialization.name">
-								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
-									<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-								</logic:equal>
-								<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
+						<logic:present  name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" >
+							<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" target="_blank">
+								<logic:present name="studentCurricularPlan" property="specialization.name">
+									<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
+										<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+									</logic:equal>
+									<logic:notEqual name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
+										<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
+									</logic:notEqual>
+								</logic:present>
+								<logic:notPresent name="studentCurricularPlan" property="specialization.name">
 									<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-								</logic:notEqual>
-							</logic:present>
-							<logic:notPresent name="studentCurricularPlan" property="specialization.name">
-								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
-							</logic:notPresent>
-							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-							<bean:write name="studentCurricularPlan" property="registration.degreeName"/>
-						</app:contentLink>
+								</logic:notPresent>
+								<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
+								<bean:write name="studentCurricularPlan" property="registration.degreeName"/>
+							</app:contentLink>
+						</logic:present>
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
