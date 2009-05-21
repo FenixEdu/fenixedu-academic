@@ -83,7 +83,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	try {
 	    final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
 		    "name", "acronym", (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), true);
-	    competenceCourseInformation.setAcronym((String) uniqueAcronymCreator.create(this).getLeft());
+	    competenceCourseInformation.setAcronym(uniqueAcronymCreator.create(this).getLeft());
 	} catch (Exception e) {
 	    throw new DomainException("competence.course.unable.to.create.acronym");
 	}
@@ -199,7 +199,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	try {
 	    final UniqueAcronymCreator<CompetenceCourse> uniqueAcronymCreator = new UniqueAcronymCreator<CompetenceCourse>(
 		    "name", "acronym", (Set<CompetenceCourse>) CompetenceCourse.readBolonhaCompetenceCourses(), true);
-	    acronym = (String) uniqueAcronymCreator.create(this).getLeft();
+	    acronym = uniqueAcronymCreator.create(this).getLeft();
 	} catch (Exception e) {
 	    throw new DomainException("competence.course.unable.to.create.acronym");
 	}
@@ -770,7 +770,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (CurricularCourse curricularCourse : curricularCourses) {
-		if (curricularCourse.getActiveScopesInExecutionPeriod(executionSemester).size() > 0) {
+		if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval())
+			.size() > 0) {
 		    return Boolean.TRUE;
 		}
 	    }
@@ -781,7 +782,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public boolean hasActiveScopesInExecutionPeriod(ExecutionSemester executionSemester) {
 	List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();
 	for (CurricularCourse curricularCourse : curricularCourses) {
-	    if (curricularCourse.getActiveScopesInExecutionPeriod(executionSemester).size() > 0) {
+	    if (curricularCourse.getActiveDegreeModuleScopesInAcademicInterval(executionSemester.getAcademicInterval()).size() > 0) {
 		return true;
 	    }
 	}
