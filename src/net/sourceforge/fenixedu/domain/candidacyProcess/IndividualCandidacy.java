@@ -28,55 +28,56 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	super();
 	super.setWhenCreated(new DateTime());
 	setRootDomainObject(RootDomainObject.getInstance());
-	
+
     }
-    
+
     protected Person init(final IndividualCandidacyProcessBean bean, final IndividualCandidacyProcess process) {
 	/*
 	 * 31/03/2009 - Now the person may be created inside init() method
 	 * 
-	 * 06/04/2009 - All subclasses share the code below. So the checkParameters() is now abstract
+	 * 06/04/2009 - All subclasses share the code below. So the
+	 * checkParameters() is now abstract
 	 */
 	Person person = null;
-	if(bean.getInternalPersonCandidacy().booleanValue()) {
-	    person = bean.getOrCreatePersonFromBean();    
+	if (bean.getInternalPersonCandidacy().booleanValue()) {
+	    person = bean.getOrCreatePersonFromBean();
 	}
-	
+
 	checkParameters(person, process, bean);
 	bean.getPersonBean().setPerson(person);
-	
+
 	IndividualCandidacyPersonalDetails.createDetails(this, bean);
 	setCandidacyProcess(process);
 	setCandidacyDate(bean.getCandidacyDate());
 	setState(IndividualCandidacyState.STAND_BY);
 	editObservations(bean);
-	
+
 	return person;
-    }    
-    
+    }
+
     /**
-     * 06/04/2009
-     * All subclasses of IndividualCandidacy call a checkParameters() in their constructor.
-     * The arguments of checkParameters varies from subclass to subclass but they come
-     * from Person, IndividualCandidacyProcess and IndividualCandidacyProcessBean
+     * 06/04/2009 All subclasses of IndividualCandidacy call a checkParameters()
+     * in their constructor. The arguments of checkParameters varies from
+     * subclass to subclass but they come from Person,
+     * IndividualCandidacyProcess and IndividualCandidacyProcessBean
      * 
      * @param person
      * @param process
      * @param bean
      */
-    protected abstract void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean);    
-    
+    protected abstract void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean);
+
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not
-	 * in administrative office)
-	 *
-	 
-	if (person == null) {
-	    throw new DomainException("error.IndividualCandidacy.invalid.person");
-	}
-	*/
-	
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it
+	 * is submited externally (not in administrative office)
+	 * 
+	 * 
+	 * if (person == null) { throw new
+	 * DomainException("error.IndividualCandidacy.invalid.person"); }
+	 */
+
 	if (process == null) {
 	    throw new DomainException("error.IndividualCandidacy.invalid.process");
 	}
@@ -149,11 +150,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
 	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();
 	/*
-	 * 31/03/2009 - 
-	 * The candidacy may be submited in a public area (by a possible student) and in that
-	 * case the candidacy may not be associated with a student which may be a person.
-	 * In the case above the precedent degree information will be external even if
-	 * the candidate has a degree of this institution
+	 * 31/03/2009 - The candidacy may be submited in a public area (by a
+	 * possible student) and in that case the candidacy may not be
+	 * associated with a student which may be a person. In the case above
+	 * the precedent degree information will be external even if the
+	 * candidate has a degree of this institution
 	 */
 	if (processBean.isExternalPrecedentDegreeType() || !processBean.getInternalPersonCandidacy()) {
 	    createExternalPrecedentDegreeInformation(bean);
@@ -181,8 +182,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
 	    final CandidacyPrecedentDegreeInformationBean bean) {
-	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(), getOrCreateInstitution(bean), 
-		bean.getConclusionGrade(), bean.getCountry());
+	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(),
+		getOrCreateInstitution(bean), bean.getConclusionGrade(), bean.getCountry());
     }
 
     protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
@@ -311,11 +312,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
 	getPrecedentDegreeInformation().editMissingInformation(bean);
     }
-    
+
     public void editObservations(final IndividualCandidacyProcessBean bean) {
 	this.setObservations(bean.getObservations());
     }
-    
+
     private void editMainCandidacyInformation(final CandidacyInformationBean bean) {
 	setCountryOfResidence(bean.getCountryOfResidence());
 	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
