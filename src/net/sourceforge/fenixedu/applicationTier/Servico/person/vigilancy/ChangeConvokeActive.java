@@ -55,17 +55,14 @@ public class ChangeConvokeActive extends FenixService {
 
     private static String generateMessage(Boolean bool, Vigilancy convoke) {
 
-	String message = "";
 	WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
 	DateTime beginDate = writtenEvaluation.getBeginningDateTime();
 	String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-" + beginDate.getYear();
 
-	message = "Caro(a) " + convoke.getVigilantWrapper().getPerson().getName() + ",\n\n";
-	message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils
-		.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
-	message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
-	message += "\nData: " + date + " (" + writtenEvaluation.getBeginningDateHourMinuteSecond().toString() + ")";
-	return message;
+	return RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.active.body", new Object[] {
+		convoke.getVigilantWrapper().getPerson().getName(),
+		(bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils
+			.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
+		date, writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
     }
-
 }

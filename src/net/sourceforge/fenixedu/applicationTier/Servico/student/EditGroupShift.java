@@ -4,13 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -26,12 +25,17 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.apache.struts.util.MessageResources;
+
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author asnr and scpo
@@ -86,7 +90,8 @@ public class EditGroupShift extends FenixService {
 	return true;
     }
 
-    private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup) throws FenixServiceException {
+    private static boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
+	    throws FenixServiceException {
 	boolean found = false;
 	List studentGroupAttends = studentGroup.getAttends();
 	Attends attend = null;
@@ -101,9 +106,9 @@ public class EditGroupShift extends FenixService {
     }
 
     private static void informStudents(final StudentGroup studentGroup, final Registration registration, final Grouping grouping) {
-	final List<String> emails = new ArrayList<String>();
+	final Set<Person> recievers = new HashSet<Person>();
 	for (final Attends attends : studentGroup.getAttends()) {
-	    emails.add(attends.getRegistration().getPerson().getEmail());
+	    recievers.add(attends.getRegistration().getPerson());
 	}
 
 	final StringBuilder executionCourseNames = new StringBuilder();
@@ -113,9 +118,19 @@ public class EditGroupShift extends FenixService {
 	    }
 	    executionCourseNames.append(executionCourse.getNome());
 	}
-	new Email("Fenix System", messages.getMessage("noreply.mail"), null, emails, null, null, messages
-		.getMessage("message.subject.grouping.change"), messages.getMessage("message.body.grouping.change.shift",
-		registration.getNumber().toString(), studentGroup.getGroupNumber().toString()));
-    }
+	final String message = messages.getMessage("message.body.grouping.change.shift", registration.getNumber().toString(),
+		studentGroup.getGroupNumber().toString(), executionCourseNames.toString());
+	final String groupName = messages.getMessage("message.group.name", studentGroup.getGroupNumber());
+	final Collection<Recipient> recipients = Collections
+		.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
 
+	rootDomainObject.getSystemSender().newMessage(recipients, messages.getMessage("message.subject.grouping.change"),
+		message, "");
+	// new Email("Fenix System", messages.getMessage("noreply.mail"), null,
+	// emails, null, null, messages
+	// .getMessage("message.subject.grouping.change"),
+	// messages.getMessage("message.body.grouping.change.shift",
+	// registration.getNumber().toString(),
+	// studentGroup.getGroupNumber().toString()));
+    }
 }

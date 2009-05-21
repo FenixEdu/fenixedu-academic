@@ -5,10 +5,11 @@ import java.util.Random;
 
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
@@ -38,10 +39,18 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	InternshipCandidacy candidacy = new InternshipCandidacy(code);
 	beanToModel(bean, candidacy);
 
-	new Email("Sistema Fénix", "suporte@ist.utl.pt", null, Collections.singleton(candidacy.getEmail()), null, null,
-		"Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()
-			+ ", a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº "
-			+ candidacy.getCandidacyCode() + ", que deverá utilizar em contactos futuros.");
+	SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+
+	sender.newMessage(Collections.EMPTY_LIST, RenderUtils.getResourceString("GLOBAL_RESOURCES", "email.iaeste.subject"),
+		RenderUtils.getResourceString("GLOBAL_RESOURCES", "iaeste.email.body", new Object[] { candidacy.getName(),
+			candidacy.getCandidacyCode() }), candidacy.getEmail());
+	// new Email("Sistema Fénix", "suporte@ist.utl.pt", null,
+	// Collections.singleton(candidacy.getEmail()), null, null,
+	// "Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()
+	// +
+	// ", a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº "
+	// + candidacy.getCandidacyCode() +
+	// ", que deverá utilizar em contactos futuros.");
 
 	return candidacy.getCandidacyCode();
     }

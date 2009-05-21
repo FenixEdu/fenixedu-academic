@@ -11,17 +11,18 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/> Created on
- *         May 23, 2006, 3:48:23 PM
+ * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
+ *         Created on May 23, 2006, 3:48:23 PM
  * 
  */
 public abstract class ForumService extends FenixService {
@@ -38,8 +39,8 @@ public abstract class ForumService extends FenixService {
 
     private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
 	final Set<Person> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getElements();
-	final Set<String> teacherEmailAddresses = new HashSet<String>();
-	final Set<String> studentEmailAddresses = new HashSet<String>();
+	final Set<Person> teachers = new HashSet<Person>();
+	final Set<Person> students = new HashSet<Person>();
 	final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
 
 	for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
@@ -54,9 +55,9 @@ public abstract class ForumService extends FenixService {
 		    subscription.setReceivePostsByEmail(false);
 		} else {
 		    if (subscriber.hasRole(RoleType.TEACHER)) {
-			teacherEmailAddresses.add(subscriber.getEmail());
+			teachers.add(subscriber);
 		    } else {
-			studentEmailAddresses.add(subscriber.getEmail());
+			students.add(subscriber);
 		    }
 		}
 	    }
@@ -67,7 +68,7 @@ public abstract class ForumService extends FenixService {
 	    subscriptionToRemove.delete();
 	}
 
-	sendEmailWithConversationMessage(teacherEmailAddresses, studentEmailAddresses, conversationMessage);
+	sendEmailWithConversationMessage(teachers, students, conversationMessage);
 
     }
 
@@ -79,35 +80,35 @@ public abstract class ForumService extends FenixService {
 	    Person nextToLastMessageReplier = nextToLastConversationMessage.getCreator();
 	    if (!conversationMessage.getConversationThread().getForum()
 		    .isPersonReceivingMessagesByEmail(nextToLastMessageReplier)) {
-		final Set<String> teacherEmailAddresses = new HashSet<String>();
-		final Set<String> studentEmailAddresses = new HashSet<String>();
+		final Set<Person> teachers = new HashSet<Person>();
+		final Set<Person> students = new HashSet<Person>();
 		if (nextToLastMessageReplier.hasRole(RoleType.TEACHER)) {
-		    teacherEmailAddresses.add(nextToLastMessageReplier.getEmail());
+		    teachers.add(nextToLastMessageReplier);
 		} else {
-		    studentEmailAddresses.add(nextToLastMessageReplier.getEmail());
+		    students.add(nextToLastMessageReplier);
 		}
 
-		sendEmailWithConversationMessage(teacherEmailAddresses, studentEmailAddresses, conversationMessage);
+		sendEmailWithConversationMessage(teachers, students, conversationMessage);
 	    }
 	}
 
     }
 
-    private void sendEmailWithConversationMessage(Set<String> teacherAddresses, Set<String> studentAddresses,
+    private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
+	if (!persons.isEmpty()) {
+	    final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
+	    rootDomainObject.getSystemSender().newMessage(recipient, subject, body, "");
+	}
+    }
+
+    private void sendEmailWithConversationMessage(Set<Person> teachers, Set<Person> students,
 	    ConversationMessage conversationMessage) {
-	String emailFrom = GLOBAL_RESOURCES.getString("forum.email.from");
-	String emailFromAddress = GLOBAL_RESOURCES.getString("forum.email.fromAddress");
-	String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
+	final String emailSubject = getEmailFormattedSubject(conversationMessage.getConversationThread());
 
-	if (!teacherAddresses.isEmpty()) {
-	    new Email(emailFrom, emailFromAddress, null, null, null, teacherAddresses, emailSubject, getEmailFormattedBody(
-		    conversationMessage, true));
-	}
-
-	if (!studentAddresses.isEmpty()) {
-	    new Email(emailFrom, emailFromAddress, null, null, null, studentAddresses, emailSubject, getEmailFormattedBody(
-		    conversationMessage, false));
-	}
+	sendEmailToPersons(teachers, GLOBAL_RESOURCES.getString("label.teachers"), emailSubject, getEmailFormattedBody(
+		conversationMessage, true));
+	sendEmailToPersons(students, GLOBAL_RESOURCES.getString("label.students"), emailSubject, getEmailFormattedBody(
+		conversationMessage, false));
     }
 
     private String getEmailFormattedSubject(ConversationThread conversationThread) {

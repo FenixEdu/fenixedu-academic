@@ -1,25 +1,26 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class UpdateParkingParty extends FenixService {
@@ -60,10 +61,10 @@ public class UpdateParkingParty extends FenixService {
 
 	if (note != null && note.trim().length() != 0 && email != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
-	    List<String> to = new ArrayList<String>();
-	    to.add(email);
-	    new Email(bundle.getString("label.fromName"), bundle.getString("label.fromAddress"), null, to, null, null, bundle
-		    .getString("label.subject"), note);
+	    Sender sender = rootDomainObject.getSystemSender();
+	    Collection<ReplyTo> replyTos = new HashSet<ReplyTo>();
+	    replyTos.add(new ConcreteReplyTo(bundle.getString("label.fromAddress")));
+	    new Message(sender, replyTos, Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);
 	}
     }
 

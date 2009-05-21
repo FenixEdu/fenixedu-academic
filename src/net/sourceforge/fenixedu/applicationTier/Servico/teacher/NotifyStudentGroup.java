@@ -1,17 +1,23 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class NotifyStudentGroup extends FenixService {
 
@@ -19,19 +25,17 @@ public class NotifyStudentGroup extends FenixService {
     @Service
     public static void run(ProjectSubmission submission, ExecutionCourse course, Person person) {
 
-	ArrayList<String> emails = new ArrayList<String>();
+	Set<Person> recievers = new HashSet<Person>();
 
 	for (Attends attend : submission.getStudentGroup().getAttends()) {
-	    emails.add(attend.getRegistration().getStudent().getPerson().getEmail());
+	    recievers.add(attend.getRegistration().getStudent().getPerson());
 	}
 
-	String from = course.getSite().getMail();
-	if (from == null || from.length() == 0) {
-	    from = person.getEmail();
-	}
-	String[] replyTo = { from };
-
-	new Email(course.getNome(), from, replyTo, emails, null, null, submission.getProject().getName(), submission
-		.getTeacherObservation());
+	final String groupName = RenderUtils.getResourceString("GLOBAL_RESOURCES", "label.group", new Object[] { submission
+		.getStudentGroup().getGroupNumber() });
+	Collection<Recipient> recipients = Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
+	Sender sender = ExecutionCourseSender.newInstance(course);
+	new Message(sender, sender.getConcreteReplyTos(), recipients, submission.getProject().getName(), submission
+		.getTeacherObservation(), "");
     }
 }

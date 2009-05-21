@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
-import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -31,8 +29,8 @@ public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
     }
 
     @Service
-    public void sendEmail(String fromName, String fromAddress, String fromSubject, String body) {
-	new Email(fromName, fromAddress, null, Arrays.asList(new String[] { this.getEmail() }), null, null, fromSubject, body);
+    public void sendEmail(String fromSubject, String body) {
+	getRootDomainObject().getSystemSender().newMessage(Collections.EMPTY_LIST, fromSubject, body, this.getEmail());
     }
 
     /**
@@ -82,11 +80,11 @@ public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
 
 	PublicCandidacyHashCode associatedHashCode = getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, processType,
 		process);
-	
-	if(associatedHashCode != null) {
+
+	if (associatedHashCode != null) {
 	    return associatedHashCode;
 	}
-	
+
 	List<PublicCandidacyHashCode> associatedHashes = getHashCodesAssociatedWithEmail(email);
 
 	for (PublicCandidacyHashCode hashCode : associatedHashes) {
@@ -100,15 +98,14 @@ public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
     private static List<PublicCandidacyHashCode> getHashCodesAssociatedWithEmail(final String email) {
 	java.util.Set<PublicCandidacyHashCode> publicCandidacyHashCodes = RootDomainObject
 		.readAllDomainObjects(PublicCandidacyHashCode.class);
-	return new ArrayList<PublicCandidacyHashCode>((Collection<PublicCandidacyHashCode>) CollectionUtils.select(
-		publicCandidacyHashCodes, new Predicate() {
+	return new ArrayList<PublicCandidacyHashCode>(CollectionUtils.select(publicCandidacyHashCodes, new Predicate() {
 
-		    @Override
-		    public boolean evaluate(Object arg0) {
-			return ((PublicCandidacyHashCode) arg0).getEmail().equals(email);
-		    }
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((PublicCandidacyHashCode) arg0).getEmail().equals(email);
+	    }
 
-		}));
+	}));
     }
 
     public static PublicCandidacyHashCode getPublicCandidacyCodeByHash(String hash) {

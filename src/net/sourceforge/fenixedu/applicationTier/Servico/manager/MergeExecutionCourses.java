@@ -52,8 +52,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -334,21 +334,25 @@ public class MergeExecutionCourses extends FenixService {
 	}
 
 	if (transferedContents.size() > 0) {
-	    final Collection<String> tos = createListOfEmailAddresses(executionCourseTo);
+	    final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
 	    final StringBuilder message = new StringBuilder();
-	    message.append("Viva, \n\n");
-	    message.append("Devido à junção da disciplina acima referida entre vários cursos, não foi possível manter os ");
-	    message.append("previlégios de acesso aos seguintes conteúdos: ");
+	    message.append(RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.body"));
+
 	    for (final Content content : transferedContents) {
 		message.append("\n\t");
 		message.append(content.getName());
 	    }
-	    message.append("\n\nAgradecemos que actualize os previlégios ");
-	    message.append("dos conteúdos logo que possível.\n\n");
-	    message.append("Os melhores cumprimentos,\n\nO sistema Fénix.");
 
-	    new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[] {}, tos, Collections.EMPTY_LIST,
-		    Collections.EMPTY_LIST, "Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
+	    message.append(RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.greetings"));
+	    rootDomainObject.getSystemSender().newMessage(
+		    Collections.EMPTY_LIST,
+		    RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.subject",
+			    new Object[] { executionCourseTo.getNome() }), message.toString(), bccs);
+
+	    // new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[]
+	    // {}, tos, Collections.EMPTY_LIST,
+	    // Collections.EMPTY_LIST, "Junção de disciplinas: " +
+	    // executionCourseTo.getNome(), message.toString());
 	}
     }
 
@@ -378,8 +382,8 @@ public class MergeExecutionCourses extends FenixService {
 	}
     }
 
-    private Collection<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
-	final Collection<String> emails = new ArrayList<String>();
+    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
+	final Set<String> emails = new HashSet<String>();
 	for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
 	    emails.add(professorship.getTeacher().getPerson().getEmail());
 	}

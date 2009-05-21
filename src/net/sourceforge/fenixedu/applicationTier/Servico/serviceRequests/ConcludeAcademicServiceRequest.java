@@ -1,11 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
-import net.sourceforge.fenixedu.domain.util.Email;
-import net.sourceforge.fenixedu.domain.util.EmailAddressList;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.joda.time.YearMonthDay;
 
@@ -36,13 +41,6 @@ public class ConcludeAcademicServiceRequest extends FenixService {
 	final ResourceBundle globalBundle = ResourceBundle.getBundle("resources.GlobalResources");
 	final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");
 
-	final Email email = new Email();
-
-	email.setFromName(globalBundle.getString("degreeAdminOffice.name"));
-	email.setFromAddress(globalBundle.getString("degreeAdminOffice.mail"));
-	email.setToAddresses(new EmailAddressList(academicServiceRequest.getPerson().getEmail()));
-	email.setSubject(academicServiceRequest.getDescription());
-
 	String body = appBundle.getString("mail.academicServiceRequest.concluded.message1");
 	body += " " + academicServiceRequest.getServiceRequestNumberYear();
 	body += " " + appBundle.getString("mail.academicServiceRequest.concluded.message2");
@@ -50,6 +48,9 @@ public class ConcludeAcademicServiceRequest extends FenixService {
 	body += "' " + appBundle.getString("mail.academicServiceRequest.concluded.message3");
 	body += "\n\n" + appBundle.getString("mail.academicServiceRequest.concluded.message4");
 
-	email.setBody(body);
+	final Sender sender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSender().get(0);
+	final Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(academicServiceRequest
+		.getPerson())));
+	new Message(sender, sender.getReplyTos(), recipients, academicServiceRequest.getDescription(), body, "");
     }
 }

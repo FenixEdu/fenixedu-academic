@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -10,10 +9,14 @@ import net.sourceforge.fenixedu.domain.LoginPeriod;
 import net.sourceforge.fenixedu.domain.LoginRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.PersonSender;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean;
 
 import org.joda.time.YearMonthDay;
@@ -61,13 +64,15 @@ public class CreateResearchContract extends FenixService {
 		    bean.getPersonNameString(), creator.getName(), url + request.getHash(), bean.getUnit().getName(),
 		    person.getUsername() });
 
-	    List<String> tos = new ArrayList<String>();
-	    tos.add(bean.getEmail());
 	    if (person.getEmail() == null) {
 		person.setEmail(bean.getEmail());
 	    }
-	    new Email(creator.getName(), creator.getEmail(), null, tos, null, null, subject, message);
+	    final Sender sender = PersonSender.newInstance(creator);
+
+	    new Message(sender, sender.getConcreteReplyTos(), Collections.singletonList(new Recipient(new PersonGroup(person))),
+		    subject, message, "");
+	    // new Email(creator.getName(), creator.getEmail(), null, tos, null,
+	    // null, subject, message);
 	}
     }
-
 }

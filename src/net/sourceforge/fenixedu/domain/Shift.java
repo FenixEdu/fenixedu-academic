@@ -13,12 +13,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -450,9 +452,9 @@ public class Shift extends Shift_Base {
 	for (final Lesson lesson : getAssociatedLessonsSet()) {
 	    if (lesson.hasSala()) {
 		if (capacity == 0) {
-		    capacity = ((AllocatableSpace) lesson.getSala()).getNormalCapacity();
+		    capacity = (lesson.getSala()).getNormalCapacity();
 		} else {
-		    capacity = Math.min(capacity, ((AllocatableSpace) lesson.getSala()).getNormalCapacity());
+		    capacity = Math.min(capacity, (lesson.getSala()).getNormalCapacity());
 		}
 	    }
 	}
@@ -483,17 +485,14 @@ public class Shift extends Shift_Base {
 
 	registration.removeShifts(this);
 
-	String fromName = executionCourse.getNome();
-	String fromAddress = executionCourse.getSite().getMail();
-	String[] replyTos = {};
-	Collection<String> toAddresses = new ArrayList<String>();
-	toAddresses.add(registration.getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
+	Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(registration.getPerson())));
+	final String subject = RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject");
+	final String body = RenderUtils.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome());
 
-	Email email = new Email(fromName, fromAddress, replyTos, toAddresses, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-		RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject"), RenderUtils
-			.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome()));
+	new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }
-    
+
     public boolean hasAnyStudentsInAssociatedStudentGroups() {
 	for (final StudentGroup studentGroup : getAssociatedStudentGroupsSet()) {
 	    if (studentGroup.getAttendsCount() > 0) {
@@ -502,7 +501,6 @@ public class Shift extends Shift_Base {
 	}
 	return false;
     }
-
 
     public String getPresentationName() {
 	StringBuilder stringBuilder = new StringBuilder(this.getNome());

@@ -36,12 +36,15 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -234,7 +237,8 @@ public class Thesis extends Thesis_Base {
 	    result.append(dissertation.getTitle());
 	    result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
 	    final Language language = dissertation.getLanguage();
-	    return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language, result.toString());
+	    return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language, result
+		    .toString());
 	}
     }
 
@@ -608,38 +612,31 @@ public class Thesis extends Thesis_Base {
     }
 
     private void sendRejectionEmail(final String rejectionComment) {
-	final Person person = AccessControl.getPerson();
-	final String emailAddr = person == null ? "no-reply@ist.utl.pt" : person.getEmail();
 
-	final Collection<String> tos = new HashSet<String>();
+	final Collection<Person> persons = new HashSet<Person>();
 	final ExecutionYear executionYear = getEnrolment().getExecutionYear();
 	for (ScientificCommission member : getDegree().getScientificCommissionMembers(executionYear)) {
 	    if (member.isContact()) {
-		final Person memberPerson = member.getPerson();
-		final String toAddr = memberPerson.getEmail();
-		if (toAddr != null && toAddr.length() > 0) {
-		    tos.add(toAddr);
-		}
+		persons.add(member.getPerson());
 	    }
 	}
 	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
 	    final ThesisParticipationType thesisParticipationType = thesisEvaluationParticipant.getType();
 	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
 		    || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
-		final Person memberPerson = thesisEvaluationParticipant.getPerson();
-		final String toAddr = memberPerson.getEmail();
-		if (toAddr != null && toAddr.length() > 0) {
-		    tos.add(toAddr);
-		}
+		persons.add(thesisEvaluationParticipant.getPerson());
 	    }
 	}
-
+	final Recipient recipient = new Recipient("Membros da tese " + getTitle().toString(), new FixedSetGroup(persons));
 	final String studentNumber = getStudent().getNumber().toString();
 	final String title = getFinalFullTitle().getContent();
 	final String subject = getMessage("message.thesis.reject.submission.email.subject", studentNumber);
 	final String body = getMessage("message.thesis.reject.submission.email.body", studentNumber, title, rejectionComment);
 
-	new Email(RoleType.SCIENTIFIC_COUNCIL.getDefaultLabel(), emailAddr, null, tos, null, null, subject, body);
+	//
+	final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().get(0);
+
+	new Message(sender, sender.getConcreteReplyTos(), Collections.singletonList(recipient), subject, body, "");
     }
 
     protected String getMessage(final String key, final Object... args) {
@@ -1091,7 +1088,7 @@ public class Thesis extends Thesis_Base {
 	    scale = GradeScale.TYPE20;
 	}
 
-	return scale.isValid(mark.toString(), EvaluationType.EXAM_TYPE); //TODO:
+	return scale.isValid(mark.toString(), EvaluationType.EXAM_TYPE); // TODO:
 	// thesis
 	// ,
 	// check

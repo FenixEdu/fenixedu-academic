@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -9,8 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.Email;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -32,27 +39,32 @@ public class ChangeStudentsShift extends FenixService {
 	    }
 	}
 
-	final List<String> emptyList = new ArrayList<String>();
-	final List<String> toMails = new ArrayList<String>();
+	final Set<Person> recievers = new HashSet<Person>();
 
 	oldShift.getStudentsSet().removeAll(registrations);
 	if (newShift != null) {
 	    newShift.getStudentsSet().addAll(registrations);
 	}
 	for (final Registration registration : registrations) {
-	    final Person person = registration.getPerson();
-	    if (person.getEmail() != null && person.getEmail().length() > 0) {
-		toMails.add(person.getEmail());
-	    }
+	    recievers.add(registration.getPerson());
 	}
 
-	final String subject = "Alteração de turnos";
-	final String messagePrefix = "Devido a alterações nos horários, a sua reserva no turno " + oldShift.getNome();
-	final String messagePosfix = newShift == null ? " foi removida. Deverá efectuar uma nova reserva no turno que pretende."
-		: " foi transferida para o turno " + newShift.getNome();
+	final String subject = RenderUtils.getResourceString("SOP_RESOURCES", "changeStudentsShift.email.subject");
+	final String groupName = RenderUtils.getResourceString("SOP_RESOURCES", "changeStudentsShift.email.groupName",
+		new Object[] { oldShift.getNome() });
+	final String messagePrefix = RenderUtils.getResourceString("SOP_RESOURCES", "changeStudentsShift.email.body",
+		new Object[] { oldShift.getNome() });
+
+	final String messagePosfix = newShift == null ? RenderUtils.getResourceString("SOP_RESOURCES",
+		"changeStudentsShift.email.notNewShift") : RenderUtils.getResourceString("SOP_RESOURCES",
+		"changeStudentsShift.email.newShift", new Object[] { oldShift.getNome() });
 	final String message = messagePrefix + messagePosfix;
-	final Person person = Person.readPersonByUsername(userView.getUtilizador());
-	new Email("GOP", "gop@ist.utl.pt", null, emptyList, emptyList, toMails, subject, message);
+
+	Collection<ReplyTo> replyTos = new HashSet<ReplyTo>();
+	Collection<Recipient> recipients = Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
+	replyTos.add(new ConcreteReplyTo("gop@ist.utl.pt"));
+	Sender sender = rootDomainObject.getSystemSender();
+	new Message(sender, replyTos, recipients, subject, message, "");
     }
 
     public static class UnableToTransferStudentsException extends FenixServiceException {

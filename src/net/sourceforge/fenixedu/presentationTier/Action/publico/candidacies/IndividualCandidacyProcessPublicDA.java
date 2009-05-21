@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
@@ -171,7 +169,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
 	    bean.setIndividualCandidacyProcess(uploadBean.getIndividualCandidacyProcess());
 	    request.setAttribute("candidacyDocumentUploadBean", bean);
-	    
+
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("edit-candidacy-documents");
@@ -256,9 +254,6 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	return mapping.findForward("show-pre-creation-candidacy-form");
     }
 
-    private static final String FROM_NAME_KEY = "message.email.from.name";
-    private static final String FROM_ADDRESS_KEY = "message.email.from.address";
-
     private static final String SEND_LINK_TO_ACCESS_SUBMISSION_FORM_SUBJECT = "message.email.subject.send.link.to.submission.form";
     private static final String INFORM_APPLICATION_SUCCESS_SUBJECT = "message.email.subject.application.submited";
     private static final String RECOVER_LINK_SUBJECT = "message.email.subject.recovery.access";
@@ -287,15 +282,13 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
     private void sendEmailForApplicationSubmissionCandidacyForm(PublicCandidacyHashCode candidacyHashCode, ActionMapping mapping,
 	    HttpServletRequest request) {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-	String fromName = bundle.getString(FROM_NAME_KEY);
-	String fromAddress = bundle.getString(FROM_ADDRESS_KEY);
 	String subject = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_SUBJECT);
 	String body = bundle.getString(SEND_LINK_TO_ACCESS_SUBMISSION_FORM_BODY);
 	String link = getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
 
 	body = String.format(body, new String[] { link });
 
-	candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
+	candidacyHashCode.sendEmail(subject, body);
 
     }
 
@@ -303,8 +296,6 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    HttpServletRequest request) {
 	PublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-	String fromName = bundle.getString(FROM_NAME_KEY);
-	String fromAddress = bundle.getString(FROM_ADDRESS_KEY);
 	String subject = bundle.getString(INFORM_APPLICATION_SUCCESS_SUBJECT);
 	String body = bundle.getString(INFORM_APPLICATION_SUCCESS_BODY);
 	String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
@@ -312,7 +303,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	body = String.format(body, new String[] { candidacyHashCode.getIndividualCandidacyProcess().getProcessCode(), link,
 		getFormattedApplicationSubmissionEndDate() });
 
-	candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
+	candidacyHashCode.sendEmail(subject, body);
     }
 
     public ActionForward prepareApplicationAccessRecovery(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -331,15 +322,13 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
 	if (candidacyHashCode != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-	    String fromName = bundle.getString(FROM_NAME_KEY);
-	    String fromAddress = bundle.getString(FROM_ADDRESS_KEY);
 	    String subject = bundle.getString(RECOVER_LINK_SUBJECT);
 	    String body = bundle.getString(RECOVER_LINK_BODY);
 	    String link = getFullLinkFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
 
 	    body = String.format(body, new String[] { link, candidacyHashCode.getIndividualCandidacyProcess().getProcessCode() });
 
-	    candidacyHashCode.sendEmail(fromName, fromAddress, subject, body);
+	    candidacyHashCode.sendEmail(subject, body);
 	}
 
 	return mapping.findForward("show-application-access-recovery-email-sent");
