@@ -125,20 +125,10 @@
 			</html:link>
 		</li>	
 		
-	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.reports"/></li>
-		<li>
-			<html:link page="/viewCourseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.courseInformationManagement"/>
-			</html:link>
-		</li>
+	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.curricularUnitsQuality"/></li>
 		<li>
 			<html:link page="/teachingInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.teachingReportManagement"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/weeklyWorkLoad.do?method=prepare" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-				<bean:message key="link.weekly.work.load"/>
 			</html:link>
 		</li>
 	</ul>	
