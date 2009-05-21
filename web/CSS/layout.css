@@ -63,6 +63,11 @@ background: url(../images/sup1_01.gif) 0 center no-repeat;
 padding: 0.4em;
 padding-left: 18px;
 }
+#top ul li.suggestion a {
+background: url(../images/sup3_01.gif) 0 center no-repeat;
+padding: 0.4em;
+padding-left: 18px;
+}
 #top ul li.logout a {
 background: url(../images/sup2_01.gif) 0 center no-repeat;
 padding: 0.4em;

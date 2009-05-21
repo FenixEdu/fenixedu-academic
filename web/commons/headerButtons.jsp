@@ -20,6 +20,11 @@
 			<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
 		</a>
 	</li>
+	<li class="suggestion">
+		<a href="https://fears.ist.utl.pt" target="_blank">
+			Sugestões
+		</a>
+	</li>
 	<li class="logout"><!-- HAS_CONTEXT --><a href="<%= request.getContextPath() %>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES"/></a></li>
 
 
