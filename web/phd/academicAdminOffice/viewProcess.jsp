@@ -20,6 +20,13 @@
 	<span>Step N: Step name </span>
 </div>
 --%>
+
+<html:link action="/phdIndividualProgramProcess.do?method=manageProcesses">
+	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+
+<br/><br/>
+
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 
@@ -47,11 +54,6 @@
 				</html:link>
 			</li>
 			<li>
-				<html:link action="/phdIndividualProgramProcess.do?method=printLoginInformation" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.printLoginInformation"/>
-				</html:link>
-			</li>
-			<li>
 				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.manageCandidacyDocuments"/>
 				</html:link>
@@ -66,7 +68,13 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.editPhdIndividualProgramProcessInformation"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.payments"/>
+				</html:link>
+			</li>
 		</ul>
+  
     </td>
   </tr>
 </table>

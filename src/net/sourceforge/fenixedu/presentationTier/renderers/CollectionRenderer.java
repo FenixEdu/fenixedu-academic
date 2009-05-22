@@ -7,6 +7,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -16,6 +18,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
@@ -731,6 +734,10 @@ public class CollectionRenderer extends OutputRenderer {
 	return Boolean.toString(getTableLink(name).isContextRelative());
     }
 
+    public String getHasContext(String name) {
+	return Boolean.toString(getTableLink(name).getHasContext());
+    }
+
     /**
      * The contextRelative property indicates if the specified link is relative
      * to the current context or is an external link (e.g.
@@ -740,6 +747,16 @@ public class CollectionRenderer extends OutputRenderer {
      */
     public void setContextRelative(String name, String value) {
 	getTableLink(name).setContextRelative(Boolean.parseBoolean(value));
+    }
+
+    /**
+     * The hasContext property indicates if the specified link should use
+     * context information
+     * 
+     * @property
+     */
+    public void setHasContext(String name, String value) {
+	getTableLink(name).setHasContext(Boolean.parseBoolean(value));
     }
 
     /**
@@ -1229,6 +1246,8 @@ public class CollectionRenderer extends OutputRenderer {
 
 	private Boolean contextRelative;
 
+	private Boolean hasContext = false;
+
 	private String custom;
 
 	private String visibleIf;
@@ -1366,6 +1385,14 @@ public class CollectionRenderer extends OutputRenderer {
 	    return this.contextRelative != null;
 	}
 
+	public Boolean getHasContext() {
+	    return hasContext;
+	}
+
+	public void setHasContext(Boolean hasContext) {
+	    this.hasContext = hasContext;
+	}
+
 	public String getCustom() {
 	    return this.custom;
 	}
@@ -1430,7 +1457,9 @@ public class CollectionRenderer extends OutputRenderer {
 	    if (getCustom() != null) {
 		return new HtmlText(RenderUtils.getFormattedProperties(getCustom(), object), false);
 	    } else {
-		HtmlLink link = new HtmlLink();
+
+		final HtmlLink link = getHasContext() ? new HtmlLinkWithPreprendedComment(
+			ContentInjectionRewriter.HAS_CONTEXT_PREFIX) : new HtmlLink();
 
 		if (isContextRelativeSet()) {
 		    link.setContextRelative(isContextRelative());

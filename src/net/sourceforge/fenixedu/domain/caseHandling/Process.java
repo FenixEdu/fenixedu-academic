@@ -127,6 +127,18 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
     }
 
+    public DateTime getWhenUpdated() {
+	return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
+    }
+
+    public String getCreatedBy() {
+	return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
+    }
+
+    public String getUpdatedBy() {
+	return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getUserName();
+    }
+
     public abstract boolean canExecuteActivity(IUserView userView);
 
     public abstract String getDisplayName();

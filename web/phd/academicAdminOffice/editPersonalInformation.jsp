@@ -13,6 +13,9 @@
 <%-- ### End of Title ### --%>
 
 
+
+<bean:define id="processId" name="process" property="externalId" />
+
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <%--
 <div class="breadcumbs">
@@ -20,6 +23,10 @@
 	<span>Step N: Step name </span>
 </div>
 --%>
+<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + processId.toString() %>">
+	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+<br/><br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 
@@ -39,10 +46,18 @@
 <%--  ### End Of Context Information  ### --%>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-
-<bean:define id="processId" name="process" property="externalId" />
-
-<fr:form action="/phdIndividualProgramProcess.do">
+<p class="mtop15 mbottom05"><strong><bean:message  key="label.phd.personalInformation" bundle="PHD_RESOURCES"/></strong></p>
+<logic:equal name="isEmployee" value="true">
+	<fr:view
+		name="editPersonalInformationBean"
+		schema="PhdProgramCandidacyProcessBean.PersonBean.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+		</fr:layout>
+	</fr:view>
+</logic:equal>
+<logic:notEqual name="isEmployee" value="true">
+	<fr:form action="/phdIndividualProgramProcess.do">
 
 	<input type="hidden" name="method" value="" />
 	<input type="hidden" name="processId" value="<%=processId.toString()%>" />
@@ -62,6 +77,9 @@
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='cancelEditPersonalInformation';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 	
 </fr:form>
+	
+</logic:notEqual>
+
 
 
 <%--  ### End of Operation Area  ### --%>

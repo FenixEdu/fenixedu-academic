@@ -77,4 +77,8 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	addActionMessage("success", request, key, args);
     }
 
+    protected void addWarningMessage(HttpServletRequest request, String key, String... args) {
+	addActionMessage("warning", request, key, args);
+    }
+
 }

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
@@ -54,7 +55,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    request.setAttribute("processId", process.getExternalId());
 	    request.setAttribute("process", process);
 	}
-	
+
 	request.setAttribute("process", getProcess(request));
 
 	return super.execute(mapping, actionForm, request, response);
@@ -99,9 +100,17 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
+	    setIsEmployeeAttribute(request, bean.getChoosePersonBean());
 	    return mapping.findForward("createCandidacy");
 	}
 
+    }
+
+    private void setIsEmployeeAttribute(HttpServletRequest request, final ChoosePersonBean bean) {
+	if (bean.getPerson() != null && bean.getPerson().hasRole(RoleType.EMPLOYEE)) {
+	    request.setAttribute("isEmployee", true);
+	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+	}
     }
 
     protected boolean showSimilarPersons(final ChoosePersonBean choosePersonBean, final Collection<Person> persons) {
@@ -116,6 +125,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+	setIsEmployeeAttribute(request, getCreateCandidacyProcessBean().getChoosePersonBean());
 
 	return mapping.findForward("createCandidacy");
     }
@@ -123,6 +133,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
     public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	setIsEmployeeAttribute(request, getCreateCandidacyProcessBean().getChoosePersonBean());
 	CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
 
 	return mapping.findForward("manageProcesses");

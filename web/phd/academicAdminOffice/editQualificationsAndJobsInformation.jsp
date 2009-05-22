@@ -12,6 +12,15 @@
 <h2><bean:message key="label.phd.academicAdminOffice.editQualificationsAndJobsInformation" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
+<bean:define id="processId" name="process" property="externalId" />
+<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
+<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
+	<bean:message key="label.back" bundle="PHD_RESOURCES" />
+</html:link>
+<br/><br/>
+
+<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
+
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=qualification&amp;viewStateId=job" />
 <%--  ### End of Error Messages  ### --%>
@@ -25,15 +34,7 @@
 </fr:view>
 <%--  ### End Of Context Information  ### --%>
 
-<bean:define id="processId" name="process" property="externalId" />
 
-<ul>
-	<li>
-		<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
-			<bean:message key="label.back" bundle="PHD_RESOURCES" />
-		</html:link>
-	</li>
-</ul>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 

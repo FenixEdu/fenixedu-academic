@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -57,6 +58,19 @@ public class GuideEntry extends GuideEntry_Base {
     @Deprecated
     public void setPrice(Double price) {
 	setPriceBigDecimal(BigDecimal.valueOf(price));
+    }
+
+    public BigDecimal getValueWithAdjustment() {
+
+	BigDecimal reimbursedValue = BigDecimal.ZERO;
+	for (final ReimbursementGuideEntry reimbursementGuideEntry : getReimbursementGuideEntries()) {
+	    if (reimbursementGuideEntry.getReimbursementGuide().isPayed()) {
+		reimbursedValue = reimbursedValue.add(reimbursementGuideEntry.getValueBigDecimal());
+	    }
+	}
+
+	return getPriceBigDecimal().subtract(reimbursedValue);
+
     }
 
 }

@@ -6426,10 +6426,6 @@ class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
 class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
 }
 
-class phd.candidacy.PhdProgramCandidacyPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
-
-}
-
 class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
 
 }

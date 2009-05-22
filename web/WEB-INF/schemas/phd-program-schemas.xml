@@ -1,22 +1,30 @@
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-	<slot name="phdProgram"/>
+	<slot name="phdProgram.name" />
+	<slot name="collaborationType" />
 	<slot name="state"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
-	<slot name="whenCreated" />
 	<slot name="person.name" />
+	<slot name="whenCreated" />
+	<slot name="createdBy" />
+	<slot name="whenUpdated" />
+	<slot name="updatedBy" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
 	<slot name="state"/>
 	<slot name="whenCreated" />
+	<slot name="whenCreated" />
+	<slot name="createdBy" />
+	<slot name="whenUpdated" />
+	<slot name="updatedBy" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editProgramInformation" 
 		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
 		bundle="PHD_RESOURCES">
-	<slot name="program" layout="menu-select">	
+	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
 		<property name="format" value="${name}" />
         <property name="saveOptions" value="true"/>
@@ -162,6 +170,28 @@
 	<slot name="email" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.NotRequiredEmailValidator">
 		<property name="size" value="40"/>
 	</slot>
+</schema>
+
+<schema name="PhdProgramCandidacyProcessBean.PersonBean.view" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+	<slot name="name" />
+	<slot name="gender" />
+	<slot name="maritalStatus" />
+	<slot name="idDocumentType"  />
+	<slot name="documentIdNumber" />
+	<slot name="documentIdEmissionDate" />
+	<slot name="documentIdEmissionLocation" />
+	<slot name="socialSecurityNumber" />
+	<slot name="dateOfBirth" />
+	<slot name="nationality.name" />
+	<slot name="fatherName" />
+	<slot name="motherName" />
+	<slot name="address" />
+	<slot name="area" />
+	<slot name="areaCode" />
+	<slot name="areaOfAreaCode" />
+	<slot name="phone" />
+	<slot name="mobile" />
+	<slot name="email" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editCandidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" bundle="APPLICATION_RESOURCES">

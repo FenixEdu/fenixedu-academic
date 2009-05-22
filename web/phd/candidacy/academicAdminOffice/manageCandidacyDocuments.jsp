@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -66,7 +67,8 @@
 	<br/>
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
-<logic:notEmpty name="process" property="documents">
+
+<logic:notEmpty name="process" property="documents">	
 	<fr:view schema="PhdProgramCandidacyProcessDocument.view" name="process" property="documents">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -74,8 +76,10 @@
 			<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
 			<fr:property name="key(view)" value="label.view"/>
 			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-			<fr:property name="order(view)" value="0"/>
-			
+			<fr:property name="order(view)" value="0" />
+			<fr:property name="module(view)" value="" />
+			<fr:property name="hasContext(view)" value="true" />
+				
 			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
 			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
@@ -87,6 +91,7 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
 

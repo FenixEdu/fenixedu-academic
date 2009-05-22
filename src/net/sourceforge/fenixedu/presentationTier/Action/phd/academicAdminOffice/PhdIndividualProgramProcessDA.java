@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
@@ -62,6 +63,11 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareEditPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	if (getProcess(request).getPerson().hasRole(RoleType.EMPLOYEE)) {
+	    request.setAttribute("isEmployee", true);
+	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+	}
+	
 	request.setAttribute("editPersonalInformationBean", new PersonBean(getProcess(request).getPerson()));
 	return mapping.findForward("editPersonalInformation");
     }

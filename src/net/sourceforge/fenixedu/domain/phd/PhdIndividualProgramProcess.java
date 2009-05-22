@@ -165,6 +165,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setPerson(person);
 	setExecutionYear(executionYear);
 	setPhdProgram(program);
+	setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
 	setState(PhdIndividualProgramProcessState.CANDIDACY);
     }
 

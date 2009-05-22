@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
@@ -40,9 +41,21 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel("METER DESCRIÇÃO!!");
+	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(getPhdProgram().getPresentationName())
+		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
+
+    }
+
+    @Override
+    public LabelFormatter getDescription() {
+	return new LabelFormatter().appendLabel(" ").appendLabel(getPhdProgram().getPresentationName()).appendLabel(" - ")
+		.appendLabel(getExecutionYear().getYear());
+    }
+
+    private ExecutionYear getExecutionYear() {
+	return getCandidacyProcess().getIndividualProgramProcess().getExecutionYear();
     }
 
     @Override

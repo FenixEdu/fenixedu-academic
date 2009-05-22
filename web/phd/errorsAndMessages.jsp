@@ -10,7 +10,7 @@
 
 
 <logic:messagesPresent message="true" property="success">
-	<div class="success5 mbottom05" style="width: 500px;">
+	<div class="success5 mbottom05" style="width: 700px;">
 		<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="success">
 			<p class="mvert025"><bean:write name="messages" /></p>
 		</html:messages>
@@ -18,8 +18,16 @@
 </logic:messagesPresent>
 
 <logic:messagesPresent message="true" property="error">
-	<div class="error3 mbottom05" style="width: 500px;">
+	<div class="error3 mbottom05" style="width: 700px;">
 		<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="error">
+			<p class="mvert025"><bean:write name="messages" /></p>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="warning">
+	<div class="warning1 mbottom05" style="width: 700px;">
+		<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="warning">
 			<p class="mvert025"><bean:write name="messages" /></p>
 		</html:messages>
 	</div>
