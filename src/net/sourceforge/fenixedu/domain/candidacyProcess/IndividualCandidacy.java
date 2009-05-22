@@ -265,6 +265,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	bean.setNumberOfFlunksOnHighSchool(getNumberOfFlunksOnHighSchool());
 
 	bean.setGrantOwnerType(getGrantOwnerType());
+	bean.setGrantOwnerProvider(getGrantOwnerProvider());
 	bean.setHighSchoolType(getHighSchoolType());
 	bean.setMaritalStatus(getMaritalStatus());
 	bean.setProfessionType(getProfessionType());
@@ -326,6 +327,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setNumberOfFlunksOnHighSchool(bean.getNumberOfFlunksOnHighSchool());
 
 	setGrantOwnerType(bean.getGrantOwnerType());
+	setGrantOwnerProvider(bean.getGrantOwnerProvider());
 	setHighSchoolType(bean.getHighSchoolType());
 	setMaritalStatus(bean.getMaritalStatus());
 	setProfessionType(bean.getProfessionType());

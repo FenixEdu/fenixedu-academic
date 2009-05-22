@@ -35,8 +35,8 @@ public class MissingCandidacyInformationFilter implements Filter {
 
 	final HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-	if (request.getRequestURI().endsWith("/logoff.do")
-		|| request.getRequestURI().endsWith("/login.do")
+	if (request.getRequestURI().endsWith("/logoff.do") || request.getRequestURI().endsWith("/login.do")
+		|| request.getRequestURI().endsWith("/changeLocaleTo.do")
 		|| request.getRequestURI().endsWith("/exceptionHandlingAction.do")
 		|| request.getRequestURI().endsWith("/editMissingCandidacyInformation.do")) {
 	    filterChain.doFilter(servletRequest, servletResponse);

@@ -39,6 +39,10 @@ public class CandidacyInformationBean implements Serializable {
 
     private GrantOwnerType grantOwnerType;
 
+    private DomainReference<Unit> grantOwnerProvider;
+
+    private String grantOwnerProviderName;
+
     private Integer numberOfCandidaciesToHigherSchool;
 
     private Integer numberOfFlunksOnHighSchool;
@@ -92,7 +96,7 @@ public class CandidacyInformationBean implements Serializable {
     public CandidacyInformationBean(Registration registration) {
 	setRegistration(registration);
     }
-    
+
     public CandidacyInformationBean(IndividualCandidacy individualCandidacy) {
 	setCountryOfResidence(individualCandidacy.getCountryOfResidence());
 	setDistrictSubdivisionOfResidence(individualCandidacy.getDistrictSubdivisionOfResidence());
@@ -102,6 +106,7 @@ public class CandidacyInformationBean implements Serializable {
 	setNumberOfFlunksOnHighSchool(individualCandidacy.getNumberOfFlunksOnHighSchool());
 
 	setGrantOwnerType(individualCandidacy.getGrantOwnerType());
+	setGrantOwnerProvider(individualCandidacy.getGrantOwnerProvider());
 	setHighSchoolType(individualCandidacy.getHighSchoolType());
 	setMaritalStatus(individualCandidacy.getMaritalStatus());
 	setProfessionType(individualCandidacy.getProfessionType());
@@ -119,7 +124,7 @@ public class CandidacyInformationBean implements Serializable {
 	setSpouseProfessionType(individualCandidacy.getSpouseProfessionType());
 	setSpouseProfessionalCondition(individualCandidacy.getSpouseProfessionalCondition());
     }
-    
+
     public CandidacyInformationBean() {
     }
 
@@ -176,6 +181,31 @@ public class CandidacyInformationBean implements Serializable {
 
     public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
 	this.grantOwnerType = grantOwnerType;
+    }
+
+    public Unit getGrantOwnerProvider() {
+	return (this.grantOwnerProvider != null) ? this.grantOwnerProvider.getObject() : null;
+    }
+
+    public void setGrantOwnerProvider(Unit grantOwnerProvider) {
+	this.grantOwnerProvider = (grantOwnerProvider != null) ? new DomainReference<Unit>(grantOwnerProvider) : null;
+    }
+
+    public String getGrantOwnerProviderName() {
+	return grantOwnerProviderName;
+    }
+
+    public void setGrantOwnerProviderName(String grantOwnerProviderName) {
+	this.grantOwnerProviderName = grantOwnerProviderName;
+    }
+
+    public UnitName getGrantOwnerProviderUnitName() {
+	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getObject().getUnitName();
+    }
+
+    public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
+	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : new DomainReference<Unit>(
+		grantOwnerProviderUnitName.getUnit());
     }
 
     public Integer getNumberOfCandidaciesToHigherSchool() {
@@ -426,6 +456,12 @@ public class CandidacyInformationBean implements Serializable {
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
 	    result
 		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	}
+
+	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
+		&& getGrantOwnerProvider() == null) {
+	    result
+		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;

@@ -96,6 +96,11 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     }
 
     @Override
+    public Integer getNumberOfEnroledCurricularCourses() {
+	return getStudentCurricularPlan().getRoot().getNumberOfAllEnroledCurriculumLines();
+    }
+
+    @Override
     public Integer getNumberOfApprovedCurricularCourses() {
 	return getStudentCurricularPlan().getRoot().getNumberOfAllApprovedCurriculumLines();
     }
@@ -127,5 +132,4 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 	super.fill(bean);
 	bean.setCountryWhereFinishedPrecedentDegree(getInstitution().getCountry());
     }
-
 }

@@ -49,6 +49,8 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
 	return getDegreeDesignation() + " / " + getInstitution().getName();
     }
 
+    abstract public Integer getNumberOfEnroledCurricularCourses();
+
     abstract public Integer getNumberOfApprovedCurricularCourses();
 
     abstract public BigDecimal getGradeSum();

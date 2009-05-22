@@ -32,16 +32,16 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     DegreeChangeIndividualCandidacy(final DegreeChangeIndividualCandidacyProcess process,
 	    final DegreeChangeIndividualCandidacyProcessBean bean) {
 	this();
-	
+
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 	createPrecedentDegreeInformation(bean);
-	
+
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
-	 * an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
-	if(bean.getInternalPersonCandidacy()) {
+	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
     }
@@ -52,8 +52,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	DegreeChangeIndividualCandidacyProcessBean degreeChangeProcessBean = (DegreeChangeIndividualCandidacyProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	Degree selectedDegree = degreeChangeProcessBean.getSelectedDegree();
-	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = degreeChangeProcessBean.getPrecedentDegreeInformation();
-	
+	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = degreeChangeProcessBean
+		.getPrecedentDegreeInformation();
+
 	checkParameters(person, degreeChangeIndividualCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
@@ -66,18 +67,19 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.degree");
 	}
-	
-	
+
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
 	 * 
-	 
-	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
-		    getCandidacyExecutionInterval()).getContent());
-	}
+	 * 
+	 * if (personHasDegree(person, selectedDegree)) { throw new
+	 * DomainException
+	 * ("error.DegreeChangeIndividualCandidacy.existing.degree",
+	 * selectedDegree.getNameFor(
+	 * getCandidacyExecutionInterval()).getContent()); }
 	 */
-	
+
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
@@ -96,8 +98,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
 	    final CandidacyPrecedentDegreeInformationBean bean) {
 	final ExternalPrecedentDegreeInformation information = super.createExternalPrecedentDegreeInformation(bean);
-	information.init(bean.getNumberOfApprovedCurricularCourses(), bean.getGradeSum(), bean.getApprovedEcts(), bean
-		.getEnroledEcts());
+	information.init(bean.getNumberOfEnroledCurricularCourses(), bean.getNumberOfApprovedCurricularCourses(), bean
+		.getGradeSum(), bean.getApprovedEcts(), bean.getEnroledEcts());
 	return information;
     }
 

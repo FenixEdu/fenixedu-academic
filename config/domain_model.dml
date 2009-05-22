@@ -6193,6 +6193,7 @@ class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject 
 		Integer conclusionYear;
 		LocalDate conclusionDate;
 		String conclusionGrade;
+		Integer numberOfEnroledCurricularCourses;
 		Integer numberOfApprovedCurricularCourses;
 		BigDecimal gradeSum;
     	BigDecimal approvedEcts;
@@ -9973,6 +9974,13 @@ relation PrecedentDegreeInformationInstitution {
 		multiplicity *;
 	}
 	organizationalStructure.Unit playsRole institution;
+}
+
+relation PrecedentDegreeInformationSourceInstitution {
+	student.PrecedentDegreeInformation playsRole destinationPrecedentDegreeInformations {
+		multiplicity *;
+	}
+	organizationalStructure.Unit playsRole sourceInstitution;
 }
 
 relation PrecedentDegreeInformationStudent {
@@ -14774,6 +14782,13 @@ relation IndividualCandidacyRegistration {
 	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
 }
 
+relation IndividualCandidacyGrantOwnerProvider {
+	candidacyProcess.IndividualCandidacy playsRole candidacies {
+		multiplicity *;
+	}
+	organizationalStructure.Unit playsRole grantOwnerProvider;
+}
+
 relation IndividualCandidacyCountryOfResidence {	
 	Country playsRole countryOfResidence;
 	candidacyProcess.IndividualCandidacy playsRole associatedResidentIndividualCandidacies {
@@ -14895,6 +14910,13 @@ relation CandidacyPrecedentDegreeInformationCountry {
 relation InstitutionPrecedentDegreeInformationStudentCurricularPlan {
 	StudentCurricularPlan playsRole studentCurricularPlan;
 	candidacyProcess.InstitutionPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
+		multiplicity *;
+	}
+}
+
+relation ExternalSourceDegreeInformationStudentCurricularPlan {
+	organizationalStructure.Unit playsRole sourceInstitution;
+	candidacyProcess.ExternalPrecedentDegreeInformation playsRole destinationExternalPrecedentDegreeInformations {
 		multiplicity *;
 	}
 }
@@ -15134,6 +15156,13 @@ relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
 	assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
 		multiplicity *;
 	}
+}
+
+relation StudentCandidacyGrantOwnerProvider {
+	candidacy.StudentCandidacy playsRole studentCandidacies {
+		multiplicity *;
+	}
+	organizationalStructure.Unit playsRole grantOwnerProvider;
 }
 
 relation StudentCandidacyDistrictSubdivisionOfResidence {

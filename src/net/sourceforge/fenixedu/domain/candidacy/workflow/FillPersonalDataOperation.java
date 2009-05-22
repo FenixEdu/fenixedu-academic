@@ -314,7 +314,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     protected void fillPersonalInformation() {
 
 	getStudentCandidacy().setGrantOwnerType(getPersonalInformationForm().getGrantOwnerType());
-//	getStudentCandidacy().setGrantOwnerProvider(getPersonalInformationForm().getGrantOwnerProvider());
+	getStudentCandidacy().setGrantOwnerProvider(getPersonalInformationForm().getGrantOwnerProvider());
 	getStudentCandidacy().setProfessionalCondition(getPersonalInformationForm().getProfessionalCondition());
 	getStudentCandidacy().setProfessionType(getPersonalInformationForm().getProfessionType());
 	getStudentCandidacy().setMaritalStatus(getPersonalInformationForm().getMaritalStatus());

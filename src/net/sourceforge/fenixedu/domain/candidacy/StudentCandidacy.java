@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -165,12 +166,17 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return result;
     }
 
+    @Override
     public void delete() {
 	removeRegistration();
 	removeExecutionDegree();
 	removeSchoolTimeDistrictSubDivisionOfResidence();
 	removeCountryOfResidence();
 	removeDistrictSubdivisionOfResidence();
+
+	if (hasGrantOwnerProvider()) {
+	    removeGrantOwnerProvider();
+	}
 
 	if (hasPrecedentDegreeInformation() && !getPrecedentDegreeInformation().hasStudent()) {
 	    getPrecedentDegreeInformation().delete();
@@ -212,6 +218,11 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setSchoolTimeDistrictSubDivisionOfResidence(originInformationBean.getSchoolTimeDistrictSubdivisionOfResidence());
 	setDislocatedFromPermanentResidence(originInformationBean.getDislocatedFromPermanentResidence());
 	setGrantOwnerType(originInformationBean.getGrantOwnerType());
+	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
+		&& originInformationBean.getGrantOwnerProvider() == null)
+	    throw new DomainException(
+		    "error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	setGrantOwnerProvider(originInformationBean.getGrantOwnerProvider());
 	setNumberOfCandidaciesToHigherSchool(originInformationBean.getNumberOfCandidaciesToHigherSchool());
 	setNumberOfFlunksOnHighSchool(originInformationBean.getNumberOfFlunksOnHighSchool());
 	setHighSchoolType(originInformationBean.getHighSchoolType());
@@ -249,6 +260,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	bean.setDislocatedFromPermanentResidence(getDislocatedFromPermanentResidence());
 
 	bean.setGrantOwnerType(getGrantOwnerType());
+	bean.setGrantOwnerProvider(getGrantOwnerProvider());
 	bean.setNumberOfCandidaciesToHigherSchool(getNumberOfCandidaciesToHigherSchool());
 	bean.setNumberOfFlunksOnHighSchool(getNumberOfFlunksOnHighSchool());
 	bean.setHighSchoolType(getHighSchoolType());
@@ -298,6 +310,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setDislocatedFromPermanentResidence(bean.getDislocatedFromPermanentResidence());
 
 	setGrantOwnerType(bean.getGrantOwnerType());
+	setGrantOwnerProvider(bean.getGrantOwnerProvider());
 	setNumberOfCandidaciesToHigherSchool(bean.getNumberOfCandidaciesToHigherSchool());
 	setNumberOfFlunksOnHighSchool(bean.getNumberOfFlunksOnHighSchool());
 	setHighSchoolType(bean.getHighSchoolType());

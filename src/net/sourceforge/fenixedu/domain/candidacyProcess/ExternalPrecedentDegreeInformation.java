@@ -16,19 +16,19 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     }
 
     public ExternalPrecedentDegreeInformation(final IndividualCandidacy candidacy, final String degreeDesignation,
-	    final LocalDate conclusionDate, final Unit institution, final String conclusionGrade, Country country) {
+	    final LocalDate conclusionDate, final Unit sourceInstitution, final String conclusionGrade, Country country) {
 	this();
-	checkParameters(candidacy, degreeDesignation, institution, conclusionGrade);
+	checkParameters(candidacy, degreeDesignation, sourceInstitution, conclusionGrade);
 	setCandidacy(candidacy);
 	setDegreeDesignation(degreeDesignation);
 	setConclusionDate(conclusionDate);
-	setInstitution(institution);
+	setSourceInstitution(sourceInstitution);
 	setConclusionGrade(conclusionGrade);
 	setCountry(country);
     }
 
-    private void checkParameters(final IndividualCandidacy candidacy, final String degreeDesignation, final Unit institution,
-	    final String conclusionGrade) {
+    private void checkParameters(final IndividualCandidacy candidacy, final String degreeDesignation,
+	    final Unit sourceInstitution, final String conclusionGrade) {
 
 	if (candidacy == null) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.candidacy");
@@ -38,7 +38,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.degreeDesignation");
 	}
 
-	if (institution == null) {
+	if (sourceInstitution == null) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.institution");
 	}
     }
@@ -51,24 +51,28 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     @Override
     public void edit(final CandidacyPrecedentDegreeInformationBean bean) {
 	checkParameters(getCandidacy(), bean.getDegreeDesignation(), bean.getInstitution(), bean.getConclusionGrade());
-	
+
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setConclusionDate(bean.getConclusionDate());
-	setInstitution(bean.getInstitution());
+	setSourceInstitution(bean.getInstitution());
 	setConclusionGrade(bean.getConclusionGrade());
     }
 
-    public void init(final Integer numberOfApprovedCurricularCourses, final BigDecimal gradeSum, final BigDecimal approvedEcts,
-	    final BigDecimal enroledEcts) {
-	checkParameters(numberOfApprovedCurricularCourses, gradeSum, approvedEcts, enroledEcts);
+    public void init(final Integer numberOfEnroledCurricularCourses, final Integer numberOfApprovedCurricularCourses,
+	    final BigDecimal gradeSum, final BigDecimal approvedEcts, final BigDecimal enroledEcts) {
+	checkParameters(numberOfEnroledCurricularCourses, numberOfApprovedCurricularCourses, gradeSum, approvedEcts, enroledEcts);
+	setNumberOfEnroledCurricularCourses(numberOfEnroledCurricularCourses);
 	setNumberOfApprovedCurricularCourses(numberOfApprovedCurricularCourses);
 	setGradeSum(gradeSum);
 	setApprovedEcts(approvedEcts);
 	setEnroledEcts(enroledEcts);
     }
 
-    private void checkParameters(final Integer numberOfApprovedCurricularCourses, final BigDecimal gradeSum,
-	    final BigDecimal approvedEcts, final BigDecimal enroledEcts) {
+    private void checkParameters(final Integer numberOfEnroledCurricularCourses, final Integer numberOfApprovedCurricularCourses,
+	    final BigDecimal gradeSum, final BigDecimal approvedEcts, final BigDecimal enroledEcts) {
+	if (numberOfEnroledCurricularCourses != null && numberOfEnroledCurricularCourses.intValue() == 0) {
+	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.numberOfEnroledCurricularCourses");
+	}
 	if (numberOfApprovedCurricularCourses != null && numberOfApprovedCurricularCourses.intValue() == 0) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.numberOfApprovedCurricularCourses");
 	}
@@ -85,8 +89,8 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 
     @Override
     public void editCurricularCoursesInformation(final CandidacyPrecedentDegreeInformationBean information) {
-	init(information.getNumberOfApprovedCurricularCourses(), information.getGradeSum(), information.getApprovedEcts(),
-		information.getEnroledEcts());
+	init(information.getNumberOfEnroledCurricularCourses(), information.getNumberOfApprovedCurricularCourses(), information
+		.getGradeSum(), information.getApprovedEcts(), information.getEnroledEcts());
     }
 
     @Override
@@ -98,7 +102,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     @Override
     public void edit(final CandidacyInformationBean bean) {
 	super.edit(bean);
-	
+
 	setConclusionYear(bean.getConclusionYear());
 	setConclusionGrade(bean.getConclusionGrade());
 	setDegreeDesignation(bean.getDegreeDesignation());

@@ -3,10 +3,13 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -51,6 +54,10 @@ public class PersonalInformationForm extends Form {
     private MaritalStatus maritalStatus;
 
     private GrantOwnerType grantOwnerType;
+
+    private DomainReference<Unit> grantOwnerProvider;
+
+    private String grantOwnerProviderName;
 
     public PersonalInformationForm() {
 	super();
@@ -192,6 +199,31 @@ public class PersonalInformationForm extends Form {
 
     public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
 	this.grantOwnerType = grantOwnerType;
+    }
+
+    public Unit getGrantOwnerProvider() {
+	return (this.grantOwnerProvider != null) ? this.grantOwnerProvider.getObject() : null;
+    }
+
+    public void setGrantOwnerProvider(Unit grantOwnerProvider) {
+	this.grantOwnerProvider = (grantOwnerProvider != null) ? new DomainReference<Unit>(grantOwnerProvider) : null;
+    }
+
+    public String getGrantOwnerProviderName() {
+	return grantOwnerProviderName;
+    }
+
+    public void setGrantOwnerProviderName(String grantOwnerProviderName) {
+	this.grantOwnerProviderName = grantOwnerProviderName;
+    }
+
+    public UnitName getGrantOwnerProviderUnitName() {
+	return (grantOwnerProvider == null) ? null : grantOwnerProvider.getObject().getUnitName();
+    }
+
+    public void setGrantOwnerProviderUnitName(UnitName grantOwnerProviderUnitName) {
+	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : new DomainReference<Unit>(
+		grantOwnerProviderUnitName.getUnit());
     }
 
     @Override

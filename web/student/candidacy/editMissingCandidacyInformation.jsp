@@ -4,6 +4,23 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="enum" %>
+
+<div style="float: right;">
+	<html:form action="/changeLocaleTo.do">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
+	 	<enum:labelValues includedFields="pt,en" id="values" enumeration="pt.utl.ist.fenix.tools.util.i18n.Language" bundle="ENUMERATION_RESOURCES" />
+	 	<html:select bundle="HTMLALT_RESOURCES" property="newLanguage" onchange="this.form.windowLocation.value=window.location; this.form.submit();" value="<%= pt.utl.ist.fenix.tools.util.i18n.Language.getLanguage().toString() %>">
+			<html:options collection="values" property="value" labelProperty="label"/>
+		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="select.newLanguage">
+			<bean:message key="button.submit"/>
+		</html:submit>
+	</html:form>
+</div>
+<script type="text/javascript">
+hideButtons();
+</script>
 
 <bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" ></bean:define>
 <logic:present name="userView" property="person.student">

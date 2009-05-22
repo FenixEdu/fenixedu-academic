@@ -22,6 +22,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     private DomainReference<Unit> institution;
     private String institutionName;
     private String conclusionGrade;
+    private Integer numberOfEnroledCurricularCourses;
     private Integer numberOfApprovedCurricularCourses;
     private BigDecimal gradeSum;
     private BigDecimal approvedEcts;
@@ -70,6 +71,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public void initCurricularCoursesInformation(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
+	setNumberOfEnroledCurricularCourses(precedentDegreeInformation.getNumberOfEnroledCurricularCourses());
 	setNumberOfApprovedCurricularCourses(precedentDegreeInformation.getNumberOfApprovedCurricularCourses());
 	setGradeSum(precedentDegreeInformation.getGradeSum());
 	setApprovedEcts(precedentDegreeInformation.getApprovedEcts());
@@ -77,6 +79,7 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     }
 
     public void initCurricularCoursesInformation(final StudentCurricularPlan studentCurricularPlan) {
+	setNumberOfEnroledCurricularCourses(studentCurricularPlan.getRoot().getNumberOfAllEnroledCurriculumLines());
 	setNumberOfApprovedCurricularCourses(studentCurricularPlan.getRoot().getNumberOfAllApprovedCurriculumLines());
 	setApprovedEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getAprovedEctsCredits()));
 	setEnroledEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getEctsCredits()));
@@ -149,6 +152,14 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 		: null;
     }
 
+    public Integer getNumberOfEnroledCurricularCourses() {
+	return numberOfEnroledCurricularCourses;
+    }
+
+    public void setNumberOfEnroledCurricularCourses(Integer numberOfEnroledCurricularCourses) {
+	this.numberOfEnroledCurricularCourses = numberOfEnroledCurricularCourses;
+    }
+
     public Integer getNumberOfApprovedCurricularCourses() {
 	return numberOfApprovedCurricularCourses;
     }
@@ -180,11 +191,11 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
     public void setEnroledEcts(BigDecimal enroledEcts) {
 	this.enroledEcts = enroledEcts;
     }
-    
+
     public Country getCountry() {
 	return this.country != null ? this.country.getObject() : null;
     }
-    
+
     public void setCountry(Country country) {
 	this.country = country != null ? new DomainReference<Country>(country) : null;
     }

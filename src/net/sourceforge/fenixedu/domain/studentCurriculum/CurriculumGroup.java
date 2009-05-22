@@ -662,6 +662,25 @@ public class CurriculumGroup extends CurriculumGroup_Base {
     }
 
     /**
+     * This method makes a deep search to count number of all enrolled
+     * CurriculumLines (except NoCourseGroupCurriculumGroups)
+     */
+    public int getNumberOfAllEnroledCurriculumLines() {
+	int result = 0;
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.isEnrolment()) {
+		    result++;
+		}
+	    } else {
+		result += ((CurriculumGroup) curriculumModule).getNumberOfAllEnroledCurriculumLines();
+	    }
+	}
+	return result;
+    }
+
+    /**
      * This method makes a deep search to count number of all approved
      * CurriculumLines (except NoCourseGroupCurriculumGroups)
      */

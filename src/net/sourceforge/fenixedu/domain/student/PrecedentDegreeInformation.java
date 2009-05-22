@@ -36,7 +36,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    }
 	}
 
-	this.setInstitution(institution);
+	this.setSourceInstitution(institution);
 	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
 	this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
@@ -48,6 +48,9 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void delete() {
 	removeCountry();
 	removeInstitution();
+	if (hasSourceInstitution()) {
+	    removeSourceInstitution();
+	}
 	removeStudent();
 	removeStudentCandidacy();
 

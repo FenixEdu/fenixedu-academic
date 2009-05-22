@@ -37,24 +37,25 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createPrecedentDegreeInformation(bean);
-	
+
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
-	 * an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
-	if(bean.getInternalPersonCandidacy()) {
+	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
     }
 
     @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean) {
 	DegreeTransferIndividualCandidacyProcessBean transferProcessBean = (DegreeTransferIndividualCandidacyProcessBean) bean;
 	DegreeTransferIndividualCandidacyProcess transferProcess = (DegreeTransferIndividualCandidacyProcess) process;
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	Degree selectedDegree = transferProcessBean.getSelectedDegree();
 	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = transferProcessBean.getPrecedentDegreeInformation();
-	
+
 	checkParameters(person, transferProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
@@ -69,13 +70,15 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
 	 * 
-	 
-	if (personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
-		    getCandidacyExecutionInterval()).getContent());
-	}
+	 * 
+	 * if (personHasDegree(person, selectedDegree)) { throw new
+	 * DomainException
+	 * ("error.DegreeTransferIndividualCandidacy.existing.degree",
+	 * selectedDegree.getNameFor(
+	 * getCandidacyExecutionInterval()).getContent()); }
 	 */
 
 	if (precedentDegreeInformation == null) {
@@ -96,8 +99,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
 	    final CandidacyPrecedentDegreeInformationBean bean) {
 	final ExternalPrecedentDegreeInformation information = super.createExternalPrecedentDegreeInformation(bean);
-	information.init(bean.getNumberOfApprovedCurricularCourses(), bean.getGradeSum(), bean.getApprovedEcts(), bean
-		.getEnroledEcts());
+	information.init(bean.getNumberOfEnroledCurricularCourses(), bean.getNumberOfApprovedCurricularCourses(), bean
+		.getGradeSum(), bean.getApprovedEcts(), bean.getEnroledEcts());
 	return information;
     }
 

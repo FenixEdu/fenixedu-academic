@@ -9,6 +9,14 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 	  
+      	<form-bean name="changeLocaleForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="windowLocation" type="java.lang.String"/>
+	   		<form-property name="newLanguage" type="java.lang.String"/>
+	   		<form-property name="newCountry" type="java.lang.String"/>
+   			<form-property name="newVariant" type="java.lang.String"/>
+		</form-bean>
       
       <form-bean name="studentShiftEnrollmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
