@@ -235,13 +235,19 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	for (; hasAnyDelegateElections(); getDelegateElections().get(0).delete())
 	    ;
 
-	removeRootDomainObject();
-	removeUnit();
-	removePhdProgram();
-	
+	if (hasSite()) {
+	    getSite().delete();
+	}
+
+	// checkDeletion assures that site is deletable
 	if (hasSender()) {
 	    removeSender();
 	}
+
+	removeUnit();
+	removePhdProgram();
+	removeRootDomainObject();
+
 	deleteDomainObject();
     }
 

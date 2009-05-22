@@ -52,8 +52,10 @@ public class DegreeSite extends DegreeSite_Base {
     public Unit getUnit() {
 	Unit unit = super.getUnit();
 	if (unit == null) {
-	    unit = getDegree().getUnit();
-	    updateUnit(unit);
+	    if (hasDegree()) {
+		unit = getDegree().getUnit();
+		updateUnit(unit);
+	    }
 	}
 	return unit;
     }
