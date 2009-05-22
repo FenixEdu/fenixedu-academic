@@ -1171,7 +1171,7 @@ public class Person extends Person_Base {
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
 		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
 		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyAcademicServiceRequests()
-		&& !hasAnyCardGenerationEntries();
+		&& !hasAnyCardGenerationEntries() && !hasAnyInternalGuidings();
     }
 
     private boolean hasParking() {
@@ -2545,7 +2545,7 @@ public class Person extends Person_Base {
 	    public boolean evaluate(Object arg0) {
 		return ((Person) arg0).hasPersonRoles(role);
 	    }
-	    
+
 	});
     }
 
@@ -3023,6 +3023,11 @@ public class Person extends Person_Base {
 	    }
 	}
 	return formations;
+    }
+
+    public Qualification getLastQualification() {
+	return hasAnyAssociatedQualifications() ? Collections
+		.max(getAssociatedQualifications(), Qualification.COMPARATOR_BY_YEAR) : null;
     }
 
     public boolean hasGratuityOrAdministrativeOfficeFeeAndInsuranceDebtsFor(final ExecutionYear executionYear) {

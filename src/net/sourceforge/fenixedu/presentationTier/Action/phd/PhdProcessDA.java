@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,11 +15,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.plugin.ConfigurationReader;
+
 abstract public class PhdProcessDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+
+	reloadRenderers();
 
 	final Process process = getProcess(request);
 	if (process != null) {
@@ -27,6 +32,11 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	}
 
 	return super.execute(mapping, actionForm, request, response);
+    }
+
+    private void reloadRenderers() throws ServletException {
+	final ConfigurationReader reader = new ConfigurationReader();
+	reader.readAll(getServlet().getServletContext());
     }
 
     protected Process getProcess(HttpServletRequest request) {

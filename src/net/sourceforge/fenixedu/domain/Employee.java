@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,10 +19,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -362,6 +365,17 @@ public class Employee extends Employee_Base {
 
     public boolean isUnitCoordinator() {
 	return getCurrentWorkingPlace().getActiveUnitCoordinator() == getPerson();
+    }
+
+    public String getCurrentEmployeeProfessionalCategoryName() {
+	final LocalDate now = new LocalDate();
+	for (final EmployeeProfessionalCategory category : getEmployeeProfessionalCategories()) {
+	    if (category.contains(now)) {
+		return category.getProfessionalCategory().getName().getContent();
+
+	    }
+	}
+	return null;
     }
 
 }

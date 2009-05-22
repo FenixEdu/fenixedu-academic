@@ -6360,11 +6360,11 @@ class phd.PhdProgram extends DomainObject {
 }
 
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
-		
 }
 
 class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
 	PhdIndividualProgramProcessState state;
+	String thesisTitle;
 	PhdIndividualProgramCollaborationType collaborationType;
 	String otherCollaborationType;
 }
@@ -6391,15 +6391,31 @@ class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreement
 class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
 }
 
+class phd.PhdProgramGuiding extends DomainObject {
+}
 
+	class phd.InternalGuiding extends phd.PhdProgramGuiding {
+	}
+
+	class phd.ExternalGuiding extends phd.PhdProgramGuiding {
+		String name;
+		String qualification;
+		String category;
+		String workLocation;
+		String address;
+		String email;
+		String phone;
+	}
 
 
 /* End of Phd Module */
+
 
 class candidacyProcess.PublicCandidacyHashCode extends DomainObject {
 	String email;
 	String value;
 }
+
 
 /*
  * Relations definitions
@@ -6468,29 +6484,45 @@ relation PhdIndividualProgramProcessExecutionYear {
 	ExecutionYear playsRole executionYear;
 }
 
-
 relation PhdProgramServiceAgreementTemplatePhdProgram {
-	
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
-		
 	phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
-
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
-
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
 		multiplicity *;
 	}
-	
 }
 
+relation PhdProgramGuidingRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProgramGuiding playsRole phdProgramGuidings {
+		multiplicity *;
+	}
+}
 
+relation InternalGuidingPerson {
+	phd.InternalGuiding playsRole internalGuidings {
+		multiplicity *;
+	}
+	Person playsRole person;
+}
 
+relation PhdIndividualProgramProcessGuiding {
+	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+	phd.PhdProgramGuiding playsRole guiding;
+}
+
+relation PhdIndividualProgramProcessAssistantGuiding {
+	phd.PhdIndividualProgramProcess playsRole assistantPhdIndividualProgramProcess;
+	phd.PhdProgramGuiding playsRole assistantguidings {
+		multiplicity *;
+	}
+}
 
 /* End of Phd Module */
-
 
 
 relation AcademicCalendarEntryAcademicCalendarEntry {

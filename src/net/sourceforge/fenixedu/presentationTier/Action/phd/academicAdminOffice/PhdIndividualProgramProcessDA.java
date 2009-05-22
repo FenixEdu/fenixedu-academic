@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -32,7 +33,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "editPersonalInformation", path = "/phd/academicAdminOffice/editPersonalInformation.jsp"),
 
-	@Forward(name = "editQualificationsAndJobsInformation", path = "/phd/academicAdminOffice/editQualificationsAndJobsInformation.jsp")
+	@Forward(name = "editQualificationsAndJobsInformation", path = "/phd/academicAdminOffice/editQualificationsAndJobsInformation.jsp"),
+
+	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -191,9 +194,19 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward deleteJobInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	addQualificationsAndJobsContextInformation(request);
-	return executeActivity(PhdIndividualProgramProcess.DeleteJobInformation.class, getDomainObject(request, "jobId"), request, mapping,
-		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
+	return executeActivity(PhdIndividualProgramProcess.DeleteJobInformation.class, getDomainObject(request, "jobId"),
+		request, mapping, "editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
 		"message.job.information.delete.success");
     }
+
     // End of Qualifications and Jobs information
+
+    // Phd individual program process information
+    public ActionForward prepareEditPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdIndividualProgramProcessBean", new PhdIndividualProgramProcessBean());
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    // End of Phd individual program process information
 }

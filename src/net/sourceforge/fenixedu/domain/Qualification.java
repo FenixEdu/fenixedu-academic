@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -8,6 +9,15 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import org.joda.time.YearMonthDay;
 
 public class Qualification extends Qualification_Base {
+
+    static public Comparator<Qualification> COMPARATOR_BY_YEAR = new Comparator<Qualification>() {
+	@Override
+	public int compare(Qualification o1, Qualification o2) {
+	    int year1 = o1.getDateYearMonthDay().getYear();
+	    int year2 = o2.getDateYearMonthDay().getYear();
+	    return year1 < year2 ? -1 : (year1 == year2 ? 0 : 1);
+	}
+    };
 
     public Qualification() {
 	super();

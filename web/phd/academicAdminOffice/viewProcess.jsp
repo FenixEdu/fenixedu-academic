@@ -61,8 +61,12 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.editQualificationsAndJobsInformation"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=prepareEditPhdIndividualProgramProcessInformation" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.editPhdIndividualProgramProcessInformation"/>
+				</html:link>
+			</li>
 		</ul>
-  
     </td>
   </tr>
 </table>

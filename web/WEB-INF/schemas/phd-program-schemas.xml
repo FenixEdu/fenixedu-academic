@@ -327,3 +327,9 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 </schema>
+
+<schema name="PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+	<slot name="thesisTitle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="collaborationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="otherCollaborationType" />
+</schema>

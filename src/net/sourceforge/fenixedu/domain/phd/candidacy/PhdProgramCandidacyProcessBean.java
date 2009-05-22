@@ -14,9 +14,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
 public class PhdProgramCandidacyProcessBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private PersonBean personBean;
@@ -34,80 +31,6 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private String otherCollaborationType;
 
     private ChoosePersonBean choosePersonBean;
-
-    public static class GuiderBean {
-
-	private String name;
-
-	private String academicQualification;
-
-	private String professionalQualification;
-
-	private String workLocation;
-
-	private String address;
-
-	private String email;
-
-	private String phone;
-
-	public String getName() {
-	    return name;
-	}
-
-	public void setName(String name) {
-	    this.name = name;
-	}
-
-	public String getAcademicQualification() {
-	    return academicQualification;
-	}
-
-	public void setAcademicQualification(String academicQualification) {
-	    this.academicQualification = academicQualification;
-	}
-
-	public String getWorkLocation() {
-	    return workLocation;
-	}
-
-	public void setWorkLocation(String workLocation) {
-	    this.workLocation = workLocation;
-	}
-
-	public String getAddress() {
-	    return address;
-	}
-
-	public void setAddress(String address) {
-	    this.address = address;
-	}
-
-	public String getEmail() {
-	    return email;
-	}
-
-	public void setEmail(String email) {
-	    this.email = email;
-	}
-
-	public String getPhone() {
-	    return phone;
-	}
-
-	public void setPhone(String phone) {
-	    this.phone = phone;
-	}
-
-	public String getProfessionalQualification() {
-	    return professionalQualification;
-	}
-
-	public void setProfessionalQualification(String professionalQualification) {
-	    this.professionalQualification = professionalQualification;
-	}
-
-    }
 
     public PhdProgramCandidacyProcessBean() {
 	setPersonBean(new PersonBean());

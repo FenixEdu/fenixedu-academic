@@ -27,4 +27,12 @@ public class EmployeeProfessionalCategory extends EmployeeProfessionalCategory_B
 	setImportationDate(new DateTime());
     }
 
+    public boolean hasEndDate() {
+	return getEndDate() != null;
+    }
+
+    public boolean contains(final LocalDate date) {
+	return !getBeginDate().isAfter(date) && (!hasEndDate() || !getEndDate().isBefore(date));
+    }
+
 }

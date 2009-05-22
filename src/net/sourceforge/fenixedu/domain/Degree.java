@@ -237,6 +237,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	removeRootDomainObject();
 	removeUnit();
+	removePhdProgram();
+	
 	if (hasSender()) {
 	    removeSender();
 	}
