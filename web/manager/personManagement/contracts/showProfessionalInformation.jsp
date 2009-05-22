@@ -20,7 +20,11 @@
 			<html:link page="<%= "/professionalInformation.do?method=showCategories&personId="+ personID%>"><bean:message key="label.categories" bundle="CONTRACTS_RESOURCES"/></html:link>, 
 			<html:link page="<%= "/professionalInformation.do?method=showRegimes&personId="+ personID%>"><bean:message key="label.regimes" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showRelations&personId="+ personID%>"><bean:message key="label.relations" bundle="CONTRACTS_RESOURCES"/></html:link>,
-			<html:link page="<%= "/professionalInformation.do?method=showContracts&personId="+ personID%>"><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></html:link>
+			<html:link page="<%= "/professionalInformation.do?method=showContracts&personId="+ personID%>"><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showFunctionsAccumulations&personId="+ personID%>"><bean:message key="label.functionsAccumulations" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showSabbaticals&personId="+ personID%>"><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showServiceExemptions&personId="+ personID%>"><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showGrantOwnerEquivalences&personId="+ personID%>"><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></html:link>
 		</p>
 		
 		<bean:define id="employee" name="person" property="employee"/>
@@ -78,6 +82,54 @@
 				<strong><bean:message key="label.contracts" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
 			<fr:view name="contracts" schema="view.employee.employeeProfessionalContract">
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
+		<logic:present name="functionsAccumulations">
+			<div class="infoop">
+				<strong><bean:message key="label.functionsAccumulations" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="functionsAccumulations" schema="view.employee.employeeFunctionsAccumulation">
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
+		<logic:present name="sabbaticals">
+			<div class="infoop">
+				<strong><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="sabbaticals" schema="view.employee.employeeSabbatical">
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
+		<logic:present name="serviceExemptions">
+			<div class="infoop">
+				<strong><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="serviceExemptions" schema="view.employee.employeeServiceExemption">
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
+		<logic:present name="grantOwnerEquivalences">
+			<div class="infoop">
+				<strong><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="grantOwnerEquivalences" schema="view.employee.employeeGrantOwnerEquivalent">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />

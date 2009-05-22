@@ -8,10 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeContractSituation;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeFunctionsAccumulation;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeGrantOwnerEquivalent;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalCategory;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalContract;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRegime;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalRelation;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeSabbatical;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeServiceExemption;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -113,4 +118,80 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	request.setAttribute("person", person);
 	return mapping.findForward("showProfessionalInformation");
     }
+
+    public ActionForward showFunctionsAccumulations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+
+	List<EmployeeFunctionsAccumulation> functionsAccumulations = new ArrayList<EmployeeFunctionsAccumulation>();
+	if (person.getEmployee() != null) {
+	    for (EmployeeFunctionsAccumulation employeeFunctionsAccumulation : person.getEmployee()
+		    .getEmployeeFunctionsAccumulations()) {
+		if (employeeFunctionsAccumulation.getAnulationDate() == null) {
+		    functionsAccumulations.add(employeeFunctionsAccumulation);
+		}
+	    }
+	}
+	request.setAttribute("functionsAccumulations", functionsAccumulations);
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
+    public ActionForward showSabbaticals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+
+	List<EmployeeProfessionalExemption> sabbaticals = new ArrayList<EmployeeProfessionalExemption>();
+	if (person.getEmployee() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+		    .getEmployeeProfessionalExemptions()) {
+		if (employeeProfessionalExemption instanceof EmployeeSabbatical
+			&& employeeProfessionalExemption.getAnulationDate() == null) {
+		    sabbaticals.add(employeeProfessionalExemption);
+		}
+	    }
+	}
+	request.setAttribute("sabbaticals", sabbaticals);
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
+    public ActionForward showServiceExemptions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+
+	List<EmployeeProfessionalExemption> serviceExemptions = new ArrayList<EmployeeProfessionalExemption>();
+	if (person.getEmployee() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+		    .getEmployeeProfessionalExemptions()) {
+		if (employeeProfessionalExemption instanceof EmployeeServiceExemption
+			&& employeeProfessionalExemption.getAnulationDate() == null) {
+		    serviceExemptions.add(employeeProfessionalExemption);
+		}
+	    }
+	}
+	request.setAttribute("serviceExemptions", serviceExemptions);
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
+    public ActionForward showGrantOwnerEquivalences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = (Person) rootDomainObject.readPartyByOID(getIntegerFromRequest(request, "personId"));
+
+	List<EmployeeProfessionalExemption> grantOwnerEquivalences = new ArrayList<EmployeeProfessionalExemption>();
+	if (person.getEmployee() != null) {
+	    for (EmployeeProfessionalExemption employeeProfessionalExemption : person.getEmployee()
+		    .getEmployeeProfessionalExemptions()) {
+		if (employeeProfessionalExemption instanceof EmployeeGrantOwnerEquivalent
+			&& employeeProfessionalExemption.getAnulationDate() == null) {
+		    grantOwnerEquivalences.add(employeeProfessionalExemption);
+		}
+	    }
+	}
+	request.setAttribute("grantOwnerEquivalences", grantOwnerEquivalences);
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
 }

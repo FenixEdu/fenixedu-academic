@@ -1411,6 +1411,34 @@ constructor="description, state, modifiedBy">
 	<slot name="contractSituation.name" key="label.situation"/>
 </schema>
 
+<schema name="view.employee.employeeFunctionsAccumulation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeFunctionsAccumulation" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="hours" />
+	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalRegime.name"/>
+	<slot name="functionsAccumulation.name" key="label.function"/>
+</schema>
+
+<schema name="view.employee.employeeSabbatical" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+</schema>
+
+<schema name="view.employee.employeeServiceExemption" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="serviceExemption.name" key="label.exemption"/>
+</schema>
+
+<schema name="view.employee.employeeGrantOwnerEquivalent" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.EmployeeProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="motive"/>
+	<slot name="local"/>
+	<slot name="country" schema="country.name" layout="values"/>
+	<slot name="grantOwnerEquivalent.name" key="label.type"/>
+</schema>
+
 <schema name="view.professionalRegime.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.regime" layout="null-as-label"/>
 </schema>

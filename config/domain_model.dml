@@ -5675,6 +5675,51 @@ class personnelSection.contracts.EmployeeProfessionalRelation extends DomainObje
 	DateTime anulationDate;
 }
 
+class personnelSection.contracts.FunctionsAccumulation extends DomainObject {
+	String giafId;
+	MultiLanguageString name;
+}
+
+class personnelSection.contracts.EmployeeFunctionsAccumulation extends DomainObject {
+	LocalDate beginDate;
+	LocalDate endDate;
+	BigDecimal hours;
+	DateTime creationDate;
+	DateTime modifiedDate;
+	DateTime importationDate;
+	DateTime anulationDate; 
+}
+
+class personnelSection.contracts.EmployeeProfessionalExemption extends DomainObject {
+	LocalDate beginDate;
+	LocalDate endDate;
+	DateTime creationDate;
+	DateTime modifiedDate;
+	DateTime importationDate;
+	DateTime anulationDate; 
+}
+
+	class personnelSection.contracts.EmployeeSabbatical extends personnelSection.contracts.EmployeeProfessionalExemption {
+	}
+
+	class personnelSection.contracts.EmployeeGrantOwnerEquivalent extends personnelSection.contracts.EmployeeProfessionalExemption {
+		String motive;
+		String local;
+	}
+
+	class personnelSection.contracts.EmployeeServiceExemption extends personnelSection.contracts.EmployeeProfessionalExemption {
+	}
+
+class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
+	String giafId;
+	MultiLanguageString name;
+}
+
+class personnelSection.contracts.ServiceExemption extends DomainObject {
+	String giafId;
+	MultiLanguageString name;
+}
+
 class personnelSection.payrollSection.bonus.AnualBonusInstallment extends DomainObject {
 	Integer year;
 	Partial paymentPartialDate;
@@ -14302,6 +14347,21 @@ relation EmployeeProfessionalRelationEmployee {
 	}
 }
 
+relation EmployeeProfessionalExemptionEmployee {
+	Employee playsRole employee;
+	personnelSection.contracts.EmployeeProfessionalExemption playsRole employeeProfessionalExemptions {
+		multiplicity *;
+	}
+}
+
+relation EmployeeFunctionsAccumulationEmployee {
+	Employee playsRole employee;
+	personnelSection.contracts.EmployeeFunctionsAccumulation playsRole employeeFunctionsAccumulations {
+		multiplicity *;
+	}
+}
+
+
 relation ContractSituationEmployeeProfessionalContract {
 	personnelSection.contracts.ContractSituation playsRole contractSituation;
 	personnelSection.contracts.EmployeeProfessionalContract playsRole employeeProfessionalContracts {
@@ -14364,6 +14424,43 @@ relation ProfessionalCategoryEmployeeProfessionalRelation {
 		multiplicity *;
 	}
 }
+
+
+relation FunctionsAccumulationEmployeeFunctionsAccumulation {
+	personnelSection.contracts.FunctionsAccumulation playsRole functionsAccumulation;
+	personnelSection.contracts.EmployeeFunctionsAccumulation playsRole employeeFunctionsAccumulations {
+		multiplicity *;
+	}
+}
+
+relation EmployeeFunctionsAccumulationProfessionalRegime {
+	personnelSection.contracts.ProfessionalRegime playsRole professionalRegime;
+	personnelSection.contracts.EmployeeFunctionsAccumulation playsRole employeeFunctionsAccumulations {
+		multiplicity *;
+	}
+}
+
+relation ServiceExemptionEmployeeServiceExemption {
+	personnelSection.contracts.ServiceExemption playsRole serviceExemption;
+	personnelSection.contracts.EmployeeServiceExemption playsRole employeeServiceExemptions {
+		multiplicity *;
+	}
+}
+
+relation GrantOwnerEquivalentEmployeeGrantOwnerEquivalent {
+	personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalent;
+	personnelSection.contracts.EmployeeGrantOwnerEquivalent playsRole employeeGrantOwnerEquivalences {
+		multiplicity *;
+	}
+}
+
+relation EmployeeGrantOwnerEquivalentCountry {
+	personnelSection.contracts.EmployeeGrantOwnerEquivalent playsRole employeeGrantOwnerEquivalences {
+		multiplicity *;
+	}
+	Country playsRole country; 
+}
+
 
 relation LibraryCardRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
@@ -15658,6 +15755,41 @@ relation ProfessionalRegimeRootDomainObject {
 relation ProfessionalRelationRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	personnelSection.contracts.ProfessionalRelation playsRole professionalRelations {
+		multiplicity *;
+	}
+}
+
+relation EmployeeFunctionsAccumulationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	personnelSection.contracts.EmployeeFunctionsAccumulation playsRole employeeFunctionsAccumulations {
+		multiplicity *;
+	}
+}
+
+relation FunctionsAccumulationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	personnelSection.contracts.FunctionsAccumulation playsRole functionsAccumulations {
+		multiplicity *;
+	}
+}
+
+relation EmployeeProfessionalExemptionRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	personnelSection.contracts.EmployeeProfessionalExemption playsRole employeeProfessionalExemptions {
+		multiplicity *;
+	}
+}
+
+relation ServiceExemptionRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	personnelSection.contracts.ServiceExemption playsRole serviceExemptions {
+		multiplicity *;
+	}
+}
+
+relation GrantOwnerEquivalentRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalences {
 		multiplicity *;
 	}
 }
