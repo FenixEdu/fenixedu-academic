@@ -1051,9 +1051,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getExecutionYears() {
 	if (selectedYears == null) {
+
+	    ExecutionYear year = null;
+	    if (getCompetenceCourse() != null) {
+		final ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
+		year = semester != null ? semester.getExecutionYear() : null;
+	    }
+
 	    selectedYears = new ArrayList<SelectItem>();
-	    for (ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
-		selectedYears.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+	    for (ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
+		if (year == null || executionYear.isAfterOrEquals(year)) {
+		    selectedYears.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+		}
 	    }
 	    Collections.sort(selectedYears, new ReverseComparator(new BeanComparator("label")));
 	}

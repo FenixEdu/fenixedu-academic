@@ -1004,6 +1004,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	final CompetenceCourseInformation information = findCompetenceCourseInformationForExecutionYear(executionYear);
 	return information != null && information.getCompetenceCourseLoadsCount() == 1;
     }
+    
+    public ExecutionSemester getStartExecutionSemester() {
+	return getOldestCompetenceCourseInformation().getExecutionPeriod();
+    }
 
     // -------------------------------------------------------------
     // read static methods
