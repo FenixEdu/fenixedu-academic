@@ -1,10 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentStandaloneEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -33,4 +41,19 @@ public class StudentStandaloneEnrolmentsDA extends NoCourseGroupCurriculumGroupE
     protected NoCourseGroupCurriculumGroupType getGroupType() {
 	return NoCourseGroupCurriculumGroupType.STANDALONE;
     }
+
+    @Override
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final ExecutionSemester semester = getExecutionSemester(request);
+	if (isStudentInPartialRegime(request, semester)) {
+	    addActionMessage("error", request, "error.Student.has.partial.regime", semester.getQualifiedName());
+	}
+	return super.prepare(mapping, actionForm, request, response);
+    }
+
+    private boolean isStudentInPartialRegime(final HttpServletRequest request, final ExecutionSemester semester) {
+	return getStudentCurricularPlan(request).getRegistration().isPartialRegime(semester.getExecutionYear());
+    }
+
 }

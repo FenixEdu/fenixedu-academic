@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -38,18 +40,31 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
 
-	if (getRegistration().isPartialRegime(getExecutionYear())) {
-	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
+	final AdministrativeOfficePermission permission1 = getEnrolmentWithoutRulesPermission();
+	if (permission1 == null || !permission1.isAppliable(getRegistration()) || !permission1.isMember(getResponsiblePerson())) {
+	    checkRegistrationRegime();
 	}
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
-	if (permission != null && permission.isAppliable(getRegistration())) {
-	    if (!permission.isMember(getResponsiblePerson())) {
+	final AdministrativeOfficePermission permission2 = getUpdateRegistrationAfterConclusionProcessPermission();
+	if (permission2 != null && permission2.isAppliable(getRegistration())) {
+	    if (!permission2.isMember(getResponsiblePerson())) {
 		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
 	    }
 	}
 
 	checkEnrolingDegreeModules();
+    }
+
+    private void checkRegistrationRegime() {
+	if (getRegistration().isPartialRegime(getExecutionYear())) {
+	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
+	}
+    }
+
+    private AdministrativeOfficePermission getEnrolmentWithoutRulesPermission() {
+	final Person person = getResponsiblePerson();
+	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.ENROLMENT_WITHOUT_RULES,
+		person.getEmployeeCampus());
     }
 
     private void checkEnrolingDegreeModules() {
