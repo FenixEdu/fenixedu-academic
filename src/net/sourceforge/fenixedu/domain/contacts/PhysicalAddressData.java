@@ -22,6 +22,17 @@ public class PhysicalAddressData implements Serializable {
     public PhysicalAddressData() {
     }
 
+    public PhysicalAddressData(PhysicalAddress address) {
+	setAddress(address.getAddress());
+	setAreaCode(address.getAreaCode());
+	setAreaOfAreaCode(address.getAreaOfAreaCode());
+	setArea(address.getArea());
+	setParishOfResidence(address.getParishOfResidence());
+	setDistrictSubdivisionOfResidence(address.getDistrictSubdivisionOfResidence());
+	setDistrictOfResidence(address.getDistrictOfResidence());
+	setCountryOfResidence(address.getCountryOfResidence());
+    }
+
     public PhysicalAddressData(final String address, final String areaCode, final String areaOfAreaCode, final String area) {
 	this(address, areaCode, areaOfAreaCode, area, null, null, null, null);
     }
@@ -110,6 +121,20 @@ public class PhysicalAddressData implements Serializable {
     public PhysicalAddressData setCountryOfResidence(Country countryOfResidence) {
 	this.countryOfResidence = (countryOfResidence != null) ? new DomainReference<Country>(countryOfResidence) : null;
 	return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof PhysicalAddressData) {
+	    PhysicalAddressData data = (PhysicalAddressData) obj;
+	    return address.equals(data.getAddress()) && areaCode.equals(data.getAreaCode())
+		    && areaOfAreaCode.equals(data.getAreaOfAreaCode()) && area.equals(data.getArea())
+		    && parishOfResidence.equals(data.getParishOfResidence())
+		    && districtSubdivisionOfResidence.equals(data.getDistrictSubdivisionOfResidence())
+		    && districtOfResidence.equals(data.getDistrictOfResidence())
+		    && countryOfResidence.equals(data.getCountryOfResidence());
+	} else
+	    return false;
     }
 
     public boolean isEmpty() {

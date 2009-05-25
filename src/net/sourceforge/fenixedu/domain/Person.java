@@ -54,6 +54,7 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -263,7 +264,7 @@ public class Person extends Person_Base {
 	createLoginIdentificationAndUserIfNecessary();
 	setIsPassInKerberos(Boolean.FALSE);
 
-	createDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
 	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
 	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
 	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, true);
@@ -280,7 +281,7 @@ public class Person extends Person_Base {
 	setGender(gender);
 	setIdentification(documentIDNumber, documentType);
 
-	createDefaultPhysicalAddress(data);
+	PhysicalAddress.createPhysicalAddress(this, data, PartyContactType.PERSONAL, true);
 	Phone.createPhone(this, phone, PartyContactType.PERSONAL, true);
 	MobilePhone.createMobilePhone(this, mobile, PartyContactType.PERSONAL, true);
 	EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
@@ -315,7 +316,7 @@ public class Person extends Person_Base {
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
     public Person edit(PersonBean personBean) {
 	setProperties(personBean);
-	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
+	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
 	setDefaultPhoneNumber(personBean.getPhone());
 	setDefaultMobilePhoneNumber(personBean.getMobile());
 	setDefaultWebAddressUrl(personBean.getWebAddress());
@@ -374,14 +375,14 @@ public class Person extends Person_Base {
 	physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(personDTO.getCountry()));
 
 	if (!physicalAddress.isEmpty()) {
-	    updateDefaultPhysicalAddress(physicalAddress);
+	    setDefaultPhysicalAddressData(physicalAddress);
 	}
 
     }
 
     public void edit(String name, String address, String phone, String mobile, String homepage, String email) {
 	setName(name);
-	updateDefaultPhysicalAddress(new PhysicalAddressData().setAddress(address));
+	setAddress(address);
 	setDefaultPhoneNumber(phone);
 	setDefaultMobilePhoneNumber(mobile);
 	setDefaultEmailAddressValue(email);
@@ -390,7 +391,6 @@ public class Person extends Person_Base {
 
     public void editPersonalData(String documentIdNumber, IDDocumentType documentType, String personName,
 	    String socialSecurityNumber) {
-
 	setName(personName);
 	setIdentification(documentIdNumber, documentType);
 	setSocialSecurityNumber(socialSecurityNumber);
@@ -398,8 +398,7 @@ public class Person extends Person_Base {
 
     public void editPersonWithExternalData(PersonBean personBean) {
 	setProperties(personBean);
-	updateDefaultPhysicalAddress(personBean.getPhysicalAddressData());
-
+	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
 	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, !hasDefaultPhone());
 	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, !hasDefaultMobilePhone());
 	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, !hasDefaultEmailAddress());
@@ -744,7 +743,7 @@ public class Person extends Person_Base {
 	setIdentification(infoPerson.getNumeroDocumentoIdentificacao(), infoPerson.getTipoDocumentoIdentificacao());
 	setFiscalCode(infoPerson.getCodigoFiscal());
 
-	updateDefaultPhysicalAddress(infoPerson.getPhysicalAddressData());
+	setDefaultPhysicalAddressData(infoPerson.getPhysicalAddressData());
 	setDefaultWebAddressUrl(infoPerson.getEnderecoWeb());
 	setDefaultPhoneNumber(infoPerson.getTelefone());
 	setDefaultMobilePhoneNumber(infoPerson.getTelemovel());
@@ -783,21 +782,11 @@ public class Person extends Person_Base {
     }
 
     private void updateProperties(InfoPersonEditor infoPerson) {
-
 	setName(valueToUpdateIfNewNotNull(getName(), infoPerson.getNome()));
 	setIdentification(valueToUpdateIfNewNotNull(getDocumentIdNumber(), infoPerson.getNumeroDocumentoIdentificacao()),
 		(IDDocumentType) valueToUpdateIfNewNotNull(getIdDocumentType(), infoPerson.getTipoDocumentoIdentificacao()));
 
 	setFiscalCode(valueToUpdateIfNewNotNull(getFiscalCode(), infoPerson.getCodigoFiscal()));
-
-	setAddress(valueToUpdateIfNewNotNull(getAddress(), infoPerson.getMorada()));
-	setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
-	setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson.getLocalidadeCodigoPostal()));
-	setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
-	setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson.getFreguesiaMorada()));
-	setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(), infoPerson
-		.getConcelhoMorada()));
-	setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson.getDistritoMorada()));
 
 	setEmissionDateOfDocumentIdYearMonthDay(infoPerson.getDataEmissaoDocumentoIdentificacao() != null ? YearMonthDay
 		.fromDateFields(infoPerson.getDataEmissaoDocumentoIdentificacao()) : getEmissionDateOfDocumentIdYearMonthDay());
@@ -821,6 +810,18 @@ public class Person extends Person_Base {
 	setSocialSecurityNumber(valueToUpdateIfNewNotNull(getSocialSecurityNumber(), infoPerson.getNumContribuinte()));
 	setProfession(valueToUpdateIfNewNotNull(getProfession(), infoPerson.getProfissao()));
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
+
+	PhysicalAddressData data = new PhysicalAddressData();
+	data.setAddress(valueToUpdateIfNewNotNull(getAddress(), infoPerson.getMorada()));
+	data.setAreaCode(valueToUpdateIfNewNotNull(getAreaCode(), infoPerson.getCodigoPostal()));
+	data.setAreaOfAreaCode(valueToUpdateIfNewNotNull(getAreaOfAreaCode(), infoPerson.getLocalidadeCodigoPostal()));
+	data.setArea(valueToUpdateIfNewNotNull(getArea(), infoPerson.getLocalidade()));
+	data.setParishOfResidence(valueToUpdateIfNewNotNull(getParishOfResidence(), infoPerson.getFreguesiaMorada()));
+	data.setDistrictSubdivisionOfResidence(valueToUpdateIfNewNotNull(getDistrictSubdivisionOfResidence(), infoPerson
+		.getConcelhoMorada()));
+	data.setDistrictOfResidence(valueToUpdateIfNewNotNull(getDistrictOfResidence(), infoPerson.getDistritoMorada()));
+	data.setCountryOfResidence(getCountryOfResidence());
+	setDefaultPhysicalAddressData(data);
 
 	if (!hasAnyPartyContact(Phone.class)) {
 	    Phone.createPhone(this, infoPerson.getTelefone(), PartyContactType.PERSONAL, true);
@@ -2538,7 +2539,7 @@ public class Person extends Person_Base {
     }
 
     public static Collection<Person> findInternalPersonByNameAndRole(final String name, final RoleType roleType) {
-	final Role role = (Role) Role.getRoleByRoleType(roleType);
+	final Role role = Role.getRoleByRoleType(roleType);
 	return CollectionUtils.select(findInternalPerson(name), new Predicate() {
 
 	    @Override

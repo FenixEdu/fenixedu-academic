@@ -279,8 +279,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		    getResidenceInformationForm().getSchoolTimeParishOfResidence(), getResidenceInformationForm()
 			    .getSchoolTimeDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
 			    .getSchoolTimeDistrictSubdivisionOfResidence().getDistrict().getName(), Country.readDefault());
-
-	    new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+	    PhysicalAddress.createPhysicalAddress(person, physicalAddressData, PartyContactType.PERSONAL, false);
 	}
     }
 
@@ -291,10 +290,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		getResidenceInformationForm().getDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
 			.getDistrictSubdivisionOfResidence().getDistrict().getName(), getResidenceInformationForm()
 			.getCountryOfResidence());
-
-	final PhysicalAddress residenceAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
-		: PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
-	residenceAddress.edit(physicalAddressData);
+	person.setDefaultPhysicalAddressData(physicalAddressData);
     }
 
     protected void fillFiliation() {

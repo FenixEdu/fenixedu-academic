@@ -35,6 +35,8 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
@@ -855,7 +857,7 @@ public class Unit extends Unit_Base {
 
 	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
 	contributor.setSocialSecurityNumber(contributorNumber);
-	contributor.createDefaultPhysicalAddress(data);
+	PhysicalAddress.createPhysicalAddress(contributor, data, PartyContactType.PERSONAL, true);
 
 	return contributor;
     }

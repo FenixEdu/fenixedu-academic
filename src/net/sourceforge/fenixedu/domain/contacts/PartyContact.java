@@ -213,12 +213,4 @@ public abstract class PartyContact extends PartyContact_Base {
 	    }
 	}
     }
-
-    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
-	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, null);
-    }
-
-    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data) {
-	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, data);
-    }
 }

@@ -26,25 +26,28 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	}
     };
 
+    static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data, PartyContactType type,
+	    Boolean isDefault) {
+	for (PhysicalAddress address : party.getPhysicalAddresses()) {
+	    if (new PhysicalAddressData(address).equals(data)) {
+		return address;
+	    }
+	}
+	return data != null ? new PhysicalAddress(party, type, isDefault, data) : null;
+    }
+
     protected PhysicalAddress() {
 	super();
     }
 
-    /**
-     * @deprecated use a constructor with PhysicalAddressData.
-     */
-    @Deprecated
-    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact) {
-	this();
-	super.init(party, type, defaultContact);
-    }
-
-    public PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact, PhysicalAddressData data) {
+    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
+	    PhysicalAddressData data) {
 	this();
 	super.init(party, type, defaultContact);
 	edit(data);
     }
 
+    // Called from renders with constructor clause.
     public PhysicalAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String address,
 	    final String areaCode, final String areaOfAreaCode, final String area, final String parishOfResidence,
 	    final String districtSubdivisionOfResidence, final String districtOfResidence, final Country countryOfResidence) {
@@ -66,6 +69,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	super.setCountryOfResidence(data.getCountryOfResidence());
     }
 
+    // Called from renders with edit clause.
     public void edit(final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
 	    final String areaOfAreaCode, final String area, final String parishOfResidence,
 	    final String districtSubdivisionOfResidence, final String districtOfResidence, final Country countryOfResidence) {

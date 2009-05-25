@@ -395,17 +395,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public void editContributor(String contributorName, String contributorNumber, String contributorAddress, String areaCode,
 	    String areaOfAreaCode, String area, String parishOfResidence, String districtSubdivisionOfResidence,
 	    String districtOfResidence) {
-
 	setName(contributorName);
 	setSocialSecurityNumber(contributorNumber);
-	setAddress(contributorAddress);
-	setAddress(contributorAddress);
-	setAreaCode(areaCode);
-	setAreaOfAreaCode(areaOfAreaCode);
-	setArea(area);
-	setParishOfResidence(parishOfResidence);
-	setDistrictSubdivisionOfResidence(districtSubdivisionOfResidence);
-	setDistrictOfResidence(districtOfResidence);
+	setDefaultPhysicalAddressData(new PhysicalAddressData(contributorAddress, areaCode, areaOfAreaCode, area,
+		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, null));
     }
 
     public boolean isPerson() {
@@ -995,49 +988,42 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     /*
      * PhysicalAddress
      */
-    protected PhysicalAddress createDefaultPhysicalAddress(final PhysicalAddressData data) {
-	return (data != null) ? PartyContact.createDefaultPersonalPhysicalAddress(this, data) : null;
-    }
-
-    protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
-	if (hasDefaultPhysicalAddress())
-	    getDefaultPhysicalAddress().edit(data);
-	else
-	    createDefaultPhysicalAddress(data);
-    }
-
-    @Deprecated
-    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
-	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this, null);
-    }
-
-    public PhysicalAddress getDefaultPhysicalAddress() {
-	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
+    public List<PhysicalAddress> getPhysicalAddresses() {
+	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
     }
 
     public boolean hasDefaultPhysicalAddress() {
 	return hasDefaultPartyContact(PhysicalAddress.class);
     }
 
-    public List<PhysicalAddress> getPhysicalAddresses() {
-	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
+    public PhysicalAddress getDefaultPhysicalAddress() {
+	return (PhysicalAddress) getDefaultPartyContact(PhysicalAddress.class);
     }
 
-    @Deprecated
+    public void setDefaultPhysicalAddressData(final PhysicalAddressData data) {
+	if (hasDefaultPhysicalAddress()) {
+	    getDefaultPhysicalAddress().edit(data);
+	} else {
+	    PhysicalAddress.createPhysicalAddress(this, data, PartyContactType.PERSONAL, true);
+	}
+    }
+
+    private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
+	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
+	return physicalAdress != null ? physicalAdress : PhysicalAddress.createPhysicalAddress(this, null,
+		PartyContactType.PERSONAL, true);
+    }
+
     public String getAddress() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAddress() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getAddress() : StringUtils.EMPTY;
     }
 
-    @Deprecated
     public void setAddress(String address) {
 	getOrCreateDefaultPhysicalAddress().setAddress(address);
     }
 
     public String getAreaCode() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaCode() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getAreaCode() : StringUtils.EMPTY;
     }
 
     public void setAreaCode(String areaCode) {
@@ -1045,8 +1031,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getAreaOfAreaCode() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getAreaOfAreaCode() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getAreaOfAreaCode() : StringUtils.EMPTY;
     }
 
     public void setAreaOfAreaCode(String areaOfAreaCode) {
@@ -1054,13 +1039,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getPostalCode() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getPostalCode() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getPostalCode() : StringUtils.EMPTY;
     }
 
     public String getArea() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getArea() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getArea() : StringUtils.EMPTY;
     }
 
     public void setArea(String area) {
@@ -1068,8 +1051,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getParishOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getParishOfResidence() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getParishOfResidence() : StringUtils.EMPTY;
     }
 
     public void setParishOfResidence(String parishOfResidence) {
@@ -1077,8 +1059,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getDistrictSubdivisionOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictSubdivisionOfResidence() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence() : StringUtils.EMPTY;
     }
 
     public void setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
@@ -1086,8 +1067,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public String getDistrictOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getDistrictOfResidence() : StringUtils.EMPTY;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getDistrictOfResidence() : StringUtils.EMPTY;
     }
 
     public void setDistrictOfResidence(String districtOfResidence) {
@@ -1095,8 +1075,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public Country getCountryOfResidence() {
-	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
-	return physicalAddress != null ? physicalAddress.getCountryOfResidence() : null;
+	return hasDefaultPhysicalAddress() ? getDefaultPhysicalAddress().getCountryOfResidence() : null;
     }
 
     public void setCountryOfResidence(Country countryOfResidence) {
