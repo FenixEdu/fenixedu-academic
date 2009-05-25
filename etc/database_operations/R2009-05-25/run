@@ -46,3 +46,8 @@ function executeWithTempFile() {
 execute "Add new columns and phd program guiding tables" alterTablePhdIndividualProgramProcess.sql
 execute "Raides Additions" raidesAdditions.sql
 execute "Create Service Exemptions Tables" createServiceExemptionsTables.sql
+
+execute "Adding remarks column to phd candidacy process document" AddRemarksColumnToPhdCandidacyProcessDocument.sql
+execute "Adding phd individual candidacy process number" AddPhdIndividualProcessNumber.sql
+
+
