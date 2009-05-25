@@ -37,5 +37,5 @@
 		<fr:property name="eachLayout" value="values"/>
 		<fr:property name="eachSchema" value="functionalities.functionality.tree"/>
 	</fr:layout>
-	<fr:destination name="functionality.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${idInternal}&amp;oid=" + siteId + "&amp;sectionID=" + parentId %>"/>
+	<fr:destination name="functionality.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${idInternal}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
 </fr:view>
