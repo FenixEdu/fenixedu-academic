@@ -265,7 +265,11 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public Category getCategory() {
-	final String codeString = getLine().substring(11, 13);
+	return readCategory(getLine());
+    }
+
+    public static Category readCategory(final String line) {
+	final String codeString = line.substring(11, 13);
 	final int code = Integer.valueOf(codeString);
 	return Category.valueOf(code);
     }
