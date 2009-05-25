@@ -671,6 +671,7 @@
       		  path="/viewRoom"
       		  scope="request"
               parameter="method"
+              validate="false"
               type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewRoomFormActionPostBack">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
