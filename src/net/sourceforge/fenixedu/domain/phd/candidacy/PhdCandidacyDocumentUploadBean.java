@@ -26,6 +26,8 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 
     private String filename;
 
+    private String remarks;
+
     public byte[] getFileContent() {
 	return this.fileContent;
     }
@@ -70,4 +72,13 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
     public boolean hasAnyInformation() {
 	return this.type != null || !StringUtils.isEmpty(this.filename) || this.fileContent != null;
     }
+
+    public String getRemarks() {
+	return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+	this.remarks = remarks;
+    }
+
 }

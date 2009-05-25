@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding remarks column to phd candidacy process document" AddRemarksColumnToPhdCandidacyProcessDocument.sql
+execute "Adding phd individual candidacy process number" AddPhdIndividualProcessNumber.sql
+

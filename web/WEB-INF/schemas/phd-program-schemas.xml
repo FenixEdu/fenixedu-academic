@@ -1,4 +1,15 @@
+<schema name="PhdIndividualProgramProcess.view.resume" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="processNumber" />
+	<slot name="phdProgram.name" />
+	<slot name="state"/>
+	<slot name="executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="person.name" />
+</schema>
+
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="processNumberToDisplay" />
 	<slot name="phdProgram.name" />
 	<slot name="collaborationType" />
 	<slot name="state"/>
@@ -14,7 +25,6 @@
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
 	<slot name="state"/>
-	<slot name="whenCreated" />
 	<slot name="whenCreated" />
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
@@ -299,14 +309,19 @@
 
 <schema name="PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type"/>
+	<slot name="remarks">
+		<property name="maxLength" value="100" />
+		<property name="size" value="20" />
+	</slot>
 	<slot name="file">
 		<property name="fileNameSlot" value="filename"/>
-		<property name="size" value="60"/>
+		<property name="size" value="20"/>
 	</slot>
 </schema>
 
 <schema name="PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">
 	<slot name="documentType"/>
+	<slot name="remarks"/>
 	<slot name="filename" />
 </schema>
 

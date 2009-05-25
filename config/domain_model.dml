@@ -6415,12 +6415,18 @@ class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
 	String otherCollaborationType;
 }
 
+class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
+	Integer year;
+	Integer number;
+}
+
 class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
 	PhdProgramCandidacyProcessState state;
 }
 
 class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
-	PhdIndividualProgramDocumentType documentType;	
+	PhdIndividualProgramDocumentType documentType;
+	String remarks;
 }
 
 class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
@@ -6473,6 +6479,19 @@ relation PhdProgramRootDomainObject {
 		multiplicity *;
 	}
 }
+
+relation PhdIndividualProgramProcessNumberRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdIndividualProgramProcessNumber playsRole phdIndividualProcessNumbers {
+		multiplicity *;
+	}
+}
+
+relation PhdIndividualProgramProcessNumberPhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.PhdIndividualProgramProcessNumber playsRole phdIndividualProcessNumber;
+}
+
 
 relation PhdProgramPhdProgramUnit {
 	phd.PhdProgram playsRole phdProgram;

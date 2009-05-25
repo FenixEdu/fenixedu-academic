@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
@@ -100,13 +101,13 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-	    setIsEmployeeAttribute(request, bean.getChoosePersonBean());
+	    setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean());
 	    return mapping.findForward("createCandidacy");
 	}
 
     }
 
-    private void setIsEmployeeAttribute(HttpServletRequest request, final ChoosePersonBean bean) {
+    private void setIsEmployeeAttributeAndMessage(HttpServletRequest request, final ChoosePersonBean bean) {
 	if (bean.getPerson() != null && bean.getPerson().hasRole(RoleType.EMPLOYEE)) {
 	    request.setAttribute("isEmployee", true);
 	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
@@ -125,7 +126,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-	setIsEmployeeAttribute(request, getCreateCandidacyProcessBean().getChoosePersonBean());
+	setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean());
 
 	return mapping.findForward("createCandidacy");
     }
@@ -133,8 +134,19 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
     public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	setIsEmployeeAttribute(request, getCreateCandidacyProcessBean().getChoosePersonBean());
-	CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
+	try {
+
+	    CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	    setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean());
+
+	    request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+
+	    return mapping.findForward("createCandidacy");
+	}
 
 	return mapping.findForward("manageProcesses");
 

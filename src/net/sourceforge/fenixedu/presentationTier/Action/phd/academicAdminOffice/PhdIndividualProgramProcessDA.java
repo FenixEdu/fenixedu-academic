@@ -67,7 +67,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    request.setAttribute("isEmployee", true);
 	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
 	}
-	
+
 	request.setAttribute("editPersonalInformationBean", new PersonBean(getProcess(request).getPerson()));
 	return mapping.findForward("editPersonalInformation");
     }

@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 
+import org.joda.time.DateTime;
+
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -162,11 +164,21 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdIndividualProgramProcess(final Person person, final ExecutionYear executionYear, final PhdProgram program) {
 	super();
+	checkParameters(person, executionYear, program);
 	setPerson(person);
 	setExecutionYear(executionYear);
 	setPhdProgram(program);
 	setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
 	setState(PhdIndividualProgramProcessState.CANDIDACY);
+
+	// TODO: change year for candidacy year and not current time year
+	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(new DateTime().getYear()));
+    }
+
+    private void checkParameters(Person person, ExecutionYear executionYear, PhdProgram phdProgram) {
+	check(person, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.cannot.be.null");
+	check(executionYear, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
+	check(phdProgram, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram.cannot.be.null");
     }
 
     @Override
@@ -192,6 +204,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     private PhdIndividualProgramProcess addJobInformation(final JobBean bean) {
 	new Job(getPerson(), bean);
 	return this;
+    }
+
+    public String getProcessNumber() {
+	return getPhdIndividualProcessNumber().getNumber() + "/" + getPhdIndividualProcessNumber().getYear();
     }
 
 }

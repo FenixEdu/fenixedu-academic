@@ -15,20 +15,21 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProcessDocument_Base {
 
     public PhdProgramCandidacyProcessDocument(PhdProgramCandidacyProcess candidacyProcess,
-	    PhdIndividualProgramDocumentType documentType, byte[] content, String filename) {
+	    PhdIndividualProgramDocumentType documentType, String remarks, byte[] content, String filename) {
 	super();
-	init(candidacyProcess, documentType, content, filename);
+	init(candidacyProcess, documentType, remarks, content, filename);
 
     }
 
     @SuppressWarnings("unchecked")
-    private void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, byte[] content,
-	    String filename) {
+    private void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, String remarks,
+	    byte[] content, String filename) {
 
 	checkParameters(candidacyProcess, documentType, content, filename);
 
 	super.setPhdCandidacyProcess(candidacyProcess);
 	super.setDocumentType(documentType);
+	super.setRemarks(remarks);
 
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, new RoleGroup(
 		RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));

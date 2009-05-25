@@ -33,7 +33,7 @@
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <table>
   <tr style="vertical-align: top;">
-    <td style="width: 50%">
+    <td style="width: 55%">
     	<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 		<fr:view schema="PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
 			<fr:layout name="tabular">

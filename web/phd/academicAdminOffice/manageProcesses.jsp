@@ -40,7 +40,7 @@
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.createCandidacy"/>
 </html:link>
 <logic:notEmpty name="processes">
-	<fr:view schema="PhdIndividualProgramProcess.view" name="processes">
+	<fr:view schema="PhdIndividualProgramProcess.view.resume" name="processes">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			<fr:property name="linkFormat(view)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${externalId}"/>
