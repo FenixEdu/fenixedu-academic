@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.services.Service;
@@ -159,12 +160,8 @@ public class RegisterAlumniData extends AlumniNotificationService {
 
 	final AlumniAddressBean addressBean = alumniBean.getAddressBean();
 	if (alumniBean.getCurrentPhysicalAddress() == null) {
-
-	    final PhysicalAddress address = new PhysicalAddress(person, PartyContactType.PERSONAL, Boolean.FALSE, addressBean
-		    .getAddress(), addressBean.getAreaCode(), addressBean.getAreaOfAreaCode(), null, null, null, null,
-		    addressBean.getCountry());
-
-	    person.addPartyContacts(address);
+	    PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(addressBean.getAddress(), addressBean
+		    .getAreaCode(), addressBean.getAreaOfAreaCode(), null), PartyContactType.PERSONAL, false);
 	} else {
 	    PhysicalAddress address = alumniBean.getCurrentPhysicalAddress();
 	    address.setAddress(addressBean.getAddress());
