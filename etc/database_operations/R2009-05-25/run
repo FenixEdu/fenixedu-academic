@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns and phd program guiding tables" alterTablePhdIndividualProgramProcess.sql
+execute "Raides Additions" raidesAdditions.sql
+execute "Create Service Exemptions Tables" createServiceExemptionsTables.sql
