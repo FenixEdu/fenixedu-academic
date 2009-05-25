@@ -93,7 +93,12 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    HttpServletResponse response) {
 	final ExecutionCourse course = (ExecutionCourse) request.getAttribute("executionCourse");
 
-	final Iterator<Announcement> announcementsIterator = course.getBoard().getActiveAnnouncements().iterator();
+	List<Announcement> activeAnnouncements = course.getBoard().getActiveAnnouncements();
+	if (!activeAnnouncements.isEmpty()) {
+	    Collections.sort(activeAnnouncements, Announcement.NEWEST_FIRST);
+	}
+
+	final Iterator<Announcement> announcementsIterator = activeAnnouncements.iterator();
 	if (announcementsIterator.hasNext()) {
 	    request.setAttribute("lastAnnouncement", announcementsIterator.next());
 	}
