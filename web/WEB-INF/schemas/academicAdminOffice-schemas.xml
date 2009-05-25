@@ -1494,6 +1494,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.CurriculumGroupsProviderForMoveCurriculumLines" />
 		<property name="saveOptions" value="true" />
 		<property name="format" value="${fullPath}" />
+		<property name="sortBy" value="fullPath=asc" />
 	</slot>
 </schema>
 

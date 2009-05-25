@@ -60,7 +60,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	    final CurricularCourse curricularCourse) {
 	if (!(curriculumGroup instanceof NoCourseGroupCurriculumGroup)) {
 	    if (!curriculumGroup.getCurricularCoursesToDismissal(credits.getExecutionPeriod()).contains(curricularCourse)) {
-		throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal");
+		throw new DomainException("error.dismissal.invalid.curricular.course.to.dismissal", curriculumGroup.getName()
+			.getContent(), curricularCourse.getName(), credits.getExecutionPeriod().getQualifiedName());
 	    }
 	}
     }

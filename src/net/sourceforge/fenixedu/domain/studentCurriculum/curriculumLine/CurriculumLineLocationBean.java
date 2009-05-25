@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 
 public class CurriculumLineLocationBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private DomainReference<CurriculumLine> curriculumLine;
@@ -46,4 +44,7 @@ public class CurriculumLineLocationBean implements Serializable {
 	return new CurriculumLineLocationBean(curriculumLine, curriculumLine.getCurriculumGroup());
     }
 
+    public Student getStudent() {
+	return getCurriculumLine().getStudent();
+    }
 }
