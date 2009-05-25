@@ -277,15 +277,23 @@ public class CloseAssiduousnessMonth extends FenixService {
 	workScheduleTypeSet.addAll(extraWorkNightsMap.keySet());
 
 	for (WorkScheduleType workScheduleType : workScheduleTypeSet) {
-	    Duration totalExtra25 = extra25Map.get(workScheduleType);
-	    Duration totalExtra125 = extra125Map.get(workScheduleType);
-	    Duration totalExtra150 = extra150Map.get(workScheduleType);
-	    Duration totalExtra150WithLimit = extra150WithLimitsMap.get(workScheduleType);
-	    Duration totalNightExtra160 = extraNight160Map.get(workScheduleType);
-	    Duration totalNightExtra190 = extraNight190Map.get(workScheduleType);
-	    Duration totalNightExtra190WithLimit = extraNight190WithLimitsMap.get(workScheduleType);
-	    Duration totalUnjustified = unjustifiedMap.get(workScheduleType);
-	    Integer extraWorkNights = extraWorkNightsMap.get(workScheduleType);
+	    Duration totalExtra25 = extra25Map.get(workScheduleType) == null ? Duration.ZERO : extra25Map.get(workScheduleType);
+	    Duration totalExtra125 = extra125Map.get(workScheduleType) == null ? Duration.ZERO : extra125Map
+		    .get(workScheduleType);
+	    Duration totalExtra150 = extra150Map.get(workScheduleType) == null ? Duration.ZERO : extra150Map
+		    .get(workScheduleType);
+	    Duration totalExtra150WithLimit = extra150WithLimitsMap.get(workScheduleType) == null ? Duration.ZERO
+		    : extra150WithLimitsMap.get(workScheduleType);
+	    Duration totalNightExtra160 = extraNight160Map.get(workScheduleType) == null ? Duration.ZERO : extraNight160Map
+		    .get(workScheduleType);
+	    Duration totalNightExtra190 = extraNight190Map.get(workScheduleType) == null ? Duration.ZERO : extraNight190Map
+		    .get(workScheduleType);
+	    Duration totalNightExtra190WithLimit = extraNight190WithLimitsMap.get(workScheduleType) == null ? Duration.ZERO
+		    : extraNight190WithLimitsMap.get(workScheduleType);
+	    Duration totalUnjustified = unjustifiedMap.get(workScheduleType) == null ? Duration.ZERO : unjustifiedMap
+		    .get(workScheduleType);
+	    Integer extraWorkNights = extraWorkNightsMap.get(workScheduleType) == null ? 0 : extraWorkNightsMap
+		    .get(workScheduleType);
 	    new AssiduousnessExtraWork(assiduousnessClosedMonth, workScheduleType, totalExtra25, totalExtra125, totalExtra150,
 		    totalExtra150WithLimit, totalNightExtra160, totalNightExtra190, totalNightExtra190WithLimit, extraWorkNights,
 		    totalUnjustified);
