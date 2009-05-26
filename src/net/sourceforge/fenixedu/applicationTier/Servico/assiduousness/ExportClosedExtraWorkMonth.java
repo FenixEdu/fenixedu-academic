@@ -643,7 +643,7 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     private static JustificationMotive getA66JustificationMotive() {
 	for (JustificationMotive justificationMotive : rootDomainObject.getJustificationMotives()) {
-	    if (justificationMotive.getAcronym().equalsIgnoreCase("A66")) {
+	    if (justificationMotive.getAcronym().equalsIgnoreCase("A 66 P.A.")) {
 		return justificationMotive;
 	    }
 	}
