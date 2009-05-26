@@ -151,8 +151,32 @@
             <bean:define id="delegateInquiryID" name="delegateInquiry" property="idInternal" />
             <html:link page="<%= "/viewInquiriesResults.do?method=showFilledYearDelegateInquiry&filledYearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
                 <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/> 
-            </html:link>            
+            </html:link>
         </li>
     </logic:iterate>
 </ul>
 
+<p class="separator2 mtop25"><b><bean:message key="title.inquiries.courseResults.coordinatorComments" bundle="INQUIRIES_RESOURCES"/></b></p>
+<logic:empty name="courseResultsCoordinatorCommentEdit">
+    <fr:view name="courseResult" property="studentInquiriesCourseResult" schema="studentInquiriesCourseResult.courseResultsCoordinatorComment" >
+        <fr:layout name="tabular">
+            <fr:property name="labelTerminator" value=""/>
+        </fr:layout>
+    </fr:view>      
+    
+    <br/><br/>
+    <logic:equal name="canComment" value="true">
+        <html:form action="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
+            <html:hidden property="executionCourseID"/>
+            <html:hidden property="executionDegreeID"/>
+            <html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+        </html:form>
+    </logic:equal>
+</logic:empty>
+<logic:notEmpty name="courseResultsCoordinatorCommentEdit">
+    <fr:edit name="courseResult" property="studentInquiriesCourseResult" schema="studentInquiriesCourseResult.courseResultsCoordinatorComment" >
+        <fr:layout>
+            <fr:property name="labelTerminator" value=""/>
+        </fr:layout>
+    </fr:edit>    
+</logic:notEmpty>
