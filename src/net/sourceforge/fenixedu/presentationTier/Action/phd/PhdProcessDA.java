@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +23,8 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.plugin.ConfigurationReader;
 
 abstract public class PhdProcessDA extends FenixDispatchAction {
+
+    protected static final Pattern AREA_CODE_REGEX = Pattern.compile("\\d{4}-\\d{3}");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -78,6 +85,30 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 
     protected void addWarningMessage(HttpServletRequest request, String key, String... args) {
 	addActionMessage("warning", request, key, args);
+    }
+
+    protected boolean validateAreaCodeAndAreaOfAreaCode(HttpServletRequest request, Country country, String areaCode,
+	    String areaOfAreaCode) {
+	if (country.isDefaultCountry() && !StringUtils.isEmpty(areaCode) && !AREA_CODE_REGEX.matcher(areaCode).matches()) {
+	    addErrorMessage(request, "error.areaCode.invalidFormat.for.national.address");
+
+	    return false;
+	}
+
+	if (!StringUtils.isEmpty(areaCode) && StringUtils.isEmpty(areaOfAreaCode)) {
+	    addErrorMessage(request, "error.areaOfAreaCode.is.required.if.areaCode.is.specified");
+
+	    return false;
+	}
+
+	return true;
+    }
+
+    protected void setIsEmployeeAttributeAndMessage(HttpServletRequest request, Person person) {
+	if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
+	    request.setAttribute("isEmployee", true);
+	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+	}
     }
 
 }

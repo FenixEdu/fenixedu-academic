@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
@@ -101,17 +100,10 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	} else {
 	    bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
-	    setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean());
+	    setIsEmployeeAttributeAndMessage(request, bean.getChoosePersonBean().getPerson());
 	    return mapping.findForward("createCandidacy");
 	}
 
-    }
-
-    private void setIsEmployeeAttributeAndMessage(HttpServletRequest request, final ChoosePersonBean bean) {
-	if (bean.getPerson() != null && bean.getPerson().hasRole(RoleType.EMPLOYEE)) {
-	    request.setAttribute("isEmployee", true);
-	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-	}
     }
 
     protected boolean showSimilarPersons(final ChoosePersonBean choosePersonBean, final Collection<Person> persons) {
@@ -126,7 +118,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-	setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean());
+	setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
 	return mapping.findForward("createCandidacy");
     }
@@ -136,12 +128,24 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	try {
 
+	    if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getPersonBean()
+		    .getCountryOfResidence(), getCreateCandidacyProcessBean().getPersonBean().getAreaCode(),
+		    getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
+
+		setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
+
+		request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
+
+		return mapping.findForward("createCandidacy");
+
+	    }
+
 	    CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
 
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 
-	    setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean());
+	    setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
 
 	    request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
 

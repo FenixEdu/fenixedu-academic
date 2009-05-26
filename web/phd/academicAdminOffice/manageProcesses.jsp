@@ -39,6 +39,10 @@
 <html:link action="/phdProgramCandidacyProcess.do?method=prepareSearchPerson">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.createCandidacy"/>
 </html:link>
+<br/><br/>
+
+<bean:size id="processesCount" name="processes"/>
+<bean:message  key="label.phd.process.count" bundle="PHD_RESOURCES" arg0="<%= processesCount.toString() %>"/>
 <logic:notEmpty name="processes">
 	<fr:view schema="PhdIndividualProgramProcess.view.resume" name="processes">
 		<fr:layout name="tabular">

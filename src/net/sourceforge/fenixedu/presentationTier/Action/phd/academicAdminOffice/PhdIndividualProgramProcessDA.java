@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
@@ -68,12 +67,9 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward prepareEditPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	if (getProcess(request).getPerson().hasRole(RoleType.EMPLOYEE)) {
-	    request.setAttribute("isEmployee", true);
-	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-	}
-
-	request.setAttribute("editPersonalInformationBean", new PersonBean(getProcess(request).getPerson()));
+	final PersonBean personBean = new PersonBean(getProcess(request).getPerson());
+	setIsEmployeeAttributeAndMessage(request, personBean.getPerson());
+	request.setAttribute("editPersonalInformationBean", personBean);
 	return mapping.findForward("editPersonalInformation");
     }
 
@@ -90,6 +86,16 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward editPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
+	if (!validateAreaCodeAndAreaOfAreaCode(request, getEditPersonalInformationBean().getCountryOfResidence(),
+		getEditPersonalInformationBean().getAreaCode(), getEditPersonalInformationBean().getAreaOfAreaCode())) {
+
+	    setIsEmployeeAttributeAndMessage(request, getEditPersonalInformationBean().getPerson());
+
+	    request.setAttribute("editPersonalInformationBean", getEditPersonalInformationBean());
+
+	    return mapping.findForward("editPersonalInformation");
+	}
 
 	request.setAttribute("editPersonalInformationBean", getEditPersonalInformationBean());
 	return executeActivity(EditPersonalInformation.class, getEditPersonalInformationBean(), request, mapping,
