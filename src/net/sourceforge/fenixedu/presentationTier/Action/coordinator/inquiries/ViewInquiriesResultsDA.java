@@ -107,9 +107,9 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
 	resultPageDTO.setExecutionDegreeID(executionDegree.getIdInternal());
 
-	Collection<ExecutionCourse> otherExecutionCourses = new ArrayList<ExecutionCourse>();
-	Collection<ExecutionCourse> executionCoursesToImproove = new ArrayList<ExecutionCourse>();
-	Collection<ExecutionCourse> excelentExecutionCourses = new ArrayList<ExecutionCourse>();
+	Collection<StudentInquiriesCourseResult> otherExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
+	Collection<StudentInquiriesCourseResult> executionCoursesToImproove = new ArrayList<StudentInquiriesCourseResult>();
+	Collection<StudentInquiriesCourseResult> excelentExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
 
 	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
 	    final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
@@ -117,20 +117,23 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
 		if (studentInquiriesCourseResult.isUnsatisfactory()
 			|| hasTeachingResultsToImproove(executionDegree, executionCourse)) {
-		    executionCoursesToImproove.add(executionCourse);
+		    executionCoursesToImproove.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
 		} else if (studentInquiriesCourseResult.isExcellent()
 			|| hasExcellentTeachingResults(executionDegree, executionCourse)) {
-		    excelentExecutionCourses.add(executionCourse);
+		    excelentExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
 		} else {
-		    otherExecutionCourses.add(executionCourse);
+		    otherExecutionCourses.add(getStudentInquiriesCourseResult(executionCourse, executionDegree));
 		}
 
 	    }
 	}
 
-	Collections.sort((List<ExecutionCourse>) otherExecutionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-	Collections.sort((List<ExecutionCourse>) executionCoursesToImproove, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
-	Collections.sort((List<ExecutionCourse>) excelentExecutionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+	Collections.sort((List<StudentInquiriesCourseResult>) otherExecutionCourses,
+		StudentInquiriesCourseResult.EXECUTION_COURSE_NAME_COMPARATOR);
+	Collections.sort((List<StudentInquiriesCourseResult>) executionCoursesToImproove,
+		StudentInquiriesCourseResult.EXECUTION_COURSE_NAME_COMPARATOR);
+	Collections.sort((List<StudentInquiriesCourseResult>) excelentExecutionCourses,
+		StudentInquiriesCourseResult.EXECUTION_COURSE_NAME_COMPARATOR);
 
 	request
 		.setAttribute("executionDegreeCoursesReport",

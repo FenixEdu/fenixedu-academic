@@ -51,82 +51,107 @@ div.progress-container > div {
 </html:form>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
+<logic:notEmpty name="executionCoursesToImproove">
 <table>
-    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
-    <logic:iterate id="executionCourse" name="executionCoursesToImproove">
-        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+    <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
+    <logic:iterate id="studentInquiriesCourseResult" name="executionCoursesToImproove">
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
+            <td>
+                <c:if test="${not empty studentInquiriesCourseResult.courseResultsCoordinatorComment}">
+                    <html:img src="<%= request.getContextPath() + "/images/accept.gif"%>"  titleKey="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/>
+                </c:if>
+            </td>
             <td class="width400px">
                 <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-                    <bean:write name="executionCourse" property="nome"/>
+                    <bean:write name="studentInquiriesCourseResult" property="executionCourse.nome"/>
                 </html:link>
             </td>
             <td> 
-                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
                 <bean:define id="ratio" name="ratio" />
                 <div class="progress-container">          
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>
             <td>
-                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+                <bean:write name="studentInquiriesCourseResult" property="executionCourse.answeredTeachingInquiriesCount"/> / <bean:write name="studentInquiriesCourseResult" property="executionCourse.professorshipsCount"/>
             </td>
         </tr>
     </logic:iterate>
 </table>
-    
+<p><img src="<%=request.getContextPath()%>/images/accept.gif"/> <em><bean:message key="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/></em></p>
+</logic:notEmpty>
+
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.excellentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
+<logic:notEmpty name="excelentExecutionCourses">
 <table>
-    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
-    <logic:iterate id="executionCourse" name="excelentExecutionCourses">
-        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+    <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
+    <logic:iterate id="studentInquiriesCourseResult" name="excelentExecutionCourses">
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
+            <td>
+                <c:if test="${not empty studentInquiriesCourseResult.courseResultsCoordinatorComment}">
+                    <html:img src="<%= request.getContextPath() + "/images/accept.gif"%>"  titleKey="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/>
+                </c:if>
+            </td>
             <td class="width400px">
                 <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-                    <bean:write name="executionCourse" property="nome"/>
+                    <bean:write name="studentInquiriesCourseResult" property="executionCourse.nome"/>
                 </html:link>
             </td>
             <td> 
-                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
                 <bean:define id="ratio" name="ratio" />
                 <div class="progress-container">          
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>
             <td>
-                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+                <bean:write name="studentInquiriesCourseResult" property="executionCourse.answeredTeachingInquiriesCount"/> / <bean:write name="studentInquiriesCourseResult" property="executionCourse.professorshipsCount"/>
             </td>
         </tr>
     </logic:iterate>
 </table>
+<p><img src="<%=request.getContextPath()%>/images/accept.gif"/> <em><bean:message key="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/></em></p>
+</logic:notEmpty>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.otherResults" bundle="INQUIRIES_RESOURCES"/></b></p>
+<logic:notEmpty name="otherExecutionCourses">
 <table>
-    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
-    <logic:iterate id="executionCourse" name="otherExecutionCourses">
-        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+    <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
+    <logic:iterate id="studentInquiriesCourseResult" name="otherExecutionCourses">
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
+            <td>
+                <c:if test="${not empty studentInquiriesCourseResult.courseResultsCoordinatorComment}">
+                    <html:img src="<%= request.getContextPath() + "/images/accept.gif"%>"  titleKey="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/>
+                </c:if>
+            </td>
             <td class="width400px">
                 <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-                    <bean:write name="executionCourse" property="nome"/>
+                    <bean:write name="studentInquiriesCourseResult" property="executionCourse.nome"/>
                 </html:link>
             </td>
             <td> 
-                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
                 <bean:define id="ratio" name="ratio" />
                 <div class="progress-container">          
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>
             <td>
-                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+                <bean:write name="studentInquiriesCourseResult" property="executionCourse.answeredTeachingInquiriesCount"/> / <bean:write name="studentInquiriesCourseResult" property="executionCourse.professorshipsCount"/>
             </td>
         </tr>
     </logic:iterate>
 </table>
+<p><img src="<%=request.getContextPath()%>/images/accept.gif"/> <em><bean:message key="label.inquiries.courseResults.coordinatorComments.filled" bundle="INQUIRIES_RESOURCES"/></em></p>
+</logic:notEmpty>
+
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES"/></b></p>
 
