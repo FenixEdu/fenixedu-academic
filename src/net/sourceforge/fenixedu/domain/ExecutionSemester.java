@@ -668,5 +668,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public InquiryResponsePeriod getDelegateInquiryResponsePeriod() {
 	return getInquiryResponsePeriod(InquiryResponsePeriodType.DELEGATE);
     }
-    
+
+    public InquiryResponsePeriod getCoordinatorReportResponsePeriod() {
+	return getInquiryResponsePeriod(InquiryResponsePeriodType.COORDINATOR);
+    }
 }

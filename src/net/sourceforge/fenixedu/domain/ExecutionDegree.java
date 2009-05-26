@@ -1001,4 +1001,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public AcademicInterval getAcademicInterval() {
 	return getExecutionYear().getAcademicInterval();
     }
+
+    public CoordinatorExecutionDegreeCoursesReport getExecutionDegreeCoursesReports(final ExecutionInterval executionInterval) {
+	for (final CoordinatorExecutionDegreeCoursesReport coordinatorExecutionDegreeCoursesReport : getExecutionDegreeCoursesReports()) {
+	    if (coordinatorExecutionDegreeCoursesReport.getExecutionInterval() == executionInterval) {
+		return coordinatorExecutionDegreeCoursesReport;
+	    }
+	}
+	return null;
+    }
+
 }

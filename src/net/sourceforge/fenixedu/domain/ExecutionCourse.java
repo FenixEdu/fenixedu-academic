@@ -2087,4 +2087,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return null;
     }
 
+    public int getAnsweredTeachingInquiriesCount() {
+	int answeredTeachingInquiries = 0;
+	for (Professorship professorship : getProfessorships()) {
+	    if (professorship.hasTeachingInquiry()) {
+		answeredTeachingInquiries++;
+	    }
+	}
+	return answeredTeachingInquiries;
+    }
+
 }
