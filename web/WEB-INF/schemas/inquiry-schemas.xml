@@ -128,3 +128,31 @@
 	<slot name="unsatisfactoryResultsCUEvaluationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUEvaluationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="unsatisfactoryResultsCUOrganizationHeader" key="label.studentInquiry.uploadTeachingResults.unsatisfactoryResultsCUOrganizationHeader" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
+
+<schema name="studentInquiriesCourseResult.courseResultsCoordinatorComment" 
+		type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult" bundle="INQUIRIES_RESOURCES">
+    <slot name="courseResultsCoordinatorComment" key="label.inquiries.courseResults.coordinatorComments" layout="longText">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>		
+</schema>
+
+<schema name="executionDegree.coordinatorExecutionDegreeCoursesReport" 
+		type="net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES">
+    <slot name="globalComment" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.globalComment">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+    <slot name="stepsToImproveResults" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.stepsToImproveResults">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+    <slot name="teachingBestPracticesDevelopedByTeachers" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.teachingBestPracticesDevelopedByTeachers">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>
+    <slot name="bolonhaProcessImplementationReflection" layout="longText" key="label.coordinatorExecutionDegreeCoursesReport.bolonhaProcessImplementationReflection">
+    	<property name="columns" value="50" />
+    	<property name="rows" value="10" />
+    </slot>            
+</schema>
