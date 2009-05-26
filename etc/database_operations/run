@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add candidacy date to process table" alterTableProcess.sql

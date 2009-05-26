@@ -35,8 +35,7 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
     }
 
     private void reloadRenderers() throws ServletException {
-	final ConfigurationReader reader = new ConfigurationReader();
-	reader.readAll(getServlet().getServletContext());
+	new ConfigurationReader().readAll(getServlet().getServletContext());
     }
 
     protected Process getProcess(HttpServletRequest request) {

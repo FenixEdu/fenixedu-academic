@@ -14,6 +14,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -45,7 +51,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("processes", ExecutionYear.readCurrentExecutionYear().getPhdIndividualProgramProcesses());
-
 	return mapping.findForward("manageProcesses");
     }
 
@@ -87,8 +92,8 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("editPersonalInformationBean", getEditPersonalInformationBean());
-	return executeActivity(PhdIndividualProgramProcess.EditPersonalInformation.class, getEditPersonalInformationBean(),
-		request, mapping, "editPersonalInformation", "viewProcess", "message.personal.data.edited.with.success");
+	return executeActivity(EditPersonalInformation.class, getEditPersonalInformationBean(), request, mapping,
+		"editPersonalInformation", "viewProcess", "message.personal.data.edited.with.success");
     }
 
     public ActionForward cancelEditPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -128,7 +133,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	final Object bean = getRenderedObject("qualification");
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), "AddQualification", bean);
+	    ExecuteProcessActivity.run(getProcess(request), AddQualification.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.qualification.information.create.success");
 
 	} catch (DomainException e) {
@@ -149,9 +154,9 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	addQualificationsAndJobsContextInformation(request);
-	return executeActivity(PhdIndividualProgramProcess.DeleteQualification.class,
-		getDomainObject(request, "qualificationId"), request, mapping, "editQualificationsAndJobsInformation",
-		"editQualificationsAndJobsInformation", "message.qualification.information.delete.success");
+	return executeActivity(DeleteQualification.class, getDomainObject(request, "qualificationId"), request, mapping,
+		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
+		"message.qualification.information.delete.success");
     }
 
     // Jobs
@@ -172,7 +177,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	final Object bean = getRenderedObject("job");
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), "AddJobInformation", bean);
+	    ExecuteProcessActivity.run(getProcess(request), AddJobInformation.class.getSimpleName(), bean);
 	    addSuccessMessage(request, "message.job.information.create.success");
 
 	} catch (DomainException e) {
@@ -200,8 +205,8 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward deleteJobInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	addQualificationsAndJobsContextInformation(request);
-	return executeActivity(PhdIndividualProgramProcess.DeleteJobInformation.class, getDomainObject(request, "jobId"),
-		request, mapping, "editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
+	return executeActivity(DeleteJobInformation.class, getDomainObject(request, "jobId"), request, mapping,
+		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
 		"message.job.information.delete.success");
     }
 
@@ -210,8 +215,36 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     // Phd individual program process information
     public ActionForward prepareEditPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("phdIndividualProgramProcessBean", new PhdIndividualProgramProcessBean());
+	request.setAttribute("phdIndividualProgramProcessBean", new PhdIndividualProgramProcessBean(getProcess(request)));
 	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward editPhdIndividualProgramProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdIndividualProgramProcessBean", getRenderedObject("phdIndividualProgramProcessBean"));
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward editPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("phdIndividualProgramProcessBean");
+	request.setAttribute("phdIndividualProgramProcessBean", bean);
+
+	if (!bean.isCollaborationInformationCorrect()) {
+	    addErrorMessage(request, "message.phdIndividualProgramProcessInformation.invalid.collaboration");
+	    return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	}
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), EditIndividualProcessInformation.class.getSimpleName(), bean);
+	    addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
+	    return viewProcess(mapping, actionForm, request, response);
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	}
     }
 
     // End of Phd individual program process information

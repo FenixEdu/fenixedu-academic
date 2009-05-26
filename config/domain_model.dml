@@ -6426,6 +6426,7 @@ class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
 }
 
 class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
+	LocalDate candidacyDate;
 	PhdProgramCandidacyProcessState state;
 }
 

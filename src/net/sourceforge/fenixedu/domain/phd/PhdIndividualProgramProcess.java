@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
@@ -31,6 +32,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new DeleteQualification());
 	activities.add(new AddJobInformation());
 	activities.add(new DeleteJobInformation());
+	activities.add(new EditIndividualProcessInformation());
     }
 
     @StartActivity
@@ -157,6 +159,23 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class EditIndividualProcessInformation extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.edit(userView, (PhdIndividualProgramProcessBean) object);
+	}
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -196,6 +215,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
     }
 
+    public String getCollaborationTypeName() {
+	return getCollaborationType().getLocalizedName()
+		+ (isOtherCollaborationType() ? " (" + getOtherCollaborationType() + ")" : "");
+    }
+
+    private boolean isOtherCollaborationType() {
+	return getCollaborationType() == PhdIndividualProgramCollaborationType.OTHER;
+    }
+
     private PhdIndividualProgramProcess addQualification(final QualificationBean bean) {
 	new Qualification(getPerson(), bean);
 	return this;
@@ -208,6 +236,28 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public String getProcessNumber() {
 	return getPhdIndividualProcessNumber().getNumber() + "/" + getPhdIndividualProcessNumber().getYear();
+    }
+
+    private PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
+
+	if (hasCandidacyProcess()) {
+	    getCandidacyProcess().executeActivity(userView, PhdProgramCandidacyProcess.EditCandidacyDate.class.getSimpleName(),
+		    bean.getCandidacyDate());
+	}
+
+	setThesisTitle(bean.getThesisTitle());
+	setCollaborationType(bean.getCollaborationType());
+
+	if (bean.isOtherCollaborationTypeSelected()) {
+	    check(bean.getOtherCollaborationType(), "error.PhdIndividualProgramProcess.invalid.other.collaboration.type");
+	    setOtherCollaborationType(bean.getOtherCollaborationType());
+	}
+
+	return this;
+    }
+
+    public LocalDate getCandidacyDate() {
+	return getCandidacyProcess().getCandidacyDate();
     }
 
 }

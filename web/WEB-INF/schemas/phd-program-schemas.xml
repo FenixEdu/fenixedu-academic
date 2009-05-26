@@ -9,9 +9,9 @@
 </schema>
 
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-	<slot name="processNumberToDisplay" />
+	<slot name="processNumber" />
 	<slot name="phdProgram.name" />
-	<slot name="collaborationType" />
+	<slot name="collaborationTypeName" />
 	<slot name="state"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
@@ -384,7 +384,13 @@
 </schema>
 
 <schema name="PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
-	<slot name="thesisTitle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="candidacyDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="thesisTitle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="80"/>
+	</slot>
 	<slot name="collaborationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="otherCollaborationType" />
 </schema>

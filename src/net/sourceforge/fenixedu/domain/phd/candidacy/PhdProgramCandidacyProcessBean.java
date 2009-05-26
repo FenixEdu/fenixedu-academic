@@ -12,11 +12,15 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 
+import org.joda.time.LocalDate;
+
 public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private PersonBean personBean;
+
+    private LocalDate candidacyDate;
 
     private DomainReference<PhdProgram> program;
 
@@ -33,8 +37,17 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private ChoosePersonBean choosePersonBean;
 
     public PhdProgramCandidacyProcessBean() {
+	setCandidacyDate(new LocalDate());
 	setPersonBean(new PersonBean());
 	setChoosePersonBean(new ChoosePersonBean());
+    }
+
+    public LocalDate getCandidacyDate() {
+	return candidacyDate;
+    }
+
+    public void setCandidacyDate(LocalDate candidacyDate) {
+	this.candidacyDate = candidacyDate;
     }
 
     public PhdProgram getProgram() {

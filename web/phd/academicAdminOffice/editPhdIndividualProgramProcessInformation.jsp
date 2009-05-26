@@ -40,19 +40,23 @@
 	<fr:form action="<%= "/phdIndividualProgramProcess.do?processId=" + processId %>">
 		<input type="hidden" name="method" value="" />
 
-		<fr:edit id="phdIndividualProgramProcessBean" name="phdIndividualProgramProcessBean" visible="false" />
-
-		<fr:edit id="details1" name="phdIndividualProgramProcessBean" schema="PhdIndividualProgramProcessBean.editDetails">
+		<strong><bean:message key="label.phd.academicAdminOffice.editPhdIndividualProgramProcessInformation.details" bundle="PHD_RESOURCES" /></strong>
+		<fr:edit id="phdIndividualProgramProcessBean" name="phdIndividualProgramProcessBean" schema="PhdIndividualProgramProcessBean.editDetails">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				<fr:property name="columnClasses" value=",,error0" />
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
+		
+			<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationInvalid&amp;processId=" + processId %>" />
+			<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
 		</fr:edit>
-		<html:submit><bean:message key="label.edit" bundle="PHD_RESOURCES" /></html:submit>
+
+		<html:submit onclick="this.form.method.value='editPhdIndividualProgramProcessInformation'"><bean:message key="label.edit" bundle="PHD_RESOURCES" /></html:submit>
+		<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
+
 	</fr:form>
 
 <%--  ### End of Operation Area  ### --%>
-
 
 </logic:present>
