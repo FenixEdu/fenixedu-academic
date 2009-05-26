@@ -21,7 +21,7 @@
 		</a>
 	</li>
 	<li class="suggestion">
-		<a href="https://fears.ist.utl.pt" target="_blank">
+		<a href="https://fears.ist.utl.pt/#Project3" target="_blank">
 			Sugestões
 		</a>
 	</li>
