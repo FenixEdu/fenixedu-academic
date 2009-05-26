@@ -624,6 +624,13 @@ class DomainObject {
 		Boolean responsible;
 	}
 
+	class CoordinatorExecutionDegreeCoursesReport extends DomainObject {
+		String globalComment;
+		String stepsToImproveResults;
+		String teachingBestPracticesDevelopedByTeachers;
+		String bolonhaProcessImplementationReflection;
+	}
+
 	class CostCenter extends DomainObject {
 		String code;
 		String departament;
@@ -1020,7 +1027,7 @@ class DomainObject {
 	
 		class FileContent extends File {
 		}
-		
+
 			class messaging.PublicBoardFileContent extends FileContent {
 			}
 
@@ -1727,7 +1734,7 @@ class DomainObject {
 	
 					class accounting.events.serviceRequests.BolonhaAdvancedFormationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
 					}
-				
+	
 				class accounting.events.serviceRequests.StudentReingressionRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
 
@@ -3377,6 +3384,7 @@ class DomainObject {
 		String rawValues;
 		DateTime uploadDateTime;
 		LocalDate resultsDate;
+		String courseResultsCoordinatorComment;
 			
 		Integer numberOfEnrolled;
 		Double evaluatedRatio;
@@ -5544,7 +5552,7 @@ class DomainObject {
 	class util.email.PersonFunctionSender extends util.email.Sender {}
 	
 	class util.email.PersonSender extends util.email.Sender {}
-	
+
 	class util.email.SystemSender extends util.email.Sender {}
 
 	class util.FunctionalityPrinters extends DomainObject {
@@ -6307,15 +6315,15 @@ class internship.InternshipCandidacy extends DomainObject {
 }
 
 class QueueJob extends DomainObject {
-	Boolean done;
-	Integer failedCounter;
-	DateTime requestDate;
-	DateTime jobStartTime;
-	DateTime jobEndTime;
+               Boolean done;
+               Integer failedCounter;
+               DateTime requestDate;
+               DateTime jobStartTime;
+               DateTime jobEndTime;
 }
 
 class QueueJobWithFile extends QueueJob {
-	String contentType;
+       String contentType;
 }
 
 class QueueJobResultFile extends documents.GeneratedDocument{}
@@ -6411,6 +6419,7 @@ class phd.PhdProgram extends DomainObject {
 }
 
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
+		
 }
 
 class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
@@ -6431,7 +6440,7 @@ class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
 }
 
 class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
-	PhdIndividualProgramDocumentType documentType;
+	PhdIndividualProgramDocumentType documentType;	
 	String remarks;
 }
 
@@ -6469,7 +6478,6 @@ class candidacyProcess.PublicCandidacyHashCode extends DomainObject {
 	String email;
 	String value;
 }
-
 
 /*
  * Relations definitions
@@ -6551,18 +6559,23 @@ relation PhdIndividualProgramProcessExecutionYear {
 	ExecutionYear playsRole executionYear;
 }
 
+
 relation PhdProgramServiceAgreementTemplatePhdProgram {
+	
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
+		
 	phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
+
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
+
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
 		multiplicity *;
 	}
 }
-
+	
 relation PhdProgramGuidingRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	phd.PhdProgramGuiding playsRole phdProgramGuidings {
@@ -6590,7 +6603,6 @@ relation PhdIndividualProgramProcessAssistantGuiding {
 }
 
 /* End of Phd Module */
-
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
 	time.calendarStructure.AcademicCalendarEntry playsRole parentEntry;
@@ -8408,6 +8420,8 @@ relation ExecutionDegreeExecutionYear {
 	}
 	ExecutionYear playsRole executionYear;
 }
+
+
 
 relation ExecutionDegreePeriodExamsFirstSemester {
 	ExecutionDegree playsRole executionDegreesForExamsFirstSemester {
@@ -15776,6 +15790,34 @@ relation ProfessionalRegimeRootDomainObject {
 relation ProfessionalRelationRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	personnelSection.contracts.ProfessionalRelation playsRole professionalRelations {
+		multiplicity *;
+	}
+}
+
+relation CoordinatorExecutionDegreeCoursesReportRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	CoordinatorExecutionDegreeCoursesReport playsRole coordinatorExecutionDegreeCoursesReports {
+		multiplicity *;
+	}
+}
+
+relation CoordinatorExecutionDegreeCoursesReportCoordinator {
+	Coordinator playsRole coordinator;
+	CoordinatorExecutionDegreeCoursesReport playsRole executionDegreeCoursesReports {
+		multiplicity *;
+	}
+}
+
+relation ExecutionDegreeCoursesReportCoordinatorExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	CoordinatorExecutionDegreeCoursesReport playsRole executionDegreeCoursesReports {
+		multiplicity *;
+	}
+}
+
+relation ExecutionIntervalCoursesReportCoordinatorExecutionDegree {
+	ExecutionInterval playsRole executionInterval;
+	CoordinatorExecutionDegreeCoursesReport playsRole executionDegreeCoursesReports {
 		multiplicity *;
 	}
 }
