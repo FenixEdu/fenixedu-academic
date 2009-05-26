@@ -226,13 +226,8 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
     private StudentInquiriesCourseResultBean populateStudentInquiriesCourseResults(final ExecutionCourse executionCourse,
 	    final ExecutionDegree executionDegree) {
 
-	StudentInquiriesCourseResultBean resultBean = null;
-	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
-	    if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {
-		resultBean = new StudentInquiriesCourseResultBean(studentInquiriesCourseResult);
-		break;
-	    }
-	}
+	StudentInquiriesCourseResultBean resultBean = new StudentInquiriesCourseResultBean(getStudentInquiriesCourseResult(
+		executionCourse, executionDegree));
 
 	for (Professorship otherTeacherProfessorship : executionCourse.getProfessorships()) {
 	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
@@ -245,6 +240,16 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	}
 
 	return resultBean;
+    }
+
+    private StudentInquiriesCourseResult getStudentInquiriesCourseResult(final ExecutionCourse executionCourse,
+	    final ExecutionDegree executionDegree) {
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionCourse.getStudentInquiriesCourseResults()) {
+	    if (studentInquiriesCourseResult.getExecutionDegree() == executionDegree) {
+		return studentInquiriesCourseResult;
+	    }
+	}
+	return null;
     }
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

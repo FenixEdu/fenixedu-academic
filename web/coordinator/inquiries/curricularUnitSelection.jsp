@@ -2,9 +2,28 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml />
+
+<style>
+
+div.progress-container {
+  border: 1px solid #ccc; 
+  width: 100px; 
+  margin: 2px 5px 2px 0; 
+  padding: 1px; 
+  float: left; 
+  background: white;
+}
+
+div.progress-container > div {
+  background-color: #ACE97C; 
+  height: 12px
+}
+
+</style>
 
 <h2><bean:message key="title.inquiries.resultsWithDescription" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -32,31 +51,82 @@
 </html:form>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
-<logic:iterate id="executionCourse" name="executionCoursesToImproove">
-    <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
-    <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/>
-    </html:link><!-- -  <bean:write name="executionCourse" property="professorshipsCount"/> / <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> --><br/>
-</logic:iterate>
-	
+<table>
+    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
+    <logic:iterate id="executionCourse" name="executionCoursesToImproove">
+        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+        <bean:define id="executionDegreeID" name="executionDegreeID" />
+        <tr>
+            <td class="width400px">
+                <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
+                    <bean:write name="executionCourse" property="nome"/>
+                </html:link>
+            </td>
+            <td> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <bean:define id="ratio" name="ratio" />
+                <div class="progress-container">          
+                    <div style="width: <%= ratio %>%"></div>
+                </div>
+            </td>
+            <td>
+                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+            </td>
+        </tr>
+    </logic:iterate>
+</table>
+    
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.excellentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
-<logic:iterate id="executionCourse" name="excelentExecutionCourses">
-    <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
-    <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/>
-    </html:link><br/>
-</logic:iterate>
+<table>
+    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
+    <logic:iterate id="executionCourse" name="excelentExecutionCourses">
+        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+        <bean:define id="executionDegreeID" name="executionDegreeID" />
+        <tr>
+            <td class="width400px">
+                <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
+                    <bean:write name="executionCourse" property="nome"/>
+                </html:link>
+            </td>
+            <td> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <bean:define id="ratio" name="ratio" />
+                <div class="progress-container">          
+                    <div style="width: <%= ratio %>%"></div>
+                </div>
+            </td>
+            <td>
+                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+            </td>
+        </tr>
+    </logic:iterate>
+</table>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.otherResults" bundle="INQUIRIES_RESOURCES"/></b></p>
-<logic:iterate id="executionCourse" name="otherExecutionCourses">
-    <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
-    <bean:define id="executionDegreeID" name="executionDegreeID" />
-    <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/>
-    </html:link><br/>
-</logic:iterate>
+<table>
+    <th></th><th colspan="2">Relatórios de Docência<br/>Preenchidos</th><th colspan="2">
+    <logic:iterate id="executionCourse" name="otherExecutionCourses">
+        <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
+        <bean:define id="executionDegreeID" name="executionDegreeID" />
+        <tr>
+            <td class="width400px">
+                <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
+                    <bean:write name="executionCourse" property="nome"/>
+                </html:link>
+            </td>
+            <td> 
+                <fmt:formatNumber maxFractionDigits="0" value="${(executionCourse.answeredTeachingInquiriesCount / executionCourse.professorshipsCount) * 100}" var="ratio"/> 
+                <bean:define id="ratio" name="ratio" />
+                <div class="progress-container">          
+                    <div style="width: <%= ratio %>%"></div>
+                </div>
+            </td>
+            <td>
+                <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> / <bean:write name="executionCourse" property="professorshipsCount"/>
+            </td>
+        </tr>
+    </logic:iterate>
+</table>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES"/></b></p>
 
