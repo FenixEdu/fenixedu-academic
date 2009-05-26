@@ -713,7 +713,10 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     @Override
     public Boolean getAuditCU() {
-	return super.getAuditCU() != null && super.getAuditCU();
+	if (super.getAuditCU() != null) {
+	    return super.getAuditCU();
+	}
+	return getValuesMap().containsKey("UC_auditoria") ? fieldToBoolean(getValuesMap().get("UC_auditoria")) : false;
     }
 
     @Override
