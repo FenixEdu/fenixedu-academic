@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCou
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.ViewInquiriesResultPageDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.YearDelegateCourseInquiryDTO;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -20,6 +22,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
@@ -128,6 +132,10 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	Collections.sort((List<ExecutionCourse>) executionCoursesToImproove, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	Collections.sort((List<ExecutionCourse>) excelentExecutionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 
+	request
+		.setAttribute("executionDegreeCoursesReport",
+			getExecutionDegreeCoursesReports(executionSemester, executionDegree));
+	request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionSemester));
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("otherExecutionCourses", otherExecutionCourses);
 	request.setAttribute("excelentExecutionCourses", excelentExecutionCourses);
@@ -135,6 +143,19 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	request.setAttribute("executionDegreeID", resultPageDTO.getExecutionDegreeID());
 
 	return actionMapping.findForward("curricularUnitSelection");
+    }
+
+    private CoordinatorExecutionDegreeCoursesReport getExecutionDegreeCoursesReports(final ExecutionSemester executionSemester,
+	    final ExecutionDegree executionDegree) {
+	final CoordinatorExecutionDegreeCoursesReport executionDegreeCoursesReports = executionDegree
+		.getExecutionDegreeCoursesReports(executionSemester);
+	try {
+	    return executionDegreeCoursesReports == null && coordinatorCanComment(executionDegree, executionSemester) ? CoordinatorExecutionDegreeCoursesReport
+		    .makeNew(executionDegree, executionSemester)
+		    : executionDegreeCoursesReports;
+	} catch (DomainException e) {
+	    return null;
+	}
     }
 
     private boolean hasTeachingResultsToImproove(final ExecutionDegree executionDegree, final ExecutionCourse executionCourse) {
@@ -165,17 +186,41 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     public ActionForward selectExecutionCourse(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request,
-		"executionCourseID"));
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(getIntegerFromRequest(request,
-		"executionDegreeID"));
+
+	StudentInquiriesCourseResult courseResult = (StudentInquiriesCourseResult) getRenderedObject();
+
+	final ExecutionCourse executionCourse = courseResult == null ? rootDomainObject
+		.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID")) : courseResult
+		.getExecutionCourse();
+	final ExecutionDegree executionDegree = courseResult == null ? rootDomainObject
+		.readExecutionDegreeByOID(getIntegerFromRequest(request, "executionDegreeID")) : courseResult
+		.getExecutionDegree();
+
+	request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionCourse.getExecutionPeriod()));
 	request.setAttribute("executionCourse", executionCourse);
+
 	if (executionCourse != null) {
+
+	    if (courseResult == null && getFromRequest(request, "courseResultsCoordinatorCommentEdit") != null) {
+		request.setAttribute("courseResultsCoordinatorCommentEdit", true);
+	    }
+
+	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getIdInternal());
+	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getIdInternal());
+
 	    request.setAttribute("studentInquiriesCourseResult", populateStudentInquiriesCourseResults(executionCourse,
 		    executionDegree));
+
 	    return actionMapping.findForward("inquiryResults");
 	}
 	return selectexecutionSemester(actionMapping, actionForm, request, response);
+    }
+
+    private boolean coordinatorCanComment(final ExecutionDegree executionDegree, final ExecutionSemester executionPeriod) {
+	final InquiryResponsePeriod coordinatorReportResponsePeriod = executionPeriod.getCoordinatorReportResponsePeriod();
+	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+	return coordinator != null && coordinator.isResponsible() && coordinatorReportResponsePeriod != null
+		&& coordinatorReportResponsePeriod.isOpen();
     }
 
     private StudentInquiriesCourseResultBean populateStudentInquiriesCourseResults(final ExecutionCourse executionCourse,
