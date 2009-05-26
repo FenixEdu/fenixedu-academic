@@ -35,6 +35,8 @@ public class Researcher extends Researcher_Base {
     }
 
     public void delete() {
+	for (; hasAnyAvailableContacts(); getAvailableContacts().get(0).delete())
+	    ;
 	removePerson();
 	removeRootDomainObject();
 	super.deleteDomainObject();
@@ -51,7 +53,7 @@ public class Researcher extends Researcher_Base {
 
     public boolean hasKeyword(String keyword) {
 	String trimmedKeyword = StringUtils.normalize(keyword.trim());
-	
+
 	for (String reseacherKeyword : getKeywordsPt().split(",")) {
 	    // Instead of equalsIgoneCase we'll use indexOf
 	    if (StringUtils.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
@@ -65,7 +67,7 @@ public class Researcher extends Researcher_Base {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 
@@ -86,26 +88,26 @@ public class Researcher extends Researcher_Base {
 	    addAvailableContacts(contact);
 	}
     }
-    
+
     private String normalizeKeywords(String keywordList) {
 	String[] keys = keywordList.split(",");
-	
+
 	StringBuilder sb = new StringBuilder();
-	for(String key : keys) {
+	for (String key : keys) {
 	    String[] dtd = key.split(" ");
-	    
-	    for(String eee : dtd) {
-		if(eee.trim().length() > 0) {
+
+	    for (String eee : dtd) {
+		if (eee.trim().length() > 0) {
 		    sb.append(eee.trim()).append(" ");
 		}
 	    }
 	    sb.deleteCharAt(sb.length() - 1);
 	    sb.append(",");
 	}
-	
+
 	return sb.substring(0, sb.length() - 1);
     }
-    
+
     @Override
     public void setKeywordsEn(String keywordsEn) {
 	super.setKeywordsEn(normalizeKeywords(keywordsEn));
@@ -115,5 +117,5 @@ public class Researcher extends Researcher_Base {
     public void setKeywordsPt(String keywordsPt) {
 	super.setKeywordsPt(normalizeKeywords(keywordsPt));
     }
-    
+
 }
