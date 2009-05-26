@@ -2,11 +2,14 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.Collator;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.UploadStudentInquiriesCourseResultsBean;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -18,6 +21,15 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_Base {
+
+    public static final Comparator<StudentInquiriesCourseResult> EXECUTION_COURSE_NAME_COMPARATOR = new Comparator<StudentInquiriesCourseResult>() {
+
+	public int compare(StudentInquiriesCourseResult o1, StudentInquiriesCourseResult o2) {
+	    final int c = Collator.getInstance().compare(o1.getExecutionCourse().getNome(), o2.getExecutionCourse().getNome());
+	    return c == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c;
+	}
+
+    };
 
     transient private Map<String, String> valuesMap = null;
 
