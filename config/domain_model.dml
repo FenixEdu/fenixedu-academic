@@ -1020,6 +1020,9 @@ class DomainObject {
 	
 		class FileContent extends File {
 		}
+		
+			class messaging.PublicBoardFileContent extends FileContent {
+			}
 
 		class ProjectSubmissionFile extends File {
 		}
@@ -5805,6 +5808,8 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 Boolean visible;
                 Boolean approved;
                 String photoUrl;
+                String editorNotes;
+                Boolean pressRelease;
 	}
 
                         class functionalities.ExecutionPath extends DomainObject {

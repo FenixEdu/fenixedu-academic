@@ -246,7 +246,7 @@
 	</tr>
 	
 <%-- Categories --%>
-<%-- 
+ 
  	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
@@ -268,7 +268,7 @@
 		<span class="error0"><fr:message for="categories-validated"/></span>
 		</td>
 	</tr>
---%>
+
 <%-- Campus --%>
 	<tr>
 		<th>
@@ -285,9 +285,19 @@
 			</fr:edit>
 		</td>
 	</tr>
+
+<%-- Press Release --%>
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.pressRelease.label"/>:
+		</th>
+		<td>
+			<fr:edit name="announcement" slot="pressRelease"/>
+		</td>
+	</tr>
 	
 <%-- Photo --%>	
-<%-- 
+ 
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>
@@ -336,8 +346,8 @@
 			</p>
 		</td>	
 	</tr>
---%>	
-<%-- 	
+
+
 	<logic:notEmpty name="announcementBoard" property="files">
 		<tr>
 		<th>
@@ -350,7 +360,7 @@
 				<bean:define id="displayName" name="file" property="displayName"/>
 				
 				<% 
-					final String REGEX = "^.*\\.(jpg|gif|png)$";
+					final String REGEX = "^.*\\.(jpg|gif|png|jpeg)$";
 					if(((String)downloadUrl).matches(REGEX)) {
 				%>
 				
@@ -361,15 +371,7 @@
 						<table>
 							<tr>
 							<td>
-							<fr:view name="file" >
-								<fr:layout name="view-as-image">
-									<fr:property name="style" value="width:40px; height:30px"/>
-									<fr:property name="contextRelative" value="false"/>
-									<fr:property name="moduleRelative" value="false"/>
-									<fr:property name="useParent" value="false"/>
-									<fr:property name="imageFormat" value="${downloadUrl}"/>	
-								</fr:layout>
-							</fr:view>
+								<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
 							</td>
 							</tr>
 						</table>
@@ -382,7 +384,19 @@
 		</td>
 		</tr>
 	</logic:notEmpty>
---%>	
+	
+	<%-- Editor notes --%>
+	<logic:notEmpty name="announcement" property="editorNotes">
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.editorNotes.label"/>:
+		</th>
+		<td>
+			<fr:view name="announcement" property="editorNotes"/>
+		</td>
+	</tr>
+	</logic:notEmpty>
+	
 </table>
 
 
@@ -390,12 +404,12 @@
 		<fr:edit name="announcement"  slot="creator">
 			<fr:hidden name="person"/>
 		</fr:edit>		
-
+	</p>
 	<p>
 		<fr:edit name="announcement"  slot="announcementBoard">
 			<fr:hidden name="announcementBoard"/>
 		</fr:edit>			
-	
+	</p>
 	
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>

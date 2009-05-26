@@ -259,7 +259,6 @@
 	</tr>
 
 <%-- Categories --%>
-<%-- 
  	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
@@ -281,7 +280,6 @@
 		<span class="error0"><fr:message for="categories-validated"/></span>
 		</td>
 	</tr>
---%>
 <%-- Campus --%>
 
 	<tr>
@@ -300,8 +298,19 @@
 		</td>
 	</tr>
 
+<%-- Press Release --%>
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.pressRelease.label"/>:
+		</th>
+		<td>
+			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="pressRelease">
+				<fr:default value="false" slot="pressRelease"/>
+			</fr:create>
+		</td>
+	</tr>
+
 <%-- Photo --%>	
-<%-- 
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>:
@@ -335,26 +344,16 @@
 				<bean:define id="displayName" name="file" property="displayName"/>
 
 				<% 
-					final String REGEX = "^.*\\.(jpg|gif|png)$";
+					final String REGEX = "^.*\\.(jpg|jpeg|gif|png)$";
 					if(((String)downloadUrl).matches(REGEX)) {
 				%>
 				
 				<div style="display: inline">
-					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
-					
 						<div class="announcement_gallery" onclick="<%= "getElementById('remove-paragraph').setAttribute('style', 'display:block'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
 						<table>
 							<tr>
 							<td>
-							<fr:view name="file" >
-								<fr:layout name="view-as-image">
-									<fr:property name="style" value="width:40px; height:30px"/>
-									<fr:property name="contextRelative" value="false"/>
-									<fr:property name="moduleRelative" value="false"/>
-									<fr:property name="useParent" value="false"/>
-									<fr:property name="imageFormat" value="${downloadUrl}"/>	
-								</fr:layout>
-							</fr:view>
+							<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
 							</td>
 							</tr>
 						</table>
@@ -366,7 +365,7 @@
 		</td>
 		</tr>
 	</logic:notEmpty>
---%>
+
 </table>
 
 

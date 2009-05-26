@@ -8,6 +8,12 @@ import net.sourceforge.fenixedu.domain.contents.Attachment;
 
 public class FileContent extends FileContent_Base {
 
+    protected FileContent() {
+	super();
+
+	setAttachment(null);
+    }
+
     protected FileContent(Attachment attachment) {
 	super();
 

@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -17,7 +16,6 @@ import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -25,6 +23,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
@@ -431,5 +430,9 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
 	return actionPath.toString();
     }
-
+    
+    @Service
+    public FileContent addFileToBoard(String fileName, byte[] content, String creatorName) {
+	return new PublicBoardFileContent(fileName, content, creatorName, this);
+    }
 }

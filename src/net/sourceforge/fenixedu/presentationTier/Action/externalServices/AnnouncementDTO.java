@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
 
 import org.joda.time.DateTime;
 
@@ -38,6 +39,8 @@ public class AnnouncementDTO {
     private String id;
     private String photoUrl;
     private String campus;
+    private String[] categories;
+    private Boolean pressRelease;
 
     public AnnouncementDTO() {
     }
@@ -66,6 +69,8 @@ public class AnnouncementDTO {
 	setId(announcement.getIdInternal().toString());
 	setPhotoUrl(announcement.getPhotoUrl());
 	setCampus(announcement.getCampusCode());
+	setCategoriesFromAnnouncement(announcement, language);
+	setPressRelease(announcement.getPressRelease());
     }
 
     private String getFormattedDate(final DateTime dateTime) {
@@ -199,20 +204,48 @@ public class AnnouncementDTO {
     public void setVisible(String visible) {
 	this.visible = visible;
     }
-    
+
     public String getPhotoUrl() {
 	return this.photoUrl;
     }
-    
-    public void setPhotoUrl(String value)  {
+
+    public void setPhotoUrl(String value) {
 	this.photoUrl = value;
     }
-    
+
     public String getCampus() {
 	return this.campus;
     }
-    
+
     public void setCampus(String value) {
 	this.campus = value;
+    }
+
+    public String[] getCategories() {
+	return this.categories;
+    }
+
+    public void setCategories(String[] categories) {
+	this.categories = categories;
+    }
+
+    private void setCategoriesFromAnnouncement(Announcement announcement, final Language language) {
+	java.util.List<String> categories = new java.util.ArrayList<String>();
+
+	for (AnnouncementCategory category : announcement.getCategories()) {
+	    if (category.getName().getContent(language) != null) {
+		categories.add(category.getName().getContent(language));
+	    }
+	}
+
+	this.setCategories(categories.toArray(new String[0]));
+    }
+
+    public Boolean getPressRelease() {
+	return this.pressRelease;
+    }
+
+    public void setPressRelease(Boolean value) {
+	this.pressRelease = value;
     }
 }

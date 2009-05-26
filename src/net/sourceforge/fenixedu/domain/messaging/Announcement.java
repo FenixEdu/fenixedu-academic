@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Node;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Announcement extends Announcement_Base {
@@ -261,15 +265,66 @@ public class Announcement extends Announcement_Base {
 	    this.addCategories(category);
 	}
     }
-    
+
     private static final String CAMPUS_ALAMEDA = "ALAMEDA";
     private static final String CAMPUS_TAGUSPARK = "TAGUSPARK";
     private static final String CAMPUS_EXTERNAL = "EXTERNAL";
-    
+
     public String getCampusCode() {
-	if(this.getCampus() != null && this.getCampus().isCampusAlameda()) return CAMPUS_ALAMEDA;
-	else if(this.getCampus() != null && this.getCampus().isCampusTaguspark()) return CAMPUS_TAGUSPARK;
-	
+	if (this.getCampus() != null && this.getCampus().isCampusAlameda())
+	    return CAMPUS_ALAMEDA;
+	else if (this.getCampus() != null && this.getCampus().isCampusTaguspark())
+	    return CAMPUS_TAGUSPARK;
+
 	return CAMPUS_EXTERNAL;
+    }
+
+    @Service
+    public static Announcement createAnnouncement(AnnouncementBoard board, String authorName, String authorEmail,
+	    MultiLanguageString body, Campus campus, List<AnnouncementCategory> categories, String place,
+	    DateTime publicationBeginDate, DateTime publicationEndDate, DateTime referedSubjectBeginDate,
+	    DateTime referedSubjectEndDate, MultiLanguageString subject, MultiLanguageString excerpt, Boolean isVisible,
+	    String editorNotes, String fileName, byte[] fileContents) {
+	Announcement announcement = new Announcement();
+
+	announcement.setAnnouncementBoard(board);
+	announcement.setAuthor(authorName);
+	announcement.setAuthorEmail(authorEmail);
+	announcement.setBody(body);
+	announcement.setCampus(campus);
+	announcement.setCategories(categories);
+	announcement.setContentId(null);
+	announcement.setCreationDate(new DateTime());
+	announcement.setCreator(null);
+	announcement.setDescription(null);
+	announcement.setExcerpt(excerpt);
+	announcement.setPhotoUrl(null);
+	announcement.setPlace(place);
+	announcement.setPublicationBegin(publicationBeginDate);
+	announcement.setPublicationEnd(publicationEndDate);
+	announcement.setReferedSubjectBegin(referedSubjectBeginDate);
+	announcement.setReferedSubjectEnd(referedSubjectEndDate);
+	announcement.setSubject(subject);
+	announcement.setTitle(null);
+	announcement.setVisible(isVisible);
+	announcement.setEditorNotes(editorNotes);
+
+	if (fileContents != null) {
+	    File file = board.addFileToBoard(fileName, fileContents, authorName);
+	    announcement.setPhotoUrl(file.getDownloadUrl());
+	}
+
+	return announcement;
+
+    }
+
+    public static Campus getCampus(String campusCode) {
+	if (campusCode != null && campusCode.equals(CAMPUS_ALAMEDA)) {
+	    return Campus.readActiveCampusByName("Alameda");
+	} else if (campusCode != null && campusCode.equals(CAMPUS_TAGUSPARK)) {
+	    return Campus.readActiveCampusByName("Taguspark");
+	}
+
+	return null;
     }
 }
