@@ -36,8 +36,8 @@
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
     <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/><br/>
-    </html:link>
+        <bean:write name="executionCourse" property="nome"/>
+    </html:link><!-- -  <bean:write name="executionCourse" property="professorshipsCount"/> / <bean:write name="executionCourse" property="answeredTeachingInquiriesCount"/> --><br/>
 </logic:iterate>
 	
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.excellentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
@@ -45,8 +45,8 @@
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
     <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/><br/>
-    </html:link>
+        <bean:write name="executionCourse" property="nome"/>
+    </html:link><br/>
 </logic:iterate>
 
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.otherResults" bundle="INQUIRIES_RESOURCES"/></b></p>
@@ -54,6 +54,33 @@
     <bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
     <bean:define id="executionDegreeID" name="executionDegreeID" />
     <html:link page="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&executionCourseID=" + executionCourseID  + "&executionDegreeID=" + executionDegreeID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
-        <bean:write name="executionCourse" property="nome"/><br/>
-    </html:link>
+        <bean:write name="executionCourse" property="nome"/>
+    </html:link><br/>
 </logic:iterate>
+
+<p class="separator2 mtop25"><b><bean:message key="title.coordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES"/></b></p>
+
+<logic:equal name="canComment" value="true">
+    <html:form action="/viewInquiriesResults.do">
+        <html:hidden property="method" value="selectexecutionSemester"/>
+        <html:hidden property="degreeCurricularPlanID"/>
+        <html:hidden property="executionDegreeID"/>
+        <html:hidden property="executionSemesterID"/>
+        <fr:edit name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
+            <fr:layout name="tabular-editable">
+                <fr:property name="classes" value="tstyle2 thlight thleft thtop"/>
+                <fr:property name="columnClasses" value="width300px,,"/>
+           </fr:layout>
+        </fr:edit>
+        <html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+    </html:form>
+</logic:equal>
+<logic:equal name="canComment" value="false">
+    <logic:notEmpty name="executionDegreeCoursesReport">
+        <fr:view name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
+            <fr:layout name="tabular">
+                <fr:property name="classes" value="tstyle2 thlight thleft thtop width300px"/>
+           </fr:layout>        
+        </fr:view>
+    </logic:notEmpty>
+</logic:equal>
