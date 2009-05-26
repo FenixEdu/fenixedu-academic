@@ -195,6 +195,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     private void processDelete() {
 	setAnotherContactAsDefault();
+	removeResearcher();
 	removeParty();
 	removeRootDomainObject();
 	super.deleteDomainObject();
