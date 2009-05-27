@@ -81,14 +81,17 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     }
 
     /**
-     * Formula: 0.5 x TotalGratuity x (1 + EnroledEcts / TotalEctsForYear)
+     * <pre>
+     * Formula for students in empty degrees: 0.5 x TotalGratuity x (1 + EnroledEcts / TotalEctsForYear)
+     * Formula for students enroled in normal degrees: TotalGratuity x (EnroledEcts / TotalEctsForYear)
+     * </pre>
      * 
      * @param degreeCurricularPlan
-     * @param totalEcts
+     * @param enroledEcts
      * @param gratuityEvent
      * @return
      */
-    private Money calculateAmountForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan, BigDecimal totalEcts,
+    private Money calculateAmountForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan, BigDecimal enroledEcts,
 	    GratuityEvent gratuityEvent) {
 
 	final IGratuityPR gratuityPR = (IGratuityPR) degreeCurricularPlan.getServiceAgreementTemplate().findPostingRuleBy(
@@ -96,9 +99,13 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
 	final Money degreeGratuityAmount = gratuityPR.getDefaultGratuityAmount(gratuityEvent.getExecutionYear());
 
-	final BigDecimal proporcionFactor = BigDecimal.ONE.add(totalEcts.divide(getEctsForYear()));
+	final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
 
-	return degreeGratuityAmount.multiply(new BigDecimal("0.5")).multiply(proporcionFactor);
+	if (gratuityEvent.getDegree().isEmpty()) {
+	    return degreeGratuityAmount.multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(creditsProporcion));
+	} else {
+	    return degreeGratuityAmount.multiply(creditsProporcion);
+	}
 
     }
 
