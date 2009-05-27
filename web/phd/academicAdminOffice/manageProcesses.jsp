@@ -35,7 +35,27 @@
 
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+
+<%--  ### Search Criteria  ### --%>
+<fr:form action="/phdIndividualProgramProcess.do?method=manageProcesses">
+	<fr:edit id="searchProcessBean"
+		name="searchProcessBean"
+		schema="SearchPhdIndividualProgramProcessBean.edit">
+	
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
+
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.search"/></html:submit>
+
+</fr:form>
+<%--  ### End of Search Criteria  ### --%>
+
 <br/>
+
+<%--  ### Results  ### --%>
 <html:link action="/phdProgramCandidacyProcess.do?method=prepareSearchPerson">
 	<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.createCandidacy"/>
 </html:link>
@@ -59,8 +79,9 @@
 	<br/>
 </logic:empty>
 
-<%--  ### End of Operation Area  ### --%>
+<%--  ### End of Results  ### --%>
 
+<%--  ### End of Operation Area  ### --%>
 
 
 <%--  ### Buttons (e.g. Submit)  ### --%>

@@ -393,6 +393,17 @@
 	<slot name="otherCollaborationType" />
 </schema>
 
+<schema name="SearchPhdIndividualProgramProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+	<slot name="executionYear" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="processState" />
+	<slot name="processNumber" />
+</schema>
+
+
 <schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
 	<slot name="name" />
 	<slot name="qualification" />
@@ -442,3 +453,4 @@
 		<property name="minChars" value="4"/>				
 	</slot>
 </schema>
+

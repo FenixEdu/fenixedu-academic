@@ -76,4 +76,8 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 
 	return result;
     }
+
+    public String getFullProcessNumber() {
+	return getNumber() + "/" + getYear();
+    }
 }

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,8 +13,7 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
@@ -57,7 +54,17 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("processes", ExecutionYear.readCurrentExecutionYear().getPhdIndividualProgramProcesses());
+	SearchPhdIndividualProgramProcessBean searchBean = (SearchPhdIndividualProgramProcessBean) getObjectFromViewState("searchProcessBean");
+
+	if (searchBean == null) {
+	    searchBean = new SearchPhdIndividualProgramProcessBean();
+	    searchBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	}
+
+	request.setAttribute("searchProcessBean", searchBean);
+
+	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean));
+
 	return mapping.findForward("manageProcesses");
     }
 

@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -13,6 +15,7 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -20,6 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -289,7 +293,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public String getProcessNumber() {
-	return getPhdIndividualProcessNumber().getNumber() + "/" + getPhdIndividualProcessNumber().getYear();
+	return getPhdIndividualProcessNumber().getFullProcessNumber();
     }
 
     private PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
@@ -314,4 +318,44 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getCandidacyDate();
     }
 
+    static public Set<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
+	final Set<PhdIndividualProgramProcess> result = new HashSet<PhdIndividualProgramProcess>();
+	final Set<Process> processesToSearch = new HashSet<Process>();
+
+	if (!StringUtils.isEmpty(searchBean.getProcessNumber())) {
+
+	    for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
+		    .getPhdIndividualProcessNumbers()) {
+		if (phdIndividualProgramProcessNumber.getFullProcessNumber().equals(searchBean.getProcessNumber())) {
+		    processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
+		}
+	    }
+
+	} else {
+	    processesToSearch.addAll(RootDomainObject.getInstance().getProcesses());
+	}
+
+	for (final Process each : processesToSearch) {
+	    if (each instanceof PhdIndividualProgramProcess) {
+		final PhdIndividualProgramProcess phdIndividualProgramProcess = (PhdIndividualProgramProcess) each;
+		if (matchesExecutionYear(searchBean, phdIndividualProgramProcess)
+			&& matchesProcessState(searchBean, phdIndividualProgramProcess)) {
+		    result.add(phdIndividualProgramProcess);
+		}
+	    }
+	}
+
+	return result;
+    }
+
+    private static boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
+	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
+	return searchBean.getProcessState() == null || searchBean.getProcessState() == phdIndividualProgramProcess.getState();
+    }
+
+    private static boolean matchesExecutionYear(SearchPhdIndividualProgramProcessBean searchBean,
+	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
+	return searchBean.getExecutionYear() == null
+		|| searchBean.getExecutionYear() == phdIndividualProgramProcess.getExecutionYear();
+    }
 }
