@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 
 public class Curriculum implements Serializable, ICurriculum {
 
+    static private final long serialVersionUID = -8365985725904139675L;
+
     private CurriculumModule curriculumModule;
 
     private Boolean bolonhaDegree;
@@ -391,6 +393,18 @@ public class Curriculum implements Serializable, ICurriculum {
 	}
 
 	return result.toString();
+    }
+
+    /**
+     * This is used to remove an entry from average and curricular year entries
+     * in order to do calculus without it
+     * 
+     * @param entryToRemove
+     */
+    public void removeFromAllCurriculumEntries(final ICurriculumEntry entryToRemove) {
+	averageEnrolmentRelatedEntries.remove(entryToRemove);
+	averageDismissalRelatedEntries.remove(entryToRemove);
+	curricularYearEntries.remove(entryToRemove);
     }
 
 }
