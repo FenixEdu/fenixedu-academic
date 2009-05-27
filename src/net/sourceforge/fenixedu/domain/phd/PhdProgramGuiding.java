@@ -17,7 +17,7 @@ abstract public class PhdProgramGuiding extends PhdProgramGuiding_Base {
 
     protected void disconnect() {
 	removePhdIndividualProgramProcess();
-	removePhdIndividualProgramProcess();
+	removeAssistantPhdIndividualProgramProcess();
 	removeRootDomainObject();
     }
 

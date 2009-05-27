@@ -39,6 +39,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new EditIndividualProcessInformation());
 	activities.add(new AddGuidingInformation());
 	activities.add(new DeleteGuiding());
+	activities.add(new AddAssistantGuidingInformation());
+	activities.add(new DeleteAssistantGuiding());
     }
 
     @StartActivity
@@ -216,6 +218,40 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class AddAssistantGuidingInformation extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.addAssistantGuiding((PhdProgramGuidingBean) object);
+	}
+    }
+
+    static public class DeleteAssistantGuiding extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.deleteAssistantGuiding((PhdProgramGuiding) object);
+	}
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -275,6 +311,21 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdIndividualProgramProcess addGuiding(final PhdProgramGuidingBean bean) {
+	setGuiding(createPhdProgramGuiding(bean));
+	return this;
+    }
+
+    public PhdIndividualProgramProcess deleteGuiding() {
+	getGuiding().delete();
+	return this;
+    }
+
+    private PhdIndividualProgramProcess addAssistantGuiding(final PhdProgramGuidingBean bean) {
+	addAssistantguidings(createPhdProgramGuiding(bean));
+	return this;
+    }
+
+    private PhdProgramGuiding createPhdProgramGuiding(final PhdProgramGuidingBean bean) {
 	final PhdProgramGuiding guiding;
 	if (bean.isInternal()) {
 	    guiding = PhdProgramGuiding.create(bean.getPerson());
@@ -282,13 +333,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    guiding = PhdProgramGuiding.create(bean.getName(), bean.getQualification(), bean.getWorkLocation(), bean.getEmail());
 	    guiding.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
 	}
-
-	setGuiding(guiding);
-	return this;
+	return guiding;
     }
 
-    public PhdIndividualProgramProcess deleteGuiding() {
-	getGuiding().delete();
+    public PhdIndividualProgramProcess deleteAssistantGuiding(PhdProgramGuiding assistant) {
+	if (hasAssistantguidings(assistant)) {
+	    assistant.delete();
+	}
 	return this;
     }
 

@@ -16,7 +16,9 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
-	<slot name="person.name" />
+	<slot name="person.name">
+		<property name="classes" value="bold"/>
+	</slot>
 	<slot name="whenCreated" />
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
@@ -405,13 +407,22 @@
 
 
 <schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
-	<slot name="name" />
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
 	<slot name="qualification" />
 	<slot name="category" />
 	<slot name="workLocation" />
 	<slot name="address" />
 	<slot name="email" />
 	<slot name="phone" />
+</schema>
+
+<schema name="PhdProgramGuiding.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="qualification" />
 </schema>
 
 <schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
