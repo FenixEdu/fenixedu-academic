@@ -60,8 +60,9 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
+			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
+		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
 		
 	</fr:edit>
 </logic:notEqual>
@@ -73,9 +74,9 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
+		<fr:property name="requiredMarkShown" value="true" />
 	</fr:layout>
-	
+	<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=createCandidacyInvalid" />
 </fr:edit>
 
 

@@ -127,6 +127,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	person.setIstUsername();
 
 	setCandidacy(new PHDProgramCandidacy(person));
+	setCandidacyDate(candidacyProcessBean.getCandidacyDate());
 
 	if (candidacyProcessBean.hasDegree()) {
 	    getCandidacy().setExecutionDegree(candidacyProcessBean.getExecutionDegree());

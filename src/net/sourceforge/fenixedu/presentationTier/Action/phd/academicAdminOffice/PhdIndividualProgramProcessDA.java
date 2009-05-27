@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
@@ -105,8 +106,9 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward editPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	if (!validateAreaCodeAndAreaOfAreaCode(request, getEditPersonalInformationBean().getCountryOfResidence(),
-		getEditPersonalInformationBean().getAreaCode(), getEditPersonalInformationBean().getAreaOfAreaCode())) {
+	if (!validateAreaCodeAndAreaOfAreaCode(request, getEditPersonalInformationBean().getPerson(),
+		getEditPersonalInformationBean().getCountryOfResidence(), getEditPersonalInformationBean().getAreaCode(),
+		getEditPersonalInformationBean().getAreaOfAreaCode())) {
 
 	    setIsEmployeeAttributeAndMessage(request, getEditPersonalInformationBean().getPerson());
 
@@ -360,7 +362,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("manageGuidingInformation");
     }
-    
+
     public ActionForward addAssistantGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

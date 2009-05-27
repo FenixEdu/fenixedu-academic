@@ -42,7 +42,7 @@
 	</slot>
 	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${presentationName}" />
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	

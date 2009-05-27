@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
@@ -59,8 +58,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdProgramCandidacyProcessBean individualProgramBean = (PhdProgramCandidacyProcessBean) object;
-	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(individualProgramBean
-		    .getOrCreatePersonFromBean(), individualProgramBean.getExecutionYear(), individualProgramBean.getProgram());
+	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(individualProgramBean);
 	    final PhdProgramCandidacyProcess candidacyProcess = Process.createNewProcess(userView,
 		    PhdProgramCandidacyProcess.class, object);
 
@@ -257,17 +255,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
-    private PhdIndividualProgramProcess(final Person person, final ExecutionYear executionYear, final PhdProgram program) {
+    public PhdIndividualProgramProcess(PhdProgramCandidacyProcessBean bean) {
 	super();
-	checkParameters(person, executionYear, program);
-	setPerson(person);
-	setExecutionYear(executionYear);
-	setPhdProgram(program);
+	checkParameters(bean.getOrCreatePersonFromBean(), bean.getExecutionYear(), bean.getProgram());
+	setPerson(bean.getOrCreatePersonFromBean());
+	setExecutionYear(bean.getExecutionYear());
+	setPhdProgram(bean.getProgram());
 	setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
 	setState(PhdIndividualProgramProcessState.CANDIDACY);
-
-	// TODO: change year for candidacy year and not current time year
-	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(new DateTime().getYear()));
+	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
     }
 
     private void checkParameters(Person person, ExecutionYear executionYear, PhdProgram phdProgram) {

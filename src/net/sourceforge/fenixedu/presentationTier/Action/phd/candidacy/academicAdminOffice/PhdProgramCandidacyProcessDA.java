@@ -128,7 +128,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	try {
 
-	    if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getPersonBean()
+	    if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson(), getCreateCandidacyProcessBean().getPersonBean()
 		    .getCountryOfResidence(), getCreateCandidacyProcessBean().getPersonBean().getAreaCode(),
 		    getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
 
