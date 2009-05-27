@@ -53,6 +53,7 @@ public class PrepareCreateStudentGroup extends FenixService {
 	    infoSiteStudentInformation.setName(person.getName());
 	    infoSiteStudentInformation.setNumber(registration.getNumber());
 	    infoSiteStudentInformation.setUsername(person.getUsername());
+	    infoSiteStudentInformation.setPersonID(person.getIdInternal());
 	    infoStudentInformationList.add(infoSiteStudentInformation);
 	}
 

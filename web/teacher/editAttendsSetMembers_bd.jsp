@@ -47,13 +47,35 @@
 	<p class="mbottom05">
 		<bean:message key="message.editAttendsSetMembers.RemoveMembers"/>
 	</p>
-	 
+
+	<logic:present name="showPhotos">
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + request.getParameter("groupingOID")%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + request.getParameter("groupingOID")%>">
+		    	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
+	
 	<table class="tstyle4 mtop05">
 		<tr>
-			<th></th>
-			<th><bean:message key="label.teacher.StudentNumber" /></th>
-			<th><bean:message key="label.teacher.StudentName" /></th>
-			<th><bean:message key="label.teacher.StudentEmail" /></th>		
+			<th>
+			</th>
+			<th>
+				<bean:message key="label.teacher.StudentNumber" />
+			</th>
+			<logic:notPresent name="showPhotos">
+				<th>
+					<bean:message key="label.photo" />
+				</th>
+			</logic:notPresent>
+			<th>
+				<bean:message key="label.teacher.StudentName" /></th>
+			<th>
+				<bean:message key="label.teacher.StudentEmail" />
+			</th>		
 		</tr>	
 		<logic:iterate id="infoAttend" name="infoGrouping" property="infoAttends">
 			<bean:define id="infoStudent" name="infoAttend" property="aluno" />
@@ -63,10 +85,22 @@
 					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentsToRemove" property="studentsToRemove">
 					<bean:write name="infoPerson" property="username" />
 					</html:multibox>
+				</td>
+				<td>
+					<bean:write name="infoStudent" property="number" />
+				</td>
+				<logic:notPresent name="showPhotos">
+					<td class="acenter">
+						<bean:define id="personID" name="infoPerson" property="person.idInternal"/>
+						<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+					</td>
+				</logic:notPresent>
+				<td>
+					<bean:write name="infoPerson" property="nome" />
 				</td>	
-				<td><bean:write name="infoStudent" property="number" /></td>	
-				<td><bean:write name="infoPerson" property="nome" /></td>	
-				<td><bean:write name="infoPerson" property="email" /></td>		
+				<td>
+					<bean:write name="infoPerson" property="email" />
+				</td>		
 		 	</tr>	
 		</logic:iterate>
 	</table>
@@ -110,15 +144,34 @@
 	<bean:message key="message.editAttendsSetMembers.InsertMembers"/>
 </p>
 
+	<logic:present name="showPhotos">
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + request.getParameter("groupingOID")%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + request.getParameter("groupingOID")%>">
+		    	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
+
 <table class="tstyle4 mtop05">
 	<tr>
 		<th>
 		</th>
-		<th><bean:message key="label.teacher.StudentNumber" />
+		<th>
+			<bean:message key="label.teacher.StudentNumber" />
 		</th>
-		<th><bean:message key="label.teacher.StudentName" />
+		<logic:notPresent name="showPhotos">
+			<th>
+				<bean:message key="label.photo" />
+			</th>
+		</logic:notPresent>
+		<th>
+			<bean:message key="label.teacher.StudentName" />
 		</th>
-		<th><bean:message key="label.teacher.StudentEmail" />
+		<th>
+			<bean:message key="label.teacher.StudentEmail" />
 		</th>
 	</tr>
 	<logic:iterate id="infoStudent" name="infoStudentList">			
@@ -128,10 +181,22 @@
 					<bean:write name="infoStudent" property="idInternal"/>
 				</html:multibox>
 			</td>	
-			<td><bean:write name="infoStudent" property="number"/></td>	
+			<td>
+				<bean:write name="infoStudent" property="number"/>
+			</td>
+			<logic:notPresent name="showPhotos">
+				<td class="acenter">
+					<bean:define id="personID" name="infoStudent.registration.person" property="idInternal"/>
+					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+				</td>
+			</logic:notPresent>	
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
-			<td><bean:write name="infoPerson" property="nome"/></td>
-			<td><bean:write name="infoPerson" property="email"/></td>
+			<td>
+				<bean:write name="infoPerson" property="nome"/>
+			</td>
+			<td>
+				<bean:write name="infoPerson" property="email"/>
+			</td>
 	 	</tr>	
 	 </logic:iterate>
 </table>

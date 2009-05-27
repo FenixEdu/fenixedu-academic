@@ -823,6 +823,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	String executionCourseID = request.getParameter("executionCourseID");
 	String registrationID = request.getParameter("registrationID");
 
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
+
 	Shift shift = rootDomainObject.readShiftByOID(Integer.valueOf(shiftID));
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(Integer.valueOf(executionCourseID));
 

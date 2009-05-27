@@ -102,22 +102,55 @@
 			<bean:message key="label.teacher.NumberOfStudents" /><%= count %>
 		</em>
 	</p>
+	
+	<logic:present name="showPhotos">
+		<html:link page="<%="/viewAttendsSet.do?method=viewAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/viewAttendsSet.do?method=viewAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;groupingOID=" + groupingOID.toString()%>">
+		    	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
 
-<table class="tstyle4">	
+<table class="tstyle4 mtop05">	
 	<tr>
-		<th width="16%"><bean:message key="label.numberWord" /></th>
-		<th width="63%"><bean:message key="label.nameWord" /></th>
-		<th width="26%"><bean:message key="label.emailWord" /></th>
+		<th>
+			<bean:message key="label.numberWord" />
+		</th>
+		<logic:notPresent name="showPhotos">
+			<th>
+				<bean:message key="label.photo" />
+			</th>
+		</logic:notPresent>
+		<th>
+			<bean:message key="label.nameWord" />
+		</th>
+		<th>
+			<bean:message key="label.emailWord" />
+		</th>
 	</tr>
 			
 	<logic:iterate id="infoFrequentaWithAll" name="attends">
 	
 		<bean:define id="infoStudent" name="infoFrequentaWithAll" property="aluno"/>
 		<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>
+		<bean:define id="person" name="infoPerson" property="person"/>
 		
 		<tr>		
-			<td><bean:write name="infoStudent" property="number"/></td>	
-			<td><bean:write name="infoPerson" property="nome"/></td>		
+			<td class="acenter">
+				<bean:write name="infoStudent" property="number"/>
+			</td>
+			<logic:notPresent name="showPhotos">
+				<td class="acenter">
+					<bean:define id="personID" name="person" property="idInternal"/>
+					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+				</td>
+			</logic:notPresent>
+			<td>
+				<bean:write name="infoPerson" property="nome"/>
+			</td>		
 			<td>
 				<logic:present name="infoPerson" property="email">
 					<bean:define id="mail" name="infoPerson" property="email"/>

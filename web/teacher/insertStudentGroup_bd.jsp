@@ -45,30 +45,59 @@
 </logic:empty>
 
 <logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
+<p>
+	<logic:present name="showPhotos">
+		<html:link page="<%="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		    	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
+</p>
 <table class="tstyle5 thlight dinline">	
 	<tr>
 		<th>
 		</th>
-		<th><bean:message key="label.teacher.StudentNumber" />
+		<th>
+			<bean:message key="label.teacher.StudentNumber" />
 		</th>
-		<th><bean:message key="label.teacher.StudentName" />
+		<logic:notPresent name="showPhotos">
+			<th>
+				<bean:message key="label.photo" />
+			</th>
+		</logic:notPresent>
+		<th>
+			<bean:message key="label.teacher.StudentName" />
 		</th>
-		<th><bean:message key="label.teacher.StudentEmail" />
+		<th>
+			<bean:message key="label.teacher.StudentEmail" />
 		</th>
 	</tr>
 	
 	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">				
 		<tr>	
 			<td>
-			<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentCodes" property="studentCodes">
-			<bean:write name="infoSiteStudentInformation" property="username"/>
-			</html:multibox>
+				<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.studentCodes" property="studentCodes">
+					<bean:write name="infoSiteStudentInformation" property="username"/>
+				</html:multibox>
 			</td>	
-			<td><bean:write name="infoSiteStudentInformation" property="number"/>
-			</td>	
-			<td><bean:write name="infoSiteStudentInformation" property="name"/>
+			<td>
+				<bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>
-			<td><bean:write name="infoSiteStudentInformation" property="email"/>
+			<logic:notPresent name="showPhotos">
+				<td class="acenter">
+					<bean:define id="personID" name="infoSiteStudentInformation" property="personID"/>
+					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+				</td>
+			</logic:notPresent>	
+			<td>
+				<bean:write name="infoSiteStudentInformation" property="name"/>
+			</td>
+			<td>
+				<bean:write name="infoSiteStudentInformation" property="email"/>
 			</td>
 	 	</tr>	
 	 </logic:iterate>

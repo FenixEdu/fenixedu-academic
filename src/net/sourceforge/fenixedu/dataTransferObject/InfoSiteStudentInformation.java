@@ -25,6 +25,7 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
     private Integer number;
     private String email;
     private String username;
+    private Integer personID;
 
     public InfoSiteStudentInformation() {
     }
@@ -68,6 +69,15 @@ public class InfoSiteStudentInformation extends DataTranferObject implements ISi
 	this.number = number;
     }
 
+    public Integer getPersonID() {
+	return personID;
+    }
+
+    public void setPersonID(Integer personID) {
+	this.personID = personID;
+    }
+
+    @Override
     public boolean equals(Object arg0) {
 	boolean result = false;
 	if (arg0 instanceof InfoSiteStudentInformation) {

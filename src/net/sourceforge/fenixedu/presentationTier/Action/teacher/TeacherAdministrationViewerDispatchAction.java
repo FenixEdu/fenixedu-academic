@@ -905,6 +905,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 	readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
+	StudentGroup group = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+	request.setAttribute("groupMembers", group.getAttends());
+
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
 
 	Object[] args = { objectCode, studentGroupCode, groupPropertiesCode, shiftCodeString };
 	try {
@@ -1480,6 +1486,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	String shiftCodeString = request.getParameter("shiftCode");
 	request.setAttribute("shiftCode", shiftCodeString);
 
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
+
 	InfoSiteStudentGroup infoSiteStudentGroup;
 	Object args[] = { objectCode, groupPropertiesCode };
 	try {
@@ -1575,6 +1585,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 	Boolean type = null;
 
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
+
 	Object args1[] = { objectCode, groupPropertiesCode, shiftCode };
 	try {
 	    infoSiteStudentsAndGroups = ReadStudentsAndGroupsByShiftID.run(groupPropertiesCode, shiftCode);
@@ -1631,6 +1645,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	String groupPropertiesString = request.getParameter("groupPropertiesCode");
 	Integer groupPropertiesCode = new Integer(groupPropertiesString);
+
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
@@ -2166,6 +2184,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	TeacherAdministrationSiteView result = (TeacherAdministrationSiteView) readSiteView(request, viewAttendsSet, null,
 		groupingOID, null);
 
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
+
 	InfoSiteGrouping infoSiteAttendsSet = (InfoSiteGrouping) result.getComponent();
 	if (infoSiteAttendsSet.getInfoGrouping() == null) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -2188,6 +2210,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	Integer groupingID = new Integer(groupingIDString);
 
 	Integer objectCode = getObjectCode(request);
+
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
 
 	ISiteComponent viewAttendsSet = new InfoSiteGrouping();
 	TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request, viewAttendsSet, null,

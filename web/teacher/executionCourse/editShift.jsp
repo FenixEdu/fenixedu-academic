@@ -36,19 +36,56 @@
 			<bean:message key="label.shifts.remove"/>
 		</html:link>
 	</p>
+	
+	<logic:present name="showPhotos">
+		<html:link page="<%="/manageExecutionCourse.do?method=editShift&amp;shiftID=" + request.getParameter("shiftID")+ "&amp;showPhotos=true&amp;executionCourseID=" + request.getParameter("executionCourseID")%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/manageExecutionCourse.do?method=editShift&amp;shiftID=" + request.getParameter("shiftID")+ "&amp;executionCourseID=" + request.getParameter("executionCourseID")%>">
+		    	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
+	
 	<table class="tstyle1">
 		<tr>
 			<th>
+				<bean:message key="label.number"/>
+			</th>
+			<logic:notPresent name="showPhotos">
+				<th>
+					<bean:message key="label.photo" />
+				</th>
+			</logic:notPresent>
+			<th>
 				<bean:message key="label.name"/>
 			</th>
-			<th></th>
+			<th>
+			</th>
+		</tr>
 		<logic:iterate id="registration" name="registrations">
 			<bean:define id="registrationID" name="registration" property="idInternal"/>
 			<tr>
-				<td><fr:view name="registration" property="person.name"/></td>
-				<td><a href="<%= request.getContextPath() + "/teacher/manageExecutionCourse.do?method=removeAttendsFromShift&shiftID=" + shiftID + "&registrationID=" + registrationID + "&executionCourseID=" + executionCourseID %>"><bean:message key="label.remove"/></a></td>
+				<td>
+					<bean:write name="registration" property="person.student.number"/>
+				</td>
+				<logic:notPresent name="showPhotos">
+					<td class="acenter">
+						<bean:define id="personID" name="registration" property="person.idInternal"/>
+						<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+					</td>
+				</logic:notPresent>	
+				<td>
+					<fr:view name="registration" property="person.name"/>
+				</td>
+				<td>
+					<a href="<%= request.getContextPath() + "/teacher/manageExecutionCourse.do?method=removeAttendsFromShift&shiftID=" + shiftID + "&registrationID=" + registrationID + "&executionCourseID=" + executionCourseID %>">
+						<bean:message key="label.remove"/>
+					</a>
+				</td>
 			</tr>
 		</logic:iterate>
-	</logic:notEmpty>
 	</table>
+	</logic:notEmpty>
 </logic:present>

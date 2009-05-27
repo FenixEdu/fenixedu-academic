@@ -77,6 +77,8 @@ public class ReadStudentsAndGroupsByShiftID extends FenixService {
 
 		infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
+		infoSiteStudentInformation.setPersonID(attend.getRegistration().getPerson().getIdInternal());
+
 		infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
 		infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
