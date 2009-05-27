@@ -34,6 +34,10 @@
 <schema name="PhdProgramCandidacyProcessBean.editProgramInformation" 
 		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean"
 		bundle="PHD_RESOURCES">
+	<slot name="candidacyDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
 	<slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
 		<property name="format" value="${name}" />
@@ -387,4 +391,54 @@
 	</slot>
 	<slot name="collaborationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="otherCollaborationType" />
+</schema>
+
+<schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+	<slot name="name" />
+	<slot name="qualification" />
+	<slot name="category" />
+	<slot name="workLocation" />
+	<slot name="address" />
+	<slot name="email" />
+	<slot name="phone" />
+</schema>
+
+<schema name="PhdProgramGuidingBean.select.type" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="selectType"/>
+		<property name="bundle" value="PHD_RESOURCES"/>
+	</slot>
+</schema>
+
+<schema name="PhdProgramGuidingBean.edit.EXTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="selectType"/>
+		<property name="bundle" value="PHD_RESOURCES"/>
+	</slot>
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="qualification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="category" />
+	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="address" />
+	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="phone" />
+</schema>
+
+<schema name="PhdProgramGuidingBean.edit.INTERNAL" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
+	<slot name="guidingType" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="selectType"/>
+		<property name="bundle" value="PHD_RESOURCES"/>
+	</slot>
+	<slot name="personName" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" >
+		<property name="size" value="50"/>
+		<property name="labelField" value="person.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchInternalPersons"/>
+		<property name="serviceArgs" value="size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
+		<property name="minChars" value="4"/>				
+	</slot>
 </schema>

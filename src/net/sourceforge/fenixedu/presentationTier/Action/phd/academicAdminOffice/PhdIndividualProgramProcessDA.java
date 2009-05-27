@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,8 +15,12 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
@@ -41,7 +47,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "editQualificationsAndJobsInformation", path = "/phd/academicAdminOffice/editQualificationsAndJobsInformation.jsp"),
 
-	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp")
+	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp"),
+
+	@Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -254,4 +262,72 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Phd individual program process information
+
+    // Phd guiding information
+    private void addGuidingsContextInformation(ActionMapping mapping, HttpServletRequest request) {
+	request.setAttribute("guiding", getProcess(request).getGuiding());
+	request.setAttribute("assistantGuidings", getProcess(request).getAssistantguidings());
+    }
+
+    public ActionForward prepareManageGuidingInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	addGuidingsContextInformation(mapping, request);
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    public ActionForward prepareAddGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	addGuidingsContextInformation(mapping, request);
+	request.setAttribute("guidingBean", new PhdProgramGuidingBean());
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    public ActionForward prepareAddGuidingInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	addGuidingsContextInformation(mapping, request);
+	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    public ActionForward prepareAddGuidingInformationSelectType(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	addGuidingsContextInformation(mapping, request);
+	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    public ActionForward addGuidingInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("guidingBean");
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), AddGuidingInformation.class.getSimpleName(), bean);
+	    addSuccessMessage(request, "message.guiding.created.with.success");
+
+	} catch (DomainException e) {
+	    request.setAttribute("guidingBean", bean);
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	addGuidingsContextInformation(mapping, request);
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    public ActionForward deleteGuiding(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), DeleteGuiding.class.getSimpleName(), null);
+	    addSuccessMessage(request, "message.guiding.deleted.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	addGuidingsContextInformation(mapping, request);
+	return mapping.findForward("manageGuidingInformation");
+    }
+
+    // End pf Phd guiding information
 }

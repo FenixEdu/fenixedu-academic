@@ -27,7 +27,7 @@ public class InternalGuiding extends InternalGuiding_Base {
     @Override
     public String getQualification() {
 	final Qualification qualification = getPerson().getLastQualification();
-	return qualification != null ? qualification.getType().getQualifiedName() : EMPTY;
+	return qualification != null ? qualification.getType().getLocalizedName() : EMPTY;
     }
 
     @Override
@@ -86,5 +86,15 @@ public class InternalGuiding extends InternalGuiding_Base {
     protected void disconnect() {
 	removePerson();
 	super.disconnect();
+    }
+
+    @Override
+    void edit(String name, String qualification, String workLocation, String email) {
+	// nothing to be done
+    }
+
+    @Override
+    void edit(String category, String address, String phone) {
+	// nothing to be done
     }
 }

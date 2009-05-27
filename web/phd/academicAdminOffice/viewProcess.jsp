@@ -73,8 +73,13 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.payments"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=prepareManageGuidingInformation" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.manageGuidingInformation"/>
+				</html:link>
+			</li>
+
 		</ul>
-  
     </td>
   </tr>
 </table>

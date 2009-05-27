@@ -11,7 +11,8 @@ public class ExternalGuiding extends ExternalGuiding_Base {
 	edit(name, qualification, workLocation, email);
     }
 
-    protected void edit(final String name, final String qualification, final String workLocation, final String email) {
+    @Override
+    void edit(final String name, final String qualification, final String workLocation, final String email) {
 	check(name, "error.ExternalGuiding.invalid.name");
 	check(qualification, "error.ExternalGuiding.invalid.qualification");
 	check(workLocation, "error.ExternalGuiding.invalid.workLocation");
@@ -23,7 +24,8 @@ public class ExternalGuiding extends ExternalGuiding_Base {
 	setEmail(email);
     }
 
-    protected void edit(final String category, final String address, final String phone) {
+    @Override
+    void edit(final String category, final String address, final String phone) {
 	setCategory(category);
 	setAddress(address);
 	setPhone(phone);

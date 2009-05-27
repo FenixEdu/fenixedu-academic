@@ -23,7 +23,7 @@
 
 
 <%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp" />
+<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=phdIndividualProgramProcessBean" />
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>

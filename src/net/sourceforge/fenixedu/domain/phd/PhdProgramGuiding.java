@@ -35,6 +35,10 @@ abstract public class PhdProgramGuiding extends PhdProgramGuiding_Base {
 
     abstract public String getPhone();
 
+    abstract void edit(final String name, final String qualification, final String workLocation, final String email);
+
+    abstract void edit(final String category, final String address, final String phone);
+
     static public PhdProgramGuiding create(final Person person) {
 	return new InternalGuiding(person);
     }

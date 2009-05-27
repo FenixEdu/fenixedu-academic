@@ -13,8 +13,22 @@ public class Qualification extends Qualification_Base {
     static public Comparator<Qualification> COMPARATOR_BY_YEAR = new Comparator<Qualification>() {
 	@Override
 	public int compare(Qualification o1, Qualification o2) {
+
+	    if (o1.getDateYearMonthDay() == null && o2.getDateYearMonthDay() == null) {
+		return 0;
+	    }
+
+	    if (o1.getDateYearMonthDay() == null) {
+		return -1;
+	    }
+
+	    if (o2.getDateYearMonthDay() == null) {
+		return 1;
+	    }
+
 	    int year1 = o1.getDateYearMonthDay().getYear();
 	    int year2 = o2.getDateYearMonthDay().getYear();
+
 	    return year1 < year2 ? -1 : (year1 == year2 ? 0 : 1);
 	}
     };

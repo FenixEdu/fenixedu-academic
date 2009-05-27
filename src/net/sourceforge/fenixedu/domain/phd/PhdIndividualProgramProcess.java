@@ -33,6 +33,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new AddJobInformation());
 	activities.add(new DeleteJobInformation());
 	activities.add(new EditIndividualProcessInformation());
+	activities.add(new AddGuidingInformation());
+	activities.add(new DeleteGuiding());
     }
 
     @StartActivity
@@ -176,6 +178,40 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class AddGuidingInformation extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.addGuiding((PhdProgramGuidingBean) object);
+	}
+    }
+
+    static public class DeleteGuiding extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // no precondition to check yet
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    return process.deleteGuiding();
+	}
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -231,6 +267,24 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdIndividualProgramProcess addJobInformation(final JobBean bean) {
 	new Job(getPerson(), bean);
+	return this;
+    }
+
+    private PhdIndividualProgramProcess addGuiding(final PhdProgramGuidingBean bean) {
+	final PhdProgramGuiding guiding;
+	if (bean.isInternal()) {
+	    guiding = PhdProgramGuiding.create(bean.getPerson());
+	} else {
+	    guiding = PhdProgramGuiding.create(bean.getName(), bean.getQualification(), bean.getWorkLocation(), bean.getEmail());
+	    guiding.edit(bean.getCategory(), bean.getAddress(), bean.getPhone());
+	}
+
+	setGuiding(guiding);
+	return this;
+    }
+
+    public PhdIndividualProgramProcess deleteGuiding() {
+	getGuiding().delete();
 	return this;
     }
 
