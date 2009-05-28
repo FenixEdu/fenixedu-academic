@@ -64,6 +64,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -117,6 +119,7 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.record.formula.functions.Forecast;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -3123,4 +3126,27 @@ public class Person extends Person_Base {
 	return false;
     }
 
+    public boolean hasCoordinationExecutionDegreeReportsToAnswer() {
+	return !getCoordinationExecutionDegreeReportsToAnswer().isEmpty();
+    }
+
+    public Collection<ExecutionDegree> getCoordinationExecutionDegreeReportsToAnswer() {
+	List<DegreeType> degreeTypes = Arrays.asList(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+		DegreeType.BOLONHA_MASTER_DEGREE);
+
+	Collection<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+	InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
+	if (responsePeriod != null) {
+	    for (Coordinator coordinator : getCoordinators()) {
+		if (coordinator.isResponsible()
+			&& degreeTypes.contains(coordinator.getExecutionDegree().getDegreeType())
+			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods().contains(
+				responsePeriod.getExecutionPeriod())) {
+		    result.add(coordinator.getExecutionDegree());
+
+		}
+	    }
+	}
+	return result;
+    }
 }

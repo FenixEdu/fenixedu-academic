@@ -55,6 +55,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
 	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
+	    } else if (isCoordinatorAndHasReportsToRespond(userView)) {
+		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
 	    } else {
@@ -85,6 +87,13 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	}
 	return false;
     }
+    
+    private boolean isCoordinatorAndHasReportsToRespond(IUserView userView) {
+	 if (userView.hasRoleType(RoleType.COORDINATOR)) {
+	    return userView.getPerson().hasCoordinationExecutionDegreeReportsToAnswer();
+	}
+	return false;
+   }    
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
@@ -132,6 +141,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToTeachingInquiriesQuestion.do?method=showQuestion");
     }
+    
+    private ActionForward handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
+    }    
 
     private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView,
 	    ActionForward actionForward) {

@@ -171,8 +171,14 @@
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToTeachingInquiriesQuestion">
             <forward name="respondToInquiriesQuestion" path="/respondToTeachingInquiriesQuestion.jsp"/>
-        </action>		      
-
+        </action>
+        
+        <action path="/respondToCoordinationExecutionDegreeReportsQuestion"
+        		parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToCoordinationExecutionDegreeReportsQuestion">
+            <forward name="respondToInquiriesQuestion" path="/respondToCoordinationExecutionDegreeReportsQuestion.jsp"/>
+        </action>
+        
         <action path="/respondToYearDelegateInquiriesQuestion"
         		parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.RespondToYearDelegateInquiriesQuestion">
