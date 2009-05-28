@@ -6,11 +6,13 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -122,12 +124,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean candidacyProcessBean) {
 	super();
 
+	checkCandidacyDate(candidacyProcessBean.getExecutionYear(), candidacyProcessBean.getCandidacyDate());
+	setCandidacyDate(candidacyProcessBean.getCandidacyDate());
+
 	final Person person = candidacyProcessBean.getOrCreatePersonFromBean();
 	new Student(person);
 	person.setIstUsername();
 
 	setCandidacy(new PHDProgramCandidacy(person));
-	setCandidacyDate(candidacyProcessBean.getCandidacyDate());
 
 	if (candidacyProcessBean.hasDegree()) {
 	    getCandidacy().setExecutionDegree(candidacyProcessBean.getExecutionDegree());
@@ -135,6 +139,16 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	new PhdProgramCandidacyEvent(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE),
 		candidacyProcessBean.getOrCreatePersonFromBean(), this);
+    }
+
+    private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
+	check(candidacyDate, "error.phd.candidacy.PhdProgramCandidacyProcess.invalid.candidacy.date");
+	if (!executionYear.containsDate(candidacyDate)) {
+	    throw new DomainException(
+		    "error.phd.candidacy.PhdProgramCandidacyProcess.executionYear.doesnot.contains.candidacy.date", candidacyDate
+			    .toString("dd/MM/yyyy"), executionYear.getQualifiedName(), executionYear.getBeginDateYearMonthDay()
+			    .toString("dd/MM/yyyy"), executionYear.getEndDateYearMonthDay().toString("dd/MM/yyyy"));
+	}
     }
 
     @Override
@@ -153,8 +167,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private PhdProgramCandidacyProcess edit(final LocalDate candidacyDate) {
-	check(candidacyDate, "error.PhdProgramCandidacyProcess.invalid.candidacy.date");
+	checkCandidacyDate(getExecutionYear(), candidacyDate);
 	setCandidacyDate(candidacyDate);
 	return this;
+    }
+
+    private ExecutionYear getExecutionYear() {
+	return getIndividualProgramProcess().getExecutionYear();
     }
 }

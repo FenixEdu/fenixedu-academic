@@ -128,14 +128,12 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	try {
 
-	    if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson(), getCreateCandidacyProcessBean().getPersonBean()
-		    .getCountryOfResidence(), getCreateCandidacyProcessBean().getPersonBean().getAreaCode(),
-		    getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
+	    if (!validateAreaCodeAndAreaOfAreaCode(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson(),
+		    getCreateCandidacyProcessBean().getPersonBean().getCountryOfResidence(), getCreateCandidacyProcessBean()
+			    .getPersonBean().getAreaCode(), getCreateCandidacyProcessBean().getPersonBean().getAreaOfAreaCode())) {
 
 		setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
-
 		request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-
 		return mapping.findForward("createCandidacy");
 
 	    }
@@ -143,12 +141,10 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    CreateNewProcess.run(PhdIndividualProgramProcess.class, getCreateCandidacyProcessBean());
 
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
-
+	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
-
+	    getCreateCandidacyProcessBean().getPersonBean().setPerson(null);
 	    request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
-
 	    return mapping.findForward("createCandidacy");
 	}
 

@@ -280,8 +280,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public PhdIndividualProgramProcess(PhdProgramCandidacyProcessBean bean) {
 	super();
-	checkParameters(bean.getOrCreatePersonFromBean(), bean.getExecutionYear(), bean.getProgram());
-	setPerson(bean.getOrCreatePersonFromBean());
+	final Person person = bean.getOrCreatePersonFromBean();
+	checkParameters(person, bean.getExecutionYear(), bean.getProgram());
+	setPerson(person);
 	setExecutionYear(bean.getExecutionYear());
 	setPhdProgram(bean.getProgram());
 	setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
@@ -290,9 +291,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private void checkParameters(Person person, ExecutionYear executionYear, PhdProgram phdProgram) {
-	check(person, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.person.cannot.be.null");
-	check(executionYear, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
-	check(phdProgram, "error.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdProgram.cannot.be.null");
+	check(person, "error.phd.PhdIndividualProgramProcess.person.cannot.be.null");
+	check(executionYear, "error.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
+	check(phdProgram, "error.phd.PhdIndividualProgramProcess.phdProgram.cannot.be.null");
     }
 
     @Override
