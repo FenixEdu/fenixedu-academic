@@ -15,16 +15,17 @@
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/createStudent.do?method=prepareCreateStudent"><bean:message key="link.studentOperations.createStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 		<li><html:link page="/students.do?method=prepareSearch"><bean:message key="link.studentOperations.viewStudents" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
-		<li>
 <%--
+		<li>
 			<html:link page="<%= "/degreeCurricularPlan/equivalencyPlan.do?method=showPlan" %>">
 			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
---%>
+
 			<html:link page="<%= "/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan" %>">
 			    <bean:message key="link.equivalency.plan" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</li>
+--%>
 
 		<li class="navheader"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<%
@@ -71,11 +72,13 @@
 
 	<ul>
 		<li class="navheader"><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></li>
-		<li><html:link page="/caseHandlingOver23CandidacyProcess.do?method=intro"><bean:message key="label.candidacy.over23" bundle="APPLICATION_RESOURCES"/></html:link></li>
-		<li><html:link page="/caseHandlingSecondCycleCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></html:link></li>
-	 	<li><html:link page="/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro"><bean:message key="label.candidacy.graduatedPerson" bundle="APPLICATION_RESOURCES"/></html:link></li> 
-		<li><html:link page="/caseHandlingDegreeChangeCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeChange" bundle="APPLICATION_RESOURCES"/></html:link></li> 
-		<li><html:link page="/caseHandlingDegreeTransferCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeTransfer" bundle="APPLICATION_RESOURCES"/></html:link></li>
+		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
+			<li><html:link page="/caseHandlingOver23CandidacyProcess.do?method=intro"><bean:message key="label.candidacy.over23" bundle="APPLICATION_RESOURCES"/></html:link></li>
+			<li><html:link page="/caseHandlingSecondCycleCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></html:link></li>
+		 	<li><html:link page="/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro"><bean:message key="label.candidacy.graduatedPerson" bundle="APPLICATION_RESOURCES"/></html:link></li> 
+			<li><html:link page="/caseHandlingDegreeChangeCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeChange" bundle="APPLICATION_RESOURCES"/></html:link></li> 
+			<li><html:link page="/caseHandlingDegreeTransferCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.degreeTransfer" bundle="APPLICATION_RESOURCES"/></html:link></li>
+		</logic:equal>
  		<li><html:link page="/caseHandlingStandaloneCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.standalone" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</ul>
 
