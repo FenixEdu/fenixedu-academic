@@ -158,7 +158,7 @@
 					<td>
 						<bean:define id="year1" type="java.lang.String" name="reportBean" property="executionYearFourYearsBack.year"/>
 						<bean:define id="year2" type="java.lang.String" name="reportBean" property="executionYear.year"/>
-						<bean:message key="label.report.status.and.aprovals" bundle="GEP_RESOURCES" arg0="<%= year1 %>" arg1="<%= year2 %>"/>
+						<bean:message key="label.report.status.and.aprovals" bundle="GEP_RESOURCES" arg0="2003/2004" arg1="<%= year2 %>"/>
 					</td>
 					<td>
 						<bean:define id="urlStatusAndAprovalCsv" type="java.lang.String"><bean:write name="urlStatusAndAproval" filter="false"/>&amp;format=csv</bean:define>
@@ -198,7 +198,7 @@
 						</html:link>
 					</td>
 				</tr>
-				<tr>
+		<!-- 		<tr>
 					<td>
 						<bean:message key="label.report.registrations" bundle="GEP_RESOURCES"/>
 					</td>
@@ -219,6 +219,7 @@
 						</html:link>
 					</td>
 				</tr>
+                 -->
 				<tr>
 					<td>
 						<bean:message key="label.report.flunked" bundle="GEP_RESOURCES"/>
