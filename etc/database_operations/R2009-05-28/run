@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add column to StudentCourseResult" addColumnToStudentCourseResult.sql
+execute "createTableCoordinatorExecutionDegreeCoursesReport" createTableCoordinatorExecutionDegreeCoursesReport.sql
+execute "Add candidacy date to process table" alterTableProcess.sql
+execute "Add new columns to Job and Qualification" addColumnsToJobAndQualification.sql
