@@ -476,7 +476,7 @@ valueType net.sourceforge.fenixedu.util.tests.TestType as TestType {
 
 valueType org.joda.time.Duration as Duration {
     externalizeWith {
-        long getMillis();
+        Long getMillis();
     }
 }
 
