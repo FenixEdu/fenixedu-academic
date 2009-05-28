@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -22,12 +21,12 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 
     @Override
     public String getJobName() {
-	return "Estatuto e aprovações entre " + getExecutionYear().getYear() + " e "
-		+ getExecutionYearFourYearsBack(getExecutionYear()).getYear();
+	return "Estatuto e aprovações entre 2003/2004 e " + getExecutionYear().getYear();
     }
 
     public static class EnrolmentAndAprovalCounter {
 	private int enrolments = 0;
+
 	private int aprovals = 0;
 
 	public void count(final Enrolment enrolment) {
@@ -49,6 +48,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
     public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
 
 	private final ExecutionSemester firstExecutionSemester;
+
 	private final ExecutionSemester lastExecutionSemester;
 
 	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
@@ -120,7 +120,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	spreadsheet.setHeader("número inscricoes");
 	spreadsheet.setHeader("número aprovacoes");
 
-	final ExecutionSemester firstExecutionSemester = ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(getExecutionYear())
+	final ExecutionSemester firstExecutionSemester = ExecutionYear.readExecutionYearByName("2003/2004")
 		.getFirstExecutionPeriod();
 	final ExecutionSemester lastExecutionSemester = getExecutionYear().getLastExecutionPeriod();
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
