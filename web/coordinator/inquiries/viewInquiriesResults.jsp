@@ -180,3 +180,9 @@
         </fr:layout>
     </fr:edit>    
 </logic:notEmpty>
+<br/>
+<html:form action="<%= "/viewInquiriesResults.do?method=selectexecutionSemester&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
+    <html:hidden property="degreeCurricularPlanID"/>
+    <html:hidden property="executionSemesterID"/>
+    <html:submit><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
+</html:form>
