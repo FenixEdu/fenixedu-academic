@@ -30,6 +30,7 @@ public class EurAceReportFile extends EurAceReportFile_Base {
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
+	spreadsheet.setHeader("codigo execucao disciplina");
 	spreadsheet.setHeader("número do docente");
 	spreadsheet.setHeader("créditos");
 
@@ -41,24 +42,27 @@ public class EurAceReportFile extends EurAceReportFile_Base {
 			    if (checkExecutionYear(getExecutionYear(), curricularCourse)) {
 				for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
 				    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
-					final Teacher teacher = professorship.getTeacher();
-					final Row row = spreadsheet.addRow();
-					setDegreeCells(row, degree);
-					row.setCell(curricularCourse.getName());
-					row.setCell(teacher.getTeacherNumber().toString());
-					double credits = 0;
-					for (final DegreeTeachingService degreeTeachingService : professorship
-						.getDegreeTeachingServicesSet()) {
-					    credits += degreeTeachingService.calculateCredits();
-					}
-					for (final TeacherMasterDegreeService teacherMasterDegreeService : professorship
-						.getTeacherMasterDegreeServicesSet()) {
-					    final Double d = teacherMasterDegreeService.getCredits();
-					    if (d != null) {
-						credits += d.doubleValue();
+					if (professorship.hasPerson()) {
+					    final Teacher teacher = professorship.getTeacher();
+					    final Row row = spreadsheet.addRow();
+					    setDegreeCells(row, degree);
+					    row.setCell(curricularCourse.getName());
+					    row.setCell(executionCourse.getIdInternal());
+					    row.setCell(teacher.getTeacherNumber().toString());
+					    double credits = 0;
+					    for (final DegreeTeachingService degreeTeachingService : professorship
+						    .getDegreeTeachingServicesSet()) {
+						credits += degreeTeachingService.calculateCredits();
 					    }
+					    for (final TeacherMasterDegreeService teacherMasterDegreeService : professorship
+						    .getTeacherMasterDegreeServicesSet()) {
+						final Double d = teacherMasterDegreeService.getCredits();
+						if (d != null) {
+						    credits += d.doubleValue();
+						}
+					    }
+					    row.setCell(Double.toString(Math.round((credits * 100.0)) / 100.0));
 					}
-					row.setCell(Double.toString(Math.round((credits * 100.0)) / 100.0));
 				    }
 				}
 			    }
