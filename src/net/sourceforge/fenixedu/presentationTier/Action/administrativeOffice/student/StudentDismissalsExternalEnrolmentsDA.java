@@ -16,9 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
 @Forwards( {
-	// Once tiles definition is deleted, below should be:
-	// "/academicAdminOffice/dismissal/managementDismissals.jsp"
-	@Forward(name = "manageDismissals", path = "studentDismissal.management"),
+	@Forward(name = "manageDismissals", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	// Complex tiles definition; cannot refactor header (yet?)
 	@Forward(name = "chooseExternalUnit", path = "student.externalEnrolment.chooseExternalUnit"),
 	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
