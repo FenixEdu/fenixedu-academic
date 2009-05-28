@@ -89,6 +89,7 @@ public class Job extends Job_Base {
 
     public void delete() {
 	removePerson();
+	removeCreator();
 	removeCountry();
 	removeBusinessArea();
 	removeRootDomainObject();

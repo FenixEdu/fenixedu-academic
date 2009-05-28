@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -101,7 +102,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addQualification((QualificationBean) object);
+	    return process.addQualification(userView.getPerson(), (QualificationBean) object);
 	}
 
     }
@@ -121,9 +122,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    final Qualification qualification = (Qualification) object;
 	    if (process.getPerson().hasAssociatedQualifications(qualification)) {
+		if (!canDelete(qualification, userView.getPerson())) {
+		    throw new DomainException("error.PhdIndividualProgramProcess.DeleteQualification.not.authorized");
+		}
 		qualification.delete();
 	    }
 	    return process;
+	}
+
+	private boolean canDelete(final Qualification qualification, final Person person) {
+	    if (!qualification.hasCreator()) {
+		return false;
+	    }
+	    final Person creator = qualification.getCreator();
+	    return creator == person || creator.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	}
     }
 
@@ -140,7 +152,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addJobInformation((JobBean) object);
+	    return process.addJobInformation(userView.getPerson(), (JobBean) object);
 	}
     }
 
@@ -159,9 +171,20 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    final Job job = (Job) object;
 	    if (process.getPerson().hasJobs(job)) {
+		if (!canDelete(job, userView.getPerson())) {
+		    throw new DomainException("error.PhdIndividualProgramProcess.DeleteJobInformation.not.authorized");
+		}
 		job.delete();
 	    }
 	    return process;
+	}
+
+	private boolean canDelete(final Job job, final Person person) {
+	    if (!job.hasCreator()) {
+		return false;
+	    }
+
+	    return job.getCreator() == person || job.getCreator().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	}
     }
 
@@ -296,13 +319,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCollaborationType() == PhdIndividualProgramCollaborationType.OTHER;
     }
 
-    private PhdIndividualProgramProcess addQualification(final QualificationBean bean) {
-	new Qualification(getPerson(), bean);
+    private PhdIndividualProgramProcess addQualification(final Person person, final QualificationBean bean) {
+	final Qualification qualification = new Qualification(getPerson(), bean);
+	qualification.setCreator(person);
 	return this;
     }
 
-    private PhdIndividualProgramProcess addJobInformation(final JobBean bean) {
-	new Job(getPerson(), bean);
+    private PhdIndividualProgramProcess addJobInformation(final Person person, final JobBean bean) {
+	final Job job = new Job(getPerson(), bean);
+	job.setCreator(person);
 	return this;
     }
 

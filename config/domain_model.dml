@@ -10351,6 +10351,13 @@ relation QualificationPerson {
 	Person playsRole person;
 }
 
+relation QualificationCreatorPerson {
+	Qualification playsRole createdQualifications {
+		multiplicity *;
+	}
+	Person playsRole creator;
+}
+
 relation QuestionBankParty {
 	tests.NewQuestionBank playsRole questionBank;
 	organizationalStructure.Party playsRole owner;
@@ -15185,6 +15192,13 @@ relation RootDomainObjectJob {
 relation JobPerson {
 	Person playsRole person;
 	Job playsRole jobs {
+		multiplicity *;
+	}
+}
+
+relation JobCreatorPerson {
+	Person playsRole creator;
+	Job playsRole createJobs {
 		multiplicity *;
 	}
 }

@@ -1172,7 +1172,8 @@ public class Person extends Person_Base {
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
 		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
 		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyAcademicServiceRequests()
-		&& !hasAnyCardGenerationEntries() && !hasAnyInternalGuidings();
+		&& !hasAnyCardGenerationEntries() && !hasAnyInternalGuidings() && !hasAnyCreatedQualifications()
+		&& !hasAnyCreateJobs();
     }
 
     private boolean hasParking() {

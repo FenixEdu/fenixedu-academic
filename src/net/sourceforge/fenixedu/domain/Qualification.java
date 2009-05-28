@@ -88,6 +88,7 @@ public class Qualification extends Qualification_Base {
 
     public void delete() {
 	super.setPerson(null);
+	super.setCreator(null);
 	removeCountry();
 	removeRootDomainObject();
 	super.deleteDomainObject();
