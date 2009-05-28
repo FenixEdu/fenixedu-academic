@@ -16,8 +16,8 @@
 <p class="mtop2">
 	<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
     <html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">            
-		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
-		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
+		<strong><bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
+		<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" /></strong>
 	</html:link>
 </p>
 
