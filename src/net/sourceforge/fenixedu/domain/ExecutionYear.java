@@ -209,6 +209,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return new Interval(begin, end).contains(dateTime);
     }
 
+    public boolean containsDate(final LocalDate date) {
+	return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
+    }
+
     public List<ExecutionDegree> getExecutionDegreesFor(final DegreeType... degreeTypes) {
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 	final List<DegreeType> degreeTypesList = Arrays.asList(degreeTypes);
