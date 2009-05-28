@@ -23,3 +23,8 @@
 <p><strong><bean:message key="message.email.sent.success" bundle="CANDIDATE_RESOURCES"/>.</strong></p>
 <p><bean:message key="message.email.sent.sucess.details" bundle="CANDIDATE_RESOURCES"/>.</p>
 
+<%-- 
+<bean:define name="link" id="link"/>
+<p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= link %>">Link</a></p>
+--%>
+
