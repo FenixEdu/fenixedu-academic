@@ -26,16 +26,6 @@
 	  	</html:link>
 	</li>
 	<li>
-	  	<html:link page="/students/firstTimeEnrolmentStudentsList.faces">
-	  		<bean:message key="link.gep.majorDegreeStudentsInformation" bundle="GEP_RESOURCES" />
-	  	</html:link>
-	</li>
-	<li>
-	  	<html:link page="/competenceCoursesStatistics.do?method=prepare">
-	  		<bean:message key="link.gep.ETIsReport" bundle="GEP_RESOURCES" />
-	  	</html:link>
-	</li>
-	<li>
 	  	<html:link page="/reportsByDegreeType.do?method=selectDegreeType">
 	  		<bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" />
 	  	</html:link>
@@ -69,12 +59,6 @@
 			<bean:message key="link.inquiries.studentInquiry.uploadResults" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>	
-	
-	<li>
-		<html:link page="/createClassificationsForStudents.do?method=prepare">
-			<bean:message key="button.createClassifications" bundle="INQUIRIES_RESOURCES" />
-		</html:link>
-	</li>
 	<li class="navheader">
 		<bean:message key="label.protocols.navigation.header" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</li>
