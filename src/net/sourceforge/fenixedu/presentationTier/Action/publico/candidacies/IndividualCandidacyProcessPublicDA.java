@@ -49,6 +49,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
 	request.setAttribute("mappingPath", mapping.getPath());
 	request.setAttribute("endSubmissionDate", getFormattedApplicationSubmissionEndDate());
+	request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
 
 	setProcess(request);
 	return super.execute(mapping, actionForm, request, response);
@@ -271,6 +272,9 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getUnusedOrCreateNewHashCode(getProcessType(),
 		    getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
+
+	    //String link = getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
+	    //request.setAttribute("link", link);
 
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {

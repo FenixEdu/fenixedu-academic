@@ -39,7 +39,7 @@
 </div>
 </logic:equal>
 
-
+<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
@@ -53,6 +53,7 @@
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
 </fr:form>
+</logic:equal>
 
 <p style="margin-bottom: 0.5em;">
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualCandidacyProcess" property="processCode"/>

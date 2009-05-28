@@ -24,6 +24,7 @@
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
 
+<logic:equal name="isApplicationSubmissionPeriodValid" value="true">
 <fr:form action='<%= mappingPath + ".do?method=bindEmailWithHashCodeAndSendMailWithLink" %>'>
 	<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES"/></p>
 	
@@ -47,3 +48,15 @@
 	
 	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> »</html:submit></p>
 </fr:form>
+</logic:equal>
+
+<logic:notEqual name="isApplicationSubmissionPeriodValid" value="true">
+	<em><bean:message key="message.application.submission.period.ended" bundle="CANDIDATE_RESOURCES"/>.</em>
+	
+	<p class="mtop15">
+		<bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES"/>.
+	</p>
+	
+	<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>	
+</logic:notEqual>
+
