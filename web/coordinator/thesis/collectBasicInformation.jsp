@@ -17,7 +17,7 @@
 
 <div class="dinline forminline">
     <fr:form action="<%= String.format("/manageThesis.do?method=createProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>">
-        <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit">
+        <fr:edit id="bean" name="bean" schema="thesis.jury.proposal.information.edit.without.subtitle">
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle5 tdtop thlight thright dinline"/>
                 <fr:property name="columnClasses" value=",,tdclear tderror1"/>

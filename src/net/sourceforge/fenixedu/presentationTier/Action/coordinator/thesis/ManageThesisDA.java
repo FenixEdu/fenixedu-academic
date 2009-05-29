@@ -94,6 +94,10 @@ public class ManageThesisDA extends FenixDispatchAction {
 	}
     }
 
+    private Enrolment getEnrolment(HttpServletRequest request) {
+	return Enrolment.fromExternalId(request.getParameter("enrolmentOID"));
+    }
+
     private Student getStudent(HttpServletRequest request) {
 	Student student = (Student) request.getAttribute("student");
 
@@ -261,8 +265,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 		    continue;
 		}
 
-		Student student = studentCurricularPlan.getRegistration().getStudent();
-		result.add(new StudentThesisInfo(student, enrolment));
+		result.add(new StudentThesisInfo(enrolment));
 	    }
 	}
 
@@ -280,18 +283,17 @@ public class ManageThesisDA extends FenixDispatchAction {
 	    return listThesis(mapping, actionForm, request, response);
 	}
 
-	Enrolment enrolment = student.getDissertationEnrolment();
+	// Enrolment enrolment = student.getDissertationEnrolment();
+	Enrolment enrolment = getEnrolment(request);
+	Thesis thesis = enrolment.getPossibleThesis();
 	Proposal proposal = enrolment.getDissertationProposal();
-
-	if (proposal == null) {
+	if (proposal == null && thesis == null) {
 	    ThesisBean bean = new ThesisBean();
 	    bean.setStudent(student);
-
 	    request.setAttribute("bean", bean);
 	    return mapping.findForward("collect-basic-information");
-	} else {
-	    return createProposalWithAssignment(mapping, actionForm, request, response);
-	}
+	} else
+	    return createProposalWithAssignment(mapping, actionForm, request, response, thesis);
     }
 
     public ActionForward createProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -306,8 +308,26 @@ public class ManageThesisDA extends FenixDispatchAction {
 	}
 
 	try {
-	    Thesis thesis = (Thesis) CreateThesisProposal.run(degreeCurricularPlan, bean.getStudent(), bean.getTitle(), bean
-		    .getComment());
+	    Thesis thesis = CreateThesisProposal.run(degreeCurricularPlan, bean.getStudent(), bean.getTitle(), bean.getComment());
+	    request.setAttribute("thesis", thesis);
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    return listThesis(mapping, actionForm, request, response);
+	}
+
+	return editProposal(mapping, actionForm, request, response);
+    }
+
+    private ActionForward createProposalWithAssignment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, Thesis previousThesis) throws Exception {
+	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	Student student = getStudent(request);
+	Enrolment enrolment = student.getDissertationEnrolment();
+
+	try {
+	    Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
+		    student, enrolment.getDissertationProposal(), previousThesis });
 	    request.setAttribute("thesis", thesis);
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -325,9 +345,9 @@ public class ManageThesisDA extends FenixDispatchAction {
 	Enrolment enrolment = student.getDissertationEnrolment();
 
 	try {
-		Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
-			student, enrolment.getDissertationProposal() });
-		request.setAttribute("thesis", thesis);
+	    Thesis thesis = (Thesis) executeService("CreateThesisProposalWithAssignment", new Object[] { degreeCurricularPlan,
+		    student, enrolment.getDissertationProposal(), enrolment.getPreviousYearThesis() });
+	    request.setAttribute("thesis", thesis);
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	    return listThesis(mapping, actionForm, request, response);

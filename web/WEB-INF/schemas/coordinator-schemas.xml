@@ -163,6 +163,19 @@
     </slot>
 </schema>
 
+<schema name="thesis.jury.proposal.information.edit.without.subtitle" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+    <slot name="student" layout="format" read-only="true">
+        <property name="format" value="${person.name} (${number})"/>
+    </slot>
+    <slot name="finalTitle" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="comment" layout="longText">
+        <property name="columns" value="60"/>
+        <property name="rows" value="10"/>
+    </slot>
+</schema>
+
 <schema name="thesis.confirm.revision.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="student" layout="format" key="student">
         <property name="format" value="${person.name} (${number})"/>

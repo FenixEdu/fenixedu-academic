@@ -60,7 +60,7 @@
             
             <fr:property name="link(create)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId)  %>"/>
             <fr:property name="key(create)" value="link.coordinator.list.create"/>
-            <fr:property name="param(create)" value="student.idInternal/studentID"/>
+            <fr:property name="param(create)" value="student.idInternal/studentID,enrolmentOID/enrolmentOID"/>
             <fr:property name="order(create)" value="1"/>
             <fr:property name="visibleIf(create)" value="unassigned"/>
 
@@ -96,7 +96,7 @@
 
             <fr:property name="link(recreate)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(recreate)" value="link.coordinator.list.create"/>
-            <fr:property name="param(recreate)" value="student.idInternal/studentID"/>
+            <fr:property name="param(recreate)" value="thesisId/thesisID"/>
             <fr:property name="order(recreate)" value="7"/>
             <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
 

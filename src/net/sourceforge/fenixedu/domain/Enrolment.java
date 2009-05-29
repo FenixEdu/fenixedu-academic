@@ -46,6 +46,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 /**
  * @author dcs-rjao
  * 
@@ -1097,7 +1099,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public static class DeleteEnrolmentExecutor implements FactoryExecutor {
 
-	private DomainReference<Enrolment> enrolment;
+	private final DomainReference<Enrolment> enrolment;
 
 	public DeleteEnrolmentExecutor(Enrolment enrolment) {
 	    super();
@@ -1352,6 +1354,33 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getRegistration().getDissertationProposal(previousExecutionYear);
     }
 
+    public Thesis getPreviousYearThesis() {
+	ExecutionYear executionYear = getExecutionYear().getPreviousExecutionYear();
+	Enrolment enrolment = getStudent().getDissertationEnrolment(null, executionYear);
+	if (enrolment != null && enrolment.getThesis() != null) {
+	    return enrolment.getThesis();
+	}
+	return null;
+    }
+
+    public Thesis getPossibleThesis() {
+	Thesis thesis = getThesis();
+	return (thesis == null && getDissertationProposal() == null) ? getPreviousYearThesis() : thesis;
+    }
+
+    // 
+    public MultiLanguageString getPossibleDissertationTitle() {
+	Thesis thesis = getThesis();
+	if (thesis == null) {
+	    if (getDissertationProposal() == null) {
+		thesis = getPreviousYearThesis();
+	    } else {
+		return new MultiLanguageString(getDissertationProposal().getTitle());
+	    }
+	}
+	return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
+    }
+
     final public Unit getAcademicUnit() {
 	return RootDomainObject.getInstance().getInstitutionUnit();
     }
@@ -1432,7 +1461,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
 	return false;
     }
-    
+
     static public Enrolment getEnrolmentWithLastExecutionPeriod(List<Enrolment> enrolments) {
 	Collections.sort(enrolments, Enrolment.REVERSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
 	return enrolments.get(0);

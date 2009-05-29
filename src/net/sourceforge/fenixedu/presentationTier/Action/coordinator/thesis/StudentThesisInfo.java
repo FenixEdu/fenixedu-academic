@@ -13,8 +13,8 @@ public class StudentThesisInfo {
     private Thesis thesis;
     private ThesisPresentationState state;
 
-    public StudentThesisInfo(Student student, Enrolment enrolment) {
-	setStudent(student);
+    public StudentThesisInfo(Enrolment enrolment) {
+	setStudent(enrolment.getStudent());
 	setEnrolment(enrolment);
 	setThesis(enrolment.getThesis());
     }
@@ -52,8 +52,7 @@ public class StudentThesisInfo {
     }
 
     public MultiLanguageString getTitle() {
-	final Thesis thesis = getThesis();
-	return thesis == null ? new MultiLanguageString("-") : thesis.getTitle();
+	return getEnrolment().getPossibleDissertationTitle();
     }
 
     public ThesisPresentationState getState() {
@@ -65,9 +64,14 @@ public class StudentThesisInfo {
     }
 
     public Integer getThesisId() {
-	Thesis thesis = getThesis();
+	final Thesis thesis = getThesis();
 
 	return thesis == null ? null : thesis.getIdInternal();
+    }
+
+    public String getEnrolmentOID() {
+	final Enrolment enrolment = getEnrolment();
+	return enrolment == null ? null : enrolment.getExternalId();
     }
 
     public boolean isUnassigned() {

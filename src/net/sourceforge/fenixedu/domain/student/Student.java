@@ -15,6 +15,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -65,6 +66,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -754,7 +756,7 @@ public class Student extends Student_Base {
 	return getDissertationEnrolment(null);
     }
 
-    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+   final public TreeSet<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
 	final TreeSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	for (final Registration registration : getRegistrations()) {
 	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);
@@ -762,7 +764,23 @@ public class Student extends Student_Base {
 		enrolments.add(dissertationEnrolment);
 	    }
 	}
+	return enrolments;
+    }
 
+    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear) {
+	TreeSet<Enrolment> enrolments = getDissertationEnrolments(degreeCurricularPlan);
+	CollectionUtils.filter(enrolments, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object enrolment) {
+		return ((Enrolment) enrolment).getExecutionYear().equals(executionYear);
+	    }
+	});
+	return enrolments.isEmpty() ? null : enrolments.last();
+    }
+
+    final public Enrolment getDissertationEnrolment(DegreeCurricularPlan degreeCurricularPlan) {
+	TreeSet<Enrolment> enrolments = getDissertationEnrolments(degreeCurricularPlan);
 	return enrolments.isEmpty() ? null : enrolments.last();
     }
 
