@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalance
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -115,6 +116,7 @@ public class CloseAssiduousnessMonth extends FenixService {
 	int maximumWorkingDays = 0;
 	Integer workedDaysWithBonusDaysDiscount = 0;
 	Integer workedDaysWithA17VacationsDaysDiscount = 0;
+	List<WorkDaySheet> workDaySheets = new ArrayList<WorkDaySheet>();
 	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    int thisBonusDiscount = 0, thisA17Discount = 0;
 	    WorkDaySheet workDaySheet = new WorkDaySheet();
@@ -251,6 +253,7 @@ public class CloseAssiduousnessMonth extends FenixService {
 	    }
 	    workedDaysWithBonusDaysDiscount += thisBonusDiscount;
 	    workedDaysWithA17VacationsDaysDiscount += thisA17Discount;
+	    workDaySheets.add(workDaySheet);
 	}
 
 	EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume(totalBalance, totalBalanceToDiscount, closedMonth
@@ -261,6 +264,9 @@ public class CloseAssiduousnessMonth extends FenixService {
 		workedDaysWithA17VacationsDaysDiscount, employeeBalanceResume.getFinalAnualBalance(), employeeBalanceResume
 			.getFutureBalanceToCompensate(), beginDate, endDate, totalWorkedTime);
 
+	for (WorkDaySheet workDaySheet : workDaySheets) {
+	    new AssiduousnessClosedDay(assiduousnessClosedMonth, workDaySheet);
+	}
 	for (JustificationMotive justificationMotive : justificationsDuration.keySet()) {
 	    Duration duration = justificationsDuration.get(justificationMotive);
 	    new ClosedMonthJustification(assiduousnessClosedMonth, justificationMotive, duration);

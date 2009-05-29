@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
@@ -173,6 +174,22 @@ public class WorkDaySheet implements Serializable {
 	setWorkSchedule(workSchedule);
 	setLeaves(list);
 	setAssiduousnessRecords(clockings);
+    }
+
+    public WorkDaySheet(AssiduousnessClosedDay assiduousnessClosedDay) {
+	setDate(assiduousnessClosedDay.getDay());
+	setWorkScheduleAcronym(assiduousnessClosedDay.getSchedule());
+	setBalanceTime(assiduousnessClosedDay.getBalance().toPeriod());
+	setUnjustifiedTime(assiduousnessClosedDay.getUnjustified());
+	setNotes(assiduousnessClosedDay.getNotes());
+	clockingsToManagement = assiduousnessClosedDay.getClockings();
+	setExtraWorkFirstLevel(assiduousnessClosedDay.getExtraWorkFirstLevel());
+	setExtraWorkSecondLevel(assiduousnessClosedDay.getExtraWorkSecondLevel());
+	setExtraWorkSecondLevelWithLimit(assiduousnessClosedDay.getExtraWorkSecondLevelWithLimit());
+	setNightExtraWorkFirstLevel(assiduousnessClosedDay.getNightlyExtraWorkFirstLevel());
+	setNightExtraWorkSecondLevel(assiduousnessClosedDay.getNightlyExtraWorkSecondLevel());
+	setNightExtraWorkSecondLevelWithLimit(assiduousnessClosedDay.getNightlyExtraWorkSecondLevelWithLimit());
+	setNightWorkBalance(assiduousnessClosedDay.getNightlyWorkBalance());
     }
 
     public Timeline getTimeline() {

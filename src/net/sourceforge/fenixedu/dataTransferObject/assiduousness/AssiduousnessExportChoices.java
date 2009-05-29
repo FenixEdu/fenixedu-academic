@@ -360,4 +360,8 @@ public class AssiduousnessExportChoices implements Serializable {
 	this.chooseYear = chooseYear;
     }
 
+    public boolean validDates() {
+	return !getBeginDate().isAfter(getEndDate());
+    }
+
 }

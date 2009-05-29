@@ -144,6 +144,12 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    getClosedMonthJustifications().remove(closedMonthJustification);
 	    closedMonthJustification.delete();
 	}
+
+	List<AssiduousnessClosedDay> assiduousnessClosedDays = new ArrayList<AssiduousnessClosedDay>(getAssiduousnessClosedDays());
+	for (AssiduousnessClosedDay assiduousnessClosedDay : assiduousnessClosedDays) {
+	    getAssiduousnessClosedDays().remove(assiduousnessClosedDay);
+	    assiduousnessClosedDay.delete();
+	}
 	deleteDomainObject();
     }
 
@@ -166,7 +172,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
 	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
 
-	double anualRemaining = (double) Assiduousness.MAX_A66_PER_YEAR - previousAccumulatedA66;
+	double anualRemaining = Assiduousness.MAX_A66_PER_YEAR - previousAccumulatedA66;
 	double monthRemaining = anualRemaining > Assiduousness.MAX_A66_PER_MONTH ? Assiduousness.MAX_A66_PER_MONTH
 		: anualRemaining;
 	if (getArticle66() < monthRemaining && unjustified > 0) {

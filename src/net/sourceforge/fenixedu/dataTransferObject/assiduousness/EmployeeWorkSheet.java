@@ -1,20 +1,36 @@
 package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.util.Month;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.Duration;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
+import org.joda.time.YearMonthDay;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class EmployeeWorkSheet implements Serializable {
+
+    private static final DecimalFormat UNIT_FORMAT = new DecimalFormat("0000");
 
     Employee employee;
 
@@ -36,10 +52,6 @@ public class EmployeeWorkSheet implements Serializable {
 
     Duration nightWork;
 
-    Duration firstHourExtraWork;
-
-    Duration nextHoursExtraWork;
-
     Duration balanceToCompensate;
 
     AssiduousnessStatusHistory lastAssiduousnessStatusHistory;
@@ -47,21 +59,32 @@ public class EmployeeWorkSheet implements Serializable {
     public EmployeeWorkSheet() {
     }
 
-    public EmployeeWorkSheet(Employee employee, List<WorkDaySheet> workDaySheetList, Duration totalBalance,
-	    Duration totalComplementaryWeeklyRestBalance, Duration totalWeeklyRestBalance, Duration holidayRest,
-	    Duration nightWork, Duration firstHourExtraWork, Duration nextHoursExtraWork, Duration unjustified,
-	    Duration balanceToCompensate) {
+    public EmployeeWorkSheet(Employee employee, LocalDate beginDate, LocalDate endDate) {
 	setEmployee(employee);
-	setWorkDaySheetList(workDaySheetList);
-	setTotalBalance(totalBalance);
-	setUnjustifiedBalance(unjustified);
-	setWeeklyRest(totalWeeklyRestBalance);
-	setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
-	setHolidayRest(holidayRest);
-	setNightWork(nightWork);
-	setFirstHourExtraWork(firstHourExtraWork);
-	setNextHoursExtraWork(nextHoursExtraWork);
-	setBalanceToCompensate(balanceToCompensate);
+	setLastAssiduousnessStatusHistory(beginDate, endDate);
+	Unit unit = employee.getLastWorkingPlace(new YearMonthDay(beginDate), new YearMonthDay(endDate));
+	EmployeeContract lastMailingContract = (EmployeeContract) employee
+		.getLastContractByContractType(AccountabilityTypeEnum.MAILING_CONTRACT);
+	if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
+	    unit = lastMailingContract.getMailingUnit();
+	}
+	setUnit(unit);
+	if (unit != null) {
+	    setUnitCode(UNIT_FORMAT.format(unit.getCostCenterCode()));
+	} else {
+	    setUnitCode("");
+	}
+    }
+
+    public String getFormattedDate() {
+	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	WorkDaySheet workDaySheet = workDaySheetList.get(0);
+	StringBuilder stringBuilder = new StringBuilder();
+	if (workDaySheet != null) {
+	    String month = bundleEnumeration.getString(Month.values()[workDaySheet.getDate().getMonthOfYear() - 1].getName());
+	    stringBuilder.append(month).append(" ").append(workDaySheet.getDate().getYear());
+	}
+	return stringBuilder.toString();
     }
 
     public String getTotalBalanceString() {
@@ -110,23 +133,33 @@ public class EmployeeWorkSheet implements Serializable {
     }
 
     public Duration getTotalBalance() {
-
-	return totalBalance;
+	return totalBalance == null ? Duration.ZERO : totalBalance;
     }
 
     public void setTotalBalance(Duration totalBalance) {
 	this.totalBalance = totalBalance;
     }
 
+    public void addTotalBalance(Duration balance) {
+	this.totalBalance = this.totalBalance == null ? balance : this.totalBalance.plus(balance);
+    }
+
     public Duration getUnjustifiedBalance() {
-	return unjustifiedBalance;
+	return unjustifiedBalance == null ? Duration.ZERO : unjustifiedBalance;
     }
 
     public void setUnjustifiedBalance(Duration unjustifiedBalance) {
 	this.unjustifiedBalance = unjustifiedBalance;
     }
 
+    public void addUnjustifiedBalance(Duration balance) {
+	this.unjustifiedBalance = this.unjustifiedBalance == null ? balance : this.unjustifiedBalance.plus(balance);
+    }
+
     public List<WorkDaySheet> getWorkDaySheetList() {
+	if (workDaySheetList == null) {
+	    workDaySheetList = new ArrayList<WorkDaySheet>();
+	}
 	return workDaySheetList;
     }
 
@@ -135,19 +168,28 @@ public class EmployeeWorkSheet implements Serializable {
     }
 
     public Duration getComplementaryWeeklyRest() {
-	return complementaryWeeklyRest;
+	return complementaryWeeklyRest == null ? Duration.ZERO : complementaryWeeklyRest;
     }
 
     public void setComplementaryWeeklyRest(Duration complementaryWeeklyRest) {
 	this.complementaryWeeklyRest = complementaryWeeklyRest;
     }
 
+    public void addComplementaryWeeklyRest(Duration balance) {
+	this.complementaryWeeklyRest = this.complementaryWeeklyRest == null ? balance : this.complementaryWeeklyRest
+		.plus(balance);
+    }
+
     public Duration getWeeklyRest() {
-	return weeklyRest;
+	return weeklyRest == null ? Duration.ZERO : weeklyRest;
     }
 
     public void setWeeklyRest(Duration weeklyRest) {
 	this.weeklyRest = weeklyRest;
+    }
+
+    public void addWeeklyRest(Duration balance) {
+	this.weeklyRest = this.weeklyRest == null ? balance : this.weeklyRest.plus(balance);
     }
 
     public Duration getNightWork() {
@@ -180,28 +222,16 @@ public class EmployeeWorkSheet implements Serializable {
 	return fmt.print(finalHolidayRestExtraWork);
     }
 
-    public Duration getFirstHourExtraWork() {
-	return firstHourExtraWork;
-    }
-
-    public void setFirstHourExtraWork(Duration firstHourExtraWork) {
-	this.firstHourExtraWork = firstHourExtraWork;
-    }
-
     public Duration getHolidayRest() {
-	return holidayRest;
+	return holidayRest == null ? Duration.ZERO : holidayRest;
     }
 
     public void setHolidayRest(Duration holidayWork) {
 	this.holidayRest = holidayWork;
     }
 
-    public Duration getNextHoursExtraWork() {
-	return nextHoursExtraWork;
-    }
-
-    public void setNextHoursExtraWork(Duration nextHoursExtraWork) {
-	this.nextHoursExtraWork = nextHoursExtraWork;
+    public void addHolidayRest(Duration balance) {
+	this.holidayRest = this.holidayRest == null ? balance : this.holidayRest.plus(balance);
     }
 
     public Duration getBalanceToCompensate() {
@@ -228,8 +258,23 @@ public class EmployeeWorkSheet implements Serializable {
 		this.lastAssiduousnessStatusHistory = assiduousnessStatusHistory;
 		break;
 	    }
-
 	}
+    }
 
+    public void addWorkDaySheets(AssiduousnessClosedMonth assiduousnessClosedMonth, LocalDate beginDate, LocalDate endDate) {
+	if (assiduousnessClosedMonth != null) {
+	    Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusMillis(1));
+	    for (AssiduousnessClosedDay assiduousnessClosedDay : assiduousnessClosedMonth.getAssiduousnessClosedDays()) {
+		if (interval.contains(assiduousnessClosedDay.getDay().toDateTimeAtStartOfDay())) {
+		    getWorkDaySheetList().add(new WorkDaySheet(assiduousnessClosedDay));
+		}
+	    }
+	    Collections.sort(getWorkDaySheetList(), new BeanComparator("date"));
+	    addTotalBalance(assiduousnessClosedMonth.getBalance());
+	    addUnjustifiedBalance(assiduousnessClosedMonth.getTotalUnjustifiedBalance());
+	    addComplementaryWeeklyRest(assiduousnessClosedMonth.getSaturdayBalance());
+	    addWeeklyRest(assiduousnessClosedMonth.getSundayBalance());
+	    addHolidayRest(assiduousnessClosedMonth.getHolidayBalance());
+	}
     }
 }

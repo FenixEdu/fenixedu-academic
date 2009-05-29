@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,17 +9,16 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
+import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
-import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -29,7 +27,6 @@ import org.joda.time.Hours;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -46,56 +43,53 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	if (assiduousness == null) {
 	    return null;
 	}
-	LocalDate lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate, endDate);
-	if (lastActiveStatus == null) {
-	    return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
-	}
-	endDate = lastActiveStatus;
-	LocalDate lowerBeginDate = beginDate.minusDays(8);
-	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate
-		.plusDays(2));
-	DateTime init = getInit(lowerBeginDate, workScheduleMap);
-	DateTime end = getEnd(endDate, workScheduleMap);
-	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = assiduousness.getClockingsMap(workScheduleMap, init, end
-		.plusDays(1));
-	HashMap<LocalDate, List<Leave>> leavesMap = assiduousness.getLeavesMap(beginDate, endDate);
 
-	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate, new LocalDate(),
-		extraWork);
-    }
-
-    private static EmployeeWorkSheet getEmployeeWorkSheetBalanceFree(Assiduousness assiduousness, LocalDate beginDate,
-	    LocalDate endDate) {
-	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
-	employeeWorkSheet.setEmployee(assiduousness.getEmployee());
-	Unit unit = assiduousness.getEmployee().getLastWorkingPlace(new YearMonthDay(beginDate), new YearMonthDay(endDate));
-	EmployeeContract lastMailingContract = (EmployeeContract) assiduousness.getEmployee().getLastContractByContractType(
-		AccountabilityTypeEnum.MAILING_CONTRACT);
-	if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
-	    unit = lastMailingContract.getMailingUnit();
-	}
-	employeeWorkSheet.setUnit(unit);
-	if (unit != null) {
-	    employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));
+	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(beginDate);
+	if (closedMonth != null && closedMonth.getClosedForBalance()) {
+	    return closedMonth.getEmployeeWorkSheet(assiduousness, beginDate, endDate);
 	} else {
-	    employeeWorkSheet.setUnitCode("");
+	    LocalDate lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate, endDate);
+	    if (lastActiveStatus == null) {
+		return new EmployeeWorkSheet(assiduousness.getEmployee(), beginDate, endDate);
+	    }
+	    endDate = lastActiveStatus;
+	    LocalDate lowerBeginDate = beginDate.minusDays(8);
+	    HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(lowerBeginDate, endDate
+		    .plusDays(2));
+	    DateTime init = getInit(lowerBeginDate, workScheduleMap);
+	    DateTime end = getEnd(endDate, workScheduleMap);
+	    HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = assiduousness.getClockingsMap(workScheduleMap, init, end
+		    .plusDays(1));
+	    HashMap<LocalDate, List<Leave>> leavesMap = assiduousness.getLeavesMap(beginDate, endDate);
+
+	    return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, endDate,
+		    new LocalDate(), extraWork);
 	}
-	return employeeWorkSheet;
     }
 
     @Service
-    public static EmployeeWorkSheet run(Assiduousness assiduousness, HashMap<LocalDate, WorkSchedule> workScheduleMap,
-	    HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap, HashMap<LocalDate, List<Leave>> leavesMap,
-	    LocalDate beginDate, LocalDate endDate, LocalDate today) {
-	if (assiduousness == null) {
+    public static EmployeeWorkSheet run(Employee employee, LocalDate beginDate, LocalDate endDate) {
+	if (employee.getAssiduousness() == null) {
 	    return null;
 	}
-	LocalDate lastActiveStatus = assiduousness.getLastActiveStatusBetween(beginDate, endDate);
+
+	LocalDate lastActiveStatus = employee.getAssiduousness().getLastActiveStatusBetween(beginDate, endDate);
 	if (lastActiveStatus == null) {
-	    return getEmployeeWorkSheetBalanceFree(assiduousness, beginDate, endDate);
+	    return new EmployeeWorkSheet(employee, beginDate, endDate);
 	}
-	return getEmployeeWorkSheet(assiduousness, workScheduleMap, clockingsMap, leavesMap, beginDate, lastActiveStatus, today,
-		false);
+	endDate = lastActiveStatus;
+	LocalDate lowerBeginDate = beginDate.minusDays(8);
+	HashMap<LocalDate, WorkSchedule> workScheduleMap = employee.getAssiduousness().getWorkSchedulesBetweenDates(
+		lowerBeginDate, endDate.plusDays(2));
+	DateTime init = getInit(lowerBeginDate, workScheduleMap);
+	DateTime end = getEnd(endDate, workScheduleMap);
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = employee.getAssiduousness().getClockingsMap(workScheduleMap,
+		init, end.plusDays(1));
+	HashMap<LocalDate, List<Leave>> leavesMap = employee.getAssiduousness().getLeavesMap(beginDate, endDate);
+
+	return getEmployeeWorkSheet(employee.getAssiduousness(), workScheduleMap, clockingsMap, leavesMap, beginDate, endDate,
+		new LocalDate(), true);
+
     }
 
     private static EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness,
@@ -189,32 +183,21 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 		totalBalanceToCompensate = totalBalanceToCompensate.plus(workDaySheet.getBalanceToCompensate());
 	    }
 	}
-	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
+	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(assiduousness.getEmployee(), beginDate, endDate);
 	employeeWorkSheet.setWorkDaySheetList(workSheet);
-	employeeWorkSheet.setEmployee(assiduousness.getEmployee());
-	employeeWorkSheet.setLastAssiduousnessStatusHistory(beginDate, endDate);
-	Unit unit = assiduousness.getLastMailingUnitInDate(beginDate, endDate);
-	employeeWorkSheet.setUnit(unit);
-	if (unit != null) {
-	    // System.out.println("Unit: " + unit.getIdInternal() + " " +
-	    // unit.getName() + " " + unit.getCostCenterCode());
-	    employeeWorkSheet.setUnitCode((new DecimalFormat("0000")).format(unit.getCostCenterCode()));
-	} else {
-	    employeeWorkSheet.setUnitCode("");
-	}
+
 	employeeWorkSheet.setTotalBalance(totalBalance);
 	employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
-
 	employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);
 	employeeWorkSheet.setWeeklyRest(totalWeeklyRestBalance);
 	employeeWorkSheet.setHolidayRest(totalHolidayBalance);
-
 	employeeWorkSheet.setBalanceToCompensate(totalBalanceToCompensate);
 	return employeeWorkSheet;
     }
 
     private static void setExtraWork(WorkDaySheet workDaySheet, Duration balance, Boolean extraWork) {
-	if (extraWork && !workDaySheet.getIrregular() && workDaySheet.getTimeline() != null) {
+	if (balance.isLongerThan(Duration.ZERO) && extraWork && !workDaySheet.getIrregular()
+		&& workDaySheet.getTimeline() != null) {
 	    Duration nightExtraWorkDuration = roundToHalfHour(new Duration(workDaySheet.getTimeline()
 		    .calculateWorkPeriodDurationBetweenDates(
 			    workDaySheet.getDate().toDateTime(Assiduousness.defaultStartNightWorkDay),

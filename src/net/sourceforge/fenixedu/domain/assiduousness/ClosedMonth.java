@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType;
@@ -111,6 +112,17 @@ public class ClosedMonth extends ClosedMonth_Base {
 	    }
 	}
 	return false;
+    }
+
+    public static ClosedMonth getClosedMonth(LocalDate date) {
+	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
+	    if (closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()) == date.getYear()
+		    && closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) == date.getMonthOfYear()
+		    && closedMonth.getClosedForBalance()) {
+		return closedMonth;
+	    }
+	}
+	return null;
     }
 
     public static ClosedMonth getClosedMonth(YearMonth yearMonth) {
@@ -222,5 +234,16 @@ public class ClosedMonth extends ClosedMonth_Base {
 	}
 	setClosedForBalance(Boolean.FALSE);
 	setClosedForExtraWork(Boolean.FALSE);
+    }
+
+    public EmployeeWorkSheet getEmployeeWorkSheet(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+	List<AssiduousnessStatusHistory> assiduousnessStatusHistories = assiduousness.getStatusBetween(getClosedMonthFirstDay(),
+		getClosedMonthLastDay());
+	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(assiduousness.getEmployee(), beginDate, endDate);
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
+	    AssiduousnessClosedMonth assiduousnessClosedMonth = getAssiduousnessClosedMonth(assiduousnessStatusHistory);
+	    employeeWorkSheet.addWorkDaySheets(assiduousnessClosedMonth, beginDate, endDate);
+	}
+	return employeeWorkSheet;
     }
 }

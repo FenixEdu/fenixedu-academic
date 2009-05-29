@@ -2213,6 +2213,22 @@ class DomainObject {
 		LocalDate beginDate;
 		LocalDate endDate;
 	}
+	
+	class assiduousness.AssiduousnessClosedDay extends DomainObject {
+		LocalDate day;
+		String schedule;
+		Duration balance;
+		Duration unjustified;
+		String notes;
+		String clockings;
+		Duration extraWorkFirstLevel;
+	    Duration extraWorkSecondLevel;
+	    Duration extraWorkSecondLevelWithLimit;
+	    Duration nightlyExtraWorkFirstLevel;
+	    Duration nightlyExtraWorkSecondLevel;
+	    Duration nightlyExtraWorkSecondLevelWithLimit;
+	    Duration nightlyWorkBalance;		
+	}
 
 	class assiduousness.AssiduousnessExemption extends DomainObject {
 		Integer year;
@@ -7047,6 +7063,13 @@ relation AssiduousnessExtraWorkAssiduousnessClosedMonth {
 	}
 }
 
+relation AssiduousnessClosedDayAssiduousnessClosedMonth {
+	assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
+	assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDays {
+		multiplicity *;
+	}
+}
+
 relation AssiduousnessExtraWorkRequest {
 	assiduousness.Assiduousness playsRole assiduousness;
 	assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
@@ -10844,6 +10867,13 @@ relation RootDomainObjectAssiduousness {
 relation RootDomainObjectAssiduousnessCampusHistory {
 	RootDomainObject playsRole rootDomainObject;
 	assiduousness.AssiduousnessCampusHistory playsRole assiduousnessCampusHistories {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAssiduousnessClosedDay {
+	RootDomainObject playsRole rootDomainObject;
+	assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDays {
 		multiplicity *;
 	}
 }

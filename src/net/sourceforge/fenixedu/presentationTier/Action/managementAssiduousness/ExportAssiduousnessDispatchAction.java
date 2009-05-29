@@ -77,20 +77,15 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward exportWorkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+	if (!assiduousnessExportChoices.validDates()) {
+	    setError(request, assiduousnessExportChoices, "error.invalidDateInterval");
+	    request.setAttribute("action", "exportWorkSheets");
+	    return mapping.findForward("choose-year-month");
+	}
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	List<EmployeeWorkSheet> employeeWorkSheetList = ReadAllAssiduousnessWorkSheets.run(assiduousnessExportChoices);
 	if (employeeWorkSheetList.size() != 0) {
 	    Map<String, String> parameters = new HashMap<String, String>();
-	    if (assiduousnessExportChoices.getYearMonth() != null) {
-		ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language
-			.getLocale());
-		String month = bundleEnumeration.getString(assiduousnessExportChoices.getYearMonth().getMonth().toString());
-		StringBuilder stringBuilder = new StringBuilder(month).append(" ").append(
-			assiduousnessExportChoices.getYearMonth().getYear());
-		parameters.put("yearMonth", stringBuilder.toString());
-	    } else {
-		parameters.put("yearMonth", " ");
-	    }
 	    String path = getServlet().getServletContext().getRealPath("/");
 	    parameters.put("path", path);
 	    ComparatorChain comparatorChain = new ComparatorChain();

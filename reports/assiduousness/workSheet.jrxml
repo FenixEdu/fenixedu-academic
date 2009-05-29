@@ -26,7 +26,6 @@
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[".\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="yearMonth" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="employee.employeeNumber" class="java.lang.Integer"/>
@@ -40,6 +39,7 @@
 	<field name="weeklyRestString" class="java.lang.String"/>
 	<field name="complementaryWeeklyRestString" class="java.lang.String"/>
 	<field name="holidayRestString" class="java.lang.String"/>
+	<field name="formattedDate" class="java.lang.String"/>
 
 
 		<group  name="pageBreak" isStartNewPage="true" >
@@ -225,7 +225,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Top">
 						<font fontName="Verdana" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{yearMonth}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{formattedDate}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
