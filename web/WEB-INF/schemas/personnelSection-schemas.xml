@@ -80,17 +80,6 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="clockingsFormatted" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES"/>
-</schema>
-
-<schema name="show.workDaySheet.management"
-	type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet">
-	<slot name="date.dayOfMonth" key="label.day" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="weekDay" key="label.weekDay" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="workScheduleAcronym" key="label.schedule" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="balanceTimeFormatted" key="label.balance" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="unjustifiedTimeFormatted" key="label.unjustified" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="notes" key="label.notes" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="clockingsFormattedToManagement" key="link.clockings" bundle="ASSIDUOUSNESS_RESOURCES">
 		<property name="escaped" value="false"/>
 	</slot>

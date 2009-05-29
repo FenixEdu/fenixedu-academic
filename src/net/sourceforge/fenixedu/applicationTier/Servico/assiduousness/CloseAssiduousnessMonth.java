@@ -134,6 +134,14 @@ public class CloseAssiduousnessMonth extends FenixService {
 		Duration thisDayWorkedTime = Duration.ZERO;
 		Duration timeLeaveToDiscount = Duration.ZERO;
 		if (workSchedule != null && !isDayHoliday) {
+		    final StringBuilder notes = new StringBuilder();
+		    for (final Leave leave : leavesList) {
+			if (notes.length() != 0) {
+			    notes.append(" / ");
+			}
+			notes.append(leave.getJustificationMotive().getAcronym());
+		    }
+		    workDaySheet.setNotes(notes.toString());
 		    maximumWorkingDays += 1;
 		    for (Leave leave : leavesList) {
 			if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {

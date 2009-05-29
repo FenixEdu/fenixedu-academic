@@ -60,7 +60,7 @@
 	</logic:empty>
 	<logic:notEmpty name="employeeWorkSheet" property="workDaySheetList">
 		<fr:view name="employeeWorkSheet" property="workDaySheetList"
-			schema="show.workDaySheet.management">
+			schema="show.workDaySheet">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder tpadding1" />
 				<fr:property name="columnClasses"

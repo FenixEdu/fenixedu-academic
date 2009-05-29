@@ -149,7 +149,6 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 			totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
 			setExtraWork(workDaySheet, balance, extraWork);
 		    }
-		    workDaySheet.setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
 		    workSheet.add(workDaySheet);
 		} else {
 		    if (!thisDay.equals(today)) {

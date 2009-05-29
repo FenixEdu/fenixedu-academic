@@ -385,6 +385,9 @@ public class WorkDaySheet implements Serializable {
 
     public void setWorkSchedule(WorkSchedule workSchedule) {
 	this.workSchedule = workSchedule;
+	if (workSchedule != null) {
+	    setWorkScheduleAcronym(workSchedule.getWorkScheduleType().getAcronym());
+	}
     }
 
     public Duration getComplementaryWeeklyRest() {
