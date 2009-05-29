@@ -4,7 +4,7 @@ public enum PhdIndividualProgramProcessState {
 
     CANDIDACY,
 
-    REJECTED,
+    NOT_ADMITTED,
 
     WORK_DEVELOPMENT,
 
