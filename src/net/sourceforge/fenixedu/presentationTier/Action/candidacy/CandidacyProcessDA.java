@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,15 +14,19 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -109,10 +114,24 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    request.setAttribute("canCreateChildProcess", canCreateProcess(getChildProcessType().getName()));
 	    request.setAttribute("childProcessName", getChildProcessType().getSimpleName());
 	    request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
+	    request.setAttribute("individualCandidaciesHashCodesNotBounded", getIndividualCandidacyHashCodesNotBounded());
 	}
 	request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 	request.setAttribute("executionIntervals", ExecutionInterval
 		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
+    }
+
+    private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
+	List<PublicCandidacyHashCode> publicCandidacyHashCodeList = new ArrayList<PublicCandidacyHashCode>(CollectionUtils
+		.select(RootDomainObject.readAllDomainObjects(PublicCandidacyHashCode.class), new Predicate() {
+
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			return ((PublicCandidacyHashCode) arg0).getIndividualCandidacyProcess() == null;
+		    }
+		}));
+
+	return publicCandidacyHashCodeList;
     }
 
     abstract protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval);
