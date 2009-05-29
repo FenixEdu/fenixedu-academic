@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.Collections;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -15,31 +16,33 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProcessDocument_Base {
 
     public PhdProgramCandidacyProcessDocument(PhdProgramCandidacyProcess candidacyProcess,
-	    PhdIndividualProgramDocumentType documentType, String remarks, byte[] content, String filename) {
+	    PhdIndividualProgramDocumentType documentType, String remarks, byte[] content, String filename, Person uploader) {
 	super();
-	init(candidacyProcess, documentType, remarks, content, filename);
+	init(candidacyProcess, documentType, remarks, content, filename, uploader);
 
     }
 
     @SuppressWarnings("unchecked")
     private void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, String remarks,
-	    byte[] content, String filename) {
+	    byte[] content, String filename, Person uploader) {
 
-	checkParameters(candidacyProcess, documentType, content, filename);
+	checkParameters(candidacyProcess, documentType, content, filename, uploader);
 
 	super.setPhdCandidacyProcess(candidacyProcess);
 	super.setDocumentType(documentType);
 	super.setRemarks(remarks);
-
+	super.setUploader(uploader);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, new RoleGroup(
 		RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
 
     }
 
     private void checkParameters(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
-	    byte[] content, String filename) {
+	    byte[] content, String filename, Person uploader) {
 
 	check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.candidacyProcess.cannot.be.null");
+	check(uploader,
+		"error.net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument.uploader.cannot.be.null");
 
 	if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
 	    throw new DomainException(

@@ -6591,6 +6591,15 @@ relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
 		multiplicity *;
 	}
 }
+
+relation PhdProgramCandidacyProcessDocumentPerson {
+	
+	Person playsRole uploader;
+	
+	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole uploadedPhdCandidacyProcessDocuments {
+		multiplicity *;
+	}
+}
 	
 relation PhdProgramGuidingRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;

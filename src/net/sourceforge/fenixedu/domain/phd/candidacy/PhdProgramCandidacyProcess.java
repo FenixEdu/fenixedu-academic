@@ -62,7 +62,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    for (final PhdCandidacyDocumentUploadBean each : documents) {
 		if (each.hasAnyInformation()) {
 		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
-			    each.getFilename());
+			    each.getFilename(), userView.getPerson());
 		}
 
 	    }
