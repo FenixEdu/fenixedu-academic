@@ -107,6 +107,10 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 	}
     }
 
+    public Set<Recipient> getRecipientsWithUpdate() {
+	return super.getRecipientsSet();
+    }
+
     @Override
     public List<Recipient> getRecipients() {
 	updateRecipients();
@@ -115,7 +119,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public Set<Recipient> getRecipientsSet() {
-	updateRecipients();
+	// updateRecipients();
 	return super.getRecipientsSet();
     }
 
