@@ -107,7 +107,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 	}
     }
 
-    public Set<Recipient> getRecipientsWithUpdate() {
+    public Set<Recipient> getRecipientsWithoutUpdate() {
 	return super.getRecipientsSet();
     }
 
