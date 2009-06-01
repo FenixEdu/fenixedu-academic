@@ -243,18 +243,32 @@
 		<b><bean:message key="label.nrOfElements"/></b> <bean:write name="nrOfElements"/>
 	</p>
 	
-	<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
-	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+	<logic:present name="infoStudentGroup" property="infoShift">
+		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
+		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 	
-	<logic:present name="showPhotos">
-		<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
-		    	<bean:message key="label.viewPhoto"/>
-		</html:link>
+		<logic:present name="showPhotos">
+			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		    		<bean:message key="label.viewPhoto"/>
+			</html:link>
+		</logic:present>
+		<logic:notPresent name="showPhotos">
+			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		    		<bean:message key="label.notViewPhoto"/>
+			</html:link>
+		</logic:notPresent>
 	</logic:present>
-	<logic:notPresent name="showPhotos">
-		<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
-		    	<bean:message key="label.notViewPhoto"/>
-		</html:link>
+	<logic:notPresent name="infoStudentGroup" property="infoShift">
+		<logic:present name="showPhotos">
+			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		    		<bean:message key="label.viewPhoto"/>
+			</html:link>
+		</logic:present>
+		<logic:notPresent name="showPhotos">
+			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		    		<bean:message key="label.notViewPhoto"/>
+			</html:link>
+		</logic:notPresent>
 	</logic:notPresent>
 
 	<table class="tstyle4 mtop05">

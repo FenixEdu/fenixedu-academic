@@ -79,26 +79,34 @@
 	
 
 	<br/>
-				 			 		
-	
+
 	<table width="75%" cellpadding="0" border="0">
 	<tbody>
 	
 	<br/>
  	<bean:size id="count" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList"/>
 	<bean:message key="label.teacher.NumberOfStudentsWithoutShift" /><%= count %>
-	<br/>	
+	<br/>
+	<logic:present name="showPhotos">
+		<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=viewStudentsAndGroupsWithoutShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		    	<bean:message key="label.viewPhoto"/>
+		</html:link>
+	</logic:present>
+	<logic:notPresent name="showPhotos">
+		<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=viewStudentsAndGroupsWithoutShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		   	<bean:message key="label.notViewPhoto"/>
+		</html:link>
+	</logic:notPresent>
 	<br/>
 	
 	<tr>
-		<th class="listClasses-header" width="10%"><bean:message key="label.studentGroupNumber" />
-		</th>
-		<th class="listClasses-header" width="16%"><bean:message key="label.numberWord" />
-		</th>
-		<th class="listClasses-header" width="53%"><bean:message key="label.nameWord" />
-		</th>
-		<th class="listClasses-header" width="26%"><bean:message key="label.emailWord" />
-		</th>
+		<th class="listClasses-header"><bean:message key="label.numberWord" /></th>
+		<th class="listClasses-header"><bean:message key="label.studentGroupNumber" /></th>
+		<logic:notPresent name="showPhotos">
+			<th class="listClasses-header"><bean:message key="label.photo" /></th>
+		</logic:notPresent>
+		<th class="listClasses-header"><bean:message key="label.nameWord" /></th>
+		<th class="listClasses-header"><bean:message key="label.emailWord" /></th>
 	</tr>
 			
 	<logic:iterate id="infoSiteStudentAndGroup" name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
@@ -106,16 +114,22 @@
 		<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
 		
-		<tr>		
-			<td class="listClasses"><bean:write name="infoStudentGroup" property="groupNumber"/>
+		<tr>
+			<td class="listClasses">
+				<bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>
-			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
-			</td>	
-			
-			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
+			<td class="listClasses">
+				<bean:write name="infoStudentGroup" property="groupNumber"/>
+			</td>
+			<logic:notPresent name="showPhotos">
+				<td class="listClasses">
+					<bean:define id="personID" name="infoSiteStudentInformation" property="personID"/>
+					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
+				</td>
+			</logic:notPresent>
+			<td class="listClasses">
+				<bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
-			
 			<td class="listClasses">
 					<bean:write name="infoSiteStudentInformation" property="email"/>
 			</td>

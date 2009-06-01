@@ -1623,6 +1623,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
+	if (request.getParameter("showPhotos") == null) {
+	    request.setAttribute("showPhotos", "false");
+	}
+
 	try {
 	    infoSiteStudentsAndGroups = ReadStudentsAndGroupsWithoutShift.run(groupPropertiesCode);
 	} catch (ExistingServiceException e) {
