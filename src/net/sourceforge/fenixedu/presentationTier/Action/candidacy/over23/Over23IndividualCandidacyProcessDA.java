@@ -44,8 +44,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
-	@Forward(name = "select-person-for-bind-with-candidacy", path="/candidacy/selectPersonForBind.jsp"),
-	@Forward(name = "edit-personal-information-for-bind", path="/candidacy/editPersonalInformationForCandidacyBind.jsp")
+	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
+	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp")
 
 })
 public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -405,8 +406,8 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     }
 
     @Override
-    /**
-     * Prepare the beans to choose a person or create a new one
+    /*
+     * * Prepare the beans to choose a person or create a new one
      */
     protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
 	    IndividualCandidacyProcess process) {
@@ -416,8 +417,16 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
 	bean.setChoosePersonBean(new ChoosePersonBean(process.getCandidacy().getPersonalDetails()));
 	bean.setPersonBean(new PersonBean(process.getCandidacy().getPersonalDetails()));
-	
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+    }
+
+    public ActionForward prepareExecuteChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new Over23IndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("change-process-checked-state");
     }
 
 }

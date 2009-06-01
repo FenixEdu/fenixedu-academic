@@ -541,4 +541,16 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 		.getSimpleName(), documentIdNumber);
     }
 
+    public ActionForward executeChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "ChangeProcessCheckedState", getIndividualCandidacyProcessBean());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("change-process-checked-state");
+	}
+
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 }

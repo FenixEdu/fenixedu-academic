@@ -10,15 +10,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy;
 
 public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyProcess_Base {
 
@@ -36,6 +35,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new EditPublicCandidacyHabilitations());
 	activities.add(new EditDocuments());
 	activities.add(new BindPersonToCandidacy());
+	activities.add(new ChangeProcessCheckedState());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -160,7 +160,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     public void bindPerson(ChoosePersonBean choosePersonBean) {
 	this.getCandidacy().bindPerson(choosePersonBean);
     }
-    
+
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<Over23IndividualCandidacyProcess> {
 
@@ -372,14 +372,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
-	    
+
 	    // First edit personal information
 	    process.editPersonalCandidacyInformation(bean.getPersonBean());
 	    // Then bind to person
 	    process.bindPerson(bean.getChoosePersonBean());
-	    
+
 	    return process;
-	    
+
 	}
 
     }
@@ -476,12 +476,28 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
+    static private class ChangeProcessCheckedState extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
+	    return process;
+	}
+    }
+
     private void saveLanguagesReadWriteSpeak(Over23IndividualCandidacyProcessBean bean) {
 	this.getCandidacy().setLanguagesRead(bean.getLanguagesRead());
 	this.getCandidacy().setLanguagesSpeak(bean.getLanguagesSpeak());
 	this.getCandidacy().setLanguagesWrite(bean.getLanguagesWrite());
     }
-
 
     @Override
     public Boolean isCandidacyProcessComplete() {

@@ -306,6 +306,7 @@
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
+	<slot name="processChecked" key="label.candidacy.process.checked" />
 </schema>
 
 <schema name="IndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
