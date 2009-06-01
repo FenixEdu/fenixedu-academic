@@ -109,8 +109,9 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
 	}
     }
-
-    private void createDebt(final Person person) {
+    
+    @Override
+    protected void createDebt(final Person person) {
 	new SecondCycleIndividualCandidacyEvent(this, person);
     }
 

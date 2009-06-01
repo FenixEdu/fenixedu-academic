@@ -375,6 +375,12 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    return process.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
+
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
+    }
     
     
 }

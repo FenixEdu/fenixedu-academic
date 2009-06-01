@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -37,6 +38,13 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	 * 
 	 * 06/04/2009 - All subclasses share the code below. So the
 	 * checkParameters() is now abstract
+	 */
+
+	/*
+	 * 08/05/2009 - Now all candidacies are external (even made in academic
+	 * administrative office)
+	 * 
+	 * TODO Anil : Are other candidacies created as an external?
 	 */
 	Person person = null;
 	if (bean.getInternalPersonCandidacy().booleanValue()) {
@@ -344,5 +352,28 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setSpouseSchoolLevel(bean.getSpouseSchoolLevel());
 	setSpouseProfessionType(bean.getSpouseProfessionType());
 	setSpouseProfessionalCondition(bean.getSpouseProfessionalCondition());
+    }
+
+    public Boolean isCandidacyInternal() {
+	return this.getPersonalDetails() instanceof IndividualCandidacyInternalPersonDetails;
+    }
+
+    protected abstract void createDebt(final Person person);
+
+    public void bindPerson(ChoosePersonBean bean) {
+	if (this.isCandidacyInternal()) {
+	    throw new DomainException("error.bind.candidacy.internal");
+	}
+
+	Person selectedPerson = bean.getPerson();
+	if (selectedPerson != null) {
+	    selectedPerson.edit(this.getPersonalDetails());
+	    this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
+	} else {
+	    selectedPerson = new Person(this.getPersonalDetails());
+	    this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
+	}
+
+	createDebt(this.getPersonalDetails().getPerson());
     }
 }

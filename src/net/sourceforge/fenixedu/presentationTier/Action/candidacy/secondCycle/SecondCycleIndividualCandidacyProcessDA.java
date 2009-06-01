@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
@@ -236,6 +237,13 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
+	    IndividualCandidacyProcess process) {
+	// TODO Auto-generated method stub
+	
     }
 
 }

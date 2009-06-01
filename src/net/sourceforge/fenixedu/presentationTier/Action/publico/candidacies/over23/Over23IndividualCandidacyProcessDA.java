@@ -173,6 +173,12 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 		return mapping.findForward("candidacy.continue.creation");
 	    }
 
+	    /*
+	     * 10/05/2009 - Since we step candidacy information form we must
+	     * copy some fields
+	     */
+	    bean.copyInformationToCandidacyBean();
+
 	    copyToInformationBeanOnePrecendentInstitution(bean);
 
 	    if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
@@ -190,7 +196,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    request.setAttribute("process", process);
 	    request.setAttribute("mappingPath", mapping.getPath());
 	    request.setAttribute("individualCandidacyProcess", process);
-	    
+
 	    setLinkFromProcess(mapping, request, process.getCandidacyHashCode());
 
 	    return mapping.findForward("inform-submited-candidacy");
@@ -201,21 +207,20 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    return mapping.findForward("fill-candidacy-information");
 	}
     }
-    
+
     private void copyToInformationBeanOnePrecendentInstitution(Over23IndividualCandidacyProcessBean bean) {
-	    if (!bean.getFormationConcludedBeanList().isEmpty()) {
-		bean.getCandidacyInformationBean().setInstitution(
-			bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
-		bean.getCandidacyInformationBean().setInstitutionName(
-			bean.getFormationConcludedBeanList().get(0).getInstitutionName());
-	    } else {
-		bean.getCandidacyInformationBean().setInstitution(
-			bean.getFormationNonConcludedBeanList().get(0).getInstitutionUnit());
-		bean.getCandidacyInformationBean().setInstitutionName(
-			bean.getFormationNonConcludedBeanList().get(0).getInstitutionName());		
-	    }	
+	if (!bean.getFormationConcludedBeanList().isEmpty()) {
+	    bean.getCandidacyInformationBean().setInstitution(bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
+	    bean.getCandidacyInformationBean().setInstitutionName(
+		    bean.getFormationConcludedBeanList().get(0).getInstitutionName());
+	} else {
+	    bean.getCandidacyInformationBean()
+		    .setInstitution(bean.getFormationNonConcludedBeanList().get(0).getInstitutionUnit());
+	    bean.getCandidacyInformationBean().setInstitutionName(
+		    bean.getFormationNonConcludedBeanList().get(0).getInstitutionName());
+	}
     }
-    
+
     private boolean validateOver23IndividualCandidacy(HttpServletRequest request, Over23IndividualCandidacyProcessBean bean) {
 	boolean isValid = true;
 
@@ -242,12 +247,18 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	try {
+	    /*
+	     * 10/05/2009 - Since we step candidacy information form we must
+	     * copy some fields
+	     */
+	    bean.copyInformationToCandidacyBean();
+
 	    copyToInformationBeanOnePrecendentInstitution(bean);
 
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
-
+	    	
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {

@@ -79,8 +79,9 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	}
     }
 
-
-    private void createDebt(final Person person) {
+    
+    @Override
+    protected void createDebt(final Person person) {
 	new StandaloneIndividualCandidacyEvent(this, person);
     }
 

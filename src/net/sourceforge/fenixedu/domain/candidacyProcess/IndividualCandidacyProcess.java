@@ -296,4 +296,21 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public Boolean getAllRequiredFilesUploaded() {
 	return getMissingRequiredDocumentFiles().isEmpty();
     }
+
+    /**
+     * Check if the process is complete i.e. if it has all required candidate
+     * personal information and candidacy information like the chosen degree.
+     * 
+     * @return
+     */
+    public abstract Boolean isCandidacyProcessComplete();
+
+    public Boolean isCandidacyInternal() {
+	return this.getCandidacy().isCandidacyInternal();
+    }
+
+    public Boolean getIsCandidacyInternal() {
+	return this.isCandidacyInternal();
+    }
+
 }

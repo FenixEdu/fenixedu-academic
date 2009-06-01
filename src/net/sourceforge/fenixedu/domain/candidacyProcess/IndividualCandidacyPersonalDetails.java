@@ -94,12 +94,10 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
      * @see #getFiscalCode()
      */
     /*
-     * TODO Anil: Check what property is used on accounting.Event in the context of
-     * candidacies and remove this method
+     * 08/05/2009 - After all social security number and fiscal code are the same
+     * thing.
      */
-    @Deprecated
     public abstract String getSocialSecurityNumber();
-    @Deprecated
     public abstract void setSocialSecurityNumber(String number);
 
     /**
@@ -107,10 +105,11 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
      * 
      */
     /*
-     * TODO Anil: Check what property is used on accounting.Event in the context of
-     * candidacies
+     * 08/05/2009 - Use Social Security Number instead
      */
+    @Deprecated
     public abstract String getFiscalCode();
+    @Deprecated
     public abstract void setFiscalCode(String value);
 
     /*

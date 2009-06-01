@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
@@ -55,37 +56,32 @@
 		</fr:layout>
 	</fr:view>
 
-	<h3 style="margin-bottom: 0.5em;"><bean:message key="label.over23.qualifications.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
+	<h3 style="margin-top: 1em;"><bean:message key="title.over23.qualifications" bundle="CANDIDATE_RESOURCES"/></h3>
+	
+	<strong><bean:message key="label.over23.qualifications.concluded" bundle="CANDIDATE_RESOURCES"/>:</strong>
 	
 	<logic:empty name="process" property="candidacy.concludedFormationList">
 		<p class="mtop05"><em><bean:message key="label.over23.has.no.qualifications" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
 	
-	<logic:notEmpty name="process.candidacy" property="concludedFormationList">
+	<logic:notEmpty name="process" property="candidacy.concludedFormationList">
 		<table class="tstyle4 thlight thleft">
 		<tr>
 			<th><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.over23.execution.year.conclusion" bundle="CANDIDATE_RESOURCES"/></th>
 		</tr>
-		<logic:iterate id="qualification" name="process.candidacy" property="concludedFormationList" indexId="index">
+		<logic:iterate id="qualification" name="process" property="candidacy.concludedFormationList" indexId="index">
 		<tr>
 			<td>
-				<fr:view 	name="qualification"
-							property="designation">
-					<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-				</fr:view>
+				<fr:view name="qualification" property="designation"/>
 			</td>
 			<td>
-				<fr:view 	name="qualification"
-							property="institution.name">
-					<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+				<fr:view name="qualification" property="institution.name">
 				</fr:view>	
 			</td>
 			<td>
-				<fr:view 	name="qualification"
-							property="conclusionExecutionYear">
-					<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+				<fr:view name="qualification" property="conclusionExecutionYear.year">
 				</fr:view>
 			</td>
 		</tr>
@@ -93,32 +89,26 @@
 		</table>
 	</logic:notEmpty>
 	
-	<h3 style="margin-bottom: 0.5em;"><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
+	<strong><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/>:</strong>
 	
-	<logic:empty name="process.candidacy" property="nonConcludedFormationList">
+	<logic:empty name="process" property="candidacy.nonConcludedFormationList">
 		<p class="mtop05"><em><bean:message key="label.over23.has.no.qualifications" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
 	
-	<logic:notEmpty name="process.candidacy" property="nonConcludedFormationList">
+	<logic:notEmpty name="process" property="candidacy.nonConcludedFormationList">
 		<table class="tstyle4 thlight thleft">
 			<tr>
 				<th><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/></th>
 				<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/></th>
 			</tr>
-			<logic:iterate id="qualification" name="process.candidacy" property="nonConcludedFormationList" indexId="index">
+			<logic:iterate id="qualification" name="process" property="candidacy.nonConcludedFormationList" indexId="index">
 			<tr>
 				<td>
-					<fr:view 	name="qualification"
-								property="designation">
-						<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+					<fr:view name="qualification" property="designation">
 					</fr:view>
 				</td>
-			</tr>
-			<tr>
 				<td>
-					<fr:view 	name="qualification"
-								property="institution.name">
-						<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+					<fr:view name="qualification" property="institution.name">
 					</fr:view>					
 				</td>
 			</tr>
@@ -129,7 +119,8 @@
 	
 	<%-- show person information --%>
 	<br />
-	<strong><bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" />:</strong>
+	<h3 style="margin-top: 1em;"><bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" />:</h3>
+	
 	<fr:view name="process" property="personalDetails" schema="CandidacyProcess.personalData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
@@ -137,14 +128,36 @@
 		</fr:layout>
 	</fr:view>
 	
-	<%-- show person address information --%>
-	<logic:notEmpty name="process" property="personalDetails">
-		<fr:view name="process" property="personalDetails" schema="CandidacyProcess.personPhysicalAddress">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-		</fr:view>
+	<%-- show documents--%>
+	<br/>
+	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
+	
+	<bean:define id="individualCandidacyProcess" name="process"/>
+	 	
+	<logic:empty name="individualCandidacyProcess" property="candidacy.documents">
+		<p><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
+	</logic:empty>
+	
+	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">
+	<table class="tstyle4 thlight thcenter">
+		<tr>
+			<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
+			<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
+			<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
+			<th></th>
+		</tr>
+	
+		
+		<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
+		<tr>
+			<td><fr:view name="documentFile" property="candidacyFileType"/></td>
+			<td><fr:view name="documentFile" property="uploadTime"/></td>
+			<td><fr:view name="documentFile" property="filename"/></td>
+			<bean:define id="url" name="documentFile" property="downloadUrl"/>
+			<td><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.view" bundle="APPLICATION_RESOURCES"/></a></td>
+		</tr>	
+		</logic:iterate>
+	</table>
 	</logic:notEmpty>
-
+	
 </logic:notEmpty>

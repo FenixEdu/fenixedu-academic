@@ -119,7 +119,6 @@ import net.sourceforge.fenixedu.util.UsernameUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.record.formula.functions.Forecast;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -274,6 +273,26 @@ public class Person extends Person_Base {
 	WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, true);
     }
 
+    public Person(final IndividualCandidacyPersonalDetails candidacyPersonalDetails) {
+	this();
+
+	this.setCountry(candidacyPersonalDetails.getCountry());
+	this.setDateOfBirthYearMonthDay(candidacyPersonalDetails.getDateOfBirthYearMonthDay());
+	this.setDocumentIdNumber(candidacyPersonalDetails.getDocumentIdNumber());
+	this.setExpirationDateOfDocumentIdYearMonthDay(candidacyPersonalDetails.getExpirationDateOfDocumentIdYearMonthDay());
+	this.setGender(candidacyPersonalDetails.getGender());
+	this.setIdDocumentType(candidacyPersonalDetails.getIdDocumentType());
+	this.setName(candidacyPersonalDetails.getName());
+	this.setSocialSecurityNumber(candidacyPersonalDetails.getSocialSecurityNumber());
+
+	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyPersonalDetails.getAddress(),
+		candidacyPersonalDetails.getAreaCode(), "", candidacyPersonalDetails.getArea(), "", "", "",
+		candidacyPersonalDetails.getCountryOfResidence());
+	PhysicalAddress.createPhysicalAddress(this, physicalAddressData, PartyContactType.PERSONAL, true);
+	Phone.createPhone(this, candidacyPersonalDetails.getTelephoneContact(), PartyContactType.PERSONAL, true);
+	EmailAddress.createEmailAddress(this, candidacyPersonalDetails.getEmail(), PartyContactType.PERSONAL, true);
+    }
+
     private Person(final String name, final Gender gender, final PhysicalAddressData data, final String phone,
 	    final String mobile, final String homepage, final String email, final String documentIDNumber,
 	    final IDDocumentType documentType) {
@@ -324,6 +343,29 @@ public class Person extends Person_Base {
 	setDefaultMobilePhoneNumber(personBean.getMobile());
 	setDefaultWebAddressUrl(personBean.getWebAddress());
 	setDefaultEmailAddressValue(personBean.getEmail());
+	return this;
+    }
+
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
+    public Person edit(IndividualCandidacyPersonalDetails candidacyExternalDetails) {
+	this.setCountry(candidacyExternalDetails.getCountry());
+
+	this.setDateOfBirthYearMonthDay(candidacyExternalDetails.getDateOfBirthYearMonthDay());
+	this.setIdentification(candidacyExternalDetails.getDocumentIdNumber(), candidacyExternalDetails.getIdDocumentType());
+	this.setExpirationDateOfDocumentIdYearMonthDay(candidacyExternalDetails.getExpirationDateOfDocumentIdYearMonthDay());
+	this.setGender(candidacyExternalDetails.getGender());
+	this.setName(candidacyExternalDetails.getName());
+	this.setSocialSecurityNumber(candidacyExternalDetails.getSocialSecurityNumber());
+
+	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
+		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
+		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
+			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+	setDefaultPhysicalAddressData(physicalAddressData);
+	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
+	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
+
 	return this;
     }
 

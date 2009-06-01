@@ -12,21 +12,28 @@
 
 <br/>
 
-<ul>
-    <li>
-        <logic:notEmpty name="process" property="candidacy.personalDetails.person">
-           <bean:define id="personId" name="process" property="candidacy.personalDetails.person.idInternal" />
-		   <html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
-			   <bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
-           </html:link>
-	   </logic:notEmpty>
-	   <logic:empty name="process" property="candidacy.personalDetails.person">
-           <bean:message key="label.payments.no.payments"/>
-	   </logic:empty>
-    </li>
-	<li>
-		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
-			<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
-		</html:link>
-	</li>
-</ul>
+
+<logic:equal name="process" property="isCandidacyInternal" value="true">
+	<bean:define id="personId" name="process" property="candidacy.personalDetails.person.idInternal" />
+	<html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
+		<bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
+	</html:link>
+</logic:equal>
+
+<logic:equal name="process" property="isCandidacyInternal" value="false">
+	<bean:message key="label.payments.no.payments"/>
+	<bean:message key="message.candidacy.not.bind.person.create.payment" bundle="CANDIDATE_RESOURCES"/>
+	
+	<p>
+	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteBindPersonToCandidacy&amp;processId=" + processId.toString() %>'>
+		<bean:message key="label.bind.person" bundle="CANDIDATE_RESOURCES"/>	
+	</html:link>
+	</p>
+	
+</logic:equal>
+
+<p>
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+</p>

@@ -14,15 +14,17 @@
 	<span class="actual"><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 4</strong>: <bean:message key="label.candidacy.candidacyInformation" bundle="APPLICATION_RESOURCES" /> </span>
 </p>
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
-<fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
- 	<html:hidden property="method" value="createNewProcess" />
+<fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="over23CandidacyForm">
+	<input type="hidden" id="methodId" name="method" value="createNewProcess"/>
+	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
+	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
@@ -47,7 +49,7 @@
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 		</fr:edit>
-		<html:submit onclick="this.form.method.value='addDegreeToCandidacy';return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<html:submit onclick="this.form.skipValidation.value='true';this.form.method.value='addDegreeToCandidacy';return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
 		
 		<logic:empty name="individualCandidacyProcessBean" property="selectedDegrees">
 			<br/>
@@ -66,27 +68,155 @@
 					<td>
 						<bean:define id="degreeId" name="degree" property="idInternal" />
 						<html:hidden property="degreeToDelete" value="<%= degreeId.toString() %>" />
-						<html:submit onclick="this.form.method.value='removeDegreeFromCandidacy';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
+						<html:submit onclick="this.form.skipValidation.value='true';this.form.method.value='removeDegreeFromCandidacy';return true;"><bean:message key="label.remove" bundle="APPLICATION_RESOURCES" /></html:submit>
 					</td>
 				</tr>
 			</logic:iterate>
 			</table>
 			<br/>
-		</logic:notEmpty>
+		</logic:notEmpty>		
 		
-		<fr:edit id="individualCandidacyProcessBean.optionalInformation"
-			name="individualCandidacyProcessBean"
-			schema="Over23IndividualCandidacyProcessBean.optionalInformation">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+		
+		<h2 style="margin-top: 1em;"><bean:message key="title.over23.qualifications" bundle="CANDIDATE_RESOURCES"/></h2>
+		
+		<h3><bean:message key="label.over23.qualifications.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
+		<logic:iterate id="qualification" name="individualCandidacyProcessBean" property="formationConcludedBeanList" indexId="index">
+			<bean:define id="qualificationId" name="qualification" property="id"/>
+			<bean:define id="designationId"><%= "individualCandidacyProcessBean.habilitation.concluded.designation:" + qualificationId %></bean:define>
+			<bean:define id="institutionNameId"><%= "individualCandidacyProcessBean.habilitation.concluded.institutionName:" + qualificationId %></bean:define>
+			<bean:define id="beginYearId"><%= "individualCandidacyProcessBean.habilitation.concluded.begin.year:" + qualificationId %></bean:define>
+			<bean:define id="endYearId"><%= "individualCandidacyProcessBean.habilitation.concluded.end.year:" + qualificationId %></bean:define>
+			<bean:define id="designationErrorId"><%=  "error.individualCandidacyProcessBean.formation.designation:" + qualificationId %></bean:define>
+			<bean:define id="institutionErrorId"><%=  "error.individualCandidacyProcessBean.formation.institution:" + qualificationId %></bean:define>
+			<bean:define id="durationErrorId"><%=  "error.individualCandidacyProcessBean.formation.duration:" + qualificationId %></bean:define>
+			<table class="tstyle5 thlight thleft mbottom0">
+				<tr>
+					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<fr:edit 	id='<%= designationId %>' 
+									name="qualification"
+									schema="PublicCandidacyProcessBean.formation.designation">
+							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+						</fr:edit>
+					</td>
+					<td rowspan="3">
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= designationId %>"/></span>
+					</td>
+				</tr>
+				<tr>
+					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<fr:edit 	id='<%= institutionNameId %>' 
+							name="qualification"
+							schema="PublicCandidacyProcessBean.formation.institutionUnitName.autoComplete">
+							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+						</fr:edit>					
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= institutionNameId %>"/></span>
+					</td>					
+				</tr>
+				<tr>
+					<th><bean:message key="label.over23.execution.year.conclusion" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<fr:edit 	id='<%= endYearId %>'
+									name="qualification"
+									schema="PublicCandidacyProcessBean.over23.execution.year.conclusion">
+							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+						</fr:edit>
+					</td>
+					<td class="tdclear">
+		                <span class="error0"><fr:message for="<%= endYearId %>"/></span>
+					</td>					
+				</tr>
+			</table>
+		</logic:iterate>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+		
+		<h3><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
+		<logic:iterate id="qualification" name="individualCandidacyProcessBean" property="formationNonConcludedBeanList" indexId="index">
+			<bean:define id="qualificationId" name="qualification" property="id"/>
+			<bean:define id="designationId"><%= "individualCandidacyProcessBean.habilitation.concluded.designation:" + qualificationId %></bean:define>
+			<bean:define id="institutionNameId"><%= "individualCandidacyProcessBean.habilitation.concluded.institutionName:" + qualificationId %></bean:define>
+			<bean:define id="beginYearId"><%= "individualCandidacyProcessBean.habilitation.concluded.begin.year:" + qualificationId %></bean:define>
+			<bean:define id="endYear"><%= "individualCandidacyProcessBean.habilitation.concluded.end.year:" + qualificationId %></bean:define>
+			<bean:define id="designationErrorId"><%=  "error.individualCandidacyProcessBean.formation.designation:" + qualificationId %></bean:define>
+			<bean:define id="institutionErrorId"><%=  "error.individualCandidacyProcessBean.formation.institution:" + qualificationId %></bean:define>
+			<bean:define id="durationErrorId"><%=  "error.individualCandidacyProcessBean.formation.duration:" + qualificationId %></bean:define>
+		
+			<table class="tstyle5 thlight thleft mbottom0">
+				<tr>
+					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<fr:edit 	id='<%= designationId %>' 
+									name="qualification"
+									schema="PublicCandidacyProcessBean.formation.designation">
+							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+						</fr:edit>
+					</td>
+					<td rowspan="3">
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+					</td>
+					<td class="tdclear">
+		                <span class="error0"><fr:message for="<%= designationId %>"/></span>
+					</td>
+				</tr>
+				<tr>
+					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<fr:edit 	id='<%= institutionNameId %>' 
+							name="qualification"
+							schema="PublicCandidacyProcessBean.formation.institutionUnitName.autoComplete">
+							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+						</fr:edit>					
+					</td>
+					<td class="tdclear">
+		                <span class="error0"><fr:message for="<%= institutionNameId %>"/></span>
+					</td>
+				</tr>
+			</table>
+		</logic:iterate>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addNonConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+
+		<h3><bean:message key="label.over23.languages" bundle="CANDIDATE_RESOURCES"/></h3>
+		
+		<p class="mbottom05"><bean:message key="label.over23.languages.read" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.read' 
+					name="individualCandidacyProcessBean"
+					schema="PublicCandidacyProcessBean.over23.languages.read">
+			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+		</fr:edit>					
+		
+		<p class="mbottom05"><bean:message key="label.over23.languages.write" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.write' 
+					name="individualCandidacyProcessBean"
+					schema="PublicCandidacyProcessBean.over23.languages.write">
+			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+		</fr:edit>					
+
+		<p class="mbottom05"><bean:message key="label.over23.languages.speak" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.speak' 
+					name="individualCandidacyProcessBean"
+					schema="PublicCandidacyProcessBean.over23.languages.speak">
+			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+		</fr:edit>		
+
+		<h2 style="margin-top: 1em;"><bean:message key="label.over23.disabilities" bundle="CANDIDATE_RESOURCES"/></h2>
+		<p><bean:message key="message.over23.disabilities.detail" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<fr:edit 	id="individualCandidacyProcessBean.disabilities"
+					name="individualCandidacyProcessBean"
+					schema="PublicCandidacyProcessBean.over23.disabilities">
+			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 		</fr:edit>
+		
 		<br/>
 	</logic:notEmpty>
-	
-	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 
+	<p>	
+	<html:submit onclick="this.form.skipValidation.value='false';this.form.method.value='createNewProcess'; return true;"><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>
+	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</p>
 </fr:form>

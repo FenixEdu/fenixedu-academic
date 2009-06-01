@@ -452,6 +452,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
+    }
+
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
     }    
 
 }

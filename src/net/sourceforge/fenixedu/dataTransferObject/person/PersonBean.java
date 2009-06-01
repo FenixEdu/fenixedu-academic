@@ -112,8 +112,6 @@ public class PersonBean implements Serializable {
 
     private DomainReference<Country> countryOfResidence;
     
-    private String fiscalCode;
-    
     public PersonBean() {
 	super();
     }
@@ -149,7 +147,7 @@ public class PersonBean implements Serializable {
 	setDocumentIdExpirationDate(personalDetails.getExpirationDateOfDocumentIdYearMonthDay());
 	setDocumentIdNumber(personalDetails.getDocumentIdNumber());
 	setIdDocumentType(personalDetails.getIdDocumentType());
-	setFiscalCode(personalDetails.getFiscalCode());
+	setSocialSecurityNumber(personalDetails.getSocialSecurityNumber());
 
 	setAddress(personalDetails.getAddress());
 	setArea(personalDetails.getArea());
@@ -539,7 +537,7 @@ public class PersonBean implements Serializable {
     }
 
     /*
-     * FIXME Anil: In the context of candidacies Social Security Number means Fiscal Code
+     * 08/05/2009 - VAT Number and Social Security Number is the same thing 
      */
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
@@ -550,11 +548,11 @@ public class PersonBean implements Serializable {
     }
 
     public String getFiscalCode() {
-	return fiscalCode;
+	return socialSecurityNumber;
     }
 
     public void setFiscalCode(String value) {
-	this.fiscalCode = value;
+	this.socialSecurityNumber = value;
     }
 
     public String getUsername() {

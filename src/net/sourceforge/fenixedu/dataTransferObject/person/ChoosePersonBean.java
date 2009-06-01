@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.YearMonthDay;
@@ -25,7 +26,14 @@ public class ChoosePersonBean implements Serializable {
     public ChoosePersonBean() {
 	super();
     }
-
+    
+    public ChoosePersonBean(IndividualCandidacyPersonalDetails personalDetails) {
+	this.name = personalDetails.getName();;
+	this.identificationNumber = personalDetails.getDocumentIdNumber();
+	this.documentType = personalDetails.getIdDocumentType();
+	this.dateOfBirth = personalDetails.getDateOfBirthYearMonthDay();
+    }
+    
     public ChoosePersonBean(Person person) {
 	this();
 	setPerson(person);

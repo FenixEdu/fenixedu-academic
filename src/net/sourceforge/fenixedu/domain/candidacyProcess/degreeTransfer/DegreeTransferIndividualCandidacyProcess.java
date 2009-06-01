@@ -363,5 +363,11 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    return process;
 	}
     }
+
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
+    }
     
 }

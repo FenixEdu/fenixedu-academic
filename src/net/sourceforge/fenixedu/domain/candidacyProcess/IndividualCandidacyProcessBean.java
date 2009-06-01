@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -13,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 
-import org.apache.commons.collections.Predicate;
 import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcessBean implements Serializable {
@@ -130,6 +127,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public void copyInformationToCandidacyBean() {
 	getCandidacyInformationBean().setMaritalStatus(getPersonBean().getMaritalStatus());
+	getCandidacyInformationBean().setCountryOfResidence(getPersonBean().getCountryOfResidence());
     }
 
     public CandidacyProcessDocumentUploadBean getDocumentIdentificationDocument() {

@@ -27,31 +27,28 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
 
     @Override
     public void edit(PersonBean personBean) {
-
 	setNationality(personBean.getNationality());
 	
 	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
 	setDocumentIdNumber(personBean.getDocumentIdNumber());
-	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
-	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
 	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
 	setGender(personBean.getGender());
 	setIdDocumentType(personBean.getIdDocumentType());
-	setMaritalStatus(personBean.getMaritalStatus());
 	setName(personBean.getName());
 	
 	/*
-	 * 10/04/2009 - We want to retrieve the fiscal code
+	 * 08/05/2009 - After social security number is the correct property for
+	 * VAT Number
 	 */
-	setFiscalCode(personBean.getFiscalCode());
+	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
 	
 	setAddress(personBean.getAddress());
 	setArea(personBean.getArea());
 	setAreaCode(personBean.getAreaCode());
-	setAreaOfAreaCode(personBean.getAreaOfAreaCode());
 	
 	setTelephoneContact(personBean.getPhone());
 	setEmail(personBean.getEmail());
+	setCountryOfResidence(personBean.getCountryOfResidence());
     }
 
     @Override

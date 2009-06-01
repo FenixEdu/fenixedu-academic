@@ -344,4 +344,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	}
     }
 
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

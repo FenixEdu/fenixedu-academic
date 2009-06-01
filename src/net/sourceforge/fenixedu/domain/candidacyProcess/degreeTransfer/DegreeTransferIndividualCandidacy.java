@@ -104,7 +104,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	return information;
     }
 
-    private void createDebt(final Person person) {
+    @Override
+    protected void createDebt(final Person person) {
 	new DegreeTransferIndividualCandidacyEvent(this, person);
     }
 

@@ -47,7 +47,7 @@
 				</fr:layout>
 				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
-			<html:submit onclick="this.form.method.value='fillCommonCandidacyInformation';return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
+			<html:submit onclick="this.form.method.value='fillCandidacyInformation';return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</logic:notEmpty>
 	</logic:notEmpty>
 

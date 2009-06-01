@@ -493,4 +493,12 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	}
 	return end.toString("dd' de 'MMMM' de 'yyyy", Language.getLocale());
     }
+
+    @Override
+    protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
+	    IndividualCandidacyProcess process) {
+	// TODO Auto-generated method stub
+
+    }
+
 }

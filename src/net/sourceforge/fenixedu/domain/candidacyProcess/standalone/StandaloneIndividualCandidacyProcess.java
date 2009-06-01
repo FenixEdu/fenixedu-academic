@@ -278,4 +278,10 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	    process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null, Ingression.STC);
 	}
     }
+
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

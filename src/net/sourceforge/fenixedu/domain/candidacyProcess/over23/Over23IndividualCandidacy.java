@@ -50,6 +50,13 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	 * 06/04/2009 - The candidacy may not be associated with a person. In
 	 * this case we will not create an Event
 	 */
+	
+	/*
+	 * 08/05/2009 - Now all candidacies are external (even made in academic administrative office) 
+	 * 
+	 * TODO Anil : Are other candidacies created as an external	
+	 * 
+	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
@@ -95,8 +102,14 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	 * "error.Over23IndividualCandidacy.person.already.has.candidacy",
 	 * process .getCandidacyExecutionInterval().getName()); }
 	 */
-
-	checkDegrees(degrees);
+	
+	/*
+	 * 08/05/2009 - The candidacy process may be created with candidate personal
+	 * information only. So we will not check the chosen degrees in initialisation
+	 *
+	 * checkDegrees(degrees);
+	 *
+	 */
     }
 
     private void checkDegrees(final List<Degree> degrees) {
@@ -117,7 +130,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	}
     }
 
-    private void createDebt(final Person person) {
+    @Override
+    protected void createDebt(final Person person) {
 	new Over23IndividualCandidacyEvent(this, person);
     }
 
@@ -134,7 +148,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     }
 
     void editCandidacyInformation(final LocalDate candidacyDate, final List<Degree> degrees, final String disabilities,
-	    final String education, final String languages) {
+	    final String education, final String languagesRead, final String languagesWrite, final String languagesSpeak) {
 
 	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 	checkDegrees(degrees);
@@ -143,7 +157,9 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	saveChoosedDegrees(degrees);
 	setDisabilities(disabilities);
 	setEducation(education);
-	setLanguages(languages);
+	setLanguagesRead(languagesRead);
+	setLanguagesSpeak(languagesSpeak);
+	setLanguagesWrite(languagesWrite);
     }
 
     List<Degree> getSelectedDegrees() {
@@ -215,6 +231,28 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	} else {
 	    formation.edit(bean);
 	}
+    }
+    
+    public List<Formation> getConcludedFormationList() {
+	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((Formation) arg0).getConcluded();
+	    }
+	    
+	}));
+    }
+
+    public List<Formation> getNonConcludedFormationList() {
+	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return !((Formation) arg0).getConcluded();
+	    }
+	    
+	}));
     }
 
     private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {

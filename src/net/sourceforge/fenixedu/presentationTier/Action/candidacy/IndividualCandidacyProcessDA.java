@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +26,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -38,6 +38,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
@@ -158,7 +161,14 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    return listProcesses(mapping, form, request, response);
 	} else {
 	    setStartInformation(form, request, response);
-	    return mapping.findForward("prepare-create-new-process");
+
+	    /*
+	     * 06/05/2009 - Skip search Person and step to personal data form. A
+	     * person will not be created
+	     * 
+	     * return mapping.findForward("prepare-create-new-process");
+	     */
+	    return mapping.findForward("fill-personal-information");
 	}
     }
 
@@ -277,15 +287,28 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
-	final Set<String> messages = bean.getCandidacyInformationBean().validate();
-	if (!messages.isEmpty()) {
-	    for (final String message : messages) {
-		addActionMessage(request, message);
-	    }
-	    return mapping.findForward("fill-common-candidacy-information");
-	} else {
-	    return mapping.findForward("fill-candidacy-information");
+	try {
+	    PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getUnusedOrCreateNewHashCode(getProcessType(),
+		    getParentProcess(request), bean.getPersonBean().getEmail());
+	    bean.setPublicCandidacyHashCode(candidacyHashCode);
+	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
+	    addActionMessage(request, "error.candidacy.hash.code.already.bounded");
+	    return mapping.findForward("fill-personal-information");
 	}
+
+	/*
+	 * 08/05/2009 - We wont validate candidacy information bean on candidacy
+	 * process creation
+	 */
+	/*
+	 * final Set<String> messages =
+	 * bean.getCandidacyInformationBean().validate(); if
+	 * (!messages.isEmpty()) { for (final String message : messages) {
+	 * addActionMessage(request, message); } return
+	 * mapping.findForward("fill-common-candidacy-information"); } else {
+	 * return mapping.findForward("fill-candidacy-information"); }
+	 */
+	return mapping.findForward("fill-candidacy-information");
     }
 
     public ActionForward fillCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
@@ -396,9 +419,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	CandidacyProcessDocumentUploadBean uploadBean = new CandidacyProcessDocumentUploadBean();
 	uploadBean.setIndividualCandidacyProcess(process);
 	request.setAttribute("candidacyDocumentUploadBean", uploadBean);
-	
+
 	RenderUtils.invalidateViewState("individualCandidacyProcessBean.document");
-	
+
 	return mapping.findForward("prepare-edit-candidacy-documents");
     }
 
@@ -406,14 +429,15 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
 	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
 	try {
-	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, uploadBean.getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, uploadBean
+		    .getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
 	    uploadBean.setDocumentFile(documentFile);
-	    
+
 	    executeActivity(getProcess(request), "EditDocuments", uploadBean);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
-	
+
 	return prepareExecuteEditDocuments(mapping, actionForm, request, response);
 
     }
@@ -425,9 +449,72 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute("activities", getAllowedActivities(process));
 	return mapping.findForward("list-allowed-activities");
     }
-    
+
+    protected boolean hasInvalidViewState() {
+	List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessorImpl.getCurrentRequest().getAttribute(
+		LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+	boolean valid = true;
+	if (viewStates != null) {
+	    for (IViewState state : viewStates) {
+		valid &= state.isValid();
+	    }
+	}
+	return valid;
+    }
+
+    protected abstract void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
+	    IndividualCandidacyProcess process);
+
+    public ActionForward prepareExecuteBindPersonToCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	IndividualCandidacyProcess individualCandidacyProcess = getProcess(request);
+	prepareInformationForBindPersonToCandidacyOperation(request, individualCandidacyProcess);
+	setProcess(request);
+
+	return mapping.findForward("select-person-for-bind-with-candidacy");
+    }
+
+    public ActionForward prepareEditPersonalInformationForBindWithSelectedPerson(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	if (bean.getChoosePersonBean().getPerson() == null) {
+	    addActionMessage(request, "error.candidacy.select.person.for.bind");
+	    return mapping.findForward("select-person-for-bind-with-candidacy");
+	}
+
+	return mapping.findForward("edit-personal-information-for-bind");
+    }
+
+    public ActionForward prepareEditPersonalInformationForBindWithNewPerson(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	return mapping.findForward("edit-personal-information-for-bind");
+    }
+
+    public ActionForward executeEditCandidacyPersonalInformationForBindInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-personal-information-for-bind");
+    }
+
+    public ActionForward bindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "BindPersonToCandidacy", getIndividualCandidacyProcessBean());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-personal-information-for-bind");
+	}
+
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
     private static final int MAX_FILE_SIZE = 3698688;
-    
+
     protected IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(
 	    CandidacyProcessDocumentUploadBean uploadBean, String documentIdNumber) throws IOException {
 	if (uploadBean == null) {
@@ -439,7 +526,6 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	long fileLength = uploadBean.getFileSize();
 	IndividualCandidacyDocumentFileType type = uploadBean.getType();
 
-
 	if (stream == null || fileLength == 0) {
 	    return null;
 	}
@@ -450,9 +536,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
 	byte[] contents = new byte[(int) fileLength];
 	stream.read(contents);
-	
+
 	return IndividualCandidacyDocumentFile.createCandidacyDocument(contents, fileName, type, getParentProcessType()
 		.getSimpleName(), documentIdNumber);
     }
-    
+
 }

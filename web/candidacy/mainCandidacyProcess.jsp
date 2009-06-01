@@ -115,7 +115,8 @@
 		<bean:size id="childProcessesSize" name="childProcesses" />
 		<em>(<bean:message key="label.Total" bundle="APPLICATION_RESOURCES" />: <strong><bean:write name="childProcessesSize" /></strong>)</em>
 	</logic:notEmpty>
-	
+
+<%-- 	
 	<p/>		
 	<logic:notEmpty name="individualCandidaciesHashCodesNotBounded">
 		<table class="tstyle4 thcenter">
@@ -136,4 +137,5 @@
 		</logic:iterate>
 		</table>
 	</logic:notEmpty>
+--%>	
 </logic:notEmpty>

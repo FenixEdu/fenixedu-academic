@@ -206,13 +206,15 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     }
 
     @Override
+    @Deprecated
     public String getFiscalCode() {
-	return this.getPerson().getFiscalCode();
+	return this.getPerson().getSocialSecurityNumber();
     }
 
     @Override
+    @Deprecated
     public void setFiscalCode(String value) {
-	this.getPerson().setFiscalCode(value);
+	this.getPerson().setSocialSecurityNumber(value);
     }
 
     @Override

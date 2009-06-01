@@ -26,7 +26,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
 	this();
 
-	init(bean, process);
+	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 	createPrecedentDegreeInformation(bean);
 	
@@ -35,7 +35,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	 * an Event
 	 */
 	if(bean.getInternalPersonCandidacy()) {
-	    createDebt();
+	    createDebt(person);
 	}
     }
 
@@ -81,9 +81,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
 	}
     }
-
-    private void createDebt() {
-	new DegreeCandidacyForGraduatedPersonEvent(this, getPersonalDetails().getPerson());
+    
+    @Override
+    protected void createDebt(final Person person) {
+	new DegreeCandidacyForGraduatedPersonEvent(this, person);
     }
 
     @Override

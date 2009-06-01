@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -34,6 +35,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new EditPublicCandidacyDocumentFile());
 	activities.add(new EditPublicCandidacyHabilitations());
 	activities.add(new EditDocuments());
+	activities.add(new BindPersonToCandidacy());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -48,14 +50,13 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	 * candidacy information are made in the init method
 	 */
 	init(bean);
-	
+
 	/*
 	 * 20/04/2009 - New document files specific to Over23 candidacies
 	 */
 	setSpecificIndividualCandidacyDocumentFiles(bean);
     }
 
-    
     @Override
     protected void checkParameters(final CandidacyProcess process) {
 	if (process == null || !process.hasCandidacyPeriod()) {
@@ -85,7 +86,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegrees(), bean.getDisabilities(),
-		bean.getEducation(), bean.getLanguages());
+		bean.getEducation(), bean.getLanguagesRead(), bean.getLanguagesSpeak(), bean.getLanguagesWrite());
 	return this;
     }
 
@@ -104,20 +105,19 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     public String getLanguages() {
 	return getCandidacy().getLanguages();
     }
-    
-    
+
     public String getLanguagesRead() {
 	return getCandidacy().getLanguagesRead();
     }
-    
+
     public String getLanguagesWrite() {
 	return getCandidacy().getLanguagesWrite();
     }
-    
+
     public String getLanguagesSpeak() {
 	return getCandidacy().getLanguagesSpeak();
     }
-    
+
     public Degree getAcceptedDegree() {
 	return getCandidacy().getAcceptedDegree();
     }
@@ -135,16 +135,16 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
-    
+
     private void setSpecificIndividualCandidacyDocumentFiles(Over23IndividualCandidacyProcessBean bean) {
 	bindIndividualCandidacyDocumentFile(bean.getCurriculumVitaeDocument());
 	bindIndividualCandidacyDocumentFile(bean.getHandicapProofDocument());
-	
-	for(CandidacyProcessDocumentUploadBean documentBean : bean.getHabilitationCertificateList()) {
+
+	for (CandidacyProcessDocumentUploadBean documentBean : bean.getHabilitationCertificateList()) {
 	    bindIndividualCandidacyDocumentFile(documentBean);
 	}
-	
-	for(CandidacyProcessDocumentUploadBean documentBean : bean.getReportOrWorkDocumentList()) {
+
+	for (CandidacyProcessDocumentUploadBean documentBean : bean.getReportOrWorkDocumentList()) {
 	    bindIndividualCandidacyDocumentFile(documentBean);
 	}
     }
@@ -152,9 +152,13 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     private void editCandidacyHabilitations(Over23IndividualCandidacyProcessBean bean) {
 	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
     }
-    
-    private void saveChoosedDegrees(final List<Degree> degrees) {
-	this.getCandidacy().saveChoosedDegrees(degrees);	
+
+    private void saveChosenDegrees(final List<Degree> degrees) {
+	this.getCandidacy().saveChoosedDegrees(degrees);
+    }
+
+    public void bindPerson(ChoosePersonBean choosePersonBean) {
+	this.getCandidacy().bindPerson(choosePersonBean);
     }
     
     @StartActivity
@@ -162,14 +166,13 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-		/* 
-		 * 06/04/2009
-		 * The candidacy may be submited by someone who's not authenticated in the system
-		 *
-	     *if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		 *throw new PreConditionNotValidException();
-	     *}
-		 */
+	    /*
+	     * 06/04/2009 The candidacy may be submited by someone who's not
+	     * authenticated in the system
+	     * 
+	     * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
+	     * PreConditionNotValidException();}
+	     */
 	}
 
 	@Override
@@ -256,6 +259,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
+	    process.editCandidacyHabilitations((Over23IndividualCandidacyProcessBean) object);
 	    return process.editCandidacyInformation((Over23IndividualCandidacyProcessBean) object);
 	}
     }
@@ -345,21 +349,56 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    return candidacyProcess.getAcceptedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
-    
+
+    static private class BindPersonToCandidacy extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyInternal()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
+	    
+	    // First edit personal information
+	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    // Then bind to person
+	    process.bindPerson(bean.getChoosePersonBean());
+	    
+	    return process;
+	    
+	}
+
+    }
+
     static private class EditPublicCandidacyPersonalInformation extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
-	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
-		IUserView userView, Object object) {
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
 	    process.editPersonalCandidacyInformation(((Over23IndividualCandidacyProcessBean) object).getPersonBean());
 	    process.editCommonCandidacyInformation(((Over23IndividualCandidacyProcessBean) object).getCandidacyInformationBean());
+	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    return process;
 	}
 
@@ -369,20 +408,20 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    return Boolean.FALSE;
 	}
     }
-    
+
     static private class EditPublicCandidacyDocumentFile extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
-	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
-		IUserView userView, Object object) {
-	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
@@ -391,24 +430,23 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	public Boolean isVisibleForAdminOffice() {
 	    return Boolean.FALSE;
 	}
-	
-	
+
     }
-    
+
     static private class EditPublicCandidacyHabilitations extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    process.editCandidacyHabilitations((Over23IndividualCandidacyProcessBean) object);
-	    process.saveChoosedDegrees(((Over23IndividualCandidacyProcessBean) object).getSelectedDegrees());
+	    process.saveChosenDegrees(((Over23IndividualCandidacyProcessBean) object).getSelectedDegrees());
 	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    process.getCandidacy().setDisabilities(((Over23IndividualCandidacyProcessBean) object).getDisabilities());
 	    return process;
@@ -419,28 +457,47 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    return Boolean.FALSE;
 	}
     }
-    
+
     static private class EditDocuments extends Activity<Over23IndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
-	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process,
-		IUserView userView, Object object) {
-	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
-    }    
-    
+    }
+
     private void saveLanguagesReadWriteSpeak(Over23IndividualCandidacyProcessBean bean) {
 	this.getCandidacy().setLanguagesRead(bean.getLanguagesRead());
 	this.getCandidacy().setLanguagesSpeak(bean.getLanguagesSpeak());
 	this.getCandidacy().setLanguagesWrite(bean.getLanguagesWrite());
+    }
+
+
+    @Override
+    public Boolean isCandidacyProcessComplete() {
+	return isCandidacyPersonalInformationComplete() && isCandidacyInformationComplete()
+		&& isCandidacyCommonInformationComplete();
+    }
+
+    private boolean isCandidacyCommonInformationComplete() {
+	return true;
+    }
+
+    private boolean isCandidacyInformationComplete() {
+	return this.getCandidacy().hasAnyOver23IndividualCandidacyDegreeEntries();
+    }
+
+    private boolean isCandidacyPersonalInformationComplete() {
+	return true;
     }
 }

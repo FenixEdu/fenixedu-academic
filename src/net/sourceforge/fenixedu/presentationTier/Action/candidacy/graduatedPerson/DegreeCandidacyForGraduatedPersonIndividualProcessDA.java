@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessBean;
@@ -210,5 +211,12 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    @Override
+    protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
+	    IndividualCandidacyProcess process) {
+	// TODO Auto-generated method stub
+	
     }
 }
