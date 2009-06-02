@@ -444,7 +444,10 @@
 	<slot name="category" />
 	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="address" />
-	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="email">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+	</slot>
 	<slot name="phone" />
 </schema>
 

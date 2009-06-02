@@ -57,11 +57,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	this.otherCollaborationType = otherCollaborationType;
     }
 
-    public boolean isOtherCollaborationTypeSelected() {
-	return getCollaborationType().equals(PhdIndividualProgramCollaborationType.OTHER);
-    }
-
     public boolean isCollaborationInformationCorrect() {
-	return isOtherCollaborationTypeSelected() ? !isEmpty(otherCollaborationType) : true;
+	return getCollaborationType().needExtraInformation() ? !isEmpty(otherCollaborationType) : true;
     }
 }

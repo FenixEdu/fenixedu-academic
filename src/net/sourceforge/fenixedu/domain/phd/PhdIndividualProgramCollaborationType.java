@@ -13,9 +13,23 @@ public enum PhdIndividualProgramCollaborationType {
 
     MIT,
 
+    EPFL,
+
     NONE,
 
-    OTHER;
+    WITH_SUPERVISION(true),
+
+    OTHER(true);
+
+    private boolean needExtraInformation;
+
+    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation) {
+	this.needExtraInformation = needExtraInformation;
+    }
+
+    private PhdIndividualProgramCollaborationType() {
+	this(false);
+    }
 
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
@@ -27,6 +41,10 @@ public enum PhdIndividualProgramCollaborationType {
 
     private String getQualifiedName() {
 	return PhdIndividualProgramCollaborationType.class.getSimpleName() + "." + name();
+    }
+
+    public boolean needExtraInformation() {
+	return needExtraInformation;
     }
 
 }

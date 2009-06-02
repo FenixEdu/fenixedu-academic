@@ -379,7 +379,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setThesisTitle(bean.getThesisTitle());
 	setCollaborationType(bean.getCollaborationType());
 
-	if (bean.isOtherCollaborationTypeSelected()) {
+	if (bean.getCollaborationType().needExtraInformation()) {
 	    check(bean.getOtherCollaborationType(), "error.PhdIndividualProgramProcess.invalid.other.collaboration.type");
 	    setOtherCollaborationType(bean.getOtherCollaborationType());
 	}
