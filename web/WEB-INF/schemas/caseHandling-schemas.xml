@@ -638,8 +638,7 @@
 	<slot name="candidacyPrecedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
-	<slot name="candidacyProfessionalStatus" layout="null-as-label" key="label.candidacy.professionalStatus" />
-	<slot name="candidacyOtherEducation" layout="null-as-label" key="label.candidacy.otherEducation"  />
+	<slot name="candidacy.formerStudentNumber" key="label.ist.student.number" read-only="true" bundle="CANDIDATE_RESOURCES"/>
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -1426,6 +1425,19 @@
 			<property name="type" value="character"/>
 			<property name="length" value="100"/>
 		</validator>			 			
+	</slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.institutionUnitName.manage.autoComplete"  type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeInformation.institutionUnitName" key="label.candidacy.choose.institution"  layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=50"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="1"/>
+		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
 </schema>
 

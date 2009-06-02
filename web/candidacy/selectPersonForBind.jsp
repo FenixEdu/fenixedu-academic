@@ -7,6 +7,8 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="title.bind.person.to.candidacy" bundle="CANDIDATE_RESOURCES"/></h2>
 
+<p><em><bean:message key="message.candidacy.not.bind.person.create.payment" bundle="CANDIDATE_RESOURCES"/></em></p>
+
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />

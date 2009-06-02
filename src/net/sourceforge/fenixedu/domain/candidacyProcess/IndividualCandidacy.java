@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -18,6 +21,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -375,5 +380,27 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
 
 	createDebt(this.getPersonalDetails().getPerson());
+    }
+
+    public List<Formation> getConcludedFormationList() {
+	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return ((Formation) arg0).getConcluded();
+	    }
+
+	}));
+    }
+
+    public List<Formation> getNonConcludedFormationList() {
+	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return !((Formation) arg0).getConcluded();
+	    }
+
+	}));
     }
 }

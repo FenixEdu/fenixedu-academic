@@ -50,12 +50,12 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	 * 06/04/2009 - The candidacy may not be associated with a person. In
 	 * this case we will not create an Event
 	 */
-	
+
 	/*
-	 * 08/05/2009 - Now all candidacies are external (even made in academic administrative office) 
+	 * 08/05/2009 - Now all candidacies are external (even made in academic
+	 * administrative office)
 	 * 
-	 * TODO Anil : Are other candidacies created as an external	
-	 * 
+	 * TODO Anil : Are other candidacies created as an external
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -102,13 +102,13 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	 * "error.Over23IndividualCandidacy.person.already.has.candidacy",
 	 * process .getCandidacyExecutionInterval().getName()); }
 	 */
-	
+
 	/*
-	 * 08/05/2009 - The candidacy process may be created with candidate personal
-	 * information only. So we will not check the chosen degrees in initialisation
-	 *
+	 * 08/05/2009 - The candidacy process may be created with candidate
+	 * personal information only. So we will not check the chosen degrees in
+	 * initialisation
+	 * 
 	 * checkDegrees(degrees);
-	 *
 	 */
     }
 
@@ -193,27 +193,29 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     void editFormationEntries(List<FormationBean> formationConcludedBeanList, List<FormationBean> formationNonConcludedBeanList) {
 	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
 	for (final Formation formation : this.getFormations()) {
-	    if(formation.getConcluded())
+	    if (formation.getConcluded())
 		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
 	}
 
 	for (final Formation formation : this.getFormations()) {
-	    if(!formation.getConcluded())
+	    if (!formation.getConcluded())
 		editFormationEntry(formationNonConcludedBeanList, formationsToBeRemovedList, formation);
 	}
-	
-	for(Formation formation : formationsToBeRemovedList) {
+
+	for (Formation formation : formationsToBeRemovedList) {
 	    this.getFormations().remove(formation);
 	    formation.delete();
 	}
-	
+
 	for (FormationBean bean : formationConcludedBeanList) {
-	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
+	    if (bean.getFormation() == null)
+		this.addFormations(new Formation(this, bean));
 	}
 
 	for (FormationBean bean : formationNonConcludedBeanList) {
-	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
-	}	
+	    if (bean.getFormation() == null)
+		this.addFormations(new Formation(this, bean));
+	}
     }
 
     private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
@@ -231,28 +233,6 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	} else {
 	    formation.edit(bean);
 	}
-    }
-    
-    public List<Formation> getConcludedFormationList() {
-	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
-
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return ((Formation) arg0).getConcluded();
-	    }
-	    
-	}));
-    }
-
-    public List<Formation> getNonConcludedFormationList() {
-	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
-
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		return !((Formation) arg0).getConcluded();
-	    }
-	    
-	}));
     }
 
     private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {

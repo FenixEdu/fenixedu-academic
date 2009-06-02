@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.secondCycle;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
@@ -138,10 +136,11 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean.getPersonBean().getDocumentIdNumber());
+	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean
+		.getPersonBean().getDocumentIdNumber());
 	bean.getPhotoDocument().setDocumentFile(photoDocumentFile);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	
+
 	return mapping.findForward("candidacy.continue.creation");
     }
 
@@ -181,7 +180,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
 	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 	    saveDocumentFiles(bean);
-	    
+
 	    SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) createNewProcess(bean);
 	    sendEmailForApplicationSuccessfullySubmited(process, mapping, request);
 
@@ -189,7 +188,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    request.setAttribute("mappingPath", mapping.getPath());
 	    request.setAttribute("individualCandidacyProcess", process);
 	    setLinkFromProcess(mapping, request, process.getCandidacyHashCode());
-	    
+
 	    return mapping.findForward("inform-submited-candidacy");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -201,50 +200,46 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     private void saveDocumentFiles(SecondCycleIndividualCandidacyProcessBean bean) throws IOException {
 	String documentIdNumber = bean.getPersonBean().getDocumentIdNumber();
-	
-	if(bean.getDocumentIdentificationDocument() != null) {
-	    IndividualCandidacyDocumentFile documentIdentificationDocumentFile = createIndividualCandidacyDocumentFile(bean.getDocumentIdentificationDocument(), documentIdNumber);
+
+	if (bean.getDocumentIdentificationDocument() != null) {
+	    IndividualCandidacyDocumentFile documentIdentificationDocumentFile = createIndividualCandidacyDocumentFile(bean
+		    .getDocumentIdentificationDocument(), documentIdNumber);
 	    bean.getDocumentIdentificationDocument().setDocumentFile(documentIdentificationDocumentFile);
 	}
-	
-	if(bean.getFirstCycleAccessHabilitationDocument() != null) {
-	    IndividualCandidacyDocumentFile firstCycleAccessHabilitationDocumentFile = createIndividualCandidacyDocumentFile(bean.getFirstCycleAccessHabilitationDocument(), documentIdNumber);
+
+	if (bean.getFirstCycleAccessHabilitationDocument() != null) {
+	    IndividualCandidacyDocumentFile firstCycleAccessHabilitationDocumentFile = createIndividualCandidacyDocumentFile(bean
+		    .getFirstCycleAccessHabilitationDocument(), documentIdNumber);
 	    bean.getFirstCycleAccessHabilitationDocument().setDocumentFile(firstCycleAccessHabilitationDocumentFile);
 	}
-	
-	if(bean.getHabilitationCertificationDocument() != null) {
-	    IndividualCandidacyDocumentFile habilitationCertficationDocument = createIndividualCandidacyDocumentFile(bean.getHabilitationCertificationDocument(), documentIdNumber);
+
+	if (bean.getHabilitationCertificationDocument() != null) {
+	    IndividualCandidacyDocumentFile habilitationCertficationDocument = createIndividualCandidacyDocumentFile(bean
+		    .getHabilitationCertificationDocument(), documentIdNumber);
 	    bean.getHabilitationCertificationDocument().setDocumentFile(habilitationCertficationDocument);
 	}
-	
-	
-	if(bean.getPaymentDocument() != null) {
-	    IndividualCandidacyDocumentFile paymentDocumentFile = createIndividualCandidacyDocumentFile(bean.getPaymentDocument(), documentIdNumber);
+
+	if (bean.getPaymentDocument() != null) {
+	    IndividualCandidacyDocumentFile paymentDocumentFile = createIndividualCandidacyDocumentFile(
+		    bean.getPaymentDocument(), documentIdNumber);
 	    bean.getPaymentDocument().setDocumentFile(paymentDocumentFile);
 	}
-	
-	if(bean.getVatCatCopyDocument() != null) {
-	    IndividualCandidacyDocumentFile vatDocumentFile = createIndividualCandidacyDocumentFile(bean.getVatCatCopyDocument(), documentIdNumber);
+
+	if (bean.getVatCatCopyDocument() != null) {
+	    IndividualCandidacyDocumentFile vatDocumentFile = createIndividualCandidacyDocumentFile(bean.getVatCatCopyDocument(),
+		    documentIdNumber);
 	    bean.getVatCatCopyDocument().setDocumentFile(vatDocumentFile);
 	}
-	
-	for(CandidacyProcessDocumentUploadBean uploadBean : bean.getReportOrWorkDocumentList()) {
-	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
+
+	for (CandidacyProcessDocumentUploadBean uploadBean : bean.getReportOrWorkDocumentList()) {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
 	    uploadBean.setDocumentFile(documentFile);
 	}
-	
-	for(CandidacyProcessDocumentUploadBean uploadBean : bean.getHabilitationCertificateList()) {
-	    IndividualCandidacyDocumentFile documentFile =  createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
-	    uploadBean.setDocumentFile(documentFile);	    
-	}
-    }
 
-    private void copyPrecedentBeanToCandidacyInformationBean(CandidacyPrecedentDegreeInformationBean precedentBean,
-	    CandidacyInformationBean informationBean) {
-	informationBean.setInstitutionName(precedentBean.getInstitutionName());
-	informationBean.setDegreeDesignation(precedentBean.getDegreeDesignation());
-	informationBean.setCountryWhereFinishedPrecedentDegree(precedentBean.getCountry());
-	informationBean.setConclusionGrade(precedentBean.getConclusionGrade());
+	for (CandidacyProcessDocumentUploadBean uploadBean : bean.getHabilitationCertificateList()) {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, documentIdNumber);
+	    uploadBean.setDocumentFile(documentFile);
+	}
     }
 
     public ActionForward prepareEditCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -155,10 +154,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     private void saveChosenDegrees(final List<Degree> degrees) {
 	this.getCandidacy().saveChoosedDegrees(degrees);
-    }
-
-    public void bindPerson(ChoosePersonBean choosePersonBean) {
-	this.getCandidacy().bindPerson(choosePersonBean);
     }
 
     @StartActivity
@@ -380,6 +375,11 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	    return process;
 
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
 	}
 
     }

@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -34,7 +33,6 @@ import org.joda.time.LocalDateTime;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
@@ -185,18 +183,6 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	return mapping.findForward("show-candidacy-creation-page");
     }
 
-    protected void invalidateDocumentFileRelatedViewStates() {
-	List<IViewState> viewStates = new ArrayList<IViewState>((List<IViewState>) RenderersRequestProcessorImpl
-		.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME));
-	if (viewStates != null) {
-	    for (IViewState state : viewStates) {
-		if (state.getId().indexOf("individualCandidacyProcessBean.document.file") > -1) {
-		    RenderUtils.invalidateViewState(state.getId());
-		}
-	    }
-	}
-    }
-
     public ActionForward executeEditCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -273,8 +259,10 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 		    getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
 
-	    //String link = getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping, request, candidacyHashCode);
-	    //request.setAttribute("link", link);
+	    // String link =
+	    // getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping,
+	    // request, candidacyHashCode);
+	    // request.setAttribute("link", link);
 
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {

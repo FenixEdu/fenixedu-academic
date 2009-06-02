@@ -393,6 +393,10 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
     public ActionForward prepareExecuteCandidacyPayment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	if (!getProcess(request).isCandidacyInternal()) {
+	    return prepareExecuteBindPersonToCandidacy(mapping, actionForm, request, response);
+	}
+
 	return mapping.findForward("prepare-candidacy-payment");
     }
 
@@ -510,7 +514,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    return mapping.findForward("edit-personal-information-for-bind");
 	}
 
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
+	return prepareExecuteCandidacyPayment(mapping, actionForm, request, response);
     }
 
     private static final int MAX_FILE_SIZE = 3698688;
@@ -552,5 +556,25 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	}
 
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    protected void copyPrecedentBeanToCandidacyInformationBean(CandidacyPrecedentDegreeInformationBean precedentBean,
+	    CandidacyInformationBean informationBean) {
+	informationBean.setInstitutionName(precedentBean.getInstitutionName());
+	informationBean.setDegreeDesignation(precedentBean.getDegreeDesignation());
+	informationBean.setCountryWhereFinishedPrecedentDegree(precedentBean.getCountry());
+	informationBean.setConclusionGrade(precedentBean.getConclusionGrade());
+    }
+
+    protected void invalidateDocumentFileRelatedViewStates() {
+	List<IViewState> viewStates = new ArrayList<IViewState>((List<IViewState>) RenderersRequestProcessorImpl
+		.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME));
+	if (viewStates != null) {
+	    for (IViewState state : viewStates) {
+		if (state.getId().indexOf("individualCandidacyProcessBean.document.file") > -1) {
+		    RenderUtils.invalidateViewState(state.getId());
+		}
+	    }
+	}
     }
 }

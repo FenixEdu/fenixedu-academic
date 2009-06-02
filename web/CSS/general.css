@@ -1656,7 +1656,7 @@ background-color: #e9fee9;
 .redtxt {
 	color: #c00;
 	}
-	
+
 .bluetxt {
 	color: #369;
 	}
@@ -2634,3 +2634,12 @@ padding-left: 1.2em;
 margin-bottom: 0.5em;
 margin-left: 1.5em;
 }
+
+
+
+
+div.flowerror span span span span { color: #c00; background-color: #ffeadd; }
+div.flowerror span span span span span { color: #000; background: #fff; }
+div.flowerror ul.autoCompleteItems { color: #000; }
+
+div.flowerror_hide span span span span { display: none; }

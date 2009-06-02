@@ -1,21 +1,17 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -38,7 +34,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     protected IndividualCandidacyProcess() {
 	super();
 	setAccessHash(RandomStringGenerator.getRandomStringGenerator(16));
-
+	setProcessChecked(Boolean.FALSE);
     }
 
     /**
@@ -270,7 +266,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public void bindIndividualCandidacyDocumentFile(CandidacyProcessDocumentUploadBean uploadBean) {
-	if(uploadBean.getDocumentFile() != null) {
+	if (uploadBean.getDocumentFile() != null) {
 	    uploadBean.getDocumentFile().setIndividualCandidacy(this.getCandidacy());
 	}
     }
@@ -311,6 +307,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public Boolean getIsCandidacyInternal() {
 	return this.isCandidacyInternal();
+    }
+
+    public void bindPerson(ChoosePersonBean choosePersonBean) {
+	this.getCandidacy().bindPerson(choosePersonBean);
     }
 
 }

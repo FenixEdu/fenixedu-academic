@@ -43,16 +43,16 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setOtherEducation(bean.getOtherEducation());
 
 	createPrecedentDegreeInformation(bean);
-	
+
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
-	
+
 	editFormerIstStudentNumber(bean);
-	
+
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
-	 * an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
-	if(bean.getInternalPersonCandidacy()) {
+	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
     }
@@ -65,15 +65,18 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean) {
 	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) process;
 	SecondCycleIndividualCandidacyProcessBean secondCandidacyProcessBean = (SecondCycleIndividualCandidacyProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	Degree selectedDegree = secondCandidacyProcessBean.getSelectedDegree();
-	CandidacyPrecedentDegreeInformationBean candidacyPrecedentDegreeInformationBean = secondCandidacyProcessBean.getPrecedentDegreeInformation();
-	
-	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate, selectedDegree, candidacyPrecedentDegreeInformationBean);
-	
+	CandidacyPrecedentDegreeInformationBean candidacyPrecedentDegreeInformationBean = secondCandidacyProcessBean
+		.getPrecedentDegreeInformation();
+
+	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate, selectedDegree,
+		candidacyPrecedentDegreeInformationBean);
+
     }
 
     private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process,
@@ -83,15 +86,16 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	checkParameters(person, process, candidacyDate);
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
 	 * 
+	 * 
+	 * if(person.hasValidSecondCycleIndividualCandidacy(process.
+	 * getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy",
+	 * process .getCandidacyExecutionInterval().getName()); }
+	 */
 
-	if (person.hasValidSecondCycleIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
-	*/
-	
 	if (degree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
@@ -109,7 +113,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
 	}
     }
-    
+
     @Override
     protected void createDebt(final Person person) {
 	new SecondCycleIndividualCandidacyEvent(this, person);
@@ -133,11 +137,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
 	}
     }
-    
+
     void editSelectedDegree(final Degree selectedDegree) {
 	setSelectedDegree(selectedDegree);
     }
-    
+
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
@@ -147,9 +151,12 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
 	}
 
-	if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
-		    getCandidacyExecutionInterval()).getContent());
+	if (isCandidacyInternal()) {
+	    if (personHasDegree(getPersonalDetails().getPerson(), selectedDegree)) {
+		throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+			getCandidacyExecutionInterval()).getContent());
+	    }
+
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -223,21 +230,22 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
     }
-    
+
     void editFormationEntries(List<FormationBean> formationConcludedBeanList) {
 	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
 	for (final Formation formation : this.getFormations()) {
-	    if(formation.getConcluded())
+	    if (formation.getConcluded())
 		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
 	}
 
-	for(Formation formation : formationsToBeRemovedList) {
+	for (Formation formation : formationsToBeRemovedList) {
 	    this.getFormations().remove(formation);
 	    formation.delete();
 	}
-	
+
 	for (FormationBean bean : formationConcludedBeanList) {
-	    if(bean.getFormation() == null) this.addFormations(new Formation(this, bean));
+	    if (bean.getFormation() == null)
+		this.addFormations(new Formation(this, bean));
 	}
     }
 
@@ -257,8 +265,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    formation.edit(bean);
 	}
     }
-    
-    
+
     void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
 	this.setFormerStudentNumber(bean.getIstStudentNumber());
     }

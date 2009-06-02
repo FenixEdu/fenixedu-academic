@@ -11,16 +11,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -37,7 +35,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new EditPublicCandidacyDocumentFile());
 	activities.add(new EditPublicCandidacyHabilitations());
 	activities.add(new EditDocuments());
-	
+	activities.add(new BindPersonToCandidacy());
+	activities.add(new ChangeProcessCheckedState());
+
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -52,22 +52,22 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	 * candidacy information are made in the init method
 	 */
 	init(bean);
-	
+
 	/*
 	 * 27/04/2009 - New document files specific to SecondCycle candidacies
 	 */
 	setSpecificIndividualCandidacyDocumentFiles(bean);
-	
+
     }
 
     private void setSpecificIndividualCandidacyDocumentFiles(SecondCycleIndividualCandidacyProcessBean bean) {
 	bindIndividualCandidacyDocumentFile(bean.getCurriculumVitaeDocument());
-	
-	for(CandidacyProcessDocumentUploadBean documentBean : bean.getHabilitationCertificateList()) {
+
+	for (CandidacyProcessDocumentUploadBean documentBean : bean.getHabilitationCertificateList()) {
 	    bindIndividualCandidacyDocumentFile(documentBean);
 	}
-	
-	for(CandidacyProcessDocumentUploadBean documentBean : bean.getReportOrWorkDocumentList()) {
+
+	for (CandidacyProcessDocumentUploadBean documentBean : bean.getReportOrWorkDocumentList()) {
 	    bindIndividualCandidacyDocumentFile(documentBean);
 	}
     }
@@ -167,24 +167,23 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     private void editCandidacyHabilitations(SecondCycleIndividualCandidacyProcessBean bean) {
 	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList());
     }
-    
+
     private void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
 	this.getCandidacy().editFormerIstStudentNumber(bean);
     }
-    
+
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-		/* 
-		 * 06/04/2009
-		 * The candidacy may be submited by someone who's not authenticated in the system
-		 *
-	     *if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		 *throw new PreConditionNotValidException();
-	     *}
-		 */
+	    /*
+	     * 06/04/2009 The candidacy may be submited by someone who's not
+	     * authenticated in the system
+	     * 
+	     * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
+	     * PreConditionNotValidException();}
+	     */
 	}
 
 	@Override
@@ -271,6 +270,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
+	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
 	    return process.editCandidacyInformation((SecondCycleIndividualCandidacyProcessBean) object);
 	}
     }
@@ -360,21 +360,22 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
-        
+
     static private class EditPublicCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.editPersonalCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getCandidacyInformationBean());
+	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
 	    return process;
 	}
 
@@ -384,20 +385,20 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
     }
-    
+
     static private class EditPublicCandidacyDocumentFile extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
@@ -408,32 +409,33 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
     }
-    
+
     static private class EditPublicCandidacyHabilitations extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
-	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process, IUserView userView,
-		Object object) {
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
 	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
-	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getCandidacyInformationBean());
+	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
 	    process.editFormerIstStudentNumber((SecondCycleIndividualCandidacyProcessBean) object);
 	    process.getCandidacy().editSelectedDegree(((SecondCycleIndividualCandidacyProcessBean) object).getSelectedDegree());
 	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
 	    return process;
 	}
-	
+
 	@Override
 	public Boolean isVisibleForAdminOffice() {
 	    return Boolean.FALSE;
 	}
-	
+
     }
 
     static private class EditDocuments extends Activity<SecondCycleIndividualCandidacyProcess> {
@@ -442,14 +444,70 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
+    }
+
+    static private class BindPersonToCandidacy extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyInternal()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
+
+	    // First edit personal information
+	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    // Then bind to person
+	    process.bindPerson(bean.getChoosePersonBean());
+
+	    return process;
+
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    static private class ChangeProcessCheckedState extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
 	    return process;
 	}
     }
@@ -458,6 +516,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     public Boolean isCandidacyProcessComplete() {
 	// TODO Auto-generated method stub
 	return null;
-    }    
+    }
 
 }

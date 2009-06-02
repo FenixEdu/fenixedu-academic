@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -32,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/caseHandlingSecondCycleCandidacyProcess.do?method=listProcessAllowedActivities"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/secondCycle/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
 	@Forward(name = "fill-common-candidacy-information", path = "/candidacy/fillCommonCandidacyInformation.jsp"),
@@ -44,8 +45,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/secondCycle/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path="/candidacy/editCandidacyDocuments.jsp")
-})
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
+	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
+	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -84,7 +87,23 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
 	bean.setCandidacyProcess(getParentProcess(request));
-	bean.setChoosePersonBean(new ChoosePersonBean());
+
+	/*
+	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
+	 * office is external So we dont require ChoosePersonBean because a
+	 * Person will not be associated or created at individual candidacy
+	 * creation stage. Instead we bind with an empty PersonBean.
+	 * 
+	 * bean.setChoosePersonBean(new ChoosePersonBean());
+	 */
+	bean.setPersonBean(new PersonBean());
+	bean.setCandidacyInformationBean(new CandidacyInformationBean());
+	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+
+	/*
+	 * 06/05/2009 - Also we mark the bean as an external candidacy.
+	 */
+	bean.setInternalPersonCandidacy(Boolean.FALSE);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
@@ -166,8 +185,10 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
-		getProcess(request)));
+	SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) getProcess(request);
+	SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean(process);
+	bean.setCandidacyInformationBean(new CandidacyInformationBean(process.getCandidacy()));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -181,6 +202,8 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
+	    SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -240,10 +263,77 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     @Override
+    /*
+     * * Prepare the beans to choose a person or create a new one
+     */
     protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
 	    IndividualCandidacyProcess process) {
-	// TODO Auto-generated method stub
-	
+	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean(
+		(SecondCycleIndividualCandidacyProcess) process);
+	bean.setCandidacyProcess(getParentProcess(request));
+
+	bean.setChoosePersonBean(new ChoosePersonBean(process.getCandidacy().getPersonalDetails()));
+	bean.setPersonBean(new PersonBean(process.getCandidacy().getPersonalDetails()));
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+    }
+
+    @Override
+    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	boolean isValid = hasInvalidViewState();
+	if (!isValid) {
+	    invalidateDocumentFileRelatedViewStates();
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("fill-candidacy-information");
+	}
+
+	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
+
+	return super.createNewProcess(mapping, form, request, response);
+    }
+
+    public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	bean.addConcludedFormationBean();
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	Integer index = getIntegerFromRequest(request, "removeIndex");
+	bean.removeFormationConcludedBean(index);
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    private ActionForward forwardTo(ActionMapping mapping, HttpServletRequest request) {
+	if (getFromRequest(request, "userAction").equals("createCandidacy")) {
+	    return mapping.findForward("fill-candidacy-information");
+	} else if (getFromRequest(request, "userAction").equals("editCandidacyQualifications")) {
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	return null;
+    }
+
+    public ActionForward prepareExecuteChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("change-process-checked-state");
     }
 
 }
