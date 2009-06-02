@@ -762,7 +762,18 @@ public class Registration extends Registration_Base {
 
     final public boolean isQualifiedForSeniority() {
 	return isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()
-		&& (isConcluded() || (isActive() && isInFinalDegreeYear()));
+		&& (isConcluded() || (isActive() && isInFinalDegreeForSeniority()));
+    }
+
+    public boolean isInFinalDegreeForSeniority() {
+	int years = 0;
+	final StudentCurricularPlan studentCurricularPlan = getLastStudentCurricularPlan();
+	for (final CycleType type : getDegreeType().getCycleTypes()) {
+	    if (studentCurricularPlan.hasCycleCurriculumGroup(type)) {
+		years += getDegreeType().getYears(type);
+	    }
+	}
+	return getCurricularYear() == years;
     }
 
     public Grade findGradeForCurricularCourse(final CurricularCourse curricularCourse) {
