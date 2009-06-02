@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -16,7 +13,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -39,10 +35,8 @@ public class VoteYearDelegateElections extends FenixService {
 		DelegateElectionVote vote = new DelegateElectionVote(yearDelegateElection, votedStudent);
 		yearDelegateElection.addVotingStudents(student);
 		yearDelegateElection.addVotes(vote);
-		Collection<ReplyTo> replyTos = new HashSet<ReplyTo>();
-		replyTos.add(new ConcreteReplyTo(fromAddress));
-		new Message(rootDomainObject.getSystemSender(), replyTos, Collections.singletonList(new Recipient(
-			new PersonGroup(person))), subject, msg, "");
+		new Message(rootDomainObject.getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(), new Recipient(
+			new PersonGroup(person)).asCollection(), subject, msg, "");
 	    } else {
 		throw new FenixServiceException("error.student.elections.voting.studentAlreadyVoted");
 	    }

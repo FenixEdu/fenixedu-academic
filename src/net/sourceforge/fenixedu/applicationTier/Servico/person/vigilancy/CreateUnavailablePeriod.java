@@ -47,9 +47,8 @@ public class CreateUnavailablePeriod extends FenixService {
 		    new Object[] { group.getName() });
 
 	    Sender sender = rootDomainObject.getSystemSender();
-	    List<ConcreteReplyTo> replyTos = Collections.singletonList(new ConcreteReplyTo(group.getContactEmail()));
-
-	    new Message(sender, replyTos, Collections.EMPTY_LIST, subject, message, bccs);
+	    new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), Collections.EMPTY_LIST, subject,
+		    message, bccs);
 	}
     }
 }

@@ -30,7 +30,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.struts.util.MessageResources;
 
@@ -124,8 +126,9 @@ public class EditGroupShift extends FenixService {
 	final Collection<Recipient> recipients = Collections
 		.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
 
-	rootDomainObject.getSystemSender().newMessage(recipients, messages.getMessage("message.subject.grouping.change"),
-		message, "");
+	SystemSender systemSender = rootDomainObject.getSystemSender();
+	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages
+		.getMessage("message.subject.grouping.change"), message, "");
 	// new Email("Fenix System", messages.getMessage("noreply.mail"), null,
 	// emails, null, null, messages
 	// .getMessage("message.subject.grouping.change"),

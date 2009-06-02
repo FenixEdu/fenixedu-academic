@@ -17,7 +17,9 @@ import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 /**
@@ -97,7 +99,8 @@ public abstract class ForumService extends FenixService {
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
 	if (!persons.isEmpty()) {
 	    final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
-	    rootDomainObject.getSystemSender().newMessage(recipient, subject, body, "");
+	    SystemSender systemSender = rootDomainObject.getSystemSender();
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
 	}
     }
 

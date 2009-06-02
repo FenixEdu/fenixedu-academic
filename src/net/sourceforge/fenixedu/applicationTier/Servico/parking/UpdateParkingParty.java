@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.parking;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -14,7 +12,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.joda.time.DateTime;
@@ -62,9 +59,8 @@ public class UpdateParkingParty extends FenixService {
 	if (note != null && note.trim().length() != 0 && email != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	    Sender sender = rootDomainObject.getSystemSender();
-	    Collection<ReplyTo> replyTos = new HashSet<ReplyTo>();
-	    replyTos.add(new ConcreteReplyTo(bundle.getString("label.fromAddress")));
-	    new Message(sender, replyTos, Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);
+	    ConcreteReplyTo replyTo = new ConcreteReplyTo(bundle.getString("label.fromAddress"));
+	    new Message(sender, replyTo.asCollection(), Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);
 	}
     }
 

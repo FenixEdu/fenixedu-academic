@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import java.util.Collections;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Login;
@@ -69,8 +67,8 @@ public class CreateResearchContract extends FenixService {
 	    }
 	    final Sender sender = PersonSender.newInstance(creator);
 
-	    new Message(sender, sender.getConcreteReplyTos(), Collections.singletonList(new Recipient(new PersonGroup(person))),
-		    subject, message, "");
+	    new Message(sender, sender.getConcreteReplyTos(), new Recipient(new PersonGroup(person)).asCollection(), subject,
+		    message, "");
 	    // new Email(creator.getName(), creator.getEmail(), null, tos, null,
 	    // null, subject, message);
 	}

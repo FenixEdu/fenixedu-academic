@@ -217,6 +217,8 @@
 </schema>
 
 <schema name="net.sourceforge.fenixedu.domain.util.email.Message.info" type="net.sourceforge.fenixedu.domain.util.email.Message" bundle="MESSAGING_RESOURCES">
+	<slot name="sender.fromName" bundle="MESSAGING_RESOURCES" key="label.fromName"/>
+	<slot name="sender.fromAddress" bundle="MESSAGING_RESOURCES" key="label.fromAddress"/>
 	<slot name="created" bundle="MESSAGING_RESOURCES" key="label.email.created"/>
 	<slot name="sent" bundle="MESSAGING_RESOURCES" key="label.email.sentDate"/>
 	<slot name="person.name" bundle="MESSAGING_RESOURCES" key="label.email.sent.by"/>

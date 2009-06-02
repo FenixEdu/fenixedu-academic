@@ -636,7 +636,7 @@ public class Thesis extends Thesis_Base {
 	//
 	final Sender sender = ScientificCouncilUnit.getScientificCouncilUnit().getUnitBasedSender().get(0);
 
-	new Message(sender, sender.getConcreteReplyTos(), Collections.singletonList(recipient), subject, body, "");
+	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
     }
 
     protected String getMessage(final String key, final Object... args) {

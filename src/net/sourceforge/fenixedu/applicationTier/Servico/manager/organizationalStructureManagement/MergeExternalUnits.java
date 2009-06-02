@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -55,7 +57,9 @@ public class MergeExternalUnits extends FenixService {
 		    // + "]  Unidade Destino -> " + destinationUnit.getName() +
 		    // "[" + destinationUnit.getIdInternal() + "]";
 
-		    rootDomainObject.getSystemSender().newMessage(Collections.EMPTY_LIST, subject, body, resultEmails);
+		    SystemSender systemSender = rootDomainObject.getSystemSender();
+		    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
+			    resultEmails);
 		    // new Email("Fénix", "suporte@ist.utl.pt", null,
 		    // resultEmails, null, null, "MergeUnits", body);
 		}

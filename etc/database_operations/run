@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "add tos,ccs Recipients to Message" addTosAndCcsRecipientsToMessage.sql 

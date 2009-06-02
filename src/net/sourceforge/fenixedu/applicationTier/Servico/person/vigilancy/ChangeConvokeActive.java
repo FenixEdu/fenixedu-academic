@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -48,8 +50,9 @@ public class ChangeConvokeActive extends FenixService {
 	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
 		writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
-	new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo), new Recipient(new VigilancyGroup(convoke)),
-		subject, emailMessage, convoke.getSitesAndGroupEmails());
+	new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
+		new VigilancyGroup(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
+		emailMessage, convoke.getSitesAndGroupEmails());
 
     }
 

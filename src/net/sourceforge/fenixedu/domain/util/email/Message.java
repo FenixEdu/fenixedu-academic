@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +21,20 @@ public class Message extends Message_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public Message(final Sender sender, ReplyTo replyTo, Recipient recipient, final String subject, final String body,
+    public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> tos,
+	    final Collection<Recipient> ccs, final Collection<Recipient> recipientsBccs, final String subject, final String body,
 	    final Set<String> bccs) {
-	this(sender, Collections.singletonList(replyTo), Collections.singletonList(recipient), subject, body, bccs);
+	this(sender, replyTos, recipientsBccs, subject, body, bccs);
+	if (tos != null) {
+	    for (final Recipient recipient : tos) {
+		addTos(recipient);
+	    }
+	}
+	if (ccs != null) {
+	    for (final Recipient recipient : ccs) {
+		addCcs(recipient);
+	    }
+	}
     }
 
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
@@ -95,7 +105,15 @@ public class Message extends Message_Base {
 	return stringBuilder.toString();
     }
 
-    protected Set<String> getDestinationEmailAddresses() {
+    protected Set<String> getRecipientAddresses(Set<Recipient> recipients) {
+	final Set<String> emailAddresses = new HashSet<String>();
+	for (final Recipient recipient : recipients) {
+	    recipient.addDestinationEmailAddresses(emailAddresses);
+	}
+	return emailAddresses;
+    }
+
+    protected Set<String> getDestinationBccs() {
 	final Set<String> emailAddresses = new HashSet<String>();
 	if (getBccs() != null && !getBccs().isEmpty()) {
 	    for (final String emailAddress : getBccs().replace(',', ' ').replace(';', ' ').split(" ")) {
@@ -105,9 +123,7 @@ public class Message extends Message_Base {
 		}
 	    }
 	}
-	for (final Recipient recipient : getRecipientsSet()) {
-	    recipient.addDestinationEmailAddresses(emailAddresses);
-	}
+	emailAddresses.addAll(getRecipientAddresses(getRecipientsSet()));
 	return emailAddresses;
     }
 
@@ -123,10 +139,10 @@ public class Message extends Message_Base {
     public void dispatch() {
 	final Sender sender = getSender();
 	final Person person = getPerson();
-	new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), Collections.EMPTY_SET,
-		Collections.EMPTY_SET, getDestinationEmailAddresses(), getSubject(), getBody());
+	new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
+		getRecipientAddresses(getTosSet()), getRecipientAddresses(getCcsSet()), getDestinationBccs(), getSubject(),
+		getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
     }
-
 }

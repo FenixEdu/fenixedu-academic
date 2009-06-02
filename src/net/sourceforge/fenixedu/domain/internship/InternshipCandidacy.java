@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.joda.time.DateTime;
@@ -41,9 +42,9 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 
 	SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 
-	sender.newMessage(Collections.EMPTY_LIST, RenderUtils.getResourceString("GLOBAL_RESOURCES", "email.iaeste.subject"),
-		RenderUtils.getResourceString("GLOBAL_RESOURCES", "iaeste.email.body", new Object[] { candidacy.getName(),
-			candidacy.getCandidacyCode() }), candidacy.getEmail());
+	new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
+		"GLOBAL_RESOURCES", "email.iaeste.subject"), RenderUtils.getResourceString("GLOBAL_RESOURCES",
+		"iaeste.email.body", new Object[] { candidacy.getName(), candidacy.getCandidacyCode() }), candidacy.getEmail());
 	// new Email("Sistema Fénix", "suporte@ist.utl.pt", null,
 	// Collections.singleton(candidacy.getEmail()), null, null,
 	// "Candidatura a estágios IAESTE", "Caro(a) " + candidacy.getName()

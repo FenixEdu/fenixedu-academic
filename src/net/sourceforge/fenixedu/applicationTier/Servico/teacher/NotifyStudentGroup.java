@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,9 +31,9 @@ public class NotifyStudentGroup extends FenixService {
 
 	final String groupName = RenderUtils.getResourceString("GLOBAL_RESOURCES", "label.group", new Object[] { submission
 		.getStudentGroup().getGroupNumber() });
-	Collection<Recipient> recipients = Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
 	Sender sender = ExecutionCourseSender.newInstance(course);
-	new Message(sender, sender.getConcreteReplyTos(), recipients, submission.getProject().getName(), submission
-		.getTeacherObservation(), "");
+	Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
+	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(),
+		submission.getProject().getName(), submission.getTeacherObservation(), "");
     }
 }

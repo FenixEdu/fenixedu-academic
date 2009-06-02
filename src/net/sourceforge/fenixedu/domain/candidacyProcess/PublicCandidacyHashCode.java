@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,7 +32,8 @@ public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Base {
 
     @Service
     public void sendEmail(String fromSubject, String body) {
-	getRootDomainObject().getSystemSender().newMessage(Collections.EMPTY_LIST, fromSubject, body, this.getEmail());
+	SystemSender systemSender = getRootDomainObject().getSystemSender();
+	new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, fromSubject, body, this.getEmail());
     }
 
     /**

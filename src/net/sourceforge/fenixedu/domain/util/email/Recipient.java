@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -109,6 +111,10 @@ public class Recipient extends Recipient_Base {
 	    recipients.add(new Recipient(group));
 	}
 	return recipients;
+    }
+
+    public Collection<Recipient> asCollection() {
+	return Collections.singletonList(this);
     }
 
 }

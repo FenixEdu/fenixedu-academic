@@ -12,18 +12,17 @@ import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AlumniNotificationService extends FenixService {
 
     private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
 	    final String bccs) {
-	RootDomainObject.getInstance().getSystemSender().newMessage(recipients, subject, body, bccs);
-    }
-
-    private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body) {
-	RootDomainObject.getInstance().getSystemSender().newMessage(recipients, subject, body, "");
+	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, subject, body, bccs);
     }
 
     private static List<Recipient> getAlumniRecipients(Alumni alumni) {
@@ -40,7 +39,7 @@ public class AlumniNotificationService extends FenixService {
 		person.getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(), ResourceBundle
 			.getBundle("resources.GlobalResources").getString("fenix.url"));
 
-	sendEmail(getAlumniRecipients(alumni), subject, body);
+	sendEmail(getAlumniRecipients(alumni), subject, body, null);
     }
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
@@ -89,7 +88,7 @@ public class AlumniNotificationService extends FenixService {
 	final String body = MessageFormat.format(bundle.getString("alumni.public.username.login.url"), alumni.getStudent()
 		.getPerson().getFirstAndLastName(), alumni.getLoginUsername());
 
-	sendEmail(getAlumniRecipients(alumni), subject, body);
+	sendEmail(getAlumniRecipients(alumni), subject, body, null);
     }
 
 }

@@ -17,14 +17,6 @@
 		</p>
 	</logic:present>
 
-	<fr:view name="message" property="sender" schema="net.sourceforge.fenixedu.domain.util.email.Sender.info">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight thleft thtop"/>
-			<fr:property name="rowClasses" value=",tdbold,ulmvert0 ulindent075,,"/>
-			<fr:property name="columnClasses" value="width11em,,,"/>
-		</fr:layout>
-	</fr:view>
-
 	<logic:notPresent name="message" property="sent">
 		<html:link page="/emails.do?method=deleteMessage" paramId="messagesId" paramName="message" paramProperty="idInternal">
 			<bean:message bundle="APPLICATION_RESOURCES" key="label.delete"/>

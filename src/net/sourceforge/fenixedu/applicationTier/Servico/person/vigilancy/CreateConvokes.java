@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,8 +56,9 @@ public class CreateConvokes extends FenixService {
 	    String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
 		    group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
 
-	    new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo), new Recipient(
-		    new FixedSetGroup(recievers)), subject, emailMessage, bccs);
+	    new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
+		    new FixedSetGroup(recievers)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
+		    emailMessage, bccs);
 	}
     }
 }

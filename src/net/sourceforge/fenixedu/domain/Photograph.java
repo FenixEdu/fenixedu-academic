@@ -17,7 +17,9 @@ import javax.imageio.ImageWriter;
 
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -101,8 +103,9 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
 	    Set<String> sendTo = Collections.singleton(getPerson().getInstitutionalOrDefaultEmailAddress().getValue());
 
-	    getRootDomainObject().getSystemSender().newMessage(new Recipient(new PersonGroup(getPerson())),
-		    bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+	    SystemSender systemSender = getRootDomainObject().getSystemSender();
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(new PersonGroup(getPerson()))
+		    .asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
 	}
     }
 

@@ -52,6 +52,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -344,10 +346,10 @@ public class MergeExecutionCourses extends FenixService {
 	    }
 
 	    message.append(RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.greetings"));
-	    rootDomainObject.getSystemSender().newMessage(
-		    Collections.EMPTY_LIST,
-		    RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.subject",
-			    new Object[] { executionCourseTo.getNome() }), message.toString(), bccs);
+	    SystemSender systemSender = rootDomainObject.getSystemSender();
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
+		    "GLOBAL_RESOURCES", "mergeExecutionCourses.email.subject", new Object[] { executionCourseTo.getNome() }),
+		    message.toString(), bccs);
 
 	    // new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[]
 	    // {}, tos, Collections.EMPTY_LIST,

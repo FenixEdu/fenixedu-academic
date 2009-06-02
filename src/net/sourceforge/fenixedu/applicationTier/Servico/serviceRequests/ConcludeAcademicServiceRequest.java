@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -49,8 +47,7 @@ public class ConcludeAcademicServiceRequest extends FenixService {
 	body += "\n\n" + appBundle.getString("mail.academicServiceRequest.concluded.message4");
 
 	final Sender sender = AdministrativeOfficeUnit.getGraduationUnit().getUnitBasedSender().get(0);
-	final Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(academicServiceRequest
-		.getPerson())));
-	new Message(sender, sender.getReplyTos(), recipients, academicServiceRequest.getDescription(), body, "");
+	final Recipient recipient = new Recipient(new PersonGroup(academicServiceRequest.getPerson()));
+	new Message(sender, sender.getReplyTos(), recipient.asCollection(), academicServiceRequest.getDescription(), body, "");
     }
 }

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +13,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -60,11 +57,9 @@ public class ChangeStudentsShift extends FenixService {
 		"changeStudentsShift.email.newShift", new Object[] { oldShift.getNome() });
 	final String message = messagePrefix + messagePosfix;
 
-	Collection<ReplyTo> replyTos = new HashSet<ReplyTo>();
-	Collection<Recipient> recipients = Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
-	replyTos.add(new ConcreteReplyTo("gop@ist.utl.pt"));
+	Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
 	Sender sender = rootDomainObject.getSystemSender();
-	new Message(sender, replyTos, recipients, subject, message, "");
+	new Message(sender, new ConcreteReplyTo("gop@ist.utl.pt").asCollection(), recipient.asCollection(), subject, message, "");
     }
 
     public static class UnableToTransferStudentsException extends FenixServiceException {

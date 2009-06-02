@@ -15406,6 +15406,24 @@ relation UtilEmailSenderUtilEmailMessage {
 	}
 }
 
+relation UtilEmailMessageUtilEmailRecipientTos {
+	util.email.Message playsRole messagesTos {
+		multiplicity *;
+	}
+	util.email.Recipient playsRole tos {
+		multiplicity *;
+	}
+}
+
+relation UtilEmailMessageUtilEmailRecipientCcs {
+	util.email.Message playsRole messagesCcs {
+		multiplicity *;
+	}
+	util.email.Recipient playsRole ccs {
+		multiplicity *;
+	}
+}
+
 relation UtilEmailMessageUtilEmailRecipient {
 	util.email.Message playsRole messages {
 		multiplicity *;
