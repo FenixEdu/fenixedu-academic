@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
 
+import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -9,9 +11,20 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 public class CurricularCourseMarksheetManagementBean implements Serializable {
 
+    private static final long serialVersionUID = -7798826573352027291L;
+
     static final public Comparator<CurricularCourseMarksheetManagementBean> COMPARATOR_BY_NAME = new Comparator<CurricularCourseMarksheetManagementBean>() {
 	@Override
 	public int compare(CurricularCourseMarksheetManagementBean o1, CurricularCourseMarksheetManagementBean o2) {
+	    if (isEmpty(o1.getName()) && isEmpty(o2.getName())) {
+		return 0;
+	    }
+	    if (isEmpty(o1.getName())) {
+		return -1;
+	    }
+	    if (isEmpty(o2.getName())) {
+		return 1;
+	    }
 	    return o1.getName().compareTo(o2.getName());
 	}
     };
