@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -57,6 +55,7 @@ import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -134,7 +133,7 @@ public class SeparationCyclesManagement {
 	moveInquiriesRegistries(oldStudentCurricularPlan, newRegistration);
 
 	markOldRegistrationWithConcludedState(oldStudentCurricularPlan);
-	
+
 	return newRegistration;
     }
 
@@ -166,27 +165,6 @@ public class SeparationCyclesManagement {
 		attend.setRegistration(newStudentCurricularPlan.getRegistration());
 	    }
 	}
-    }
-
-    private void changeShifts(final Attends attend, final StudentCurricularPlan oldStudentCurricularPlan,
-	    final StudentCurricularPlan newStudentCurricularPlan) {
-
-	for (final Shift shift : getShiftsToMove(attend, oldStudentCurricularPlan)) {
-	    shift.removeStudents(oldStudentCurricularPlan.getRegistration());
-	    if (!shift.hasStudents(newStudentCurricularPlan.getRegistration())) {
-		shift.addStudents(newStudentCurricularPlan.getRegistration());
-	    }
-	}
-    }
-
-    private List<Shift> getShiftsToMove(final Attends attend, final StudentCurricularPlan oldStudentCurricularPlan) {
-	final List<Shift> shifts = new ArrayList<Shift>();
-	for (final Shift shift : oldStudentCurricularPlan.getRegistration().getShifts()) {
-	    if (attend.isFor(shift)) {
-		shifts.add(shift);
-	    }
-	}
-	return shifts;
     }
 
     private boolean belongsTo(final StudentCurricularPlan studentCurricularPlan, final Attends attend) {
@@ -322,9 +300,7 @@ public class SeparationCyclesManagement {
 	    }
 	}
 
-	final StudentCurricularPlan oldStudentCurricularPlan = enrolment.getStudentCurricularPlan();
 	final Registration registration = parent.getStudentCurricularPlan().getRegistration();
-
 	enrolment.setCurriculumGroup(parent);
 
 	for (final Attends attend : enrolment.getAttends()) {
@@ -379,6 +355,7 @@ public class SeparationCyclesManagement {
 
     private OptionalDismissal createNewOptionalDismissal(final Credits credits, final CurriculumGroup parent,
 	    final OptionalCurricularCourse curricularCourse, final Double ectsCredits) {
+
 	if (ectsCredits == null || ectsCredits.doubleValue() == 0) {
 	    throw new DomainException("error.OptionalDismissal.invalid.credits");
 	}
@@ -535,7 +512,7 @@ public class SeparationCyclesManagement {
 	    return;
 	}
 	final RegistrationState state = RegistrationStateCreator.createState(oldStudentCurricularPlan.getRegistration(), null,
-		new YearMonthDay().toDateTimeAtMidnight(), RegistrationStateType.CONCLUDED);
+		new LocalDate().toDateTimeAtStartOfDay(), RegistrationStateType.CONCLUDED);
 	state.setResponsiblePerson(null);
     }
 
