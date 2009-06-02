@@ -57,8 +57,7 @@
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
 		<td><fr:view name="documentFile" property="uploadTime"/></td>
 		<td><fr:view name="documentFile" property="filename"/></td>
-		<bean:define id="url" name="documentFile" property="downloadUrl"/>
-		<td><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.view" bundle="APPLICATION_RESOURCES"/></a></td>
+		<td><fr:view name="documentFile" layout="link"/></td>
 	</tr>	
 	</logic:iterate>
 </table>
