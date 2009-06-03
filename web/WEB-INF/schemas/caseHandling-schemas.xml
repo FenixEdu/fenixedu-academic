@@ -631,6 +631,7 @@
 
 <schema name="SecondCycleIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
+	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="candidacySelectedDegree" key="label.candidacy.choosed.degree">
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
