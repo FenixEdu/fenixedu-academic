@@ -6618,7 +6618,9 @@ relation InternalGuidingPerson {
 
 relation PhdIndividualProgramProcessGuiding {
 	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
-	phd.PhdProgramGuiding playsRole guiding;
+	phd.PhdProgramGuiding playsRole guidings {
+		multiplicity *;
+	}
 }
 
 relation PhdIndividualProgramProcessAssistantGuiding {

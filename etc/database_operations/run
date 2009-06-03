@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "add tos,ccs Recipients to Message" addTosAndCcsRecipientsToMessage.sql 
+execute "add tos,ccs Recipients to Message" addTosAndCcsRecipientsToMessage.sql
+execute "Remove unnecessary column from PhdIndividualProgramProcess" correctPhdProgramGuiding.sql

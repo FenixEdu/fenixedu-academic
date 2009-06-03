@@ -109,31 +109,35 @@ function toggle(obj) {
 	</logic:notPresent>
 	
 	<%-- ### view guiding ### --%>
-	<logic:present name="guiding">
-		<div id="g1">
+	<logic:iterate id="guiding" name="guidings" indexId="index" >
+		<bean:define id="guidingId" name="guiding" property="externalId" />
+		<bean:define id="divId">g<bean:write name="guidingId" /></bean:define>
+		<%-- ### simple view ### --%>
+		<div id="<%= divId + "1" %>">
 			<fr:view name="guiding" schema="PhdProgramGuiding.view.simple">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				</fr:layout>
 			</fr:view>
 		</div>
-		<div id="g2" style="display:none;">
+		<%-- ### detailed view ### --%>
+		<div id="<%= divId + "2" %>" style="display:none;">
 			<fr:view name="guiding" schema="PhdProgramGuiding.view">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				</fr:layout>
 			</fr:view>
 		</div>
-		<a href="#" onclick="javascript:toggle('g1');javascript:toggle('g2')"><bean:message key="label.details" bundle="PHD_RESOURCES" /></a>
-		, <html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteGuiding&amp;processId=" + processId %>" onclick="<%= confirmationMessage %>" >
+		<a href="#" onclick="<%= "javascript:toggle('" + divId + "1" + "');javascript:toggle('" + divId + "2')" %>"><bean:message key="label.details" bundle="PHD_RESOURCES" /></a>
+		, <html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteGuiding&amp;processId=" + processId + "&amp;guidingId=" + guidingId %>" onclick="<%= confirmationMessage %>" >
 			<bean:message key="label.delete" bundle="PHD_RESOURCES" />
 		</html:link>
-	</logic:present>
+		<br/>
+	</logic:iterate>
 
 	<%-- ### End of Guiding ### --%>
 
 	<%-- ### Assistant Guiding ### --%>
-	<br/>
 	<br/>
 	<br/>
 	<strong id="assistant"><bean:message key="label.phd.academicAdminOffice.assistant.guidings" bundle="PHD_RESOURCES" /></strong>
@@ -181,8 +185,10 @@ function toggle(obj) {
 	</logic:present>
 
 	<%-- ### view assistant guidings ### --%>
-	<logic:iterate id="assistantGuiding" name="assistantGuidings" indexId="index" >
-		<bean:define id="divId">ag<bean:write name="index" /></bean:define>
+	<logic:iterate id="assistantGuiding" name="assistantGuidings">
+		<bean:define id="assistantGuidingId" name="assistantGuiding" property="externalId" />
+		<bean:define id="divId">ag<bean:write name="assistantGuidingId" /></bean:define>
+		<%-- ### simple view ### --%>
 		<div id="<%= divId + "1" %>">
 			<fr:view name="assistantGuiding" schema="PhdProgramGuiding.view.simple">
 				<fr:layout name="tabular">
@@ -190,6 +196,7 @@ function toggle(obj) {
 				</fr:layout>
 			</fr:view>
 		</div>
+		<%-- ### detailed view ### --%>
 		<div id="<%= divId + "2" %>" style="display:none;">
 			<fr:view name="assistantGuiding" schema="PhdProgramGuiding.view">
 				<fr:layout name="tabular">
@@ -198,11 +205,9 @@ function toggle(obj) {
 			</fr:view>
 		</div>
 		<a href="#" onclick="<%= "javascript:toggle('" + divId + "1" + "');javascript:toggle('" + divId + "2')" %>"><bean:message key="label.details" bundle="PHD_RESOURCES" /></a>
-		<bean:define id="assistantGuidingId" name="assistantGuiding" property="externalId" />
 		, <html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteAssistantGuiding&amp;processId=" + processId + "&amp;assistantGuidingId=" + assistantGuidingId %>" onclick="<%= confirmationMessage %>" >
 			<bean:message key="label.delete" bundle="PHD_RESOURCES" />
 		</html:link>
-		<br/>
 		<br/>
 	</logic:iterate>
 

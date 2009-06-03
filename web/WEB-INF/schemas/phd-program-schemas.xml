@@ -392,7 +392,9 @@
 		<property name="size" value="80"/>
 	</slot>
 	<slot name="collaborationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="otherCollaborationType" />
+	<slot name="otherCollaborationType">
+		<property name="size" value="40"/>
+	</slot>
 </schema>
 
 <schema name="SearchPhdIndividualProgramProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">

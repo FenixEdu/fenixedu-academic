@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
@@ -277,7 +276,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
     // Phd guiding information
     private void addGuidingsContextInformation(ActionMapping mapping, HttpServletRequest request) {
-	request.setAttribute("guiding", getProcess(request).getGuiding());
+	request.setAttribute("guidings", getProcess(request).getGuidings());
 	request.setAttribute("assistantGuidings", getProcess(request).getAssistantguidings());
     }
 
@@ -330,7 +329,8 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), DeleteGuiding.class.getSimpleName(), null);
+	    ExecuteProcessActivity.run(getProcess(request), DeleteGuiding.class.getSimpleName(), getDomainObject(request,
+		    "guidingId"));
 	    addSuccessMessage(request, "message.guiding.deleted.with.success");
 
 	} catch (DomainException e) {
@@ -384,8 +384,8 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), DeleteAssistantGuiding.class.getSimpleName(),
-		    getAssistantGuiding(request));
+	    ExecuteProcessActivity.run(getProcess(request), DeleteAssistantGuiding.class.getSimpleName(), getDomainObject(
+		    request, "assistantGuidingId"));
 	    addSuccessMessage(request, "message.assistant.guiding.deleted.with.success");
 
 	} catch (DomainException e) {
@@ -394,10 +394,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	addGuidingsContextInformation(mapping, request);
 	return mapping.findForward("manageGuidingInformation");
-    }
-
-    private PhdProgramGuiding getAssistantGuiding(HttpServletRequest request) {
-	return getDomainObject(request, "assistantGuidingId");
     }
 
     // End pf Phd guiding information

@@ -235,7 +235,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.deleteGuiding();
+	    return process.deleteGuiding((PhdProgramGuiding) object);
 	}
     }
 
@@ -333,12 +333,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     private PhdIndividualProgramProcess addGuiding(final PhdProgramGuidingBean bean) {
-	setGuiding(createPhdProgramGuiding(bean));
+	addGuidings(createPhdProgramGuiding(bean));
 	return this;
     }
 
-    public PhdIndividualProgramProcess deleteGuiding() {
-	getGuiding().delete();
+    public PhdIndividualProgramProcess deleteGuiding(final PhdProgramGuiding guiding) {
+	if (hasGuidings(guiding)) {
+	    guiding.delete();
+	}
 	return this;
     }
 
@@ -358,7 +360,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return guiding;
     }
 
-    public PhdIndividualProgramProcess deleteAssistantGuiding(PhdProgramGuiding assistant) {
+    public PhdIndividualProgramProcess deleteAssistantGuiding(final PhdProgramGuiding assistant) {
 	if (hasAssistantguidings(assistant)) {
 	    assistant.delete();
 	}
