@@ -45,3 +45,5 @@ function executeWithTempFile() {
 
 execute "add tos,ccs Recipients to Message" addTosAndCcsRecipientsToMessage.sql
 execute "Remove unnecessary column from PhdIndividualProgramProcess" correctPhdProgramGuiding.sql
+execute "Add new column to CurriculumModule table" alterTableCurriculumModule.sql
+

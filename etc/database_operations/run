@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Add new column to CurriculumModule table" alterTableCurriculumModule.sql
