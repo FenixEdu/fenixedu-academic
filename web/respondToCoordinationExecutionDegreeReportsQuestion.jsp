@@ -35,7 +35,7 @@
                             <bean:write name="executionPeriod" property="executionYear.year" />             
                             <html:link page="/coordinator/viewInquiriesResults.do?method=prepare&contentContextPath_PATH=/coordenador/coordenador" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.idInternal">
                                 <strong>
-                                    <bean:write name="executionDegree" property="degree.name" />
+                                    <bean:write name="executionDegree" property="degree.sigla" /> - <bean:write name="executionDegree" property="degree.name" />
                                     »
                                 </strong>
                             </html:link>                            

@@ -50,6 +50,12 @@ div.progress-container > div {
 	</table>
 </html:form>
 
+<c:if test="${(not empty executionDegreeCoursesReport) and not (empty executionDegreeCoursesReport.executionInterval.coordinatorReportResponsePeriod)}">
+    <div class="mtop1">
+        <bean:write name="executionDegreeCoursesReport" property="executionInterval.coordinatorReportResponsePeriod.introduction" filter="false"/>
+    </div>
+</c:if>
+
 <p class="separator2 mtop25"><b><bean:message key="title.coordinationReport.resultsToImprove" bundle="INQUIRIES_RESOURCES"/></b></p>
 <logic:notEmpty name="executionCoursesToImproove">
 <table>
@@ -70,9 +76,10 @@ div.progress-container > div {
                 <c:if test="${studentInquiriesCourseResult.auditCU}"><span class="error0"><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></span></c:if>
             </td>
             <td> 
-                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
-                <bean:define id="ratio" name="ratio" />
+                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/>
+                <c:if test="${!studentInquiriesCourseResult.executionCourse.availableForInquiries}"><c:set var="ratio" value="100" /></c:if> 
                 <div class="progress-container">          
+                    <bean:define id="ratio" name="ratio" />
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>
@@ -105,9 +112,10 @@ div.progress-container > div {
                 <c:if test="${studentInquiriesCourseResult.auditCU}"><span class="error0"><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></span></c:if>
             </td>
             <td> 
-                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
-                <bean:define id="ratio" name="ratio" />
+                <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/>
+                <c:if test="${!studentInquiriesCourseResult.executionCourse.availableForInquiries}"><c:set var="ratio" value="100" /></c:if> 
                 <div class="progress-container">          
+                    <bean:define id="ratio" name="ratio" />
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>
@@ -141,8 +149,9 @@ div.progress-container > div {
             </td>
             <td> 
                 <fmt:formatNumber maxFractionDigits="0" value="${(studentInquiriesCourseResult.executionCourse.answeredTeachingInquiriesCount / studentInquiriesCourseResult.executionCourse.professorshipsCount) * 100}" var="ratio"/> 
-                <bean:define id="ratio" name="ratio" />
-                <div class="progress-container">          
+                <c:if test="${!studentInquiriesCourseResult.executionCourse.availableForInquiries}"><c:set var="ratio" value="100" /></c:if>
+                <div class="progress-container">
+                    <bean:define id="ratio" name="ratio" />
                     <div style="width: <%= ratio %>%"></div>
                 </div>
             </td>

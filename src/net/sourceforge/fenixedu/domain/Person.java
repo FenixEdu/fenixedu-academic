@@ -3173,15 +3173,13 @@ public class Person extends Person_Base {
     }
 
     public Collection<ExecutionDegree> getCoordinationExecutionDegreeReportsToAnswer() {
-	List<DegreeType> degreeTypes = Arrays.asList(DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
-		DegreeType.BOLONHA_MASTER_DEGREE);
 
 	Collection<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 	InquiryResponsePeriod responsePeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
 	if (responsePeriod != null) {
 	    for (Coordinator coordinator : getCoordinators()) {
 		if (coordinator.isResponsible()
-			&& degreeTypes.contains(coordinator.getExecutionDegree().getDegreeType())
+			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods().contains(
 				responsePeriod.getExecutionPeriod())) {
 		    result.add(coordinator.getExecutionDegree());

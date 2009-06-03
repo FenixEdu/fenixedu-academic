@@ -58,7 +58,9 @@
             <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPresencialLearning" bundle="INQUIRIES_RESOURCES"/></th>
             <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPedagogicalCapacity" bundle="INQUIRIES_RESOURCES"/></th>
             <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsStudentInteraction" bundle="INQUIRIES_RESOURCES"/></th>
-            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></th>
+            <c:if test="${!isToImproove}">
+                <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></th>
+            </c:if>
         </tr>
         <logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
             <tr>        
@@ -68,7 +70,9 @@
                 <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsPresencialLearning().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
                 <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsPedagogicalCapacity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
                 <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsStudentInteraction().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
-                <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsAuditable().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+                <c:if test="${!isToImproove}">
+                    <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsAuditable().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
+                </c:if>
             </tr>       
         </logic:iterate>
     </table>
@@ -169,7 +173,7 @@
         <html:form action="<%= "/viewInquiriesResults.do?method=selectExecutionCourse&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
             <html:hidden property="executionCourseID"/>
             <html:hidden property="executionDegreeID"/>
-            <html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
+            <html:submit><bean:message key="label.inquiries.courseResults.coordinatorComments.edit" bundle="INQUIRIES_RESOURCES"/></html:submit>
         </html:form>
     </logic:equal>
 </logic:empty>
@@ -183,6 +187,7 @@
 <br/>
 <html:form action="<%= "/viewInquiriesResults.do?method=selectexecutionSemester&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
     <html:hidden property="degreeCurricularPlanID"/>
-    <html:hidden property="executionSemesterID"/>
+    <bean:define id="executionSemesterID" name="executionCourse" property="executionPeriod.idInternal" type="java.lang.Integer" />
+    <html:hidden property="executionSemesterID" value="<%= executionSemesterID.toString() %>" />
     <html:submit><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
 </html:form>

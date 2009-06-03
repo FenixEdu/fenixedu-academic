@@ -150,6 +150,10 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
     private CoordinatorExecutionDegreeCoursesReport getExecutionDegreeCoursesReports(final ExecutionSemester executionSemester,
 	    final ExecutionDegree executionDegree) {
+	if (executionDegree.getDegreeType().isThirdCycle()) {
+	    return null;
+	}
+
 	final CoordinatorExecutionDegreeCoursesReport executionDegreeCoursesReports = executionDegree
 		.getExecutionDegreeCoursesReports(executionSemester);
 	try {
@@ -211,8 +215,11 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getIdInternal());
 	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getIdInternal());
 
-	    request.setAttribute("studentInquiriesCourseResult", populateStudentInquiriesCourseResults(executionCourse,
-		    executionDegree));
+	    final StudentInquiriesCourseResultBean courseResultBean = populateStudentInquiriesCourseResults(executionCourse,
+		    executionDegree);
+	    request.setAttribute("isToImproove", courseResultBean.getStudentInquiriesCourseResult().isUnsatisfactory()
+		    || hasTeachingResultsToImproove(executionDegree, executionCourse));
+	    request.setAttribute("studentInquiriesCourseResult", courseResultBean);
 
 	    return actionMapping.findForward("inquiryResults");
 	}
@@ -220,6 +227,10 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
     }
 
     private boolean coordinatorCanComment(final ExecutionDegree executionDegree, final ExecutionSemester executionPeriod) {
+	if (executionDegree.getDegreeType().isThirdCycle()) {
+	    return false;
+	}
+
 	final InquiryResponsePeriod coordinatorReportResponsePeriod = executionPeriod.getCoordinatorReportResponsePeriod();
 	final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
 	return coordinator != null && coordinator.isResponsible() && coordinatorReportResponsePeriod != null
