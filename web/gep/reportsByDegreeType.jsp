@@ -311,6 +311,58 @@
 
 </logic:present>
 
+<logic:present name="reportBean" property="executionYear">
+
+<bean:define id="urlDissertations" type="java.lang.String">/reportsByDegreeType.do?method=downloadDissertationsWithExternalAffiliations&amp;<bean:write name="args" filter="false"/></bean:define>
+<bean:define id="urlDissertationsProposals" type="java.lang.String">/reportsByDegreeType.do?method=downloadDissertationsProposals&amp;<bean:write name="args" filter="false"/></bean:define>
+<bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
+<table class="tstyle1 thleft thlight mtop05">
+	<tr>
+		<td style="width: 350px;">
+			<bean:message key="label.report.dissertations" bundle="GEP_RESOURCES"/>
+		</td>
+		<td>
+			<bean:define id="urlDissertationsCsv" type="java.lang.String"><bean:write name="urlDissertations" filter="false"/>&amp;format=csv</bean:define>
+			<html:link page="<%= urlDissertationsCsv %>">
+				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			</html:link>
+			|
+			<bean:define id="urlDissertationsXls" type="java.lang.String"><bean:write name="urlDissertations" filter="false"/>&amp;format=xls</bean:define>
+			<html:link page="<%= urlDissertationsXls %>">
+				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+		<td>
+			<html:link page="<%= viewReports + "&type=11" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 350px;">
+			<bean:message key="label.report.dissertations.proposals" bundle="GEP_RESOURCES"/>
+		</td>
+		<td>
+			<bean:define id="urlDissertationsCsv" type="java.lang.String"><bean:write name="urlDissertationsProposals" filter="false"/>&amp;format=csv</bean:define>
+			<html:link page="<%= urlDissertationsCsv %>">
+				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			</html:link>
+			|
+			<bean:define id="urlDissertationsXls" type="java.lang.String"><bean:write name="urlDissertationsProposals" filter="false"/>&amp;format=xls</bean:define>
+			<html:link page="<%= urlDissertationsXls %>">
+				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+		<td>
+			<html:link page="<%= viewReports + "&type=12" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+	</tr>
+</table>
+
+</logic:present>
+
 <bean:define id="urlGraduations" type="java.lang.String">/reportsByDegreeType.do?method=downloadGraduations&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">

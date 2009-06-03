@@ -6360,6 +6360,8 @@ class reports.RegistrationReportFile extends reports.GepReportFile {}
 class reports.FlunkedReportFile extends reports.GepReportFile {}
 class reports.TeachersByShiftReportFile extends reports.GepReportFile {}
 class reports.CourseLoadReportFile extends reports.GepReportFile {}
+class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
+class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
 

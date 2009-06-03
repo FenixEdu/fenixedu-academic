@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
+import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
+import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
 import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
@@ -18,11 +20,11 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReportFileFactory {
 
     @Service
-    public static PublicRelationsStudentListQueueJob createPublicRelationsStudentListQueueJob(ExecutionYear executionYear, DegreeType degreeType,
-	    Boolean concluded, Boolean active) {
+    public static PublicRelationsStudentListQueueJob createPublicRelationsStudentListQueueJob(ExecutionYear executionYear,
+	    DegreeType degreeType, Boolean concluded, Boolean active) {
 	return new PublicRelationsStudentListQueueJob(executionYear, degreeType, concluded, active);
     }
-    
+
     @Service
     static public GepReportFile createStatusAndApprovalReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
 	final StatusAndApprovalReportFile statusAndApprovalReportFile = new StatusAndApprovalReportFile();
@@ -30,6 +32,26 @@ public class ReportFileFactory {
 	statusAndApprovalReportFile.setDegreeType(degreeType);
 	statusAndApprovalReportFile.setExecutionYear(executionYear);
 	return statusAndApprovalReportFile;
+    }
+
+    @Service
+    public static GepReportFile createDissertationsProposalsReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final DissertationsProposalsReportFile dissertationsProposalsReportFile = new DissertationsProposalsReportFile();
+	dissertationsProposalsReportFile.setType(type);
+	dissertationsProposalsReportFile.setDegreeType(degreeType);
+	dissertationsProposalsReportFile.setExecutionYear(executionYear);
+	return dissertationsProposalsReportFile;
+    }
+
+    @Service
+    public static GepReportFile createDissertationsWithExternalAffiliationsReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final DissertationsWithExternalAffiliationsReportFile dissertationsWithExternalAffiliationsReportFile = new DissertationsWithExternalAffiliationsReportFile();
+	dissertationsWithExternalAffiliationsReportFile.setType(type);
+	dissertationsWithExternalAffiliationsReportFile.setDegreeType(degreeType);
+	dissertationsWithExternalAffiliationsReportFile.setExecutionYear(executionYear);
+	return dissertationsWithExternalAffiliationsReportFile;
     }
 
     @Service

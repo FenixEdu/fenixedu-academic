@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
+import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
+import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelCurricularCourseReportFile;
 import net.sourceforge.fenixedu.domain.reports.EctsLabelDegreeReportFile;
 import net.sourceforge.fenixedu.domain.reports.EtiReportFile;
@@ -203,6 +205,32 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
+    public ActionForward downloadDissertationsProposals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory
+		.createDissertationsProposalsReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
+    @SuppressWarnings("unused")
+    public ActionForward downloadDissertationsWithExternalAffiliations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createDissertationsWithExternalAffiliationsReportFile(format,
+		degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
+    @SuppressWarnings("unused")
     public ActionForward downloadGraduations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
@@ -288,6 +316,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return CourseLoadReportFile.class;
 	case 10:
 	    return GraduationReportFile.class;
+	case 11:
+	    return DissertationsWithExternalAffiliationsReportFile.class;
+	case 12:
+	    return DissertationsProposalsReportFile.class;
 	default:
 	    return null;
 	}
@@ -333,7 +365,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     public ActionForward viewReports(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final String type = (String) request.getParameter("type");
+	final String type = request.getParameter("type");
 
 	Class reportClass = getClassForParameter(type);
 	final DegreeType degreeType = getDegreeType(request);
