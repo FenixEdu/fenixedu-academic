@@ -37,6 +37,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setCreatedBy(getCurrentUser());
+	setUsedInSeparationCycle(false);
     }
 
     final public ExecutionYear getExecutionYear() {

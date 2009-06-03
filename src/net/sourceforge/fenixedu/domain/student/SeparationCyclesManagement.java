@@ -311,31 +311,42 @@ public class SeparationCyclesManagement {
     }
 
     private void moveDismissal(final Dismissal dismissal, final CurriculumGroup parent) {
-	if (curriculumGroupHasSimilarDismissal(parent, dismissal)) {
-	    return;
+	if (!dismissal.getUsedInSeparationCycle()) {
+	    if (!curriculumGroupHasSimilarDismissal(parent, dismissal)) {
+		dismissal.setCurriculumGroup(parent);
+	    } else {
+		dismissal.setUsedInSeparationCycle(true);
+	    }
 	}
-	dismissal.setCurriculumGroup(parent);
     }
 
     private void createSubstitutionForEnrolment(final Enrolment enrolment, final CurriculumGroup parent) {
-	if (parent.hasChildDegreeModule(enrolment.getDegreeModule())) {
+	if (enrolment.getUsedInSeparationCycle() || parent.hasChildDegreeModule(enrolment.getDegreeModule())) {
+	    // TODO: temporary
+	    enrolment.setUsedInSeparationCycle(true);
 	    return;
 	}
 
-	final Substitution substitution = new Substitution();
-	substitution.setStudentCurricularPlan(parent.getStudentCurricularPlan());
-	substitution.setExecutionPeriod(getExecutionPeriod());
-	EnrolmentWrapper.create(substitution, enrolment);
+	enrolment.setUsedInSeparationCycle(true);
 
 	if (enrolment.isOptional()) {
 	    final OptionalEnrolment optional = (OptionalEnrolment) enrolment;
 	    if (parent.hasChildDegreeModule(optional.getOptionalCurricularCourse())) {
 		return;
 	    }
+	    final Substitution substitution = createSubstitution(enrolment, parent);
 	    createNewOptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
 	} else {
-	    createNewDismissal(substitution, parent, enrolment.getCurricularCourse());
+	    createNewDismissal(createSubstitution(enrolment, parent), parent, enrolment.getCurricularCourse());
 	}
+    }
+
+    private Substitution createSubstitution(final Enrolment enrolment, final CurriculumGroup parent) {
+	final Substitution substitution = new Substitution();
+	substitution.setStudentCurricularPlan(parent.getStudentCurricularPlan());
+	substitution.setExecutionPeriod(getExecutionPeriod());
+	EnrolmentWrapper.create(substitution, enrolment);
+	return substitution;
     }
 
     private Dismissal createNewDismissal(final Credits credits, final CurriculumGroup parent,
@@ -374,7 +385,6 @@ public class SeparationCyclesManagement {
     }
 
     private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
-
 	final CourseGroup degreeModule = curriculumGroup.getDegreeModule();
 	for (final Context context : degreeModule.getChildContexts(CurricularCourse.class)) {
 	    final CurricularCourse each = (CurricularCourse) context.getChildDegreeModule();
@@ -386,10 +396,13 @@ public class SeparationCyclesManagement {
     }
 
     private void createDismissal(final Dismissal dismissal, final CurriculumGroup parent) {
-	if (curriculumGroupHasSimilarDismissal(parent, dismissal)) {
+	if (dismissal.getUsedInSeparationCycle() || curriculumGroupHasSimilarDismissal(parent, dismissal)) {
+	    // TODO: temporary
+	    dismissal.setUsedInSeparationCycle(true);
 	    return;
 	}
 
+	dismissal.setUsedInSeparationCycle(true);
 	final Credits credits = dismissal.getCredits();
 
 	final Credits newCredits;

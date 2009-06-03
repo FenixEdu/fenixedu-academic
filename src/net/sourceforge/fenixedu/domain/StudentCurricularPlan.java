@@ -2564,6 +2564,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
 			    curriculumLine.getFullPath(), destination.getFullPath());
 		}
+
+		if (curriculumLine.hasExecutionPeriod()
+			&& curriculumLine.getExecutionYear().isBefore(destination.getRegistration().getStartExecutionYear())) {
+		    throw new DomainException(
+			    "error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group.invalid.period",
+			    curriculumLine.getFullPath(), destination.getFullPath(), curriculumLine.getExecutionPeriod()
+				    .getQualifiedName(), destination.getRegistration().getStartExecutionYear().getQualifiedName());
+		}
+
 		if (!destination.isExtraCurriculum()) {
 		    runRules = true;
 		}
@@ -2596,6 +2605,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	    if (curriculumLine.getCurriculumGroup() != destination) {
 		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
+
+		if (curriculumLine.hasExecutionPeriod()
+			&& curriculumLine.getExecutionYear().isBefore(destination.getRegistration().getStartExecutionYear())) {
+		    throw new DomainException(
+			    "error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group.invalid.period",
+			    curriculumLine.getFullPath(), destination.getFullPath(), curriculumLine.getExecutionPeriod()
+				    .getQualifiedName(), destination.getRegistration().getStartExecutionYear().getQualifiedName());
+		}
+
 		curriculumLine.setCurriculumGroup(destination);
 	    }
 	    if (!curriculumLine.hasCreatedBy()) {
@@ -2806,6 +2824,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (!hasEnrolments(enrolment)) {
+	    // if we remove this test, then check if enrolment period is before
+	    // registration start
 	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
 	}
 
@@ -2846,6 +2866,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
 
 	if (!hasEnrolments(enrolment)) {
+	    // if we remove this test, then check if enrolment period is before
+	    // registration start
 	    throw new DomainException("error.StudentCurricularPlan.doesnot.have.enrolment", enrolment.getName().getContent());
 	}
 

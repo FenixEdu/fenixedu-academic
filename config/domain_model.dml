@@ -4904,6 +4904,7 @@ class DomainObject {
 			}
 
 		class studentCurriculum.CurriculumLine extends studentCurriculum.CurriculumModule {
+			Boolean usedInSeparationCycle;
 			String createdBy;
 		}
 

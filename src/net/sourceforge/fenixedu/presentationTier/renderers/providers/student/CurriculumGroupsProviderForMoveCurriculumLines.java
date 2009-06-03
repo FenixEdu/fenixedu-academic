@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.curriculumLine.CurriculumLineLocationBean;
@@ -16,10 +17,11 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
 
     public Object provide(Object source, Object currentValue) {
 	final CurriculumLineLocationBean bean = (CurriculumLineLocationBean) source;
-	
+
+	final Student student = bean.getStudent();
 	final Set<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 
-	for (final Registration registration : bean.getStudent().getRegistrations()) {
+	for (final Registration registration : student.getRegistrations()) {
 
 	    if (!registration.isBolonha()) {
 		result.addAll(registration.getLastStudentCurricularPlan().getAllCurriculumGroups());
@@ -31,9 +33,11 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
 
 	    for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 
-		if (cycle.hasConclusionProcess()) {
+		if (cycle.hasConclusionProcess()
+			|| (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()))) {
 		    continue;
 		}
+
 		result.addAll(cycle.getAllCurriculumGroups());
 	    }
 	}
