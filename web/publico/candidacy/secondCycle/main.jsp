@@ -46,7 +46,7 @@
 	<li>sejam detentores de um currículo escolar, científico ou profissional, que ateste a sua capacidade para realização do Mestrado a que se candidatam.</li>
 </ul>
 
-<p>Os candidatos que se encontrem a terminar no IST uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, poderão submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao término do referido ciclo até ao dia 30 de Setembro de 2009.</p>
+<p>Os candidatos que se encontrem a terminar uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, poderão submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao término do referido ciclo até ao dia 30 de Setembro de 2009.</p>
 
 <p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do IST</a></p>
 
