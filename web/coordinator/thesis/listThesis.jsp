@@ -10,7 +10,7 @@
 
 <bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
 <bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
-<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 
 <h2><bean:message key="title.coordinator.thesis.list"/></h2>
@@ -60,7 +60,7 @@
             
             <fr:property name="link(create)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId)  %>"/>
             <fr:property name="key(create)" value="link.coordinator.list.create"/>
-            <fr:property name="param(create)" value="student.idInternal/studentID,enrolmentOID/enrolmentOID"/>
+            <fr:property name="param(create)" value="student.externalId/studentID,enrolmentOID/enrolmentOID"/>
             <fr:property name="order(create)" value="1"/>
             <fr:property name="visibleIf(create)" value="unassigned"/>
 
@@ -96,7 +96,7 @@
 
             <fr:property name="link(recreate)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(recreate)" value="link.coordinator.list.create"/>
-            <fr:property name="param(recreate)" value="thesisId/thesisID"/>
+            <fr:property name="param(recreate)" value="student.externalId/studentID,thesisId/thesisID,enrolmentOID/enrolmentOID"/>
             <fr:property name="order(recreate)" value="7"/>
             <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
 

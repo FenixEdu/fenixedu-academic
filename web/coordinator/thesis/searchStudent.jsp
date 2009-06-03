@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 
 <h2><bean:message key="title.coordinator.viewStudent"/></h2>
@@ -48,7 +48,7 @@
 			<bean:message key="label.coordinator.proposal.assigned"/>
 	    </p>
 
-	    <bean:define id="studentId" name="bean" property="student.idInternal"/>
+	    <bean:define id="studentId" name="bean" property="student.externalId"/>
 	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
 	        <html:submit>
 	            <bean:message key="button.coordinator.thesis.proposal.create"/>
@@ -63,7 +63,7 @@
 			<strong><bean:message key="label.attention"/>:</strong><br/>
 		    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
 	    </p>
-	    <bean:define id="studentId" name="bean" property="student.idInternal"/>
+	    <bean:define id="studentId" name="bean" property="student.externalId"/>
 	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
 	        <html:submit>
 	            <bean:message key="button.coordinator.thesis.proposal.create"/>
@@ -77,7 +77,7 @@
         <p class="mtop0 mbottom0">
             <bean:message key="label.coordinator.thesis.existing"/>
 
-            <bean:define id="thesisId" name="thesis" property="idInternal"/>
+            <bean:define id="thesisId" name="thesis" property="externalId"/>
             <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
                 <bean:message key="label.coordinator.thesis.state.view"/>
             </html:link>

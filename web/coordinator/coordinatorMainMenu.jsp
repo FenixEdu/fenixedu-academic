@@ -17,6 +17,7 @@
 	<bean:define id="infoExecutionDegree" name="<%=PresentationConstants.MASTER_DEGREE%>" type="InfoExecutionDegree" />
 	<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
 	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" type="java.lang.Integer"/>
+	<bean:define id="degreeCurricularPlanOID" name="infoDegreeCurricularPlan" property="externalId"/>
 	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
 
     <%
@@ -270,12 +271,12 @@
                	<bean:message key="label.coordinator.thesis"/>
             </li>
             <li>
-              <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+              <html:link page="<%= "/manageThesis.do?method=searchStudent&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
                     <bean:message key="link.coordinator.thesis.viewStudent" />
               </html:link>
             </li>
             <li>
-              <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+              <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
                     <bean:message key="link.coordinator.thesis.list" />
               </html:link>
             </li>

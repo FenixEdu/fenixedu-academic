@@ -37,15 +37,18 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
 	if (degreeCurricularPlanOID != null) {
-	    final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+	    final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
 	    if (degreeCurricularPlan != null) {
 		final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
 
 		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 		request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
-		
-		final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates = (List) ReadDegreeCandidates.run(degreeCurricularPlanOID);
-		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer.valueOf(infoMasterDegreeCandidates.size()));
+
+		final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates = ReadDegreeCandidates
+			.run(degreeCurricularPlanOID);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer
+			.valueOf(infoMasterDegreeCandidates.size()));
 	    }
 	}
     }
@@ -69,6 +72,36 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	    degreeCurricularPlanID = paramValue == null ? null : Integer.valueOf(paramValue);
 	}
 
+	return degreeCurricularPlanID;
+    }
+
+    /* uses external ids */
+    public static void newSetCoordinatorContext(final HttpServletRequest request) {
+	final String degreeCurricularPlanOID = newFindDegreeCurricularPlanID(request);
+	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
+
+	if (degreeCurricularPlanOID != null) {
+	    final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.fromExternalId(degreeCurricularPlanOID);
+	    if (degreeCurricularPlan != null) {
+		final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+		request.setAttribute(PresentationConstants.MASTER_DEGREE, infoExecutionDegree);
+
+		final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates = ReadDegreeCandidates.run(degreeCurricularPlan
+			.getIdInternal());
+		request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, Integer
+			.valueOf(infoMasterDegreeCandidates.size()));
+	    }
+	}
+    }
+
+    /* uses external ids */
+    private static String newFindDegreeCurricularPlanID(HttpServletRequest request) {
+	String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
+	if (degreeCurricularPlanID == null) {
+	    degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
+	}
 	return degreeCurricularPlanID;
     }
 

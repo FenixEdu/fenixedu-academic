@@ -48,7 +48,7 @@ public class ManageThesisDA extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	CoordinatedDegreeInfo.newSetCoordinatorContext(request);
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
 	request.setAttribute("thesis", getThesis(request));
 	request.setAttribute("student", getStudent(request));
@@ -71,12 +71,7 @@ public class ManageThesisDA extends FenixDispatchAction {
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	Integer id = getId(request.getParameter("degreeCurricularPlanID"));
-	if (id == null) {
-	    return null;
-	} else {
-	    return RootDomainObject.getInstance().readDegreeCurricularPlanByOID(id);
-	}
+	return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
     }
 
     private Thesis getThesis(HttpServletRequest request) {
@@ -85,12 +80,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 	if (thesis != null) {
 	    return thesis;
 	} else {
-	    Integer id = getId(request.getParameter("thesisID"));
-	    if (id == null) {
-		return null;
-	    } else {
-		return RootDomainObject.getInstance().readThesisByOID(id);
-	    }
+	    return Thesis.fromExternalId(request.getParameter("thesisID"));
 	}
     }
 
@@ -104,12 +94,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 	if (student != null) {
 	    return student;
 	} else {
-	    Integer id = getId(request.getParameter("studentID"));
-	    if (id == null) {
-		return null;
-	    } else {
-		return RootDomainObject.getInstance().readStudentByOID(id);
-	    }
+	    return Student.fromExternalId(request.getParameter("studentID"));
 	}
     }
 
@@ -285,7 +270,11 @@ public class ManageThesisDA extends FenixDispatchAction {
 
 	// Enrolment enrolment = student.getDissertationEnrolment();
 	Enrolment enrolment = getEnrolment(request);
-	Thesis thesis = enrolment.getPossibleThesis();
+	Thesis thesis = getThesis(request);
+
+	if (thesis == null) {
+	    thesis = enrolment.getPossibleThesis();
+	}
 	Proposal proposal = enrolment.getDissertationProposal();
 	if (proposal == null && thesis == null) {
 	    ThesisBean bean = new ThesisBean();

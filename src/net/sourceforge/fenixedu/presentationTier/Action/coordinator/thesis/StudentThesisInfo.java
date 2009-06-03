@@ -63,10 +63,10 @@ public class StudentThesisInfo {
 	this.state = ThesisPresentationState.getThesisPresentationState(thesis);
     }
 
-    public Integer getThesisId() {
+    public String getThesisId() {
 	final Thesis thesis = getThesis();
 
-	return thesis == null ? null : thesis.getIdInternal();
+	return thesis == null ? null : thesis.getExternalId();
     }
 
     public String getEnrolmentOID() {

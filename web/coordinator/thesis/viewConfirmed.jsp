@@ -4,9 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<bean:define id="dcpId" name="degreeCurricularPlan" property="idInternal"/>
+<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
-<bean:define id="thesisId" name="thesis" property="idInternal"/>
+<bean:define id="thesisId" name="thesis" property="externalId"/>
 
 <html:xhtml/>
 

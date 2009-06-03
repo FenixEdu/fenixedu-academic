@@ -21,9 +21,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
-    private DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
+    private final DomainReference<DegreeCurricularPlan> degreeCurricularPlanDomainReference;
 
-    private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
 	degreeCurricularPlanDomainReference = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
@@ -33,11 +33,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 	return degreeCurricularPlanDomainReference == null ? null : degreeCurricularPlanDomainReference.getObject();
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj instanceof InfoDegreeCurricularPlan
 		&& getDegreeCurricularPlan() == ((InfoDegreeCurricularPlan) obj).getDegreeCurricularPlan();
     }
 
+    @Override
     public String toString() {
 	return getDegreeCurricularPlan().toString();
     }
@@ -174,6 +176,10 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     @Override
     public Integer getIdInternal() {
 	return getDegreeCurricularPlan().getIdInternal();
+    }
+
+    public String getExternalId() {
+	return getDegreeCurricularPlan().getExternalId();
     }
 
 }
