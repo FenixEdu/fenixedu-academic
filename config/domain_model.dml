@@ -3401,6 +3401,7 @@ class DomainObject {
 		DateTime uploadDateTime;
 		LocalDate resultsDate;
 		String courseResultsCoordinatorComment;
+		DateTime courseResultsCoordinatorCommentDate;
 			
 		Integer numberOfEnrolled;
 		Double evaluatedRatio;
@@ -15930,6 +15931,13 @@ relation ServiceExemptionRootDomainObject {
 relation GrantOwnerEquivalentRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalences {
+		multiplicity *;
+	}
+}
+
+relation CoordinatorStudentInquiriesCourseResult {
+	Coordinator playsRole coordinatorComment;
+	inquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
 		multiplicity *;
 	}
 }

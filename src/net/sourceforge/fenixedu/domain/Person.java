@@ -3181,10 +3181,13 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods().contains(
-				responsePeriod.getExecutionPeriod())) {
+				responsePeriod.getExecutionPeriod())
+			&& (coordinator.getExecutionDegree().getExecutionDegreeCoursesReports().isEmpty() || coordinator
+				.getExecutionDegree().getExecutionDegreeCoursesReports().iterator().next().isEmpty())) {
 		    result.add(coordinator.getExecutionDegree());
 
 		}
+
 	    }
 	}
 	return result;

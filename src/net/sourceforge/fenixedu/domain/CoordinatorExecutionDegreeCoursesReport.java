@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutionDegreeCoursesReport_Base {
@@ -33,6 +36,12 @@ public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutio
     public static CoordinatorExecutionDegreeCoursesReport makeNew(final ExecutionDegree executionDegree,
 	    final ExecutionInterval executionInterval) {
 	return new CoordinatorExecutionDegreeCoursesReport(executionDegree, executionInterval);
+    }
+
+    public boolean isEmpty() {
+	return StringUtils.isEmpty(getStepsToImproveResults())
+		&& StringUtils.isEmpty(getBolonhaProcessImplementationReflection()) && StringUtils.isEmpty(getGlobalComment())
+		&& StringUtils.isEmpty(getTeachingBestPracticesDevelopedByTeachers());
     }
 
 }

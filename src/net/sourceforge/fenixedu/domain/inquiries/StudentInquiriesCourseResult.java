@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -778,6 +779,13 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
 	}
 
+    }
+
+    @Override
+    public void setCourseResultsCoordinatorComment(String courseResultsCoordinatorComment) {
+	super.setCourseResultsCoordinatorComment(courseResultsCoordinatorComment);
+	setCoordinatorComment(getExecutionDegree().getCoordinatorByTeacher(AccessControl.getPerson()));
+	setCourseResultsCoordinatorCommentDate(new DateTime());
     }
 
 }

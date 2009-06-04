@@ -135,6 +135,10 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	Collections.sort((List<StudentInquiriesCourseResult>) excelentExecutionCourses,
 		StudentInquiriesCourseResult.EXECUTION_COURSE_NAME_COMPARATOR);
 
+	if (getFromRequest(request, "courseResultsCoordinatorCommentEdit") != null) {
+	    request.setAttribute("courseResultsCoordinatorCommentEdit", true);
+	}
+
 	request
 		.setAttribute("executionDegreeCoursesReport",
 			getExecutionDegreeCoursesReports(executionSemester, executionDegree));

@@ -104,18 +104,18 @@
         </tr>
         </tr>
         <logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
-            <tr>        
+            <tr>
                 <td class="aleft nowrap"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
                 <td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_assiduidade']}" /></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_prov_aprend_pres']}" /></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_cap_pedag']}" /></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_int_alunos']}" /></td>
-            </tr>       
+            </tr>
         </logic:iterate>
     </table>
 </logic:notEmpty>
-    
+
 
 <p class="separator2 mtop25"><b><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></b></p>
 
@@ -125,11 +125,11 @@
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
 				<html:link page="<%= "/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
-					<bean:write name="professorship" property="teacher.person.name"/> 
+					<bean:write name="professorship" property="teacher.person.name"/>
 				</html:link>
 			</logic:notEmpty>
 			<logic:empty name="professorship" property="teachingInquiry">
-				<bean:write name="professorship" property="teacher.person.name"/> 
+				<bean:write name="professorship" property="teacher.person.name"/>
 			</logic:empty>
 		</li>
 	</logic:iterate>
@@ -154,7 +154,7 @@
         <li>
             <bean:define id="delegateInquiryID" name="delegateInquiry" property="idInternal" />
             <html:link page="<%= "/viewInquiriesResults.do?method=showFilledYearDelegateInquiry&filledYearDelegateInquiryId=" + delegateInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
-                <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/> 
+                <bean:write name="delegateInquiry" property="delegate.registration.student.person.name"/>
             </html:link>
         </li>
     </logic:iterate>
@@ -166,7 +166,7 @@
         <fr:layout name="tabular">
             <fr:property name="labelTerminator" value=""/>
         </fr:layout>
-    </fr:view>      
+    </fr:view>
     
     <br/><br/>
     <logic:equal name="canComment" value="true">
@@ -182,7 +182,7 @@
         <fr:layout>
             <fr:property name="labelTerminator" value=""/>
         </fr:layout>
-    </fr:edit>    
+    </fr:edit>
 </logic:notEmpty>
 <br/>
 <html:form action="<%= "/viewInquiriesResults.do?method=selectexecutionSemester&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >

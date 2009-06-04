@@ -168,26 +168,47 @@ div.progress-container > div {
 <p class="separator2 mtop25"><b><bean:message key="title.coordinatorExecutionDegreeCoursesReport" bundle="INQUIRIES_RESOURCES"/></b></p>
 
 <logic:equal name="canComment" value="true">
-    <html:form action="/viewInquiriesResults.do">
-        <html:hidden property="method" value="selectexecutionSemester"/>
-        <html:hidden property="degreeCurricularPlanID"/>
-        <html:hidden property="executionDegreeID"/>
-        <html:hidden property="executionSemesterID"/>
-        <fr:edit name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
-            <fr:layout name="tabular-editable">
-                <fr:property name="classes" value="tstyle2 thlight thleft thtop"/>
-                <fr:property name="columnClasses" value="width300px,,"/>
-           </fr:layout>
-        </fr:edit>
-        <html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></html:submit>
-    </html:form>
+
+    <logic:empty name="courseResultsCoordinatorCommentEdit">
+        <logic:notEmpty name="executionDegreeCoursesReport">
+            <fr:view name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
+                <fr:layout name="tabular">
+                    <fr:property name="classes" value="tstyle2 thlight thleft thtop width300px"/>
+               </fr:layout>
+            </fr:view>
+        </logic:notEmpty>
+        <html:form action="/viewInquiriesResults.do?courseResultsCoordinatorCommentEdit=true">
+            <html:hidden property="method" value="selectexecutionSemester"/>
+            <html:hidden property="degreeCurricularPlanID"/>
+            <html:hidden property="executionDegreeID"/>
+            <html:hidden property="executionSemesterID"/>
+            <html:submit><bean:message key="label.inquiries.coordinatorExecutionDegreeCoursesReport.insert" bundle="INQUIRIES_RESOURCES"/></html:submit>
+        </html:form>
+    </logic:empty>
+    <logic:notEmpty name="courseResultsCoordinatorCommentEdit">
+        <html:form action="/viewInquiriesResults.do">
+            <html:hidden property="method" value="selectexecutionSemester"/>
+            <html:hidden property="degreeCurricularPlanID"/>
+            <html:hidden property="executionDegreeID"/>
+            <html:hidden property="executionSemesterID"/>
+            <fr:edit name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
+                <fr:layout name="tabular-editable">
+                    <fr:property name="classes" value="tstyle2 thlight thleft thtop"/>
+                    <fr:property name="columnClasses" value="width300px,,"/>
+               </fr:layout>
+            </fr:edit>
+            <html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+        </html:form>
+    </logic:notEmpty>
+
 </logic:equal>
+
 <logic:equal name="canComment" value="false">
     <logic:notEmpty name="executionDegreeCoursesReport">
         <fr:view name="executionDegreeCoursesReport" schema="executionDegree.coordinatorExecutionDegreeCoursesReport" >
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle2 thlight thleft thtop width300px"/>
-           </fr:layout>        
+           </fr:layout>
         </fr:view>
     </logic:notEmpty>
 </logic:equal>
