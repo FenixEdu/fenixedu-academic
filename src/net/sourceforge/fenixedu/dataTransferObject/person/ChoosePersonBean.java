@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
@@ -26,14 +27,15 @@ public class ChoosePersonBean implements Serializable {
     public ChoosePersonBean() {
 	super();
     }
-    
+
     public ChoosePersonBean(IndividualCandidacyPersonalDetails personalDetails) {
-	this.name = personalDetails.getName();;
+	this.name = personalDetails.getName();
+	
 	this.identificationNumber = personalDetails.getDocumentIdNumber();
 	this.documentType = personalDetails.getIdDocumentType();
 	this.dateOfBirth = personalDetails.getDateOfBirthYearMonthDay();
     }
-    
+
     public ChoosePersonBean(Person person) {
 	this();
 	setPerson(person);
@@ -91,4 +93,7 @@ public class ChoosePersonBean implements Serializable {
 	this.firstTimeSearch = firstTimeSearch;
     }
 
+    public boolean isEmployee() {
+	return getPerson() != null && getPerson().hasRole(RoleType.EMPLOYEE);
+    }
 }

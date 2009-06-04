@@ -372,7 +372,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
 	Person selectedPerson = bean.getPerson();
 	if (selectedPerson != null) {
-	    selectedPerson.edit(this.getPersonalDetails());
+	    if (!selectedPerson.hasRole(RoleType.EMPLOYEE)) {
+		selectedPerson.edit(this.getPersonalDetails());
+	    }
 	    this.setPersonalDetails(new IndividualCandidacyInternalPersonDetails(this, selectedPerson));
 	} else {
 	    selectedPerson = new Person(this.getPersonalDetails());
