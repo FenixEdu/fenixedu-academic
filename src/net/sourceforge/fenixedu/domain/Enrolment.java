@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -1440,16 +1439,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	}
 
-	return false;
-    }
-
-    public boolean isSourceOfDismissal() {
-	final List<Dismissal> dismissals = getStudentCurricularPlan().getDismissals();
-	for (final Dismissal dismissal : dismissals) {
-	    if (dismissal.hasSourceIEnrolments(this)) {
-		return true;
-	    }
-	}
 	return false;
     }
 
