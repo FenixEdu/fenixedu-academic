@@ -314,6 +314,7 @@ public class SeparationCyclesManagement {
 	if (!dismissal.getUsedInSeparationCycle()) {
 	    if (!curriculumGroupHasSimilarDismissal(parent, dismissal)) {
 		dismissal.setCurriculumGroup(parent);
+		dismissal.getCredits().setStudentCurricularPlan(parent.getStudentCurricularPlan());
 	    } else {
 		dismissal.setUsedInSeparationCycle(true);
 	    }
