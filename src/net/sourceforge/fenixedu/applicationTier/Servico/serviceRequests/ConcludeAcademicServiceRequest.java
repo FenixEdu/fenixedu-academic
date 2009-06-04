@@ -36,7 +36,6 @@ public class ConcludeAcademicServiceRequest extends FenixService {
 
     private static void sendEmail(final AcademicServiceRequest academicServiceRequest) {
 
-	final ResourceBundle globalBundle = ResourceBundle.getBundle("resources.GlobalResources");
 	final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");
 
 	String body = appBundle.getString("mail.academicServiceRequest.concluded.message1");
