@@ -1,18 +1,24 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class DeleteWrittenEvaluation extends FenixService {
 
@@ -35,24 +41,34 @@ public class DeleteWrittenEvaluation extends FenixService {
 
     private void notifyVigilants(WrittenEvaluation writtenEvaluation) {
 
-	final ArrayList<String> tos = new ArrayList<String>();
+	final Set<Person> tos = new HashSet<Person>();
 
-	VigilantGroup group = writtenEvaluation.getAssociatedVigilantGroups().iterator().next();
-	DateTime date = writtenEvaluation.getBeginningDateTime();
-	String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
-	String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
+	for (VigilantGroup group : writtenEvaluation.getAssociatedVigilantGroups()) {
+	    tos.clear();
+	    DateTime date = writtenEvaluation.getBeginningDateTime();
+	    String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
+	    String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
-		writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	    String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
+		    writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	    String body = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.writtenEvaluationDeletedMessage",
+		    new Object[] { writtenEvaluation.getName(), beginDateString, time });
+	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
+		Person person = vigilancy.getVigilantWrapper().getPerson();
+		tos.add(person);
+	    }
+	    Sender sender = RootDomainObject.getInstance().getSystemSender();
+	    new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
+		    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
 
-	for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
-	    Person person = vigilancy.getVigilantWrapper().getPerson();
-	    tos.add(person.getEmail());
 	}
 
-	EmailSender.send(group.getName(), group.getContactEmail(), new String[] { group.getContactEmail() }, tos, null, null,
-		subject, RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.writtenEvaluationDeletedMessage",
-			new Object[] { writtenEvaluation.getName(), beginDateString, time }));
+	// EmailSender.send(group.getName(), group.getContactEmail(), new
+	// String[] { group.getContactEmail() }, tos, null, null,
+	// subject, RenderUtils.getResourceString("VIGILANCY_RESOURCES",
+	// "label.writtenEvaluationDeletedMessage",
+	// new Object[] { writtenEvaluation.getName(), beginDateString, time
+	// }));
     }
 
 }

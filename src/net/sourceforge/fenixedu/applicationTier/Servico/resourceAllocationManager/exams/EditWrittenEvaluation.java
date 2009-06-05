@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -11,16 +12,20 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EditWrittenEvaluation extends FenixService {
 
@@ -118,25 +123,33 @@ public class EditWrittenEvaluation extends FenixService {
 
     private void notifyVigilants(WrittenEvaluation writtenEvaluation, Date dayDate, Date beginDate) {
 
-	final ArrayList<String> tos = new ArrayList<String>();
+	final HashSet<Person> tos = new HashSet<Person>();
 
-	VigilantGroup group = writtenEvaluation.getAssociatedVigilantGroups().iterator().next();
-	DateTime date = writtenEvaluation.getBeginningDateTime();
-	String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
-	String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
+	// VigilantGroup group =
+	// writtenEvaluation.getAssociatedVigilantGroups().iterator().next();
+	for (VigilantGroup group : writtenEvaluation.getAssociatedVigilantGroups()) {
+	    tos.clear();
+	    DateTime date = writtenEvaluation.getBeginningDateTime();
+	    String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
+	    String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	String subject = String.format("[ %s - %s - %s %s ]", new Object[] { writtenEvaluation.getName(), group.getName(),
-		beginDateString, time });
-	String body = String.format(
-		"Caro Vigilante,\n\nA prova de avalição: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
-		new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
+	    String subject = String.format("[ %s - %s - %s %s ]", new Object[] { writtenEvaluation.getName(), group.getName(),
+		    beginDateString, time });
+	    String body = String
+		    .format(
+			    "Caro Vigilante,\n\nA prova de avalição: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
+			    new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
 
-	for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
-	    Person person = vigilancy.getVigilantWrapper().getPerson();
-	    tos.add(person.getEmail());
+	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
+		Person person = vigilancy.getVigilantWrapper().getPerson();
+		tos.add(person);
+	    }
+	    Sender sender = RootDomainObject.getInstance().getSystemSender();
+	    new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
+		    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
+	    // EmailSender.send(group.getName(), group.getContactEmail(), new
+	    // String[] { group.getContactEmail() }, tos, null, null,
+	    // subject, body);
 	}
-
-	EmailSender.send(group.getName(), group.getContactEmail(), new String[] { group.getContactEmail() }, tos, null, null,
-		subject, body);
     }
 }
