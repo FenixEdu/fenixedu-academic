@@ -43,4 +43,7 @@ public class DegreeCurricularPlanServiceAgreement extends DegreeCurricularPlanSe
 	return result;
     }
 
+    public GratuityPaymentPlan getDefaultGratuityPaymentPlan(final ExecutionYear executionYear) {
+	return getServiceAgreementTemplate().getDefaultPaymentPlan(executionYear);
+    }
 }

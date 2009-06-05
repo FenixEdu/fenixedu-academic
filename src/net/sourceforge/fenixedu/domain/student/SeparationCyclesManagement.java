@@ -565,6 +565,9 @@ public class SeparationCyclesManagement {
 
     private void movePayments(final GratuityEventWithPaymentPlan firstEvent, final GratuityEventWithPaymentPlan secondEvent) {
 
+	// TODO: move this line to after following 'if' statement
+	secondEvent.configurateDefaultPaymentPlan();
+
 	if (firstEvent.hasCustomGratuityPaymentPlan()) {
 	    return;
 	}
@@ -576,7 +579,7 @@ public class SeparationCyclesManagement {
 
 	// First Event
 	final Money amountLessPenalty = firstEvent.getPayedAmountLessPenalty();
-	firstEvent.configureCustomPaymentPlan();
+	firstEvent.configurateCustomPaymentPlan();
 	createInstallment(firstEvent, firstEvent.getGratuityPaymentPlan(), firstEvent.getPayedAmount());
 	for (final PaymentCode paymentCode : firstEvent.getNonProcessedPaymentCodes()) {
 	    paymentCode.setState(PaymentCodeState.INVALID);

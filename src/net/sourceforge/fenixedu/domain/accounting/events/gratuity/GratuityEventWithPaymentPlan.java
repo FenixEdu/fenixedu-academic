@@ -102,11 +102,23 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
-    public void configureCustomPaymentPlan() {
+    public void configurateCustomPaymentPlan() {
 	if (!hasCustomGratuityPaymentPlan()) {
 	    ensureServiceAgreement();
 	    super.setGratuityPaymentPlan(new CustomGratuityPaymentPlan(getExecutionYear(),
 		    getDegreeCurricularPlanServiceAgreement()));
+	}
+    }
+
+    public void configurateDefaultPaymentPlan() {
+	if (!hasDefaultGratuityPaymentPlan()) {
+	    ensureServiceAgreement();
+	    final GratuityPaymentPlan paymentPlan = getDegreeCurricularPlanServiceAgreement().getDefaultGratuityPaymentPlan(
+		    getExecutionYear());
+	    if (paymentPlan == null) {
+		throw new DomainException("error.GratuityEventWithPaymentPlan.cannot.set.null.payment.plan");
+	    }
+	    super.setGratuityPaymentPlan(paymentPlan);
 	}
     }
 
@@ -401,6 +413,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     public boolean hasCustomGratuityPaymentPlan() {
 	return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isCustomGratuityPaymentPlan();
+    }
+
+    public boolean hasDefaultGratuityPaymentPlan() {
+	return hasGratuityPaymentPlan() && getGratuityPaymentPlan().isDefault();
     }
 
     public Money getPayedAmountLessPenalty() {
