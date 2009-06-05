@@ -18,6 +18,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class PrecedentDegreeInformationBean implements Serializable {
 
+    private static final long serialVersionUID = 574983352972623607L;
+
     private DomainReference<PrecedentDegreeInformation> precedentDegreeInformation;
 
     private DomainReference<Unit> institution;

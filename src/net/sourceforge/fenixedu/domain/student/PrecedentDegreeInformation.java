@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInfo
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
@@ -36,13 +37,22 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    }
 	}
 
-	this.setSourceInstitution(institution);
+	if (hasStudentCandidacy() && isDFADegree()) {
+	    this.setInstitution(institution);
+	} else {
+	    this.setSourceInstitution(institution);
+	}
+
 	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
 	this.setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
 	this.setCountry(precedentDegreeInformationBean.getCountry());
 	this.setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
 	this.setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
+    }
+
+    private boolean isDFADegree() {
+	return getStudentCandidacy().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
     }
 
     public void delete() {
