@@ -16,12 +16,33 @@
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
+
+	<p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.currentEvents" /></strong></p>
+	<logic:notEmpty name="entryDTOs">
+		<fr:view name="entryDTOs" schema="entryDTO.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thcenter thlight tdleft mtop025" />
+				<fr:property name="columnClasses" value=",," />
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	<logic:empty name="entryDTOs">
+		<bean:message key="label.payments.events.noEvents" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	</logic:empty>
+
+	<logic:notEmpty name="accountingEventPaymentCodes">
+		<p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.sibsPayments" /></strong></p>
+		<fr:view name="accountingEventPaymentCodes" schema="AccountingEventPaymentCode.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
+				<fr:property name="columnClasses" value=",," />
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.payedEvents2" /></strong></p>
-	
 	<logic:empty name="event" property="positiveEntries">
-		<bean:message key="label.payments.not.found"
-			bundle="ACADEMIC_OFFICE_RESOURCES" />
+		<bean:message key="label.payments.not.found" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</logic:empty>
 	
 	<logic:notEmpty name="event" property="positiveEntries">	

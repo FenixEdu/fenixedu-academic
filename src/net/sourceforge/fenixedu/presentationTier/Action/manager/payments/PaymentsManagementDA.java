@@ -108,7 +108,12 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward showPaymentsForEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("event", getEvent(request));
+	final Event event = getEvent(request);
+	request.setAttribute("event", event);
+	if (event.isOpen()) {
+	    request.setAttribute("entryDTOs", event.calculateEntries());
+	    request.setAttribute("accountingEventPaymentCodes", event.getNonProcessedPaymentCodes());
+	}
 
 	return mapping.findForward("showPaymentsForEvent");
     }
