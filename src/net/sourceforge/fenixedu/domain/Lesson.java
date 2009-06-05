@@ -253,19 +253,21 @@ public class Lesson extends Lesson_Base {
 
     public void deleteLessonInstanceIn(YearMonthDay day) {
 
-	throw new UnsupportedOperationException();
+//	throw new UnsupportedOperationException();
 
-	/*
-	 * if(day == null) { return; }
-	 * 
-	 * LessonInstance lessonInstance = getLessonInstanceFor(day);
-	 * if(lessonInstance == null) { if(!wasFinished() &&
-	 * !getPeriod().getStartYearMonthDay().isAfter(day)){
-	 * edit(day.plusDays(1),
-	 * getPeriod().getLastOccupationPeriodOfNestedPeriods
-	 * ().getEndYearMonthDay(), getDiaSemana(), getInicio(), getFim(),
-	 * getFrequency(), true, day); } } else { lessonInstance.delete(); }
-	 */
+	if (day == null) {
+	    return;
+	}
+	LessonInstance lessonInstance = getLessonInstanceFor(day);
+	if (lessonInstance == null) {
+	    throw new UnsupportedOperationException();
+//	    if (!wasFinished() && !getPeriod().getStartYearMonthDay().isAfter(day)) {
+//		edit(day.plusDays(1), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay(), getDiaSemana(),
+//			getInicio(), getFim(), getFrequency(), true, day);
+//	    }
+	} else {
+	    lessonInstance.delete();
+	}
     }
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {

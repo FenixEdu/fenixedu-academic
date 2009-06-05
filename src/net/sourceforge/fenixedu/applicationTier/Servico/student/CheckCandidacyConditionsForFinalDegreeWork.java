@@ -69,6 +69,9 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	if (scheduleing.getMinimumCompletedCreditsFirstCycle() == null) {
 	    throw new NumberOfNecessaryCompletedCreditsInFirstCycleNotSpecifiedException();
 	}
+	if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
+	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
+	}
 	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing
 		.getMaximumCurricularYearToCountCompletedCourses();
 	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
