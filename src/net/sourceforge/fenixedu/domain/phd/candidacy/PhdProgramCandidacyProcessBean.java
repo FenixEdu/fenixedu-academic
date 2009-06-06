@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.dataTransferObject.Captcha;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -39,7 +38,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private String email;
 
-    private Captcha captcha;
+    private String captcha;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -144,11 +143,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.email = email;
     }
 
-    public Captcha getCaptcha() {
+    public String getCaptcha() {
 	return captcha;
     }
 
-    public void setCaptcha(Captcha captcha) {
+    public void setCaptcha(String captcha) {
 	this.captcha = captcha;
     }
 

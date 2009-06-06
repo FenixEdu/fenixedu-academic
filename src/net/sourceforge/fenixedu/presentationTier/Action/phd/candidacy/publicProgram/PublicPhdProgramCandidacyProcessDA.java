@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicPro
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.Captcha;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -25,9 +24,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     public ActionForward prepareCreateCandidacyIdentity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
-	bean.setCaptcha(new Captcha());
-	request.setAttribute("candidacyBean", bean);
+	request.setAttribute("candidacyBean", new PhdProgramCandidacyProcessBean());
+	return mapping.findForward("createCandidacyIdentity");
+    }
+    
+    public ActionForward prepareCreateCandidacyIdentityInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject());
 	return mapping.findForward("createCandidacyIdentity");
     }
 

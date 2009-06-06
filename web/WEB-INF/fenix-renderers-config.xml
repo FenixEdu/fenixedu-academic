@@ -1133,6 +1133,8 @@ Documentation:
 	
 	<renderer mode="output" type="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig" class="net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRenderer"/>
 	
-	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.Captcha" class="net.sourceforge.fenixedu.presentationTier.renderers.CaptchaRenderer" />
+	<renderer mode="input" type="java.lang.String" layout="captcha" class="net.sourceforge.fenixedu.presentationTier.renderers.CaptchaRenderer">
+		<property name="jcaptchaUrl" value="/publico/jcaptcha.do" />
+	</renderer>
 	
 </renderers-config>

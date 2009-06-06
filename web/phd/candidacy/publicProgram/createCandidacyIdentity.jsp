@@ -29,6 +29,8 @@ TESTE
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		<fr:property name="requiredMarkShown" value="true" />
 	</fr:layout>
+
+	<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentityInvalid" />
 </fr:edit>
 
 
