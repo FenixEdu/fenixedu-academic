@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
@@ -127,7 +127,8 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
 		    @Override
 		    public boolean evaluate(Object arg0) {
-			return ((PublicCandidacyHashCode) arg0).getIndividualCandidacyProcess() == null;
+			final PublicCandidacyHashCode hashCode = (PublicCandidacyHashCode) arg0;
+			return hashCode.isFromDegreeOffice() && !hashCode.hasCandidacyProcess();
 		    }
 		}));
 

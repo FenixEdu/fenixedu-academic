@@ -22,7 +22,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private DomainReference<CandidacyProcess> candidacyProcess;
 
-    private DomainReference<PublicCandidacyHashCode> publicCandidacyHashCode;
+    private DomainReference<DegreeOfficePublicCandidacyHashCode> publicCandidacyHashCode;
 
     private DomainReference<IndividualCandidacyProcess> individualCandidacyProcess;
 
@@ -181,12 +181,14 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 		individualCandidacyProcess) : null;
     }
 
-    public PublicCandidacyHashCode getPublicCandidacyHashCode() {
-	return this.publicCandidacyHashCode != null ? this.publicCandidacyHashCode.getObject() : null;
+    public DegreeOfficePublicCandidacyHashCode getPublicCandidacyHashCode() {
+	return (this.publicCandidacyHashCode != null) ? this.publicCandidacyHashCode.getObject() : null;
     }
 
-    public void setPublicCandidacyHashCode(PublicCandidacyHashCode hashCode) {
-	this.publicCandidacyHashCode = hashCode != null ? new DomainReference<PublicCandidacyHashCode>(hashCode) : null;
+    public void setPublicCandidacyHashCode(DegreeOfficePublicCandidacyHashCode publicCandidacyHashCode) {
+	this.publicCandidacyHashCode = (publicCandidacyHashCode != null) ? new DomainReference<DegreeOfficePublicCandidacyHashCode>(
+		publicCandidacyHashCode)
+		: null;
     }
 
     public String getObservations() {

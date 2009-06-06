@@ -45,3 +45,5 @@ function executeWithTempFile() {
 
 execute "alterTableStudentInquiriesCourseResult" alterTableStudentInquiriesCourseResult.sql
 execute "Corrected menu from degrees management content" changedDegreesManagementMenu.sql
+
+execute "Add new columns to PublicCandidacyHashCode table" alterTablePublicCandidacyHashCode.sql

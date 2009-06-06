@@ -6,6 +6,8 @@ public enum PhdIndividualProgramProcessState {
 
     NOT_ADMITTED,
 
+    CANCELLED,
+
     WORK_DEVELOPMENT,
 
     SUSPENDED,

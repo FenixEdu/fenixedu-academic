@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -255,12 +256,13 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	    HttpServletRequest request, HttpServletResponse response) {
 	try {
 	    String email = (String) getObjectFromViewState("PublicAccessCandidacy.preCreationForm");
-	    PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getUnusedOrCreateNewHashCode(getProcessType(),
-		    getCurrentOpenParentProcess(), email);
+	    PublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCode(
+		    getProcessType(), getCurrentOpenParentProcess(), email);
 	    sendEmailForApplicationSubmissionCandidacyForm(candidacyHashCode, mapping, request);
 
 	    // String link =
-	    // getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(mapping,
+	    // getFullLinkForSubmissionFromPublicCandidacyHashCodeForEmails(
+	    // mapping,
 	    // request, candidacyHashCode);
 	    // request.setAttribute("link", link);
 
@@ -286,7 +288,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
     protected void sendEmailForApplicationSuccessfullySubmited(IndividualCandidacyProcess process, ActionMapping mapping,
 	    HttpServletRequest request) {
-	PublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
+	DegreeOfficePublicCandidacyHashCode candidacyHashCode = process.getCandidacyHashCode();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	String subject = bundle.getString(INFORM_APPLICATION_SUCCESS_SUBJECT);
 	String body = bundle.getString(INFORM_APPLICATION_SUCCESS_BODY);
@@ -309,7 +311,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
     public ActionForward recoverApplicationAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	String email = (String) getObjectFromViewState("PublicAccessCandidacy.recoveryAccessForm");
-	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode
+	DegreeOfficePublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode
 		.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, getProcessType(), getCurrentOpenParentProcess());
 
 	if (candidacyHashCode != null) {
@@ -328,8 +330,10 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 
     public ActionForward showApplicationSubmissionConditions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	String hash = request.getParameter("hash");
-	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getPublicCandidacyCodeByHash(hash);
+	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) DegreeOfficePublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(hash);
 
 	if (candidacyHashCode == null) {
 	    return mapping.findForward("open-candidacy-processes-not-found");
@@ -381,9 +385,8 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
     }
 
     protected boolean candidacyIndividualProcessExistsForThisEmail(String email) {
-	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode
-		.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email, getProcessType(), getCurrentOpenParentProcess());
-	return candidacyHashCode != null;
+	return DegreeOfficePublicCandidacyHashCode.getPublicCandidacyHashCodeByEmailAndCandidacyProcessType(email,
+		getProcessType(), getCurrentOpenParentProcess()) != null;
     }
 
     protected boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {

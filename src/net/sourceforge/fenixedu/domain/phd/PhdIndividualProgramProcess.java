@@ -29,6 +29,26 @@ import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
+    static abstract private class PhdActivity extends Activity<PhdIndividualProgramProcess> {
+
+	@Override
+	final public void checkPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+	    processPreConditions(process, userView);
+	    activityPreConditions(process, userView);
+	}
+
+	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
+	    if (process != null && process.isCancelled()) {
+		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.is.cancelled");
+	    }
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditPersonalInformation());
@@ -41,17 +61,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new DeleteGuiding());
 	activities.add(new AddAssistantGuidingInformation());
 	activities.add(new DeleteAssistantGuiding());
+	activities.add(new CancelPhdIndividualProgramProcess());
     }
 
     @StartActivity
-    static public class CreateCandidacy extends Activity<PhdIndividualProgramProcess> {
+    static public class CreateCandidacy extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 	    // no precondition to check
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
@@ -71,14 +89,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
-    static public class EditPersonalInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class EditPersonalInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
 	    // no precondition to check
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
@@ -89,14 +104,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class AddQualification extends Activity<PhdIndividualProgramProcess> {
+    static public class AddQualification extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -107,14 +119,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
-    static public class DeleteQualification extends Activity<PhdIndividualProgramProcess> {
+    static public class DeleteQualification extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -139,14 +148,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class AddJobInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class AddJobInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -156,14 +162,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class DeleteJobInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class DeleteJobInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -188,14 +191,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class EditIndividualProcessInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class EditIndividualProcessInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -205,14 +205,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class AddGuidingInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class AddGuidingInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -222,14 +219,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class DeleteGuiding extends Activity<PhdIndividualProgramProcess> {
+    static public class DeleteGuiding extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -239,14 +233,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class AddAssistantGuidingInformation extends Activity<PhdIndividualProgramProcess> {
+    static public class AddAssistantGuidingInformation extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -256,14 +247,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class DeleteAssistantGuiding extends Activity<PhdIndividualProgramProcess> {
+    static public class DeleteAssistantGuiding extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // no precondition to check yet
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
 	}
 
 	@Override
@@ -271,6 +259,28 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    return process.deleteAssistantGuiding((PhdProgramGuiding) object);
 	}
+    }
+
+    static public class CancelPhdIndividualProgramProcess extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView arg1) {
+
+	    // TODO: CHECK CONDITIONS TO CANCEL PROCESS
+
+	    if (process.hasAnyPayments()) {
+		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.cannot.cancel.because.has.payments");
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.setState(PhdIndividualProgramProcessState.CANCELLED);
+	    process.getCandidacyProcess().cancelDebt(userView.getPerson().getEmployee());
+	    return process;
+	}
+
     }
 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -393,6 +403,16 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getCandidacyDate();
     }
 
+    public boolean isCancelled() {
+	return getState() == PhdIndividualProgramProcessState.CANCELLED;
+    }
+
+    private boolean hasAnyPayments() {
+	// TODO: for now just check candidacy, but is necessary to check another
+	// debts?
+	return getCandidacyProcess().hasAnyPayments();
+    }
+
     static public Set<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
 	final Set<PhdIndividualProgramProcess> result = new HashSet<PhdIndividualProgramProcess>();
 	final Set<Process> processesToSearch = new HashSet<Process>();
@@ -423,12 +443,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
-    private static boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
+    static private boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
 	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
 	return searchBean.getProcessState() == null || searchBean.getProcessState() == phdIndividualProgramProcess.getState();
     }
 
-    private static boolean matchesExecutionYear(SearchPhdIndividualProgramProcessBean searchBean,
+    static private boolean matchesExecutionYear(SearchPhdIndividualProgramProcessBean searchBean,
 	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
 	return searchBean.getExecutionYear() == null
 		|| searchBean.getExecutionYear() == phdIndividualProgramProcess.getExecutionYear();

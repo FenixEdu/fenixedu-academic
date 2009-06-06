@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -21,15 +23,28 @@ import org.joda.time.LocalDate;
 
 public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base {
 
-    @StartActivity
-    public static class CreateCandidacy extends Activity<PhdProgramCandidacyProcess> {
+    static abstract private class PhdActivity extends Activity<PhdProgramCandidacyProcess> {
 
 	@Override
-	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    // no precondition to check
+	final public void checkPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView) {
+	    processPreConditions(process, userView);
+	    activityPreConditions(process, userView);
+	}
+
+	protected void processPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView) {
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+	}
+
+	abstract protected void activityPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView);
+    }
+
+    @StartActivity
+    public static class CreateCandidacy extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
 	}
 
 	@Override
@@ -39,19 +54,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    result.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
 
 	    return result;
-
 	}
 
     }
 
-    public static class UploadDocuments extends Activity<PhdProgramCandidacyProcess> {
+    public static class UploadDocuments extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    // no precondition to check
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,14 +83,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
-    public static class DeleteDocument extends Activity<PhdProgramCandidacyProcess> {
+    public static class DeleteDocument extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    // no precondition to check
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -92,14 +98,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
-    public static class EditCandidacyDate extends Activity<PhdProgramCandidacyProcess> {
+    public static class EditCandidacyDate extends PhdActivity {
 
 	@Override
-	public void checkPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    // no precondition to check
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -174,5 +176,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private ExecutionYear getExecutionYear() {
 	return getIndividualProgramProcess().getExecutionYear();
+    }
+
+    public boolean hasAnyPayments() {
+	return hasEvent() && getEvent().hasAnyPayments();
+    }
+
+    public void cancelDebt(final Employee employee) {
+	getEvent().cancel(employee);
     }
 }

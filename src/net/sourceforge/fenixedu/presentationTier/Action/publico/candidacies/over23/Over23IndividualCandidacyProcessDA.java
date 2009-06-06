@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
@@ -99,7 +100,8 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    return mapping.findForward("open-candidacy-processes-not-found");
 
 	String hash = request.getParameter("hash");
-	PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getPublicCandidacyCodeByHash(hash);
+	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(hash);
 
 	if (candidacyHashCode == null) {
 	    return mapping.findForward("open-candidacy-processes-not-found");

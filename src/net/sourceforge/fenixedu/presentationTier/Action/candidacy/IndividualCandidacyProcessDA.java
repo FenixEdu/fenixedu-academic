@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -288,8 +288,8 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	try {
-	    PublicCandidacyHashCode candidacyHashCode = PublicCandidacyHashCode.getUnusedOrCreateNewHashCode(getProcessType(),
-		    getParentProcess(request), bean.getPersonBean().getEmail());
+	    DegreeOfficePublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode
+		    .getUnusedOrCreateNewHashCode(getProcessType(), getParentProcess(request), bean.getPersonBean().getEmail());
 	    bean.setPublicCandidacyHashCode(candidacyHashCode);
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
 	    addActionMessage(request, "error.candidacy.hash.code.already.bounded");

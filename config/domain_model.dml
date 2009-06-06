@@ -6429,6 +6429,14 @@ class messaging.AnnouncementCategory extends DomainObject {
 	AnnouncementCategoryType type;
 }
 
+class PublicCandidacyHashCode extends DomainObject {
+	String email;
+	String value;
+}
+
+	class candidacyProcess.DegreeOfficePublicCandidacyHashCode extends PublicCandidacyHashCode {
+	}
+
 /* Phd Module */
 
 class phd.PhdProgram extends DomainObject {
@@ -6491,14 +6499,11 @@ class phd.PhdProgramGuiding extends DomainObject {
 		String phone;
 	}
 
+	class phd.candidacy.PhdProgramPublicCandidacyHashCode extends PublicCandidacyHashCode {
+	}
 
 /* End of Phd Module */
 
-
-class candidacyProcess.PublicCandidacyHashCode extends DomainObject {
-	String email;
-	String value;
-}
 
 /*
  * Relations definitions
@@ -6576,31 +6581,24 @@ relation PhdIndividualProgramProcessExecutionYear {
 	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcesses {
 		multiplicity *;
 	}
-	
 	ExecutionYear playsRole executionYear;
 }
 
 
 relation PhdProgramServiceAgreementTemplatePhdProgram {
-	
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
-		
 	phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
-
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
-
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
 		multiplicity *;
 	}
 }
 
 relation PhdProgramCandidacyProcessDocumentPerson {
-	
 	Person playsRole uploader;
-	
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole uploadedPhdCandidacyProcessDocuments {
 		multiplicity *;
 	}
@@ -6632,6 +6630,11 @@ relation PhdIndividualProgramProcessAssistantGuiding {
 	phd.PhdProgramGuiding playsRole assistantguidings {
 		multiplicity *;
 	}
+}
+
+relation PhdProgramPublicCandidacyHashCodeIndividualCandidacyProcess {
+	phd.candidacy.PhdProgramPublicCandidacyHashCode playsRole candidacyHashCode;
+	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcess;
 }
 
 /* End of Phd Module */
@@ -15784,13 +15787,13 @@ relation IndividualCandidacyIndividualCandidacyDocumentFile {
 
 relation PublicCandidacyHashCodeRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
-	candidacyProcess.PublicCandidacyHashCode playsRole candidacyHashCodes {
+	PublicCandidacyHashCode playsRole candidacyHashCodes {
 		multiplicity *;
 	}
 }
 
 relation PublicCandidacyHashCodeIndividualCandidacyProcess {
-	candidacyProcess.PublicCandidacyHashCode playsRole candidacyHashCode;
+	candidacyProcess.DegreeOfficePublicCandidacyHashCode playsRole candidacyHashCode;
 	candidacyProcess.IndividualCandidacyProcess playsRole individualCandidacyProcess;
 }
 
