@@ -894,7 +894,6 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-	
 	<!--  Degree Change -->
     <definition name="degree.change.candidacy.creation.page" extends="definition.candidacy.process">
     	<put name="body" value="/publico/candidacy/degreechange/createCandidacy.jsp"/>
@@ -915,7 +914,6 @@
 	<definition name="degree.change.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacyDocuments.jsp"/>
 	</definition>
-
 
 	<!--  Degree Transfer -->
     <definition name="degree.transfer.candidacy.creation.page" extends="definition.candidacy.process">
@@ -997,8 +995,6 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	
-	
 	<!-- Second Cycle Candidacies -->
 	<definition name="second.cycle.candidacy.process.intro" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/secondCycle/main.jsp"/>
@@ -1038,4 +1034,8 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
+	<!-- PhdProgram candidacies -->
+	<definition name="phdProgram.createCandidacyIdentity" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyIdentity.jsp"/>
+	</definition>
 </tiles-definitions>

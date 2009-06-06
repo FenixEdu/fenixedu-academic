@@ -70,8 +70,10 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
-	request.setAttribute("createCandidacyBean", new PhdProgramCandidacyProcessBean());
+	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
+	bean.setPersonBean(new PersonBean());
+	bean.setChoosePersonBean(new ChoosePersonBean());
+	request.setAttribute("createCandidacyBean", bean);
 	request.setAttribute("persons", Collections.emptyList());
 
 	return mapping.findForward("searchPerson");
