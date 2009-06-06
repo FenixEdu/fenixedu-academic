@@ -7,6 +7,14 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
+
+
+
+breadcrumb here
+breadcrumb here
+
+
+
 <h2><bean:message key="label.phd.candidacy.academicAdminOffice.createCandidacy" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -20,34 +28,24 @@
 <jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean" />
 <%--  ### End of Error Messages  ### --%>
 
-TESTE
-<br/>
-
-<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:property name="requiredMarkShown" value="true" />
-	</fr:layout>
-
-	<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentityInvalid" />
-</fr:edit>
-
-
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 
 <%--  ### End Of Context Information  ### --%>
 
 
+<%--  ### Operation Area ### --%>
 
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentification">
 
-
-<%--  ### End of Operation Area  ### --%>
-
-
-
-
-<%--  ### Buttons (e.g. Submit)  ### --%>
-
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
+	<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			<fr:property name="requiredMarkShown" value="true" />
+		</fr:layout>
+	
+		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentificationInvalid" />
+	</fr:edit>
+	
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
+</fr:form>

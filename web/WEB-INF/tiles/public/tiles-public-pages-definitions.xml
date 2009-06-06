@@ -1035,7 +1035,7 @@
 	</definition>
 	
 	<!-- PhdProgram candidacies -->
-	<definition name="phdProgram.createCandidacyIdentity" extends="definition.candidacy.process">
-		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyIdentity.jsp"/>
+	<definition name="phdProgram.createCandidacyIdentification" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyIdentification.jsp"/>
 	</definition>
 </tiles-definitions>

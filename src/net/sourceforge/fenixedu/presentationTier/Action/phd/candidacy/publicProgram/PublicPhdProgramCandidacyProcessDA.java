@@ -17,21 +17,27 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "publico")
 @Forwards( {
 
-@Forward(name = "createCandidacyIdentity", path = "phdProgram.createCandidacyIdentity")
+@Forward(name = "createCandidacyIdentification", path = "phdProgram.createCandidacyIdentification")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProcessDA {
 
-    public ActionForward prepareCreateCandidacyIdentity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", new PhdProgramCandidacyProcessBean());
-	return mapping.findForward("createCandidacyIdentity");
+	return mapping.findForward("createCandidacyIdentification");
     }
     
-    public ActionForward createCandidacyIdentityInvalid(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward createCandidacyIdentificationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject());
-	return mapping.findForward("createCandidacyIdentity");
+	return mapping.findForward("createCandidacyIdentification");
+    }
+    
+    public ActionForward createCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	// add code
+	return mapping.findForward("createCandidacyIdentification");
     }
 
     // @Override
