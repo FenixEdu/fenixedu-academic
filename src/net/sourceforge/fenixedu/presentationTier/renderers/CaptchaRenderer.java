@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Collections;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.dataTransferObject.Captcha;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
