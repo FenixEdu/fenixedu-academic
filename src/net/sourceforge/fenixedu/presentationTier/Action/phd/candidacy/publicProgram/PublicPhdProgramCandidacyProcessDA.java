@@ -28,7 +28,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProcessDA {
 	return mapping.findForward("createCandidacyIdentity");
     }
     
-    public ActionForward prepareCreateCandidacyIdentityInvalid(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward createCandidacyIdentityInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject());
 	return mapping.findForward("createCandidacyIdentity");
