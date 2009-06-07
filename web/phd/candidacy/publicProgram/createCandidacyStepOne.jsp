@@ -25,7 +25,7 @@
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=XPTO" />
+<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.personBean" />
 <%--  ### End of Error Messages  ### --%>
 
 <%-- <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p> --%>
@@ -38,7 +38,7 @@
 
 <logic:present name="candidacyBean">
 
-	<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStep2">
+	<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwo">
 		<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 		
 		<br/>
@@ -49,10 +49,10 @@
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-				<fr:property name="requiredMarkShown" value="true" />
+					<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
 		
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStep1Invalid" />
+			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
 		</fr:edit>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>

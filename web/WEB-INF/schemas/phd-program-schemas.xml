@@ -548,4 +548,39 @@
 	<slot name="email" read-only="true"/>
 </schema>
 
+<schema name="Public.PhdProgramCandidacyProcessBean.focus.area" 
+		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+	<slot name="focusArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
+		<property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdProgramCandidacyProcessBean.thesis.title" 
+		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+	<slot name="thesisTitle">
+		<property name="size" value="80"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdProgramCandidacyProcess.qualification" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />
+	</slot>
+	<slot name="mark" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="attended" layout="year-month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="maxLength" value="7" />
+		<property name="size" value="7" />
+	</slot>
+	<slot name="degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="Public.PhdProgramCandidacyProcess.referee" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean" bundle="PHD_RESOURCES">
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="institution" />
+</schema>
+
 <!-- End of public schemas -->  

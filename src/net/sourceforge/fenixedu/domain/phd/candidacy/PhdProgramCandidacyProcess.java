@@ -49,12 +49,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) object);
-
 	    result.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
-
 	    return result;
 	}
-
     }
 
     public static class UploadDocuments extends PhdActivity {
@@ -110,6 +107,20 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class AddCandidacyReferee extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    process.addCandidacyReferees(new PhdCandidacyReferee(process, (PhdCandidacyRefereeBean) object));
+	    return process;
+	}
+
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -120,17 +131,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new UploadDocuments());
 	activities.add(new DeleteDocument());
 	activities.add(new EditCandidacyDate());
+	activities.add(new AddCandidacyReferee());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean candidacyProcessBean) {
 	super();
 
+	// TODO: receive person as argument?
 	checkCandidacyDate(candidacyProcessBean.getExecutionYear(), candidacyProcessBean.getCandidacyDate());
 	setCandidacyDate(candidacyProcessBean.getCandidacyDate());
 
 	final Person person = candidacyProcessBean.getOrCreatePersonFromBean();
-	new Student(person);
-	person.setIstUsername();
+
+	// if (!person.hasStudent()) {
+	// TODO: generate when creating registration?
+	// new Student(person);
+	// }
+	// person.setIstUsername();
 
 	setCandidacy(new PHDProgramCandidacy(person));
 
@@ -138,8 +155,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    getCandidacy().setExecutionDegree(candidacyProcessBean.getExecutionDegree());
 	}
 
-	new PhdProgramCandidacyEvent(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE),
-		candidacyProcessBean.getOrCreatePersonFromBean(), this);
+	if (candidacyProcessBean.generateCandidacyDebt()) {
+	    new PhdProgramCandidacyEvent(AdministrativeOffice
+		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), candidacyProcessBean
+		    .getOrCreatePersonFromBean(), this);
+	}
     }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {

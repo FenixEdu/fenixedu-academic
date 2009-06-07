@@ -2,13 +2,16 @@ package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
 
+import org.joda.time.Partial;
+
 public class QualificationBean implements Serializable {
 
     static private final long serialVersionUID = 3778404795808964270L;
-    
+
     private QualificationType type;
     private String school;
     private String degree;
+    private Partial attended;
     private String year;
     private String mark;
 
@@ -29,6 +32,14 @@ public class QualificationBean implements Serializable {
 
     public void setSchool(String school) {
 	this.school = school;
+    }
+
+    public Partial getAttended() {
+	return attended;
+    }
+
+    public void setAttended(Partial attended) {
+	this.attended = attended;
     }
 
     public String getYear() {

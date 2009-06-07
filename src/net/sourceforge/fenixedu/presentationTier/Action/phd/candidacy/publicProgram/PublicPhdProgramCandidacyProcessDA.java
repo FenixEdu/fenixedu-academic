@@ -1,12 +1,19 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
@@ -15,6 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -29,7 +37,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "candidacyIdentificationRecovery", path = "phdProgram.candidacyIdentificationRecovery"),
 
-@Forward(name = "createCandidacyStepOne", path = "phdProgram.createCandidacyStepOne")
+@Forward(name = "createCandidacyStepOne", path = "phdProgram.createCandidacyStepOne"),
+
+@Forward(name = "createCandidacyStepTwo", path = "phdProgram.createCandidacyStepTwo"),
+
+@Forward(name = "createCandidacySuccess", path = "phdProgram.createCandidacySuccess")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -174,26 +186,144 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setEmail(hashCode.getEmail());
+	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 	bean.setCandidacyHashCode(hashCode);
 
 	request.setAttribute("candidacyBean", bean);
 	return mapping.findForward("createCandidacyStepOne");
     }
 
-    public ActionForward createCandidacyStep1Invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward createCandidacyStepOneInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
 	return mapping.findForward("createCandidacyStepOne");
     }
 
-    public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward createCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	//TODO: ..............
-	return null;
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	// TODO:IMPORTANT change when extending this candidacies to all types
+	bean.setCollaborationType(PhdIndividualProgramCollaborationType.EPFL);
+	// may be must always generate and then create exemption
+	bean.setGenerateCandidacyDebt(false);
+	// TODO: ---------------------------------------------------------------
+
+	bean.setQualifications(new ArrayList<QualificationBean>());
+	bean.setCandidacyReferees(new ArrayList<PhdCandidacyRefereeBean>());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
     }
 
-    // TODO: createCandidacyStep2 methods
-    // TODO: createCandidacyStep2Invalid and postback methods
-    // TODO: createCandidacy methods
+    public ActionForward createCandidacyStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward addQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.addQualification(new QualificationBean());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward removeQualification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.removeQualification(getIntegerFromRequest(request, "removeIndex").intValue());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward addCandidacyReferee(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.addCandidacyReferee(new PhdCandidacyRefereeBean());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward removeCandidacyReferee(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.removeCandidacyReferee(getIntegerFromRequest(request, "removeIndex").intValue());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    @Override
+    public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	try {
+
+	    // --------------------------
+	    // validate minimum documents
+	    // validate minimum referees
+	    // --------------------------
+
+	    // --------------------------
+	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING?
+	    // --------------------------
+
+	    // executeActivity(activity, activityParameter, request, mapping,
+	    // errorForward, sucessForward)
+
+	    // ExecuteProcessActivity.run(process, activityId, object)
+
+	    // Create Process Individual, Candidacy, Person
+
+	    // Guiding information
+
+	    // Qualifications
+
+	    // Referees
+
+	    // Upload documents
+
+	    // send email to candidate (can send individual process number)
+
+	    // send email to all referees
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("candidacyBean", bean);
+	    bean.clearPerson();
+	    // TODO: also clear documents content? even when is invalid?
+	    return mapping.findForward("createCandidacyStepTwo");
+	}
+
+	// page and tiles public mapping not created
+	return mapping.findForward("createCandidacySuccess");
+    }
+
+    public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	// TODO: ..............
+	return mapping.findForward("viewCandidacy");
+    }
 
 }

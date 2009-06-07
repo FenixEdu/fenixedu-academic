@@ -6447,6 +6447,11 @@ class phd.PhdProgram extends DomainObject {
 	String acronym;
 }
 
+class phd.PhdProgramFocusArea extends DomainObject {
+	DateTime whenCreated;
+	MultiLanguageString name;
+}
+
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
 		
 }
@@ -6499,8 +6504,13 @@ class phd.PhdProgramGuiding extends DomainObject {
 		String phone;
 	}
 
-	class phd.candidacy.PhdProgramPublicCandidacyHashCode extends PublicCandidacyHashCode {
-	}
+class phd.candidacy.PhdProgramPublicCandidacyHashCode extends PublicCandidacyHashCode {
+}
+
+class phd.candidacy.PhdCandidacyReferee extends PublicCandidacyHashCode {
+	String name;
+	String institution;
+}
 
 /* End of Phd Module */
 
@@ -6516,6 +6526,22 @@ class phd.PhdProgramGuiding extends DomainObject {
 relation PhdProgramRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	phd.PhdProgram playsRole phdPrograms {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramFocusAreaRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramPhdProgramFocusArea {
+	phd.PhdProgram playsRole phdPrograms {
+		multiplicity *;
+	}
+	phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
 		multiplicity *;
 	}
 }
@@ -6545,6 +6571,14 @@ relation PhdProgramDegree {
 
 relation PhdProgramPhdIndividualProgramProcess {
 	phd.PhdProgram playsRole phdProgram;
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
+		multiplicity *;
+	}
+}
+
+
+relation PhdProgramFocusAreaPhdIndividualProgramProcess {
+	phd.PhdProgramFocusArea playsRole phdProgramFocusArea;
 	phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
 		multiplicity *;
 	}
@@ -6632,9 +6666,16 @@ relation PhdIndividualProgramProcessAssistantGuiding {
 	}
 }
 
-relation PhdProgramPublicCandidacyHashCodeIndividualCandidacyProcess {
+relation PhdProgramPublicCandidacyHashCodePhdProgramCandidacyProcess {
 	phd.candidacy.PhdProgramPublicCandidacyHashCode playsRole candidacyHashCode;
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcess;
+}
+
+relation PhdProgramCandidacyProcessPhdCandidacyReferee {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcess;
+	phd.candidacy.PhdCandidacyReferee playsRole candidacyReferees {
+		multiplicity *;
+	}
 }
 
 /* End of Phd Module */
@@ -15792,7 +15833,7 @@ relation PublicCandidacyHashCodeRootDomainObject {
 	}
 }
 
-relation PublicCandidacyHashCodeIndividualCandidacyProcess {
+relation DegreeOfficePublicCandidacyHashCodeIndividualCandidacyProcess {
 	candidacyProcess.DegreeOfficePublicCandidacyHashCode playsRole candidacyHashCode;
 	candidacyProcess.IndividualCandidacyProcess playsRole individualCandidacyProcess;
 }

@@ -262,9 +262,11 @@ public class Person extends Person_Base {
 	super();
 
 	setProperties(personBean);
-
-	createLoginIdentificationAndUserIfNecessary();
 	setIsPassInKerberos(Boolean.FALSE);
+
+	if (personBean.createLoginIdentificationAndUserIfNecessary()) {
+	    createLoginIdentificationAndUserIfNecessary();
+	}
 
 	PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
 	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);

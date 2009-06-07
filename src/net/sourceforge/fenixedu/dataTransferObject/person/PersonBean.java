@@ -111,7 +111,9 @@ public class PersonBean implements Serializable {
     private DomainReference<DistrictSubdivision> districtSubdivisionOfResidenceObject;
 
     private DomainReference<Country> countryOfResidence;
-    
+
+    private boolean createLoginIdentificationAndUserIfNecessary = true;
+
     public PersonBean() {
 	super();
     }
@@ -537,7 +539,7 @@ public class PersonBean implements Serializable {
     }
 
     /*
-     * 08/05/2009 - VAT Number and Social Security Number is the same thing 
+     * 08/05/2009 - VAT Number and Social Security Number is the same thing
      */
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
@@ -620,6 +622,14 @@ public class PersonBean implements Serializable {
 
     public boolean hasStudent() {
 	return hasPerson() && getPerson().hasStudent();
+    }
+
+    public boolean createLoginIdentificationAndUserIfNecessary() {
+	return createLoginIdentificationAndUserIfNecessary;
+    }
+
+    public void setCreateLoginIdentificationAndUserIfNecessary(boolean value) {
+	this.createLoginIdentificationAndUserIfNecessary = value;
     }
 
 }

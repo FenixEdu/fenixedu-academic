@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.Serializable;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -9,8 +10,11 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 
 import org.joda.time.LocalDate;
 
@@ -41,6 +45,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private String captcha;
 
     private DomainReference<PhdProgramPublicCandidacyHashCode> candidacyHashCode;
+
+    private DomainReference<PhdProgramFocusArea> focusArea;
+
+    private List<QualificationBean> qualifications;
+
+    private List<PhdCandidacyRefereeBean> candidacyReferees;
+
+    private boolean generateCandidacyDebt = true;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -83,6 +95,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	    Person person = new Person(getPersonBean());
 	    getPersonBean().setPerson(person);
 	    return person;
+	}
+
+	if (getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)) {
+	    return getPersonBean().getPerson();
 	}
 
 	return getPersonBean().getPerson().edit(personBean);
@@ -161,4 +177,57 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.candidacyHashCode = (candidacyHashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(
 		candidacyHashCode) : null;
     }
+
+    public PhdProgramFocusArea getFocusArea() {
+	return (this.focusArea != null) ? this.focusArea.getObject() : null;
+    }
+
+    public void setFocusArea(final PhdProgramFocusArea focusArea) {
+	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
+    }
+
+    public List<QualificationBean> getQualifications() {
+	return qualifications;
+    }
+
+    public void setQualifications(List<QualificationBean> qualifications) {
+	this.qualifications = qualifications;
+    }
+
+    public void addQualification(final QualificationBean qualification) {
+	this.qualifications.add(qualification);
+    }
+
+    public void removeQualification(int index) {
+	this.qualifications.remove(index);
+    }
+
+    public List<PhdCandidacyRefereeBean> getCandidacyReferees() {
+	return candidacyReferees;
+    }
+
+    public void setCandidacyReferees(List<PhdCandidacyRefereeBean> candidacyReferees) {
+	this.candidacyReferees = candidacyReferees;
+    }
+
+    public void addCandidacyReferee(PhdCandidacyRefereeBean phdCandidacyRefereeBean) {
+	this.candidacyReferees.add(phdCandidacyRefereeBean);
+    }
+
+    public void removeCandidacyReferee(int index) {
+	this.candidacyReferees.remove(index);
+    }
+
+    public void clearPerson() {
+	getPersonBean().setPerson(null);
+    }
+
+    public boolean generateCandidacyDebt() {
+	return generateCandidacyDebt;
+    }
+
+    public void setGenerateCandidacyDebt(boolean generateCandidacyDebt) {
+	this.generateCandidacyDebt = generateCandidacyDebt;
+    }
+
 }

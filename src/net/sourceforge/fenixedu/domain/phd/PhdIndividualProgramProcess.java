@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 
@@ -41,12 +42,21 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    if (process != null && process.isCancelled()) {
 		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.is.cancelled");
 	    }
+
+	    // TODO: change this due to public candidacy (move to each
+	    // activity?)
+
 	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
+    }
+
+    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -62,6 +72,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new AddAssistantGuidingInformation());
 	activities.add(new DeleteAssistantGuiding());
 	activities.add(new CancelPhdIndividualProgramProcess());
+	activities.add(new AddCandidacyReferee());
+	activities.add(new UploadDocuments());
     }
 
     @StartActivity
@@ -280,30 +292,72 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    process.getCandidacyProcess().cancelDebt(userView.getPerson().getEmployee());
 	    return process;
 	}
-
     }
 
-    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    static public class AddCandidacyReferee extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    // nothing to be done for now
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.getCandidacyProcess().executeActivity(userView,
+		    PhdProgramCandidacyProcess.AddCandidacyReferee.class.getSimpleName(), object);
+	    return process;
+	}
+    }
+
+    static public class UploadDocuments extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.getCandidacyProcess().executeActivity(userView,
+		    PhdProgramCandidacyProcess.UploadDocuments.class.getSimpleName(), object);
+	    return process;
+	}
     }
 
     public PhdIndividualProgramProcess(PhdProgramCandidacyProcessBean bean) {
 	super();
+
 	final Person person = bean.getOrCreatePersonFromBean();
-	checkParameters(person, bean.getExecutionYear(), bean.getProgram());
+	checkParameters(person, bean.getExecutionYear(), bean.getFocusArea(), bean.getProgram());
 	setPerson(person);
-	setExecutionYear(bean.getExecutionYear());
+
+	setPhdProgramFocusArea(bean.getFocusArea());
 	setPhdProgram(bean.getProgram());
-	setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
+	setExecutionYear(bean.getExecutionYear());
+
+	setCollaborationType(bean);
 	setState(PhdIndividualProgramProcessState.CANDIDACY);
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
     }
 
-    private void checkParameters(Person person, ExecutionYear executionYear, PhdProgram phdProgram) {
+    private void setCollaborationType(PhdProgramCandidacyProcessBean bean) {
+	if (bean.getCollaborationType() != null) {
+	    setCollaborationType(bean.getCollaborationType());
+	} else {
+	    setCollaborationType(PhdIndividualProgramCollaborationType.NONE);
+	}
+    }
+
+    private void checkParameters(Person person, ExecutionYear executionYear, final PhdProgramFocusArea phdProgramFocusArea,
+	    final PhdProgram phdProgram) {
+
 	check(person, "error.phd.PhdIndividualProgramProcess.person.cannot.be.null");
 	check(executionYear, "error.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
-	check(phdProgram, "error.phd.PhdIndividualProgramProcess.phdProgram.cannot.be.null");
+
+	if (phdProgramFocusArea == null && phdProgram == null) {
+	    check(phdProgram, "error.phd.PhdIndividualProgramProcess.phdProgram.or.focus.area.cannot.be.null");
+	}
     }
 
     @Override
@@ -411,6 +465,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	// TODO: for now just check candidacy, but is necessary to check another
 	// debts?
 	return getCandidacyProcess().hasAnyPayments();
+    }
+
+    public List<PhdCandidacyReferee> getPhdCandidacyReferees() {
+	return getCandidacyProcess().getCandidacyReferees();
     }
 
     static public Set<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
