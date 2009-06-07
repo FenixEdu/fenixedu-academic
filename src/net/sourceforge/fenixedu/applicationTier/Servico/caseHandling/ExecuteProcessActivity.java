@@ -1,20 +1,40 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.caseHandling;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.Pair;
 
 public class ExecuteProcessActivity extends FenixService {
 
     @Service
-    public static Process run(Process process, String activityId, Object object) {
+    static public Process run(Process process, String activityId, Object object) {
 	return process.executeActivity(AccessControl.getUserView(), activityId, object);
     }
 
-    /*
-     * public Process run(Integer processId, String activityId, Object object) {
-     * return run(rootDomainObject.readProcessByOID(processId), activityId,
-     * object); }
+    /**
+     * <pre>
+     * Pair&lt;String, Object&gt;
+     * - left: activity id
+     * - right: activity arg
+     * </pre>
+     * 
+     * @param process
+     * @param activities
+     * @return
      */
+    @Service
+    static public Process run(final Process process, final List<Pair<String, Object>> activities) {
+	final IUserView userView = AccessControl.getUserView();
+	for (final Pair<String, Object> activity : activities) {
+	    process.executeActivity(userView, activity.getKey(), activity.getValue());
+	}
+
+	return process;
+    }
+
 }
