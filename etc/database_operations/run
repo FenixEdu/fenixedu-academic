@@ -47,3 +47,5 @@ execute "alterTableStudentInquiriesCourseResult" alterTableStudentInquiriesCours
 execute "Corrected menu from degrees management content" changedDegreesManagementMenu.sql
 
 execute "Add new columns to PublicCandidacyHashCode table" alterTablePublicCandidacyHashCode.sql
+execute "Create phd program focus area" createPhdProgramFocusAreaTable.sql
+execute "Add new columns to public candidacy hash code table" alterPublicCandidacyHashCodeTable.sql
