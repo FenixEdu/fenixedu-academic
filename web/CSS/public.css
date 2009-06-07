@@ -39,7 +39,7 @@ span.red { color: #c30 !important; }
 *:first-child+html .form1 fieldset { padding-top: 1.75em; } /* ie7 only */
  
 span.comment { font-size: 0.85em !important; color: #999; }
-
+span.required { color: #b55; }
 
 
 /***********************************************************

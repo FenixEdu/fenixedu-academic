@@ -481,4 +481,71 @@
 	<slot name="captcha" layout="captcha" />
 </schema>
 
+<schema name="Public.PhdProgramCandidacyProcessBean.editPersonalInformation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="maxLength" value="255"/>
+	</slot>
+	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="documentIdEmissionLocation">
+		<property name="size" value="15"/>
+		<property name="maxLength" value="50"/>
+	</slot>
+	<slot name="socialSecurityNumber">
+    	<property name="size" value="9"/>
+		<property name="maxLength" value="15"/>
+    </slot>
+    	<slot name="dateOfBirth">
+		<property name="size" value="12"/>
+		<property name="maxLength" value="10"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${nationality}" />
+		<property name="sortBy" value="nationality"/>
+	</slot>
+	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="40"/>
+	</slot>
+	<slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="10"/>
+	</slot>
+    <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
+	<slot name="phone">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
+        </validator>
+    </slot>
+	<slot name="mobile">
+    	<property name="size" value="15"/>
+		<property name="maxLength" value="15"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="PHD_RESOURCES" />
+        </validator>
+    </slot>
+	<slot name="email" read-only="true"/>
+</schema>
+
 <!-- End of public schemas -->  

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -26,7 +27,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createCandidacyIdentificationSuccess", path = "phdProgram.createCandidacyIdentificationSuccess"),
 
-@Forward(name = "candidacyIdentificationRecovery", path = "phdProgram.candidacyIdentificationRecovery")
+@Forward(name = "candidacyIdentificationRecovery", path = "phdProgram.candidacyIdentificationRecovery"),
+
+@Forward(name = "createCandidacyStepOne", path = "phdProgram.createCandidacyStepOne")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -139,10 +142,58 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    prefix = "/candidacies/phd-program/recovery-access";
 	} else {
 	    prefix = "/candidaturas/programa-doutoral/recuperar-acesso";
-
 	}
 	return prefix + "?hash=" + hashCode.getValue() + "&locale=" + Language.getLocale().getLanguage();
     }
 
-    // TODO: prepareCreateCandidacy methods
+    public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	// TODO: for now send directly to first page
+	return createCandidacyStepOne(mapping, actionForm, request, response);
+    }
+
+    public ActionForward createCandidacyStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final String hash = request.getParameter("hash");
+	final PhdProgramPublicCandidacyHashCode hashCode = (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(hash);
+
+	if (hashCode == null) {
+	    // TODO: if prepareCreateCandidacy is different then send that page
+	    return mapping.findForward("createCandidacyStepOne");
+	}
+
+	// TODO check for candidacy period if appliable?
+
+	if (hashCode.hasCandidacyProcess()) {
+	    // TODO check what is necessary in request to the following method
+	    return viewCandidacy(mapping, actionForm, request, response);
+	}
+
+	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
+	bean.setPersonBean(new PersonBean());
+	bean.getPersonBean().setEmail(hashCode.getEmail());
+	bean.setCandidacyHashCode(hashCode);
+
+	request.setAttribute("candidacyBean", bean);
+	return mapping.findForward("createCandidacyStepOne");
+    }
+
+    public ActionForward createCandidacyStep1Invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	return mapping.findForward("createCandidacyStepOne");
+    }
+
+    public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	//TODO: ..............
+	return null;
+    }
+
+    // TODO: createCandidacyStep2 methods
+    // TODO: createCandidacyStep2Invalid and postback methods
+    // TODO: createCandidacy methods
+
 }

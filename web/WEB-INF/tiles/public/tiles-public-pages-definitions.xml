@@ -1044,5 +1044,7 @@
 	<definition name="phdProgram.candidacyIdentificationRecovery" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/candidacyIdentificationRecovery.jsp"/>
 	</definition>
-
+	<definition name="phdProgram.createCandidacyStepOne" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyStepOne.jsp"/>
+	</definition>
 </tiles-definitions>

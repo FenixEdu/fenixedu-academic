@@ -40,6 +40,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private String captcha;
 
+    private DomainReference<PhdProgramPublicCandidacyHashCode> candidacyHashCode;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
     }
@@ -151,4 +153,12 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.captcha = captcha;
     }
 
+    public PhdProgramPublicCandidacyHashCode getCandidacyHashCode() {
+	return (this.candidacyHashCode != null) ? this.candidacyHashCode.getObject() : null;
+    }
+
+    public void setCandidacyHashCode(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
+	this.candidacyHashCode = (candidacyHashCode != null) ? new DomainReference<PhdProgramPublicCandidacyHashCode>(
+		candidacyHashCode) : null;
+    }
 }
