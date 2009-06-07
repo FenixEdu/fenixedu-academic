@@ -74,7 +74,7 @@ public class PersonBean implements Serializable {
 
     private boolean isHomepageAvailable;
 
-    private boolean isPhotoAvailable;
+    private boolean isPhotoAvailable = false;
 
     // birth information
     private YearMonthDay dateOfBirth;
