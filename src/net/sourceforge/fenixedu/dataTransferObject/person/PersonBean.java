@@ -57,7 +57,7 @@ public class PersonBean implements Serializable {
 
     private String profession;
 
-    private MaritalStatus maritalStatus;
+    private MaritalStatus maritalStatus = MaritalStatus.UNKNOWN;
 
     // contacts
     private String phone;
