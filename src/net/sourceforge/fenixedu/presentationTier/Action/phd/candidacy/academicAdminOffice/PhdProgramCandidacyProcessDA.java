@@ -56,8 +56,6 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    request.setAttribute("process", process);
 	}
 
-	request.setAttribute("process", getProcess(request));
-
 	return super.execute(mapping, actionForm, request, response);
     }
 

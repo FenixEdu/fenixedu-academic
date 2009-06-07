@@ -11,11 +11,11 @@
 <div class="breadcumbs">
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
 	<a href="http://www.ist.utl.pt/en/html/ist-epfl/">IST</a> &gt;
-	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/programa-doutoral/acesso" %>"><bean:message key="label.php.program" bundle="PHD_RESOURCES"/></a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/programa-doutoral/recuperar-acesso" %>"><bean:message key="label.php.program" bundle="PHD_RESOURCES"/></a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h2><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.public.candidacy.recover" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -24,10 +24,10 @@
 
 <%--  ### Operation Area ### --%>
 
-<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentification">
+<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=candidacyIdentificationRecovery">
 
-	<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES"/></p>
-
+	<p><bean:message key="message.email.recovery.access.process" bundle="CANDIDATE_RESOURCES"/></p>
+	
 	<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
@@ -35,7 +35,7 @@
 			<fr:property name="requiredMarkShown" value="true" />
 		</fr:layout>
 	
-		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentificationInvalid" />
+		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=candidacyIdentificationRecoveryInvalid" />
 	</fr:edit>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>

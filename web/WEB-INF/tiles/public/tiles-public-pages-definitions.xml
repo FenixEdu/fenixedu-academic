@@ -1038,4 +1038,11 @@
 	<definition name="phdProgram.createCandidacyIdentification" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyIdentification.jsp"/>
 	</definition>
+	<definition name="phdProgram.createCandidacyIdentificationSuccess" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyIdentificationSuccess.jsp"/>
+	</definition>
+	<definition name="phdProgram.candidacyIdentificationRecovery" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/candidacyIdentificationRecovery.jsp"/>
+	</definition>
+
 </tiles-definitions>

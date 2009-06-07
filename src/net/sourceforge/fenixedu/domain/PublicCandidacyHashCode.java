@@ -26,6 +26,10 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
     public boolean isFromDegreeOffice() {
 	return false;
     }
+    
+    public boolean isFromPhdProgram() {
+	return false;
+    }
 
     abstract public boolean hasCandidacyProcess();
 
