@@ -14,16 +14,20 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProcessDocument_Base {
+    
+    protected PhdProgramCandidacyProcessDocument() {
+	super();
+    }
 
     public PhdProgramCandidacyProcessDocument(PhdProgramCandidacyProcess candidacyProcess,
 	    PhdIndividualProgramDocumentType documentType, String remarks, byte[] content, String filename, Person uploader) {
-	super();
+	this();
 	init(candidacyProcess, documentType, remarks, content, filename, uploader);
 
     }
 
     @SuppressWarnings("unchecked")
-    private void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, String remarks,
+    protected void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, String remarks,
 	    byte[] content, String filename, Person uploader) {
 
 	checkParameters(candidacyProcess, documentType, content, filename, uploader);
@@ -37,7 +41,7 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 
     }
 
-    private void checkParameters(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
+    protected void checkParameters(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
 	    byte[] content, String filename, Person uploader) {
 
 	check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.candidacyProcess.cannot.be.null");
@@ -48,7 +52,6 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 	    throw new DomainException(
 		    "error.phd.candidacy.PhdProgramCandidacyProcessDocument.documentType.and.file.cannot.be.null");
 	}
-
     }
 
     /**

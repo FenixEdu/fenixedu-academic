@@ -6,6 +6,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
@@ -52,6 +53,10 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 	}
 
 	return null;
+    }
+
+    public PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
     }
 
 }

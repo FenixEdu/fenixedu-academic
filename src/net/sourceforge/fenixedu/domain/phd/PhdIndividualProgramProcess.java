@@ -44,11 +44,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 
 	    // TODO: change this due to public candidacy (move to each
-	    // activity?)
+	    // activity?) test is isMasterDegreeAdministrativeOfficeEmployee or
+	    // person?
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    // throw new PreConditionNotValidException();
+	    // }
 	}
 
 	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
@@ -62,17 +63,26 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditPersonalInformation());
+
 	activities.add(new AddQualification());
+	activities.add(new AddQualifications());
 	activities.add(new DeleteQualification());
+
 	activities.add(new AddJobInformation());
 	activities.add(new DeleteJobInformation());
+
 	activities.add(new EditIndividualProcessInformation());
+
 	activities.add(new AddGuidingInformation());
+	activities.add(new AddGuidingsInformation());
 	activities.add(new DeleteGuiding());
 	activities.add(new AddAssistantGuidingInformation());
 	activities.add(new DeleteAssistantGuiding());
+
 	activities.add(new CancelPhdIndividualProgramProcess());
-	activities.add(new AddCandidacyReferee());
+
+	activities.add(new AddCandidacyReferees());
+
 	activities.add(new UploadDocuments());
     }
 
@@ -128,14 +138,32 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    return process.addQualification(userView.getPerson(), (QualificationBean) object);
 	}
+    }
 
+    static public class AddQualifications extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+	    // no precondition to check
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    for (final QualificationBean bean : (List<QualificationBean>) object) {
+		process.addQualification(userView.getPerson(), bean);
+	    }
+	    return process;
+	}
     }
 
     static public class DeleteQualification extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -177,8 +205,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static public class DeleteJobInformation extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -231,11 +261,30 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class DeleteGuiding extends PhdActivity {
+    static public class AddGuidingsInformation extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
 	    // no precondition to check
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    for (final PhdProgramGuidingBean bean : (List<PhdProgramGuidingBean>) object) {
+		process.addGuiding(bean);
+	    }
+	    return process;
+	}
+    }
+
+    static public class DeleteGuiding extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -262,8 +311,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static public class DeleteAssistantGuiding extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
+	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@Override
@@ -276,7 +327,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static public class CancelPhdIndividualProgramProcess extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView arg1) {
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 
 	    // TODO: CHECK CONDITIONS TO CANCEL PROCESS
 
@@ -294,7 +348,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class AddCandidacyReferee extends PhdActivity {
+    static public class AddCandidacyReferees extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
@@ -305,7 +359,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 	    process.getCandidacyProcess().executeActivity(userView,
-		    PhdProgramCandidacyProcess.AddCandidacyReferee.class.getSimpleName(), object);
+		    PhdProgramCandidacyProcess.AddCandidacyReferees.class.getSimpleName(), object);
 	    return process;
 	}
     }
@@ -338,6 +392,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	setCollaborationType(bean);
 	setState(PhdIndividualProgramProcessState.CANDIDACY);
+	setThesisTitle(bean.getThesisTitle());
+
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
     }
 

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 
 import org.joda.time.LocalDate;
 
@@ -48,11 +49,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private DomainReference<PhdProgramFocusArea> focusArea;
 
+    private List<PhdProgramGuidingBean> guidings;
+
     private List<QualificationBean> qualifications;
 
     private List<PhdCandidacyRefereeBean> candidacyReferees;
-
-    private boolean generateCandidacyDebt = true;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -137,6 +138,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.collaborationType = collaborationType;
     }
 
+    public boolean hasCollaborationType() {
+	return getCollaborationType() != null;
+    }
+
     public String getOtherCollaborationType() {
 	return otherCollaborationType;
     }
@@ -186,6 +191,22 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
     }
 
+    public List<PhdProgramGuidingBean> getGuidings() {
+	return guidings;
+    }
+
+    public void setGuidings(List<PhdProgramGuidingBean> guidings) {
+	this.guidings = guidings;
+    }
+
+    public void addGuiding(final PhdProgramGuidingBean guiding) {
+	this.guidings.add(guiding);
+    }
+
+    public void removeGuiding(int index) {
+	this.guidings.remove(index);
+    }
+
     public List<QualificationBean> getQualifications() {
 	return qualifications;
     }
@@ -220,14 +241,6 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void clearPerson() {
 	getPersonBean().setPerson(null);
-    }
-
-    public boolean generateCandidacyDebt() {
-	return generateCandidacyDebt;
-    }
-
-    public void setGenerateCandidacyDebt(boolean generateCandidacyDebt) {
-	this.generateCandidacyDebt = generateCandidacyDebt;
     }
 
 }

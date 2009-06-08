@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.LocalDate;
 
@@ -31,9 +30,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	protected void processPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
+	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    // throw new PreConditionNotValidException();
+	    // }
 	}
 
 	abstract protected void activityPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView);
@@ -70,19 +69,19 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
 			    each.getFilename(), userView.getPerson());
 		}
-
 	    }
 
 	    return process;
-
 	}
-
     }
 
     public static class DeleteDocument extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
+	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,7 +96,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     public static class EditCandidacyDate extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
+	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
 	}
 
 	@SuppressWarnings("unchecked")
@@ -107,7 +109,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
-    static public class AddCandidacyReferee extends PhdActivity {
+    static public class AddCandidacyReferees extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -115,10 +117,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    process.addCandidacyReferees(new PhdCandidacyReferee(process, (PhdCandidacyRefereeBean) object));
+	    for (final PhdCandidacyRefereeBean bean : (List<PhdCandidacyRefereeBean>) object) {
+		process.addCandidacyReferees(new PhdCandidacyReferee(process, bean));
+	    }
 	    return process;
 	}
-
     }
 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
@@ -131,17 +134,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new UploadDocuments());
 	activities.add(new DeleteDocument());
 	activities.add(new EditCandidacyDate());
-	activities.add(new AddCandidacyReferee());
+	activities.add(new AddCandidacyReferees());
     }
 
-    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean candidacyProcessBean) {
+    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean) {
 	super();
 
 	// TODO: receive person as argument?
-	checkCandidacyDate(candidacyProcessBean.getExecutionYear(), candidacyProcessBean.getCandidacyDate());
-	setCandidacyDate(candidacyProcessBean.getCandidacyDate());
+	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
+	setCandidacyDate(bean.getCandidacyDate());
 
-	final Person person = candidacyProcessBean.getOrCreatePersonFromBean();
+	final Person person = bean.getOrCreatePersonFromBean();
 
 	// if (!person.hasStudent()) {
 	// TODO: generate when creating registration?
@@ -149,16 +152,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	// }
 	// person.setIstUsername();
 
+	setCandidacyHashCode(bean.getCandidacyHashCode());
 	setCandidacy(new PHDProgramCandidacy(person));
 
-	if (candidacyProcessBean.hasDegree()) {
-	    getCandidacy().setExecutionDegree(candidacyProcessBean.getExecutionDegree());
+	if (bean.hasDegree()) {
+	    getCandidacy().setExecutionDegree(bean.getExecutionDegree());
 	}
 
-	if (candidacyProcessBean.generateCandidacyDebt()) {
+	if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
 	    new PhdProgramCandidacyEvent(AdministrativeOffice
-		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), candidacyProcessBean
-		    .getOrCreatePersonFromBean(), this);
+		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), bean.getOrCreatePersonFromBean(),
+		    this);
 	}
     }
 

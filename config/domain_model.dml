@@ -175,6 +175,8 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType  
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                            	  as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
+enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
+enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantRank														  as ApplicantRank;
 
 /*
  * Value types that need special externalization
@@ -6512,6 +6514,25 @@ class phd.candidacy.PhdCandidacyReferee extends PublicCandidacyHashCode {
 	String institution;
 }
 
+class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
+	 ApplicantOverallPromise overallPromise;
+	 String comparisonGroup;
+	 ApplicantRank rank;
+	 String rankValue;
+	 String refereeName;
+	 String refereePosition;
+	 String refereeInstituition;
+	 String refereeAddress;
+	 String refereeCity;
+	 String refereeZipCode;
+	 String refereePhone;
+	 LocalDate date;
+	 String comments;
+}
+
+class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgramCandidacyProcessDocument {
+}
+
 /* End of Phd Module */
 
 
@@ -6576,7 +6597,6 @@ relation PhdProgramPhdIndividualProgramProcess {
 	}
 }
 
-
 relation PhdProgramFocusAreaPhdIndividualProgramProcess {
 	phd.PhdProgramFocusArea playsRole phdProgramFocusArea;
 	phd.PhdIndividualProgramProcess playsRole individualProgramProcesses {
@@ -6617,7 +6637,6 @@ relation PhdIndividualProgramProcessExecutionYear {
 	}
 	ExecutionYear playsRole executionYear;
 }
-
 
 relation PhdProgramServiceAgreementTemplatePhdProgram {
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
@@ -6676,6 +6695,37 @@ relation PhdProgramCandidacyProcessPhdCandidacyReferee {
 	phd.candidacy.PhdCandidacyReferee playsRole candidacyReferees {
 		multiplicity *;
 	}
+}
+
+relation PhdCandidacyRefereeLetterRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.candidacy.PhdCandidacyRefereeLetter playsRole phdCandidacyRefereeLetters {
+		multiplicity *;
+	}
+}
+
+relation PhdCandidacyRefereePhdCandidacyRefereeLetter {
+	phd.candidacy.PhdCandidacyRefereeLetter playsRole letter;
+	phd.candidacy.PhdCandidacyReferee playsRole candidacyReferee;
+}
+
+relation PhdProgramCandidacyProcessPhdCandidacyRefereeLetter {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcess;
+	phd.candidacy.PhdCandidacyRefereeLetter playsRole refereeLetters {
+		multiplicity *;
+	}
+}
+
+relation PhdCandidacyRefereeLetterPhdCandidacyRefereeLetterFile {
+	phd.candidacy.PhdCandidacyRefereeLetter playsRole letter;
+	phd.candidacy.PhdCandidacyRefereeLetterFile playsRole file;
+}
+
+relation PhdCandidacyRefereeLetterCountry {
+	Country playsRole refereeCountry;
+	phd.candidacy.PhdCandidacyRefereeLetter playsRole refereeLetters {
+		multiplicity *;
+	} 
 }
 
 /* End of Phd Module */

@@ -13,7 +13,7 @@ public enum PhdIndividualProgramCollaborationType {
 
     MIT,
 
-    EPFL,
+    EPFL(false, false),
 
     NONE,
 
@@ -22,13 +22,19 @@ public enum PhdIndividualProgramCollaborationType {
     OTHER(true);
 
     private boolean needExtraInformation;
+    private boolean generateCandidacyDebt;
 
-    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation) {
+    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation, final boolean generateCandidacyDebt) {
 	this.needExtraInformation = needExtraInformation;
+	this.generateCandidacyDebt = generateCandidacyDebt;
     }
 
     private PhdIndividualProgramCollaborationType() {
-	this(false);
+	this(false, true);
+    }
+
+    private PhdIndividualProgramCollaborationType(final boolean needExtraInformation) {
+	this(needExtraInformation, true);
     }
 
     public String getLocalizedName() {
@@ -45,6 +51,10 @@ public enum PhdIndividualProgramCollaborationType {
 
     public boolean needExtraInformation() {
 	return needExtraInformation;
+    }
+
+    public boolean generateCandidacyDebt() {
+	return generateCandidacyDebt;
     }
 
 }
