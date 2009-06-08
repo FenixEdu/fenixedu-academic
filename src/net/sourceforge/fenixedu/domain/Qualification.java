@@ -71,18 +71,9 @@ public class Qualification extends Qualification_Base {
 	setType(bean.getType());
 	setSchool(bean.getSchool());
 	setDegree(bean.getDegree());
-	setDate(bean);
+	setAttendedBegin(bean.getAttendedBegin());
+	setAttendedEnd(bean.getAttendedEnd());
 	setMark(bean.getMark());
-    }
-
-    private void setDate(final QualificationBean bean) {
-	if (bean.getAttended() != null) {
-	    final Partial partial = bean.getAttended();
-	    setDateYearMonthDay(new YearMonthDay(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType
-		    .monthOfYear()), 1));
-	} else {
-	    setDateYearMonthDay(new YearMonthDay(Integer.valueOf(bean.getYear()), 1, 1));
-	}
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,12 +15,15 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualifications;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -48,6 +52,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Forward(name = "createCandidacyStepOne", path = "phdProgram.createCandidacyStepOne"),
 
 @Forward(name = "createCandidacyStepTwo", path = "phdProgram.createCandidacyStepTwo"),
+
+@Forward(name = "createCandidacyStepThree", path = "phdProgram.createCandidacyStepThree"),
 
 @Forward(name = "createCandidacySuccess", path = "phdProgram.createCandidacySuccess")
 
@@ -190,6 +196,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("createCandidacyStepOne");
     }
 
+    public ActionForward returnCreateCandidacyStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("createCandidacyStepOne");
+    }
+
     public ActionForward createCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -202,6 +215,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
 	bean.setQualifications(new ArrayList<QualificationBean>());
 	bean.setCandidacyReferees(new ArrayList<PhdCandidacyRefereeBean>());
+	bean.setCurriculumVitae(createCurriculumVitaeDocumentBean());
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
@@ -209,9 +223,22 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
+    private PhdCandidacyDocumentUploadBean createCurriculumVitaeDocumentBean() {
+	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
+	bean.setType(PhdIndividualProgramDocumentType.CV);
+	return bean;
+    }
+
     public ActionForward createCandidacyStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward returnCreateCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
@@ -290,6 +317,24 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
+    public ActionForward createCandidacyStepThree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	bean.setCurriculumVitae(createCurriculumVitaeDocumentBean());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepThree");
+    }
+
+    public ActionForward createCandidacyStepThreeInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	return mapping.findForward("createCandidacyStepThree");
+    }
+
     @Override
     public ActionForward createCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -303,7 +348,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    // --------------------------
 
 	    // --------------------------
+	    // **********************************************************
 	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING ????
+	    // **********************************************************
 	    // --------------------------
 	    // Create Process Individual, Candidacy, Person
 	    CreateNewProcess.run(PhdIndividualProgramProcess.class, bean, buildActivities(bean));
@@ -317,17 +364,23 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("candidacyBean", bean);
 	    bean.clearPerson();
-	    // TODO: also clear documents content? even when is invalid?
+	    clearDocumentsInformation(bean);
 	    return mapping.findForward("createCandidacyStepTwo");
 	}
 
-	// page and tiles public mapping not created
 	return mapping.findForward("createCandidacySuccess");
     }
 
-    private List<Pair<Class, Object>> buildActivities(PhdProgramCandidacyProcessBean bean) {
+    private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
+	bean.getCurriculumVitae().setFile(null);
+	RenderUtils.invalidateViewState("candidacyBean.curriculumVitae");
 
-	final List<Pair<Class, Object>> result = new ArrayList<Pair<Class, Object>>();
+	// TODO: add another documents
+    }
+
+    private List<Pair<Class<?>, Object>> buildActivities(PhdProgramCandidacyProcessBean bean) {
+
+	final List<Pair<Class<?>, Object>> result = new ArrayList<Pair<Class<?>, Object>>();
 
 	// Guiding information
 	result.add(pair(AddGuidingsInformation.class, bean.getGuidings()));
@@ -339,21 +392,25 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	result.add(pair(AddCandidacyReferees.class, bean.getCandidacyReferees()));
 
 	// Upload documents
-	// TODO: add here
+	// TODO: add all documents in here (for now use only cv)
+	result.add(pair(UploadDocuments.class, Collections.singletonList(bean.getCurriculumVitae())));
 
 	return result;
     }
 
-    private Pair<Class, Object> pair(final Class class1, final Object object) {
-	return new Pair<Class, Object>(class1, object);
+    private Pair<Class<?>, Object> pair(final Class<?> class1, final Object object) {
+	return new Pair<Class<?>, Object>(class1, object);
     }
 
     public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final String hash = request.getParameter("hash");
-	final PhdProgramPublicCandidacyHashCode hashCode = (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
-		.getPublicCandidacyCodeByHash(hash);
+	return viewCandidacy(mapping, request, (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(request.getParameter("hash")));
+    }
+
+    private ActionForward viewCandidacy(ActionMapping mapping, HttpServletRequest request,
+	    final PhdProgramPublicCandidacyHashCode hashCode) {
 
 	if (hashCode == null) {
 	    // TODO: if prepareCreateCandidacy is different then send to that
@@ -361,7 +418,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return mapping.findForward("createCandidacyStepOne");
 	}
 
-	request.setAttribute("hash", hash);
+	request.setAttribute("hash", hashCode.getValue());
 	request.setAttribute("IndividualProgramProcess", hashCode.getIndividualProgramProcess());
 
 	return mapping.findForward("viewCandidacy");

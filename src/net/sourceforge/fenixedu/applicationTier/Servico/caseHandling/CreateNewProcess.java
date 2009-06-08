@@ -39,11 +39,11 @@ public class CreateNewProcess extends FenixService {
      * @return
      */
     @Service
-    public static Process run(Class<? extends Process> processClass, Object object, final List<Pair<Class, Object>> activities) {
+    public static Process run(Class<? extends Process> processClass, Object object, final List<Pair<Class<?>, Object>> activities) {
 	final IUserView userView = AccessControl.getUserView();
 	final Process process = Process.createNewProcess(userView, processClass, object);
 
-	for (final Pair<Class, Object> activity : activities) {
+	for (final Pair<Class<?>, Object> activity : activities) {
 	    process.executeActivity(userView, activity.getKey().getSimpleName(), activity.getValue());
 	}
 

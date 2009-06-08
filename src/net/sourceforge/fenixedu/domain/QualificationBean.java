@@ -11,7 +11,8 @@ public class QualificationBean implements Serializable {
     private QualificationType type;
     private String school;
     private String degree;
-    private Partial attended;
+    private Partial attendedBegin;
+    private Partial attendedEnd;
     private String year;
     private String mark;
 
@@ -34,12 +35,20 @@ public class QualificationBean implements Serializable {
 	this.school = school;
     }
 
-    public Partial getAttended() {
-	return attended;
+    public Partial getAttendedBegin() {
+	return attendedBegin;
     }
 
-    public void setAttended(Partial attended) {
-	this.attended = attended;
+    public void setAttendedBegin(Partial attendedBegin) {
+	this.attendedBegin = attendedBegin;
+    }
+
+    public Partial getAttendedEnd() {
+	return attendedEnd;
+    }
+
+    public void setAttendedEnd(Partial attendedEnd) {
+	this.attendedEnd = attendedEnd;
     }
 
     public String getYear() {

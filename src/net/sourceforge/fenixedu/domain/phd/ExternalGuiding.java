@@ -14,7 +14,7 @@ public class ExternalGuiding extends ExternalGuiding_Base {
     @Override
     void edit(final String name, final String qualification, final String workLocation, final String email) {
 	check(name, "error.ExternalGuiding.invalid.name");
-	check(qualification, "error.ExternalGuiding.invalid.qualification");
+	// check(qualification, "error.ExternalGuiding.invalid.qualification");
 	check(workLocation, "error.ExternalGuiding.invalid.workLocation");
 	check(email, "error.ExternalGuiding.invalid.email");
 

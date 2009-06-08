@@ -22,7 +22,7 @@
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.focus.area&viewStateId=candidacyBean.thesis.title" />
+<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.focus.area" />
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Operation Area ### --%>
@@ -30,13 +30,11 @@
 <fr:form id="candidacyForm" action="/candidacies/phdProgramCandidacyProcess.do" >
 
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	<input type="hidden" id="methodId" name="method" value="createCandidacy"/>
+	<input type="hidden" id="methodId" name="method" value="createCandidacyStepThree"/>
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
-
 	
 	<h2 class="mtop1"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
-
 	
 	<h3 class="mtop15"><bean:message key="title.public.phd.focus.area" bundle="PHD_RESOURCES"/></h3>
 
@@ -102,8 +100,8 @@
 	
 
 	<h3 class="mtop15"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h3>
-	<bean:message key="title.public.phd.reference.letters.authors.note" bundle="PHD_RESOURCES" />	
-
+	<bean:message key="label.phd.public.reference.letters.authors.note" bundle="PHD_RESOURCES" />	
+	<br/>
 	<logic:notEmpty name="candidacyBean" property="candidacyReferees">
 		<logic:iterate id="referee" name="candidacyBean" property="candidacyReferees" indexId="index">
 			<strong><%= index.intValue() + 1 %>.</strong>
@@ -120,10 +118,8 @@
 	</logic:notEmpty>
 	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addCandidacyReferee\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
 	
-	<%-- Document uploads in here? --%>
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepOne'; document.getElementById('candidacyForm').submit();" %>"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
 
 	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>	

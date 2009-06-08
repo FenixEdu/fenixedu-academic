@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Create phd candidacy referee letter table and relations" createPhdCandidacyRefereeLetterTable.sql
+
+execute "Add new columns to Qualification table" addColumnsToQualificationTable.sql

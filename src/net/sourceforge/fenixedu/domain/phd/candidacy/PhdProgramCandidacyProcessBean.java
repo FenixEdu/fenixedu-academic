@@ -55,6 +55,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private List<PhdCandidacyRefereeBean> candidacyReferees;
 
+    private PhdCandidacyDocumentUploadBean curriculumVitae;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
     }
@@ -241,6 +243,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void clearPerson() {
 	getPersonBean().setPerson(null);
+    }
+
+    public PhdCandidacyDocumentUploadBean getCurriculumVitae() {
+	return curriculumVitae;
+    }
+
+    public void setCurriculumVitae(PhdCandidacyDocumentUploadBean curriculumVitae) {
+	this.curriculumVitae = curriculumVitae;
     }
 
 }
