@@ -55,7 +55,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
     public static Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {
 
 	final Alumni alumni = new AlumniManager().registerAlumni(studentNumber, documentIdNumber, email);
-	sendPublicAccessMail(alumni);
+	sendPublicAccessMail(alumni, email);
 	return alumni;
     }
 

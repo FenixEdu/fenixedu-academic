@@ -29,7 +29,7 @@ public class AlumniNotificationService extends FenixService {
 	return Collections.singletonList(Recipient.newInstance(new PersonGroup(alumni.getStudent().getPerson())));
     }
 
-    protected static void sendPublicAccessMail(final Alumni alumni) {
+    protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {
 
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
 
@@ -39,7 +39,7 @@ public class AlumniNotificationService extends FenixService {
 		person.getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(), ResourceBundle
 			.getBundle("resources.GlobalResources").getString("fenix.url"));
 
-	sendEmail(getAlumniRecipients(alumni), subject, body, null);
+	sendEmail(Collections.EMPTY_LIST, subject, body, alumniEmail);
     }
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
