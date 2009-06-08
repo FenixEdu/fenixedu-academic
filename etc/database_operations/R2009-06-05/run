@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "alterTableStudentInquiriesCourseResult" alterTableStudentInquiriesCourseResult.sql
+execute "Corrected menu from degrees management content" changedDegreesManagementMenu.sql
