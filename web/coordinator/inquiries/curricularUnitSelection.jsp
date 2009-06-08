@@ -27,9 +27,6 @@ div.progress-container > div {
 
 <h2><bean:message key="title.inquiries.resultsWithDescription" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<p>
-	<bean:message key="message.inquiries.coordinator.instructions" bundle="INQUIRIES_RESOURCES"/>
-</p>
 
 <html:form action="/viewInquiriesResults.do">
 	<html:hidden property="method" value="prepare"/>
@@ -50,9 +47,22 @@ div.progress-container > div {
 	</table>
 </html:form>
 
+<h2><bean:message key="title.coordinatorExecutionDegreeCoursesReport.withSigla" bundle="INQUIRIES_RESOURCES"/></h2>
+
 <c:if test="${(not empty executionDegreeCoursesReport) and not (empty executionDegreeCoursesReport.executionInterval.coordinatorReportResponsePeriod)}">
     <div class="mtop1">
         <bean:write name="executionDegreeCoursesReport" property="executionInterval.coordinatorReportResponsePeriod.introduction" filter="false"/>
+        
+        <p>De seguida apresenta-se informação sobre os resultados dos Inquéritos aos alunos, dos Relatórios de Docência, preenchidos por cada elemento do Corpo Docente e pelo Responsável por UC, e dos Relatórios de Discência, preenchidos pelos Delegados de Curso , para cada UC do curso.</p> 
+        
+        <p>No primeiro grupo de UC estarão aquelas onde foram identificados resultados a melhorar, sendo que algumas apresentam resultados a melhorar em mais do que um grupo de questões e para mais de metade dos pares Docente/tipo de aulas que leccionaram (auditorias). Nos segundo e terceiro grupos estão, respectivamente, as UC cujos docentes tiveram resultados excelentes e as restantes UC.</p>
+        
+        <p>Para cada UC é possível introduzir um comentário individual aos resultados; para as UC em condições de serem auditadas é obrigatório o registo de medidas correctivas a serem adoptadas, incluindo a respectiva calendarização.</p>
+        
+        <p>No final desta página é solicitado o registo dos seguintes pontos que compõem o RSCC: <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;- Comentário Global ao funcionamento e aos resultados das UC do curso;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;- Síntese das medidas correctivas a serem adoptadas na sequência de resultados insatisfatórios;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;- a identificação de boas práticas de ensino e aprendizagem desenvolvidas pelos Docentes, com vista a uma sistematização e disseminação das mesmas.</p>
     </div>
 </c:if>
 
