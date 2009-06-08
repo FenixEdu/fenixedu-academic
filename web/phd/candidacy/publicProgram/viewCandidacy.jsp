@@ -6,6 +6,7 @@
 <html:xhtml/>
 
 <%-- ### Title #### --%>
+<%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
 	<a href="http://www.ist.utl.pt/en/html/ist-epfl/">IST</a> &gt;
@@ -63,7 +64,7 @@
 	</fr:edit>
 
 	
-	<h3 class="mtop15"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/></h3>
+	<h3 class="mtop15"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h3>
 
 	<logic:notEmpty name="candidacyBean" property="guidings">
 		<logic:iterate id="guiding" name="candidacyBean" property="guidings" indexId="index">
@@ -102,8 +103,7 @@
 	
 
 	<h3 class="mtop15"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h3>
-	<bean:message key="title.public.phd.reference.letters.authors.note" bundle="PHD_RESOURCES" />	
-
+	
 	<logic:notEmpty name="candidacyBean" property="candidacyReferees">
 		<logic:iterate id="referee" name="candidacyBean" property="candidacyReferees" indexId="index">
 			<strong><%= index.intValue() + 1 %>.</strong>
@@ -124,7 +124,6 @@
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
-
 	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>	
 
