@@ -22,7 +22,7 @@
 			<fr:form action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>">
 				<fr:edit id="roleBean" action="<%="/activities/editResearchActivity.do?method=createNewParticipationRole&" + parameter%>" name="participationRoleBean" schema="<%= schema %>" >
 					<fr:destination name="invalid" path="<%="/activities/editResearchActivity.do?method=prepareCreateNew" + activityType + "ParticipationRole&" + parameter%>"/>	
-					<fr:destination name="cancel" path="<%="/activities/editResearchActivity.do?method=prepareEditParticipants&" + parameter%>"/>
+					<fr:destination name="cancel" path="<%="/activities/editResearchActivity.do?method=prepareEditJournalIssueParticipants&" + parameter%>"/>
 			 	    <fr:layout name="tabular">
 			    	    <fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025 mbottom0"/>
 			        	<fr:property name="columnClasses" value="width8em,width50em,tdclear tderror1"/>
