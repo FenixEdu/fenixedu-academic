@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -542,6 +543,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public List<PhdProgramCandidacyProcessDocument> getCandidacyUploadedDocuments() {
 	return getCandidacyProcess().getDocuments();
+    }
+
+    public PhdProgramPublicCandidacyHashCode getCandidacyProcessHashCode() {
+	return getCandidacyProcess().getCandidacyHashCode();
     }
 
     static public Set<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {

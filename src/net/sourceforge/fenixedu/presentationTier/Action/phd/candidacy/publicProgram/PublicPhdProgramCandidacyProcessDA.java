@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPerso
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -72,6 +73,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+
+	final String hash = request.getParameter("hash");
+	final PhdProgramPublicCandidacyHashCode hashCode = (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(hash);
+	if (hashCode != null) {
+	    return viewCandidacy(mapping, request, hashCode);
+	}
+
 	request.setAttribute("candidacyBean", new PhdProgramCandidacyProcessBean());
 	return mapping.findForward("createCandidacyIdentification");
     }
@@ -103,7 +112,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.send.link.to.submission.form");
 	final String body = bundle.getString("message.phd.email.body.send.link.to.submission.form");
 	hashCode.sendEmail(subject, String.format(body, getFullLink(getSubmissionLinkPrefix(), request, hashCode)));
@@ -140,10 +149,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
 	final String body = bundle.getString("message.phd.email.body.recovery.access");
-	final String link = getFullLink(getRecoveryLinkPrefix(), request, candidacyHashCode);
+	final String link = getFullLink(getCandidacyAccessLinkPrefix(), request, candidacyHashCode);
 	candidacyHashCode.sendEmail(subject, String.format(body, link, candidacyHashCode.getPhdProgramCandidacyProcess()
 		.getProcessNumber()));
     }
@@ -163,9 +172,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		: "/candidaturas/programa-doutoral/submissao";
     }
 
-    private String getRecoveryLinkPrefix() {
-	return Language.getLanguage().equals(Language.en) ? "/candidacies/phd-program/recovery-access"
-		: "/candidaturas/programa-doutoral/recuperar-acesso";
+    private String getCandidacyAccessLinkPrefix() {
+	return Language.getLanguage().equals(Language.en) ? "/candidacies/phd-program/access"
+		: "/candidaturas/programa-doutoral/acesso";
     }
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -388,9 +397,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	    }
 
-	    // --------------------------
-	    // TODO: validate minimum referees
-	    // --------------------------
+	    // check for CANDIDACY PERIOD?
 
 	    // --------------------------
 	    // **********************************************************
@@ -406,19 +413,16 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	    // **********************************************************
 	    // --------------------------
-	    CreateNewProcess.run(PhdIndividualProgramProcess.class, bean, buildActivities(bean));
+	    /*
+	     * 
+	     * CHECK IF CANDIDACY EMAIL REFEREE IS EQUAL TO CANDIDATES
+	     */
 
-	    // TODO:------------------------------
-	    // TODO: send email to all referees? Create referees
-	    // TODO:----------------------------
+	    final PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) CreateNewProcess.run(
+		    PhdIndividualProgramProcess.class, bean, buildActivities(bean));
 
-	    // sendEmailForApplicationSuccessfullySubmited(bean.
-	    // getCandidacyHashCode(),
-	    // request); also use this method when recovering
-
-	    // TODO:------------------------------
-	    // TODO: send email to all referees? Create referees
-	    // TODO:----------------------------
+	    sendApplicationSuccessfullySubmitedEmail(bean.getCandidacyHashCode(), request);
+	    sendCandidacyRefereesEmail(process, request);
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
@@ -429,6 +433,40 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	return mapping.findForward("createCandidacySuccess");
+    }
+
+    private void sendApplicationSuccessfullySubmitedEmail(final PhdProgramPublicCandidacyHashCode hashCode,
+	    final HttpServletRequest request) {
+
+	// TODO: if candidacy period exists, then change body message to send
+	// candidacy limit end date
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+	final String subject = bundle.getString("message.phd.email.subject.application.submited");
+	final String body = bundle.getString("message.phd.email.body.application.submited");
+	final String link = getFullLink(getCandidacyAccessLinkPrefix(), request, hashCode);
+	hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(), link));
+    }
+
+    private void sendCandidacyRefereesEmail(final PhdIndividualProgramProcess process, final HttpServletRequest request) {
+	// TODO: if candidacy period exists, then change body message to send
+	// candidacy limit end date
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+	final String subject = String.format(bundle.getString("message.phd.email.subject.referee.form"), process.getPerson()
+		.getName());
+	final String body = bundle.getString("message.phd.email.body.referee.form");
+	final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, process.getCandidacyProcessHashCode());
+	final String finalBody = String.format(body, process.getPerson().getName(), link);
+
+	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
+	    referee.sendEmail(subject, finalBody);
+	}
+    }
+
+    private String getCandidacyRefereeAccessLinkPrefix() {
+	return Language.getLanguage().equals(Language.en) ? "/candidacies/phd-program/referee-form"
+		: "/candidaturas/programa-doutoral/carta-referencia";
     }
 
     private boolean hasMinimumDocuments(final HttpServletRequest request) {
