@@ -113,6 +113,8 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	if (person != null && person.hasRole(RoleType.EMPLOYEE)) {
 	    request.setAttribute("isEmployee", true);
 	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+	} else {
+	    request.setAttribute("isEmployee", false);
 	}
     }
 
