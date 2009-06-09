@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,13 +21,16 @@ public class SetParkingCardId extends FenixService {
     }
 
     private static final Set<String> allowedHosts = new HashSet<String>();
+
     private static final String password;
     static {
 	final String allowedHostString = PropertiesManager.getProperty("parkingCardId.admin.allowed.hosts");
 	if (allowedHostString != null) {
 	    final String[] allowedHostTokens = allowedHostString.split(",");
 	    for (int i = 0; i < allowedHostTokens.length; i++) {
-		allowedHosts.add(allowedHostTokens[i]);
+		if (!StringUtils.isEmpty(allowedHostTokens[i])) {
+		    allowedHosts.add(allowedHostTokens[i]);
+		}
 	    }
 	}
 	password = PropertiesManager.getProperty("parkingCardId.admin.password");
@@ -33,7 +38,7 @@ public class SetParkingCardId extends FenixService {
 
     public static boolean isAllowed(final String host, final String ip, final String password) {
 	return SetParkingCardId.password != null && SetParkingCardId.password.equals(password)
-		&& (allowedHosts.contains(host) || allowedHosts.contains(ip));
+		&& (allowedHosts.isEmpty() || allowedHosts.contains(host) || allowedHosts.contains(ip));
     }
 
     private static String set(final String identificationCardCode, final Long parkingCardID) throws FenixServiceException {
