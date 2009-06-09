@@ -41,7 +41,7 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    private void reloadRenderers() throws ServletException {
+    protected void reloadRenderers() throws ServletException {
 	new ConfigurationReader().readAll(getServlet().getServletContext());
     }
 

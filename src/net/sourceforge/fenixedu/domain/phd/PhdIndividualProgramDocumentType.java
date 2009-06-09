@@ -9,6 +9,10 @@ public enum PhdIndividualProgramDocumentType {
     CV,
 
     DEGREE_FINALIZATION_CERTIFICATE,
+    
+    HABILITATION_CERTIFICATE_DOCUMENT,
+    
+    REPORT_OR_WORK_DOCUMENT,
 
     ID_DOCUMENT,
 
@@ -23,6 +27,8 @@ public enum PhdIndividualProgramDocumentType {
     ASSISTENT_GUIDER_ACCEPTANCE_LETTER,
 
     MOTIVATION_LETTER,
+    
+    RESEARCH_PLAN,
 
     OTHER;
 

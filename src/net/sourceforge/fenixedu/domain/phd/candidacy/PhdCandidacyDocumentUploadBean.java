@@ -58,6 +58,10 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 	}
     }
 
+    public void removeFile() {
+	setFile(null);
+    }
+
     public String getFilename() {
 	return filename;
     }
@@ -67,7 +71,7 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
     }
 
     public boolean hasAnyInformation() {
-	return this.type != null || !StringUtils.isEmpty(this.filename) || this.fileContent != null;
+	return this.type != null && !StringUtils.isEmpty(this.filename) && this.fileContent != null;
     }
 
     public String getRemarks() {

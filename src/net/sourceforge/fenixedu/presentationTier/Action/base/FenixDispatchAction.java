@@ -40,9 +40,11 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -399,7 +401,23 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	stringBuilder.append(currentContextPath);
 
 	return new FenixActionForward(request, new ActionForward(stringBuilder.toString(), true));
-
     }
 
+    public List<IViewState> getViewStatesWithPrefixId(final String prefixId) {
+	final List<IViewState> viewStates = (List<IViewState>) RenderersRequestProcessorImpl.getCurrentRequest().getAttribute(
+		LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+
+	final List<IViewState> result = new ArrayList<IViewState>();
+
+	if (viewStates != null) {
+	    for (final IViewState state : viewStates) {
+		if (state.getId().startsWith(prefixId)) {
+		    result.add(state);
+		}
+	    }
+	}
+
+	return result;
+
+    }
 }

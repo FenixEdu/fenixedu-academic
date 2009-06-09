@@ -1072,3 +1072,31 @@ div.flowerror_hide span span span span { display: none; }
 
 .marker { background: #fffbc7; padding: 2px; }
 .lightbulb { background: url(http://www.ist.utl.pt/img/icon_lightbulb.gif) no-repeat 10px 0px; padding-left: 35px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.error3 {
+background-color: #ffeadd;
+color: #a00;
+border-top: 1px solid #c33;
+border-bottom: 1px solid #c33;
+padding: 4px 5px 5px 5px;
+}

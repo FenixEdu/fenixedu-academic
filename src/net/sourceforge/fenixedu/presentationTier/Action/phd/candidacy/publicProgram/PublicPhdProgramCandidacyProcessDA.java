@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,6 +32,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -59,6 +59,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
+
+    static private final int MINIMUM_HABILITATIONS_AND_CERTIFICATES = 2;
+    static private final int MINIMUM_CANDIDACY_REFEREES = 3;
 
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -176,8 +179,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	// TODO check for candidacy period if appliable?
 
 	if (hashCode.hasCandidacyProcess()) {
-	    // TODO check what is necessary in request to the following method
-	    return viewCandidacy(mapping, actionForm, request, response);
+	    return viewCandidacy(mapping, request, hashCode);
 	}
 
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
@@ -215,18 +217,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
 	bean.setQualifications(new ArrayList<QualificationBean>());
 	bean.setCandidacyReferees(new ArrayList<PhdCandidacyRefereeBean>());
-	bean.setCurriculumVitae(createCurriculumVitaeDocumentBean());
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepTwo");
-    }
-
-    private PhdCandidacyDocumentUploadBean createCurriculumVitaeDocumentBean() {
-	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
-	bean.setType(PhdIndividualProgramDocumentType.CV);
-	return bean;
     }
 
     public ActionForward createCandidacyStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -237,7 +232,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward returnCreateCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	request.setAttribute("candidacyBean", bean);
+	clearDocumentsInformation(bean);
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("createCandidacyStepTwo");
     }
@@ -254,7 +251,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepTwo");
-
     }
 
     public ActionForward removeGuiding(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -309,7 +305,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
-	bean.removeCandidacyReferee(getIntegerFromRequest(request, "removeIndex").intValue());
+	if (bean.getCandidacyReferees().size() > MINIMUM_CANDIDACY_REFEREES) {
+	    bean.removeCandidacyReferee(getIntegerFromRequest(request, "removeIndex").intValue());
+	}
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
@@ -321,12 +319,44 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
-	bean.setCurriculumVitae(createCurriculumVitaeDocumentBean());
+
+	bean.setCurriculumVitae(createDocumentBean(PhdIndividualProgramDocumentType.CV));
+	bean.setIdentificationDocument(createDocumentBean(PhdIndividualProgramDocumentType.ID_DOCUMENT));
+	bean.setMotivationLetter(createDocumentBean(PhdIndividualProgramDocumentType.MOTIVATION_LETTER));
+	bean.setSocialSecurityDocument(createDocumentBean(PhdIndividualProgramDocumentType.SOCIAL_SECURITY));
+	bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
+	bean.setReportOrWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.REPORT_OR_WORK_DOCUMENT));
+	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments());
+	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepThree");
+    }
+
+    private PhdCandidacyDocumentUploadBean createDocumentBean(final PhdIndividualProgramDocumentType type) {
+	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
+	bean.setType(type);
+	return bean;
+    }
+
+    private List<PhdCandidacyDocumentUploadBean> createHabilitationCertificateDocuments() {
+	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(2);
+	result.add(createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+	result.add(createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+	return result;
+    }
+
+    private List<PhdCandidacyDocumentUploadBean> createPhdGuidingLetters(final PhdProgramCandidacyProcessBean bean) {
+	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(bean.getGuidings()
+		.size());
+	if (bean.hasAnyGuiding()) {
+	    for (int i = 0; i < bean.getGuidings().size(); i++) {
+		result.add(createDocumentBean(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER));
+	    }
+	}
+	return result;
     }
 
     public ActionForward createCandidacyStepThreeInvalid(ActionMapping mapping, ActionForm actionForm,
@@ -342,58 +372,158 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
 	try {
 
+	    if (!hasMinimumDocuments(request)) {
+		clearDocumentsInformation(bean);
+		return createCandidacyStepThreeInvalid(mapping, form, request, response);
+	    }
+
 	    // --------------------------
-	    // TODO: validate minimum documents
 	    // TODO: validate minimum referees
 	    // --------------------------
 
 	    // --------------------------
 	    // **********************************************************
-	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING ????
+	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING or use ist number
+	    // ????
+
+	    /*
+	     * then check by that number and if information is correct use,
+	     * otherwise error
+	     * 
+	     * and if exists any user with document id equal then error
+	     */
+
 	    // **********************************************************
 	    // --------------------------
-	    // Create Process Individual, Candidacy, Person
 	    CreateNewProcess.run(PhdIndividualProgramProcess.class, bean, buildActivities(bean));
+	    sendSubmissionEmailForCandidacy(bean.getCandidacyHashCode(), request);
 
-	    // TODO: send email to candidate (can send individual process
-	    // number)
-
-	    // TODO: send email to all referees
+	    // TODO:------------------------------
+	    // TODO: send email to all referees? Create referees 
+	    // TODO:----------------------------
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    request.setAttribute("candidacyBean", bean);
 	    bean.clearPerson();
 	    clearDocumentsInformation(bean);
-	    return mapping.findForward("createCandidacyStepTwo");
+	    request.setAttribute("candidacyBean", bean);
+	    return mapping.findForward("createCandidacyStepThree");
 	}
 
 	return mapping.findForward("createCandidacySuccess");
     }
 
+    private boolean hasMinimumDocuments(final HttpServletRequest request) {
+	boolean result = true;
+
+	if (!RenderUtils.getViewState("candidacyBean.curriculumVitae").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.curriculumVitae.not.valid");
+	    result = false;
+	}
+
+	if (!RenderUtils.getViewState("candidacyBean.identificationDocument").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.identificationDocument.not.valid");
+	    result = false;
+	}
+
+	if (!RenderUtils.getViewState("candidacyBean.motivationLetter").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.motivationLetter.not.valid");
+	    result = false;
+	}
+
+	if (!RenderUtils.getViewState("candidacyBean.socialSecurityDocument").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.socialSecurityDocument.not.valid");
+	    result = false;
+	}
+
+	if (!RenderUtils.getViewState("candidacyBean.researchPlan").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.researchPlan.not.valid");
+	    result = false;
+	}
+
+	if (!RenderUtils.getViewState("candidacyBean.reportOrWorkDocument").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.reportOrWorkDocument.not.valid");
+	    result = false;
+	}
+
+	if (hasAnyHabilitationCertificateDocumentInvalid()) {
+	    addErrorMessage(request, "error.candidacyBean.habilitationCertificateDocuments.not.valid");
+	    result = false;
+	}
+
+	if (hasAnyPhdGuidingLetterInvalid()) {
+	    addErrorMessage(request, "error.candidacyBean.phdGuidingLetters.not.valid");
+	    result = false;
+	}
+
+	return result;
+    }
+
+    private boolean hasAnyHabilitationCertificateDocumentInvalid() {
+	for (final IViewState viewState : getViewStatesWithPrefixId("candidacyBean.habilitationCertificateDocument")) {
+	    if (!viewState.isValid()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean hasAnyPhdGuidingLetterInvalid() {
+	for (final IViewState viewState : getViewStatesWithPrefixId("candidacyBean.phdGuidingLetter")) {
+	    if (!viewState.isValid()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
-	bean.getCurriculumVitae().setFile(null);
+	bean.getCurriculumVitae().removeFile();
 	RenderUtils.invalidateViewState("candidacyBean.curriculumVitae");
 
-	// TODO: add another documents
+	bean.getIdentificationDocument().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.identificationDocument");
+
+	bean.getMotivationLetter().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.motivationLetter");
+
+	bean.getSocialSecurityDocument().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.socialSecurityDocument");
+
+	bean.getResearchPlan().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.researchPlan");
+
+	bean.getReportOrWorkDocument().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.reportOrWorkDocument");
+
+	bean.removeHabilitationCertificateDocumentFiles();
+	invalidateHabilitationCertificateDocumentViewStates();
+
+	bean.removePhdGuidingLetters();
+	invalidatePhdGuidingLetterViewStates();
+    }
+
+    private void invalidateHabilitationCertificateDocumentViewStates() {
+	invalidViewStatesWith("candidacyBean.habilitationCertificateDocument");
+    }
+
+    private void invalidatePhdGuidingLetterViewStates() {
+	invalidViewStatesWith("candidacyBean.phdGuidingLetter");
+    }
+
+    private void invalidViewStatesWith(final String prefixId) {
+	for (final IViewState viewState : getViewStatesWithPrefixId(prefixId)) {
+	    RenderUtils.invalidateViewState(viewState.getId());
+	}
     }
 
     private List<Pair<Class<?>, Object>> buildActivities(PhdProgramCandidacyProcessBean bean) {
-
 	final List<Pair<Class<?>, Object>> result = new ArrayList<Pair<Class<?>, Object>>();
 
-	// Guiding information
 	result.add(pair(AddGuidingsInformation.class, bean.getGuidings()));
-
-	// Qualifications
 	result.add(pair(AddQualifications.class, bean.getQualifications()));
-
-	// Referees
 	result.add(pair(AddCandidacyReferees.class, bean.getCandidacyReferees()));
-
-	// Upload documents
-	// TODO: add all documents in here (for now use only cv)
-	result.add(pair(UploadDocuments.class, Collections.singletonList(bean.getCurriculumVitae())));
+	result.add(pair(UploadDocuments.class, bean.getAllDocuments()));
 
 	return result;
     }
@@ -402,9 +532,35 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return new Pair<Class<?>, Object>(class1, object);
     }
 
+    public ActionForward addHabilitationCertificateDocument(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	final PhdCandidacyDocumentUploadBean document = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
+	bean.addHabilitationCertificateDocument(document);
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepThree");
+    }
+
+    public ActionForward removeHabilitationCertificateDocument(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) getRenderedObject("candidacyBean");
+	if (bean.getHabilitationCertificateDocuments().size() > MINIMUM_HABILITATIONS_AND_CERTIFICATES) {
+	    bean.removeHabilitationCertificateDocument(getIntegerFromRequest(request, "removeIndex").intValue());
+	}
+	request.setAttribute("candidacyBean", bean);
+	clearDocumentsInformation(bean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepThree");
+    }
+
     public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	return viewCandidacy(mapping, request, (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
 		.getPublicCandidacyCodeByHash(request.getParameter("hash")));
     }
@@ -424,4 +580,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("viewCandidacy");
     }
 
+    // TODO: uncomment this line
+    // @Override
+    // protected void reloadRenderers() throws ServletException {
+    // }
 }

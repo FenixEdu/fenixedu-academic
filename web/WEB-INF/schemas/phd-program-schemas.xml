@@ -606,17 +606,84 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.edit" extends="PhdCandidacyDocumentUploadBean.edit" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" 
-		bundle="PHD_RESOURCES">
-	<remove name="remarks" />
+<schema name="Public.PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.document">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
 </schema>
 
-
-<schema name="Public.PhdCandidacyDocumentUploadBean.curriculum.vitae" extends="Public.PhdCandidacyDocumentUploadBean.edit" 
-		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" 
-		bundle="PHD_RESOURCES">
-	<remove name="type" />
+<!-- Documents: The following schemas could be removed if interface was different  -->
+<schema name="Public.PhdCandidacyDocumentUploadBean.curriculum.vitae" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.curriculum.vitae">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
 </schema>
+
+<schema name="Public.PhdCandidacyDocumentUploadBean.identificationDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.identificationDocument">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdCandidacyDocumentUploadBean.motivationLetter" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.motivationLetter">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdCandidacyDocumentUploadBean.socialSecurityDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.socialSecurityDocument">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdCandidacyDocumentUploadBean.researchPlan" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.researchPlan">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+<schema name="Public.PhdCandidacyDocumentUploadBean.reportOrWorkDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.reportOrWorkDocument">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+<!-- End of documents  -->
 
 <!-- End of public schemas -->  
