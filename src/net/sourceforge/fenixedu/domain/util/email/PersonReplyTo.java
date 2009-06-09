@@ -19,4 +19,15 @@ public class PersonReplyTo extends PersonReplyTo_Base {
 	return getPerson().getEmail();
     }
 
+    @Override
+    public void safeDelete() {
+	if (getPerson() == null) {
+	    super.safeDelete();
+	} else {
+	    for (final Message message : getMessagesSet()) {
+		removeMessages(message);
+	    }	    
+	}
+    }
+
 }
