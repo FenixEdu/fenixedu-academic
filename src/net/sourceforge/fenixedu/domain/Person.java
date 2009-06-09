@@ -262,10 +262,10 @@ public class Person extends Person_Base {
 	super();
 
 	setProperties(personBean);
-	setIsPassInKerberos(Boolean.FALSE);
 
 	if (personBean.createLoginIdentificationAndUserIfNecessary()) {
 	    createLoginIdentificationAndUserIfNecessary();
+	    setIsPassInKerberos(Boolean.FALSE);
 	}
 
 	PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
@@ -443,13 +443,28 @@ public class Person extends Person_Base {
 	setSocialSecurityNumber(socialSecurityNumber);
     }
 
-    public void editPersonWithExternalData(PersonBean personBean) {
+    public void editPersonWithExternalData(final PersonBean personBean) {
+	editPersonWithExternalData(personBean, false);
+    }
+
+    public Person editPersonWithExternalData(final PersonBean personBean, final boolean updateExistingContacts) {
+
 	setProperties(personBean);
 	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
-	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, !hasDefaultPhone());
-	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, !hasDefaultMobilePhone());
-	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, !hasDefaultEmailAddress());
-	WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, !hasDefaultWebAddress());
+
+	if (updateExistingContacts) {
+	    setDefaultPhoneNumber(personBean.getPhone());
+	    setDefaultMobilePhoneNumber(personBean.getMobile());
+	    setDefaultWebAddressUrl(personBean.getWebAddress());
+	    setDefaultEmailAddressValue(personBean.getEmail());
+	} else {
+	    Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, !hasDefaultPhone());
+	    MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, !hasDefaultMobilePhone());
+	    EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, !hasDefaultEmailAddress());
+	    WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, !hasDefaultWebAddress());
+	}
+
+	return this;
     }
 
     @Deprecated

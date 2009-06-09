@@ -693,7 +693,7 @@
 	<slot name="gender" />
 	<slot name="idDocumentType" />
 	<slot name="documentIdNumber" />
-	<slot name="documentIdEmissionLocation" />
+	<slot name="emissionLocationOfDocumentId" />
 	<slot name="socialSecurityNumber" />
    	<slot name="dateOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />

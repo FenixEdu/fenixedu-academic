@@ -57,7 +57,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
@@ -122,7 +122,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    process.getPerson().edit((PersonBean) object);
+
+	    final Person person = process.getPerson();
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		person.edit((PersonBean) object);
+	    } else if (!person.hasAnyPersonRoles() && !person.hasUser() && !person.hasStudent()
+		    && process.getCandidacyProcess().isPublicCandidacy()) {
+		// assuming public candidacy
+		person.editPersonWithExternalData((PersonBean) object, true);
+	    }
 	    return process;
 	}
     }
@@ -527,11 +535,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdCandidacyReferee> getPhdCandidacyReferees() {
 	return getCandidacyProcess().getCandidacyReferees();
     }
-    
+
     public List<Qualification> getQualifications() {
 	return getPerson().getAssociatedQualifications();
     }
-    
+
     public List<PhdProgramCandidacyProcessDocument> getCandidacyUploadedDocuments() {
 	return getCandidacyProcess().getDocuments();
     }

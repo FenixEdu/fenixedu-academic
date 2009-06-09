@@ -165,6 +165,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    this);
 	}
     }
+    
+    public boolean isPublicCandidacy() {
+	return hasCandidacyHashCode();
+    }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
 	check(candidacyDate, "error.phd.candidacy.PhdProgramCandidacyProcess.invalid.candidacy.date");

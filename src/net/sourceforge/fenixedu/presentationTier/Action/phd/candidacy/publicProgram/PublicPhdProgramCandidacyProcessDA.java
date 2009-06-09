@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualifications;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
@@ -600,23 +602,45 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	final Person person = bean.getCandidacyHashCode().getPerson();
 	setIsEmployeeAttributeAndMessage(request, person);
 	bean.setPersonBean(new PersonBean(person));
-	
-	return mapping.findForward("editPersonalInformation");
-    }
-    
-    public ActionForward editPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	
-	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+	request.setAttribute("candidacyBean", bean);
+
 	return mapping.findForward("editPersonalInformation");
     }
 
+    public ActionForward editPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+	request.setAttribute("candidacyBean", bean);
+	return mapping.findForward("editPersonalInformation");
+    }
+
+    public ActionForward editPersonalInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+
+	try {
+
+	    ExecuteProcessActivity.run(bean.getCandidacyHashCode().getIndividualProgramProcess(), EditPersonalInformation.class,
+		    bean.getPersonBean());
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+	    request.setAttribute("candidacyBean", bean);
+	    return mapping.findForward("editPersonalInformation");
+	}
+
+	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
+    }
     // TODO: uncomment this line
     // @Override
     // protected void reloadRenderers() throws ServletException {
