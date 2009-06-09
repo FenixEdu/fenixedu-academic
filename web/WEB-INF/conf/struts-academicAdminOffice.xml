@@ -193,6 +193,19 @@
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
 	    </action>			
 
+		<action path="/viewStudentCurriculum"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+			scope="request"
+			validate="true"
+			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
+	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>			
+
 	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
 		</action>			

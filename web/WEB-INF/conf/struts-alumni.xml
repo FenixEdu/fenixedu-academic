@@ -103,6 +103,17 @@
 			<forward name="alumni.view.curriculum.validate.identity" path="alumni.view.curriculum.validate.identity"/>
 		</action>
 
+		<action path="/viewStudentCurriculum"
+				name="studentCurricularPlanAndEnrollmentsSelectionForm"
+				scope="request"		
+		        parameter="method"
+		        type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum">
+	        <forward name="chooseRegistration" path="df.page.curriculum.chooseRegistration" />
+			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+			<forward name="alumni.view.curriculum.not.authorized" path="df.page.notAuthorized"/>
+			<forward name="alumni.view.curriculum.validate.identity" path="alumni.view.curriculum.validate.identity"/>
+		</action>
+
 		<action path="/searchAlumni" 
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniSearchDA"

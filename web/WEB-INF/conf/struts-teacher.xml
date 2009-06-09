@@ -1617,6 +1617,15 @@
 	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
 	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>
 	    </action>
+
+		<action path="/viewStudentCurriculum"
+		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
+			name="studentCurricularPlanAndEnrollmentsSelectionForm"
+	        parameter="method" scope="request" input="/viewStudentsByTutor.do?method=execute&amp;page=0" validate="false">
+			<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+	        <forward name="NotAuthorized" path="df.page.notAuthorized"/>
+	    </action>
 	    
 	    <action path="/viewCurriculumGraph" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">

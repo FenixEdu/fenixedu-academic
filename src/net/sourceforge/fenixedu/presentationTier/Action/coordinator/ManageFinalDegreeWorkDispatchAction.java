@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -1095,7 +1096,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	String studentNumber = request.getParameter("studentNumber");
-	request.setAttribute("studentNumber", studentNumber);
+	if (studentNumber != null && !studentNumber.isEmpty()) {
+	    request.setAttribute("studentNumber", studentNumber);
+	    final Student student = Student.readStudentByNumber(Integer.valueOf(studentNumber));
+	    final Registration registration = student.getLastActiveRegistration();
+	    if (registration != null) {
+		request.setAttribute("registrationOID", registration.getIdInternal().toString());
+	    }
+	}
 	// String degreeCurrucularPlanID =
 	// request.getParameter("degreeCurrucularPlanID");
 	// request.setAttribute("degreeCurrucularPlanID",

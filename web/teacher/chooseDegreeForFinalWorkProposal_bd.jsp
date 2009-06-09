@@ -224,7 +224,7 @@
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/>
@@ -234,7 +234,7 @@
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
@@ -264,7 +264,7 @@
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.username"/> 
@@ -274,7 +274,7 @@
 												<bean:define id="registrationOID" name="student" property="idInternal"/>
 												<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
 												<bean:define id="curriculumLink">
-													/viewCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
+													/viewStudentCurriculum.do?method=prepare&amp;registrationOID=<%= registrationOID.toString() %>&amp;executionDegreeId=<%= executionDegreeId.toString() %>
 												</bean:define>
 												<html:link page='<%= curriculumLink.toString() %>'>
 													<bean:write name="student" property="infoPerson.nome"/>
