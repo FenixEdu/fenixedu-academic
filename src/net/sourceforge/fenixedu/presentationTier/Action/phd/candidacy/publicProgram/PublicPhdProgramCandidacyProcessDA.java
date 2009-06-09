@@ -456,10 +456,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final String subject = String.format(bundle.getString("message.phd.email.subject.referee.form"), process.getPerson()
 		.getName());
 	final String body = bundle.getString("message.phd.email.body.referee.form");
-	final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, process.getCandidacyProcessHashCode());
-	final String finalBody = String.format(body, process.getPerson().getName(), link);
 
 	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
+	    final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, referee);
+	    final String finalBody = String.format(body, process.getPerson().getName(), link);
 	    referee.sendEmail(subject, finalBody);
 	}
     }
@@ -679,6 +679,22 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
     }
+
+    public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+		.getParameter("hash"));
+
+	if (hashCode == null) {
+	    // TODO: add logic present to jsp
+	    return mapping.findForward("createRefereeLetter");
+	}
+
+	// TODO:
+
+	return null;
+    }
+
     // TODO: uncomment this line
     // @Override
     // protected void reloadRenderers() throws ServletException {
