@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import pt.ist.fenixWebFramework.services.Service;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -57,6 +58,10 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
 	return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
+    }
+
+    public Person getPerson() {
+	return getPhdProgramCandidacyProcess().getPerson();
     }
 
 }

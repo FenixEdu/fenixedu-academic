@@ -1056,5 +1056,12 @@
 	<definition name="phdProgram.createCandidacySuccess" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/candidacySubmited.jsp"/>
 	</definition>
+	<definition name="phdProgram.viewCandidacy" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/viewCandidacy.jsp"/>
+	</definition>
+	<definition name="phdProgram.editPersonalInformation" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/editPersonalInformation.jsp"/>
+	</definition>
+	
 
 </tiles-definitions>

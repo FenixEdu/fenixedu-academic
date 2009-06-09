@@ -504,7 +504,7 @@
     	<property name="size" value="9"/>
 		<property name="maxLength" value="15"/>
     </slot>
-    	<slot name="dateOfBirth">
+    <slot name="dateOfBirth">
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -685,5 +685,56 @@
 </schema>
 
 <!-- End of documents  -->
+
+<schema name="Public.PhdIndividualProgramProcess.view.person" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="gender" />
+	<slot name="idDocumentType" />
+	<slot name="documentIdNumber" />
+	<slot name="documentIdEmissionLocation" />
+	<slot name="socialSecurityNumber" />
+   	<slot name="dateOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="nationality.nationality" />
+	<slot name="address" />
+	<slot name="area" />
+	<slot name="areaCode" />
+    <slot name="countryOfResidence.name" />
+	<slot name="phone" />
+	<slot name="mobile" />
+	<slot name="email" />
+</schema>
+
+<schema name="Public.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="phdProgramFocusArea.name" />
+	<slot name="thesisTitle" />
+	<slot name="collaborationTypeName" />
+	<slot name="executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+</schema>
+
+<schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="workLocation" />
+	<slot name="email" />
+</schema>
+
+<schema name="PhdCandidacyReferee.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee" bundle="PHD_RESOURCES">
+	<slot name="name" />
+	<slot name="email" />
+	<slot name="institution" />
+</schema>
+
+<schema name="Public.PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">
+	<slot name="documentType" />
+	<slot name="uploadTime" />
+	<slot name="filename" />
+</schema>
+
 
 <!-- End of public schemas -->  

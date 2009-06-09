@@ -212,4 +212,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     public String getProcessNumber() {
 	return getIndividualProgramProcess().getProcessNumber();
     }
+
+    public Person getPerson() {
+	return getIndividualProgramProcess().getPerson();
+    }
 }

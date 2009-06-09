@@ -6,125 +6,122 @@
 <html:xhtml/>
 
 <%-- ### Title #### --%>
-<%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
 	<a href="http://www.ist.utl.pt/en/html/ist-epfl/">IST-EPFL</a> &gt;
-	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
+	<bean:message key="title.view.candidacy.process" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
 <h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
 <%-- ### End of Title ### --%>
 
-<%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<jsp:include page="/phd/candidacy/publicProgram/createCandidacyStepsBreadcrumb.jsp?step=2"></jsp:include>
-
-<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
-
 <%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.focus.area&viewStateId=candidacyBean.thesis.title" />
+<jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Operation Area ### --%>
 
-<fr:form id="candidacyForm" action="/candidacies/phdProgramCandidacyProcess.do" >
+<%--
+  CHECK: has candidacy period? 
+<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
+--%>
 
+<fr:form id="editCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
+	<input type="hidden" id="methodForm" name="method" />
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	<input type="hidden" id="methodId" name="method" value="createCandidacy"/>
-	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
-	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
-
 	
-	<h2 class="mtop1"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
-
-	
-	<h3 class="mtop15"><bean:message key="title.public.phd.focus.area" bundle="PHD_RESOURCES"/></h3>
-
-	<fr:edit id="candidacyBean.focus.area" name="candidacyBean" 
-			 schema="Public.PhdProgramCandidacyProcessBean.focus.area">
-		<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight thleft"/>
-		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-			<fr:property name="requiredMarkShown" value="true" />
-		</fr:layout>
-		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
-	</fr:edit>
-
-
-	<h3 class="mtop15"><bean:message key="title.public.phd.thesis.title" bundle="PHD_RESOURCES"/></h3>
-
-	<fr:edit id="candidacyBean.thesis.title" name="candidacyBean" 
-			 schema="Public.PhdProgramCandidacyProcessBean.thesis.title">
-		<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight thleft"/>
-		        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-			<fr:property name="requiredMarkShown" value="true" />
-		</fr:layout>
-	</fr:edit>
-
-	
-	<h3 class="mtop15"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h3>
-
-	<logic:notEmpty name="candidacyBean" property="guidings">
-		<logic:iterate id="guiding" name="candidacyBean" property="guidings" indexId="index">
-			<strong><%= index.intValue() + 1 %>.</strong>
-			<fr:edit id="<%= "candidacyBean.guiding" + index %>" name="guiding" schema="Public.PhdProgramGuidingBean.edit">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight thleft"/>
-		        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
-			</fr:edit>
-			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeGuiding\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
-		</logic:iterate>
-	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addGuiding\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-	
-
-	<h3 class="mtop15"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h3>
-
-	<logic:notEmpty name="candidacyBean" property="qualifications">
-		<logic:iterate id="qualification" name="candidacyBean" property="qualifications" indexId="index">
-			<strong><%= index.intValue() + 1 %>.</strong>
-			<fr:edit id="<%= "candidacyBean.qualification" + index %>" name="qualification" schema="Public.PhdProgramCandidacyProcess.qualification">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight thleft"/>
-		        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
-			</fr:edit>
-			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeQualification\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
-		</logic:iterate>
-	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addQualification\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-	
-
-	<h3 class="mtop15"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h3>
-	
-	<logic:notEmpty name="candidacyBean" property="candidacyReferees">
-		<logic:iterate id="referee" name="candidacyBean" property="candidacyReferees" indexId="index">
-			<strong><%= index.intValue() + 1 %>.</strong>
-			<fr:edit id="<%= "candidacyBean.referee" + index %>" name="referee" schema="Public.PhdProgramCandidacyProcess.referee">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight thleft"/>
-		        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
-			</fr:edit>
-			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeCandidacyReferee\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
-		</logic:iterate>
-	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addCandidacyReferee\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-	
-	<%-- Document uploads in here? --%>
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
-	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>	
-
+	<noscript>
+		<html:submit onclick="this.form.method.value='prepareEditPersonalInformation';"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></html:submit>
+	</noscript>
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPersonalInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></a> |
 </fr:form>
+
+
+<p style="margin-bottom: 0.5em;">
+	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
+</p>
+
+<%-- --%>
+<h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+
+<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="thlight thleft"/>
+        <fr:property name="columnClasses" value="width175px,,,,"/>
+	</fr:layout>
+</fr:view>
+
+<%-- 
+<table>
+	<tr>
+		<td class="width175px"><bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:</td>
+		<td>
+			<logic:present name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
+			<bean:define id="photo" name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo"/>
+			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
+			</logic:present>
+			
+			<logic:notPresent name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
+				<em><bean:message key="message.does.not.have.photo" bundle="CANDIDATE_RESOURCES"/></em>
+			</logic:notPresent>
+		</td>
+	</tr>
+</table>
+--%>
+
+<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
+
+<fr:view name="individualProgramProcess" schema="Public.PhdIndividualProgramProcess.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="thlight thleft"/>
+        <fr:property name="columnClasses" value="width175px,,,,"/>
+	</fr:layout>
+</fr:view>
+
+<logic:notEmpty name="individualProgramProcess" property="guidings">
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/></h2>
+	
+	<logic:iterate id="guiding" name="individualProgramProcess" property="guidings" indexId="index" >
+		<strong><%= index.intValue() + 1 %>.</strong>
+		<fr:view name="guiding" schema="Public.PhdProgramGuiding.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thleft"/>
+		        <fr:property name="columnClasses" value="width175px,,,,"/>
+			</fr:layout>
+		</fr:view>
+	</logic:iterate>
+</logic:notEmpty>
+
+<logic:notEmpty name="individualProgramProcess" property="qualifications">
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
+	
+	<logic:iterate id="qualification" name="individualProgramProcess" property="qualifications" indexId="index" >
+		<strong><%= index.intValue() + 1 %>.</strong>
+		<fr:view name="qualification" schema="Phd.Qualification.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thleft"/>
+		        <fr:property name="columnClasses" value="width175px,,,,"/>
+			</fr:layout>
+		</fr:view>
+	</logic:iterate>
+</logic:notEmpty>
+
+<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h2>
+<logic:iterate id="candidacyReferee" name="individualProgramProcess" property="phdCandidacyReferees" indexId="index" >
+	<strong><%= index.intValue() + 1 %>.</strong>
+	<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight thleft"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:iterate>
+
+
+<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></h2>
+<fr:view name="individualProgramProcess" property="candidacyUploadedDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight thcenter"/>
+	</fr:layout>
+</fr:view>
