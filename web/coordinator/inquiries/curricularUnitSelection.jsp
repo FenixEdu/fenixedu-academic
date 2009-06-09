@@ -47,7 +47,7 @@ div.progress-container > div {
 	</table>
 </html:form>
 
-<h2><bean:message key="title.coordinatorExecutionDegreeCoursesReport.withSigla" bundle="INQUIRIES_RESOURCES"/></h2>
+<!--<h2><bean:message key="title.coordinatorExecutionDegreeCoursesReport.withSigla" bundle="INQUIRIES_RESOURCES"/></h2>-->
 
 <c:if test="${(not empty executionDegreeCoursesReport) and not (empty executionDegreeCoursesReport.executionInterval.coordinatorReportResponsePeriod)}">
     <div class="mtop1">
