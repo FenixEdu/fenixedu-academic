@@ -206,7 +206,7 @@
 
 
 
-<%-- An�ncio dispon�vel apartir... --%>
+<%-- An�ncio disponivel apartir... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -217,7 +217,7 @@
 		</td>
 	</tr>
 
-<%-- An�ncio dispon�vel at�... --%>
+<%-- Anuncio disponivel ate... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -228,7 +228,7 @@
 		</td>
 	</tr>
 
-<%-- Vis�vel --%>
+<%-- Visivel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
@@ -239,6 +239,115 @@
 			</fr:create>
 		</td>
 	</tr>
+	
+<%-- Categories --%>
+ 	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.categories.label"/>:
+		</th>
+		<td>
+			<fr:create id="categories-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="categories">
+				<fr:layout name="option-select">
+					<fr:property name="labelStyle" value="display:none"/>
+				
+                <fr:property name="label" value="" />
+                <fr:property name="providerClass"
+                        value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AnnouncementCategoryProvider" />
+                <fr:property name="eachSchema" value="announcement.category.name.content" />
+                <fr:property name="eachLayout" value="values" />
+				<fr:property name="classes" value="nobullet noindent" />
+        
+				</fr:layout>
+			</fr:create>
+		<span class="error0"><fr:message for="categories-validated"/></span>
+		</td>
+	</tr>
+<%-- Campus --%>
+
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.campus.label"/>:
+		</th>
+		<td>
+			<fr:create id="campus-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement"  slot="campus">
+ 				<fr:layout name="menu-select">
+					<fr:property name="labelStyle" value="display:none"/>
+		<fr:property name="size" value="30"/>
+		<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<fr:property name="format"	value="${spaceInformation.presentationName}" />
+				</fr:layout>
+			</fr:create>
+		</td>
+	</tr>
+
+<%-- Press Release --%>
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.pressRelease.label"/>:
+		</th>
+		<td>
+			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="pressRelease">
+				<fr:default value="false" slot="pressRelease"/>
+			</fr:create>
+		</td>
+	</tr>
+
+<%-- Photo --%>	
+	<tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.photo.label"/>:
+		</th>
+		<td>
+			<span id="photoUrl">
+				<fr:create id="announcement-photoUrl" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="photoUrl" visible="true">
+					<fr:layout name="input-with-comment">
+						<fr:property name="style" value="display: none"/>
+					</fr:layout>
+				</fr:create>
+			</span>
+		
+			<span id="photo">
+				<img src="#" name="announcement"/>
+			</span>
+			
+			<p id="remove-paragraph" class="mvert025" style="display:none"><a onclick="getElementById('remove-paragraph').setAttribute('style', 'display:none'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value',''); getElementById('photo').childNodes[1].setAttribute('src', '');">Remover</a></p>
+		</td>	
+	</tr>
+	
+	<logic:notEmpty name="announcementBoard" property="files">
+		<tr>
+		<th>
+			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:
+		</th>
+		<td>
+				<div style="height: 80px; overflow: auto; padding: 0.25em;">
+				<logic:iterate id="file" name="announcementBoard" property="filesSortedByDate">
+                <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
+				<bean:define id="displayName" name="file" property="displayName"/>
+
+				<% 
+					final String REGEX = "^.*\\.(jpg|jpeg|gif|png)$";
+					if(((String)downloadUrl).matches(REGEX)) {
+				%>
+				
+				<div style="display: inline">
+						<div class="announcement_gallery" onclick="<%= "getElementById('remove-paragraph').setAttribute('style', 'display:block'); getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
+						<table>
+							<tr>
+							<td>
+							<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
+							</td>
+							</tr>
+						</table>
+					</div>
+                </div>
+                <% } %>
+			</logic:iterate>
+			</div>
+		</td>
+		</tr>
+	</logic:notEmpty>
+	
 </table>
 
 	

@@ -2719,7 +2719,6 @@ public class Person extends Person_Base {
 	return new ArrayList<ResearchUnit>(baseUnits);
     }
 
-    // FIXME Anil : This method is identical to getWorkingResearchUnits.
     public Set<Unit> getAssociatedResearchOrDepartmentUnits() {
 	Set<Unit> units = new HashSet<Unit>();
 	Set<Accountability> parentAccountabilities = new HashSet<Accountability>();
@@ -2727,16 +2726,37 @@ public class Person extends Person_Base {
 	parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT));
 	parentAccountabilities.addAll(getParentAccountabilities(AccountabilityTypeEnum.WORKING_CONTRACT));
 
-	YearMonthDay currentDate = new YearMonthDay();
 	for (Accountability accountability : parentAccountabilities) {
-	    if (accountability.isActive(currentDate)
-		    && (((Unit) accountability.getParentParty()).isResearchUnit() || ((Unit) accountability.getParentParty())
-			    .isDepartmentUnit())) {
-		units.add((Unit) accountability.getParentParty());
+	    Unit unit = getActiveAncestorUnitFromAccountability(accountability);
+	    if (unit != null) {
+		units.add(unit);
 	    }
 	}
 
 	return units;
+    }
+
+    private Unit getActiveAncestorUnitFromAccountability(Accountability accountability) {
+	YearMonthDay currentDate = new YearMonthDay();
+	if (!accountability.isActive(currentDate)) {
+	    return null;
+	}
+
+	Unit parentUnit = (Unit) accountability.getParentParty();
+	if (isResearchDepartmentScientificOrSectionUnitType(parentUnit)) {
+	    return parentUnit;
+	}
+
+	for (Unit grandParentUnit : parentUnit.getParentUnits()) {
+	    if (isResearchDepartmentScientificOrSectionUnitType(grandParentUnit))
+		return grandParentUnit;
+	}
+
+	return null;
+    }
+
+    private boolean isResearchDepartmentScientificOrSectionUnitType(Unit unit) {
+	return unit.isResearchUnit() || unit.isDepartmentUnit() || unit.isScientificAreaUnit() || unit.isSectionUnit();
     }
 
     // FIXME Anil : This method is identical to getWorkingResearchUnitNames
