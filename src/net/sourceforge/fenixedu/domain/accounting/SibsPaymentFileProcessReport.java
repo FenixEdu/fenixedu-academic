@@ -12,6 +12,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
 
     static final public Comparator<SibsPaymentFileProcessReport> COMPARATOR_BY_SIBS_PROCESS_DATE = new Comparator<SibsPaymentFileProcessReport>() {
@@ -113,6 +115,11 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	}
 	return result;
 
+    }
+
+    @Service
+    static public SibsPaymentFileProcessReport create(SibsPaymentFileProcessReportDTO reportDTO) {
+	return new SibsPaymentFileProcessReport(reportDTO);
     }
 
 }

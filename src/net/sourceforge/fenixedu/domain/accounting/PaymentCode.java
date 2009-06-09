@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentCode extends PaymentCode_Base {
@@ -150,6 +151,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     @Override
+    @Service
     public void setState(PaymentCodeState state) {
 	super.setWhenUpdated(new DateTime());
 	super.setState(state);
@@ -202,6 +204,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setWhenUpdated(new DateTime());
     }
 
+    @Service
     public void process(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
 
 	if (isProcessed()) {
