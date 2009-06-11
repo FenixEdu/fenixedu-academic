@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -24,6 +26,8 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
     private String filename;
 
     private String remarks;
+
+    private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
 
     public byte[] getFileContent() {
 	return this.fileContent;
@@ -82,4 +86,17 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 	this.remarks = remarks;
     }
 
+    public PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return (this.
+		individualProgramProcess != null) ? this.
+		individualProgramProcess.getObject() : null;
+    }
+
+    public void setIndividualProgramProcess(final PhdIndividualProgramProcess 
+		individualProgramProcess) {
+	this.
+		individualProgramProcess = (
+		individualProgramProcess != null) ? new DomainReference<PhdIndividualProgramProcess>(
+		individualProgramProcess) : null;
+    }
 }

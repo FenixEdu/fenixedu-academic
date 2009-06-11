@@ -209,7 +209,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     }
 
-    private boolean hasAnyDocumentToUpload() {
+    protected boolean hasAnyDocumentToUpload() {
 	for (final PhdCandidacyDocumentUploadBean each : getDocumentsToUpload()) {
 	    if (each.hasAnyInformation()) {
 		return true;
@@ -220,7 +220,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     }
 
-    private List<PhdCandidacyDocumentUploadBean> getDocumentsToUpload() {
+    protected List<PhdCandidacyDocumentUploadBean> getDocumentsToUpload() {
 	return (List<PhdCandidacyDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
     }
 

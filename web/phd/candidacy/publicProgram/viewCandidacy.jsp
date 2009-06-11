@@ -28,13 +28,11 @@
 --%>
 
 <fr:form id="editCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
-	<input type="hidden" id="methodForm" name="method" />
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
+	<input type="hidden" id="methodForm" name="method" />
 	
-	<noscript>
-		<html:submit onclick="this.form.method.value='prepareEditPersonalInformation';"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></html:submit>
-	</noscript>
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPersonalInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></a> |
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a>
 </fr:form>
 
 
@@ -120,7 +118,7 @@
 
 
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></h2>
-<fr:view name="individualProgramProcess" property="candidacyUploadedDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
+<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thcenter"/>
 	</fr:layout>

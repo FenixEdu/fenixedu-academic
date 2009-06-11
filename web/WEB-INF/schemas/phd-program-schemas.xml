@@ -617,6 +617,23 @@
 	</slot>
 </schema>
 
+<schema name="Public.PhdCandidacyDocumentUploadBean.edit.with.type" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="type" layout="menu-select">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA$PhdCandidacyDocumentUploadBeanTypes" />
+		<property name="eachLayout" value="not.existing" />
+	</slot>
+	<slot name="file" key="label.phd.public.document">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
 <!-- Documents: The following schemas could be removed if interface was different  -->
 <schema name="Public.PhdCandidacyDocumentUploadBean.curriculum.vitae" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.documents.curriculum.vitae">

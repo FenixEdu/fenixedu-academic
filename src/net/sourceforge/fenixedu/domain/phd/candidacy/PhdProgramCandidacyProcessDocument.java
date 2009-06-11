@@ -14,7 +14,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProcessDocument_Base {
-    
+
     protected PhdProgramCandidacyProcessDocument() {
 	super();
     }
@@ -27,8 +27,8 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
     }
 
     @SuppressWarnings("unchecked")
-    protected void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType, String remarks,
-	    byte[] content, String filename, Person uploader) {
+    protected void init(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
+	    String remarks, byte[] content, String filename, Person uploader) {
 
 	checkParameters(candidacyProcess, documentType, content, filename, uploader);
 
@@ -74,6 +74,10 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
     public void delete() {
 	removePhdCandidacyProcess();
 	super.delete();
+    }
+
+    public boolean hasType(final PhdIndividualProgramDocumentType type) {
+	return getDocumentType().equals(type);
     }
 
 }

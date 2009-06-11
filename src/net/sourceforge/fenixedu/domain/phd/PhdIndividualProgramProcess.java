@@ -541,7 +541,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPerson().getAssociatedQualifications();
     }
 
-    public List<PhdProgramCandidacyProcessDocument> getCandidacyUploadedDocuments() {
+    public List<PhdProgramCandidacyProcessDocument> getCandidacyProcessDocuments() {
 	return getCandidacyProcess().getDocuments();
     }
 

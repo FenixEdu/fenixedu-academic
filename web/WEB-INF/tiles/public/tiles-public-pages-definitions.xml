@@ -1062,6 +1062,8 @@
 	<definition name="phdProgram.editPersonalInformation" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/editPersonalInformation.jsp"/>
 	</definition>
-	
+	<definition name="phdProgram.uploadCandidacyDocuments" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/uploadCandidacyDocuments.jsp"/>
+	</definition>
 
 </tiles-definitions>

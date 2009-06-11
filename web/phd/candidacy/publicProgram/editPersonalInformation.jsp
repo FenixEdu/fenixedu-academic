@@ -12,15 +12,27 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<br/>
+<h2><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="hash" name="candidacyBean" property="candidacyHashCode.value" />
 
 <html:link action="<%= "/candidacies/phdProgramCandidacyProcess.do?method=viewCandidacy&hash=" + hash %>">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	
 </html:link>
+
+<fr:form id="editPersonalInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
+	<input type="hidden" id="methodForm" name="method" value="editPersonalInformation" />
+	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
+	
+	<noscript>
+		<html:submit onclick="this.form.method.value='prepareEditPersonalInformation';"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></html:submit>
+	</noscript>
+	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 
 <br/><br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
@@ -52,8 +64,6 @@
 	</logic:equal>
 
 	<logic:equal name="isEmployee" value="false">
-		<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformation">
-			<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 			
 			<br/>
 			<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
@@ -71,7 +81,6 @@
 			
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
 			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-			
-		</fr:form>
 	</logic:equal>
 </logic:present>
+</fr:form>

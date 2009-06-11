@@ -1100,3 +1100,11 @@ border-top: 1px solid #c33;
 border-bottom: 1px solid #c33;
 padding: 4px 5px 5px 5px;
 }
+
+.success5 {
+background-color: #e2f5e2;
+color: #146e14;
+border-top: 1px solid #0a0;
+border-bottom: 1px solid #0a0;
+padding: 4px 5px 5px 5px;
+}
