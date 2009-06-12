@@ -22,7 +22,6 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<bean:define id="hash" name="candidacyBean" property="candidacyHashCode.value" />
 
 <fr:form id="uploadDocumentForm" action="/candidacies/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />

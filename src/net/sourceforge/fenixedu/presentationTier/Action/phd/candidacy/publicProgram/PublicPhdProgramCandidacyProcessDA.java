@@ -19,10 +19,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualifications;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
@@ -70,7 +75,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "editPersonalInformation", path = "phdProgram.editPersonalInformation"),
 
-@Forward(name = "uploadCandidacyDocuments", path = "phdProgram.uploadCandidacyDocuments")
+@Forward(name = "uploadCandidacyDocuments", path = "phdProgram.uploadCandidacyDocuments"),
+
+@Forward(name = "editPhdIndividualProgramProcessInformation", path = "phdProgram.editPhdIndividualProgramProcessInformation")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -764,6 +771,103 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	return prepareUploadDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean candidacyBean = getCandidacyBean();
+	request.setAttribute("candidacyBean", candidacyBean);
+	request.setAttribute("individualProcessBean", new PhdIndividualProgramProcessBean(candidacyBean.getCandidacyHashCode()
+		.getIndividualProgramProcess()));
+
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward editPhdIndividualProgramProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("individualProcessBean", getRenderedObject("individualProcessBean"));
+	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
+
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward editPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("individualProcessBean");
+	try {
+	    ExecuteProcessActivity.run(bean.getIndividualProgramProcess(), EditIndividualProcessInformation.class, bean);
+	    addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("candidacyBean", getCandidacyBean());
+	    request.setAttribute("individualProcessBean", bean);
+	    return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	}
+
+	return viewCandidacy(mapping, request, getCandidacyBean().getCandidacyHashCode());
+    }
+
+    public ActionForward prepareAddGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	final PhdProgramGuidingBean guiding = new PhdProgramGuidingBean();
+	guiding.setGuidingType(PhdProgramGuidingType.EXTERNAL);
+	request.setAttribute("guidingBean", guiding);
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward addGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("guidingBean");
+	try {
+	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
+		    AddGuidingInformation.class, bean);
+	    addSuccessMessage(request, "message.guiding.created.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("candidacyBean", getCandidacyBean());
+	    request.setAttribute("guidingBean", bean);
+	    return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	}
+
+	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward removeGuidingFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final String externalId = (String) getFromRequest(request, "removeIndex");
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	final PhdProgramGuiding guiding = getGuiding(bean.getCandidacyHashCode().getIndividualProgramProcess(), externalId);
+
+	try {
+	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
+		    DeleteGuiding.class, guiding);
+	    addSuccessMessage(request, "message.guiding.deleted.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+	
+	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
+    }
+
+    private PhdProgramGuiding getGuiding(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
+	for (final PhdProgramGuiding guiding : individualProgramProcess.getGuidingsSet()) {
+	    if (guiding.getExternalId().equals(externalId)) {
+		return guiding;
+	    }
+	}
+	return null;
+	
     }
 
     public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

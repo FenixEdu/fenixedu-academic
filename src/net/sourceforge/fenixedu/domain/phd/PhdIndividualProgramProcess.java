@@ -292,9 +292,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
@@ -503,13 +500,16 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
 
-	if (hasCandidacyProcess()) {
+	checkParameters(getPerson(), getExecutionYear(), bean.getFocusArea(), bean.getPhdProgram());
+
+	if (hasCandidacyProcess() && !getCandidacyDate().equals(bean.getCandidacyDate())) {
 	    getCandidacyProcess().executeActivity(userView, PhdProgramCandidacyProcess.EditCandidacyDate.class.getSimpleName(),
 		    bean.getCandidacyDate());
 	}
 
 	setThesisTitle(bean.getThesisTitle());
 	setCollaborationType(bean.getCollaborationType());
+	setPhdProgramFocusArea(bean.getFocusArea());
 
 	if (bean.getCollaborationType().needExtraInformation()) {
 	    check(bean.getOtherCollaborationType(), "error.PhdIndividualProgramProcess.invalid.other.collaboration.type");

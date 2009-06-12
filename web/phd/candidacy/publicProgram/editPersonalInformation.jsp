@@ -18,11 +18,12 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
+<%-- 
 <bean:define id="hash" name="candidacyBean" property="candidacyHashCode.value" />
-
 <html:link action="<%= "/candidacies/phdProgramCandidacyProcess.do?method=viewCandidacy&hash=" + hash %>">
-	
+	« <bean:message key="label.back" bundle="PHD_RESOURCES" />	
 </html:link>
+--%>
 
 <fr:form id="editPersonalInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />

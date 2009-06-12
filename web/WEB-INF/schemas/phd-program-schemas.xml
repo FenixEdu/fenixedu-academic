@@ -725,6 +725,7 @@
 </schema>
 
 <schema name="Public.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="candidacyDate" />
 	<slot name="phdProgramFocusArea.name" />
 	<slot name="thesisTitle" />
 	<slot name="collaborationTypeName" />
@@ -753,5 +754,15 @@
 	<slot name="filename" />
 </schema>
 
+<schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+	<slot name="focusArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProvider" />
+		<property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
+	</slot>
+	<slot name="thesisTitle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="80"/>
+	</slot>
+</schema>
 
 <!-- End of public schemas -->  
