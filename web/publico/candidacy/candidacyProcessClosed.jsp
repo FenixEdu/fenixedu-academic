@@ -25,4 +25,10 @@
 
 <h1><bean:message key="label.candidacy" bundle="APPLICATION_RESOURCES"/>: <bean:write name="application.name" bundle="APPLICATION_RESOURCES"/></h1>
 
-<bean:message key="message.application.process.closed"/>
+<em><bean:message key="message.application.submission.period.ended" bundle="CANDIDATE_RESOURCES"/>.</em>
+
+<p class="mtop15">
+	<bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES"/>.
+</p>
+
+<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>	
