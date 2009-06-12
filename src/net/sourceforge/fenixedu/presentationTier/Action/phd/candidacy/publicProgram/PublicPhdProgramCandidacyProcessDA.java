@@ -893,6 +893,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return null;
     }
 
+    public ActionForward prepareEditCandidacyReferees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	// TODO:
+	return null;
+    }
+
     public ActionForward prepareEditQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
@@ -1032,7 +1038,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return mapping.findForward("createRefereeLetter");
 	}
 
-	// TODO: check uploaded file .........
 	final PhdCandidacyRefereeLetterBean bean;
 	if (hashCode.hasLetter()) {
 	    bean = new PhdCandidacyRefereeLetterBean(hashCode.getLetter());
@@ -1061,7 +1066,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
 
-	// TODO: chek if is view states are valid?
 	if (hasAnyRefereeLetterViewStateInvalid()) {
 	    return createRefereeLetterInvalid(mapping, actionForm, request, response);
 	}
@@ -1073,7 +1077,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("createRefereeLetterBean", bean);
 	    return mapping.findForward("createRefereeLetter");
-
 	}
 
 	return mapping.findForward("createRefereeLetterSuccess");
