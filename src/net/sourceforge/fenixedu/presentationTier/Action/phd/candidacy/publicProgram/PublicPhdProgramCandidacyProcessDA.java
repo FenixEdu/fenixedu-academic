@@ -37,6 +37,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidi
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -84,7 +86,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "editQualifications", path = "phdProgram.editQualifications"),
 
-@Forward(name = "createRefereeLetter", path = "phdProgram.createRefereeLetter")
+@Forward(name = "createRefereeLetter", path = "phdProgram.createRefereeLetter"),
+
+@Forward(name = "createRefereeLetterSuccess", path = "phdProgram.createRefereeLetterSuccess")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -201,11 +205,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	// TODO: for now send directly to first page
+	// TODO: check candidacy period!!!!????????
 	return createCandidacyStepOne(mapping, actionForm, request, response);
     }
 
     public ActionForward createCandidacyStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+
+	// TODO: check candidacy period!!!!????????
 
 	final String hash = request.getParameter("hash");
 	final PhdProgramPublicCandidacyHashCode hashCode = (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
@@ -216,8 +223,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    // page
 	    return mapping.findForward("createCandidacyStepOne");
 	}
-
-	// TODO check for candidacy period if appliable?
 
 	if (hashCode.hasCandidacyProcess()) {
 	    return viewCandidacy(mapping, request, hashCode);
@@ -760,7 +765,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	// TODO: check candidacy period
+	// TODO: check candidacy period!!!!????????
 
 	if (!RenderUtils.getViewState("documentByType").isValid()) {
 	    return uploadDocumentsInvalid(mapping, form, request, response);
@@ -810,6 +815,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward editPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	// TODO: check candidacy period!!!!????????
+
 	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("individualProcessBean");
 	try {
 	    ExecuteProcessActivity.run(bean.getIndividualProgramProcess(), EditIndividualProcessInformation.class, bean);
@@ -838,6 +845,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward addGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	// TODO: check candidacy period!!!!????????
+
 	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("guidingBean");
 	try {
 	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
@@ -856,6 +865,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward removeGuidingFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+
+	// TODO: check candidacy period!!!!????????
 
 	final String externalId = (String) getFromRequest(request, "removeIndex");
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
@@ -906,6 +917,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward addQualificationToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	// TODO: check candidacy period!!!!????????
+
 	request.setAttribute("candidacyBean", getCandidacyBean());
 
 	try {
@@ -923,6 +936,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward removeQualificationFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
+
+	// TODO: check candidacy period!!!!????????
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	request.setAttribute("candidacyBean", getCandidacyBean());
@@ -1008,17 +1023,69 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	// TODO: check candidacy period!!!!
+
 	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
 		.getParameter("hash"));
 
-	if (hashCode == null || hashCode.hasLetter()) {
-	    // TODO: add logic present to jsp
+	if (hashCode == null) {
 	    return mapping.findForward("createRefereeLetter");
 	}
 
-	// create new bean
+	// TODO: check uploaded file .........
+	final PhdCandidacyRefereeLetterBean bean;
+	if (hashCode.hasLetter()) {
+	    bean = new PhdCandidacyRefereeLetterBean(hashCode.getLetter());
+	} else {
+	    bean = new PhdCandidacyRefereeLetterBean();
+	    bean.setCandidacyReferee(hashCode);
+	}
 
+	request.setAttribute("createRefereeLetterBean", bean);
 	return mapping.findForward("createRefereeLetter");
+    }
+
+    public ActionForward createRefereeLetterInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
+	request.setAttribute("createRefereeLetterBean", bean);
+	RenderUtils.invalidateViewState("createRefereeLetterBean.file");
+	bean.removeFile();
+	return mapping.findForward("createRefereeLetter");
+    }
+
+    public ActionForward createRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	// TODO: check candidacy period!!!!
+
+	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
+
+	// TODO: chek if is view states are valid?
+	if (hasAnyRefereeLetterViewStateInvalid()) {
+	    return createRefereeLetterInvalid(mapping, actionForm, request, response);
+	}
+
+	try {
+	    PhdCandidacyRefereeLetter.createOrEdit(bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("createRefereeLetterBean", bean);
+	    return mapping.findForward("createRefereeLetter");
+
+	}
+
+	return mapping.findForward("createRefereeLetterSuccess");
+    }
+
+    private boolean hasAnyRefereeLetterViewStateInvalid() {
+	for (final IViewState viewState : getViewStatesWithPrefixId("createRefereeLetterBean.")) {
+	    if (!viewState.isValid()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     // TODO: uncomment this line

@@ -4,9 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 
 import org.joda.time.LocalDate;
 
@@ -16,13 +20,17 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 
     static private final long serialVersionUID = 6105525451822275989L;
 
+    private DomainReference<PhdCandidacyReferee> candidacyReferee;
+    private DomainReference<PhdCandidacyRefereeLetter> letter;
+
     private ApplicantOverallPromise overallPromise;
     private String comparisonGroup;
-    private ApplicantRank rank;
     private String rankValue;
+    private ApplicantRank rank;
+
     private String refereeName;
     private String refereePosition;
-    private String refereeInstituition;
+    private String refereeInstitution;
     private String refereeAddress;
     private String refereeCity;
     private String refereeZipCode;
@@ -35,7 +43,54 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     private byte[] fileContent;
     private String filename;
 
+    private String existingFileFilename;
+    private String existingFileSize;
+
     public PhdCandidacyRefereeLetterBean() {
+	setDate(new LocalDate());
+    }
+
+    public PhdCandidacyRefereeLetterBean(final PhdCandidacyRefereeLetter letter) {
+	setOverallPromise(letter.getOverallPromise());
+	setComparisonGroup(letter.getComparisonGroup());
+	setRank(letter.getRank());
+	setRankValue(letter.getRankValue());
+	setRefereeName(letter.getRefereeName());
+	setRefereePosition(letter.getRefereePosition());
+	setRefereeInstitution(letter.getRefereeInstitution());
+	setRefereeAddress(letter.getRefereeAddress());
+	setRefereeCity(letter.getRefereeCity());
+	setRefereeZipCode(letter.getRefereeZipCode());
+	setRefereeCountry(letter.getRefereeCountry());
+	setRefereePhone(letter.getRefereePhone());
+	setDate(letter.getDate());
+	setComments(letter.getComments());
+
+	if (letter.hasFile()) {
+	    // TODO: check this
+	    setExistingFileFilename(letter.getFile().getFilename());
+	    setExistingFileSize(new BigDecimal(letter.getFile().getSize()).divide(new BigDecimal("1024")).setScale(2,
+		    RoundingMode.HALF_EVEN).toString());
+	}
+
+	setCandidacyReferee(letter.getCandidacyReferee());
+	setLetter(letter);
+    }
+
+    public PhdCandidacyReferee getCandidacyReferee() {
+	return (this.candidacyReferee != null) ? this.candidacyReferee.getObject() : null;
+    }
+
+    public void setCandidacyReferee(final PhdCandidacyReferee candidacyReferee) {
+	this.candidacyReferee = (candidacyReferee != null) ? new DomainReference<PhdCandidacyReferee>(candidacyReferee) : null;
+    }
+
+    public PhdCandidacyRefereeLetter getLetter() {
+	return (this.letter != null) ? this.letter.getObject() : null;
+    }
+
+    public void setLetter(final PhdCandidacyRefereeLetter letter) {
+	this.letter = (letter != null) ? new DomainReference<PhdCandidacyRefereeLetter>(letter) : null;
     }
 
     public ApplicantOverallPromise getOverallPromise() {
@@ -86,12 +141,12 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 	this.refereePosition = refereePosition;
     }
 
-    public String getRefereeInstituition() {
-	return refereeInstituition;
+    public String getRefereeInstitution() {
+	return refereeInstitution;
     }
 
-    public void setRefereeInstituition(String refereeInstituition) {
-	this.refereeInstituition = refereeInstituition;
+    public void setRefereeInstitution(String refereeInstitution) {
+	this.refereeInstitution = refereeInstitution;
     }
 
     public String getRefereeAddress() {
@@ -186,4 +241,41 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     public boolean hasFileContent() {
 	return this.fileContent != null;
     }
+
+    public Person getPerson() {
+	return getCandidacyReferee().getPhdProgramCandidacyProcess().getPerson();
+    }
+
+    public PhdProgramFocusArea getFocusArea() {
+	return getCandidacyReferee().getPhdProgramCandidacyProcess().getIndividualProgramProcess().getPhdProgramFocusArea();
+    }
+
+    public String getEmail() {
+	return getCandidacyReferee().getEmail();
+    }
+
+    public boolean hasLetter() {
+	return getLetter() != null;
+    }
+
+    public void removeFile() {
+	setFile(null);
+    }
+
+    public String getExistingFileFilename() {
+	return existingFileFilename;
+    }
+
+    public void setExistingFileFilename(String existingFileFilename) {
+	this.existingFileFilename = existingFileFilename;
+    }
+
+    public String getExistingFileSize() {
+	return existingFileSize;
+    }
+
+    public void setExistingFileSize(String existingFileSize) {
+	this.existingFileSize = existingFileSize;
+    }
+
 }

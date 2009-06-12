@@ -1085,14 +1085,6 @@ div.flowerror_hide span span span span { display: none; }
 
 
 
-
-
-
-
-
-
-
-
 .error3 {
 background-color: #ffeadd;
 color: #a00;
@@ -1108,3 +1100,74 @@ border-top: 1px solid #0a0;
 border-bottom: 1px solid #0a0;
 padding: 4px 5px 5px 5px;
 }
+
+#main .breadcumbs {
+padding-bottom: 0 !important;
+}
+span.required {
+color: #b33;
+}
+
+
+/* --- form    --- */
+.fs_form {
+margin-top: 2em;
+}
+.fs_form fieldset {
+background: #f6f6f6;
+width: 80%;
+border: 1px solid #e2e2e2;
+padding: 0em 2em 1.5em 2em;
+position: relative;
+margin-bottom: 1em;
+padding-top: 1.0em;
+}
+.fs_form fieldset p {
+color: #666;
+}
+.fs_form legend {
+font-size: 1.2em;
+font-weight: bold;
+padding: 0 0.5em;
+position:absolute;
+top: -0.5em;
+left: 0.5em;
+color: #000;
+}
+
+.fs_form label { font-weight: normal; display: block; padding: 4px 2px; }
+.fs_form table td img { padding: 4px; }
+.fs_form p.comment { font-size: 1em; color: #999; padding-top: 1em; }
+.fs_form input#button { margin-top: 1em; }
+.fs_form span.red { color: #bb1309 !important; }
+.fs_form span.comment { font-size: 1em; color: #999; font-weight: normal; }
+span.red { color: #c30 !important; }
+span.comment { font-size: 0.85em !important; color: #999; }
+
+* html .fs_form fieldset { padding-top: 1.75em; } /* ie6 only*/
+*:first-child+html .fs_form fieldset { padding-top: 1.75em; } /* ie7 only */
+
+* html div.ie67margin20px { height: 20px; }
+*:first-child+html div.ie67margin20px { height: 20px; }
+
+* html p.ie67pbottom5px { padding-bottom: 5px !important; }
+*:first-child+html p.ie67pbottom5px { padding-bottom: 5px !important; }
+
+.alumnilogo {
+background: url(../images/alumni03.gif) top right no-repeat; padding-right: 210px;	
+}
+.fwnormal {
+font-weight: normal !important;
+}
+
+.ptoplegendfix { padding-top: 0em; /* IE6 */ }
+.ptoplegendfix[class] { padding-top: 0em; /* Firefox */ }
+*:first-child+html .ptoplegendfix[class] { padding-top: 0em; /* IE7 */ }
+@media screen and (min-width: 0px) { .ptoplegendfix{ padding-top: 0.75em !important; }  /* Opera */ }
+@media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .ptoplegendfix { padding-top: 0.75em !important; } /* Safari */ }
+
+.toplegendfix { top: -0.5em; /* IE6 */ }
+.toplegendfix[class] { top: -0.5em; /* Firefox */ }
+*:first-child+html .toplegendfix[class] { top: -0.5em; /* IE7 */ }
+@media screen and (min-width: 0px) { .toplegendfix{ top: -0.75em !important; }  /* Opera */ }
+@media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .toplegendfix { top: -0.75em !important; } /* Safari */ }

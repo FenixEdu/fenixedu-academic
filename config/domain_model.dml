@@ -6523,7 +6523,7 @@ class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
 	 String rankValue;
 	 String refereeName;
 	 String refereePosition;
-	 String refereeInstituition;
+	 String refereeInstitution;
 	 String refereeAddress;
 	 String refereeCity;
 	 String refereeZipCode;
