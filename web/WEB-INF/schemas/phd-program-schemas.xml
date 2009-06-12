@@ -609,7 +609,6 @@
 <schema name="Public.PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="required" value="true" />
 			<property name="maxSize" value="3mb" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>
@@ -701,6 +700,18 @@
 	</slot>
 </schema>
 
+<schema name="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="3mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
 <!-- End of documents  -->
 
 <schema name="Public.PhdIndividualProgramProcess.view.person" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
@@ -746,6 +757,7 @@
 	<slot name="name" />
 	<slot name="email" />
 	<slot name="institution" />
+	<slot name="letterAvailable" />
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">

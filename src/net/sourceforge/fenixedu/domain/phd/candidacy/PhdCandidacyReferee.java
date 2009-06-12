@@ -27,4 +27,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 	return hasPhdProgramCandidacyProcess();
     }
 
+    public boolean isLetterAvailable() {
+	return hasLetter();
+    }
 }

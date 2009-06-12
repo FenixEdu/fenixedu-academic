@@ -100,10 +100,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
 		Object object) {
 
-	    final PhdProgramCandidacyProcessBean individualProgramBean = (PhdProgramCandidacyProcessBean) object;
-	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(individualProgramBean);
+	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
+	    final Person person = bean.getOrCreatePersonFromBean();
+	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
 	    final PhdProgramCandidacyProcess candidacyProcess = Process.createNewProcess(userView,
-		    PhdProgramCandidacyProcess.class, object);
+		    PhdProgramCandidacyProcess.class, new Object[] { bean, person });
 
 	    candidacyProcess.setIndividualProgramProcess(createdProcess);
 
@@ -161,7 +162,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 	    for (final QualificationBean bean : (List<QualificationBean>) object) {
-		process.addQualification(userView.getPerson(), bean);
+		process.addQualification(userView != null ? userView.getPerson() : null, bean);
 	    }
 	    return process;
 	}
@@ -384,10 +385,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    public PhdIndividualProgramProcess(PhdProgramCandidacyProcessBean bean) {
+    private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
-	final Person person = bean.getOrCreatePersonFromBean();
 	checkParameters(person, bean.getExecutionYear(), bean.getFocusArea(), bean.getProgram());
 	setPerson(person);
 

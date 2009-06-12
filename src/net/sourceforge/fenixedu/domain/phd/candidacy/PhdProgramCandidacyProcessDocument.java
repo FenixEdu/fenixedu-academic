@@ -45,8 +45,11 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 	    byte[] content, String filename, Person uploader) {
 
 	check(candidacyProcess, "error.phd.candidacy.PhdProgramCandidacyProcessDocument.candidacyProcess.cannot.be.null");
-	check(uploader,
-		"error.net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument.uploader.cannot.be.null");
+
+	if (!candidacyProcess.isPublicCandidacy()) {
+	    check(uploader,
+		    "error.net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument.uploader.cannot.be.null");
+	}
 
 	if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
 	    throw new DomainException(

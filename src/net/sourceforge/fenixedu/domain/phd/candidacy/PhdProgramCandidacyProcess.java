@@ -47,7 +47,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) object);
+	    final Object[] values = (Object[]) object;
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) values[0],
+		    (Person) values[1]);
 	    result.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
 	    return result;
 	}
@@ -67,7 +69,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    for (final PhdCandidacyDocumentUploadBean each : documents) {
 		if (each.hasAnyInformation()) {
 		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
-			    each.getFilename(), userView.getPerson());
+			    each.getFilename(), userView != null ? userView.getPerson() : null);
 		}
 	    }
 
@@ -137,15 +139,15 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new AddCandidacyReferees());
     }
 
-    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean) {
+    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
-	// TODO: receive person as argument?
 	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
 	setCandidacyDate(bean.getCandidacyDate());
 
-	final Person person = bean.getOrCreatePersonFromBean();
-
+	// TODO: receive person as argument?
+	// TODO: public candidacies, do not create student and user: pay
+	// attention to public candidacies
 	// if (!person.hasStudent()) {
 	// TODO: generate when creating registration?
 	// new Student(person);

@@ -217,7 +217,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public boolean hasAnyGuiding() {
-	return !this.guidings.isEmpty();
+	return this.guidings != null && !this.guidings.isEmpty();
     }
 
     public void addGuiding(final PhdProgramGuidingBean guiding) {
@@ -244,6 +244,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.qualifications.remove(index);
     }
 
+    public boolean hasAnyQualification() {
+	return this.qualifications != null && !this.qualifications.isEmpty();
+    }
+
     public List<PhdCandidacyRefereeBean> getCandidacyReferees() {
 	return candidacyReferees;
     }
@@ -258,6 +262,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void removeCandidacyReferee(int index) {
 	this.candidacyReferees.remove(index);
+    }
+
+    public boolean hasAnyCandidacyReferee() {
+	return this.candidacyReferees != null && !this.candidacyReferees.isEmpty();
     }
 
     public void clearPerson() {

@@ -1071,5 +1071,8 @@
 	<definition name="phdProgram.editQualifications" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/editQualifications.jsp"/>
 	</definition>
+	<definition name="phdProgram.createRefereeLetter" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/createRefereeLetter.jsp"/>
+	</definition>
 
 </tiles-definitions>

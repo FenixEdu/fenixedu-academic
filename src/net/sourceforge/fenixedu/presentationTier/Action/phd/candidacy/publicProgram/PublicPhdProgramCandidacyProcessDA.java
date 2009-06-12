@@ -82,7 +82,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "editPhdIndividualProgramProcessInformation", path = "phdProgram.editPhdIndividualProgramProcessInformation"),
 
-@Forward(name = "editQualifications", path = "phdProgram.editQualifications")
+@Forward(name = "editQualifications", path = "phdProgram.editQualifications"),
+
+@Forward(name = "createRefereeLetter", path = "phdProgram.createRefereeLetter")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -239,7 +241,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward returnCreateCandidacyStepOne(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	request.setAttribute("candidacyBean", getCandidacyBean());
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("createCandidacyStepOne");
     }
@@ -253,9 +255,15 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setCollaborationType(PhdIndividualProgramCollaborationType.EPFL);
 	// TODO: ---------------------------------------------------------------
 
-	bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
-	bean.setQualifications(new ArrayList<QualificationBean>());
-	bean.setCandidacyReferees(createCandidacyRefereesMinimumList());
+	if (!bean.hasAnyGuiding()) {
+	    bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
+	}
+	if (!bean.hasAnyQualification()) {
+	    bean.setQualifications(new ArrayList<QualificationBean>());
+	}
+	if (!bean.hasAnyCandidacyReferee()) {
+	    bean.setCandidacyReferees(createCandidacyRefereesMinimumList());
+	}
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
@@ -944,21 +952,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return null;
     }
 
-    public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
-		.getParameter("hash"));
-
-	if (hashCode == null) {
-	    // TODO: add logic present to jsp
-	    return mapping.findForward("createRefereeLetter");
-	}
-
-	// TODO:
-
-	return null;
-    }
-
     static public class PhdCandidacyDocumentUploadBeanTypes implements DataProvider {
 
 	@Override
@@ -1010,7 +1003,22 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    }
 	    return false;
 	}
+    }
 
+    public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+		.getParameter("hash"));
+
+	if (hashCode == null || hashCode.hasLetter()) {
+	    // TODO: add logic present to jsp
+	    return mapping.findForward("createRefereeLetter");
+	}
+
+	// create new bean
+
+	return mapping.findForward("createRefereeLetter");
     }
 
     // TODO: uncomment this line

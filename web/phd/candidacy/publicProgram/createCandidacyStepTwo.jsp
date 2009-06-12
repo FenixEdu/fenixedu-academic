@@ -36,6 +36,8 @@
 	
 	<h2 class="mtop1"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
 	
+	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+	
 	<h3 class="mtop15"><bean:message key="title.public.phd.focus.area" bundle="PHD_RESOURCES"/></h3>
 
 	<fr:edit id="candidacyBean.focus.area" name="candidacyBean" 
@@ -118,9 +120,7 @@
 	</logic:notEmpty>
 	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addCandidacyReferee\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepOne'; document.getElementById('candidacyForm').submit();" %>"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
-
-	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepOne'; document.getElementById('candidacyForm').submit();" %>">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit>
 
 </fr:form>

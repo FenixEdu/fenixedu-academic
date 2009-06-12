@@ -38,7 +38,8 @@
 
 	
 	<h2 class="mtop1"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></h2>
-	
+
+	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>	
 	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 	<br/>
@@ -104,12 +105,12 @@
 
 	<br />
 	<strong class="mtop1"><bean:message key="label.phd.public.documents.habilitationCertificateDocuments" bundle="PHD_RESOURCES"/></strong>
-
+	
 	<br />
 	<logic:notEmpty name="candidacyBean" property="habilitationCertificateDocuments">
 		<logic:iterate id="document" name="candidacyBean" property="habilitationCertificateDocuments" indexId="index">
 			<strong><%= index.intValue() + 1 %>.</strong>
-			<fr:edit id="<%= "candidacyBean.habilitationCertificateDocument" + index %>" name="document" schema="Public.PhdCandidacyDocumentUploadBean.edit">
+			<fr:edit id="<%= "candidacyBean.habilitationCertificateDocument" + index %>" name="document" schema="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 		        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
@@ -139,11 +140,9 @@
 		</logic:iterate>
 	</logic:notEmpty>
 
+	<p><em><bean:message key="label.phd.public.documents.habilitationCertificateDocuments.note" bundle="PHD_RESOURCES" /></em></p>
 	<br/>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepTwo'; document.getElementById('candidacyForm').submit();" %>">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepTwo'; document.getElementById('candidacyForm').submit();" %>"><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
-
-	<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-	<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>	
 
 </fr:form>
