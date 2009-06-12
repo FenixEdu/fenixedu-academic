@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
@@ -25,8 +26,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualifications;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
@@ -77,7 +80,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "uploadCandidacyDocuments", path = "phdProgram.uploadCandidacyDocuments"),
 
-@Forward(name = "editPhdIndividualProgramProcessInformation", path = "phdProgram.editPhdIndividualProgramProcessInformation")
+@Forward(name = "editPhdIndividualProgramProcessInformation", path = "phdProgram.editPhdIndividualProgramProcessInformation"),
+
+@Forward(name = "editQualifications", path = "phdProgram.editQualifications")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -840,9 +845,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
     }
-    
-    public ActionForward removeGuidingFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward removeGuidingFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	final String externalId = (String) getFromRequest(request, "removeIndex");
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
@@ -856,7 +861,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	}
-	
+
 	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
     }
 
@@ -867,7 +872,76 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    }
 	}
 	return null;
-	
+    }
+
+    public ActionForward prepareEditQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	return mapping.findForward("editQualifications");
+    }
+
+    public ActionForward editQualificationsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("qualificationBean", getRenderedObject("qualificationBean"));
+	return mapping.findForward("editQualifications");
+    }
+
+    public ActionForward prepareAddQualificationToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("qualificationBean", new QualificationBean());
+	return mapping.findForward("editQualifications");
+    }
+
+    public ActionForward addQualificationToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+
+	try {
+	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
+		    AddQualification.class, getRenderedObject("qualificationBean"));
+	    addSuccessMessage(request, "message.qualification.information.create.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("qualificationBean", getRenderedObject("qualificationBean"));
+	}
+
+	return mapping.findForward("editQualifications");
+    }
+
+    public ActionForward removeQualificationFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("candidacyBean", getCandidacyBean());
+
+	final String externalId = (String) getFromRequest(request, "removeIndex");
+	final Qualification qualification = getQualification(bean.getCandidacyHashCode().getIndividualProgramProcess(),
+		externalId);
+
+	try {
+	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
+		    DeleteQualification.class, qualification);
+	    addSuccessMessage(request, "message.qualification.information.delete.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	return mapping.findForward("editQualifications");
+    }
+
+    private Qualification getQualification(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
+	for (final Qualification qualification : individualProgramProcess.getQualifications()) {
+	    if (qualification.getExternalId().equals(externalId)) {
+		return qualification;
+	    }
+	}
+	return null;
     }
 
     public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

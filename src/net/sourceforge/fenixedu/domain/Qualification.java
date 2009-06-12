@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
-import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -66,6 +66,7 @@ public class Qualification extends Qualification_Base {
 	this();
 
 	check(person, "error.Qualification.invalid.person");
+	checkAttendedPartials(bean.getAttendedBegin(), bean.getAttendedEnd());
 
 	setPerson(person);
 	setType(bean.getType());
@@ -74,6 +75,12 @@ public class Qualification extends Qualification_Base {
 	setAttendedBegin(bean.getAttendedBegin());
 	setAttendedEnd(bean.getAttendedEnd());
 	setMark(bean.getMark());
+    }
+
+    private void checkAttendedPartials(Partial attendedBegin, Partial attendedEnd) {
+	if (attendedBegin != null && attendedEnd != null && attendedBegin.isAfter(attendedEnd)) {
+	    throw new DomainException("error.Qualification.invalid.attended.dates");
+	}
     }
 
     @Override

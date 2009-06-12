@@ -1068,5 +1068,8 @@
 	<definition name="phdProgram.editPhdIndividualProgramProcessInformation" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/editPhdIndividualProgramProcessInformation.jsp"/>
 	</definition>
+	<definition name="phdProgram.editQualifications" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/editQualifications.jsp"/>
+	</definition>
 
 </tiles-definitions>

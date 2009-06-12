@@ -146,7 +146,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addQualification(userView.getPerson(), (QualificationBean) object);
+	    return process.addQualification(userView != null ? userView.getPerson() : null, (QualificationBean) object);
 	}
     }
 
@@ -171,9 +171,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
@@ -181,7 +178,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    final Qualification qualification = (Qualification) object;
 	    if (process.getPerson().hasAssociatedQualifications(qualification)) {
-		if (!canDelete(qualification, userView.getPerson())) {
+		if (!canDelete(qualification, process, userView != null ? userView.getPerson() : null)) {
 		    throw new DomainException("error.PhdIndividualProgramProcess.DeleteQualification.not.authorized");
 		}
 		qualification.delete();
@@ -189,9 +186,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    return process;
 	}
 
-	private boolean canDelete(final Qualification qualification, final Person person) {
+	private boolean canDelete(final Qualification qualification, final PhdIndividualProgramProcess process,
+		final Person person) {
 	    if (!qualification.hasCreator()) {
-		return false;
+		return process.getCandidacyProcess().isPublicCandidacy();
 	    }
 	    final Person creator = qualification.getCreator();
 	    return creator == person || creator.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);

@@ -165,8 +165,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    this);
 	}
     }
-    
+
     public boolean isPublicCandidacy() {
+	// TODO: add some state to hash code to be changed after create some
+	// student and identification or when changed by other entity
 	return hasCandidacyHashCode();
     }
 
