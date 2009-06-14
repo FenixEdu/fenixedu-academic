@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicPro
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -439,6 +442,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	    }
 
+	    if (candidacyRefereesEmailsAreInvalid(bean)) {
+		addErrorMessage(request, "error.candidacyBean.invalid.referee.emails");
+		clearDocumentsInformation(bean);
+		return createCandidacyStepThreeInvalid(mapping, form, request, response);
+	    }
+
 	    // check for CANDIDACY PERIOD?
 
 	    // --------------------------
@@ -454,11 +463,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	     */
 
 	    // **********************************************************
-	    // --------------------------
-	    /*
-	     * 
-	     * CHECK IF CANDIDACY EMAIL REFEREE IS EQUAL TO CANDIDATES
-	     */
 
 	    final PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) CreateNewProcess.run(
 		    PhdIndividualProgramProcess.class, bean, buildActivities(bean));
@@ -475,6 +479,20 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	return mapping.findForward("createCandidacySuccess");
+    }
+
+    private boolean candidacyRefereesEmailsAreInvalid(final PhdProgramCandidacyProcessBean bean) {
+	final Set<String> emails = new HashSet<String>(bean.getCandidacyReferees().size() + 1);
+	emails.add(bean.getCandidacyHashCode().getEmail());
+
+	for (final PhdCandidacyRefereeBean refereeBean : bean.getCandidacyReferees()) {
+	    if (emails.contains(refereeBean.getEmail())) {
+		return true;
+	    }
+	    emails.add(refereeBean.getEmail());
+	}
+
+	return false;
     }
 
     private void sendApplicationSuccessfullySubmitedEmail(final PhdProgramPublicCandidacyHashCode hashCode,
@@ -1131,7 +1149,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     // TODO: uncomment this line
-    // @Override
-    // protected void reloadRenderers() throws ServletException {
-    // }
+    @Override
+    protected void reloadRenderers() throws ServletException {
+    }
 }
