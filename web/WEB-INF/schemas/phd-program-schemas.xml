@@ -484,6 +484,7 @@
 	<slot name="email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+		<property name="size" value="40"/>
 	</slot>
 	<slot name="captcha" layout="captcha" />
 </schema>
@@ -584,25 +585,39 @@
 		<property name="maxLength" value="7" />
 		<property name="size" value="7" />
 	</slot>
-	<slot name="degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="school" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="Public.PhdProgramCandidacyProcess.referee" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean" bundle="PHD_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+		<property name="size" value="50"/>
 	</slot>
-	<slot name="institution" />
+	<slot name="institution">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
 
 <schema name="Public.PhdProgramGuidingBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean" bundle="PHD_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="workLocation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 	<slot name="email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator" />
+		<property name="size" value="50"/>
 	</slot>
 </schema>
 

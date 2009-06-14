@@ -35,26 +35,27 @@
 
 <logic:present name="candidacyBean">
 
+	<div class="fs_form">
 	<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwo">
 		<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-		
-		<br/>
-		<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
-	
-		<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
-			schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
-			<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight thleft"/>
-			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-			</fr:layout>
-		
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
-		</fr:edit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
-		<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-		
+
+		<fieldset style="display: block;">
+			<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
+			<p class="mvert05"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+			
+			<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
+				schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
+				<fr:layout name="tabular">
+						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
+				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+						<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+			
+				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
+			</fr:edit>
+			
+		</fieldset>
+		<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
 	</fr:form>
-	
+	</div>
 </logic:present>

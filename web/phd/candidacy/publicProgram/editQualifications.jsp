@@ -25,7 +25,7 @@
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editQualificationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-<br/>
+	<br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -43,22 +43,24 @@
 
 <logic:present name="candidacyBean">
 
-	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>	
 	
 	<logic:notEmpty name="qualificationBean">
 		<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
-		<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="thlight thleft"/>
-				<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-				<fr:property name="requiredMarkShown" value="true" />
-			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
-		</fr:edit>	
-		<html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
-		<br/>
+		<div class="fs_form">
+		<fieldset style="display: block;">
+			<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="thlight thleft"/>
+					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
+			</fr:edit>	
+		</fieldset>
+		</div>
+		<p><html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
 		<br/>
 	</logic:notEmpty>
 	
@@ -72,10 +74,10 @@
 			        <fr:property name="columnClasses" value="width175px,,,,"/>
 				</fr:layout>
 			</fr:view>
-			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+			<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
 		</logic:iterate>
 	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
 		
 </logic:present>
 </fr:form>

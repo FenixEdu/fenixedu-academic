@@ -12,7 +12,7 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h2><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h2>
+<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 <%-- ### End of Title ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -21,19 +21,24 @@
 
 <%--  ### Operation Area ### --%>
 
+<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES"/></p>
+
+<div class="fs_form">
 <fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentification">
 
-	<p><bean:message key="message.email.required.begin.process" bundle="CANDIDATE_RESOURCES"/></p>
+	<fieldset style="display: block;">
+		<legend><bean:message key="message.email.identification" bundle="PHD_RESOURCES"/></legend>
 
-	<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:property name="requiredMarkShown" value="true" />
-		</fr:layout>
-	
-		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentificationInvalid" />
-	</fr:edit>
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
+		<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thright thtop mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				<fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+		
+			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyIdentificationInvalid" />
+		</fr:edit>
+	</fieldset>	
+	<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
 </fr:form>
+</div>

@@ -13,8 +13,6 @@
 </div>
 
 <h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
-<br/>
-<h2><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -34,9 +32,6 @@
 		<html:submit onclick="this.form.method.value='prepareEditPersonalInformation';"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></html:submit>
 	</noscript>
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-
-<br/><br/>
-<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 
 <%--  ### Error Messages  ### --%>
@@ -65,23 +60,25 @@
 	</logic:equal>
 
 	<logic:equal name="isEmployee" value="false">
+			<p class="mtop15"><em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em></p>
 			
-			<br/>
-			<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+			<div class="fs_form">
+			<fieldset style="display: block;">
+				<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
 		
-			<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
-				schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
-				<fr:layout name="tabular">
-						<fr:property name="classes" value="thlight thleft"/>
-				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-			
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
-			</fr:edit>
-			
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
-			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+				<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
+					schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
+					<fr:layout name="tabular">
+							<fr:property name="classes" value="thlight thleft"/>
+					        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="true" />
+					</fr:layout>
+				
+					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
+				</fr:edit>
+			</fieldset>
+			</div>
+			<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit></p>
 	</logic:equal>
 </logic:present>
 </fr:form>

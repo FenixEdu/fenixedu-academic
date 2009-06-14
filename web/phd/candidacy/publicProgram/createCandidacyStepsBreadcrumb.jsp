@@ -6,7 +6,7 @@
 
 <bean:define id="step" value="<%=request.getParameter("step")%>" />
 
-<div class="breadcumbs">
+<div class="steps">
 	<span class="<%= step.equals("1") ? "actual" : "" %>"><bean:message  key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.breadcrumb" bundle="PHD_RESOURCES"/></span> &gt; 
 	<span class="<%= step.equals("2") ? "actual" : "" %>"><bean:message  key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.breadcrumb" bundle="PHD_RESOURCES"/></span> &gt;
 	<span class="<%= step.equals("3") ? "actual" : "" %>"><bean:message  key="label.phd.public.candidacy.createCandidacy.updloadDocuments.breadcrumb" bundle="PHD_RESOURCES"/></span> &gt;

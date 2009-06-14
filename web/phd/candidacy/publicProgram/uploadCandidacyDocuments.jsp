@@ -15,7 +15,6 @@
 
 <h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
-<br/>
 <h2><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES" /></h2>
 
 
@@ -29,7 +28,6 @@
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-<br/><br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -41,31 +39,34 @@
 <logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 --%>
 
-<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+<p class="mtop15">
+	<em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em><br/>
+	<em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em>
+</p>
 
 <logic:notPresent name="candidacyBean">
 	<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
 </logic:notPresent>
 
 <logic:present name="candidacyBean">
-		<br/>
-		<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">		
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="thlight thleft"/>
-				<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-				<fr:property name="requiredMarkShown" value="true" />
-			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=uploadDocumentsInvalid" />
-		</fr:edit>
-	
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
+		<div class="fs_form">
+		<fieldset style="display: block;">
+			<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">		
+				<fr:layout name="tabular-editable">
+					<fr:property name="classes" value="thlight thleft"/>
+					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+					<fr:property name="requiredMarkShown" value="true" />
+				</fr:layout>
+				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=uploadDocumentsInvalid" />
+			</fr:edit>
+		</fieldset>
+		</div>	
+		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
 </logic:present>
 </fr:form>
 
 <br/>
 
-<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></h2>
 <fr:view name="candidacyProcessDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thcenter"/>
