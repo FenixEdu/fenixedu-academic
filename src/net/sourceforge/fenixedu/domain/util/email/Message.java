@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class Message extends Message_Base {
 
     public Message() {
@@ -65,8 +67,7 @@ public class Message extends Message_Base {
 	setCreated(new DateTime());
     }
 
-    // EU SOU UMA MARTELADA! NAO ME COMMITEM!
-    // @Service
+    @Service
     public void safeDelete() {
 	if (getSent() == null) {
 	    delete();
