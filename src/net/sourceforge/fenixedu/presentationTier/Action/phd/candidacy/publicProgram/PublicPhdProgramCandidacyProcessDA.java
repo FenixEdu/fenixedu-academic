@@ -88,7 +88,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createRefereeLetter", path = "phdProgram.createRefereeLetter"),
 
-@Forward(name = "createRefereeLetterSuccess", path = "phdProgram.createRefereeLetterSuccess")
+@Forward(name = "createRefereeLetterSuccess", path = "phdProgram.createRefereeLetterSuccess"),
+
+@Forward(name = "editCandidacyReferees", path = "phdProgram.editCandidacyReferees")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -895,8 +897,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditCandidacyReferees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	// TODO:
-	return null;
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	return mapping.findForward("editCandidacyReferees");
     }
 
     public ActionForward prepareEditQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

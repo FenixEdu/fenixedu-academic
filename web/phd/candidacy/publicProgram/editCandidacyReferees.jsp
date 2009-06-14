@@ -18,13 +18,14 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editQualificationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editCandidacyRefereeForm" action="/candidacies/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	<input type="hidden" id="methodId" name="method" value="addQualificationToExistingCandidacy" />
+	
+	<input type="hidden" id="methodId" name="method" value="" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editQualificationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editCandidacyRefereeForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 <br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -45,7 +46,7 @@
 
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h2>	
-	
+	<%-- 
 	<logic:notEmpty name="qualificationBean">
 		<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
@@ -61,22 +62,27 @@
 		<br/>
 		<br/>
 	</logic:notEmpty>
+	--%>
 	
-	<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications">
-		<logic:iterate id="qualification" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications" indexId="index" >
+	<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees">
+		<logic:iterate id="candidacyReferee" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees" indexId="index" >
 			<strong><%= index.intValue() + 1 %>.</strong>
-			<bean:define id="qualificationId" name="qualification" property="externalId" />
-			<fr:view name="qualification" schema="Phd.Qualification.view">
+			<bean:define id="candidacyRefereeId" name="candidacyReferee" property="externalId" />
+			<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 			        <fr:property name="columnClasses" value="width175px,,,,"/>
 				</fr:layout>
 			</fr:view>
-			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+			<%-- 
+			<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + candidacyRefereeId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+			--%>
 		</logic:iterate>
 	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-		
+	<%-- 
+	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+	--%>
+	
 </logic:present>
 </fr:form>
 
