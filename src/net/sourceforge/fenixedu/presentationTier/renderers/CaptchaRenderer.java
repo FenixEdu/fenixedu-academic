@@ -4,15 +4,18 @@ import java.util.Collections;
 import java.util.Properties;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
+import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 import pt.utl.ist.fenix.tools.util.Pair;
@@ -22,9 +25,11 @@ import com.octo.captcha.service.CaptchaServiceException;
 
 public class CaptchaRenderer extends InputRenderer {
 
-    static private final String DEFAULT_IMAGE_STYLE = "border: 1px solid #bbb; padding: 5px;";
+    static private final String DEFAULT_IMAGE_STYLE = "border: 1px solid rgb(187, 187, 187); padding: 5px;";
+    static private final String DEFAULT_TEXT_STYLE = "mbottom05";
 
     private String imageStyle = DEFAULT_IMAGE_STYLE;
+    private String textStyle = DEFAULT_TEXT_STYLE;
     private String jcaptchaUrl;
 
     public String getImageStyle() {
@@ -33,6 +38,14 @@ public class CaptchaRenderer extends InputRenderer {
 
     public void setImageStyle(String imageStyle) {
 	this.imageStyle = imageStyle;
+    }
+
+    public String getTextStyle() {
+	return textStyle;
+    }
+
+    public void setTextStyle(String textStyle) {
+	this.textStyle = textStyle;
     }
 
     public String getJcaptchaUrl() {
@@ -46,6 +59,10 @@ public class CaptchaRenderer extends InputRenderer {
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new Layout() {
+	    
+	    protected String getResourceMessage(String message) {
+		return RenderUtils.getResourceString("RENDERER_RESOURCES", message);
+	    }
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
@@ -54,12 +71,16 @@ public class CaptchaRenderer extends InputRenderer {
 
 		final MetaSlotKey key = (MetaSlotKey) getInputContext().getMetaObject().getKey();
 		final HtmlBlockContainer container = new HtmlBlockContainer();
-		container.setStyle("display: block;");
-		
+
 		final HtmlImage image = new HtmlImage();
 		image.setSource(getContext().getViewState().getRequest().getContextPath() + getJcaptchaUrl());
 		image.setStyle(getImageStyle());
 		container.addChild(image);
+
+		final HtmlText text = new HtmlText(getResourceMessage("fenix.renderers.captcha.process"));
+		text.setFace(Face.PARAGRAPH);
+		text.setClasses(getTextStyle());
+		container.addChild(text);
 
 		final HtmlTextInput input = new HtmlTextInput();
 		input.setName(key.toString() + "_response");
