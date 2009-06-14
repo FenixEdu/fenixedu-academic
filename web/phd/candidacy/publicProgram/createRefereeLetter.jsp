@@ -86,7 +86,7 @@
 		
 		<br/>
 		<br/>
-		<p class="mvert05">To be completed in BLOCK LETTERS</p>
+		<p class="mvert05">Referee's information: </p>
 		<fr:edit id="createRefereeLetterBean.referee.information" name="createRefereeLetterBean" 
 			schema="Public.PhdCandidacyRefereeLetterBean.referee.information">
 			<fr:layout name="tabular">

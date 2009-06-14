@@ -819,6 +819,7 @@
 	<slot name="refereePhone" >
 		<property name="size" value="10"/>
 	</slot>
+	<slot name="email" read-only="true" />
 	<slot name="date">
 		<property name="size" value="10"/>
 	</slot>
