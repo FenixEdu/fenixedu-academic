@@ -500,10 +500,15 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final String body = bundle.getString("message.phd.email.body.referee.form");
 
 	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
-	    final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, referee);
-	    final String finalBody = String.format(body, process.getPerson().getName(), link);
-	    referee.sendEmail(subject, finalBody);
+	    sendCandidacyRefereeEmail(process, request, subject, body, referee);
 	}
+    }
+
+    private void sendCandidacyRefereeEmail(final PhdIndividualProgramProcess process, final HttpServletRequest request,
+	    final String subject, final String body, final PhdCandidacyReferee referee) {
+	final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, referee);
+	final String finalBody = String.format(body, process.getPerson().getName(), link);
+	referee.sendEmail(subject, finalBody);
     }
 
     private String getCandidacyRefereeAccessLinkPrefix() {
@@ -899,6 +904,38 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	return mapping.findForward("editCandidacyReferees");
+    }
+
+    public ActionForward sendCandidacyRefereeEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	final PhdIndividualProgramProcess process = bean.getCandidacyHashCode().getIndividualProgramProcess();
+	final Person person = process.getPerson();
+
+	// TODO: if candidacy period exists, then change body message to send
+	// candidacy limit end date
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+	final String subject = String.format(bundle.getString("message.phd.email.subject.referee.form"), person.getName());
+	final String body = bundle.getString("message.phd.email.body.referee.form");
+
+	final PhdCandidacyReferee referee = getReferee(process, request);
+	sendCandidacyRefereeEmail(process, request, subject, body, referee);
+
+	addSuccessMessage(request, "message.candidacy.referee.email.sent.with.success", referee.getName());
+	request.setAttribute("candidacyBean", bean);
+	return mapping.findForward("editCandidacyReferees");
+    }
+
+    private PhdCandidacyReferee getReferee(final PhdIndividualProgramProcess process, final HttpServletRequest request) {
+	final String externalId = (String) getFromRequest(request, "removeIndex");
+	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
+	    if (referee.getExternalId().equals(externalId)) {
+		return referee;
+	    }
+	}
+	return null;
     }
 
     public ActionForward prepareEditQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
