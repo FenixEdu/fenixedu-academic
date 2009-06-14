@@ -26,7 +26,6 @@
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editCandidacyRefereeForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-<br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -44,7 +43,6 @@
 
 <logic:present name="candidacyBean">
 
-	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h2>	
 	<%-- 
 	<logic:notEmpty name="qualificationBean">
@@ -75,7 +73,7 @@
 				</fr:layout>
 			</fr:view>
 			<logic:equal name="candidacyReferee" property="letterAvailable" value="false">
-				<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + candidacyRefereeId + "; document.getElementById(\"methodId\").value=\"sendCandidacyRefereeEmail\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.re.send.email" bundle="PHD_RESOURCES"/></a></p>
+				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + candidacyRefereeId + "; document.getElementById(\"methodId\").value=\"sendCandidacyRefereeEmail\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.re.send.email" bundle="PHD_RESOURCES"/></a></p>
 			</logic:equal>
 		</logic:iterate>
 	</logic:notEmpty>

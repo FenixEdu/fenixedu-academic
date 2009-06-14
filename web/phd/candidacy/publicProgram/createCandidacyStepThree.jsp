@@ -5,6 +5,18 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
+<script type="text/javascript">
+	function clearFileInputs() {
+		var tags = document.getElementsByTagName("input");
+		for(i=0; i<tags.length; i++) {
+			var tag = tags[i];
+			if (tag.type == "file") {
+				tag.parentNode.innerHTML = tag.parentNode.innerHTML;
+			}
+		}       
+	}
+</script>
+
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
@@ -121,18 +133,22 @@
 					</fr:layout>
 					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 				</fr:edit>
-				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeHabilitationCertificateDocument\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+				<%-- 
+				<p class="mtop05"><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"removeIndexId\").value=" + index + ";javascript:document.getElementById(\"methodId\").value=\"removeHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+				--%>
 			</logic:iterate>
 		</logic:notEmpty>
-		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"addHabilitationCertificateDocument\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+		<%-- 
+		<p><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"methodId\").value=\"addHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+		--%>
 	</fieldset>
 	</div>
 
-	<div class="fs_form">
-	<fieldset style="display: block;">
-		<legend><bean:message key="label.phd.public.documents.phdGuidingLetters" bundle="PHD_RESOURCES"/></legend>
+	<logic:notEmpty name="candidacyBean" property="phdGuidingLetters">
+		<div class="fs_form">
+		<fieldset style="display: block;">
+			<legend><bean:message key="label.phd.public.documents.phdGuidingLetters" bundle="PHD_RESOURCES"/></legend>
 
-		<logic:notEmpty name="candidacyBean" property="phdGuidingLetters">
 			<logic:iterate id="guiding" name="candidacyBean" property="phdGuidingLetters" indexId="index">
 				<strong><%= index.intValue() + 1 %>.</strong>
 				<fr:edit id="<%= "candidacyBean.phdGuidingLetter" + index %>" name="guiding" schema="Public.PhdCandidacyDocumentUploadBean.edit">
@@ -144,13 +160,13 @@
 					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 				</fr:edit>
 			</logic:iterate>
-		</logic:notEmpty>
-	</fieldset>
-	</div>
+		</fieldset>
+		</div>
+	</logic:notEmpty>
 
 	<p><em><bean:message key="label.phd.public.documents.habilitationCertificateDocuments.note" bundle="PHD_RESOURCES" /></em></p>
 	<p class="mtop15">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='returnCreateCandidacyStepTwo'; document.getElementById('candidacyForm').submit();" %>">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='returnCreateCandidacyStepTwo';javascript:document.getElementById('candidacyForm').submit();" %>">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
 	</p>
 </fr:form>

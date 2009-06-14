@@ -1,10 +1,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<html:xhtml/>
 
+<script type="text/javascript">
+	function clearFileInputs() {
+		var tags = document.getElementsByTagName("input");
+		for(i=0; i<tags.length; i++) {
+			var tag = tags[i];
+			if (tag.type == "file") {
+				tag.parentNode.innerHTML = tag.parentNode.innerHTML;
+			}
+		}       
+	}
+</script>
 
 <%-- ### Title #### --%>
 <div class="breadcumbs">
@@ -27,7 +37,7 @@
 	<input type="hidden" id="methodForm" name="method" value="uploadDocuments" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<a href="#" onclick="javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
