@@ -31,7 +31,7 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
-    private static final int MAX_SIZE_SUBJECT = 200;
+    private static final int MAX_SIZE_SUBJECT = 250;
     private static final int MAX_SIZE_BODY = 3000;
     private static final int MAX_SIZE_EXCERPT = 250;
     private static final int MAX_SIZE_KEYWORDS = 150;
