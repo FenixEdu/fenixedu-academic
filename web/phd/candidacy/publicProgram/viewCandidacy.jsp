@@ -43,7 +43,6 @@
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
 </p>
 
-<%-- --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
@@ -53,23 +52,17 @@
 	</fr:layout>
 </fr:view>
 
-<%-- 
-<table>
-	<tr>
-		<td class="width175px"><bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:</td>
-		<td>
-			<logic:present name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
-			<bean:define id="photo" name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo"/>
-			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
-			</logic:present>
-			
-			<logic:notPresent name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
-				<em><bean:message key="message.does.not.have.photo" bundle="CANDIDATE_RESOURCES"/></em>
-			</logic:notPresent>
-		</td>
-	</tr>
-</table>
---%>
+<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
+
+<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.add" bundle="PHD_RESOURCES"/></a>
+</logic:empty>
+<logic:notEmpty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
+	<div>
+		<bean:define id="photoCode" name="individualProgramProcess" property="person.personalPhotoEvenIfPending.idInternal" />
+		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	</div>
+</logic:notEmpty>
 
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
 

@@ -54,7 +54,7 @@ public class PhotographUploadBean implements Serializable {
     }
 
     public void setFileInputStream(InputStream inputStream) throws IOException {
-	this.rawContents = new ByteArray(inputStream).getBytes();
+	this.rawContents = (inputStream != null) ? new ByteArray(inputStream).getBytes() : null;
     }
 
     public InputStream getCompressedInputStream() throws FileNotFoundException {

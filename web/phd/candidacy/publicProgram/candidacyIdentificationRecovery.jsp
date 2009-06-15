@@ -12,7 +12,7 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h2><bean:message key="label.phd.public.candidacy.recover" bundle="PHD_RESOURCES" /></h2>
+<h1><bean:message key="label.phd.public.candidacy.recover" bundle="PHD_RESOURCES" /></h1>
 <%-- ### End of Title ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -25,15 +25,20 @@
 
 	<p><bean:message key="message.email.recovery.access.process" bundle="CANDIDATE_RESOURCES"/></p>
 	
-	<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:property name="requiredMarkShown" value="true" />
-		</fr:layout>
+	<div class="fs_form">
+		<fieldset style="display: block;">
+		<legend><bean:message key="message.email.identification" bundle="PHD_RESOURCES"/></legend>
 	
-		<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=candidacyIdentificationRecoveryInvalid" />
-	</fr:edit>
+		<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thright thtop mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				<fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=candidacyIdentificationRecoveryInvalid" />
+		</fr:edit>
+	</fieldset>
+	</div>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit>
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
 </fr:form>

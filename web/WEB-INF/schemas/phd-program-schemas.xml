@@ -716,7 +716,7 @@
 </schema>
 
 <schema name="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
-	<slot name="file">
+	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="required" value="true" />
@@ -858,3 +858,15 @@
 </schema>
 
 <!-- End of public schemas -->  
+
+<schema name="PhotographUploadBean.upload" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean" bundle="PHD_RESOURCES">
+	<slot name="fileInputStream" key="label.photo">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="required" value="true" />
+			<property name="maxSize" value="2mb" />
+		</validator>
+		<property name="fileNameSlot" value="filename" />
+		<property name="fileContentTypeSlot" value="contentType" />
+	</slot>
+</schema>

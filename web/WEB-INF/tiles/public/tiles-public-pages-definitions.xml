@@ -1080,4 +1080,7 @@
 	<definition name="phdProgram.editCandidacyReferees" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/editCandidacyReferees.jsp"/>
 	</definition>
+	<definition name="phdProgram.uploadPhoto" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/uploadPhoto.jsp"/>
+	</definition>
 </tiles-definitions>

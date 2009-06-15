@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -7,13 +8,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -46,6 +49,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -93,7 +97,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createRefereeLetterSuccess", path = "phdProgram.createRefereeLetterSuccess"),
 
-@Forward(name = "editCandidacyReferees", path = "phdProgram.editCandidacyReferees")
+@Forward(name = "editCandidacyReferees", path = "phdProgram.editCandidacyReferees"),
+
+@Forward(name = "uploadPhoto", path = "phdProgram.uploadPhoto")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -235,6 +241,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
 	bean.setPersonBean(new PersonBean());
+	bean.getPersonBean().setPhotoAvailable(true);
 	bean.getPersonBean().setEmail(hashCode.getEmail());
 	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 	bean.setCandidacyHashCode(hashCode);
@@ -463,7 +470,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	     */
 
 	    // **********************************************************
-
 	    final PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) CreateNewProcess.run(
 		    PhdIndividualProgramProcess.class, bean, buildActivities(bean));
 
@@ -1148,8 +1154,57 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return false;
     }
 
-    // TODO: uncomment this line
-    @Override
-    protected void reloadRenderers() throws ServletException {
+    public ActionForward prepareUploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("uploadPhotoBean", new PhotographUploadBean());
+	return mapping.findForward("uploadPhoto");
     }
+
+    public ActionForward uploadPhotoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("uploadPhotoBean", getRenderedObject("uploadPhotoBean"));
+	RenderUtils.invalidateViewState("uploadPhotoBean");
+	return mapping.findForward("uploadPhoto");
+    }
+
+    public ActionForward uploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	final PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject("uploadPhotoBean");
+
+	if (!RenderUtils.getViewState("uploadPhotoBean").isValid()) {
+	    addErrorMessage(request, "error.photo.upload.invalid.information");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	if (ContentType.getContentType(photo.getContentType()) == null) {
+	    addErrorMessage(request, "error.photo.upload.unsupported.file");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	try {
+	    photo.processImage();
+	    UploadOwnPhoto.upload(photo, bean.getCandidacyHashCode().getPerson());
+
+	} catch (final UnableToProcessTheImage e) {
+	    addErrorMessage(request, "error.photo.upload.unable.to.process.image");
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
+    }
+
+    // TODO: uncomment this line
+    // @Override
+    // protected void reloadRenderers() throws ServletException {
+    // }
 }
