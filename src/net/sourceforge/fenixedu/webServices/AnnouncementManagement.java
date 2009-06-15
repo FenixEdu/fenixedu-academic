@@ -31,13 +31,13 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
-    private static final int MAX_SIZE_SUBJECT = 100;
+    private static final int MAX_SIZE_SUBJECT = 200;
     private static final int MAX_SIZE_BODY = 3000;
-    private static final int MAX_SIZE_EXCERPT = 200;
-    private static final int MAX_SIZE_KEYWORDS = 100;
+    private static final int MAX_SIZE_EXCERPT = 250;
+    private static final int MAX_SIZE_KEYWORDS = 150;
     private static final int MAX_SIZE_AUTHOR_NAME = 100;
-    private static final int MAX_SIZE_AUTHOR_EMAIL = 50;
-    private static final int MAX_SIZE_PLACE = 100;
+    private static final int MAX_SIZE_AUTHOR_EMAIL = 70;
+    private static final int MAX_SIZE_PLACE = 120;
     private static final int MAX_SIZE_EDITOR_NOTES = 1000;
     private static final int MAX_SIZE_FILE = 4783818;
 
