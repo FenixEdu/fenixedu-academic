@@ -327,6 +327,7 @@
 		  </fr:layout>
 		</fr:edit>
 
+<%-- 
 		<div class="mtop1 mbottom1">
 			<label for="captcha"><bean:message key="label.captcha" bundle="ALUMNI_RESOURCES" />:</label>
 			<div class="mbottom05">
@@ -341,6 +342,7 @@
 			
 			<br/>
 		</div>
+--%>
 
 		<h3><bean:message key="label.payment.title" bundle="CANDIDATE_RESOURCES"/></h3>
 		<p><bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/></p> 

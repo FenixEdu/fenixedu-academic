@@ -58,7 +58,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-application-access-recovery-email-sent", path = "show.application.access.recovery.email.sent") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessPublicDA {
     private static final LocalDateTime start = new LocalDateTime(2009, 4, 28, 0, 0);
-    private static final LocalDateTime end = new LocalDateTime(2009, 6, 15, 23, 59);
+    private static final LocalDateTime end = new LocalDateTime(2009, 6, 16, 12, 00);
 
     @Override
     protected String getCandidacyNameKey() {
@@ -166,11 +166,12 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 		return mapping.findForward("candidacy.continue.creation");
 	    }
 
-	    if (!validateCaptcha(mapping, request)) {
-		invalidateDocumentFileRelatedViewStates();
-		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-		return mapping.findForward("candidacy.continue.creation");
-	    }
+	    // if (!validateCaptcha(mapping, request)) {
+	    // invalidateDocumentFileRelatedViewStates();
+	    // request.setAttribute(getIndividualCandidacyProcessBeanName(),
+	    // getIndividualCandidacyProcessBean());
+	    // return mapping.findForward("candidacy.continue.creation");
+	    // }
 
 	    if (candidacyIndividualProcessExistsForThisEmail(bean.getPersonBean().getEmail())) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);

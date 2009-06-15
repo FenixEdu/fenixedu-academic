@@ -61,7 +61,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	return mapping.findForward("Success");
     }
 
-    private static Integer findDegreeCurricularPlanID(HttpServletRequest request) {
+    public static Integer findDegreeCurricularPlanID(HttpServletRequest request) {
 	final Integer degreeCurricularPlanID;
 
 	String paramValue = request.getParameter("degreeCurricularPlanID");

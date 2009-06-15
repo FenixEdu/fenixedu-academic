@@ -225,6 +225,11 @@
 					<bean:message key="link.coordinator.tutorshipHistory"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="<%= "/caseHandlingSecondCycleCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:message key="link.coordinator.second.cycle.applications"/>
+				</html:link>
+			</li>
 			
 			<li class="navheader">
 				<bean:message key="label.coordinator.degreeSite.students"/>
@@ -239,7 +244,8 @@
 				    <bean:message key="list.students"/>
 				</html:link>			
 			</li>
-						
+			
+			
 			<%--<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="false">
 				<li>
 					<html:link page="<%= "/sendMail.do?method=prepare&amp;students=true&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">

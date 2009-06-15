@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -110,7 +111,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	if (process != null) {
 	    request.setAttribute("process", process);
 	    request.setAttribute("processActivities", process.getAllowedActivities(AccessControl.getUserView()));
-	    request.setAttribute("childProcesses", process.getChildProcesses());
+	    request.setAttribute("childProcesses", getChildProcesses(process, request));
 	    request.setAttribute("canCreateChildProcess", canCreateProcess(getChildProcessType().getName()));
 	    request.setAttribute("childProcessName", getChildProcessType().getSimpleName());
 	    request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
@@ -119,6 +120,10 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 	request.setAttribute("executionIntervals", ExecutionInterval
 		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
+    }
+
+    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+	return process.getChildProcesses();
     }
 
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
