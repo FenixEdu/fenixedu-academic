@@ -106,8 +106,8 @@
 			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
-		<fr:edit id="candidacyBean.reportOrWorkDocument" name="candidacyBean" property="reportOrWorkDocument" 
-				 schema="Public.PhdCandidacyDocumentUploadBean.reportOrWorkDocument">
+		<fr:edit id="candidacyBean.dissertationOrFinalWorkDocument" name="candidacyBean" property="dissertationOrFinalWorkDocument" 
+				 schema="Public.PhdCandidacyDocumentUploadBean.dissertationOrFinalWorkDocument">
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

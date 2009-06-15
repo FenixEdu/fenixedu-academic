@@ -69,7 +69,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private PhdCandidacyDocumentUploadBean researchPlan;
 
-    private PhdCandidacyDocumentUploadBean reportOrWorkDocument;
+    private PhdCandidacyDocumentUploadBean dissertationOrFinalWorkDocument;
 
     private List<PhdCandidacyDocumentUploadBean> habilitationCertificateDocuments;
 
@@ -323,12 +323,12 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.researchPlan = researchPlan;
     }
 
-    public PhdCandidacyDocumentUploadBean getReportOrWorkDocument() {
-	return reportOrWorkDocument;
+    public PhdCandidacyDocumentUploadBean getDissertationOrFinalWorkDocument() {
+	return dissertationOrFinalWorkDocument;
     }
 
-    public void setReportOrWorkDocument(PhdCandidacyDocumentUploadBean reportOrWorkDocument) {
-	this.reportOrWorkDocument = reportOrWorkDocument;
+    public void setDissertationOrFinalWorkDocument(PhdCandidacyDocumentUploadBean dissertationOrFinalWorkDocument) {
+	this.dissertationOrFinalWorkDocument = dissertationOrFinalWorkDocument;
     }
 
     public List<PhdCandidacyDocumentUploadBean> getHabilitationCertificateDocuments() {
@@ -382,8 +382,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	    result.add(getResearchPlan());
 	}
 
-	if (getReportOrWorkDocument().hasAnyInformation()) {
-	    result.add(getReportOrWorkDocument());
+	if (getDissertationOrFinalWorkDocument().hasAnyInformation()) {
+	    result.add(getDissertationOrFinalWorkDocument());
 	}
 
 	for (final PhdCandidacyDocumentUploadBean bean : getHabilitationCertificateDocuments()) {

@@ -399,7 +399,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setMotivationLetter(createDocumentBean(PhdIndividualProgramDocumentType.MOTIVATION_LETTER));
 	bean.setSocialSecurityDocument(createDocumentBean(PhdIndividualProgramDocumentType.SOCIAL_SECURITY));
 	bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
-	bean.setReportOrWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.REPORT_OR_WORK_DOCUMENT));
+	bean.setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
 	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments());
 	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
@@ -570,8 +570,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    result = false;
 	}
 
-	if (!RenderUtils.getViewState("candidacyBean.reportOrWorkDocument").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.reportOrWorkDocument.not.valid");
+	if (!RenderUtils.getViewState("candidacyBean.dissertationOrFinalWorkDocument").isValid()) {
+	    addErrorMessage(request, "error.candidacyBean.dissertationOrFinalWorkDocument.not.valid");
 	    result = false;
 	}
 
@@ -622,8 +622,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.getResearchPlan().removeFile();
 	RenderUtils.invalidateViewState("candidacyBean.researchPlan");
 
-	bean.getReportOrWorkDocument().removeFile();
-	RenderUtils.invalidateViewState("candidacyBean.reportOrWorkDocument");
+	bean.getDissertationOrFinalWorkDocument().removeFile();
+	RenderUtils.invalidateViewState("candidacyBean.dissertationOrFinalWorkDocument");
 
 	bean.removeHabilitationCertificateDocumentFiles();
 	invalidateHabilitationCertificateDocumentViewStates();
@@ -1074,7 +1074,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    }
 
 	    result.add(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
-	    result.add(PhdIndividualProgramDocumentType.REPORT_OR_WORK_DOCUMENT);
+	    result.add(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT);
 	    result.add(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
 
 	    return result;

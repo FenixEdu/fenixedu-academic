@@ -707,8 +707,8 @@
 	</slot>
 </schema>
 
-<schema name="Public.PhdCandidacyDocumentUploadBean.reportOrWorkDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
-	<slot name="file" key="label.phd.public.documents.reportOrWorkDocument">
+<schema name="Public.PhdCandidacyDocumentUploadBean.dissertationOrFinalWorkDocument" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="file" key="label.phd.public.documents.dissertationOrFinalWorkDocument">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="3mb" />
 		</validator>
