@@ -118,7 +118,7 @@
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 
-	<logic:notEmpty name="technicalReports">
+	<logic:notEmpty name="technical-reports">
 	<p id='books' class="mtop2 mbottom0"><strong><span>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.TechnicalReports" />
 	</span></strong></p>
@@ -129,7 +129,7 @@
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 
-	<logic:notEmpty name="otherPublications">
+	<logic:notEmpty name="other-publications">
 	<p id='books' class="mtop2 mbottom0"><strong><span>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.OtherPublications" />
 	</span></strong></p>
@@ -171,8 +171,8 @@
 								<logic:empty name="proceedings">
 									<logic:empty name="theses">
 										<logic:empty name="manuals">
-											<logic:empty name="technicalReports">
-												<logic:empty name="otherPublications">
+											<logic:empty name="technical-reports">
+												<logic:empty name="other-publications">
 													<logic:empty name="unstructureds">
 														<bean:message key="label.search.noResultsFound" />
 													</logic:empty>
