@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.phd;
 
 public enum PhdProgramCandidacyProcessState {
 
+    PRE_CANDIDATE,
+
     STAND_BY_WITH_MISSING_INFORMATION,
 
     STAND_BY_WITH_COMPLETE_INFORMATION,

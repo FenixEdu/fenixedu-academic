@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 
@@ -45,6 +46,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private String email;
 
     private String captcha;
+
+    private PhdProgramCandidacyProcessState state = PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION;
 
     private DomainReference<PhdProgramPublicCandidacyHashCode> candidacyHashCode;
 
@@ -189,6 +192,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setCaptcha(String captcha) {
 	this.captcha = captcha;
+    }
+
+    public PhdProgramCandidacyProcessState getState() {
+	return state;
+    }
+
+    public void setState(PhdProgramCandidacyProcessState state) {
+	this.state = state;
     }
 
     public PhdProgramPublicCandidacyHashCode getCandidacyHashCode() {

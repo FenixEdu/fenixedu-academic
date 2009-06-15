@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 
 import org.joda.time.LocalDate;
 
@@ -48,9 +47,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final Object[] values = (Object[]) object;
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess((PhdProgramCandidacyProcessBean) values[0],
-		    (Person) values[1]);
-	    result.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
+	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) values[0];
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, (Person) values[1]);
+	    result.setState(bean.getState());
 	    return result;
 	}
     }
