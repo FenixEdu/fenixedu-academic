@@ -627,6 +627,7 @@ class DomainObject {
 	}
 
 	class CoordinatorExecutionDegreeCoursesReport extends DomainObject {
+		DateTime lastEditionDate;
 		String globalComment;
 		String stepsToImproveResults;
 		String teachingBestPracticesDevelopedByTeachers;
@@ -6637,23 +6638,31 @@ relation PhdIndividualProgramProcessExecutionYear {
 	phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcesses {
 		multiplicity *;
 	}
+	
 	ExecutionYear playsRole executionYear;
 }
 
+
 relation PhdProgramServiceAgreementTemplatePhdProgram {
+	
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
+		
 	phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
+
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
+
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
 		multiplicity *;
 	}
 }
 
 relation PhdProgramCandidacyProcessDocumentPerson {
+	
 	Person playsRole uploader;
+	
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole uploadedPhdCandidacyProcessDocuments {
 		multiplicity *;
 	}

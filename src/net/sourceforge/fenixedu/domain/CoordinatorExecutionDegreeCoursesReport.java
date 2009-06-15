@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -44,4 +45,27 @@ public class CoordinatorExecutionDegreeCoursesReport extends CoordinatorExecutio
 		&& StringUtils.isEmpty(getTeachingBestPracticesDevelopedByTeachers());
     }
 
+    @Override
+    public void setBolonhaProcessImplementationReflection(String bolonhaProcessImplementationReflection) {
+	setLastEditionDate(new DateTime());
+	super.setBolonhaProcessImplementationReflection(bolonhaProcessImplementationReflection);
+    }
+
+    @Override
+    public void setGlobalComment(String globalComment) {
+	setLastEditionDate(new DateTime());
+	super.setGlobalComment(globalComment);
+    }
+
+    @Override
+    public void setStepsToImproveResults(String stepsToImproveResults) {
+	setLastEditionDate(new DateTime());
+	super.setStepsToImproveResults(stepsToImproveResults);
+    }
+
+    @Override
+    public void setTeachingBestPracticesDevelopedByTeachers(String teachingBestPracticesDevelopedByTeachers) {
+	setLastEditionDate(new DateTime());
+	super.setTeachingBestPracticesDevelopedByTeachers(teachingBestPracticesDevelopedByTeachers);
+    }
 }
