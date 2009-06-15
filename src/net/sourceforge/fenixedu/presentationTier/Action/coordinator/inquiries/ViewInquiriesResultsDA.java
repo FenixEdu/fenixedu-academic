@@ -142,6 +142,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	request
 		.setAttribute("executionDegreeCoursesReport",
 			getExecutionDegreeCoursesReports(executionSemester, executionDegree));
+	request.setAttribute("executionSemester", executionSemester);	
 	request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionSemester));
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("otherExecutionCourses", otherExecutionCourses);
