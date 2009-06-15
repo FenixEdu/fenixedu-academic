@@ -49,3 +49,6 @@ execute "Create phd candidacy referee letter table and relations" createPhdCandi
 execute "Add new columns to Qualification table" addColumnsToQualificationTable.sql
 execute "Change the Upload Files link on manager side menu" FunctionalitiesUploadSIBSFiles.sql
 execute "Rename column from PhdCandidacyRefereeLetter" alterPhdCandidacyRefereeLetterTable.sql
+
+execute "alterTableCoordinatorExecutionDegreeCoursesReport" alterTableCoordinatorExecutionDegreeCoursesReport.sql
+
