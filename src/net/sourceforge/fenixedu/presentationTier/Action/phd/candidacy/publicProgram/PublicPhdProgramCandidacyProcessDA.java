@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
@@ -270,6 +271,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	// TODO:IMPORTANT change when extending this candidacies to all types
 	bean.setCollaborationType(PhdIndividualProgramCollaborationType.EPFL);
+	bean.setState(PhdProgramCandidacyProcessState.PRE_CANDIDATE);
 	// TODO: ---------------------------------------------------------------
 
 	if (!bean.hasAnyGuiding()) {
