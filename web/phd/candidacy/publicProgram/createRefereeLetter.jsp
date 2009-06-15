@@ -128,7 +128,7 @@
 		<logic:notEmpty name="createRefereeLetterBean" property="existingFileFilename">
 			<em>Previous file: <bean:write name="createRefereeLetterBean" property="existingFileFilename" /> (<bean:write name="createRefereeLetterBean" property="existingFileSize" />Kb)</em>
 		</logic:notEmpty>
-		<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+		<p><em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em></p>
 
 		</fieldset>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>

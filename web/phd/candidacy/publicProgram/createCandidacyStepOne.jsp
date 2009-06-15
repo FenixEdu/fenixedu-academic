@@ -25,7 +25,7 @@
 <jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.personBean" />
 <%--  ### End of Error Messages  ### --%>
 
-<%-- <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p> --%>
+<%-- <p><em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em></p> --%>
 
 <%--  ### Operation Area ### --%>
 

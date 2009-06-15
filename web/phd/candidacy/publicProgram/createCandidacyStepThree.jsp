@@ -49,7 +49,7 @@
 
 	<p class="mtop2">
 		<em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em><br/>
-		<em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em>
+		<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
 	</p>	
 
 	<div class="fs_form">

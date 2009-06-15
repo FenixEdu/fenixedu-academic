@@ -1109,6 +1109,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	} else {
 	    bean = new PhdCandidacyRefereeLetterBean();
 	    bean.setCandidacyReferee(hashCode);
+	    bean.setRefereeName(hashCode.getName());
 	}
 
 	request.setAttribute("createRefereeLetterBean", bean);

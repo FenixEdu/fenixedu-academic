@@ -51,7 +51,7 @@
 
 <p class="mtop15">
 	<em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em><br/>
-	<em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em>
+	<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
 </p>
 
 <logic:notPresent name="candidacyBean">
@@ -61,7 +61,7 @@
 <logic:present name="candidacyBean">
 		<div class="fs_form">
 		<fieldset style="display: block;">
-			<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">		
+			<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="thlight thleft"/>
 					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

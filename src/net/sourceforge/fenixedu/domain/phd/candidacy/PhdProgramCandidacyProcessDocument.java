@@ -2,11 +2,13 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.Collections;
 
+import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -75,6 +77,7 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
     }
 
     public void delete() {
+	removeUploader();
 	removePhdCandidacyProcess();
 	super.delete();
     }
