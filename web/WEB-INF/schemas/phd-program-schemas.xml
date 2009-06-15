@@ -79,7 +79,7 @@
 		<property name="maxLength" value="15"/>
     </slot>
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -129,8 +129,8 @@
 	</slot>	
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
-		<property name="format" value="${nationality}" />
-		<property name="sortBy" value="nationality"/>
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="countryNationality"/>
 	</slot>
 	<slot name="fatherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="75"/>
@@ -141,7 +141,7 @@
 		<property name="maxLength" value="255"/>
 	</slot>
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -206,7 +206,7 @@
 
 <schema name="PhdProgramCandidacyProcessBean.editCandidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" bundle="APPLICATION_RESOURCES">
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -294,7 +294,7 @@
 		<property name="rawSlotName" value="institutionName"/>
 	</slot>
 	<slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -358,7 +358,7 @@
 	<slot name="beginDate" />
 	<slot name="endDate" />
 	<slot name="country" layout="format">
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 	</slot>
 	<slot name="businessArea" layout="format">
 		<property name="format" value="${description}"/>
@@ -383,7 +383,7 @@
 	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="endDate" />
 	<slot name="country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -518,8 +518,8 @@
 	</slot>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
-		<property name="format" value="${nationality}" />
-		<property name="sortBy" value="nationality"/>
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="countryNationality"/>
 	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -531,7 +531,7 @@
 		<property name="size" value="10"/>
 	</slot>
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
@@ -742,11 +742,11 @@
 	<slot name="socialSecurityNumber" />
    	<slot name="dateOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
-	<slot name="nationality.nationality" />
+	<slot name="nationality.countryNationality" />
 	<slot name="address" />
 	<slot name="area" />
 	<slot name="areaCode" />
-    <slot name="countryOfResidence.name" />
+    <slot name="countryOfResidence.localizedName" />
 	<slot name="phone" />
 	<slot name="mobile" />
 	<slot name="email" />
@@ -830,7 +830,7 @@
 	</slot>
 	<slot name="refereeCountry" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-		<property name="format" value="${name}"/>
+		<property name="format" value="${localizedName}"/>
 		<property name="sortBy" value="name=asc" />
 	</slot>
 	<slot name="refereePhone" >
