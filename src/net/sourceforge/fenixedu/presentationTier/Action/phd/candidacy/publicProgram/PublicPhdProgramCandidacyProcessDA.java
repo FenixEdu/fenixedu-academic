@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicPro
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +48,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
@@ -399,7 +399,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setMotivationLetter(createDocumentBean(PhdIndividualProgramDocumentType.MOTIVATION_LETTER));
 	bean.setSocialSecurityDocument(createDocumentBean(PhdIndividualProgramDocumentType.SOCIAL_SECURITY));
 	bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
-	bean.setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
+	bean
+		.setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
 	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments());
 	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
@@ -1047,48 +1048,27 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	@Override
 	public Object provide(Object source, Object currentValue) {
-	    final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) source;
-	    final List<PhdProgramCandidacyProcessDocument> documents = bean.getIndividualProgramProcess()
-		    .getCandidacyProcessDocuments();
 
-	    final List<PhdIndividualProgramDocumentType> result = new ArrayList<PhdIndividualProgramDocumentType>();
+	    return Arrays.asList(
 
-	    if (!has(PhdIndividualProgramDocumentType.CV, documents)) {
-		result.add(PhdIndividualProgramDocumentType.CV);
-	    }
+	    PhdIndividualProgramDocumentType.CV,
 
-	    if (!has(PhdIndividualProgramDocumentType.ID_DOCUMENT, documents)) {
-		result.add(PhdIndividualProgramDocumentType.ID_DOCUMENT);
-	    }
+	    PhdIndividualProgramDocumentType.ID_DOCUMENT,
 
-	    if (!has(PhdIndividualProgramDocumentType.MOTIVATION_LETTER, documents)) {
-		result.add(PhdIndividualProgramDocumentType.MOTIVATION_LETTER);
-	    }
+	    PhdIndividualProgramDocumentType.MOTIVATION_LETTER,
 
-	    if (!has(PhdIndividualProgramDocumentType.SOCIAL_SECURITY, documents)) {
-		result.add(PhdIndividualProgramDocumentType.SOCIAL_SECURITY);
-	    }
+	    PhdIndividualProgramDocumentType.SOCIAL_SECURITY,
 
-	    if (!has(PhdIndividualProgramDocumentType.RESEARCH_PLAN, documents)) {
-		result.add(PhdIndividualProgramDocumentType.RESEARCH_PLAN);
-	    }
+	    PhdIndividualProgramDocumentType.RESEARCH_PLAN,
 
-	    result.add(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
-	    result.add(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT);
-	    result.add(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
+	    PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT,
 
-	    return result;
+	    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
+
+	    PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
+
 	}
 
-	private boolean has(final PhdIndividualProgramDocumentType type, final List<PhdProgramCandidacyProcessDocument> documents) {
-
-	    for (final PhdProgramCandidacyProcessDocument document : documents) {
-		if (document.hasType(type)) {
-		    return true;
-		}
-	    }
-	    return false;
-	}
     }
 
     public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -13,28 +13,39 @@ public enum PhdIndividualProgramDocumentType {
 
     CV,
 
-    DEGREE_FINALIZATION_CERTIFICATE,
+    DEGREE_FINALIZATION_CERTIFICATE(true),
 
-    HABILITATION_CERTIFICATE_DOCUMENT,
+    HABILITATION_CERTIFICATE_DOCUMENT(true),
 
-    DISSERTATION_OR_FINAL_WORK_DOCUMENT,
+    DISSERTATION_OR_FINAL_WORK_DOCUMENT(true),
+
     ID_DOCUMENT,
 
     SOCIAL_SECURITY,
 
-    RECOMMENDATION_LETTER,
+    RECOMMENDATION_LETTER(true),
 
     HEALTH_BULLETIN,
 
-    GUIDER_ACCEPTANCE_LETTER,
+    GUIDER_ACCEPTANCE_LETTER(true),
 
-    ASSISTENT_GUIDER_ACCEPTANCE_LETTER,
+    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(true),
 
     MOTIVATION_LETTER,
 
     RESEARCH_PLAN,
 
-    OTHER;
+    OTHER(true);
+
+    private boolean multipleDocumentsAllowed;
+
+    private PhdIndividualProgramDocumentType() {
+	this(false);
+    }
+
+    private PhdIndividualProgramDocumentType(boolean multipleDocumentsAllowed) {
+	this.multipleDocumentsAllowed = multipleDocumentsAllowed;
+    }
 
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
@@ -46,6 +57,10 @@ public enum PhdIndividualProgramDocumentType {
 
     public String getQualifiedName() {
 	return PhdIndividualProgramDocumentType.class.getSimpleName() + "." + name();
+    }
+
+    public boolean isMultipleDocumentsAllowed() {
+	return multipleDocumentsAllowed;
     }
 
 }

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 
 import org.joda.time.LocalDate;
 
@@ -67,6 +68,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	    for (final PhdCandidacyDocumentUploadBean each : documents) {
 		if (each.hasAnyInformation()) {
+		    if (!each.getType().isMultipleDocumentsAllowed()) {
+			process.removeDocumentsByType(each.getType());
+		    }
+
 		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
 			    each.getFilename(), userView != null ? userView.getPerson() : null);
 		}
@@ -128,6 +133,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    }
+
+    public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
+	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
+	    if (each.getDocumentType() == type) {
+		each.delete();
+	    }
+	}
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
