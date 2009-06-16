@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchAct
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ParticipationsInterface;
@@ -128,6 +129,12 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 	return mapping.findForward("EditParticipants");
     }
 
+    public ActionForward prepareEditParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return generalPrepareParticipants(mapping, form, request, response, getEventFromRequest(request));
+    }
+
     public ActionForward prepareEditEventParticipants(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -230,6 +237,12 @@ public class EditResearchActivityDispatchAction extends ActivitiesManagementDisp
 		    CreateResearchActivityParticipation.run((ScientificJournal) participantBean.getActivity(), participantBean
 			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage(), participantBean
 			    .getBeginDate(), participantBean.getEndDate());
+		} else if (participantBean.getActivity() instanceof JournalIssue) {
+		    CreateResearchActivityParticipation.run((JournalIssue) participantBean.getActivity(), participantBean
+			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage());
+		} else if (participantBean.getActivity() instanceof EventEdition) {
+		    CreateResearchActivityParticipation.run((EventEdition) participantBean.getActivity(), participantBean
+			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage());
 		} else {
 		    CreateResearchActivityParticipation.run((ResearchEvent) participantBean.getActivity(), participantBean
 			    .getRole(), participantBean.getPerson(), participantBean.getRoleMessage());
