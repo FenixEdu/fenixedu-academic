@@ -9,7 +9,7 @@
 
 <%-- <div class="col_right_alumni"><img src="alumni_reg_01.gif" alt="[Image] Alumni" /></div> --%>
 
-<h1>Alumni</h1>
+<h1>Inscrição Alumni</h1>
 
 <div class="alumnilogo">
 

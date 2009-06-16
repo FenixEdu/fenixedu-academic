@@ -8,13 +8,13 @@
 
 <!-- alumniPublicAccess.jsp -->
 
-<h1>Alumni</h1>
+<h1>Inscrição Alumni</h1>
 
 <div class="alumnilogo">
-
+<br/>
 <%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
 
-
+<%--
 <p class="greytxt"><bean:message key="label.alumni.welcome.a" bundle="ALUMNI_RESOURCES" /></p>
 <p class="greytxt"><bean:message key="label.alumni.welcome.b" bundle="ALUMNI_RESOURCES" /></p>
 
@@ -46,6 +46,7 @@
 <span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 </html:messages>
 
+--%>
 
 <div class="reg_form">	
 
@@ -152,6 +153,7 @@
 </div>
 </div>
 
+<%--
 <h2>Sobre o Projecto Alumni</h2>
 <p>O projecto Alumni consiste na cria&ccedil;&atilde;o de uma rede de contactos com os Antigos Alunos do T&eacute;cnico, com vista &agrave; manuten&ccedil;&atilde;o da liga&ccedil;&atilde;o com a escola na perspectiva da forma&ccedil;&atilde;o ao longo da vida, da actualiza&ccedil;&atilde;o de informa&ccedil;&atilde;o e conhecimentos, e do refor&ccedil;o de uma comunidade orientada para a produ&ccedil;&atilde;o cient&iacute;fica e tecnol&oacute;gica.</p>
 
@@ -204,6 +206,7 @@
 
 </ul>
 
+--%>
 
 <!-- END CONTENTS -->
 </div>

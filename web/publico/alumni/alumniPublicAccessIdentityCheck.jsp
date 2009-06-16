@@ -9,7 +9,7 @@
 <!-- alumniPublicAccessIdentityCheck.jsp -->
 
 
-<h1>Alumni</h1>
+<h1>Inscrição Alumni</h1>
 
 <div class="alumnilogo">
 <%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>

@@ -7,7 +7,7 @@
 
 <!-- alumniRegistrationResult.jsp -->
 
-<h1>Alumni</h1>
+<h1>Inscrição Alumni</h1>
 
 <div class="alumnilogo">
 	
