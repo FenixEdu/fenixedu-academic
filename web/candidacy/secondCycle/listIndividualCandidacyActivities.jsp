@@ -99,6 +99,12 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
+
+	<%-- Observations --%>
+	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
+	<fr:view name="process"
+		property="candidacy.observations">
+	</fr:view>
 	
 	<%-- show documents--%>
 	<br/>

@@ -87,6 +87,12 @@
 		</fr:layout>
 	</fr:view>
 	
+	<%-- Observations --%>
+	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
+	<fr:view name="process"
+		property="candidacy.observations">
+	</fr:view>
+	
 	<%-- show documents--%>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
