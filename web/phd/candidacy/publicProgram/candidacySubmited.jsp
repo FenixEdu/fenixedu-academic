@@ -18,6 +18,7 @@
 
 <%-- Add information about candidacy period --%>
 
-<p><em><bean:message key="message.application.submited.success2" bundle="PHD_RESOURCES"/></em></p>
+<bean:define id="maximumDaysToEditCandidacy" name="maximumDaysToEditCandidacy" />
+<p><em><bean:message key="message.application.submited.success2" arg0="<%= maximumDaysToEditCandidacy.toString() %>" bundle="PHD_RESOURCES"/></em></p>
 
 <p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>

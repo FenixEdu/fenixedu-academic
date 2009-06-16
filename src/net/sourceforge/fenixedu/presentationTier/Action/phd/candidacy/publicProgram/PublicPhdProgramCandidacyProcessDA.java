@@ -502,6 +502,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	}
 
+	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	return mapping.findForward("createCandidacySuccess");
     }
 
