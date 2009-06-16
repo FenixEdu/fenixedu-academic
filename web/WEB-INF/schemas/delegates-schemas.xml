@@ -254,6 +254,14 @@
 	</slot>
 </schema>
 
+<schema name="choose.execution.year.domain.object" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
+	<slot name="domainObject" key="label.executionYear" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/> 
+		<property name="format" value="${year}"/>
+		<property name="nullOptionHidden" value="true" />
+		<property name="destination" value="postBackChooseExecutionYear"/>
+	</slot>
+</schema>
 <schema name="delegates.show.eachGroup" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	<slot name="name" layout="label"/>
 </schema>

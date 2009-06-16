@@ -11,7 +11,7 @@
 
 <bean:define id="year" name="currentExecutionYear" property="domainObject.year"/>
 <fr:form action="/viewStudents.do?method=chooseExecutionYear">
-	<fr:edit schema="choose.execution.year" name="currentExecutionYear" id="chooseExecutionYear" layout="tabular">
+	<fr:edit schema="choose.execution.year.domain.object" name="currentExecutionYear" id="chooseExecutionYear" layout="tabular">
 		<fr:destination name="postBackChooseExecutionYear" path="/viewStudents.do?method=chooseExecutionYear"/>
 	</fr:edit>
 </fr:form>
