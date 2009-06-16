@@ -16,12 +16,6 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<%-- 
-<bean:define id="hash" name="candidacyBean" property="candidacyHashCode.value" />
-<html:link action="<%= "/candidacies/phdProgramCandidacyProcess.do?method=viewCandidacy&hash=" + hash %>">
-	« <bean:message key="label.back" bundle="PHD_RESOURCES" />	
-</html:link>
---%>
 
 <fr:form id="editPersonalInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
@@ -33,52 +27,50 @@
 	</noscript>
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 
+<logic:equal name="canEditCandidacy" value="true">
 
-<%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.personBean" />
-<%--  ### End of Error Messages  ### --%>
-
-<%--  ### Operation Area ### --%>
-
-<%--
-  CHECK: has candidacy period? 
-<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
---%>
-
-<logic:notPresent name="candidacyBean">
-	<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-</logic:notPresent>
-
-<logic:present name="candidacyBean">
-
-	<logic:equal name="isEmployee" value="true">
-		<fr:view name="candidacyBean" property="personBean" schema="Public.PhdIndividualProgramProcess.view.person">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			</fr:layout>
-		</fr:view>
-	</logic:equal>
-
-	<logic:equal name="isEmployee" value="false">
-			<p class="mtop15"><em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em></p>
-			
-			<div class="fs_form">
-			<fieldset style="display: block;">
-				<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
-		
-				<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
-					schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
-					<fr:layout name="tabular">
-							<fr:property name="classes" value="thlight thleft"/>
-					        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-							<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
+	<%--  ### Error Messages  ### --%>
+	<jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=candidacyBean.personBean" />
+	<%--  ### End of Error Messages  ### --%>
+	
+	<%--  ### Operation Area ### --%>
+	
+	<logic:notPresent name="candidacyBean">
+		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+	</logic:notPresent>
+	
+	<logic:present name="candidacyBean">
+	
+		<logic:equal name="isEmployee" value="true">
+			<fr:view name="candidacyBean" property="personBean" schema="Public.PhdIndividualProgramProcess.view.person">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
+	
+		<logic:equal name="isEmployee" value="false">
+				<p class="mtop15"><em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em></p>
 				
-					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
-				</fr:edit>
-			</fieldset>
-			</div>
-			<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit></p>
-	</logic:equal>
-</logic:present>
+				<div class="fs_form">
+				<fieldset style="display: block;">
+					<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
+			
+					<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
+						schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
+						<fr:layout name="tabular">
+								<fr:property name="classes" value="thlight thleft"/>
+						        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+								<fr:property name="requiredMarkShown" value="true" />
+						</fr:layout>
+					
+						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
+					</fr:edit>
+				</fieldset>
+				</div>
+				<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit></p>
+		</logic:equal>
+	</logic:present>
+</logic:equal>
+
 </fr:form>

@@ -28,58 +28,55 @@
 	<br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
-<%--  ### Error Messages  ### --%>
-<jsp:include page="/phd/errorsAndMessages.jsp" />
-<%--  ### End of Error Messages  ### --%>
+<logic:equal name="canEditCandidacy" value="true">
 
-<%--
-  CHECK: has candidacy period? 
-<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
---%>
-
-<logic:notPresent name="candidacyBean">
-	<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-</logic:notPresent>
-
-<logic:present name="candidacyBean">
-
-	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>	
+	<%--  ### Error Messages  ### --%>
+	<jsp:include page="/phd/errorsAndMessages.jsp" />
+	<%--  ### End of Error Messages  ### --%>
 	
-	<logic:notEmpty name="qualificationBean">
-		<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-
-		<div class="fs_form">
-		<fieldset style="display: block;">
-			<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="thlight thleft"/>
-					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
-			</fr:edit>	
-		</fieldset>
-		</div>
-		<p><html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
-		<br/>
-	</logic:notEmpty>
+	<logic:notPresent name="candidacyBean">
+		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+	</logic:notPresent>
 	
-	<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications">
-		<logic:iterate id="qualification" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications" indexId="index" >
-			<strong><%= index.intValue() + 1 %>.</strong>
-			<bean:define id="qualificationId" name="qualification" property="externalId" />
-			<fr:view name="qualification" schema="Phd.Qualification.view">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="thlight thleft"/>
-			        <fr:property name="columnClasses" value="width175px,,,,"/>
-				</fr:layout>
-			</fr:view>
-			<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
-		</logic:iterate>
-	</logic:notEmpty>
-	<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+	<logic:present name="candidacyBean">
+	
+		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>	
 		
-</logic:present>
-</fr:form>
+		<logic:notEmpty name="qualificationBean">
+			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+	
+			<div class="fs_form">
+			<fieldset style="display: block;">
+				<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
+					<fr:layout name="tabular-editable">
+						<fr:property name="classes" value="thlight thleft"/>
+						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+						<fr:property name="requiredMarkShown" value="true" />
+					</fr:layout>
+					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
+				</fr:edit>	
+			</fieldset>
+			</div>
+			<p><html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
+			<br/>
+		</logic:notEmpty>
+		
+		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications">
+			<logic:iterate id="qualification" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications" indexId="index" >
+				<strong><%= index.intValue() + 1 %>.</strong>
+				<bean:define id="qualificationId" name="qualification" property="externalId" />
+				<fr:view name="qualification" schema="Phd.Qualification.view">
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="thlight thleft"/>
+				        <fr:property name="columnClasses" value="width175px,,,,"/>
+					</fr:layout>
+				</fr:view>
+				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+			</logic:iterate>
+		</logic:notEmpty>
+		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+			
+	</logic:present>
+</logic:equal>
 
-<br/>
+</fr:form>

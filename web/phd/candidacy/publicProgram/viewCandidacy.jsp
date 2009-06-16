@@ -22,22 +22,20 @@
 
 <%--  ### Operation Area ### --%>
 
-<%--
-  CHECK: has candidacy period? 
-<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
---%>
+<logic:equal name="canEditCandidacy" value="true">
 
-<fr:form id="editCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
-	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	<input type="hidden" id="methodForm" name="method" />
-	
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPersonalInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></a> | 
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPhdIndividualProgramProcessInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/></a> | 
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/></a> |
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyReferees';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/></a> |  
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a>
-</fr:form>
+	<fr:form id="editCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
+		<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
+		<input type="hidden" id="methodForm" name="method" />
+		
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPersonalInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></a> | 
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPhdIndividualProgramProcessInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/></a> | 
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/></a> |
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyReferees';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/></a> |  
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a>
+	</fr:form>
 
+</logic:equal>
 
 <p style="margin-bottom: 0.5em;">
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
@@ -52,12 +50,14 @@
 	</fr:layout>
 </fr:view>
 
-<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
-
-<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.add" bundle="PHD_RESOURCES"/></a>
-</logic:empty>
+<logic:equal name="canEditCandidacy" value="true">
+	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
+		<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.add" bundle="PHD_RESOURCES"/></a>
+	</logic:empty>
+</logic:equal>
 <logic:notEmpty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
+	<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 	<div>
 		<bean:define id="photoCode" name="individualProgramProcess" property="person.personalPhotoEvenIfPending.idInternal" />
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>

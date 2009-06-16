@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.util.ContentType;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -107,6 +108,19 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     static private final int MINIMUM_HABILITATIONS_AND_CERTIFICATES = 2;
     static private final int MINIMUM_CANDIDACY_REFEREES = 3;
+    static private final int MAXIMUM_DAYS_TO_EDIT_CANDIDACY = 2;
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	if (bean != null && bean.hasCandidacyHashCode()) {
+	    request.setAttribute("canEditCandidacy", canEditCandidacy(bean.getCandidacyHashCode()));
+	}
+
+	return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -405,6 +419,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
 	request.setAttribute("candidacyBean", bean);
+	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepThree");
@@ -437,6 +452,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward createCandidacyStepThreeInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
+	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	return mapping.findForward("createCandidacyStepThree");
     }
 
@@ -483,8 +499,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    bean.clearPerson();
 	    clearDocumentsInformation(bean);
-	    request.setAttribute("candidacyBean", bean);
-	    return mapping.findForward("createCandidacyStepThree");
+	    return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	}
 
 	return mapping.findForward("createCandidacySuccess");
@@ -708,7 +723,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setCandidacyHashCode(hashCode);
 	request.setAttribute("candidacyBean", bean);
 	request.setAttribute("individualProgramProcess", hashCode.getIndividualProgramProcess());
-
+	request.setAttribute("canEditCandidacy", canEditCandidacy(bean.getCandidacyHashCode()));
+	
 	return mapping.findForward("viewCandidacy");
     }
 
@@ -1184,6 +1200,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
+    }
+
+    private Boolean canEditCandidacy(final PhdProgramPublicCandidacyHashCode hashCode) {
+	if (!hashCode.hasPhdProgramCandidacyProcess()) {
+	    return false;
+	}
+	final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
+	return !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
     }
 
     // TODO: uncomment this line

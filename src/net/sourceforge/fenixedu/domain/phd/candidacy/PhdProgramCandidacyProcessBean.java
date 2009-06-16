@@ -211,6 +211,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 		candidacyHashCode) : null;
     }
 
+    public boolean hasCandidacyHashCode() {
+	return getCandidacyHashCode() != null;
+    }
+
     public PhdProgramFocusArea getFocusArea() {
 	return (this.focusArea != null) ? this.focusArea.getObject() : null;
     }

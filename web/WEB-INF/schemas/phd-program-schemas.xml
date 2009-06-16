@@ -762,7 +762,9 @@
 </schema>
 
 <schema name="Public.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
-	<slot name="candidacyDate" />
+	<slot name="candidacyDate">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
 	<slot name="phdProgramFocusArea.name" />
 	<slot name="thesisTitle" />
 	<slot name="collaborationTypeName" />
@@ -772,9 +774,7 @@
 </schema>
 
 <schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">
-	<slot name="name">
-		<property name="classes" value="bold nowrap"/>
-	</slot>
+	<slot name="name" />
 	<slot name="workLocation" />
 	<slot name="email" />
 </schema>
