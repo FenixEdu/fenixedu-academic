@@ -14,7 +14,7 @@
 		</html:messages>
 	</ul>
 
-	<html:form focus="studentNumber" method="post" action="/viewStudentCurriculum.do">
+	<html:form focus="studentNumber" method="post" action="/viewStudentCurriculumSearch.do">
 		<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<html:hidden property="method" value="showStudentCurriculum"/>
 		<html:hidden property="executionDegreeId" />

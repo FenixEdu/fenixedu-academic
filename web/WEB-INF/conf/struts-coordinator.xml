@@ -791,7 +791,7 @@
 		<forward name="Success" path="firstPageStudentEnrollementSection"/>
 	</action>
 		
-	<action path="/viewStudentCurriculum"
+	<action path="/viewStudentCurriculumSearch"
 	   	type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.student.curriculum.ViewStudentCurriculumDA"
        	parameter="method"
        	name="viewStudentCurriculumForm" 

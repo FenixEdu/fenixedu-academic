@@ -235,7 +235,7 @@
 				<bean:message key="label.coordinator.degreeSite.students"/>
 			</li>
 			<li>
-				<html:link page="<%= "/viewStudentCurriculum.do?method=prepare&amp;executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				<html:link page="<%= "/viewStudentCurriculumSearch.do?method=prepare&amp;executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				    <bean:message key="label.coordinator.studentInformation"/>
 				</html:link>			
 			</li>		
