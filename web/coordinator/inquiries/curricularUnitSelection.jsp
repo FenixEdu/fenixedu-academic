@@ -49,7 +49,7 @@ div.progress-container > div {
 
 <c:if test="${not empty executionSemester.coordinatorReportResponsePeriod}">
     <div class="mtop1">
-        <bean:write name="executionDegreeCoursesReport" property="executionInterval.coordinatorReportResponsePeriod.introduction" filter="false"/>
+        <bean:write name="executionSemester" property="coordinatorReportResponsePeriod.introduction" filter="false"/>
         
         <p>De seguida apresenta-se informação sobre os resultados dos Inquéritos aos alunos, dos Relatórios de Docência, preenchidos por cada elemento do Corpo Docente e pelo Responsável por UC, e dos Relatórios de Discência, preenchidos pelos Delegados de Curso , para cada UC do curso.</p> 
         
