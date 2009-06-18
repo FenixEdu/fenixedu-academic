@@ -121,7 +121,7 @@
 				<fr:view name="importList" property="unsuccessfulEvents" schema="show.residenceEventBean.with.status">
 					<fr:layout name="tabular">	
 						<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05" />
-						<fr:property name="columnClasses" value=",aleft,,,highlight6 aleft" />
+						<fr:property name="columnClasses" value=",aleft,,,,highlight6 aleft" />
 						<fr:property name="sortBy" value="userName"/>
 					</fr:layout>
 				</fr:view>
