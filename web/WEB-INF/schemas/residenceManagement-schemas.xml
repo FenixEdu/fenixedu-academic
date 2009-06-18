@@ -48,6 +48,7 @@
 		<property name="destination" value="personLink"/>
 	</slot>
 	<slot name="roomValue" key="label.roomValue"/>
+	<slot name="room" key="label.room"/>
 </schema>
 
 <schema  name="show.residenceEvent.with.dates" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">

@@ -1667,6 +1667,7 @@ class DomainObject {
 	
 		class accounting.ResidenceEvent extends accounting.Event {
 			Money roomValue;
+			String room;
 		}
 		
 		class accounting.events.AnnualEvent extends accounting.AcademicEvent {

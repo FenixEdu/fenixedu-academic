@@ -155,7 +155,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    String fiscalNumber = getValueFromColumnMayBeNull(row, 2);
 	    String name = getValueFromColumnMayBeNull(row, 3);
 	    Double roomValue = new Double(row.getCell((short) 4).getNumericCellValue());
-	    beans.add(new ResidenceEventBean(userName, fiscalNumber, name, roomValue));
+	    beans.add(new ResidenceEventBean(userName, fiscalNumber, name, roomValue, room));
 
 	    i++;
 	}

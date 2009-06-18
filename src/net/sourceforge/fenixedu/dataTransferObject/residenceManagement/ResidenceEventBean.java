@@ -18,12 +18,22 @@ public class ResidenceEventBean implements Serializable {
     private DomainReference<Student> student;
     private Money roomValue;
     private String statusMessage;
+    private String room;
 
-    public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue) {
+    public String getRoom() {
+	return room;
+    }
+
+    public void setRoom(String room) {
+	this.room = room;
+    }
+
+    public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue, String room) {
 	this.userName = userName;
 	this.fiscalNumber = fiscalNumber;
 	this.name = name;
 	this.roomValue = new Money(roomValue);
+	this.room = room;
 	setStudent(null);
     }
 

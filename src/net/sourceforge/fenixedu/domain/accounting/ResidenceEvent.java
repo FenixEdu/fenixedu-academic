@@ -27,17 +27,18 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	super();
     }
 
-    public ResidenceEvent(ResidenceMonth month, Person person, Money roomValue) {
-	init(EventType.RESIDENCE_PAYMENT, person, month, roomValue);
+    public ResidenceEvent(ResidenceMonth month, Person person, Money roomValue, String room) {
+	init(EventType.RESIDENCE_PAYMENT, person, month, roomValue, room);
     }
 
-    protected void init(EventType eventType, Person person, ResidenceMonth month, Money roomValue) {
+    protected void init(EventType eventType, Person person, ResidenceMonth month, Money roomValue, String room) {
 	super.init(eventType, person);
 	if (month == null) {
 	    throw new DomainException("error.accounting.events.ResidenceEvent.ResidenceMonth.cannot.be.null");
 	}
 	setResidenceMonth(month);
 	setRoomValue(roomValue);
+	setRoom(room);
     }
 
     @Override
