@@ -67,6 +67,7 @@
 	<slot name="name" key="label.name"/>
 	<slot name="fiscalNumber" key="label.fiscalNumber"/>
 	<slot name="roomValue" key="label.roomValue"/>
+	<slot name="room" key="label.room"/>
 </schema>
 
 <schema name="show.residenceEventBean.with.status" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEventBean" >
