@@ -78,13 +78,18 @@
 
 		<logic:notEmpty name="searchBean" property="residenceMonth.events">		
 			<p class="mtop15 mbottom05"><bean:message key="label.residents.with.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></p>
+		
 			<logic:notEmpty name="searchBean" property="residenceMonth.eventsWithPaymentCodes">
 				<fr:view name="searchBean" property="residenceMonth.eventsWithPaymentCodes" schema="show.residenceEvent.with.dates">	
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05"/>
-							<fr:property name="columnClasses" value=",,aleft,,,,,"/>
-							<fr:property name="sortBy" value="person.student.number"/>
-						</fr:layout>
+						<fr:layout name="tabular-sortable">
+                                <fr:property name="classes" value="tstyle1 tdcenter thlight mtop05"/>
+                                <fr:property name="columnClasses" value=",,aleft,,,,,"/>
+                                <fr:property name="sortParameter" value="sortBy"/>
+                                <fr:property name="sortUrl" value="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>" />
+                                <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "person.student.number=asc" : request.getParameter("sortBy") %>"/>
+                                <fr:property name="sortableSlots" value="person.student.number, person.socialSecurityNumber, person.name, roomValue, paymentDate" />
+                        </fr:layout>
+
 						<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}"/>
 				</fr:view>
 			</logic:notEmpty>
@@ -95,10 +100,14 @@
 			<p class="mtop2 mbottom05"><bean:message key="label.residents.with.no.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></p>
 			<logic:notEmpty name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes">
 				<fr:view name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes" schema="show.residenceEvent.with.dates">	
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05"/>
-							<fr:property name="columnClasses" value=",,aleft,,,,,"/>
-							<fr:property name="sortBy" value="person.student.number"/>
+						<fr:layout name="tabular-sortable">
+							 <fr:property name="classes" value="tstyle1 tdcenter thlight mtop05"/>
+                                <fr:property name="columnClasses" value=",,aleft,,,,,"/>
+                                <fr:property name="sortParameter" value="sortBy"/>
+                                <fr:property name="sortUrl" value="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>" />
+                                <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "person.student.number=asc" : request.getParameter("sortBy") %>"/>
+                                <fr:property name="sortableSlots" value="person.student.number, person.socialSecurityNumber, person.name, roomValue, paymentDate" />
+                     
 						</fr:layout>
 						<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&monthOID=${residenceMonth.OID}"/>
 				</fr:view>
