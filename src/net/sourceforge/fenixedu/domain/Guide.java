@@ -5,8 +5,10 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.State;
@@ -18,6 +20,13 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 
 public class Guide extends Guide_Base {
+
+    public static Comparator<Guide> COMPARATOR_BY_VERSION = new Comparator<Guide>() {
+	public int compare(Guide leftGuide, Guide rightGuide) {
+	    int comparationResult = leftGuide.getVersion().compareTo(rightGuide.getVersion());
+	    return (comparationResult == 0) ? leftGuide.getIdInternal().compareTo(rightGuide.getIdInternal()) : comparationResult;
+	}
+    };
 
     public Guide() {
 	super();
@@ -106,6 +115,21 @@ public class Guide extends Guide_Base {
 	    }
 	}
 	return null;
+    }
+
+    static public Guide readLastVersionByNumberAndYear(Integer number, Integer year) {
+	Set<Guide> result = new HashSet<Guide>();
+	for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+	    if (guide.getYear().equals(year) && guide.getNumber().equals(number)) {
+		result.add(guide);
+	    }
+	}
+
+	if (result.isEmpty()) {
+	    return null;
+	}
+
+	return Collections.max(result, Guide.COMPARATOR_BY_VERSION);
     }
 
     public static List<Guide> readByNumberAndYear(Integer number, Integer year) {

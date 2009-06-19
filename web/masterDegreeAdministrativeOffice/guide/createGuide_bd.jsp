@@ -6,8 +6,20 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
+
+
+<!-- masterDegreeAdministrativeOffice/guide/createGuide_bd.jsp -->
+
 <h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<span class="error"><!-- Error messages go here -->
+
+<html:messages id="messages" message="true">
+	<bean:write name="messages" />
+</html:messages>
+
+<html:errors/>
+
+</span>
 <br />
 <logic:present name="<%= PresentationConstants.EXECUTION_DEGREE %>" scope="request">
    <table>
@@ -36,7 +48,7 @@
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterType"/>: </td>
          <td>        
-            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.GuideRequester" bundle="ENUMERATION_RESOURCES"/>
+            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.GuideRequester" bundle="ENUMERATION_RESOURCES" excludedFields="CANDIDATE"/>
             <html:select bundle="HTMLALT_RESOURCES" altKey="select.requester" property="requester">
             	<html:option key="dropDown.Default" value=""/>
                 <html:options collection="values" property="value" labelProperty="label"/>

@@ -210,10 +210,6 @@ public abstract class PresentationConstants {
 
     public static final String CONTRIBUTOR_ACTION = "contributor_action";
 
-    public static final String GUIDE_REQUESTER_LIST = "guide_requester_list";
-
-    public static final String STUDENT_GUIDE_LIST = "student_guide_list";
-
     public static final String GUIDE = "guide";
 
     public static final String GUIDE_YEAR = "guide_year";
@@ -232,7 +228,6 @@ public abstract class PresentationConstants {
 
     public static final String PRINT_PASSWORD = "print_password";
 
-    public static final String PRINT_INFORMATION = "print_information";
 
     public static final String DATE = "date";
 

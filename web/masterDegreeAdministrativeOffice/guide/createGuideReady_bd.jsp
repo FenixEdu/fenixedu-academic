@@ -1,19 +1,25 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide.CreateGuideBean"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.Integer" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 
+<!-- masterDegreeAdministrativeOffice/guide/createGuideReady_bd.jsp -->
+
    <span class="error"><!-- Error messages go here --><html:errors /><br/></span>
 
    <table>
-    <bean:define id="infoGuide" name="<%= PresentationConstants.GUIDE%>" />
-    <bean:define id="graduationType" name="graduationType"/>
+    <bean:define id="infoGuide" name="createGuideBean" property="infoGuide" />
+    <bean:define id="createGuideBean" name="createGuideBean"/>
+    <bean:define id="graduationType" value="<%= ((CreateGuideBean) createGuideBean).getGraduationType().name() %>"/>
     
        <!-- Requester Name -->
        <tr>
@@ -24,7 +30,7 @@
        <!-- Requester Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
-         <td><bean:write name="<%= PresentationConstants.REQUESTER_NUMBER %>" /></td>
+         <td><bean:write name="createGuideBean" property="requesterNumber" /></td>
         </tr>
 
        <!-- Requester degree -->
@@ -101,9 +107,8 @@
 		</logic:iterate>
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
-       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-       <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_TYPE).toString()%>'/>
-       <html:hidden alt="<%= PresentationConstants.REQUESTER_NUMBER %>" property="<%= PresentationConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_NUMBER).toString()%>'/>
+      	<fr:edit visible="false" name="createGuideBean" id="createGuideBean" />
+      	
        <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>

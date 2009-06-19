@@ -3,23 +3,23 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<h2><bean:message key="label.masterDegree.administrativeOffice.studentGuide" /></h2>
- <bean:define id="studentGuideList" name="<%= PresentationConstants.CERTIFICATE_LIST %>"/>
-<br />
 
+<!-- masterDegreeAdministrativeOffice/guide/chooseStudentGuide_bd.jsp -->
+
+<h2><bean:message key="label.masterDegree.administrativeOffice.studentGuide" /></h2>
+<br />
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
    
-   <table>
 <html:form action="/studentGuideDispatchAction?method=createReady">
+   <table>
+	<fr:edit visible="false" name="createGuideBean" id="createGuideBean" />
+	
     <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-    <bean:define id="graduationType" name="graduationType"/>
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.requester" property="requester" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_TYPE).toString()%>'/>
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.number" property="number" value='<%= pageContext.findAttribute(PresentationConstants.REQUESTER_NUMBER).toString()%>'/>
     
-    <bean:define id="certificateList" name="<%= PresentationConstants.CERTIFICATE_LIST %>"/>
+    <bean:define id="certificateList" name="createGuideBean" property="infoPrices"/>
     
     <logic:iterate id="price" name="certificateList" >
     	<tr>

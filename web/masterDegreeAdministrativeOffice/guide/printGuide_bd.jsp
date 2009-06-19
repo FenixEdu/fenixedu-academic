@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
+<!-- masterDegreeAdministrativeOffice/guide/printGuide_bd.jsp -->
+
 <html>
   <head>
     <title><bean:message key="title.masterDegree.administraiveOffice.createGuide" /></title>
@@ -30,15 +32,10 @@
    
    
    </table>
-   <%--<bean:define id="link">/printGuidePages.do?graduationType=<bean:write name="graduationType"/>&<bean:write name="<%= PresentationConstants.REQUESTER_NUMBER %>"/></bean:define>
-   <bean:define id="graduationType" name="graduationType"/>
-   <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
-   <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.graduationType" property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>
-   <html:hidden alt="<%= PresentationConstants.REQUESTER_NUMBER %>" property="<%= PresentationConstants.REQUESTER_NUMBER %>" value='<%= pageContext.findAttribute("PresentationConstants.REQUESTER_NUMBER").toString()%>'/>
-   <bean:message key="link.masterDegree.administrativeOffice.printGuide" />
-   </html:link>--%>
-   <html:link page="<%= "/printGuidePages.do?graduationType=" + pageContext.findAttribute("graduationType") + "&amp;" + PresentationConstants.REQUESTER_NUMBER + "=" + pageContext.findAttribute(PresentationConstants.REQUESTER_NUMBER)%>" >
-   <bean:message key="link.masterDegree.administrativeOffice.printGuide" /> 
+   <bean:define id="number" name="guide" property="number" />
+   <bean:define id="year" name="guide" property="year" />
+   <html:link page="<%= "/printGuide.do?method=printByNumberAndYear&amp;number=" + number.toString() + "&amp;year=" + year.toString() %>">
+   		<bean:message key="link.masterDegree.administrativeOffice.printGuide" /> 
    </html:link>
    
    
