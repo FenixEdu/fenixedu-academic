@@ -31,6 +31,8 @@
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
 
+        <!-- set a different FenixDomainModel class until we don't need the ojbConcreteClass anylonger -->
+        <property name="fenix.framework.domainModelClass" value="pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC"/>
         <import file="dml-generate.xml"/>
 
         <path id="classpath.analysis">
@@ -113,35 +115,6 @@
 		</javac>
 	</target>
 
-    <target name="generate-OJBMetadata"
-    		description="Adds specific readByOID methods to RootDomainObject."
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true">
-			<arg value="${dml.definition.file.completed}"/>
-			<arg value="${class}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>	
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>	
-
-    <target name="generate-OJBMetadataWithDebug"
-    		description="Adds specific readByOID methods to RootDomainObject."
-    		depends="compile">
-		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true" 
-			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
-		>
-			<arg value="${dml.definition.file.completed}"/>
-			<arg value="${option}"/>
-			<classpath refid="class.path.lib.ref"/>
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>	
-				<pathelement path="${build.home.webinf.classes}"/>
-			</classpath>
-		</java>
-    </target>
 
     <target name="changeVarcharColumnsToLongvarcharColumns"
     		depends="compile">

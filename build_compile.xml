@@ -44,6 +44,10 @@
 	<property name="compile.deprecation" value="off" />
 	<property name="compile.optimize" value="on" />
 
+        <!-- set a different FenixDomainModel class until we don't need the ojbConcreteClass anylonger -->
+        <property name="fenix.framework.domainModelClass" value="pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC"/>
+        <import file="dml-generate.xml"/>
+
 	<target name="set-properties-copy" if="institution.project"
 			description="Determine properties to use for build properties">
 		<property name="build.home" location="build" />
@@ -330,14 +334,12 @@
 	</target>
 
 	<target name="post-compile" description="Does some stuff after compile">
-		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" dir="${build.home.webinf.classes}" fork="true" >
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-			</classpath>
-			<arg value="-d" />
-			<arg value="${dml.definition.file.completed}" />
-		</java>
+          <post-process-domain dir="${build.home.webinf.classes}" dml="${dml.definition.file.completed}">
+            <classpath refid="class.path.lib.ref" />
+            <classpath>
+              <pathelement path="${build.home.webinf.classes}" />
+            </classpath>
+          </post-process-domain>
 		<copy file=".actionAnnotationLog" todir="${build.home.webinf.classes}" overwrite="true" failonerror="false" />
 		<java classname="pt.ist.fenixWebFramework.services.ServiceAnnotationInjector" failonerror="true" fork="true" >
 			<classpath refid="class.path.lib.ref" />

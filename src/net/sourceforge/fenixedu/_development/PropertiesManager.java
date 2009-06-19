@@ -13,6 +13,8 @@ import java.util.Properties;
 import pt.ist.fenixWebFramework.Config;
 import pt.ist.fenixWebFramework.Config.CasConfig;
 
+import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
+
 /**
  * @author Luis Cruz
  * 
@@ -67,6 +69,7 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 
 	return new Config() {
 	    {
+                domainModelClass = FenixDomainModelWithOCC.class;
 		domainModelPath = domainModel;
 		dbAlias = getProperty("db.alias");
 		dbUsername = getProperty("db.user");
