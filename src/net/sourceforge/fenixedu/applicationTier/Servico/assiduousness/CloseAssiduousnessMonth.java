@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
+import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
@@ -36,6 +38,8 @@ import org.joda.time.Hours;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CloseAssiduousnessMonth extends FenixService {
 
@@ -250,6 +254,25 @@ public class CloseAssiduousnessMonth extends FenixService {
 		    }
 		    totalWorkedTime = totalWorkedTime.plus(thisDayWorkedTime);
 		} else {
+		    StringBuilder notes = new StringBuilder();
+		    for (final Leave leave : leavesList) {
+			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
+				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
+				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
+				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
+				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
+			    if (notes.length() != 0) {
+				notes.append(" / ");
+			    }
+			    notes.append(leave.getJustificationMotive().getAcronym());
+			}
+		    }
+		    workDaySheet.setNotes(notes.toString());
+		    if (isDayHoliday) {
+			ResourceBundle bundle = ResourceBundle
+				.getBundle("resources.AssiduousnessResources", Language.getLocale());
+			workDaySheet.setWorkScheduleAcronym(bundle.getString("label.holiday"));
+		    }
 		    totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance.plus(new Duration(Math.min(
 			    roundToHalfHour(workDaySheet.getComplementaryWeeklyRest()).getMillis(),
 			    Assiduousness.normalWorkDayDuration.getMillis())));
