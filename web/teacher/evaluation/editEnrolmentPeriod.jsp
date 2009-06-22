@@ -40,21 +40,21 @@
 					<h:outputText value="#{bundle['label.exam.enrollment.begin.day']}" escape="false"/>
 				<h:outputText value="</th>" escape="false" />
 				<h:outputText value="<td>" escape="false" />
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginDay']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentBeginDay}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginDay']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentBeginDay}">
 						<f:validateLongRange minimum="1" maximum="31" />
 					</h:inputText>
 					<h:outputText value=" / "/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginMonth']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentBeginMonth}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginMonth']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentBeginMonth}">
 						<f:validateLongRange minimum="1" maximum="12" />
 					</h:inputText>
 					<h:outputText value=" / "/>
 					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginYear']}" required="true" maxlength="4" size="4" value="#{evaluationManagementBackingBean.enrolmentBeginYear}"/>
 					<h:outputText value=" #{bundle['label.at']} " escape="false"/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginHour']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentBeginHour}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginHour']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentBeginHour}">
 						<f:validateLongRange minimum="0" maximum="23" />
 					</h:inputText>
 					<h:outputText value=" : "/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginMinute']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentBeginMinute}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentBeginMinute']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentBeginMinute}">
 						<f:validateLongRange minimum="0" maximum="59" />
 					</h:inputText>
 					<h:outputText value=" <i>#{bundle['label.date.instructions']}</i>" escape="false"/>
@@ -66,21 +66,21 @@
 					<h:outputText value="#{bundle['label.exam.enrollment.end.day']} " escape="false"/>				
 				<h:outputText value="</th>" escape="false" />
 				<h:outputText value="<td>" escape="false" />
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndDay']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentEndDay}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndDay']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentEndDay}">
 						<f:validateLongRange minimum="1" maximum="31" />
 					</h:inputText>
 					<h:outputText value=" / "/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndMonth']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentEndMonth}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndMonth']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentEndMonth}">
 						<f:validateLongRange minimum="1" maximum="12" />
 					</h:inputText>
 					<h:outputText value=" / "/>
 					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndYear']}" required="true" maxlength="4" size="4" value="#{evaluationManagementBackingBean.enrolmentEndYear}"/>
 					<h:outputText value=" #{bundle['label.at']} " escape="false"/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndHour']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentEndHour}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndHour']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentEndHour}">
 						<f:validateLongRange minimum="0" maximum="23" />
 					</h:inputText>
 					<h:outputText value=" : "/>
-					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndMinute']}" required="true" maxlength="2" size="1" value="#{evaluationManagementBackingBean.enrolmentEndMinute}">
+					<h:inputText alt="#{htmlAltBundle['inputText.enrolmentEndMinute']}" required="true" maxlength="2" size="2" value="#{evaluationManagementBackingBean.enrolmentEndMinute}">
 						<f:validateLongRange minimum="0" maximum="59" />
 					</h:inputText>
 					<h:outputText value=" <i>#{bundle['label.date.instructions']}</i>" escape="false"/>
