@@ -6,14 +6,17 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod;
@@ -49,8 +52,8 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -185,6 +188,13 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    IUserView userView = UserView.getUser();
 	    Object argsProposal[] = { infoFinalWorkProposal };
 	    ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
+	} catch (NotAuthorizedFilterException nafe) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
+		    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
+	    saveErrors(request, actionErrors);
+
+	    return mapping.findForward("OutOfSubmisionPeriod");
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -260,6 +270,37 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
 
 	return mapping.findForward("chooseDegreeForFinalWorkProposal");
+    }
+
+    public ActionForward listProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
+	    IllegalAccessException, InstantiationException {
+	final IUserView userView = UserView.getUser();
+
+	TreeSet<Proposal> proposals = new TreeSet<Proposal>(new Comparator<Proposal>() {
+
+	    @Override
+	    public int compare(Proposal o1, Proposal o2) {
+		return o1.getProposalNumber().compareTo(o2.getProposalNumber());
+	    }
+	});
+	proposals.addAll(userView.getPerson().findFinalDegreeWorkProposals());
+	request.setAttribute("proposals", proposals);
+
+	String executionDegreeString = (String) getFromRequest(request, "degree");
+	Integer executionDegreeInteger = Integer.valueOf(executionDegreeString);
+	ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
+		executionDegreeInteger);
+	request.setAttribute("degree", executionDegreeString);
+	request.setAttribute("explicitDegree", executionDegree.getDegree().getName());
+
+	String executionYearString = (String) getFromRequest(request, "executionYear");
+	Integer executionYearInteger = Integer.valueOf(executionYearString);
+	ExecutionYear executionYear = (ExecutionYear) readDomainObject(request, ExecutionYear.class, executionYearInteger);
+	request.setAttribute("executionYear", executionYearString);
+	request.setAttribute("explicitYear", executionYear.getName());
+
+	return mapping.findForward("listProposals");
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -471,8 +512,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	return mapping.findForward("print");
     }
 
-    public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+    public ActionForward finalDegreeWorkProposalEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, boolean newProposal) throws FenixActionException, FenixFilterException {
 	String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
 	if (finalDegreeWorkProposalOIDString != null && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
@@ -485,9 +526,10 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		if (infoProposal != null) {
 		    DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-		    if (infoProposal.getIdInternal() != null) {
+		    if ((newProposal == false) && (infoProposal.getIdInternal() != null)) {
 			finalWorkForm.set("idInternal", infoProposal.getIdInternal().toString());
 		    }
+
 		    finalWorkForm.set("title", infoProposal.getTitle());
 		    if (infoProposal.getOrientatorsCreditsPercentage() != null) {
 			finalWorkForm.set("responsibleCreditsPercentage", infoProposal.getOrientatorsCreditsPercentage()
@@ -560,24 +602,34 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 			finalWorkForm.set("branchList", branchList);
 		    }
 
-		    final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
-			    infoProposal.getExecutionDegree().getIdInternal());
+		    ExecutionDegree executionDegree;
+		    if (newProposal) {
+			String executionDegreeString = (String) getFromRequest(request, "degree");
+			finalWorkForm.set("degree", executionDegreeString);
+			Integer executionDegreeInteger = Integer.valueOf(executionDegreeString);
+			executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
+				executionDegreeInteger);
+
+			String executionYearString = (String) getFromRequest(request, "executionYear");
+			finalWorkForm.set("executionYear", executionYearString);
+		    } else {
+			executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class, infoProposal
+				.getExecutionDegree().getIdInternal());
+		    }
 		    final Scheduleing scheduleing = executionDegree.getScheduling();
+		    if (scheduleing == null) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
+				"finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("OutOfSubmisionPeriod");
+		    }
 		    final List branches = new ArrayList();
 		    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
 			final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
 			branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan
 				.getIdInternal()));
 		    }
-		    // InfoExecutionDegree infoExecutionDegree =
-		    // CommonServiceRequests
-		    // .getInfoExecutionDegree(userView, infoProposal
-		    // .getExecutionDegree().getIdInternal());
-		    // List branches = CommonServiceRequests
-		    // .getBranchesByDegreeCurricularPlan(userView,
-		    // infoExecutionDegree
-		    // .getInfoDegreeCurricularPlan()
-		    // .getIdInternal());
 		    request.setAttribute("branches", branches);
 
 		    request.setAttribute("scheduling", executionDegree.getScheduling());
@@ -588,6 +640,16 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("submitFinalWorkProposal");
+    }
+
+    public ActionForward editToCreateFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	return finalDegreeWorkProposalEdition(mapping, form, request, response, true);
+    }
+
+    public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	return finalDegreeWorkProposalEdition(mapping, form, request, response, false);
     }
 
     public ActionForward attributeFinalDegreeWork(ActionMapping mapping, ActionForm form, HttpServletRequest request,

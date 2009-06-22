@@ -66,6 +66,16 @@
 	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="APPLICATION_RESOURCES" key="button.create"/></html:submit></p>
 </html:form>
 
+<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
+<bean:define id="executionYear" name="finalWorkInformationForm" property="executionYear"/>
+<logic:notEmpty name="degree">
+	<logic:notEmpty name="executionYear">
+		<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.ListOfProposals"/>
+		<html:link page="<%= "/finalWorkManagement.do?method=listProposals&amp;degree=" + degree.toString() + "&amp;executionYear=" + executionYear.toString() %>">
+			<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.here"/>
+		</html:link>.
+	</logic:notEmpty>
+</logic:notEmpty>
 
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">

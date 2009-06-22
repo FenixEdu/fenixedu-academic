@@ -12,6 +12,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
@@ -191,19 +192,19 @@ public class Scheduleing extends Scheduleing_Base {
 
     private DateTime newDateTime(final Date date, final Date time) {
 	if (date != null && time != null) {
-	    return new DateTime(date.getTime())
-	    		.withHourOfDay(time.getHours())
-	    		.withMinuteOfHour(time.getMinutes())
-	    		.withSecondOfMinute(0)
-	    		.withMillisOfSecond(0);
+	    return new DateTime(date.getTime()).withHourOfDay(time.getHours()).withMinuteOfHour(time.getMinutes())
+		    .withSecondOfMinute(0).withMillisOfSecond(0);
 	}
 	return null;
     }
 
     public boolean getAreCandidacyConditionsDefined() {
-	return getMinimumCompletedCreditsFirstCycle() != null
-		&& getMinimumCompletedCreditsSecondCycle() != null
+	return getMinimumCompletedCreditsFirstCycle() != null && getMinimumCompletedCreditsSecondCycle() != null
 		&& getMaximumNumberOfProposalCandidaciesPerGroup() != null;
+    }
+
+    public ExecutionYear getExecutionYearOfOneExecutionDegree() {
+	return getExecutionDegrees().get(0).getExecutionYear();
     }
 
 }

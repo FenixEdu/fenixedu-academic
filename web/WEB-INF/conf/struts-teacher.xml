@@ -1651,6 +1651,7 @@
     	    	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         		<forward name="NotAuthorized" path="df.page.notAuthorized"/>
         		<forward name="print" path="df.page.final.degree.work.print"/>
+        		<forward name="listProposals" path="df.page.prepareListProposals"/>      
 	    </action>
 	    
 	    <action path="/finalDegreeWorkAttribution"
