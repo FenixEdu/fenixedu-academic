@@ -327,4 +327,16 @@ public class Announcement extends Announcement_Base {
 
 	return null;
     }
+
+    @Override
+    protected void disconnectContent() {
+	super.disconnectContent();
+
+	for (AnnouncementCategory category : getCategories()) {
+	    removeCategories(category);
+	}
+
+	removeCampus();
+    }
+
 }
