@@ -181,8 +181,8 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas superior a 5 e a 10% do nº inscritos.</span></a></th>
-			<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de respostas superior a 5 e a 50% do nº inscritos.</span></a></th>
+			<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 10% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 50% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
 		</tr>
 		<tr>
 			<th>Representatividade para divulgação</th>
@@ -195,8 +195,8 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais de 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
-			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
+			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 50% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos (no mínimo de 10 respostas) classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
 			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de auditoria se organização e avaliação da UC com resultados a melhorar e, pelo menos, metade do corpo docente com resultados a melhorar no mínimo de dois grupos.</span></a></th>
 		</tr>
 		<tr>
