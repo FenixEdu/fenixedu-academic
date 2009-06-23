@@ -1,18 +1,20 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.Vehicle;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -29,12 +31,9 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     private static final int _1 = 1;
     private static final int _0 = 0;
     private static final Date DATE = new LocalDate(2000, 1, 1).toDateTimeAtStartOfDay().toDate();
-    private static final String EMPTY_STRING = "";
-    private InputStream parkingDBFile;
 
-    public ParkingDataReportFile(InputStream parkingDBFile) {
+    public ParkingDataReportFile() {
 	super();
-	setParkingDBFile(parkingDBFile);
     }
 
     @Override
@@ -45,8 +44,10 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     @Override
     public QueueJobResult execute() throws Exception {
 	QueueJobResult queueJobResult = null;
-	if (getParkingDBFile() != null) {
-	    File parkingDataFile = FileUtils.copyToTemporaryFile(getParkingDBFile());
+
+	final String inputFilename = PropertiesManager.getProperty("export.parking.data.report.input.file");
+	if (inputFilename != null) {
+	    File parkingDataFile = FileUtils.copyToTemporaryFile(new FileInputStream(inputFilename));
 	    renderReport(parkingDataFile);
 
 	    queueJobResult = new QueueJobResult();
@@ -110,9 +111,9 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 	newRow[8] = now;
 	newRow[9] = now;
 	newRow[10] = person != null ? getName(person.getNickname()) : getName(parkingParty.getParty().getName());
-	newRow[11] = EMPTY_STRING;
-	String vehicle1PlateNumber = EMPTY_STRING;
-	String vehicle2PlateNumber = EMPTY_STRING;
+	newRow[11] = StringUtils.EMPTY;
+	String vehicle1PlateNumber = StringUtils.EMPTY;
+	String vehicle2PlateNumber = StringUtils.EMPTY;
 	int counter = 1;
 	for (Vehicle vehicle : parkingParty.getVehicles()) {
 	    if (counter == 1) {
@@ -127,11 +128,11 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 	newRow[12] = vehicle1PlateNumber;
 	newRow[13] = vehicle2PlateNumber;
 	newRow[14] = person != null && person.getPersonWorkPhone() != null ? getString(person.getPersonWorkPhone().getNumber(),
-		19) : EMPTY_STRING;
+		19) : StringUtils.EMPTY;
 	newRow[15] = person != null && person.getDefaultMobilePhone() != null ? getString(person.getDefaultMobilePhone()
-		.getNumber(), 19) : EMPTY_STRING;
-	newRow[16] = EMPTY_STRING;
-	newRow[17] = EMPTY_STRING;
+		.getNumber(), 19) : StringUtils.EMPTY;
+	newRow[16] = StringUtils.EMPTY;
+	newRow[17] = StringUtils.EMPTY;
 	newRow[18] = _0;
 	newRow[19] = parkingParty.getCardEndDate() == null ? null : parkingParty.getCardEndDate().toDate();
 	newRow[20] = DATE;
@@ -180,21 +181,13 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 
     private String getString(String string, int maxSize) {
 	if (string == null) {
-	    return EMPTY_STRING;
+	    return StringUtils.EMPTY;
 	}
 	if (string.length() > maxSize) {
 	    return string.substring(0, maxSize - 1);
 	} else {
 	    return string;
 	}
-    }
-
-    public InputStream getParkingDBFile() {
-	return parkingDBFile;
-    }
-
-    public void setParkingDBFile(InputStream parkingDBFile) {
-	this.parkingDBFile = parkingDBFile;
     }
 
 }
