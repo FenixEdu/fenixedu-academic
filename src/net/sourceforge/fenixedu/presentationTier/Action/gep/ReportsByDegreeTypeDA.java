@@ -22,6 +22,9 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
@@ -278,6 +281,27 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return mapping.findForward("selectDegreeType");
     }
 
+    public ActionForward downloadRaidesGraduation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareNewJobResponse(request, ReportFileFactory.createRaidesGraduationReportFile(getFormat(request),
+		getDegreeType(request), getExecutionYear(request)));
+	return mapping.findForward("selectDegreeType");
+    }
+
+    public ActionForward downloadRaidesDfa(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareNewJobResponse(request, ReportFileFactory.createRaidesDfaReportFile(getFormat(request), getDegreeType(request),
+		getExecutionYear(request)));
+	return mapping.findForward("selectDegreeType");
+    }
+
+    public ActionForward downloadRaidesPhd(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareNewJobResponse(request, ReportFileFactory.createRaidesPhdReportFile(getFormat(request), getDegreeType(request),
+		getExecutionYear(request)));
+	return mapping.findForward("selectDegreeType");
+    }
+
     private void prepareNewJobResponse(HttpServletRequest request, GepReportFile job) {
 
 	ReportBean reportBean = (ReportBean) getRenderedObject();
@@ -320,6 +344,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return DissertationsWithExternalAffiliationsReportFile.class;
 	case 12:
 	    return DissertationsProposalsReportFile.class;
+	case 13:
+	    return RaidesGraduationReportFile.class;
+	case 14:
+	    return RaidesDfaReportFile.class;
+	case 15:
+	    return RaidesPhdReportFile.class;
 	default:
 	    return null;
 	}
