@@ -11,6 +11,9 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
+import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
@@ -145,4 +148,30 @@ public class ReportFileFactory {
 	return tutorshipProgramReportFile;
     }
 
+    @Service
+    public static GepReportFile createRaidesGraduationReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final RaidesGraduationReportFile reportFile = new RaidesGraduationReportFile();
+	reportFile.setType(type);
+	reportFile.setDegreeType(degreeType);
+	reportFile.setExecutionYear(executionYear);
+	return reportFile;
+    }
+
+    @Service
+    public static GepReportFile createRaidesDfaReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final RaidesDfaReportFile reportFile = new RaidesDfaReportFile();
+	reportFile.setType(type);
+	reportFile.setDegreeType(degreeType);
+	reportFile.setExecutionYear(executionYear);
+	return reportFile;
+    }
+
+    @Service
+    public static GepReportFile createRaidesPhdReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final RaidesPhdReportFile reportFile = new RaidesPhdReportFile();
+	reportFile.setType(type);
+	reportFile.setDegreeType(degreeType);
+	reportFile.setExecutionYear(executionYear);
+	return reportFile;
+    }
 }
