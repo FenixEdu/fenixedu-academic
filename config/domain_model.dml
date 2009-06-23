@@ -6353,6 +6353,9 @@ class QueueJobWithFile extends QueueJob {
 
 class QueueJobResultFile extends documents.GeneratedDocument{}
 
+class reports.ParkingDataReportFile extends QueueJobWithFile {
+}
+
 class reports.GepReportFile extends QueueJobWithFile {
 	String type;
 	DegreeType degreeType;
