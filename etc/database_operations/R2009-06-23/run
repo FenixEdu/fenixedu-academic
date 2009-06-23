@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Reset PublicCandidacyHashCode OID'S" resetPublicCandidacyHashCodeOID.sql
+execute "Add Citizen Card to IdDocumentTypeObject" addCitizenCardIdDocumentTypeObject.sql
