@@ -6375,6 +6375,9 @@ class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
 class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
+class reports.RaidesGraduationReportFile extends reports.GepReportFile {}
+class reports.RaidesDfaReportFile extends reports.GepReportFile {}
+class reports.RaidesPhdReportFile extends reports.GepReportFile {}
 
 class PublicRelationsStudentListQueueJob extends QueueJobWithFile{
 	Boolean active;
