@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <html:xhtml/>
 
 <h2><bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" /></h2>
@@ -88,6 +89,9 @@
 	<bean:define id="urlTeachersByShift" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersByShift&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlCourseLoads" type="java.lang.String">/reportsByDegreeType.do?method=downloadCourseLoads&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlTutorshipProgram" type="java.lang.String">/reportsByDegreeType.do?method=downloadTutorshipProgram&amp;<bean:write name="args" filter="false"/></bean:define>
+    <bean:define id="urlRaidesGraduation" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesGraduation&amp;<bean:write name="args" filter="false"/></bean:define>
+    <bean:define id="urlRaidesDfa" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesDfa&amp;<bean:write name="args" filter="false"/></bean:define>
+    <bean:define id="urlRaidesPhd" type="java.lang.String">/reportsByDegreeType.do?method=downloadRaidesPhd&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 	
 			<table class="tstyle1 thleft thlight mtop05">
@@ -305,6 +309,79 @@
 						</html:link>
 					</td>
 				</tr>
+
+                <c:if test="${degreeType == 'BOLONHA_DEGREE' || degreeType == 'BOLONHA_MASTER_DEGREE' || degreeType == 'BOLONHA_INTEGRATED_MASTER_DEGREE'}">
+                    <tr>
+                        <td>
+                            <bean:message key="label.report.raides.graduation" bundle="GEP_RESOURCES"/>
+                        </td>
+                        <td>
+                            <bean:define id="urlRaidesGraduationCsv" type="java.lang.String"><bean:write name="urlRaidesGraduation" filter="false"/>&amp;format=csv</bean:define>
+                            <html:link page="<%= urlRaidesGraduationCsv %>">
+                                <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+                            </html:link>
+                            |
+                            <bean:define id="urlRaidesGraduationXls" type="java.lang.String"><bean:write name="urlRaidesGraduation" filter="false"/>&amp;format=xls</bean:define>
+                            <html:link page="<%= urlRaidesGraduationXls %>">
+                                <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                        <td>
+                            <html:link page="<%= viewReports + "&type=13" %>">
+                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                    </tr>
+                </c:if>
+
+                <logic:equal value="BOLONHA_ADVANCED_FORMATION_DIPLOMA" name="degreeType" >
+                    <tr>
+                        <td>
+                            <bean:message key="label.report.raides.dfa" bundle="GEP_RESOURCES"/>
+                        </td>
+                        <td>
+                            <bean:define id="urlRaidesDfaCsv" type="java.lang.String"><bean:write name="urlRaidesDfa" filter="false"/>&amp;format=csv</bean:define>
+                            <html:link page="<%= urlRaidesDfaCsv %>">
+                                <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+                            </html:link>
+                            |
+                            <bean:define id="urlRaidesDfaXls" type="java.lang.String"><bean:write name="urlRaidesDfa" filter="false"/>&amp;format=xls</bean:define>
+                            <html:link page="<%= urlRaidesDfaXls %>">
+                                <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                        <td>
+                            <html:link page="<%= viewReports + "&type=14" %>">
+                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                    </tr>
+                </logic:equal>
+                
+                <logic:equal value="BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA" name="degreeType" >
+                    <tr>
+                        <td>
+                            <bean:message key="label.report.raides.phd" bundle="GEP_RESOURCES"/>
+                        </td>
+                        <td>
+                            <bean:define id="urlRaidesPhdCsv" type="java.lang.String"><bean:write name="urlRaidesPhd" filter="false"/>&amp;format=csv</bean:define>
+                            <html:link page="<%= urlRaidesPhdCsv %>">
+                                <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+                            </html:link>
+                            |
+                            <bean:define id="urlRaidesPhdXls" type="java.lang.String"><bean:write name="urlRaidesPhd" filter="false"/>&amp;format=xls</bean:define>
+                            <html:link page="<%= urlRaidesPhdXls %>">
+                                <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                        <td>
+                            <html:link page="<%= viewReports + "&type=15" %>">
+                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+                            </html:link>
+                        </td>
+                    </tr>
+                </logic:equal>
+                
 			</table>
 </logic:present>
 </logic:present>
