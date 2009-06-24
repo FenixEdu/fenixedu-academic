@@ -21,6 +21,9 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -86,6 +89,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new AddCandidacyReferees());
 
 	activities.add(new UploadDocuments());
+
+	activities.add(new AddCustomAlert());
+
+	activities.add(new DeleteCustomAlert());
     }
 
     @StartActivity
@@ -385,6 +392,46 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class AddCustomAlert extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    new PhdCustomAlert(process, (PhdCustomAlertBean) object);
+
+	    return process;
+	}
+
+    }
+
+    static public class DeleteCustomAlert extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    ((PhdCustomAlert) object).delete();
+
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -586,5 +633,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
 	return searchBean.getExecutionYear() == null
 		|| searchBean.getExecutionYear() == phdIndividualProgramProcess.getExecutionYear();
+    }
+
+    public Set<PhdAlert> getActiveAlerts() {
+	final Set<PhdAlert> result = new HashSet<PhdAlert>();
+
+	for (final PhdAlert each : getAlerts()) {
+	    if (each.isActive()) {
+		result.add(each);
+	    }
+	}
+
+	return result;
     }
 }

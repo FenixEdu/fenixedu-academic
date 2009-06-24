@@ -882,3 +882,52 @@
 		<property name="fileContentTypeSlot" value="contentType" />
 	</slot>
 </schema>
+
+
+<schema name="PhdCustomAlertBean.edit" type="net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean" bundle="PHD_RESOURCES">	
+	<slot name="subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	
+	<slot name="body" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="longText">
+    	<property name="rows" value="20"/>
+		<property name="columns" value="60"/>
+	</slot>
+	
+	<slot name="toSendEmail" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	
+	<slot name="fireDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	
+	<slot name="targetGroupType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="radio" />
+
+</schema>
+
+
+<schema name="PhdAlert.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">	
+	
+	<slot name="subject" />
+	
+	<slot name="body" />
+	
+	<slot name="sendEmail" />
+	
+	<slot name="targetGroup.name"/>
+	
+	<slot name="systemAlert"/>
+	
+	<slot name="fireDateDescription"/>
+	
+	
+</schema>
+
+<schema name="PhdAlertMessage.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+	
+	<slot name="process.processNumber"/>
+
+	<slot name="subject" />
+	
+</schema>
+
+<schema name="PhdAlertMessage.view.detailed" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES" extends="PhdAlertMessage.view">	
+	
+	<slot name="body" />
+	
+</schema>

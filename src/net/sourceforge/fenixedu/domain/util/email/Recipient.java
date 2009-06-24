@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -33,6 +34,10 @@ public class Recipient extends Recipient_Base {
 
     public Recipient(final Group group) {
 	this(group.getName(), group);
+    }
+
+    public Recipient(final Collection<Person> persons) {
+	this(new FixedSetGroup(persons));
     }
 
     public Recipient(final String toName, final Group members) {

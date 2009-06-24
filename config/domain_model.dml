@@ -6543,6 +6543,29 @@ class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
 class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgramCandidacyProcessDocument {
 }
 
+class phd.alert.PhdAlert extends DomainObject {
+	Group targetGroup;
+	MultiLanguageString subject;
+	MultiLanguageString body;
+	Boolean sendEmail;
+	Boolean active;
+}
+
+	class phd.alert.PhdPublicPresentationSeminarAlert extends phd.alert.PhdAlert {
+			
+	}
+	
+	class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
+		LocalDate fireDate;
+	}
+	
+class phd.alert.PhdAlertMessage extends DomainObject {
+	MultiLanguageString subject;
+	MultiLanguageString body;
+	Boolean readed;
+}
+
+
 /* End of Phd Module */
 
 
@@ -6745,6 +6768,49 @@ relation PhdCandidacyRefereeLetterCountry {
 		multiplicity *;
 	} 
 }
+
+relation RootDomainObjectPhdAlert {
+	RootDomainObject playsRole rootDomainObject;
+	phd.alert.PhdAlert playsRole phdAlerts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPhdAlertActive {
+	RootDomainObject playsRole rootDomainObjectForActivePhdAlerts;
+	phd.alert.PhdAlert playsRole activePhdAlerts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPhdAlertMessage {
+	RootDomainObject playsRole rootDomainObject;
+	phd.alert.PhdAlertMessage playsRole phdAlertMessages {
+		multiplicity *;
+	}
+}
+
+relation PhdAlertMessagePerson {
+	Person playsRole person;
+	phd.alert.PhdAlertMessage playsRole phdAlertMessages {
+		multiplicity *;
+	}
+}
+
+relation PhdAlertPhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.alert.PhdAlert playsRole alerts {
+		multiplicity *;
+	}
+}
+
+relation PhdAlertMessagePhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.alert.PhdAlertMessage playsRole alertMessages {
+		multiplicity *;
+	}
+}
+
 
 /* End of Phd Module */
 

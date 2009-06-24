@@ -29,7 +29,6 @@
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
-
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
@@ -78,7 +77,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.manageGuidingInformation"/>
 				</html:link>
 			</li>
-
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=manageAlerts" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.manageAlerts"/>
+				</html:link>
+			</li>
 		</ul>
     </td>
   </tr>

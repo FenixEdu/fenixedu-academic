@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +27,9 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJob
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -49,7 +54,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp"),
 
-	@Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp")
+	@Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp"),
+
+	@Forward(name = "manageAlerts", path = "/phd/academicAdminOffice/manageAlerts.jsp"),
+
+	@Forward(name = "createCustomAlert", path = "/phd/academicAdminOffice/createCustomAlert.jsp"),
+
+	@Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -397,4 +408,98 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End pf Phd guiding information
+
+    // Alerts Management
+
+    public ActionForward manageAlerts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("alerts", getAlertsToShow(request));
+
+	return mapping.findForward("manageAlerts");
+    }
+
+    public ActionForward prepareCreateCustomAlert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createCustomAlertBean", new PhdCustomAlertBean());
+
+	return mapping.findForward("createCustomAlert");
+    }
+
+    public ActionForward prepareCreateCustomAlertInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createCustomAlert", getCreateCustomAlertBean());
+
+	return mapping.findForward("createCustomAlert");
+    }
+
+    public ActionForward createCustomAlert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdCustomAlertBean bean = getCreateCustomAlertBean();
+	request.setAttribute("createCustomAlertBean", bean);
+
+	final ActionForward result = executeActivity(PhdIndividualProgramProcess.AddCustomAlert.class, bean, request, mapping,
+		"createCustomAlert", "manageAlerts", "message.alert.create.with.success");
+
+	request.setAttribute("alerts", getAlertsToShow(request));
+
+	return result;
+    }
+
+    private Set<PhdAlert> getAlertsToShow(HttpServletRequest request) {
+	return getProcess(request).getActiveAlerts();
+    }
+
+    public ActionForward deleteCustomAlert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ActionForward result = executeActivity(PhdIndividualProgramProcess.DeleteCustomAlert.class, getAlert(request),
+		request, mapping, "manageAlerts", "manageAlerts", "message.alert.deleted.with.success");
+
+	request.setAttribute("alerts", getAlertsToShow(request));
+
+	return result;
+
+    }
+
+    private PhdAlert getAlert(HttpServletRequest request) {
+	return getDomainObject(request, "alertId");
+    }
+
+    private PhdCustomAlertBean getCreateCustomAlertBean() {
+	return (PhdCustomAlertBean) getRenderedObject("createCustomAlertBean");
+    }
+
+    public ActionForward viewAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
+
+	return mapping.findForward("viewAlertMessages");
+    }
+
+    public ActionForward deleteAlertMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    getAlertMessage(request).delete();
+
+	    addSuccessMessage(request, "message.alertMessage.deleted.successfuly");
+
+	} catch (DomainException ex) {
+	    addErrorMessage(request, ex.getKey(), ex.getArgs());
+	}
+
+	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
+
+	return mapping.findForward("viewAlertMessages");
+    }
+
+    private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
+	return getDomainObject(request, "alertMessageId");
+    }
+
+    // End of Alerts Management
 }
