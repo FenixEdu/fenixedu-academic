@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding Phd Alerts tables" AddPhdAlertsTables.sql
