@@ -118,25 +118,25 @@
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 
-	<logic:notEmpty name="technical-reports">
+	<logic:notEmpty name="technicalReports">
 	<p id='books' class="mtop2 mbottom0"><strong><span>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.TechnicalReports" />
 	</span></strong></p>
 		<bean:define id="currentSchema"
 			value="result.publication.presentation.TechnicalReport"
 			toScope="request" />
-		<bean:define id="results" name="technical-reports" toScope="request" />
+		<bean:define id="results" name="technicalReports" toScope="request" />
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 
-	<logic:notEmpty name="other-publications">
+	<logic:notEmpty name="otherPublications">
 	<p id='books' class="mtop2 mbottom0"><strong><span>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.OtherPublications" />
 	</span></strong></p>
 		<bean:define id="currentSchema"
 			value="result.publication.presentation.OtherPublication"
 			toScope="request" />
-		<bean:define id="results" name="other-publications" toScope="request" />
+		<bean:define id="results" name="otherPublications" toScope="request" />
 		<jsp:include page="publicationsResume.jsp" />
 	</logic:notEmpty>
 
