@@ -15,14 +15,11 @@
 	<html:link page="<%= urlDownloadBatchFile %>">
 		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.download"/>
 	</html:link>
-
 	|
-
 	<bean:define id="urlDownloadBatchFile" type="java.lang.String">/manageCardGeneration.do?method=editCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
 	<html:link page="<%= urlDownloadBatchFile %>">
 		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.edit"/>
 	</html:link>
-	
 	<logic:notPresent name="cardGenerationBatch" property="sent">
 	|
 		<bean:define id="setCardDate" type="java.lang.String">/manageCardGeneration.do?method=setCardDate&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
@@ -30,6 +27,17 @@
 			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.set.card"/>
 		</html:link>
 	</logic:notPresent>
+
+	<logic:present role="MANAGER">
+		<logic:notEmpty name="cardGenerationBatch" property="peopleForEntryCreation">
+			|
+			<bean:define id="urlClearConstructionFlag" type="java.lang.String">/manageCardGeneration.do?method=clearConstructionFlag&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+			<html:link page="<%= urlClearConstructionFlag %>">
+				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.clear.construction.flag"/>
+			</html:link>
+		</logic:notEmpty>
+	</logic:present>
+
 </div>
 
 

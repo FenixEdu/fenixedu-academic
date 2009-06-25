@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationServices;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
@@ -163,6 +164,14 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
 	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
 	return mapping.findForward("editCardGenerationBatch");
+    }
+
+    public ActionForward clearConstructionFlag(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	CardGenerationServices.clearConstructionFlag(cardGenerationBatch);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("manageCardGenerationBatch");
     }
 
     private void writeFile(final CardGenerationBatch cardGenerationBatch, final ServletOutputStream writer) throws IOException {
