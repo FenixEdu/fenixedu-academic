@@ -15,6 +15,13 @@
 	<html:link page="<%= urlDownloadBatchFile %>">
 		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.download"/>
 	</html:link>
+
+	|
+
+	<bean:define id="urlDownloadBatchFile" type="java.lang.String">/manageCardGeneration.do?method=editCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>
+	<html:link page="<%= urlDownloadBatchFile %>">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.edit"/>
+	</html:link>
 	
 	<logic:notPresent name="cardGenerationBatch" property="sent">
 	|

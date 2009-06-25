@@ -35,10 +35,15 @@
 </fr:form>
 
 <bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+<bean:define id="urlEmpty" type="java.lang.String">/manageCardGeneration.do?method=createEmptyCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
 <logic:notEqual name="categoryCondesProblem" value="true">
 	<p class="mvert05">
 		<html:link page="<%= url %>">
 			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch" />
+		</html:link>
+		|
+		<html:link page="<%= urlEmpty %>">
+			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch.empty" />
 		</html:link>
 	</p>
 </logic:notEqual>

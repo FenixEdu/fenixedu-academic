@@ -21,7 +21,8 @@ public enum Category {
 	    newDegreeTypeSet(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)),
     CODE_96(96, LineLayout.MULTIPE, newDegreeTypeSet()),
     CODE_97(97, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)),
-    CODE_98(98, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.BOLONHA_SPECIALIZATION_DEGREE));
+    CODE_98(98, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)),
+    CODE_99(99, LineLayout.STUDENT, newDegreeTypeSet(DegreeType.EMPTY));
 
     private static final Set<DegreeType> newDegreeTypeSet(final DegreeType... degreeTypes) {
 	final Set<DegreeType> result = new HashSet<DegreeType>();

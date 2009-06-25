@@ -17,6 +17,9 @@
      <definition name="df.page.card.generation.manageCardGenerationBatch" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/cardGeneration/manageCardGenerationBatch.jsp"/>
     </definition>
+     <definition name="df.page.card.generation.editCardGenerationBatch" extends="definition.identificationCardManager.masterPage">
+        <put name="body" value="/identificationCardManager/cardGeneration/editCardGenerationBatch.jsp"/>
+    </definition>
      <definition name="df.page.card.generation.manageCardGenerationBatchProblems" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/cardGeneration/manageCardGenerationBatchProblems.jsp"/>
     </definition>

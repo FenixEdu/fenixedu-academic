@@ -25,15 +25,17 @@
    					<logic:notEqual name="degreeTypeIndex" value="0">
    						<br/>
    					</logic:notEqual>
-					<html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels" paramId="degreeType" paramName="degreeType" paramProperty="name">
-	   					<bean:message bundle="ENUMERATION_RESOURCES" name="degreeType" property="name"/>
-					</html:link>
-					<bean:define id="problemsMap" name="problemsMap" type="java.util.Map"/>
-					<% if (((Boolean) problemsMap.get(degreeType)).booleanValue()) { %>
-						<font color="red">
-							<bean:message bundle="CARD_GENERATION_RESOURCES" key="message.manage.card.generation.degree.type.has.problems"/>
-						</font>
-					<% } %>
+   					<logic:notEqual name="degreeType" value="name" value="EMPTY">
+						<html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels" paramId="degreeType" paramName="degreeType" paramProperty="name">
+	   						<bean:message bundle="ENUMERATION_RESOURCES" name="degreeType" property="name"/>
+						</html:link>
+						<bean:define id="problemsMap" name="problemsMap" type="java.util.Map"/>
+						<% if (((Boolean) problemsMap.get(degreeType)).booleanValue()) { %>
+							<font color="red">
+								<bean:message bundle="CARD_GENERATION_RESOURCES" key="message.manage.card.generation.degree.type.has.problems"/>
+							</font>
+						<% } %>
+					</logic:notEqual>
    				</logic:iterate>
     		</td>
   		</tr>

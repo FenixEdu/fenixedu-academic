@@ -66,7 +66,15 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     public ActionForward createCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final ExecutionYear executionYear = getExecutionYear(request);
-	final CardGenerationBatchCreator cardGenerationBatchCreator = new CardGenerationBatchCreator(executionYear);
+	final CardGenerationBatchCreator cardGenerationBatchCreator = new CardGenerationBatchCreator(executionYear, false);
+	executeFactoryMethod(cardGenerationBatchCreator);
+	return firstPage(mapping, actionForm, request, response);
+    }
+
+    public ActionForward createEmptyCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final CardGenerationBatchCreator cardGenerationBatchCreator = new CardGenerationBatchCreator(executionYear, true);
 	executeFactoryMethod(cardGenerationBatchCreator);
 	return firstPage(mapping, actionForm, request, response);
     }
@@ -150,6 +158,13 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward editCardGenerationBatch(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final CardGenerationBatch cardGenerationBatch = getCardGenerationBatch(request);
+	request.setAttribute("cardGenerationBatch", cardGenerationBatch);
+	return mapping.findForward("editCardGenerationBatch");
+    }
+
     private void writeFile(final CardGenerationBatch cardGenerationBatch, final ServletOutputStream writer) throws IOException {
 	for (final CardGenerationEntry cardGenerationEntry : cardGenerationBatch.getCardGenerationEntriesSet()) {
 	    writer.print(cardGenerationEntry.getLine());
@@ -191,7 +206,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected void checkForProblemasInDegrees(final HttpServletRequest request) {
 	final Map<DegreeType, Boolean> problemsMap = new HashMap<DegreeType, Boolean>();
-	for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
+	for (final DegreeType degreeType : DegreeType.values()) {
 	    problemsMap.put(degreeType, checkHasProblem(degreeType));
 	}
 	request.setAttribute("problemsMap", problemsMap);

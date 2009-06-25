@@ -34,3 +34,6 @@
 	<slot name="cardGenerationBatch.description"/>
 	<slot name="cardGenerationBatch.sent"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.edit" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch">
+	<slot name="description"/>
+</schema>

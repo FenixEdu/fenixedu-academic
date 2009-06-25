@@ -26,8 +26,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public static final Comparator<CardGenerationBatch> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationBatch>() {
@@ -43,13 +41,15 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     public static class CardGenerationBatchCreator implements FactoryExecutor {
 
 	private final ExecutionYear executionYear;
+	private final boolean emptyCardGenerationBatch;
 
-	public CardGenerationBatchCreator(final ExecutionYear executionYear) {
+	public CardGenerationBatchCreator(final ExecutionYear executionYear, final boolean emptyCardGenerationBatch) {
 	    this.executionYear = executionYear;
+	    this.emptyCardGenerationBatch = emptyCardGenerationBatch;
 	}
 
 	public Object execute() {
-	    return new CardGenerationBatch(null, executionYear, false);
+	    return new CardGenerationBatch(null, executionYear, emptyCardGenerationBatch);
 	}
 
     }
