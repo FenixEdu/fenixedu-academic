@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -379,4 +377,23 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     public String getStudentCompleteName() {
 	return this.getLine().substring(178, 262);
     }
+
+    public boolean matches(final String line) {
+	return linesMatch(getLine(), line);
+    }
+
+    public static boolean linesMatch(final String line1, final String line2) {
+	final String cl1 = makeComparableLine(line1);
+	final String cl2 = makeComparableLine(line2);
+	return cl1.equals(cl2);
+    }
+
+    private static String makeComparableLine(final String line) {
+	final StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(line.substring(0, 21));
+	stringBuilder.append(line.substring(26, 30));
+	stringBuilder.append(line.substring(32, 262));
+	return stringBuilder.toString();
+    }
+
 }
