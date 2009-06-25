@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +34,11 @@ public class Message extends Message_Base {
 		addCcs(recipient);
 	    }
 	}
+    }
+
+    public Message(final Sender sender, final Recipient recipient, final String subject, final String body) {
+	this(sender, sender.getConcreteReplyTos(), Collections.singleton(recipient), subject, body, new EmailAddressList(
+		Collections.EMPTY_LIST).toString());
     }
 
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
