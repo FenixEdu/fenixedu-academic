@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.MessageDeleteService;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -127,7 +128,7 @@ public class EmailsDA extends FenixDispatchAction {
 	    return viewSentEmails(mapping, actionForm, request, response);
 	} else {
 	    final Sender sender = message.getSender();
-	    message.safeDelete();
+	    MessageDeleteService.delete(message);
 	    return viewSentEmails(mapping, request, sender);
 	}
     }
