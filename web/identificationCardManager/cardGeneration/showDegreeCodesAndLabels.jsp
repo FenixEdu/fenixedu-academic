@@ -12,7 +12,12 @@
 <bean:message bundle="CARD_GENERATION_RESOURCES" key="label.degree.type"/>:
 <logic:iterate id="degree" name="degrees" length="1">
 	<strong>
-		<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
+		<logic:notEqual name="degreeType" value="name" value="">
+			<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
+		</logic:notEqual>
+		<logic:equal name="degreeType" value="name" value="">
+			<bean:message bundle="ENUMERATION_RESOURCES" key="EMPTY.desc"/>
+		</logic:equal>
 	</strong>
 </logic:iterate>
 
@@ -57,14 +62,16 @@
     			</logic:notPresent>
     		</td>
     		<td>
-    			<bean:define id="idCardName" name="degree" property="idCardName" type="java.lang.String"/>
-    			<% if (idCardName.length() > 42) { %>
-    				<font color="red">
-    			<% } %>
-		    			<bean:write name="degree" property="idCardName"/>
-		    	<% if (idCardName.length() > 42) { %>
-    				</font>
-    			<% } %>
+    			<logic:present name="degree" property="idCardName">
+    				<bean:define id="idCardName" name="degree" property="idCardName" type="java.lang.String"/>
+    				<% if (idCardName.length() > 42) { %>
+	    				<font color="red">
+    				<% } %>
+		    				<bean:write name="degree" property="idCardName"/>
+		    		<% if (idCardName.length() > 42) { %>
+	    				</font>
+    				<% } %>
+    			</logic:present>
     		</td>
     		<td>
     			<html:link page="/manageCardGeneration.do?method=editDegree" paramId="degreeID" paramName="degree" paramProperty="idInternal">

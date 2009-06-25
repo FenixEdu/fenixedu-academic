@@ -200,7 +200,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected Set<Degree> getDegrees(final DegreeType degreeType) {
 	final Set<Degree> degrees = new TreeSet<Degree>();
-	for (final Degree degree : Degree.readNotEmptyDegrees()) {
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degreeType == null || degree.getDegreeType() == degreeType) {
 		degrees.add(degree);
 	    }

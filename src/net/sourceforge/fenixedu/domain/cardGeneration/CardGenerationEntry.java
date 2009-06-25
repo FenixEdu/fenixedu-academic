@@ -198,6 +198,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
 	    return "ESPECIALIZACAO   ";
 	}
+	if (degreeType == DegreeType.EMPTY) {
+	    return "U.C. ISOLADAS    ";
+	}
 	throw new Error("Unknown degree type: " + degreeType);
     }
 
@@ -230,6 +233,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	}
 	if (degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE) {
 	    return "ESPECIALIZ  ";
+	}
+	if (degreeType == DegreeType.EMPTY) {
+	    return "U.C.ISOLADAS";
 	}
 	throw new Error("Unknown degree type: " + degreeType);
     }

@@ -154,16 +154,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public void setMinistryCode(final String ministryCode) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public void setIdCardName(final String idCardName) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
     public void setDegreeType(final DegreeType degreeType) {
 	throw new DomainException("EmptyDegree.not.available");
     }
