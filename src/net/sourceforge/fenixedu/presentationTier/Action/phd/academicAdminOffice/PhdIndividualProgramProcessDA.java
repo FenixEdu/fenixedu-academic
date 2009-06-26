@@ -480,6 +480,16 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("viewAlertMessages");
     }
 
+    public ActionForward markTaskAsPerformed(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	getAlertMessage(request).setTaskPerformed(true);
+
+	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
+
+	return mapping.findForward("viewAlertMessages");
+    }
+
     public ActionForward deleteAlertMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 

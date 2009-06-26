@@ -89,6 +89,7 @@ import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -3228,6 +3229,18 @@ public class Person extends Person_Base {
 
 	    }
 	}
+	return result;
+    }
+
+    public Set<PhdAlertMessage> getPhdAlertMessagesWithTasksToPerfom() {
+	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
+
+	for (final PhdAlertMessage message : getPhdAlertMessages()) {
+	    if (!message.isTaskPerformed()) {
+		result.add(message);
+	    }
+	}
+
 	return result;
     }
 }

@@ -26,7 +26,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	super.setPerson(person);
 	super.setSubject(subject);
 	super.setBody(body);
-	super.setReaded(Boolean.FALSE);
+	super.setTaskPerformed(Boolean.FALSE);
     }
 
     private void checkParameters(PhdIndividualProgramProcess process, Person person, MultiLanguageString subject,
@@ -57,17 +57,16 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.body");
     }
 
+    @Service
     @Override
-    public void setReaded(Boolean readed) {
-	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.cannot.modify.readed");
+    public void setTaskPerformed(Boolean taskPerformed) {
+	check(taskPerformed, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage.taskPerformed.cannot.be.null");
+
+	super.setTaskPerformed(taskPerformed);
     }
 
-    public void markAsReaded() {
-	super.setReaded(true);
-    }
-
-    public void masAsUnreaded() {
-	super.setReaded(false);
+    public boolean isTaskPerformed() {
+	return getTaskPerformed().booleanValue();
     }
 
     @Service

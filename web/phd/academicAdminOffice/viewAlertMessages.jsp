@@ -14,12 +14,6 @@
 
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<%--
-<div class="breadcumbs">
-	<span class="actual">Step 1: Step Name</span> > 
-	<span>Step N: Step name </span>
-</div>
---%>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -34,7 +28,7 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <logic:notEmpty name="alertMessages">
-	<fr:view schema="PhdAlertMessage.view.detailed" name="alertMessages">
+	<fr:view schema="PhdAlertMessage.view" name="alertMessages">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				
@@ -42,14 +36,22 @@
 				<fr:property name="key(viewProcess)" value="label.viewProcess"/>
 				<fr:property name="bundle(viewProcess)" value="PHD_RESOURCES"/>
 				<fr:property name="order(viewProcess)" value="0"/>
-				
+
+				<fr:property name="linkFormat(markTaskAsPerformed)" value="/phdIndividualProgramProcess.do?method=markTaskAsPerformed&processId=${process.externalId}&alertMessageId=${externalId}"/>
+				<fr:property name="key(markTaskAsPerformed)" value="label.mark.task.as.performed"/>
+				<fr:property name="bundle(markTaskAsPerformed)" value="PHD_RESOURCES"/>
+				<fr:property name="order(markTaskAsPerformed)" value="1"/>
+				<fr:property name="visibleIfNot(markTaskAsPerformed)" value="taskPerformed"/>
+				<fr:property name="confirmationKey(markTaskAsPerformed)" value="message.confirm.alertMessage.mark.task.as.performed" />
+				<fr:property name="confirmationBundle(markTaskAsPerformed)" value="PHD_RESOURCES" />
+
 				
 				<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteAlertMessage&alertMessageId=${externalId}"/>
 				<fr:property name="key(delete)" value="label.delete"/>
 				<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
 				<fr:property name="confirmationKey(delete)" value="message.confirm.alertMessage.delete" />
 				<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-				<fr:property name="order(delete)" value="1" />
+				<fr:property name="order(delete)" value="3" />
 		</fr:layout>
 	</fr:view>	
 </logic:notEmpty>

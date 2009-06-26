@@ -6562,7 +6562,7 @@ class phd.alert.PhdAlert extends DomainObject {
 class phd.alert.PhdAlertMessage extends DomainObject {
 	MultiLanguageString subject;
 	MultiLanguageString body;
-	Boolean readed;
+	Boolean taskPerformed;
 }
 
 

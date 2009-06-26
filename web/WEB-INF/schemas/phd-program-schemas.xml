@@ -924,10 +924,8 @@
 
 	<slot name="subject" />
 	
-</schema>
-
-<schema name="PhdAlertMessage.view.detailed" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES" extends="PhdAlertMessage.view">	
-	
 	<slot name="body" />
+	
+	<slot name="taskPerformed" />
 	
 </schema>
