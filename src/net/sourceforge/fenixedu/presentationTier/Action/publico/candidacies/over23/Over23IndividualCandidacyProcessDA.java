@@ -95,10 +95,6 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward prepareCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
-	if (candidacyProcess == null)
-	    return mapping.findForward("open-candidacy-processes-not-found");
-
 	String hash = request.getParameter("hash");
 	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode
 		.getPublicCandidacyCodeByHash(hash);
@@ -107,7 +103,8 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
 
-	if (candidacyHashCode.getIndividualCandidacyProcess() != null) {
+	if (candidacyHashCode.getIndividualCandidacyProcess() != null
+		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess().getClass() == getParentProcessType()) {
 	    request.setAttribute("individualCandidacyProcess", candidacyHashCode.getIndividualCandidacyProcess());
 	    return viewCandidacy(mapping, form, request, response);
 	}
@@ -115,6 +112,10 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	if (!isApplicationSubmissionPeriodValid()) {
 	    return beginCandidacyProcessIntro(mapping, form, request, response);
 	}
+
+	CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
+	if (candidacyProcess == null)
+	    return mapping.findForward("open-candidacy-processes-not-found");
 
 	Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	bean.setPersonBean(new PersonBean());

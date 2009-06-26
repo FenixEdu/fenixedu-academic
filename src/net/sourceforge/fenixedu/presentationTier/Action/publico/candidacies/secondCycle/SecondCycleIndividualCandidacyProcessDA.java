@@ -96,9 +96,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
-	if (candidacyProcess == null)
-	    return mapping.findForward("open-candidacy-processes-not-found");
 
 	String hash = request.getParameter("hash");
 	DegreeOfficePublicCandidacyHashCode candidacyHashCode = (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode
@@ -109,17 +106,21 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	}
 
 	if (candidacyHashCode.getIndividualCandidacyProcess() != null
-		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess() == candidacyProcess) {
+		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess().getClass() == getParentProcessType()) {
 	    request.setAttribute("individualCandidacyProcess", candidacyHashCode.getIndividualCandidacyProcess());
 	    return viewCandidacy(mapping, form, request, response);
 	} else if (candidacyHashCode.getIndividualCandidacyProcess() != null
-		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess() != candidacyProcess) {
+		&& candidacyHashCode.getIndividualCandidacyProcess().getCandidacyProcess().getClass() != getParentProcessType()) {
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
 
 	if (!isApplicationSubmissionPeriodValid()) {
 	    return beginCandidacyProcessIntro(mapping, form, request, response);
 	}
+
+	CandidacyProcess candidacyProcess = getCurrentOpenParentProcess();
+	if (candidacyProcess == null)
+	    return mapping.findForward("open-candidacy-processes-not-found");
 
 	SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
 	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
