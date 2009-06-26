@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
+import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -350,6 +351,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return RaidesDfaReportFile.class;
 	case 15:
 	    return RaidesPhdReportFile.class;
+	case 16:
+	    return TutorshipProgramReportFile.class;
 	default:
 	    return null;
 	}
