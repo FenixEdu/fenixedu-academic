@@ -251,14 +251,8 @@
 			<span id="photo">
 			<logic:present name="announcement" property="photoUrl">
 			<logic:notEmpty name="announcement" property="photoUrl">
-				<fr:view name="announcement" >
-					<fr:layout name="view-as-image">
-						<fr:property name="contextRelative" value="false"/>
-						<fr:property name="moduleRelative" value="false"/>
-						<fr:property name="useParent" value="false"/>
-						<fr:property name="imageFormat" value="${photoUrl}"/>	
-					</fr:layout>
-				</fr:view>
+				<bean:define id="announcementPhotoUrl" name="announcement" property="photoUrl"/>
+				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= announcementPhotoUrl %>" />
 			</logic:notEmpty>
 			<logic:empty name="announcement" property="photoUrl">
 				<img src="http://bogus/bogus.jpg"/>
@@ -341,12 +335,12 @@
 		<fr:edit name="announcement"  slot="creator">
 			<fr:hidden name="person"/>
 		</fr:edit>		
-
+	</p>
 	<p>
 		<fr:edit name="announcement"  slot="announcementBoard">
 			<fr:hidden name="announcementBoard"/>
 		</fr:edit>			
-	
+	</p>
 	
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.save.button"/></html:submit>
