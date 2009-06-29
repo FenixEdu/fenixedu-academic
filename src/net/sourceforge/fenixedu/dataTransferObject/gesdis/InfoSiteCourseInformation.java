@@ -246,7 +246,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 	    dates.add(curriculum.getLastModificationDateDateTime());
 	}
 
-	return dates.isEmpty() ? null : Collections.max(dates).toDate();
+	return dates.isEmpty() ? null : Collections.<DateTime> max(dates).toDate();
     }
 
     public List<InfoDepartment> getInfoDepartments() {
