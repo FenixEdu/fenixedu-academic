@@ -15,7 +15,8 @@
 <div class="warning0 mbottom1">
 	<div style="padding: 10px;">
 	<bean:size id="messagesSize" name="alertMessagesToNotify"/>
-	Tem <bean:write name="messagesSize"/> mensagem(s) de alerta com tarefas por realizar.
+	
+	<bean:message key="message.pending.phd.alert.messages.notification" bundle="PHD_RESOURCES" arg0="<%= messagesSize.toString() %>"/>
 	<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages"><bean:message bundle="PHD_RESOURCES" key="label.details"/></html:link>
 	</div>
 </div>
