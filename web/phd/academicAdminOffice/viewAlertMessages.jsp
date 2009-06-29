@@ -45,13 +45,6 @@
 				<fr:property name="confirmationKey(markTaskAsPerformed)" value="message.confirm.alertMessage.mark.task.as.performed" />
 				<fr:property name="confirmationBundle(markTaskAsPerformed)" value="PHD_RESOURCES" />
 
-				
-				<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteAlertMessage&alertMessageId=${externalId}"/>
-				<fr:property name="key(delete)" value="label.delete"/>
-				<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-				<fr:property name="confirmationKey(delete)" value="message.confirm.alertMessage.delete" />
-				<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-				<fr:property name="order(delete)" value="3" />
 		</fr:layout>
 	</fr:view>	
 </logic:notEmpty>

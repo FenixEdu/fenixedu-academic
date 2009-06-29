@@ -490,23 +490,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("viewAlertMessages");
     }
 
-    public ActionForward deleteAlertMessage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	try {
-	    getAlertMessage(request).delete();
-
-	    addSuccessMessage(request, "message.alertMessage.deleted.successfuly");
-
-	} catch (DomainException ex) {
-	    addErrorMessage(request, ex.getKey(), ex.getArgs());
-	}
-
-	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
-
-	return mapping.findForward("viewAlertMessages");
-    }
-
     private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
 	return getDomainObject(request, "alertMessageId");
     }

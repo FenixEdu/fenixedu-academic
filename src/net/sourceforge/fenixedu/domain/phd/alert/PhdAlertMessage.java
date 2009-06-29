@@ -69,12 +69,4 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	return getTaskPerformed().booleanValue();
     }
 
-    @Service
-    public void delete() {
-	super.setPerson(null);
-	super.setProcess(null);
-	super.setRootDomainObject(null);
-	super.deleteDomainObject();
-    }
-
 }
