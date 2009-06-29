@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -46,6 +47,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private String email;
 
     private String captcha;
+
+    private String institutionId;
 
     private PhdProgramCandidacyProcessState state = PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION;
 
@@ -192,6 +195,18 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setCaptcha(String captcha) {
 	this.captcha = captcha;
+    }
+
+    public String getInstitutionId() {
+	return institutionId;
+    }
+
+    public void setInstitutionId(String institutionId) {
+	this.institutionId = institutionId;
+    }
+
+    public boolean hasInstitutionId() {
+	return !StringUtils.isEmpty(this.institutionId);
     }
 
     public PhdProgramCandidacyProcessState getState() {

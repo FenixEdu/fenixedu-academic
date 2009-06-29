@@ -108,7 +108,34 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
-	    final Person person = bean.getOrCreatePersonFromBean();
+	    // final Person person = bean.getOrCreatePersonFromBean();
+
+	    /*
+	     * 
+	     * 
+	     */
+
+	    Person xpto;
+	    
+	    if (!bean.getPersonBean().hasPerson()) {
+		final Person created = new Person(bean.getPersonBean());
+		bean.getPersonBean().setPerson(created);
+		xpto = created;
+	    }
+
+	    if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE) || bean.hasInstitutionId()) {
+		xpto = bean.getPersonBean().getPerson();
+	    } else {
+		xpto = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
+	    }
+
+
+	    Person person = xpto;
+	    /*
+	     * 
+	     * 
+	     */
+
 	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
 	    final PhdProgramCandidacyProcess candidacyProcess = Process.createNewProcess(userView,
 		    PhdProgramCandidacyProcess.class, new Object[] { bean, person });

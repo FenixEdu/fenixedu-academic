@@ -574,6 +574,11 @@
 	</slot>
 </schema>
 
+<schema name="Public.PhdProgramCandidacyProcessBean.institution.id" 
+		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+	<slot name="institutionId" />
+</schema>
+
 <schema name="Public.PhdProgramCandidacyProcess.qualification" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />

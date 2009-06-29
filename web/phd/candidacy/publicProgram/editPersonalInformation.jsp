@@ -41,7 +41,7 @@
 	
 	<logic:present name="candidacyBean">
 	
-		<logic:equal name="isEmployee" value="true">
+		<logic:equal name="canEditPersonalInformation" value="false">
 			<fr:view name="candidacyBean" property="personBean" schema="Public.PhdIndividualProgramProcess.view.person">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -49,7 +49,7 @@
 			</fr:view>
 		</logic:equal>
 	
-		<logic:equal name="isEmployee" value="false">
+		<logic:equal name="canEditPersonalInformation" value="true">
 				<p class="mtop15"><em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em></p>
 				
 				<div class="fs_form">

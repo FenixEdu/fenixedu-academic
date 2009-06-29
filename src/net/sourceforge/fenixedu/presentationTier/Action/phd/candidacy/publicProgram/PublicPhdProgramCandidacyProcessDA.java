@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -282,6 +283,42 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+
+	/*
+	 * 
+	 */
+
+	final PersonBean personBean = bean.getPersonBean();
+	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(), personBean
+		.getIdDocumentType());
+
+	if (person != null) {
+
+	    if (bean.hasInstitutionId() && bean.getInstitutionId().equals(person.getIstUsername())) {
+
+		if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
+
+		    // TODO: person found!!!!!!!!!
+
+		    personBean.setPerson(person);
+
+		} else {
+		    // TODO: found person with diff date of birth
+		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		    return createCandidacyStepOneInvalid(mapping, actionForm, request, response);
+		}
+
+	    } else {
+		// TODO: deverá preencher o ist number correctamente ........
+		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		return createCandidacyStepOneInvalid(mapping, actionForm, request, response);
+	    }
+	}
+
+	/*
+	 * 
+	 */
+
 	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	// TODO:IMPORTANT change when extending this candidacies to all types
 	bean.setCollaborationType(PhdIndividualProgramCollaborationType.EPFL);
@@ -480,6 +517,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    // **********************************************************
 	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING or use ist number
 	    // ????
+
+	    /*
+	     * 
+	     * 
+	     * CHANGE INDIVIDUAL PROCESS TO NOT CREATE PERSON!?!?!? OR EVEN EDIT
+	     * ..............
+	     */
 
 	    /*
 	     * then check by that number and if information is correct use,
@@ -725,7 +769,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("candidacyBean", bean);
 	request.setAttribute("individualProgramProcess", hashCode.getIndividualProgramProcess());
 	request.setAttribute("canEditCandidacy", canEditCandidacy(bean.getCandidacyHashCode()));
-	
+
 	return mapping.findForward("viewCandidacy");
     }
 
@@ -739,7 +783,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	final Person person = bean.getCandidacyHashCode().getPerson();
-	setIsEmployeeAttributeAndMessage(request, person);
+	canEditPersonalInformation(request, person);
 	bean.setPersonBean(new PersonBean(person));
 	request.setAttribute("candidacyBean", bean);
 
@@ -750,7 +794,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+	canEditPersonalInformation(request, bean.getPersonBean().getPerson());
 	request.setAttribute("candidacyBean", bean);
 	return mapping.findForward("editPersonalInformation");
     }
@@ -761,7 +805,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	// TODO: check candidacy period
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
+	canEditPersonalInformation(request, bean.getPersonBean().getPerson());
 
 	try {
 
@@ -770,12 +814,23 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    setIsEmployeeAttributeAndMessage(request, bean.getPersonBean().getPerson());
 	    request.setAttribute("candidacyBean", bean);
 	    return mapping.findForward("editPersonalInformation");
 	}
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
+    }
+
+    private void canEditPersonalInformation(final HttpServletRequest request, final Person person) {
+	if (person.hasRole(RoleType.EMPLOYEE)) {
+	    request.setAttribute("canEditPersonalInformation", false);
+	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
+	} else if (person.hasAnyPersonRoles() || person.hasUser() || person.hasStudent()) {
+	    request.setAttribute("canEditPersonalInformation", false);
+	    addWarningMessage(request, "message.existing.person.data.must.be.updated.in.academic.office");
+	} else {
+	    request.setAttribute("canEditPersonalInformation", true);
+	}
     }
 
     public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
