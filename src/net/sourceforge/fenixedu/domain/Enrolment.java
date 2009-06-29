@@ -994,7 +994,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @SuppressWarnings("unchecked")
     private EnrolmentEvaluation getLatestEnrolmentEvalution(Collection<EnrolmentEvaluation> enrolmentEvaluations) {
-	return (enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections.max(enrolmentEvaluations);
+	return ((enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) ? null : Collections
+		.<EnrolmentEvaluation> max(enrolmentEvaluations));
     }
 
     final public EnrolmentEvaluation getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType evaluationType) {
