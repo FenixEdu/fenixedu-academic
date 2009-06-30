@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Changing Phd Alert Message" AlterTablePhdAlertMessage.sql
 execute "Update qualifications creator" updateQualificationsCreator.sql
+execute "Add phd program funtionalities" addPhdProgramFunctionalities.sql
