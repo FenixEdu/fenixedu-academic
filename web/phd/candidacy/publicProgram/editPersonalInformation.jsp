@@ -42,11 +42,14 @@
 	<logic:present name="candidacyBean">
 	
 		<logic:equal name="canEditPersonalInformation" value="false">
-			<fr:view name="candidacyBean" property="personBean" schema="Public.PhdIndividualProgramProcess.view.person">
+			<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
+			<fr:view name="candidacyBean" property="personBean.person" schema="Public.PhdIndividualProgramProcess.view.person.simple">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="classes" value="thlight thleft"/>
+			        <fr:property name="columnClasses" value="width175px,,,,"/>
 				</fr:layout>
 			</fr:view>
+			<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
 		</logic:equal>
 	
 		<logic:equal name="canEditPersonalInformation" value="true">

@@ -48,10 +48,18 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final Object[] values = (Object[]) object;
-	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) values[0];
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, (Person) values[1]);
+	    final PhdProgramCandidacyProcessBean bean = getBean(values);
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, getPerson(values));
 	    result.setState(bean.getState());
 	    return result;
+	}
+
+	private Person getPerson(final Object[] values) {
+	    return (Person) values[1];
+	}
+
+	private PhdProgramCandidacyProcessBean getBean(final Object[] values) {
+	    return (PhdProgramCandidacyProcessBean) values[0];
 	}
     }
 

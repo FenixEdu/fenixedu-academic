@@ -766,6 +766,15 @@
 	<slot name="email" />
 </schema>
 
+<schema name="Public.PhdIndividualProgramProcess.view.person.simple" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="idDocumentType" />
+	<slot name="documentIdNumber" />
+   	<slot name="dateOfBirth" />
+</schema>
+
 <schema name="Public.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="candidacyDate">
 		<property name="classes" value="bold nowrap"/>

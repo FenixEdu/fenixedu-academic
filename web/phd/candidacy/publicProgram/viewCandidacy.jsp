@@ -43,12 +43,23 @@
 
 <h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
-<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="thlight thleft"/>
-        <fr:property name="columnClasses" value="width175px,,,,"/>
-	</fr:layout>
-</fr:view>
+<logic:equal name="canEditPersonalInformation" value="true">
+	<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight thleft"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
+		</fr:layout>
+	</fr:view>
+</logic:equal>
+<logic:equal name="canEditPersonalInformation" value="false">
+	<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person.simple">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="thlight thleft"/>
+	        <fr:property name="columnClasses" value="width175px,,,,"/>
+		</fr:layout>
+	</fr:view>
+	<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
+</logic:equal>
 
 <logic:equal name="canEditCandidacy" value="true">
 	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">

@@ -117,7 +117,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	if (bean != null && bean.hasCandidacyHashCode()) {
-	    request.setAttribute("canEditCandidacy", canEditCandidacy(bean.getCandidacyHashCode()));
+	    canEditCandidacy(request, bean.getCandidacyHashCode());
 	}
 
 	return super.execute(mapping, actionForm, request, response);
@@ -284,40 +284,25 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
-	/*
-	 * 
-	 */
-
 	final PersonBean personBean = bean.getPersonBean();
 	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(), personBean
 		.getIdDocumentType());
 
+	// check if person already exists
 	if (person != null) {
-
 	    if (bean.hasInstitutionId() && bean.getInstitutionId().equals(person.getIstUsername())) {
-
 		if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
-
-		    // TODO: person found!!!!!!!!!
-
 		    personBean.setPerson(person);
-
 		} else {
-		    // TODO: found person with diff date of birth
+		    // found person with diff date of birth
 		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    return createCandidacyStepOneInvalid(mapping, actionForm, request, response);
 		}
-
 	    } else {
-		// TODO: deverá preencher o ist number correctamente ........
 		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		return createCandidacyStepOneInvalid(mapping, actionForm, request, response);
 	    }
 	}
-
-	/*
-	 * 
-	 */
 
 	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	// TODO:IMPORTANT change when extending this candidacies to all types
@@ -511,28 +496,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	    }
 
-	    // check for CANDIDACY PERIOD?
+	    // TODO: check for CANDIDACY PERIOD?
 
-	    // --------------------------
-	    // **********************************************************
-	    // CHECK IF PERSON ALREADY EXISTS AND USE EXISTING or use ist number
-	    // ????
-
-	    /*
-	     * 
-	     * 
-	     * CHANGE INDIVIDUAL PROCESS TO NOT CREATE PERSON!?!?!? OR EVEN EDIT
-	     * ..............
-	     */
-
-	    /*
-	     * then check by that number and if information is correct use,
-	     * otherwise error
-	     * 
-	     * and if exists any user with document id equal then error
-	     */
-
-	    // **********************************************************
 	    final PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) CreateNewProcess.run(
 		    PhdIndividualProgramProcess.class, bean, buildActivities(bean));
 
@@ -768,7 +733,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setCandidacyHashCode(hashCode);
 	request.setAttribute("candidacyBean", bean);
 	request.setAttribute("individualProgramProcess", hashCode.getIndividualProgramProcess());
-	request.setAttribute("canEditCandidacy", canEditCandidacy(bean.getCandidacyHashCode()));
+	canEditCandidacy(request, bean.getCandidacyHashCode());
+	canEditPersonalInformation(request, hashCode.getPerson());
 
 	return mapping.findForward("viewCandidacy");
     }
@@ -1258,12 +1224,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
     }
 
-    private Boolean canEditCandidacy(final PhdProgramPublicCandidacyHashCode hashCode) {
-	if (!hashCode.hasPhdProgramCandidacyProcess()) {
-	    return false;
+    private void canEditCandidacy(final HttpServletRequest request, final PhdProgramPublicCandidacyHashCode hashCode) {
+	Boolean value = Boolean.FALSE;
+	if (hashCode.hasPhdProgramCandidacyProcess()) {
+	    final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
+	    value = !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
 	}
-	final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
-	return !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
+	request.setAttribute("canEditCandidacy", value);
     }
 
     // TODO: uncomment this line

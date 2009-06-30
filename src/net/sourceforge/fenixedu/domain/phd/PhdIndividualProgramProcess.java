@@ -108,33 +108,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
-	    // final Person person = bean.getOrCreatePersonFromBean();
-
-	    /*
-	     * 
-	     * 
-	     */
-
-	    Person xpto;
-	    
-	    if (!bean.getPersonBean().hasPerson()) {
-		final Person created = new Person(bean.getPersonBean());
-		bean.getPersonBean().setPerson(created);
-		xpto = created;
-	    }
-
-	    if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE) || bean.hasInstitutionId()) {
-		xpto = bean.getPersonBean().getPerson();
-	    } else {
-		xpto = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
-	    }
-
-
-	    Person person = xpto;
-	    /*
-	     * 
-	     * 
-	     */
+	    final Person person = getOrCreatePerson(bean);
 
 	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
 	    final PhdProgramCandidacyProcess candidacyProcess = Process.createNewProcess(userView,
@@ -146,6 +120,26 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	}
 
+	private Person getOrCreatePerson(final PhdProgramCandidacyProcessBean bean) {
+	    Person result;
+
+	    if (!bean.getPersonBean().hasPerson()) {
+		result = new Person(bean.getPersonBean());
+	    } else {
+		if (bean.getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)
+			|| bean.getPersonBean().getPerson().hasAnyPersonRoles() || bean.getPersonBean().getPerson().hasUser()
+			|| bean.getPersonBean().getPerson().hasStudent() || bean.hasInstitutionId()) {
+		    result = bean.getPersonBean().getPerson();
+		} else {
+		    /*
+		     * if person never had any identity in the system then let
+		     * edit information
+		     */
+		    result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
+		}
+	    }
+	    return result;
+	}
     }
 
     static public class EditPersonalInformation extends PhdActivity {
