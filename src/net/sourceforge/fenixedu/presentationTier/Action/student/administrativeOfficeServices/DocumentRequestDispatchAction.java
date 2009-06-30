@@ -54,11 +54,11 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("viewDocumentRequests");
     }
 
-    private List<DocumentRequest> getDocumentRequest(final HttpServletRequest request) {
+    private List<AcademicServiceRequest> getDocumentRequest(final HttpServletRequest request) {
 
-	final List<DocumentRequest> result = new ArrayList<DocumentRequest>();
+	final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
 	for (final Registration registration : getLoggedPerson(request).getStudent().getRegistrationsSet()) {
-	    result.addAll(registration.getDocumentRequests());
+	    result.addAll(registration.getAcademicServiceRequests());
 	}
 	return result;
     }

@@ -22,7 +22,7 @@
 	<p class="mtop2"><em><bean:message key="no.document.requests" bundle="STUDENT_RESOURCES"/><bean:write name="student" property="person.username"/>.</em></p>
 </logic:empty>
 
-<fr:view name="documentRequests" schema="DocumentRequest.summary-view-by-student">
+<fr:view name="documentRequests" schema="AcademicServiceRequest.view-for-given-registration">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle1 thlight tdcenter" />
 		<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt,smalltxt,smalltxt,aleft smalltxt nowrap,smalltxt,smalltxt,smalltxt,smalltxt nowrap," />
@@ -33,6 +33,6 @@
 		<fr:property name="key(cancel)" value="label.cancel"/>
 		<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES"/>
 		<fr:property name="visibleIf(cancel)" value="loggedPersonCanCancel"/>
-		<fr:property name="sortBy" value="creationDate=desc, documentRequestType=asc, urgentRequest=desc"/>
+		<fr:property name="sortBy" value="requestDate=desc, academicServiceRequestType=asc, urgentRequest=desc"/>
 	</fr:layout>
 </fr:view>
