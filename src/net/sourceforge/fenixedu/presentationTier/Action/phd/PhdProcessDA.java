@@ -38,7 +38,10 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	    request.setAttribute("process", process);
 	}
 
-	request.setAttribute("alertMessagesToNotify", getLoggedPerson(request).getPhdAlertMessagesWithTasksToPerfom());
+	final Person loggedPerson = getLoggedPerson(request);
+	if (loggedPerson != null) {
+	    request.setAttribute("alertMessagesToNotify", loggedPerson.getPhdAlertMessagesWithTasksToPerfom());
+	}
 
 	return super.execute(mapping, actionForm, request, response);
     }
