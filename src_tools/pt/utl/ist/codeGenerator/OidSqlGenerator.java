@@ -122,7 +122,7 @@ public class OidSqlGenerator {
 	protected void writeSelect(final FileWriter fileWriter, final String domainClassName, final String tablename)
 		throws IOException {
 	    fileWriter
-		    .append("select @xpto:=null;\nselect @xpto:=DOMAIN_CLASS_INFO.DOMAIN_CLASS_ID from DOMAIN_CLASS_INFO where DOMAIN_CLASS_INFO.DOMAIN_CLASS_NAME = '");
+		    .append("select @xpto:=null;\nselect @xpto:=FF$DOMAIN_CLASS_INFO.DOMAIN_CLASS_ID from FF$DOMAIN_CLASS_INFO where FF$DOMAIN_CLASS_INFO.DOMAIN_CLASS_NAME = '");
 	    fileWriter.append(domainClassName);
 	    fileWriter.append("';\n");
 	}
