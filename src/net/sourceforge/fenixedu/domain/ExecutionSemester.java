@@ -231,6 +231,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return (nextExecutionPeriod == null) ? false : this == nextExecutionPeriod.getNextExecutionPeriod();
     }
 
+    @Override
     public boolean isCurrent() {
 	return getState().equals(PeriodState.CURRENT);
     }

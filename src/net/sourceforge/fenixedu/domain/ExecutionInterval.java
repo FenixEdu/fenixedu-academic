@@ -128,6 +128,8 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     abstract public String getQualifiedName();
 
+    abstract public boolean isCurrent();
+
     // static information
 
     static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
