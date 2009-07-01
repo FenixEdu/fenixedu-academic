@@ -21,13 +21,7 @@
 			<form-property name="organizedBy" type="java.lang.String" />
 			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
 			<form-property name="viewType" type="java.lang.String"/>
-		</form-bean>	
-
-		<!-- Student Management -->	    
-   		<form-bean name="studentManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="registrationID" type="java.lang.Integer" />
-	    </form-bean>
+		</form-bean>
 
       <!-- Bean for The Creation of a Contributor -->
       <form-bean name="createContributorForm" 
@@ -557,19 +551,6 @@
 		</action>
 		
 		<!-- End : Bolonha Student Enrollment -->
-		
-		<!-- ===== Contacts ======== -->
-		<action path="/partyContacts"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.PartyContactsAcademicAdministrativeOfficeDA"
-				name="studentManagementForm"
-				parameter="method"
-				scope="request"
-				>
-				<forward name="createPartyContact" path="student.createPartyContact"/>
-				<forward name="editPartyContact" path="student.editPartyContact"/>
-				<forward name="editPersonalData" path="/student.do?method=prepareEditPersonalData"/>
-		</action>
-		<!-- ===== End Contacts ======== -->
 		
 		<action path="/notNeedToEnrolEnrolments"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsDA"

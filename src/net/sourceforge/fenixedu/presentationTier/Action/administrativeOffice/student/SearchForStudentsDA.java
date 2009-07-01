@@ -20,11 +20,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/students", module = "academicAdminOffice", formBean = "studentManagementForm")
+@Mapping(path = "/students", module = "academicAdminOffice")
 @Forwards( {
 	@Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
 	@Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp")
-
 })
 public class SearchForStudentsDA extends FenixDispatchAction {
 

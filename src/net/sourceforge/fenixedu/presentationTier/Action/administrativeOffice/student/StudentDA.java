@@ -19,13 +19,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/student", module = "academicAdminOffice", formBean = "studentManagementForm")
+@Mapping(path = "/student", module = "academicAdminOffice")
 @Forwards( {
 	@Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
 	@Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp"),
 	@Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp"),
 	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
-
 })
 public class StudentDA extends StudentRegistrationDA {
 

@@ -26,12 +26,6 @@
     <definition name="students.manageStatutes" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/manageStatutes.jsp"></put>
     </definition>
-    <definition name="student.createPartyContact" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/createPartyContact.jsp"></put>
-    </definition>
-    <definition name="student.editPartyContact" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/editPartyContact.jsp"></put>
-    </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>    
