@@ -231,16 +231,6 @@
 			<forward name="viewCurriculum" path="/viewCurriculum.do?method=prepare"/>
 			<forward name="visualizeRegistration" path="/student.do?method=visualizeRegistration"/>
 		</action>
-
-		<!-- Begin Prices Management -->
-		<action path="/pricesManagement"
-		     	parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.pricesManagement.AcademicAdminOfficePricesManagementDispatchAction"
-				scope="request">
-				<forward name="viewPrices" path="prices.management.viewPrices"/>
-		       	<forward name="editPrice" path="prices.management.editPrice"/>
-		</action>
-		<!-- End Prices Management -->
 		
       <!-- Dispatch Action to Create the Contributor Information -->
       <action path="/createContributorDispatchAction"
