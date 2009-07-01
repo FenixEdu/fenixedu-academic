@@ -58,10 +58,10 @@ public class MoveCurriculumLinesBean implements Serializable {
 	return result;
     }
 
-    static public MoveCurriculumLinesBean buildFrom(final List<CurriculumLine> curriculumLines) {
+    static public MoveCurriculumLinesBean buildFrom(final List<CurriculumLine> curriculumLines, final boolean withRules) {
 	final MoveCurriculumLinesBean result = new MoveCurriculumLinesBean();
 	for (final CurriculumLine curriculumLine : curriculumLines) {
-	    result.addCurriculumLineLocation(CurriculumLineLocationBean.buildFrom(curriculumLine));
+	    result.addCurriculumLineLocation(CurriculumLineLocationBean.buildFrom(curriculumLine, withRules));
 	}
 	return result;
     }

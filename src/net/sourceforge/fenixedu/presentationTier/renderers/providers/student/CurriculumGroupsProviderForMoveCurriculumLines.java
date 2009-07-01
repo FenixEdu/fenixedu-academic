@@ -33,8 +33,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
 
 	    for (final CycleCurriculumGroup cycle : studentCurricularPlan.getCycleCurriculumGroups()) {
 
-		if (cycle.hasConclusionProcess()
-			|| (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()))) {
+		if (bean.isWithRules() && isConcluded(student, cycle)) {
 		    continue;
 		}
 
@@ -43,6 +42,11 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
 	}
 
 	return result;
+    }
+
+    private boolean isConcluded(final Student student, final CycleCurriculumGroup cycle) {
+	return cycle.hasConclusionProcess()
+		|| (cycle.isExternal() && student.hasRegistrationFor(cycle.getDegreeCurricularPlanOfDegreeModule()));
     }
 
     public Converter getConverter() {

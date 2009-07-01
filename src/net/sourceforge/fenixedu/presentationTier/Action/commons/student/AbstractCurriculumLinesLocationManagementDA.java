@@ -52,10 +52,11 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 	    return prepare(mapping, request, isWithRules(request));
 	}
 
-	final MoveCurriculumLinesBean moveCurriculumLinesBean = MoveCurriculumLinesBean.buildFrom(selectedCurriculumLines);
-	moveCurriculumLinesBean.setStudentCurricularPlan(getStudentCurricularPlan(request));
-	moveCurriculumLinesBean.withRules(isWithRules(request));
-	request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
+	final boolean withRules = isWithRules(request);
+	final MoveCurriculumLinesBean bean = MoveCurriculumLinesBean.buildFrom(selectedCurriculumLines, withRules);
+	bean.setStudentCurricularPlan(getStudentCurricularPlan(request));
+	bean.withRules(withRules);
+	request.setAttribute("moveCurriculumLinesBean", bean);
 
 	return mapping.findForward("chooseNewLocation");
     }
@@ -80,12 +81,12 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 	    addRuleResultMessagesToActionMessages(request, e.getFalseResult());
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
 	    return mapping.findForward("chooseNewLocation");
-	    
+
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage(request, "error.NotAuthorized");
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);
 	    return mapping.findForward("chooseNewLocation");
-	    
+
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);

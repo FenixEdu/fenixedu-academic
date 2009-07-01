@@ -15,13 +15,17 @@ public class CurriculumLineLocationBean implements Serializable {
 
     private DomainReference<CurriculumGroup> curriculumGroup;
 
+    private boolean withRules = true;
+
     public CurriculumLineLocationBean() {
 
     }
 
-    public CurriculumLineLocationBean(final CurriculumLine curriculumLine, final CurriculumGroup curriculumGroup) {
+    public CurriculumLineLocationBean(final CurriculumLine curriculumLine, final CurriculumGroup curriculumGroup,
+	    final boolean withRules) {
 	setCurriculumLine(curriculumLine);
 	setCurriculumGroup(curriculumGroup);
+	withRules(withRules);
     }
 
     public CurriculumLine getCurriculumLine() {
@@ -40,11 +44,19 @@ public class CurriculumLineLocationBean implements Serializable {
 	this.curriculumGroup = (curriculumGroup != null) ? new DomainReference<CurriculumGroup>(curriculumGroup) : null;
     }
 
-    public static CurriculumLineLocationBean buildFrom(final CurriculumLine curriculumLine) {
-	return new CurriculumLineLocationBean(curriculumLine, curriculumLine.getCurriculumGroup());
+    public static CurriculumLineLocationBean buildFrom(final CurriculumLine curriculumLine, final boolean withRules) {
+	return new CurriculumLineLocationBean(curriculumLine, curriculumLine.getCurriculumGroup(), withRules);
     }
 
     public Student getStudent() {
 	return getCurriculumLine().getStudent();
+    }
+
+    public boolean isWithRules() {
+	return withRules;
+    }
+
+    public void withRules(boolean value) {
+	this.withRules = value;
     }
 }
