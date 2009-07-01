@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -60,10 +61,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "createCustomAlert", path = "/phd/academicAdminOffice/createCustomAlert.jsp"),
 
-	@Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp")
+	@Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp"),
+
+	@Forward(name = "viewProcessAlertMessages", path = "/phd/academicAdminOffice/viewProcessAlertMessages.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final PhdIndividualProgramProcess process = getProcess(request);
+
+	if (process != null) {
+	    request.setAttribute("processAlertMessagesToNotify", process.getAlertMessagesWithTasksToPerform());
+	}
+
+	return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -480,18 +496,29 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("viewAlertMessages");
     }
 
-    public ActionForward markTaskAsPerformed(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward markAlertMessageTaskAsPerformed(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	getAlertMessage(request).setTaskPerformed(true);
 
-	request.setAttribute("alertMessages", getLoggedPerson(request).getPhdAlertMessages());
+	// TODO: finish
+	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
+		|| request.getParameter("global").equals("true") ? true : false;
 
-	return mapping.findForward("viewAlertMessages");
+	return globalMessagesView ? viewAlertMessages(mapping, form, request, response) : viewProcessAlertMessages(mapping, form,
+		request, response);
     }
 
     private PhdAlertMessage getAlertMessage(HttpServletRequest request) {
 	return getDomainObject(request, "alertMessageId");
+    }
+
+    public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("alertMessages", getProcess(request).getAlertMessages());
+
+	return mapping.findForward("viewProcessAlertMessages");
     }
 
     // End of Alerts Management

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
@@ -661,6 +662,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	for (final PhdAlert each : getAlerts()) {
 	    if (each.isActive()) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<PhdAlertMessage> getAlertMessagesWithTasksToPerform() {
+	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
+
+	for (final PhdAlertMessage each : getAlertMessages()) {
+	    if (!each.isTaskPerformed()) {
 		result.add(each);
 	    }
 	}

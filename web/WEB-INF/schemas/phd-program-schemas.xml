@@ -943,3 +943,14 @@
 	<slot name="taskPerformed" />
 	
 </schema>
+
+
+<schema name="PhdAlertMessage.view.for.process" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+	
+	<slot name="subject" />
+	
+	<slot name="body" />
+	
+	<slot name="taskPerformed" />
+	
+</schema>

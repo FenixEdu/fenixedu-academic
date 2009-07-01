@@ -6,6 +6,8 @@
 
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<bean:define id="processId" name="process" property="externalId" />
+
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -14,7 +16,10 @@
 
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-
+<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + processId.toString() %>">
+	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+<br/><br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
@@ -22,25 +27,26 @@
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-
+<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
+<fr:view schema="PhdIndividualProgramProcess.view" name="process">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+	</fr:layout>
+</fr:view>
 <%--  ### End Of Context Information  ### --%>
 
+<br/><br/>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+<strong><bean:message  key="label.phd.messages" bundle="PHD_RESOURCES"/></strong>
 <logic:notEmpty name="alertMessages">
-	<fr:view schema="PhdAlertMessage.view" name="alertMessages">
+	<fr:view schema="PhdAlertMessage.view.for.process" name="alertMessages">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
-				
-				<fr:property name="linkFormat(viewProcess)" value="/phdIndividualProgramProcess.do?method=viewProcess&processId=${process.externalId}"/>
-				<fr:property name="key(viewProcess)" value="label.viewProcess"/>
-				<fr:property name="bundle(viewProcess)" value="PHD_RESOURCES"/>
-				<fr:property name="order(viewProcess)" value="0"/>
-
-				<fr:property name="linkFormat(markTaskAsPerformed)" value="/phdIndividualProgramProcess.do?method=markAlertMessageTaskAsPerformed&global=true&processId=${process.externalId}&alertMessageId=${externalId}"/>
+				<fr:property name="linkFormat(markTaskAsPerformed)" value="/phdIndividualProgramProcess.do?method=markAlertMessageTaskAsPerformed&global=false&processId=${process.externalId}&alertMessageId=${externalId}"/>
 				<fr:property name="key(markTaskAsPerformed)" value="label.mark.task.as.performed"/>
 				<fr:property name="bundle(markTaskAsPerformed)" value="PHD_RESOURCES"/>
-				<fr:property name="order(markTaskAsPerformed)" value="1"/>
+				<fr:property name="order(markTaskAsPerformed)" value="0"/>
 				<fr:property name="visibleIfNot(markTaskAsPerformed)" value="taskPerformed"/>
 				<fr:property name="confirmationKey(markTaskAsPerformed)" value="message.confirm.alertMessage.mark.task.as.performed" />
 				<fr:property name="confirmationBundle(markTaskAsPerformed)" value="PHD_RESOURCES" />
