@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy_Base {
 
@@ -33,21 +35,22 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	    final StandaloneIndividualCandidacyProcessBean bean) {
 
 	this();
-	
+
 	Person person = init(bean, process);
 	addSelectedCurricularCourses(bean.getCurricularCourses(), bean.getCandidacyExecutionInterval());
-	
+
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
-	 * an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
-	if(bean.getInternalPersonCandidacy()) {
+	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
     }
 
     @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean) {
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	checkParameters(person, process, candidacyDate);
     }
@@ -79,7 +82,6 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	}
     }
 
-    
     @Override
     protected void createDebt(final Person person) {
 	new StandaloneIndividualCandidacyEvent(this, person);
@@ -138,6 +140,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
+	registration.setStartDate(getStartDate());
 
 	setRegistration(registration);
 
@@ -147,6 +150,12 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	enrolInCurricularCourses(registration);
 
 	return registration;
+    }
+
+    @Override
+    protected YearMonthDay getStartDate() {
+	final ExecutionInterval interval = getCandidacyExecutionInterval().getExecutionYear();
+	return interval.isCurrent() ? new YearMonthDay() : interval.getBeginDateYearMonthDay();
     }
 
     private void enrolInCurricularCourses(final Registration registration) {

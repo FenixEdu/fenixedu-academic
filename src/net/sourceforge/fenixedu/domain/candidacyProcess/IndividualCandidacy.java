@@ -25,6 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
@@ -237,6 +238,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
+	registration.setStartDate(getStartDate());
 	setRegistration(registration);
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
@@ -248,6 +250,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getPersonalDetails().hasStudent()
 		&& getPersonalDetails().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
+    }
+
+    protected YearMonthDay getStartDate() {
+	final ExecutionInterval interval = getCandidacyExecutionInterval();
+	return interval.isCurrent() ? new YearMonthDay() : interval.getBeginDateYearMonthDay();
     }
 
     public Student getStudent() {
