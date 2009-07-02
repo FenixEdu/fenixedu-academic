@@ -132,6 +132,8 @@
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_DEGREE']}" itemValue="BOLONHA_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_MASTER_DEGREE']}" itemValue="BOLONHA_MASTER_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_INTEGRATED_MASTER_DEGREE']}" itemValue="BOLONHA_INTEGRATED_MASTER_DEGREE"/>
+					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_ADVANCED_FORMATION_DIPLOMA']}" itemValue="BOLONHA_ADVANCED_FORMATION_DIPLOMA"/>
+					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA']}" itemValue="BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA"/>
 				</fc:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>
