@@ -38,7 +38,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final MultiLanguageString ANNOUNCEMENTS_NAME = MultiLanguageString.i18n().add("pt", "Anï¿½ncios").finish();
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = MultiLanguageString.i18n().add("pt", "Anúncios").finish();
 
     public static final MultiLanguageString EVENTS_NAME = MultiLanguageString.i18n().add("pt", "Eventos").finish();
 
