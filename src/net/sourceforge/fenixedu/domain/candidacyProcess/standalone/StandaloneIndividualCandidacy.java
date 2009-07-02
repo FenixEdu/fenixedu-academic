@@ -140,7 +140,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
-	registration.setStartDate(getStartDate());
+	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 
 	setRegistration(registration);
 

@@ -238,7 +238,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
-	registration.setStartDate(getStartDate());
+	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
