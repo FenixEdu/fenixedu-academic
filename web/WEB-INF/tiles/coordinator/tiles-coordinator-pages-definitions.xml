@@ -75,6 +75,9 @@
 	<definition name="coordinatorDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 	</definition>
+	<definition name="coordinatorCompetenceCourses" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/commons/blank.jsp" />
+	</definition>
 	<definition name="activeDegreeCurricularPlan" extends="coordinatorDegreeCurricularPlan">
 		<put name="body" value="/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp" />
 	</definition>
