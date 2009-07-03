@@ -17,14 +17,21 @@ public class SchoolRegistrationDeclarationRequest extends SchoolRegistrationDecl
 
     public SchoolRegistrationDeclarationRequest(final DocumentRequestCreateBean bean) {
 	this();
-	super.init(bean);
-
 	checkRulesToCreate(bean);
+	bean.setExecutionYear(getRequestedExecutionYear(bean));
+	super.init(bean);
+    }
+
+    private ExecutionYear getRequestedExecutionYear(DocumentRequestCreateBean bean) {
+	return bean.getRegistration().hasIndividualCandidacyFor(bean.getExecutionYear().getNextExecutionYear()) ? bean
+		.getExecutionYear().getNextExecutionYear() : bean.getExecutionYear();
     }
 
     private void checkRulesToCreate(final DocumentRequestCreateBean bean) {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (!bean.getRegistration().isRegistered(currentExecutionYear)) {
+	final ExecutionYear executionYear = bean.getExecutionYear();
+
+	if (!bean.getRegistration().isRegistered(executionYear)
+		&& !bean.getRegistration().hasIndividualCandidacyFor(executionYear.getNextExecutionYear())) {
 	    throw new DomainException(
 		    "SchoolRegistrationDeclarationRequest.registration.not.in.registered.state.in.current.executionYear");
 	}

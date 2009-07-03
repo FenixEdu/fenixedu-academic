@@ -3736,4 +3736,9 @@ public class Registration extends Registration_Base {
 	}
 	return result;
     }
+
+    public Boolean hasIndividualCandidacyFor(final ExecutionYear executionYear) {
+	return hasIndividualCandidacy()
+		&& getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
+    }
 }
