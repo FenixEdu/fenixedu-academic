@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
-import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -159,8 +158,7 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 			totalHolidayBalance = totalHolidayBalance.plus(workDaySheet.getHolidayRest());
 		    }
 		    for (final Leave leave : leavesList) {
-			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
-				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
+			if (leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {

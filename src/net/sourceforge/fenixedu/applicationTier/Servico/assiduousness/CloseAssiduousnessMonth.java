@@ -256,8 +256,7 @@ public class CloseAssiduousnessMonth extends FenixService {
 		} else {
 		    StringBuilder notes = new StringBuilder();
 		    for (final Leave leave : leavesList) {
-			if (leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE
-				&& leave.getJustificationMotive().getDayType() != DayType.WORKDAY
+			if (leave.getJustificationMotive().getDayType() != DayType.WORKDAY
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.CURRENT_YEAR_HOLIDAYS
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.LAST_YEAR_HOLIDAYS
 				&& leave.getJustificationMotive().getJustificationGroup() != JustificationGroup.NEXT_YEAR_HOLIDAYS) {
