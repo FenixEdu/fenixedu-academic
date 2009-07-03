@@ -10,17 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
+import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadDocuments;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -41,7 +45,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
 
-@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp")
+@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
+
+@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
@@ -168,7 +174,6 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	prepareDocumentsToUpload(request);
-
 	return mapping.findForward("manageCandidacyDocuments");
     }
 
@@ -182,7 +187,6 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	request.setAttribute("documentsToUpload", getDocumentsToUpload());
-
 	return mapping.findForward("manageCandidacyDocuments");
     }
 
@@ -215,13 +219,46 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 		return true;
 	    }
 	}
-
 	return false;
-
     }
 
     protected List<PhdCandidacyDocumentUploadBean> getDocumentsToUpload() {
 	return (List<PhdCandidacyDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    }
+
+    public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
+	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
+	request.setAttribute("documentToUpload", bean);
+	return mapping.findForward("manageCandidacyReview");
+    }
+
+    public ActionForward uploadCandidacyReviewInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("documentToUpload", getRenderedObject("documentToUpload"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("manageCandidacyReview");
+    }
+
+    public ActionForward uploadCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("documentToUpload");
+	RenderUtils.invalidateViewState();
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), UploadDocuments.class, Collections.singletonList(bean));
+	    addSuccessMessage(request, "message.document.uploaded.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    bean.removeFile();
+	    request.setAttribute("documentToUpload", bean);
+	    return mapping.findForward("manageCandidacyReview");
+	}
+
+	return manageCandidacyReview(mapping, actionForm, request, response);
     }
 
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -229,8 +266,22 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	prepareDocumentsToUpload(request);
 
-	return executeActivity(PhdProgramCandidacyProcess.DeleteDocument.class, getDocument(request), request, mapping,
-		"manageCandidacyDocuments", "manageCandidacyDocuments", "message.document.deleted.successfuly");
+	return executeActivity(DeleteDocument.class, getDocument(request), request, mapping, "manageCandidacyDocuments",
+		"manageCandidacyDocuments", "message.document.deleted.successfuly");
+    }
+
+    public ActionForward deleteCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), DeleteDocument.class, getDocument(request));
+	    addSuccessMessage(request, "message.document.uploaded.with.success");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	return manageCandidacyReview(mapping, actionForm, request, response);
     }
 
     private PhdProgramCandidacyProcessDocument getDocument(HttpServletRequest request) {

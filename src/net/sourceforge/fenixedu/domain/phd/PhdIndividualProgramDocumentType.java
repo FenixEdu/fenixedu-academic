@@ -9,6 +9,8 @@ public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_FORM,
 
+    CANDIDACY_REVIEW(true),
+
     STUDY_PLAN,
 
     CV,

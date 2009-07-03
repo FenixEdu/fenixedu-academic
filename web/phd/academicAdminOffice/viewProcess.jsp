@@ -60,6 +60,11 @@
 				</html:link>
 			</li>
 			<li>
+				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
+				</html:link>
+			</li>
+			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=prepareEditQualificationsAndJobsInformation" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.editQualificationsAndJobsInformation"/>
 				</html:link>

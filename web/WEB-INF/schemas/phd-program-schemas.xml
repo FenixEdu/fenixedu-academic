@@ -1,6 +1,9 @@
 <schema name="PhdIndividualProgramProcess.view.resume" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
-	<slot name="phdProgram.name" />
+	<slot name="phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
 	<slot name="state"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
@@ -8,9 +11,16 @@
 	<slot name="person.name" />
 </schema>
 
+<schema name="PhdProgram.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" bundle="PHD_RESOURCES">
+	<slot name="name" />
+</schema>
+
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
-	<slot name="phdProgram.name" />
+	<slot name="phdProgram" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgram.name" />
+	</slot>
 	<slot name="collaborationTypeName" />
 	<slot name="state"/>
 	<slot name="executionYear" layout="format">
@@ -306,9 +316,10 @@
 	<slot name="otherSchoolLevel" />
 </schema>
 
-
 <schema name="PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
-	<slot name="type"/>
+	<slot name="type">
+		<property name="excludedValues" value="CANDIDACY_REVIEW" />
+	</slot>
 	<slot name="remarks">
 		<property name="maxLength" value="100" />
 		<property name="size" value="20" />
@@ -319,10 +330,30 @@
 	</slot>
 </schema>
 
+<schema name="PhdCandidacyDocumentUploadBean.review.document" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="remarks">
+		<property name="maxLength" value="100" />
+		<property name="size" value="20" />
+	</slot>
+	<slot name="file">
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
+
 <schema name="PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">
 	<slot name="documentType"/>
-	<slot name="remarks"/>
+	<slot name="uploadTime" />
+	<slot name="uploader.name" />
 	<slot name="filename" />
+	<slot name="remarks"/>
+</schema>
+
+<schema name="PhdProgramCandidacyProcessDocument.review.document" 
+		type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" 
+		extends="PhdProgramCandidacyProcessDocument.view" bundle="PHD_RESOURCES">
+	<remove name="documentType"/>
 </schema>
 
 <schema name="Phd.Qualification.view" type="net.sourceforge.fenixedu.domain.Qualification" bundle="PHD_RESOURCES">
@@ -581,7 +612,7 @@
 
 <schema name="Public.PhdProgramCandidacyProcess.qualification" type="net.sourceforge.fenixedu.domain.QualificationBean" bundle="PHD_RESOURCES">
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="includedValues" value="DEGREE,MASTER_DEGREE,FIRST_CYCLE,SECOND_CYCLE,INTEGRATED_MASTER_DEGREE,BACHELOR_DEGREE,OTHER" />
+		<property name="includedValues" value="BACHELOR_DEGREE,MASTER_DEGREE,DOCTORATE_DEGREE" />
 	</slot>
 	<slot name="mark" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="attendedBegin" layout="year-month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

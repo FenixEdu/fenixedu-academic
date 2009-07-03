@@ -244,4 +244,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     public Person getPerson() {
 	return getIndividualProgramProcess().getPerson();
     }
+
+    public List<PhdProgramCandidacyProcessDocument> getCandidacyReviewDocuments() {
+	final List<PhdProgramCandidacyProcessDocument> documents = new ArrayList<PhdProgramCandidacyProcessDocument>();
+	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+	    if (document.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
+		documents.add(document);
+	    }
+	}
+	return documents;
+    }
 }

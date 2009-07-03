@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -212,7 +213,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     private String getFullLink(final String prefix, HttpServletRequest request, PublicCandidacyHashCode hashCode) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
 	final String link = bundle.getString("const.public.applications.link.http.hostname");
-	return link + request.getContextPath() + getLink(prefix, hashCode);
+	return link + getLink(prefix, hashCode);
     }
 
     private String getLink(final String prefix, final PublicCandidacyHashCode hashCode) {
@@ -723,7 +724,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     private ActionForward viewCandidacy(ActionMapping mapping, HttpServletRequest request,
 	    final PhdProgramPublicCandidacyHashCode hashCode) {
 
-	if (hashCode == null) {
+	if (hashCode == null || !hashCode.hasCandidacyProcess()) {
 	    // TODO: if prepareCreateCandidacy is different then send to that
 	    // page
 	    return mapping.findForward("createCandidacyStepOne");
@@ -1233,8 +1234,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("canEditCandidacy", value);
     }
 
-    // TODO: uncomment this line
-    // @Override
-    // protected void reloadRenderers() throws ServletException {
-    // }
+    @Override
+    protected void reloadRenderers() throws ServletException {
+    }
 }
