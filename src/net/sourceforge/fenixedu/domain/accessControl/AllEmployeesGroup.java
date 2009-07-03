@@ -33,11 +33,6 @@ public class AllEmployeesGroup extends Group {
     }
 
     @Override
-    public String getExpression() {
-	return new RoleGroup(Role.getRoleByRoleType(RoleType.EMPLOYEE)).getExpression();
-    }
-
-    @Override
     protected Argument[] getExpressionArguments() {
 	return null;
     }
