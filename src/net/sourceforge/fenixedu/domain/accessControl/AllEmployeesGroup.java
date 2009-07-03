@@ -5,18 +5,21 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-public class AllEmployeesGroup extends RoleTypeGroup {
+public class AllEmployeesGroup extends Group {
+
+    private static final long serialVersionUID = 1L;
 
     public AllEmployeesGroup() {
-	super(RoleType.EMPLOYEE);
     }
 
     @Override
     public Set<Person> getElements() {
 	final Set<Person> people = new HashSet<Person>();
-	for (final Person person : Role.getRoleByRoleType(getRoleType()).getAssociatedPersons()) {
+	for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
 	    if (!person.hasRole(RoleType.TEACHER)) {
 		people.add(person);
 	    }
@@ -25,8 +28,25 @@ public class AllEmployeesGroup extends RoleTypeGroup {
     }
 
     @Override
-    public boolean isMember(final Person person) {
+    public boolean isMember(Person person) {
 	return person != null && person.hasRole(RoleType.EMPLOYEE) && !person.hasRole(RoleType.TEACHER);
+    }
+
+    @Override
+    public String getExpression() {
+	return new RoleGroup(Role.getRoleByRoleType(RoleType.EMPLOYEE)).getExpression();
+    }
+
+    @Override
+    protected Argument[] getExpressionArguments() {
+	return null;
+    }
+
+    @Override
+    public String getName() {
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "."
+		+ RoleType.EMPLOYEE);
+	return name != null ? name : super.getName();
     }
 
 }
