@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
@@ -14,7 +13,6 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     protected PhdCustomAlert() {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public PhdCustomAlert(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
@@ -30,18 +28,21 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     private void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
 	    MultiLanguageString body, Boolean sendEmail, LocalDate fireDate) {
-
-	super.init(process, targetGroup, subject, body, sendEmail);
-
 	check(fireDate, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.fireDate.cannot.be.null");
+	super.init(process, targetGroup, subject, body, sendEmail);
+	super.setWhenToFire(fireDate);
+    }
 
-	super.setFireDate(fireDate);
-
+    @Override
+    protected void checkParameters(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
+	    MultiLanguageString body, Boolean sendEmail) {
+	check(targetGroup, "error.phd.alert.PhdAlert.targetGroup.cannot.be.null");
+	super.checkParameters(process, targetGroup, subject, body, sendEmail);
     }
 
     @Override
     public boolean isToFire() {
-	return !new LocalDate().isBefore(getFireDate());
+	return !new LocalDate().isBefore(getWhenToFire());
     }
 
     @Override
@@ -55,8 +56,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     @Override
-    public String getFireDateDescription() {
-	return getFireDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT);
+    public String getDescription() {
+	return getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT);
     }
 
     public void delete() {

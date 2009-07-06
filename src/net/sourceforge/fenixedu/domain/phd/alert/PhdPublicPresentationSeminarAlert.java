@@ -22,7 +22,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     @Override
-    public String getFireDateDescription() {
+    public String getDescription() {
 	throw new RuntimeException("TODO!!");
     }
 

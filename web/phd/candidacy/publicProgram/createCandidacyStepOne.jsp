@@ -55,7 +55,7 @@
 			</fr:edit>
 		</fieldset>
 		</div>
-		
+		<%-- 
 		<div class="fs_form">
 		<fieldset style="display: block;">
 			<legend><bean:message key="title.public.phd.institution.id" bundle="PHD_RESOURCES"/></legend>
@@ -72,7 +72,7 @@
 			</fr:edit>
 		</fieldset>
 		</div>
-		
+		--%>
 		<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
 	</fr:form>
 </logic:present>

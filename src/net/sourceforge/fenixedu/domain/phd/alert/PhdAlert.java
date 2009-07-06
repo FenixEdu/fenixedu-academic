@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -20,12 +22,6 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	setRootDomainObjectForActivePhdAlerts(RootDomainObject.getInstance());
     }
 
-    public PhdAlert(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendMail) {
-	this();
-	init(process, targetGroup, subject, body, sendMail);
-    }
-
     protected void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
 	    MultiLanguageString body, Boolean sendEmail) {
 	checkParameters(process, targetGroup, subject, body, sendEmail);
@@ -37,10 +33,9 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	super.setActive(Boolean.TRUE);
     }
 
-    private void checkParameters(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
+    protected void checkParameters(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
 	    MultiLanguageString body, Boolean sendEmail) {
 	check(process, "error.phd.alert.PhdAlert.process.cannot.be.null");
-	check(targetGroup, "error.phd.alert.PhdAlert.targetGroup.cannot.be.null");
 	check(subject, "error.phd.alert.PhdAlert.subject.cannot.be.null");
 	check(body, "error.phd.alert.PhdAlert.body.cannot.be.null");
 	check(sendEmail, "error.phd.alert.PhdAlert.sendEmail.cannot.be.null");
@@ -80,7 +75,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	return getSendEmail().booleanValue();
     }
 
-    private String buildMailBody() {
+    protected String buildMailBody() {
 	final StringBuilder result = new StringBuilder();
 
 	for (final String eachContent : getBody().getAllContents()) {
@@ -93,7 +88,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 
     }
 
-    private String buildMailSubject() {
+    protected String buildMailSubject() {
 	final StringBuilder result = new StringBuilder();
 
 	for (final String eachContent : getSubject().getAllContents()) {
@@ -108,12 +103,12 @@ abstract public class PhdAlert extends PhdAlert_Base {
     }
 
     public void fire() {
-
 	if (!isToFire()) {
 	    return;
 	}
 
 	generateMessage();
+	super.setFireDate(new DateTime());
 
 	if (isToDiscard()) {
 	    discard();
@@ -130,8 +125,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	    new PhdAlertMessage(getProcess(), person, getSubject(), getBody());
 	}
 
-	new Message(RootDomainObject.getInstance().getSystemSender(), new Recipient(toSendEmail), buildMailSubject(),
-		buildMailBody());
+	new Message(getRootDomainObject().getSystemSender(), new Recipient(toSendEmail), buildMailSubject(), buildMailBody());
     }
 
     public void discard() {
@@ -157,7 +151,11 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	return getActive().booleanValue();
     }
 
-    abstract public String getFireDateDescription();
+    public boolean hasFireDate() {
+	return getFireDate() != null;
+    }
+
+    abstract public String getDescription();
 
     abstract protected boolean isToDiscard();
 
