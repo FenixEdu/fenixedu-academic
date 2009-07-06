@@ -85,7 +85,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createCandidacyStepThree", path = "phdProgram.createCandidacyStepThree"),
 
-@Forward(name = "createCandidacySuccess", path = "phdProgram.createCandidacySuccess"),
+@Forward(name = "createCandidacySuccess", path = "phdProgram.createCandidacySuccess", redirect = true),
 
 @Forward(name = "viewCandidacy", path = "phdProgram.viewCandidacy"),
 
@@ -438,7 +438,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setResearchPlan(createDocumentBean(PhdIndividualProgramDocumentType.RESEARCH_PLAN));
 	bean
 		.setDissertationOrFinalWorkDocument(createDocumentBean(PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT));
-	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments());
+	bean.setHabilitationCertificateDocuments(createHabilitationCertificateDocuments(bean));
 	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
 	request.setAttribute("candidacyBean", bean);
@@ -454,10 +454,17 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return bean;
     }
 
-    private List<PhdCandidacyDocumentUploadBean> createHabilitationCertificateDocuments() {
-	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(2);
-	result.add(createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
-	result.add(createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+    private List<PhdCandidacyDocumentUploadBean> createHabilitationCertificateDocuments(final PhdProgramCandidacyProcessBean bean) {
+	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(bean
+		.getQualifications().size());
+	if (bean.hasAnyQualification()) {
+	    bean.sortQualificationsByAttendedEnd();
+	    for (final QualificationBean qualification : bean.getQualifications()) {
+		final PhdCandidacyDocumentUploadBean uploadBean = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
+		uploadBean.setRemarks(qualification.getType().getLocalizedName());
+		result.add(uploadBean);
+	    }
+	}
 	return result;
     }
 
@@ -513,6 +520,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
+
 	return mapping.findForward("createCandidacySuccess");
     }
 
@@ -1102,12 +1110,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	    PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT,
 
-	    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
-
 	    PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
-
 	}
-
     }
 
     public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

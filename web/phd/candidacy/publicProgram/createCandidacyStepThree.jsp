@@ -124,7 +124,7 @@
 	
 		<logic:notEmpty name="candidacyBean" property="habilitationCertificateDocuments">
 			<logic:iterate id="document" name="candidacyBean" property="habilitationCertificateDocuments" indexId="index">
-				<strong><%= index.intValue() + 1 %>.</strong>
+				<strong><%= index.intValue() + 1 %>.</strong> <em><bean:write name="document" property="remarks"/></em>
 				<fr:edit id="<%= "candidacyBean.habilitationCertificateDocument" + index %>" name="document" schema="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft"/>

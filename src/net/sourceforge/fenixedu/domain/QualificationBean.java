@@ -1,12 +1,27 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import org.joda.time.Partial;
 
 public class QualificationBean implements Serializable {
 
     static private final long serialVersionUID = 3778404795808964270L;
+
+    static public Comparator<QualificationBean> COMPARATOR_BY_MOST_RECENT_ATTENDED_END = new Comparator<QualificationBean>() {
+
+	@Override
+	public int compare(QualificationBean o1, QualificationBean o2) {
+	    if (o1.getAttendedEnd() == null) {
+		return 1;
+	    }
+	    if (o2.getAttendedEnd() == null) {
+		return -1;
+	    }
+	    return -o1.getAttendedEnd().compareTo(o2.getAttendedEnd());
+	}
+    };
 
     private QualificationType type;
     private String school;

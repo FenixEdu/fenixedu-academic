@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
@@ -276,6 +277,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public boolean hasAnyQualification() {
 	return this.qualifications != null && !this.qualifications.isEmpty();
+    }
+
+    public void sortQualificationsByAttendedEnd() {
+	Collections.sort(this.qualifications, QualificationBean.COMPARATOR_BY_MOST_RECENT_ATTENDED_END);
     }
 
     public List<PhdCandidacyRefereeBean> getCandidacyReferees() {
