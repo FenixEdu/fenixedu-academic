@@ -184,6 +184,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return (!StringUtils.isEmpty(requestParameter) ? Integer.valueOf(requestParameter) : (Integer) request.getAttribute(name));
     }
 
+    protected Long getLongFromRequest(HttpServletRequest request, String name) {
+	final String requestParameter = request.getParameter(name);
+	return (!StringUtils.isEmpty(requestParameter) ? Long.valueOf(requestParameter) : (Long) request.getAttribute(name));
+    }
+    
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
 	if (!(e instanceof DomainException)) {
 	    return null;
