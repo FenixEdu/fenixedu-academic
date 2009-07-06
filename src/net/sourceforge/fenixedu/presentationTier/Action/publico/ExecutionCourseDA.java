@@ -121,6 +121,9 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	final SummariesSearchBean summariesSearchBean = executionCourse.getSummariesSearchBean();
 	request.setAttribute("summariesSearchBean", summariesSearchBean);
 	if (dynaActionForm != null) {
+	    if (dynaActionForm.get("order").equals("ascendant")){
+		summariesSearchBean.setAscendant(true);
+	    }
 	    final String shiftType = (String) dynaActionForm.get("shiftType");
 	    if (shiftType != null && shiftType.length() > 0) {
 		summariesSearchBean.setShiftType(ShiftType.valueOf(shiftType));

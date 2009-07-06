@@ -40,6 +40,18 @@ public class Summary extends Summary_Base {
 	    }
 	}
     };
+    
+    public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR_ASC = new Comparator<Summary>() {
+	public int compare(final Summary o1, final Summary o2) {
+	    final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
+	    if (c1 == 0) {
+		final int c2 = o2.getSummaryHourHourMinuteSecond().compareTo(o1.getSummaryHourHourMinuteSecond());
+		return -1 * (c2 == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c2);
+	    } else {
+		return -1 * c1;
+	    }
+	}
+    };
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
 	    Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,

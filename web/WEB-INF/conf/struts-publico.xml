@@ -198,7 +198,8 @@
    		<form-property name="shiftType" type="java.lang.String"/>
    		<form-property name="shiftID" type="java.lang.String"/>
    		<form-property name="professorshipID" type="java.lang.String"/>
-	</form-bean>
+   		<form-property name="order" type="java.lang.String"/>
+   	</form-bean>
 
 	<form-bean name="findSpacesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">        
         <form-property name="method" type="java.lang.String" initial=""/>        

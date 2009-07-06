@@ -19,6 +19,7 @@ public class SummariesSearchBean implements Serializable {
     private DomainReference<Shift> shiftDomainReference;
     private DomainReference<Professorship> professorshipDomainReference;
     private Boolean showOtherProfessors;
+    private Boolean ascendant = false;
 
     public SummariesSearchBean(final ExecutionCourse executionCourse) {
 	this.executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
@@ -61,7 +62,14 @@ public class SummariesSearchBean implements Serializable {
     }
 
     public SortedSet<Summary> search() {
-	final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	
+	final SortedSet<Summary> summaries;
+	if (isAscendant()){
+	    summaries =  new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
+	}else{
+	    summaries =  new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR);
+	}
+	
 	for (final Summary summary : getExecutionCourse().getAssociatedSummariesSet()) {
 	    final Shift shift = summary.getShift();
 	    if (getShift() == null || getShift() == shift) {
@@ -84,6 +92,12 @@ public class SummariesSearchBean implements Serializable {
     public SortedSet<Summary> getSummaries() {
 	return search();
     }
+    
+    public SortedSet<Summary> getSummariesInverted() {
+	final SortedSet<Summary> summaries = new TreeSet<Summary>(Summary.COMPARATOR_BY_DATE_AND_HOUR_ASC);
+	summaries.addAll(search());
+	return summaries;
+    }
 
     public SortedSet<ShiftType> getShiftTypes() {
 	final SortedSet<ShiftType> shiftTypes = new TreeSet<ShiftType>();
@@ -91,6 +105,14 @@ public class SummariesSearchBean implements Serializable {
 	    shiftTypes.addAll(shift.getTypes());
 	}
 	return shiftTypes;
+    }
+
+    public void setAscendant(Boolean descendant) {
+	this.ascendant = descendant;
+    }
+
+    public Boolean isAscendant() {
+	return ascendant;
     }
 
 }

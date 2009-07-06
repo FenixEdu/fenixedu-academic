@@ -75,6 +75,15 @@
 					</logic:iterate>
 					<html:option  value="-1" key="label.others" />
 				</html:select>			
+			</td>
+		</tr>
+		<tr>
+			<td><bean:message key="label.order"/>:</td>
+			<td>
+				<html:select bundle="HTMLALT_RESOURCES" property="order" onchange="this.form.submit();">
+					<html:option  value="descendant" key="label.descendant" />
+					<html:option value="ascendant" key="label.ascendant" />
+				</html:select>			
 				<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
 				</html:submit>
@@ -94,7 +103,7 @@
 <logic:notEmpty name="summaries">
 	<logic:iterate id="summary" name="summaries" type="net.sourceforge.fenixedu.domain.Summary">	
 		<bean:define id="summaryIdDiv" type="java.lang.String">s<bean:write name ="summary" property="idInternal" /></bean:define>
-		<div id="<%= summaryIdDiv %>">
+		<div id="<%= summaryIdDiv %>" class="public_summary">
 			<logic:present name="summary" property="shift">
 				<p class="mtop2 mbottom0">
 					<%= summary.getSummaryDateYearMonthDay().toString("dd/MM/yyyy") %>
@@ -130,9 +139,9 @@
 				</logic:notEmpty>
 			</logic:present>
 			
-			<p class="mvert0">
+			<div class="summary_content">
 				<bean:write name="summary" property="summaryText" filter="false"/>
-			</p>
+			</div>
 			
 			<div class="details mtop025">
 				<span class="updated-date">
