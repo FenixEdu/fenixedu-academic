@@ -105,7 +105,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	    return prepare(actionMapping, actionForm, request, response);
 	}
 
-	resultPageDTO.setExecutionDegreeID(executionDegree.getIdInternal());
+	resultPageDTO.setExecutionDegreeID(executionDegree.getOid());
 
 	Collection<StudentInquiriesCourseResult> otherExecutionCourses = new ArrayList<StudentInquiriesCourseResult>();
 	Collection<StudentInquiriesCourseResult> executionCoursesToImproove = new ArrayList<StudentInquiriesCourseResult>();
@@ -142,7 +142,7 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 	request
 		.setAttribute("executionDegreeCoursesReport",
 			getExecutionDegreeCoursesReports(executionSemester, executionDegree));
-	request.setAttribute("executionSemester", executionSemester);	
+	request.setAttribute("executionSemester", executionSemester);
 	request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionSemester));
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("otherExecutionCourses", otherExecutionCourses);
@@ -217,8 +217,8 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 		request.setAttribute("courseResultsCoordinatorCommentEdit", true);
 	    }
 
-	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getIdInternal());
-	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getIdInternal());
+	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionCourseID(executionCourse.getOid());
+	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionDegreeID(executionDegree.getOid());
 
 	    final StudentInquiriesCourseResultBean courseResultBean = populateStudentInquiriesCourseResults(executionCourse,
 		    executionDegree);
