@@ -113,6 +113,14 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	    return;
 	}
 
+	generateMessage();
+
+	if (isToDiscard()) {
+	    discard();
+	}
+    }
+
+    protected void generateMessage() {
 	final Set<Person> toSendEmail = new HashSet<Person>();
 	for (final Person person : getTargetGroup().getElements()) {
 	    if (isToSendEmail()) {
@@ -124,10 +132,6 @@ abstract public class PhdAlert extends PhdAlert_Base {
 
 	new Message(RootDomainObject.getInstance().getSystemSender(), new Recipient(toSendEmail), buildMailSubject(),
 		buildMailBody());
-
-	if (isToDiscard()) {
-	    discard();
-	}
     }
 
     public void discard() {
