@@ -118,11 +118,11 @@
 	</fieldset>
 	</div>
 
-	<div class="fs_form">
-	<fieldset style="display: block;">
-		<legend><bean:message key="label.phd.public.documents.habilitationCertificateDocuments" bundle="PHD_RESOURCES"/></legend>
+	<logic:notEmpty name="candidacyBean" property="habilitationCertificateDocuments">
+		<div class="fs_form">
+		<fieldset style="display: block;">
+			<legend><bean:message key="label.phd.public.documents.habilitationCertificateDocuments" bundle="PHD_RESOURCES"/></legend>
 	
-		<logic:notEmpty name="candidacyBean" property="habilitationCertificateDocuments">
 			<logic:iterate id="document" name="candidacyBean" property="habilitationCertificateDocuments" indexId="index">
 				<strong><%= index.intValue() + 1 %>.</strong> <em><bean:write name="document" property="remarks"/></em>
 				<fr:edit id="<%= "candidacyBean.habilitationCertificateDocument" + index %>" name="document" schema="Public.PhdCandidacyDocumentUploadBean.habilitationCertificateDocument">
@@ -137,12 +137,12 @@
 				<p class="mtop05"><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"removeIndexId\").value=" + index + ";javascript:document.getElementById(\"methodId\").value=\"removeHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
 				--%>
 			</logic:iterate>
-		</logic:notEmpty>
-		<%-- 
-		<p><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"methodId\").value=\"addHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-		--%>
-	</fieldset>
-	</div>
+		</fieldset>
+		</div>
+	</logic:notEmpty>
+	<%-- 
+	<p><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"methodId\").value=\"addHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+	--%>
 
 	<logic:notEmpty name="candidacyBean" property="phdGuidingLetters">
 		<div class="fs_form">
