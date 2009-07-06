@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.YearDelegateCourseI
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CoordinatorExecutionDegreeCoursesReport;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -201,12 +202,10 @@ public class ViewInquiriesResultsDA extends FenixDispatchAction {
 
 	StudentInquiriesCourseResult courseResult = (StudentInquiriesCourseResult) getRenderedObject();
 
-	final ExecutionCourse executionCourse = courseResult == null ? rootDomainObject
-		.readExecutionCourseByOID(getIntegerFromRequest(request, "executionCourseID")) : courseResult
-		.getExecutionCourse();
-	final ExecutionDegree executionDegree = courseResult == null ? rootDomainObject
-		.readExecutionDegreeByOID(getIntegerFromRequest(request, "executionDegreeID")) : courseResult
-		.getExecutionDegree();
+	final ExecutionCourse executionCourse = courseResult == null ? (ExecutionCourse) DomainObject.fromOID(getLongFromRequest(
+		request, "executionCourseID")) : courseResult.getExecutionCourse();
+	final ExecutionDegree executionDegree = courseResult == null ? (ExecutionDegree) DomainObject.fromOID(getLongFromRequest(
+		request, "executionDegreeID")) : courseResult.getExecutionDegree();
 
 	request.setAttribute("canComment", coordinatorCanComment(executionDegree, executionCourse.getExecutionPeriod()));
 	request.setAttribute("executionCourse", executionCourse);

@@ -187,7 +187,7 @@
 <br/>
 <html:form action="<%= "/viewInquiriesResults.do?method=selectexecutionSemester&courseResultsCoordinatorCommentEdit=true&degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") %>" >
     <html:hidden property="degreeCurricularPlanID"/>
-    <bean:define id="executionSemesterID" name="executionCourse" property="executionPeriod.idInternal" type="java.lang.Integer" />
+    <bean:define id="executionSemesterID" name="executionCourse" property="executionPeriod.oid" type="java.lang.Long" />
     <html:hidden property="executionSemesterID" value="<%= executionSemesterID.toString() %>" />
     <html:submit><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
 </html:form>

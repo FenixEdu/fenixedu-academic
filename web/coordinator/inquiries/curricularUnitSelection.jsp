@@ -40,7 +40,7 @@ div.progress-container > div {
 		<td>
 		<html:select property="executionSemesterID" onchange="this.form.method.value='selectexecutionSemester';this.form.submit();">
 			<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
-	 		<html:options collection="executionPeriods" property="idInternal" labelProperty="qualifiedName"/>
+	 		<html:options collection="executionPeriods" property="oid" labelProperty="qualifiedName"/>
 		</html:select>
 		</td>
 	</tr>
@@ -69,7 +69,7 @@ div.progress-container > div {
 <table>
     <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
     <logic:iterate id="studentInquiriesCourseResult" name="executionCoursesToImproove">
-        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.oid" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
             <td>
@@ -105,7 +105,7 @@ div.progress-container > div {
 <table>
     <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
     <logic:iterate id="studentInquiriesCourseResult" name="excelentExecutionCourses">
-        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.oid" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
             <td>
@@ -141,7 +141,7 @@ div.progress-container > div {
 <table>
     <th></th><th></th><th colspan="2"><bean:message key="label.inquiries.courseResults.teachingReports.filled" bundle="INQUIRIES_RESOURCES"/></th><th colspan="2">
     <logic:iterate id="studentInquiriesCourseResult" name="otherExecutionCourses">
-        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.idInternal" />
+        <bean:define id="executionCourseID" name="studentInquiriesCourseResult" property="executionCourse.oid" />
         <bean:define id="executionDegreeID" name="executionDegreeID" />
         <tr>
             <td>
