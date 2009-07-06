@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -14,19 +15,19 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 
     private String method;
 
-    private Integer executionSemesterID;
+    private Long executionSemesterID;
 
     private DomainReference<ExecutionSemester> executionSemester;
 
-    private Integer executionDegreeID;
+    private Long executionDegreeID;
 
     private DomainReference<ExecutionDegree> executionDegree;
 
-    private Integer executionCourseID;
+    private Long executionCourseID;
 
     private DomainReference<ExecutionCourse> executionCourse;
 
-    public Integer getExecutionSemesterID() {
+    public Long getExecutionSemesterID() {
 	return executionSemesterID;
     }
 
@@ -34,34 +35,34 @@ public class SearchInquiriesResultPageDTO extends ActionForm {
 	return isNullOrZero(executionSemesterID);
     }
 
-    public void setExecutionSemesterID(Integer executionSemesterID) {
+    public void setExecutionSemesterID(Long executionSemesterID) {
 	this.executionSemesterID = executionSemesterID;
 	this.executionSemester = isNullOrZero(executionSemesterID) ? null : new DomainReference<ExecutionSemester>(
-		ExecutionSemester.class, executionSemesterID);
+		(ExecutionSemester) DomainObject.fromOID(executionSemesterID));
     }
 
-    private boolean isNullOrZero(Integer id) {
+    private boolean isNullOrZero(Long id) {
 	return id == null || id.intValue() == 0;
     }
 
-    public Integer getExecutionDegreeID() {
+    public Long getExecutionDegreeID() {
 	return executionDegreeID;
     }
 
-    public void setExecutionDegreeID(Integer executionDegreeID) {
+    public void setExecutionDegreeID(Long executionDegreeID) {
 	this.executionDegreeID = executionDegreeID;
 	this.executionDegree = isNullOrZero(executionDegreeID) ? null : new DomainReference<ExecutionDegree>(
-		ExecutionDegree.class, executionDegreeID);
+		(ExecutionDegree) DomainObject.fromOID(executionDegreeID));
     }
 
-    public Integer getExecutionCourseID() {
+    public Long getExecutionCourseID() {
 	return executionCourseID;
     }
 
-    public void setExecutionCourseID(Integer executionCourseID) {
+    public void setExecutionCourseID(Long executionCourseID) {
 	this.executionCourseID = executionCourseID;
 	this.executionCourse = isNullOrZero(executionCourseID) ? null : new DomainReference<ExecutionCourse>(
-		ExecutionCourse.class, executionCourseID);
+		(ExecutionCourse) DomainObject.fromOID(executionCourseID));
     }
 
     public ExecutionSemester getExecutionSemester() {
