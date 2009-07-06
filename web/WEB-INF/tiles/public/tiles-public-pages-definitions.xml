@@ -1053,7 +1053,7 @@
 	<definition name="phdProgram.createCandidacyStepThree" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/createCandidacyStepThree.jsp"/>
 	</definition>
-	<definition name="phdProgram.createCandidacySuccess" extends="definition.candidacy.process">
+	<definition name="phdProgram.showCandidacySuccess" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/candidacySubmited.jsp"/>
 	</definition>
 	<definition name="phdProgram.viewCandidacy" extends="definition.candidacy.process">

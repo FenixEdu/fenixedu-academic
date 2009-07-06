@@ -85,7 +85,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "createCandidacyStepThree", path = "phdProgram.createCandidacyStepThree"),
 
-@Forward(name = "createCandidacySuccess", path = "phdProgram.createCandidacySuccess", redirect = true),
+@Forward(name = "showCandidacySuccess", path = "phdProgram.showCandidacySuccess"),
 
 @Forward(name = "viewCandidacy", path = "phdProgram.viewCandidacy"),
 
@@ -312,7 +312,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	// TODO: ---------------------------------------------------------------
 
 	if (!bean.hasAnyGuiding()) {
-	    bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
+	    bean.setGuidings(createGuidingsMinimumList());
 	}
 	if (!bean.hasAnyQualification()) {
 	    bean.setQualifications(new ArrayList<QualificationBean>());
@@ -325,6 +325,21 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    private List<PhdProgramGuidingBean> createGuidingsMinimumList() {
+	final List<PhdProgramGuidingBean> result = new ArrayList<PhdProgramGuidingBean>();
+
+	final PhdProgramGuidingBean g1 = new PhdProgramGuidingBean();
+	g1.setWorkLocation("IST");
+	final PhdProgramGuidingBean g2 = new PhdProgramGuidingBean();
+	// TODO: change this according to collaboration type acronym
+	g2.setWorkLocation("EPFL");
+
+	result.add(g1);
+	result.add(g2);
+
+	return result;
     }
 
     private List<PhdCandidacyRefereeBean> createCandidacyRefereesMinimumList() {
@@ -519,9 +534,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return createCandidacyStepThreeInvalid(mapping, form, request, response);
 	}
 
-	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
+	return redirect("/candidacies/phdProgramCandidacyProcess.do?method=showCandidacySuccess", request);
+    }
 
-	return mapping.findForward("createCandidacySuccess");
+    public ActionForward showCandidacySuccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	// TODO: remove if validate button created
+	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
+	return mapping.findForward("showCandidacySuccess");
     }
 
     private boolean candidacyRefereesEmailsAreInvalid(final PhdProgramCandidacyProcessBean bean) {
@@ -561,14 +581,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final String body = bundle.getString("message.phd.email.body.referee.form");
 
 	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
-	    sendCandidacyRefereeEmail(process, request, subject, body, referee);
+	    sendCandidacyRefereeEmail(request, subject, body, referee);
 	}
     }
 
-    private void sendCandidacyRefereeEmail(final PhdIndividualProgramProcess process, final HttpServletRequest request,
-	    final String subject, final String body, final PhdCandidacyReferee referee) {
+    private void sendCandidacyRefereeEmail(final HttpServletRequest request, final String subject, final String body,
+	    final PhdCandidacyReferee referee) {
 	final String link = getFullLink(getCandidacyRefereeAccessLinkPrefix(), request, referee);
-	final String finalBody = String.format(body, process.getPerson().getName(), link);
+	final String finalBody = String.format(body, link);
 	referee.sendEmail(subject, finalBody);
     }
 
@@ -995,7 +1015,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final String body = bundle.getString("message.phd.email.body.referee.form");
 
 	final PhdCandidacyReferee referee = getReferee(process, request);
-	sendCandidacyRefereeEmail(process, request, subject, body, referee);
+	sendCandidacyRefereeEmail(request, subject, body, referee);
 
 	addSuccessMessage(request, "message.candidacy.referee.email.sent.with.success", referee.getName());
 	request.setAttribute("candidacyBean", bean);
