@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
 
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
@@ -22,6 +23,8 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 	setEmail(bean.getEmail());
 	setInstitution(bean.getInstitution());
 	setValue(UUID.randomUUID().toString());
+
+	new PhdCandidacyRefereeAlert(this);
     }
 
     @Override
