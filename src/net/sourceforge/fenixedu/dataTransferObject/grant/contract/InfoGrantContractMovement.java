@@ -108,17 +108,4 @@ public class InfoGrantContractMovement extends InfoObject {
 	}
 	return infoGrantMovement;
     }
-
-    /**
-     * @param grantMovement
-     * @throws ExcepcaoPersistencia
-     */
-    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement, GrantContractMovement grantContractMovement) {
-	super.copyToDomain(infoGrantContractMovement, grantContractMovement);
-
-	grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
-	grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
-	grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
-    }
-
 }

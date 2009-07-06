@@ -103,11 +103,4 @@ public class InfoGrantPart extends InfoObject {
 	}
 	return infoGrantPart;
     }
-
-    public void copyToDomain(InfoGrantPart infoGrantPart, GrantPart grantPart) {
-	super.copyToDomain(infoGrantPart, grantPart);
-
-	grantPart.setPercentage(infoGrantPart.getPercentage());
-    }
-
 }

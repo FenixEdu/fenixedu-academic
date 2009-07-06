@@ -182,19 +182,6 @@ public class InfoGrantContract extends InfoObject {
 	return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, GrantContract grantContract) {
-	super.copyToDomain(infoGrantContract, grantContract);
-
-	grantContract.setContractNumber(infoGrantContract.getContractNumber());
-	grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
-	grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
-	if (infoGrantContract.getGrantCostCenterInfo() != null) {
-	    final InfoGrantCostCenter infoGrantCostCenter = infoGrantContract.getGrantCostCenterInfo();
-	    final GrantCostCenter grantCostCenter = (GrantCostCenter) RootDomainObject.getInstance().readGrantPaymentEntityByOID(infoGrantCostCenter.getIdInternal());
-	    grantContract.setGrantCostCenter(grantCostCenter);
-	}
-    }
-
     /**
      * @return Returns the costCenterKey.
      */

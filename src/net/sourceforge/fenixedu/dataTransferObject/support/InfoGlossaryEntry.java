@@ -55,13 +55,4 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
 	}
 	return infoGlossaryEntry;
     }
-
-    public void copyToDomain(InfoGlossaryEntry infoGlossaryEntry, GlossaryEntry glossaryEntry) {
-	if (infoGlossaryEntry != null && glossaryEntry != null) {
-	    super.copyToDomain(infoGlossaryEntry, glossaryEntry);
-	    glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
-	    glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
-	}
-    }
-
 }

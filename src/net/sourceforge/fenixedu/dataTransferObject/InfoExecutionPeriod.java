@@ -130,11 +130,6 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
     }
 
     @Override
-    public void copyToDomain(InfoObject infoObject, DomainObject domainObject) {
-	throw new Error("Method should not be called!");
-    }
-
-    @Override
     public Integer getIdInternal() {
 	return getExecutionPeriod().getIdInternal();
     }

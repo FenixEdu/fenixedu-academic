@@ -159,19 +159,4 @@ public class InfoGrantType extends InfoObject {
 	}
 	return infoGrantType;
     }
-
-    public void copyToDomain(InfoGrantType infoGrantType, GrantType grantType) {
-	super.copyToDomain(infoGrantType, grantType);
-
-	grantType.setName(infoGrantType.getName());
-	grantType.setSigla(infoGrantType.getSigla());
-	grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
-	grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
-	grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
-	grantType.setSource(infoGrantType.getSource());
-	if (infoGrantType.getState() != null) {
-	    grantType.setValidUntil(new LocalDate(infoGrantType.getState()));
-	}
-    }
-
 }

@@ -152,13 +152,4 @@ public class InfoGrantInsurance extends InfoObject {
 	}
 	return infoGrantInsurance;
     }
-
-    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, GrantInsurance grantInsurance) {
-	super.copyToDomain(infoGrantInsurance, grantInsurance);
-
-	grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
-	grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
-	grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
-    }
-
 }

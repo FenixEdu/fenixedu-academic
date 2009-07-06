@@ -52,12 +52,4 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
 	}
 	return infoGrantProject;
     }
-
-    public void copyToDomain(InfoGrantProject infoGrantProject, GrantProject grantProject) {
-	super.copyToDomain(infoGrantProject, grantProject);
-
-	grantProject.setDesignation(infoGrantProject.getDesignation());
-	grantProject.setNumber(infoGrantProject.getNumber());
-    }
-
 }

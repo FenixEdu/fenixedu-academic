@@ -38,12 +38,4 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
 	}
 	return infoGrantCostCenter;
     }
-
-    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, GrantCostCenter grantCostCenter) {
-	super.copyToDomain(infoGrantCostCenter, grantCostCenter);
-
-	grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
-	grantCostCenter.setNumber(infoGrantCostCenter.getNumber());
-    }
-
 }

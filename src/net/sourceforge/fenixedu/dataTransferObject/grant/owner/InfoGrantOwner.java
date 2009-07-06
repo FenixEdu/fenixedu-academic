@@ -82,14 +82,6 @@ public class InfoGrantOwner extends InfoObject {
 	return infoGrantOwner;
     }
 
-    public void copyToDomain(InfoGrantOwner infoGrantOwner, GrantOwner grantOwner) {
-	super.copyToDomain(infoGrantOwner, grantOwner);
-
-	grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
-	grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
-	grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
-    }
-
     /*
      * - Temporary solution to remove create InfoPerson wrapper - This attribute
      * should be removed and placed in InfoGrantOwnerEditor

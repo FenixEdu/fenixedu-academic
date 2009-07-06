@@ -202,19 +202,6 @@ public class InfoDegreeCurricularPlanEditor extends InfoObject {
 	this.descriptionEn = descriptionEn;
     }
 
-    public void copyToDomain(InfoDegreeCurricularPlanEditor infoDegreeCurricularPlan, DegreeCurricularPlan degreeCurricularPlan) {
-	super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-	degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
-	degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
-	degreeCurricularPlan.setInitialDate(infoDegreeCurricularPlan.getInitialDate());
-	degreeCurricularPlan.setEndDate(infoDegreeCurricularPlan.getEndDate());
-	degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
-	degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
-	degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
-	degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
-	degreeCurricularPlan.setGradeScale(infoDegreeCurricularPlan.getGradeScale());
-    }
-
     public String getAnotation() {
 	return anotation;
     }

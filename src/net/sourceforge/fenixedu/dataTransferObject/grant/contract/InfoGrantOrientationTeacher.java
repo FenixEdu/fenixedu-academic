@@ -105,13 +105,4 @@ public class InfoGrantOrientationTeacher extends InfoObject {
 	}
 	return infoGrantOrientationTeacher;
     }
-
-    public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-	    GrantOrientationTeacher grantOrientationTeacher) {
-	super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
-
-	grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());
-	grantOrientationTeacher.setEndDate(infoGrantOrientationTeacher.getEndDate());
-    }
-
 }

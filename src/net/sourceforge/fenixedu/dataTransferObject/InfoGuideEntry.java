@@ -169,7 +169,6 @@ public class InfoGuideEntry extends InfoObject {
     }
 
     public void copyToDomain(InfoGuideEntry infoGuideEntry, GuideEntry guideEntry) {
-	super.copyToDomain(infoGuideEntry, guideEntry);
 	guideEntry.setDescription(infoGuideEntry.getDescription());
 	guideEntry.setDocumentType(infoGuideEntry.getDocumentType());
 	guideEntry.setGraduationType(infoGuideEntry.getGraduationType());

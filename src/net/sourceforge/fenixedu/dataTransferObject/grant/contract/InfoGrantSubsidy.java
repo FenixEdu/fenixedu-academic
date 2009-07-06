@@ -172,16 +172,4 @@ public class InfoGrantSubsidy extends InfoObject {
 	}
 	return infoGrantSubsidy;
     }
-
-    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, GrantSubsidy grantSubsidy) {
-	super.copyToDomain(infoGrantSubsidy, grantSubsidy);
-
-	grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
-	grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
-	grantSubsidy.setState(infoGrantSubsidy.getState());
-	grantSubsidy.setTotalCost(infoGrantSubsidy.getTotalCost());
-	grantSubsidy.setValue(infoGrantSubsidy.getValue());
-	grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
-    }
-
 }
