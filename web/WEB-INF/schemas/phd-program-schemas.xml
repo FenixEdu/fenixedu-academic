@@ -958,8 +958,7 @@
 	
 	<slot name="systemAlert"/>
 	
-	<slot name="fireDateDescription"/>
-	
+	<slot name="description"/>
 	
 </schema>
 

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.UUID;
 
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     private PhdCandidacyReferee() {
@@ -29,5 +31,9 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     public boolean isLetterAvailable() {
 	return hasLetter();
+    }
+
+    public PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return getPhdProgramCandidacyProcess().getIndividualProgramProcess();
     }
 }
