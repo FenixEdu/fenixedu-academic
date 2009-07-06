@@ -217,7 +217,7 @@ public class StringFormatter {
 		    if (i == (lowerCaseName.length - 1) & lowerCaseName[i].equals("a")) {
 			capitalizedName.append(lowerCaseName[i].toUpperCase());
 		    } else {
-			capitalizedName.append(capitalizeWord(lowerCaseName[i]));
+			capitalizedName.append(capitalizeWord(lowerCaseName[i], false));
 		    }
 		}
 	    }
@@ -267,12 +267,12 @@ public class StringFormatter {
 	int startPos = 0;
 
 	for (int index = indexOfAnySpecChar(uglyWord, 0); index >= 0; index = indexOfAnySpecChar(uglyWord, startPos)) {
-	    prettyWord.append(capitalizeWord(uglyWord.substring(startPos, startPos + index)));
+	    prettyWord.append(capitalizeWord(uglyWord.substring(startPos, startPos + index), index > 0));
 	    prettyWord.append(uglyWord.substring(startPos + index, startPos + index + 1));
 	    startPos += (index + 1);
 
 	    if (containsNoneSpecialChars(uglyWord.substring(startPos))) {
-		prettyWord.append(capitalizeWord(uglyWord.substring(startPos)));
+		prettyWord.append(capitalizeWord(uglyWord.substring(startPos), false));
 	    }
 	}
 
@@ -287,15 +287,16 @@ public class StringFormatter {
      * 
      * @param uglyWord
      *            the string to capitalize
+     * @param originalWordEndsWithSpecialChar 
      * @return the capitalized word
      */
-    public static String capitalizeWord(String uglyWord) {
+    public static String capitalizeWord(String uglyWord, boolean originalWordEndsWithSpecialChar) {
 	StringBuilder prettyWord = new StringBuilder();
 
 	if (allCapSet.contains(uglyWord)) {
 	    prettyWord.append(uglyWord.toUpperCase());
 	} else {
-	    if (allLowerSet.contains(uglyWord)) {
+	    if (!originalWordEndsWithSpecialChar && allLowerSet.contains(uglyWord)) {
 		prettyWord.append(uglyWord);
 	    } else {
 		prettyWord.append(WordUtils.capitalize(uglyWord));
