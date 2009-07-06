@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl.groups;
 import java.util.HashSet;
 import java.util.Set;
 
-import sun.misc.Perf.GetPerfAction;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
