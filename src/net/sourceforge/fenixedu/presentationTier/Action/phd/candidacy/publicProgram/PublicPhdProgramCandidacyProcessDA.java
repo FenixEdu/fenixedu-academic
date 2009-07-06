@@ -1000,6 +1000,41 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("editCandidacyReferees");
     }
 
+    public ActionForward prepareAddCandidacyRefereeToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("refereeBean", new PhdCandidacyRefereeBean());
+	return mapping.findForward("editCandidacyReferees");
+    }
+
+    public ActionForward editCandidacyRefereesInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("refereeBean", getRenderedObject("refereeBean"));
+	return mapping.findForward("editCandidacyReferees");
+    }
+
+    public ActionForward addCandidacyRefereeToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	// TODO: check candidacy period!!!!????????
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+
+	try {
+	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
+		    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
+	    addSuccessMessage(request, "message.qualification.information.create.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("refereeBean", getRenderedObject("refereeBean"));
+	}
+
+	return mapping.findForward("editCandidacyReferees");
+    }
+
     public ActionForward sendCandidacyRefereeEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

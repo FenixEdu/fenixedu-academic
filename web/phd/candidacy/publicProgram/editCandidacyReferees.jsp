@@ -41,23 +41,25 @@
 	<logic:present name="candidacyBean">
 	
 		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h2>	
-		<%-- 
-		<logic:notEmpty name="qualificationBean">
+		
+		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddCandidacyRefereeToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+		
+		<logic:notEmpty name="refereeBean">
 			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
-			<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
+			<fr:edit id="refereeBean" name="refereeBean" schema="Public.PhdProgramCandidacyProcess.referee">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="thlight thleft"/>
 					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
+				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyRefereesInvalid" />
 			</fr:edit>	
-			<html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
+			<html:submit onclick="document.getElementById('methodId').value='addCandidacyRefereeToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
 			<br/>
 			<br/>
 		</logic:notEmpty>
-		--%>
+		
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees">
 			<logic:iterate id="candidacyReferee" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees" indexId="index" >
@@ -70,14 +72,11 @@
 					</fr:layout>
 				</fr:view>
 				<logic:equal name="candidacyReferee" property="letterAvailable" value="false">
-					<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + candidacyRefereeId + "; document.getElementById(\"methodId\").value=\"sendCandidacyRefereeEmail\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.re.send.email" bundle="PHD_RESOURCES"/></a></p>
+					<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + candidacyRefereeId + "; document.getElementById(\"methodId\").value=\"sendCandidacyRefereeEmail\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.resend.email" bundle="PHD_RESOURCES"/></a></p>
 				</logic:equal>
 			</logic:iterate>
 		</logic:notEmpty>
-		<%-- 
-		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" ><bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-		--%>
-		
+		 
 	</logic:present>
 </logic:equal>
 </fr:form>
