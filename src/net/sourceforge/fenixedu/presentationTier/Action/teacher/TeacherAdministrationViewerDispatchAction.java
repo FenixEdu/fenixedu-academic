@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadAllStudentsAndGroups;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsByShiftID;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndGroupsWithoutShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorshipWithPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PrepareEditGroupingMembers;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherResponsibleByExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -62,8 +63,11 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -404,14 +408,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
-	Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
-	Object args[] = { objectCode, teacherNumber };
+	String id = (String) teacherForm.get("teacherNumber");
+	Person person;
+	if (id.substring(0, 3).equals("ist")) {
+	    person = Person.readPersonByIstUsername(id);
+	} else {
+	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
+	    person = teacher.getPerson();
+	}
 	try {
-	    ServiceManagerServiceFactory.executeService("AssociateTeacher", args);
-	} catch (InvalidArgumentsServiceException e) {
-	    throw new InvalidArgumentsActionException(teacherNumber.toString(), e);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException(teacherNumber.toString(), e);
+	    Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -424,15 +430,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	if (teacherCodeString == null) {
 	    teacherCodeString = (String) request.getAttribute("teacherCode");
 	}
-	Integer teacherCode = new Integer(teacherCodeString);
 	Integer objectCode = getObjectCode(request);
-	Object args[] = { objectCode, teacherCode };
 	try {
-	    ServiceManagerServiceFactory.executeService("DeleteProfessorship", args);
-	} catch (NotAuthorizedFilterException e) {
-	    final ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.invalidTeacherRemoval", new ActionError("error.invalidTeacherRemoval"));
-	    saveErrors(request, actionErrors);
+	    DeleteProfessorshipWithPerson.run(Person.readPersonByIstUsername(teacherCodeString), rootDomainObject
+		    .readExecutionCourseByOID(objectCode));
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	} catch (DomainException domainException) {
@@ -691,11 +692,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	ISiteComponent commonComponent = new InfoSiteCommon();
 	Object[] args = { infoExecutionCourseCode, commonComponent, firstPageComponent, objectCode, obj1, obj2 };
-
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
 	try {
 	    TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
 		    "TeacherAdministrationSiteComponentService", args);
 	    request.setAttribute("siteView", siteView);
+	    request.setAttribute("listPersons", executionCourse.getProfessorships());
 	    request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse()
 		    .getIdInternal());
 	    if (siteView.getComponent() instanceof InfoSiteSection) {

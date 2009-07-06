@@ -173,7 +173,11 @@ public class Shift extends Shift_Base {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return getCourseLoads().get(0).getExecutionCourse();
+	CourseLoad courseLoad = getCourseLoads().get(0);
+	if (courseLoad != null)
+	    return courseLoad.getExecutionCourse();
+	else
+	    return null;
     }
 
     public ExecutionSemester getExecutionPeriod() {

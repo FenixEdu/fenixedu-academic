@@ -248,7 +248,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     }
 
     private Professorship getProfessorship(ExecutionCourse executionCourse) {
-	return AccessControl.getPerson().getTeacher().getProfessorshipByExecutionCourse(executionCourse);
+	return AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
     }
 
     public ActionForward showInquiryCourseResult(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

@@ -11,7 +11,7 @@
 	<p class="infoop">
 		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.teacherNumber"/>
 	</p>
-	<bean:message bundle="MANAGER_RESOURCES" key="label.teacher.number"/>:&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	/>
+	<bean:message bundle="MANAGER_RESOURCES" key="label.person.ist.id"/>:&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	/>
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.submit"/>                    		         	
 		</html:submit> 

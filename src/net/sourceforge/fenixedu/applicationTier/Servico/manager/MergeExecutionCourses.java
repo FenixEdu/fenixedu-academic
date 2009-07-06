@@ -387,7 +387,7 @@ public class MergeExecutionCourses extends FenixService {
     private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
 	final Set<String> emails = new HashSet<String>();
 	for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-	    emails.add(professorship.getTeacher().getPerson().getEmail());
+	    emails.add(professorship.getPerson().getEmail());
 	}
 	return emails;
     }
@@ -396,7 +396,7 @@ public class MergeExecutionCourses extends FenixService {
 	final Set<IGroup> groups = new HashSet<IGroup>();
 	for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
 	    if (professorship.isResponsibleFor()) {
-		groups.add(new PersonGroup(professorship.getTeacher().getPerson()));
+		groups.add(new PersonGroup(professorship.getPerson()));
 	    }
 	}
 	return groups.isEmpty() ? null : new GroupUnion(groups);

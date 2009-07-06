@@ -53,7 +53,7 @@ public class ExpandExecutionCourseMailAlias extends FenixService {
 		if (course.getSite() != null) {
 		    if (course.getSite().getDynamicMailDistribution()) {
 			for (Professorship professorship : course.getProfessorships()) {
-			    addresses.add(professorship.getTeacher().getPerson().getEmail());
+			    addresses.add(professorship.getPerson().getEmail());
 			}
 			report.status = AliasExpandingStatus.OK;
 			report.expandedAddresses = addresses;

@@ -9,16 +9,16 @@ import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.UpdateProfessorshipWithPerson;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -32,12 +32,12 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 	Integer[] executionCourseResponsabilities = (Integer[]) teacherExecutionYearResponsabilitiesForm
 		.get("executionCourseResponsability");
 
-	Integer teacherId = (Integer) teacherExecutionYearResponsabilitiesForm.get("teacherId");
+	String teacherId = (String) teacherExecutionYearResponsabilitiesForm.get("teacherName");
 	Integer executionYearId = (Integer) teacherExecutionYearResponsabilitiesForm.get("executionYearId");
-	Object args[] = { teacherId, executionYearId, Arrays.asList(executionCourseResponsabilities) };
+	Person person = Person.readPersonByIstUsername(teacherId);
+	ExecutionYear executionYear = RootDomainObject.getInstance().readExecutionYearByOID(executionYearId);
 
-	IUserView userView = UserView.getUser();
-	ServiceUtils.executeService("UpdateTeacherExecutionYearResponsabilities", args);
+	UpdateProfessorshipWithPerson.run(person, executionYear, Arrays.asList(executionCourseResponsabilities));
 
 	return mapping.findForward("successfull-update");
     }

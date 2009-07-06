@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
@@ -327,9 +328,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 		    infoResponsibleTeachers.add(infoTeacher);
 		}
 
-		Teacher teacher = Teacher.readTeacherByUsername(username);
-		Professorship responsibleFor = teacher.getProfessorshipByExecutionCourse(executionCourse);
-		if (teacher != null) {
+		Person person = Person.readPersonByUsername(username);
+		Professorship responsibleFor = person.getProfessorshipByExecutionCourse(executionCourse);
+		if (person != null) {
 		    if (responsibleTeachers != null && !responsibleTeachers.isEmpty()
 			    && responsibleTeachers.contains(responsibleFor)) {
 			isResponsible = true;

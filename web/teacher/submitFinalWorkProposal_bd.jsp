@@ -39,20 +39,19 @@
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.title"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
 	<hr/><br/>
-
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.responsable"/>:</b>
 	<table width="100%">
 		<tr>
 			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString() %>'
+				<logic:present name="orientator">					<%						String orientatorPersonId = "";						if (((Person) pageContext.findAttribute("orientator")).getEmployee() == null){						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getIstUsername().toString();						}else{						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString();						}					%>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" size="6"
+						value='<%= orientatorPersonId %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber"  size="6"
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
 				</logic:notPresent>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -64,7 +63,7 @@
 			<td width="66%">
 				<logic:present name="orientator">
 					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
-						value=''/>
+						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'/>
 				</logic:present>
 				<logic:notPresent name="orientator">
 					<html:text disabled="true" bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
@@ -78,14 +77,14 @@
 		<tr>
 			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((Person) pageContext.findAttribute("coorientator")).getEmployee().getEmployeeNumber().toString() %>'
+				<logic:present name="coorientator">					<%						String coorientatorPersonId = "";						if (((Person) pageContext.findAttribute("coorientator")).getEmployee() == null){						    coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getIstUsername().toString();						}else{						    coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getEmployee().getEmployeeNumber().toString();						}					%>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6"
+						value='<%= coorientatorPersonId %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6" 
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6" 
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 					/>
 				</logic:notPresent>

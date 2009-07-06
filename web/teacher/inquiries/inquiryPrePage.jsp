@@ -41,7 +41,7 @@
 				<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
 					<li>
 						<html:link page="<%= "/teachingInquiry.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
-							<bean:write name="teachingResult" property="professorship.teacher.person.name" />
+							<bean:write name="teachingResult" property="professorship.person.name" />
 							&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
 						</html:link>
 					</li>			
@@ -54,7 +54,7 @@
 --%>
 	<p class="separator2 mtop25"><bean:message key="title.inquiries.teachingReports" bundle="INQUIRIES_RESOURCES"/></p>
 	<logic:iterate id="professorship" name="executionCourse" property="professorships" type="net.sourceforge.fenixedu.domain.Professorship">
-		<% if (professorship.getTeacher().getPerson() == AccessControl.getPerson()) { %>
+		<% if (professorship.getPerson() == AccessControl.getPerson()) { %>
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
 				<html:link href="<%= request.getContextPath() + "/coordinator/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID %>" target="_blank">

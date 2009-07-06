@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.MidiDevice.Info;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionPeriods;
@@ -19,7 +20,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.department.professorship
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -43,14 +48,12 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     public ActionForward createProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
+	final DynaActionForm personExecutionCourseForm = (DynaActionForm) form;
 
-	final Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
-	final Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-	final Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
+	final Integer executionCourseId = Integer.valueOf((String) personExecutionCourseForm.get("executionCourseId"));
+	final Boolean responsibleFor = (Boolean) personExecutionCourseForm.get("responsibleFor");
 
-	final Object arguments[] = { executionCourseId, teacherNumber, responsibleFor, 0.0 };
-	executeService("InsertProfessorshipByDepartment", arguments);
+	Professorship.create(responsibleFor, rootDomainObject.readExecutionCourseByOID(executionCourseId),getPerson(personExecutionCourseForm), 0.0);
 
 	return mapping.findForward("final-step");
     }
@@ -74,22 +77,31 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	return executionDegrees;
     }
 
-    private void prepareConstants(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
-	    throws FenixServiceException, FenixFilterException {
-	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
-
-	InfoTeacher infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(teacherNumber);
-
-	request.setAttribute("infoTeacher", infoTeacher);
+    public Person getPerson(DynaActionForm personExecutionCourseForm) {
+	String id = (String) personExecutionCourseForm.get("teacherNumber");
+	Person person;
+	if (id.substring(0, 3).equals("ist")) {
+	    person = Person.readPersonByIstUsername(id);
+	} else {
+	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
+	    person = teacher.getPerson();
+	}
+	return person;
     }
 
-    private void prepareFirstStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void prepareConstants(DynaActionForm personExecutionCourseForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
-	prepareConstants(teacherExecutionCourseForm, request);
+
+	request.setAttribute("infoPerson", InfoPerson.newInfoFromDomain(getPerson(personExecutionCourseForm)));
+    }
+
+    private void prepareFirstStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
+	    throws FenixServiceException, FenixFilterException {
+	prepareConstants(personExecutionCourseForm, request);
 
 	List executionPeriodsNotClosed = (List) ReadNotClosedExecutionPeriods.run();
 
-	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);
+	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, personExecutionCourseForm);
 
 	BeanComparator initialDateComparator = new BeanComparator("beginDate");
 	Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
@@ -97,23 +109,23 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	request.setAttribute("executionPeriods", executionPeriodsNotClosed);
     }
 
-    private void prepareSecondStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void prepareSecondStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
-	prepareFirstStep(teacherExecutionCourseForm, request);
+	prepareFirstStep(personExecutionCourseForm, request);
 	List executionDegrees = getExecutionDegrees(request);
 	request.setAttribute("executionDegrees", executionDegrees);
     }
 
-    private void prepareThirdStep(DynaValidatorForm teacherExecutionCourseForm, HttpServletRequest request)
+    private void prepareThirdStep(DynaValidatorForm personExecutionCourseForm, HttpServletRequest request)
 	    throws FenixServiceException, FenixFilterException {
-	prepareSecondStep(teacherExecutionCourseForm, request);
-	Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionDegreeId"));
-	Integer executionPeriodId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionPeriodId"));
+	prepareSecondStep(personExecutionCourseForm, request);
+	Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
+	Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
 
 	List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
-	Integer teacherNumber = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
+	String personId = (String) personExecutionCourseForm.get("teacherNumber");
 
-	List executionCoursesToRemove = (List) ReadExecutionCoursesByTeacherResponsibility.run(teacherNumber);
+	List executionCoursesToRemove = (List) ReadExecutionCoursesByTeacherResponsibility.run(personId);
 	executionCourses.removeAll(executionCoursesToRemove);
 	Collections.sort(executionCourses, new BeanComparator("nome"));
 
@@ -122,10 +134,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     }
 
     private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
-	    DynaValidatorForm teacherExecutionCourseForm) {
+	    DynaValidatorForm personExecutionCourseForm) {
 	Integer executionPeriodIdValue = null;
 	try {
-	    executionPeriodIdValue = Integer.valueOf((String) teacherExecutionCourseForm.get("executionPeriodId"));
+	    executionPeriodIdValue = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
 	} catch (Exception e) {
 	    // do nothing
 	}
@@ -156,28 +168,28 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     public ActionForward showExecutionDegreeExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
-	prepareFirstStep(teacherExecutionCourseForm, request);
+	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+	prepareFirstStep(personExecutionCourseForm, request);
 
-	prepareThirdStep(teacherExecutionCourseForm, request);
-	teacherExecutionCourseForm.set("page", new Integer(3));
+	prepareThirdStep(personExecutionCourseForm, request);
+	personExecutionCourseForm.set("page", new Integer(3));
 	return mapping.findForward("third-step");
     }
 
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
-	prepareSecondStep(teacherExecutionCourseForm, request);
-	teacherExecutionCourseForm.set("page", new Integer(2));
+	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+	prepareSecondStep(personExecutionCourseForm, request);
+	personExecutionCourseForm.set("page", new Integer(2));
 	return mapping.findForward("second-step");
     }
 
     public ActionForward showExecutionYearExecutionPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm teacherExecutionCourseForm = (DynaValidatorForm) form;
+	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
 
-	prepareFirstStep(teacherExecutionCourseForm, request);
-	teacherExecutionCourseForm.set("page", new Integer(1));
+	prepareFirstStep(personExecutionCourseForm, request);
+	personExecutionCourseForm.set("page", new Integer(1));
 	return mapping.findForward("second-step");
     }
 }

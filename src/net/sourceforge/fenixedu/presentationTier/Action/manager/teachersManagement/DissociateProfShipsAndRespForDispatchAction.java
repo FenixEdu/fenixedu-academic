@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.DissociateProfessorShipsAndResponsibleFor;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.ReadInfoTeacherByTeacherNumber;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement.DissociateProfessorShipsAndResponsibleFor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -43,36 +39,21 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
 	DynaActionForm teacherNumberForm = (DynaActionForm) form;
 
-	Integer teacherNumber = Integer.valueOf((String) teacherNumberForm.get("teacherNumber"));
+	// Integer teacherNumber = Integer.valueOf((String) teacherNumberForm.get("teacherNumber"));
+	String personId = (String)teacherNumberForm.get("teacherNumber");
+	// InfoTeacher infoTeacher = null;
+	Person person = null;
 
-	ActionErrors errors = new ActionErrors();
-	InfoTeacher infoTeacher = null;
+	
+	//infoTeacher = (InfoTeacher) ReadInfoTeacherByTeacherNumber.run(teacherNumber);
+	person = Person.readPersonByIstUsername(personId);
 
-	try {
-	    infoTeacher = (InfoTeacher) ReadInfoTeacherByTeacherNumber.run(teacherNumber);
-
-	} catch (NonExistingServiceException e) {
-	    if (e.getMessage().equals("noTeacher")) {
-		addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", teacherNumber);
-	    } else if (e.getMessage().equals(("noPSnorRF"))) {
-		addErrorMessage(request, "noPSNorRF", "error.manager.teachersManagement.noPSNorRF", teacherNumber);
-	    } else {
-		throw new NonExistingActionException("");
-	    }
-	} catch (FenixServiceException e) {
-	    if (e.getMessage().equals("nullTeacherNumber")) {
-		addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noTeacherNumber");
-	    } else {
-		throw new FenixActionException(e);
-	    }
-	}
-
-	if (!errors.isEmpty()) {
+	if (person == null) {
+	    addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", personId);
 	    return mapping.getInputForward();
 	}
 
-	request.setAttribute("infoTeacher", infoTeacher);
-
+	request.setAttribute("person", person);
 	return mapping.findForward("prepareDissociateECShowProfShipsAndRespFor");
     }
 
@@ -80,7 +61,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	DynaActionForm teacherForm = (DynaActionForm) form;
-	Integer teacherNumber = Integer.valueOf((String) teacherForm.get("teacherNumber"));
+	String personNumber = (String) teacherForm.get("teacherNumber");
 	Integer professorshipsListSize = (Integer) teacherForm.get("professorshipsListSize");
 	Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
 
@@ -93,29 +74,29 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	HashMap professorshipsNotRemoved = null;
 
 	try {
-	    professorshipsNotRemoved = (HashMap) DissociateProfessorShipsAndResponsibleFor.run(teacherNumber, professorshipsToDelete, responsibleForsToDelete);
+	    professorshipsNotRemoved = (HashMap) DissociateProfessorShipsAndResponsibleFor.run(personNumber, professorshipsToDelete, responsibleForsToDelete);
 
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noTeacher")) {
-		addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noTeacher", teacherNumber);
+		addErrorMessage(request, "chosenTeacher", "error.manager.teachersManagement.noPerson", personNumber);
 	    } else {
 		throw new NonExistingActionException("");
 	    }
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("nullTeacherNumber")) {
-		addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noTeacherNumber");
+		addErrorMessage(request, "nullCode", "error.manager.teachersManagement.noPersonNumber");
 	    } else if (e.getMessage().equals("nullPSNorRF")) {
-		addErrorMessage(request, "nullPSNorRF", "error.manager.teachersManagement.nullPSNorRF", teacherNumber);
+		addErrorMessage(request, "nullPSNorRF", "error.manager.teachersManagement.nullPSNorRF", personNumber);
 	    } else if (e.getMessage().equals("notPSNorRFTeacher")) {
-		addErrorMessage(request, "notPSNorRFTeacher", "error.manager.teachersManagement.notPSNorRFTeacher");
+		addErrorMessage(request, "notPSNorRFTeacher", "error.manager.teachersManagement.notPSNorRFPerson");
 	    } else {
 		throw new FenixActionException(e);
 	    }
 	}
-
+	/*
 	if (!errors.isEmpty()) {
 	    return mapping.getInputForward();
-	}
+	}*/
 
 	if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0) {
 	    errors = createErrors(request, professorshipsNotRemoved, "supportLessons", "PSWithSL",
@@ -159,7 +140,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
     private Integer dataToDelete(HttpServletRequest request, int index, String what, String property, String formProperty) {
 	Integer itemToDelete = null;
-	String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
+	String checkbox = request.getParameter(what + "[" + index + "]." + "responsibleFor");
 	String toDelete = null;
 	if (checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
 	    toDelete = request.getParameter(what + "[" + index + "]." + property);

@@ -118,7 +118,7 @@
 								<logic:equal name="teachingServiceSize" value="0">&nbsp;</logic:equal>
 								<logic:notEqual name="teachingServiceSize" value="0">
 									<logic:iterate id="teachingService"	name="shift" property="degreeTeachingServices" indexId="indexPercentage">						
-							    		<bean:write name="teachingService" property="professorship.teacher.person.name" />
+							    		<bean:write name="teachingService" property="professorship.person.name" />
 				 						<bean:define id="teachingServicePercentage" name="teachingService" property="percentage"/>
 				 						&nbsp;-&nbsp;<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 				 						<br />

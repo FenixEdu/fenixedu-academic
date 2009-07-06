@@ -144,7 +144,7 @@
 					<%-- Teacher --%>						
 					<logic:notEmpty name="summary" property="professorship">
 						<bean:message key="label.teacher" />:&nbsp;				
-						<bean:write name="summary" property="professorship.teacher.person.name" /> 
+						<bean:write name="summary" property="professorship.person.name" /> 
 					</logic:notEmpty>
 					<logic:notEmpty name="summary" property="teacher">
 						<bean:message key="label.teacher" />:&nbsp;								

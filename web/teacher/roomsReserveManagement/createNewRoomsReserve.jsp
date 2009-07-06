@@ -8,7 +8,10 @@
 <em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="create.rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 
-<logic:present role="TEACHER">
+<bean:define id="isTeacher" value="<%= new Boolean(net.sourceforge.fenixedu.injectionCode.AccessControl.getPerson().hasAnyProfessorships()).toString() %>" />
+
+
+<logic:equal name="isTeacher" value="true">
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -44,5 +47,5 @@
 		</fr:edit>			
 	</logic:notEmpty>	
 	
-</logic:present>
+</logic:equal>
 

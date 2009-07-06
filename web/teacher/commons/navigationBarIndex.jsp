@@ -3,13 +3,17 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 
-<html:xhtml />
+
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
 
 <ul>
+
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/showProfessorships.do?method=list" %>">
 		<bean:message key="link.manage.executionCourse" />
 	</html:link></li>
+<logic:present role="TEACHER">
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/tutorSection.do?method=prepare" %>">
 		<bean:message key="link.teacher.tutor.operations" />
@@ -62,6 +66,7 @@
 		<bean:message key="link.curriculumHistoric.consult"
 			bundle="CURRICULUM_HISTORIC_RESOURCES" />
 	</html:link></li>
+	</logic:present>
 	<%-- 
   <li>
   	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.idInternal"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getIdInternal() %></bean:define>

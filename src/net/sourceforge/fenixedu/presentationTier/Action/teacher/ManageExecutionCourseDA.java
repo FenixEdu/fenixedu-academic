@@ -627,13 +627,10 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	if (userView != null) {
 	    final Person person = userView.getPerson();
 	    if (person != null) {
-		final Teacher teacher = person.getTeacher();
-		if (teacher != null) {
-		    for (final Professorship professorship : teacher.getProfessorshipsSet()) {
-			final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-			if (executionCourse.getIdInternal().equals(executionCourseID)) {
-			    return executionCourse;
-			}
+		for (final Professorship professorship : person.getProfessorshipsSet()) {
+		    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+		    if (executionCourse.getIdInternal().equals(executionCourseID)) {
+			return executionCourse;
 		    }
 		}
 	    }

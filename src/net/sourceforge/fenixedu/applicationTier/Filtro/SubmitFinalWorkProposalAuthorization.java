@@ -38,7 +38,7 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
     }
 
     private boolean authorized(final Person person, final Scheduleing scheduleing) {
-	if ((person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))&& scheduleing.isInsideProposalSubmissionPeriod()) {
+	if ((person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))&& scheduleing.isInsideProposalSubmissionPeriod()) {
 	    return true;
 	}
 	return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);
@@ -74,8 +74,9 @@ public class SubmitFinalWorkProposalAuthorization extends Filtro {
 	}
 	for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
 	    if (executionDegree == scientificCommission.getExecutionDegree()
-			|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree().getDegreeCurricularPlan()
-				&& executionDegree.getExecutionYear() == scientificCommission.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
+		    || (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
+			    .getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
+			    .getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
 		return true;
 	    }
 	}

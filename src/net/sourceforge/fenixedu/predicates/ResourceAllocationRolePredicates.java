@@ -66,6 +66,11 @@ public class ResourceAllocationRolePredicates {
 		    && loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(executionCourse)) {
 		return true;
 	    }
+	    
+	    if (! loggedPerson.hasTeacher() && loggedPerson.getProfessorships().size() > 0 && 
+		    loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)){
+		return true;
+	    }
 
 	    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
 	    return true;
@@ -79,7 +84,7 @@ public class ResourceAllocationRolePredicates {
 
 	    Person loggedPerson = AccessControl.getPerson();
 
-	    if (loggedPerson.hasRole(RoleType.TEACHER)) {
+	    if (loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships()) {
 		return true;
 	    }
 

@@ -156,7 +156,7 @@ public class Teacher extends Teacher_Base {
 	}
 	return null;
     }
-
+    
     public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
 	    throws MaxResponsibleForExceed, InvalidCategory {
 

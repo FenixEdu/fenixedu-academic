@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
-<bean:define id="person" name="professorship" property="teacher.person" />
+<bean:define id="person" name="professorship" property="person" />
 <logic:present name="person" property="homepage">
 	<logic:notPresent name="person" property="homepage.activated">
 		<bean:write name="person" property="nickname"/>

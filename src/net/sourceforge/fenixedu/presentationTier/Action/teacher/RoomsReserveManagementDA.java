@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserve;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserve;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -47,7 +47,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	    GanttDiagram diagram = GanttDiagram.getNewWeeklyGanttDiagram(new ArrayList<GanttDiagramEvent>(result), firstDay);
 	    request.setAttribute("ganttDiagram", diagram);
 	}
-
+	
 	return mapping.findForward("viewRoomsReserves");
     }
 
@@ -122,7 +122,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
 	    return viewReserves(mapping, form, request, response);
 	}
 
-	executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] { punctualRoomsReserve, true });
+	MarkPunctualRoomsOccupationCommentsAsRead.run(punctualRoomsReserve, true);
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(loggedPerson, punctualRoomsReserve));
 	return mapping.findForward("seeSpecifiedRoomsReserve");
     }

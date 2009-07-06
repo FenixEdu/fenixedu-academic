@@ -35,8 +35,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 	Object[] arguments = getServiceCallArguments(request);
 
 	try {
-	    if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
-		    || !lecturesExecutionCourse(id, arguments)) {
+	    if ((id == null) || (id.getRoleTypes() == null) || !lecturesExecutionCourse(id, arguments)) {
 		throw new NotAuthorizedFilterException();
 	    }
 	} catch (RuntimeException e) {
@@ -54,12 +53,9 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
 	    return false;
 	}
 	final Teacher teacher = id.getPerson().getTeacher();
-	if (teacher == null) {
-	    return false;
-	}
 
 	for (final Professorship professorship : executionCourse.getProfessorships()) {
-	    if (professorship.getTeacher() == teacher) {
+	    if (professorship.getTeacher() == teacher || professorship.getPerson() == id.getPerson()) {
 		return true;
 	    }
 	}

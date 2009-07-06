@@ -20,7 +20,15 @@
             <form-property name="method" type="java.lang.String"/>
             <form-property name="teacherId" type="java.lang.Integer"/>
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>            
-        </form-bean>      
+        </form-bean>
+        <form-bean name="personSearchForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0"/>            
+            <form-property name="teacherNumber" type="java.lang.String"/>
+            <form-property name="method" type="java.lang.String"/>
+            <form-property name="teacherId" type="java.lang.Integer"/>
+			<form-property name="executionPeriodId" type="java.lang.Integer"/>            
+        </form-bean>            
         <form-bean name="professorshipForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="teacherId" type="java.lang.Integer"/>
@@ -99,6 +107,7 @@
         </form-bean>
         <form-bean name="teacherExecutionCourseResponsabilities" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="teacherName" type="java.lang.String" />
             <form-property name="idInternal" type="java.lang.Integer" />
             <form-property name="teacherId" type="java.lang.Integer" />
             <form-property  name="executionYearId" type="java.lang.Integer" />
@@ -451,12 +460,12 @@
 
         <!-- ======= USE CASE: Associate teacher to executionCourse ================= -->
         <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-shift-management" 
-            name="teacherSearchForm" scope="request" parameter="method" 
+            name="personSearchForm" scope="request" parameter="method" 
             type="net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-            <set-property property="serviceName" value="FindTeachersService"/>
-            <set-property property="objectAttribute" value="infoTeacher"/>
-            <set-property property="listAttribute" value="infoTeacherList"/>
+            <set-property property="serviceName" value="FindPersonService"/>
+            <set-property property="objectAttribute" value="infoPerson"/>
+            <set-property property="listAttribute" value="infoPersonList"/>
             <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
             <forward name="search-form" path="search-for-teacherExecutionCourseAssociation-management"/>
             <forward name="list-one" path="/showTeacherProfessorshipsForManagement.do"/>
@@ -465,7 +474,7 @@
 
         <action path="/showTeacherProfessorshipsForManagement" input="show-teacher-professorships-for-management" 
             name="teacherExecutionCourseResponsabilities" scope="request" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            type="net.sourceforge.fenixedu.presentationTier.Action.department.ReadPersonProfessorshipsByExecutionYearAction">
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
                 path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>

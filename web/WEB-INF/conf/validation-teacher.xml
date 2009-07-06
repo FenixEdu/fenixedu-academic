@@ -528,11 +528,11 @@
     </form>
    
    <!-- Validation for the teacher number form -->
-   <form name="teacherForm">
+   <!-- <form name="teacherForm">
       <field property="teacherNumber" depends="required, integer" page="1">
         <arg0 key="message.teacherNumber" resource="true"/>
       </field>
-    </form>
+    </form>-->
 
                 
 	<!-- Validation for bibliographicReferenceForm -->
@@ -1046,10 +1046,10 @@
 		<field property="companionPhone" depends="integer" page="2">
 			<arg0 key="finalWorkInformationForm.companionPhone" resource="true"/>
 		</field>
-		<field property="responsableTeacherNumber" depends="integer" page="1">
+		<field property="responsableTeacherNumber" page="1">
 			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
 		</field>
-		<field property="coResponsableTeacherNumber" depends="integer" page="1">
+		<field property="coResponsableTeacherNumber" page="1">
 			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>
 		</field>
 	</form>

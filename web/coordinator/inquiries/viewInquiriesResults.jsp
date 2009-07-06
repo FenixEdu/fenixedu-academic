@@ -26,7 +26,7 @@
 		<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
 			<li>
                 <html:link href="<%= request.getContextPath() + "/teacher/teachingInquiry.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">            
-					<bean:write name="teachingResult" property="professorship.teacher.person.name" />
+					<bean:write name="teachingResult" property="professorship.person.name" />
 					&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
                 </html:link>                        
 			</li>			
@@ -64,7 +64,7 @@
         </tr>
         <logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
             <tr>        
-                <td class="aleft nowrap"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
+                <td class="aleft nowrap"><c:out value="${teachingResult.professorship.person.name}" /></td>
                 <td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
                 <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsAssiduity().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
                 <td><bean:message key="<%= "label.colored." + teachingResult.getUnsatisfactoryResultsPresencialLearning().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
@@ -105,7 +105,7 @@
         </tr>
         <logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
             <tr>
-                <td class="aleft nowrap"><c:out value="${teachingResult.professorship.teacher.person.name}" /></td>
+                <td class="aleft nowrap"><c:out value="${teachingResult.professorship.person.name}" /></td>
                 <td><bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_assiduidade']}" /></td>
                 <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${teachingResult.valuesMap['Res_excelentes_prov_aprend_pres']}" /></td>
@@ -125,11 +125,11 @@
 			<logic:notEmpty name="professorship" property="teachingInquiry">
 				<bean:define id="teachingInquiryID" name="professorship" property="teachingInquiry.idInternal" />
 				<html:link page="<%= "/viewInquiriesResults.do?method=showFilledTeachingInquiry&filledTeachingInquiryId=" + teachingInquiryID + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")  %>" target="_blank">
-					<bean:write name="professorship" property="teacher.person.name"/>
+					<bean:write name="professorship" property="person.name"/>
 				</html:link>
 			</logic:notEmpty>
 			<logic:empty name="professorship" property="teachingInquiry">
-				<bean:write name="professorship" property="teacher.person.name"/>
+				<bean:write name="professorship" property="person.name"/>
 			</logic:empty>
 		</li>
 	</logic:iterate>

@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagement;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,26 +9,29 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     @Service
-    public static Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
+    public static Map run(String personNumber, List<Integer> professorships, List<Integer> responsibleFors)
 	    throws FenixServiceException {
 
-	if (teacherNumber == null) {
-	    throw new FenixServiceException("nullTeacherNumber");
+	if (personNumber == null) {
+	    throw new FenixServiceException("nullPersonNumber");
 	}
-
-	final Teacher teacher = Teacher.readByNumber(teacherNumber);
-	if (teacher == null) {
-	    throw new NonExistingServiceException("noTeacher");
+	final Person person = Person.readPersonByIstUsername(personNumber);
+	//final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	if (person == null) {
+	    throw new NonExistingServiceException("noPerson");
 	}
 
 	List<InfoProfessorship> professorshipsWithSupportLessons = new ArrayList<InfoProfessorship>();
@@ -45,8 +44,8 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 		    throw new FenixServiceException("nullPSNorRF");
 		}
 
-		if (!(professorship.getTeacher() == teacher)) {
-		    throw new FenixServiceException("notPSNorRFTeacher");
+		if (!(professorship.getPerson() == person)) {
+		    throw new FenixServiceException("notPSNorRFPerson");
 		}
 		newProfessorships.add(professorship);
 	    }
@@ -58,8 +57,8 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 		    throw new FenixServiceException("nullPSNorRF");
 		}
 
-		if (!(responsibleFor.getTeacher() == teacher)) {
-		    throw new FenixServiceException("notPSNorRFTeacher");
+		if (!(responsibleFor.getPerson() == person)) {
+		    throw new FenixServiceException("notPSNorRFPerson");
 		}
 		newResponsibleFor.add(responsibleFor);
 	    }
@@ -101,7 +100,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends FenixService {
 	    professorshipsNotRemoved.put("supportLessons", professorshipsWithSupportLessons);
 	    professorshipsNotRemoved.put("shifts", professorshipsWithShifts);
 	}
-
+	
 	return professorshipsNotRemoved;
     }
 

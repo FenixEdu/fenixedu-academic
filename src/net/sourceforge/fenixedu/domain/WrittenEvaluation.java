@@ -864,7 +864,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	Set<Person> persons = new HashSet<Person>();
 	for (ExecutionCourse course : getAssociatedExecutionCourses()) {
 	    for (Professorship professorship : course.getProfessorships()) {
-		persons.add(professorship.getTeacher().getPerson());
+		persons.add(professorship.getPerson());
 	    }
 	}
 	return persons;

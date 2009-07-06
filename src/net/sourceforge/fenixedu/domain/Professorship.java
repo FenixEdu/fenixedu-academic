@@ -21,12 +21,14 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 /**
  * @author Jo�o Mota
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("teacher.person.name", Collator
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator
 	    .getInstance());
 
     public Professorship() {
@@ -52,18 +54,51 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
 	Professorship professorShip = new Professorship();
 	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
-
-	if (responsibleFor.booleanValue()) {
-	    ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, professorShip);
-	}
-	professorShip.setResponsibleFor(responsibleFor);
 	professorShip.setExecutionCourse(executionCourse);
 	professorShip.setPerson(teacher.getPerson());
-
+	
+	professorShip.setResponsibleFor(responsibleFor);
 	executionCourse.moveSummariesFromTeacherToProfessorship(teacher, professorShip);
+	
+	return professorShip;
+    }
+    @Service
+    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse, Person person, Double hours)
+	    throws MaxResponsibleForExceed, InvalidCategory {
+
+	for (final Professorship otherProfessorship : executionCourse.getProfessorshipsSet()) {
+	    if (person == otherProfessorship.getPerson()) {
+		throw new DomainException("error.teacher.already.associated.to.professorship");
+	    }
+	}
+	
+	if (responsibleFor == null || executionCourse == null || person == null)
+	    throw new NullPointerException();
+
+	Professorship professorShip = new Professorship();
+	professorShip.setHours((hours == null) ? new Double(0.0) : hours);
+	professorShip.setExecutionCourse(executionCourse);
+	professorShip.setPerson(person);
+	
+	if (responsibleFor.booleanValue() && professorShip.getPerson().getTeacher() != null) {
+	    ResponsibleForValidator.getInstance().validateResponsibleForList(professorShip.getPerson().getTeacher(), professorShip.getExecutionCourse(), professorShip);
+	    professorShip.setResponsibleFor(Boolean.TRUE);
+	}else{
+	    professorShip.setResponsibleFor(Boolean.FALSE);
+	}
+	if (person.getTeacher() != null) {
+	    executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
+	}
+	
+	
+	
+	
+	
+	
 
 	return professorShip;
     }
+    
 
     public void delete() {
 	if (canBeDeleted()) {

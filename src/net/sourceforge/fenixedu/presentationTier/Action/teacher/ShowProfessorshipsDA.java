@@ -53,16 +53,13 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
 	if (userView != null) {
 	    final Person person = userView.getPerson();
 	    if (person != null) {
-		final Teacher teacher = person.getTeacher();
-		if (teacher != null) {
-		    for (final Professorship professorship : teacher.getProfessorshipsSet()) {
-			final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-			final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+    		    for (final Professorship professorship : person.getProfessorshipsSet()) {
+		    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+		    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
-			executionSemesters.add(executionSemester);
-			if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionSemester) {
-			    executionCourses.add(executionCourse);
-			}
+		    executionSemesters.add(executionSemester);
+		    if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionSemester) {
+			executionCourses.add(executionCourse);
 		    }
 		}
 	    }

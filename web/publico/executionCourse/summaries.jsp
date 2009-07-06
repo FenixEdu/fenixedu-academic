@@ -70,7 +70,7 @@
 					<logic:iterate id="professorship" name="executionCourse" property="professorshipsSortedAlphabetically">
 						<bean:define id="professorshipID" name="professorship" property="idInternal"/>
 						<html:option value="<%= professorshipID.toString() %>">
-							<bean:write name="professorship" property="teacher.person.name"/>
+							<bean:write name="professorship" property="person.name"/>
 						</html:option>
 					</logic:iterate>
 					<html:option  value="-1" key="label.others" />
@@ -143,7 +143,7 @@
 				<logic:notEmpty name="summary" property="professorship">
 					<span class="author">
 						<bean:message key="label.teacher.abbreviation" />				
-						<bean:write name="summary" property="professorship.teacher.person.name" />	
+						<bean:write name="summary" property="professorship.person.name" />	
 					</span>
 				</logic:notEmpty>
 		

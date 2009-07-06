@@ -4,13 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
-<bean:define id="infoTeacher" name="infoTeacher" scope="request" />
+<bean:define id="infoPerson" name="infoPerson" scope="request" />
 <p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
+	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
+	<bean:define id="teacherNumber" name="infoPerson" property="istUsername"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/><br />
 	<%--<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />--%>
-<%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+<%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoPerson" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>) --%>
 

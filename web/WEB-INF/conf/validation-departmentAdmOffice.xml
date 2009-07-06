@@ -45,6 +45,13 @@
 				<arg0 key="label.property.teacher-number" />
 			</field>
     	</form>
+    	<!-- ================================================================ -->    	    	
+		<form name="personSearchForm">
+			<field property="teacherNumber" depends="string" page="1">
+				<msg name="string" key="errors.invalid.teacher-number"/>
+				<arg0 key="label.property.teacher-number" />
+			</field>
+    	</form>
 		<!-- ================================================================ -->    	    	
     	<form name="supportLessonForm">			
 			<field property="startTimeHour" depends="required,integer,intRange" page="1">

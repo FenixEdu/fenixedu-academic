@@ -15,6 +15,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
@@ -3232,6 +3236,50 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {
+	return (Professorship) CollectionUtils.find(getProfessorships(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		Professorship professorship = (Professorship) arg0;
+		return professorship.getExecutionCourse() == executionCourse;
+	    }
+	});
+    }
+
+    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses)
+	    throws MaxResponsibleForExceed, InvalidCategory {
+
+	if (executionYearId == null || executionCourses == null)
+	    throw new NullPointerException();
+
+	boolean responsible;
+	for (final Professorship professorship : this.getProfessorships()) {
+	    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+	    if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)) {
+		responsible = executionCourses.contains(executionCourse.getIdInternal());
+		if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible)) && this.getTeacher() != null) {
+		    ResponsibleForValidator.getInstance().validateResponsibleForList(this.getTeacher(), executionCourse, professorship);
+		    professorship.setResponsibleFor(responsible);
+		}
+	    }
+	}
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Professorship> getResponsableProfessorships(){
+	List<Professorship> result = new ArrayList<Professorship>();
+	for(Professorship professorship : getProfessorships()){
+	    if(professorship.isResponsibleFor()){
+		result.add(professorship);
+	    }
+	}
+	return result;
+    }
+    
+    public boolean hasProfessorshipForExecutionCourse(final ExecutionCourse executionCourse) {
+	return (getProfessorshipByExecutionCourse(executionCourse) != null);
+    }
+
+
     public Set<PhdAlertMessage> getPhdAlertMessagesWithTasksToPerfom() {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
@@ -3244,3 +3292,4 @@ public class Person extends Person_Base {
 	return result;
     }
 }
+

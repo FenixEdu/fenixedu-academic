@@ -95,8 +95,8 @@
 								<p>
 									<bean:define id="email" name="professorship" property="teacher.person.email"/>
 									<a href="mailto:<%= email %>">
-										<bean:write name="professorship" property="teacher.person.name"/>
-										(<bean:write name="professorship" property="teacher.teacherNumber"/>)
+										<bean:write name="professorship" property="person.name"/>
+										(<bean:write name="professorship" property="person.istUsername"/>)
 									</a>
 								</p>
 							</logic:equal>

@@ -295,8 +295,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List<Professorship> responsibleFors() {
 	final List<Professorship> res = new ArrayList<Professorship>();
 	for (final Professorship professorship : this.getProfessorships()) {
-	    if (professorship.getResponsibleFor())
+	    Boolean responsibleFor = professorship.getResponsibleFor();
+	    if (professorship != null && responsibleFor != null && responsibleFor) {
 		res.add(professorship);
+	    }
 	}
 	return res;
     }

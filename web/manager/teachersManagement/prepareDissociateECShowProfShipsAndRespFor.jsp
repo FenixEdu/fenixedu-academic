@@ -12,29 +12,29 @@
 	<p class="infoop">
 		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.choosePSorRF"/>
 	</p>
-	<logic:present name="infoTeacher">
+	<logic:present name="person">
 		<b>
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.teacher"/>&nbsp;
-			<bean:write name="infoTeacher" property="teacherNumber"/>&nbsp;-&nbsp;
-			<bean:write name="infoTeacher" property="infoPerson.nome"/>
+			<bean:write name="person" property="istUsername"/>&nbsp;-&nbsp;
+			<bean:write name="person" property="name"/>
 		</b>
 		<br /><br />	
 		<table>
-			<bean:size id="professorshipsListSize" name="infoTeacher" property="professorShipsExecutionCourses"/>
+			<bean:size id="professorshipsListSize" name="person" property="professorships"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professorshipsListSize" property="professorshipsListSize" value="<%=professorshipsListSize.toString()%>"/>
 			<logic:greaterThan name="professorshipsListSize" value="0">
 				<tr>
 					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.dissociate"/></th>
 					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.professorShips"/></th>
 				</tr>
-				<logic:iterate id="professorship" name="infoTeacher" property="professorShipsExecutionCourses">			
+				<logic:iterate id="professorship" name="person" property="professorships">			
 					<tr>
 						<td class="listClasses">
 							<bean:define id="internalId" name="professorship" property="idInternal"/>
-							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="professorship" property="toDelete" indexed="true"/>
+							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="professorship" property="responsibleFor" value="false" indexed="true"/> 
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="professorship" property="idInternal" indexed="true" value="<%= internalId.toString() %>"/>
 						</td>
-						<td class="listClasses"><bean:write name="professorship" property="infoExecutionCourse.nome"/></td>
+						<td class="listClasses"><bean:write name="professorship" property="executionCourse.nome"/></td>
 					</tr>
 				</logic:iterate>
 			</logic:greaterThan>
@@ -48,21 +48,21 @@
 		</table>
 		<br /><br />
 		<table>
-			<bean:size id="responsibleForListSize" name="infoTeacher" property="responsibleForExecutionCourses"/>
+			<bean:size id="responsibleForListSize" name="person" property="responsableProfessorships"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.responsibleForListSize" property="responsibleForListSize" value="<%=responsibleForListSize.toString()%>"/>			
 			<logic:greaterThan name="responsibleForListSize" value="0">
 				<tr>
 					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.dissociate"/></th>
 					<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.teachersManagement.responsibleFor"/></th>
 				</tr>
-				<logic:iterate id="responsibleFor" name="infoTeacher" property="responsibleForExecutionCourses">			
+				<logic:iterate id="responsibleFor" name="person" property="responsableProfessorships">			
 					<tr>
 						<td class="listClasses">
 							<bean:define id="internalId" name="responsibleFor" property="idInternal"/>
-							<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="responsibleFor" property="toDelete" indexed="true"/>
+							<html:checkbox  bundle="HTMLALT_RESOURCES" altKey="checkbox.toDelete" name="responsibleFor" property="responsibleFor" indexed="true"/> 
 							<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" name="responsibleFor" property="idInternal" indexed="true" value="<%= internalId.toString() %>"/>
 						</td>
-						<td class="listClasses"><bean:write name="responsibleFor" property="infoExecutionCourse.nome"/></td>
+						<td class="listClasses"><bean:write name="responsibleFor" property="executionCourse.nome"/></td>
 					</tr>
 				</logic:iterate>
 			</logic:greaterThan>

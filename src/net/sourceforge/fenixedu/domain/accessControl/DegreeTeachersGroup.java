@@ -39,7 +39,7 @@ public class DegreeTeachersGroup extends DegreeGroup {
 	    for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
 		for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
 		    for (Professorship professorship : executionCourse.getProfessorships()) {
-			elements.add(professorship.getTeacher().getPerson());
+			elements.add(professorship.getPerson());
 		    }
 		}
 	    }

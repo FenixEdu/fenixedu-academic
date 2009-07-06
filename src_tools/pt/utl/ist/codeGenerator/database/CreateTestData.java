@@ -1479,7 +1479,7 @@ public class CreateTestData {
 	writtenEvaluation.setDayDateYearMonthDay(yearMonthDay);
 	for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 	    /*
-	     * final Vigilant vigilant = professorship.getTeacher().getPerson().
+	     * final Vigilant vigilant = professorship.getPerson().
 	     * getVigilantForGivenExecutionYear(
 	     * executionPeriod.getExecutionYear());
 	     * 

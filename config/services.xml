@@ -2002,6 +2002,13 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+    
+    <service>
+        <name>FindPersonService</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.FindPersonService</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 
     <service>
         <name>FindTeachersServiceForDepartmentOffice</name>
@@ -2257,16 +2264,6 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
-
-    <service>
-        <name>MarkPunctualRoomsOccupationCommentsAsRead</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TeacherTimeTableManagerOrTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
     <service>
         <name>MergeEventEditions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity.MergeEventEditions</implementationClass>

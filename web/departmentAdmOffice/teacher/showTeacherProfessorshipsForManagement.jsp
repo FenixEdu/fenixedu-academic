@@ -4,12 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <p class="infoselected">
-	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/> <br />
+	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
+	<b><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></b> <bean:write name="infoPerson" property="istUsername"/> <br />
 	<b> <bean:message key="label.teacher.department"/> </b> 
 		<logic:present name="teacherDepartment">
 			<bean:write name="teacherDepartment" property="name"/> 
 		</logic:present>
+		<logic:notPresent name="teacherDepartment">
+			Esta pessoa não é docente
+		</logic:notPresent>
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<logic:equal name="isDepartmentManager" value="true">
 		</logic:equal>
@@ -41,8 +44,9 @@
 <br />
 <logic:notEmpty name="detailedProfessorshipList" >	
 	<html:form action="/updateTeacherExecutionYearExecutionCourseResponsabilities">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />	
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" property="teacherName"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYearId" property="executionYearId" />
 		
 		<h2><bean:message key="label.teacher.professorships"/></h2>
@@ -133,7 +137,7 @@
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
-									 /removeProfessorship.do?teacherNumber=<bean:write name="infoTeacher" property="teacherNumber"/>&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;idInternal=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
+									 /removeProfessorship.do?teacherNumber=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="idInternal"/>&amp;idInternal=<bean:write name="infoPerson" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
 								</bean:define>
 								<html:link page='<%= removeLink.toString() %>'>
 									<bean:message key="link.remove" />
@@ -163,7 +167,7 @@
 	<logic:equal name="isDepartmentManager" value="true">
 		<br />
 		<br />
-		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoPerson" paramProperty="istUsername">
 			<bean:message key="link.professorship.addExecutionCourse"/>
 		</html:link>
 	</logic:equal>

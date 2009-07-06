@@ -44,7 +44,7 @@ public class SummaryTeacherBean implements Serializable {
 
     public String getLabel() {
 	if (getProfessorship() != null) {
-	    return getProfessorship().getTeacher().getPerson().getName();
+	    return getProfessorship().getPerson().getName();
 	} else if (getOthers()) {
 	    return RenderUtils.getResourceString("DEFAULT", "label.others");
 	}

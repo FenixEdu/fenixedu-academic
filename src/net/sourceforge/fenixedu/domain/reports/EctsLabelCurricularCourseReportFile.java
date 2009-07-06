@@ -145,7 +145,7 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 	final StringBuilder builder = new StringBuilder();
 	for (final ExecutionCourse executionCourse : curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
 	    for (final Professorship professorship : executionCourse.getProfessorshipsSortedAlphabetically()) {
-		builder.append(professorship.getTeacher().getPerson().getName()).append("; ");
+		builder.append(professorship.getPerson().getName()).append("; ");
 	    }
 	}
 	return builder.toString();

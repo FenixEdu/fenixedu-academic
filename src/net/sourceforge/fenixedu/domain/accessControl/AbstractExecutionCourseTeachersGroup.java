@@ -19,7 +19,7 @@ public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCour
 	public Object transform(Object arg0) {
 	    Professorship professorship = (Professorship) arg0;
 
-	    return professorship.getTeacher().getPerson();
+	    return professorship.getPerson();
 	}
     }
 

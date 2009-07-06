@@ -376,7 +376,7 @@ public class Grouping extends Grouping_Base {
     public boolean isPersonTeacher(Person person) {
 	for (ExecutionCourse ec : getExecutionCourses()) {
 	    for (Professorship professorship : ec.getProfessorships()) {
-		if (professorship.getTeacher().getPerson() == person) {
+		if (professorship.getPerson() == person) {
 		    return true;
 		}
 	    }

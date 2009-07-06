@@ -31,18 +31,19 @@
 
 <table class="tstyle2 tdcenter">
 	<tr>
-		<th><bean:message key="label.teacherNumber" /></th>
+		<th><bean:message key="label.istid" bundle="APPLICATION_RESOURCES" /></th>
 		<th><bean:message key="label.name" /></th>			
 		<logic:equal name="isResponsible" value="true">
 			<th><bean:message key="message.edit" /></th>    
 		</logic:equal>
 	</tr>	
-	<logic:iterate id="infoTeacher" name="teachersList">
+	<logic:iterate id="professorship" name="listPersons">
+	<bean:define id="person" name="professorship" property="person" />
 	<tr>
-		<td><bean:write name="infoTeacher"  property="teacherNumber" /></td>
-		<td><bean:write name="infoTeacher" property="infoPerson.nome" /></td>	
+		<td><bean:write name="person"  property="istUsername" /></td>
+		<td><bean:write name="person" property="name" /></td>	
 		<logic:equal name="isResponsible" value="true">
-			<bean:define id="teacherCode" name="infoTeacher" property="idInternal"/>		
+			<bean:define id="teacherCode" name="person" property="istUsername"/>		
 			<td>
 				<html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherCode=" + teacherCode %>">
 					<bean:message key="link.removeTeacher"/>

@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -74,13 +75,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	String teacherNumber = request.getParameter("teacherNumber_");
 
-	if (StringUtils.isEmpty(teacherNumber) && !getLoggedPerson(request).hasTeacher()) {
-	    throw new FenixActionException("error.summariesManagement.empty.loggedTeacher");
+	Teacher loggedTeacher;
+	Professorship loggedProfessorship;
+	if (! StringUtils.isEmpty(teacherNumber)) {
+	    loggedTeacher =  Teacher.readByNumber(Integer.valueOf(teacherNumber));
+	    loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
+	}else{
+	    loggedProfessorship = AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
 	}
-
-	Teacher loggedTeacher = (StringUtils.isEmpty(teacherNumber) ? getLoggedPerson(request).getTeacher() : Teacher
-		.readByNumber(Integer.valueOf(teacherNumber)));
-	Professorship loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
 
 	if (loggedProfessorship == null) {
 	    throw new FenixActionException("error.summariesManagement.empty.loggedProfessorship");
@@ -371,7 +373,9 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	readAndSaveNextPossibleSummaryLessonsAndDates(request, executionCourse);
 	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged),
 		executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
-	request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
+	if (professorshipLogged.getTeacher() != null){
+	    request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
+	}
 	request.setAttribute("summaries", teacherSummaries);
 	return mapping.findForward("prepareShowSummaries");
     }

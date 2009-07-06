@@ -62,6 +62,7 @@ import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.InternalOrExternalTeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
@@ -239,7 +240,7 @@ public class GroupBuilderRegistry {
 		InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
 		TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
-		AllResearchersGroup.class };
+		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class };
 
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();

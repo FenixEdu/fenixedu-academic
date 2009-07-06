@@ -26,8 +26,8 @@ public class TeachersWithGradesToSubmit extends TeachersByExecutionPeriodDegreeA
 		getDegreeCurricularPlan())) {
 	    for (Professorship professorship : executionCourse.getProfessorships()) {
 		if (professorship.getResponsibleFor()) {
-		    if (professorship.getTeacher().getPerson() != null) {
-			teachers.add(professorship.getTeacher().getPerson());
+		    if (professorship.getPerson() != null) {
+			teachers.add(professorship.getPerson());
 		    }
 		}
 	    }
