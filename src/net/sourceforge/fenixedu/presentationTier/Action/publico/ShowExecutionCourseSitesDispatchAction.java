@@ -16,10 +16,12 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -59,9 +61,16 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixDispatchAction 
     }
 
     private InfoExecutionPeriod getPreviousExecutionPeriod(HttpServletRequest request) {
-	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-		.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-	final InfoExecutionPeriod previousInfoExecutionPeriod = infoExecutionPeriod.getPreviousInfoExecutionPeriod();
+	final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
+
+	final ExecutionSemester executionSemester = infoExecutionPeriod.getExecutionPeriod();
+	final ExecutionSemester nextExecutionSemester = executionSemester.getNextExecutionPeriod();
+	final InfoExecutionPeriod previousInfoExecutionPeriod;
+	if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
+	    previousInfoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(nextExecutionSemester);
+	} else {
+	    previousInfoExecutionPeriod = infoExecutionPeriod.getPreviousInfoExecutionPeriod();
+	}
 
 	request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
 	return previousInfoExecutionPeriod;

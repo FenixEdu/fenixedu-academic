@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.util.PeriodState;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends FenixService {
@@ -15,7 +16,13 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Fen
     @Service
     public static Set<ExecutionCourseView> run(final Degree degree) {
 	final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-	final ExecutionSemester previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+	final ExecutionSemester nextExecutionSemester = currentExecutionPeriod.getNextExecutionPeriod();
+	final ExecutionSemester previousExecutionPeriod;
+	if (nextExecutionSemester != null && nextExecutionSemester.getState().equals(PeriodState.OPEN)) {
+	    previousExecutionPeriod = nextExecutionSemester;
+	} else {
+	    previousExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+	}
 
 	final Set<ExecutionCourseView> result = new HashSet<ExecutionCourseView>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
