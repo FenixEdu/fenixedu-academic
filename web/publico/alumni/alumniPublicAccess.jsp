@@ -11,16 +11,20 @@
 <h1>Inscrição Alumni</h1>
 
 <div class="alumnilogo">
-<br/>
+<logic:present name="alumniPublicAccessMessage">
+	<span class="error0"><bean:write name="alumniPublicAccessMessage" scope="request" /></span><br/>
+</logic:present>
+
+<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
+<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+</html:messages>
+
 <%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
 
 <%--
 <p class="greytxt"><bean:message key="label.alumni.welcome.a" bundle="ALUMNI_RESOURCES" /></p>
 <p class="greytxt"><bean:message key="label.alumni.welcome.b" bundle="ALUMNI_RESOURCES" /></p>
 
-<logic:present name="alumniPublicAccessMessage">
-	<span class="error0"><bean:write name="alumniPublicAccessMessage" scope="request" /></span><br/>
-</logic:present>
 
 <table>
 	<tr>
@@ -41,10 +45,6 @@
 	<div id="registration" class="switchInline">
 	</logic:equal>
 </logic:present>
-
-<html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">
-<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
-</html:messages>
 
 --%>
 
