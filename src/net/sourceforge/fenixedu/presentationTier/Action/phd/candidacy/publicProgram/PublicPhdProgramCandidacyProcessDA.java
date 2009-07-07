@@ -95,6 +95,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "editPhdIndividualProgramProcessInformation", path = "phdProgram.editPhdIndividualProgramProcessInformation"),
 
+@Forward(name = "editCandidacyGuidings", path = "phdProgram.editCandidacyGuidings"),
+
 @Forward(name = "editQualifications", path = "phdProgram.editQualifications"),
 
 @Forward(name = "createRefereeLetter", path = "phdProgram.createRefereeLetter"),
@@ -870,7 +872,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	request.setAttribute("individualProcessBean", getRenderedObject("individualProcessBean"));
-	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
 
 	return mapping.findForward("editPhdIndividualProgramProcessInformation");
     }
@@ -895,6 +896,21 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return viewCandidacy(mapping, request, getCandidacyBean().getCandidacyHashCode());
     }
 
+    public ActionForward prepareEditCandidacyGuidings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	return mapping.findForward("editCandidacyGuidings");
+    }
+
+    public ActionForward editCandidacyGuidingsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
+
+	return mapping.findForward("editCandidacyGuidings");
+    }
+
     public ActionForward prepareAddGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -902,7 +918,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramGuidingBean guiding = new PhdProgramGuidingBean();
 	guiding.setGuidingType(PhdProgramGuidingType.EXTERNAL);
 	request.setAttribute("guidingBean", guiding);
-	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	return mapping.findForward("editCandidacyGuidings");
     }
 
     public ActionForward addGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -920,10 +936,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    request.setAttribute("candidacyBean", getCandidacyBean());
 	    request.setAttribute("guidingBean", bean);
-	    return mapping.findForward("editPhdIndividualProgramProcessInformation");
+	    return mapping.findForward("editCandidacyGuidings");
 	}
 
-	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
+	return prepareEditCandidacyGuidings(mapping, actionForm, request, response);
     }
 
     public ActionForward removeGuidingFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
@@ -944,7 +960,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	}
 
-	return prepareEditPhdIndividualProgramProcessInformation(mapping, actionForm, request, response);
+	return prepareEditCandidacyGuidings(mapping, actionForm, request, response);
     }
 
     private PhdProgramGuiding getGuiding(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
