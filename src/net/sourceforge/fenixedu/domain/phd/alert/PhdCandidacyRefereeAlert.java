@@ -16,7 +16,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
-    static private final int INTERVAL = 2; // number of days
+    static private final int INTERVAL = 4; // number of days
 
     private PhdCandidacyRefereeAlert() {
 	super();
@@ -52,7 +52,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-	return getReferee().hasLetter();
+	return getReferee().hasLetter(); // or candidacy period is over
     }
 
     @Override
@@ -67,7 +67,6 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     public void fire() {
-
 	if (!isToFire()) {
 	    if (isToDiscard()) {
 		discard();
