@@ -19,7 +19,7 @@
 			</div>
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
-				<div class="infoop2 mtop1">
+				<div class="mtop1">
 					<bean:write name="executionPeriod" property="inquiryResponsePeriod.introduction" filter="false"/>
 				</div>
 			</div>
