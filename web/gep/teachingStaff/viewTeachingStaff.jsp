@@ -53,9 +53,9 @@
 				<bean:write name="nonAffiliatedTeacher" property="institutionUnit.name"/>
 			</td>							
 			<td>
-				<bean:define id="deleteLink">/teachingStaff.do?method=deleteNonAffiliatedTeacher&executionCourseID=<bean:write name="teachingStaffForm" property="executionCourseID"/></bean:define>
+				<bean:define id="deleteLink">/teachingStaff.do?method=removeNonAffiliatedTeacher&executionCourseID=<bean:write name="teachingStaffForm" property="executionCourseID"/></bean:define>
 				<html:link action="<%= deleteLink %>" paramId="nonAffiliatedTeacherID" paramName="nonAffiliatedTeacher" paramProperty="idInternal">
-					<bean:message bundle="APPLICATION_RESOURCES" key="label.delete"/>
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.remove"/>
 				</html:link>				
 			</td>							
 		</tr>
@@ -68,25 +68,6 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createNewNonAffiliatedTeacher" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" styleId="executionCourseID" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.nonAffiliatedTeacherID" property="nonAffiliatedTeacherID" />
-		
-		<script>
-			var getTeacherHeader = function(teacher) { return '<bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" />' };
-			var getInstitutionHeader = function(teacher) { return '<bean:message key="table.header.inquiries.institution" bundle="INQUIRIES_RESOURCES" />' };
-			var getEmptyHeader = function(teacher) { return '&nbsp;' };
-			var getName = function(teacher) { return teacher.name };
-			var getInstitution = function(teacher) { return teacher.infoInstitution.name };
-			var getAssociate = function(teacher) { return '<a href="teachingStaff.do?method=insertNonAffiliatedTeacher&nonAffiliatedTeacherID='+teacher.idInternal+'&executionCourseID='+ document.getElementById("executionCourseID").value+'">Associar</a>' }; 
-			
-			function fillTeachers(teachers){
-				DWRUtil.removeAllRows("teachersResultHeader");
-				if(teachers.length > 0){
-				    DWRUtil.addRows("teachersResultHeader", new Array(1), [ getTeacherHeader, getInstitutionHeader, getEmptyHeader ]);
-			    }	    
-				DWRUtil.removeAllRows("teachersResult");
-			    DWRUtil.addRows("teachersResult", teachers, [ getName, getInstitution, getAssociate ]);
-			}
-			
-		</script>
 		
 		<tr>
 			<td><strong><bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" />:</strong></td>
