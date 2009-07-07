@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualifications;
@@ -212,7 +211,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	// TODO: for now send directly to first page
 	// TODO: check candidacy period!!!!????????
 	return createCandidacyStepOne(mapping, actionForm, request, response);
     }
@@ -898,26 +896,51 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditCandidacyGuidings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getCandidacyBean());
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("candidacyBean", bean);
+
+	if (!bean.getCandidacyHashCode().getIndividualProgramProcess().hasAnyGuidings()) {
+	    bean.setGuidings(createGuidingsMinimumList());
+	} else {
+	    bean.setGuidings(null);
+	}
+
 	return mapping.findForward("editCandidacyGuidings");
     }
 
     public ActionForward editCandidacyGuidingsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
-	request.setAttribute("candidacyBean", getCandidacyBean());
-	request.setAttribute("guidingBean", getRenderedObject("guidingBean"));
 
+	request.setAttribute("candidacyBean", getCandidacyBean());
 	return mapping.findForward("editCandidacyGuidings");
     }
 
     public ActionForward prepareAddGuidingToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("candidacyBean", getCandidacyBean());
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	request.setAttribute("candidacyBean", bean);
+
+	if (!bean.hasAnyGuiding()) {
+	    bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
+	}
+
 	final PhdProgramGuidingBean guiding = new PhdProgramGuidingBean();
 	guiding.setGuidingType(PhdProgramGuidingType.EXTERNAL);
-	request.setAttribute("guidingBean", guiding);
+	bean.addGuiding(guiding);
+
+	return mapping.findForward("editCandidacyGuidings");
+    }
+
+    public ActionForward removeGuidingFromCreationList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	bean.removeGuiding(getIntegerFromRequest(request, "removeIndex").intValue());
+
+	request.setAttribute("candidacyBean", bean);
+	RenderUtils.invalidateViewState();
+
 	return mapping.findForward("editCandidacyGuidings");
     }
 
@@ -926,19 +949,20 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	// TODO: check candidacy period!!!!????????
 
-	final PhdProgramGuidingBean bean = (PhdProgramGuidingBean) getRenderedObject("guidingBean");
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+
 	try {
-	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
-		    AddGuidingInformation.class, bean);
+	    ExecuteProcessActivity.run(bean.getCandidacyHashCode().getIndividualProgramProcess(), AddGuidingsInformation.class,
+		    bean.getGuidings());
 	    addSuccessMessage(request, "message.guiding.created.with.success");
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    request.setAttribute("candidacyBean", getCandidacyBean());
-	    request.setAttribute("guidingBean", bean);
+	    request.setAttribute("candidacyBean", bean);
 	    return mapping.findForward("editCandidacyGuidings");
 	}
 
+	bean.setGuidings(null);
 	return prepareEditCandidacyGuidings(mapping, actionForm, request, response);
     }
 

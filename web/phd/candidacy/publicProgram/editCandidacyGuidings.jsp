@@ -18,13 +18,13 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editPhdInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editGuidingsForm" action="/candidacies/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodId" name="method" value="" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editGuidingsForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	<br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -41,23 +41,30 @@
 	<logic:present name="candidacyBean">
 		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/></h2>
 		
-		<logic:notEmpty name="guidingBean">
+		<logic:notEmpty name="candidacyBean" property="guidings">
+		
 			<div class="fs_form">
 			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-
 			<fieldset style="display: block;">
-				<fr:edit id="guidingBean" name="guidingBean" schema="Public.PhdProgramGuidingBean.edit">
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="thlight thleft"/>
-						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
-					</fr:layout>
-					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyGuidingsInvalid" />
-					<fr:destination name="cancel" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareEditCandidacyGuidings" />
-				</fr:edit>
-				</fieldset>
-				</div>
-				<p><html:submit onclick="document.getElementById('methodId').value='addGuidingToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
+			
+				<logic:iterate id="guidingBean" name="candidacyBean" property="guidings" indexId="index">
+					<strong><%= index.intValue() + 1 %>.</strong>
+					<bean:define id="guidingId" name="index" />
+					<fr:edit id="guidingBean" name="guidingBean" schema="Public.PhdProgramGuidingBean.edit">
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="thlight thleft"/>
+							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="true" />
+						</fr:layout>
+						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyGuidingsInvalid" />
+						<fr:destination name="cancel" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareEditCandidacyGuidings" />
+					</fr:edit>
+					<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + guidingId + "; document.getElementById(\"methodId\").value=\"removeGuidingFromCreationList\"; document.getElementById(\"editGuidingsForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+				</logic:iterate>
+			
+			</fieldset>
+			</div>
+			<p><html:submit onclick="document.getElementById('methodId').value='addGuidingToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.guidings">
@@ -70,10 +77,10 @@
 				        <fr:property name="columnClasses" value="width175px,,,,"/>
 					</fr:layout>
 				</fr:view>
-				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + guidingId + "; document.getElementById(\"methodId\").value=\"removeGuidingFromExistingCandidacy\"; document.getElementById(\"editPhdInformationForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
+				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + guidingId + "; document.getElementById(\"methodId\").value=\"removeGuidingFromExistingCandidacy\"; document.getElementById(\"editGuidingsForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
 			</logic:iterate>
 		</logic:notEmpty>
-		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddGuidingToExistingCandidacy\"; document.getElementById(\"editPhdInformationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddGuidingToExistingCandidacy\"; document.getElementById(\"editGuidingsForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
 			
 	</logic:present>
 </logic:equal>
