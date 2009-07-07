@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.person.PartyContactsManagementDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,7 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/partyContacts", module = "academicAdminOffice")
+@Mapping(path = "/partyContacts", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
 	@Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
 	@Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
