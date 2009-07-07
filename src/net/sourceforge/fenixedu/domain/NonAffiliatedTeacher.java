@@ -10,6 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -23,6 +25,12 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public NonAffiliatedTeacher(final String name, final Unit institution) {
+	this();
+	setName(name);
+	setInstitutionUnit(institution);
+    }
+
     public static Set<NonAffiliatedTeacher> findNonAffiliatedTeacherByName(final String name) {
 	Pattern pattern = Pattern.compile(name.toLowerCase());
 	final Set<NonAffiliatedTeacher> nonAffiliatedTeachers = new HashSet<NonAffiliatedTeacher>();
@@ -33,6 +41,28 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 	    }
 	}
 	return nonAffiliatedTeachers;
+    }
+
+    @Service
+    public static void associateToInstitutionAndExecutionCourse(final String nonAffiliatedTeacherName, final Unit institution,
+	    final ExecutionCourse executionCourse) {
+
+	NonAffiliatedTeacher nonAffiliatedTeacher = institution.findNonAffiliatedTeacherByName(nonAffiliatedTeacherName);
+	if (nonAffiliatedTeacher == null) {
+	    nonAffiliatedTeacher = new NonAffiliatedTeacher(nonAffiliatedTeacherName, institution);
+	}
+
+	if (nonAffiliatedTeacher.getExecutionCourses().contains(executionCourse)) {
+	    throw new DomainException("error.invalid.executionCourse");
+	} else {
+	    nonAffiliatedTeacher.addExecutionCourses(executionCourse);
+	}
+
+    }
+
+    @Service
+    public void removeExecutionCourse(final ExecutionCourse executionCourse) {
+	getExecutionCourses().remove(executionCourse);
     }
 
     public void delete() {
