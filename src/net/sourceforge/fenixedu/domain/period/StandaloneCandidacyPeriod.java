@@ -13,8 +13,8 @@ public class StandaloneCandidacyPeriod extends StandaloneCandidacyPeriod_Base {
 	super();
     }
 
-    public StandaloneCandidacyPeriod(final StandaloneCandidacyProcess candidacyProcess, final ExecutionSemester executionSemester,
-	    final DateTime start, final DateTime end) {
+    public StandaloneCandidacyPeriod(final StandaloneCandidacyProcess candidacyProcess,
+	    final ExecutionSemester executionSemester, final DateTime start, final DateTime end) {
 	this();
 	init(candidacyProcess, executionSemester, start, end);
     }
@@ -40,13 +40,6 @@ public class StandaloneCandidacyPeriod extends StandaloneCandidacyPeriod_Base {
 			.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
 	    }
 	}
-    }
-
-    public boolean intercept(final DateTime start, final DateTime end) {
-	if (start.isAfter(end)) {
-	    throw new DomainException("error.CandidacyPeriod.begin.cannot.be.after.end");
-	}
-	return contains(start) || contains(end);
     }
 
     public StandaloneCandidacyProcess getStandaloneCandidacyProcess() {
