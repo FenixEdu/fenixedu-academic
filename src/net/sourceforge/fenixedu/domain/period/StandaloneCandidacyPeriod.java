@@ -42,7 +42,7 @@ public class StandaloneCandidacyPeriod extends StandaloneCandidacyPeriod_Base {
 	}
     }
 
-    private boolean intercept(final DateTime start, final DateTime end) {
+    public boolean intercept(final DateTime start, final DateTime end) {
 	if (start.isAfter(end)) {
 	    throw new DomainException("error.CandidacyPeriod.begin.cannot.be.after.end");
 	}
