@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adding new PartyType" addPartyType.sql
 
