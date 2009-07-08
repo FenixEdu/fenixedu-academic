@@ -1519,4 +1519,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public boolean canCreateGratuityEvent() {
 	return true;
     }
+
+    public boolean isDEA() {
+	return getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+    }
 }
