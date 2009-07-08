@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/ICalTimeTable", module = "messaging")
+@Mapping(path = "/ICalTimeTable", module = "student")
 @Forwards( { @Forward(name = "viewOptions", path = "icalendar-view-options"),
 	     @Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
 public class ICalStudentTimeTable extends FenixDispatchAction {

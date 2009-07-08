@@ -114,16 +114,4 @@
 		<put name="body" value="/researcher/expertDetails/browserResearchers.jsp"/>
 	</definition>
 	
-	
-
-	<!-- start: ICalendar Informaton -->
-	<definition name="icalendar-view-options" extends="definition.messaging.masterPage">
-        <put name="body" value="/student/iCalendar/viewCalendarInformation.jsp"/>
-    </definition>
-    
-    <definition name="icalendar-choose-registration" extends="definition.messaging.masterPage">
-        <put name="body" value="/student/iCalendar/chooseRegistration.jsp"/>
-    </definition>
-    <!-- end: ICalendar Informaton -->
-	
 </tiles-definitions>

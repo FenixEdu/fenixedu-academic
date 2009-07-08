@@ -12,6 +12,15 @@
 	<li class="navheader"><bean:message key="consult"/></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
 	<li><html:link page="/studentTimeTable.do?method=prepare" titleKey="link.title.timetable"><bean:message key="link.my.timetable"/></html:link></li>
+	<li>
+	<ul>
+	<li>
+		<html:link page="/ICalTimeTable.do?method=prepare" bundle="MESSAGING_RESOURCES" titleKey="label.title.sync">
+			<bean:message bundle="MESSAGING_RESOURCES" key="label.title.sync"/>
+		</html:link>
+	</li>
+	</ul>
+	</li>
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
 	<li><html:link page="/viewTutorInfo.do?method=prepare" titleKey="link.title.tutorInfo"><bean:message key="link.student.tutorInfo"/></html:link></li>
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>

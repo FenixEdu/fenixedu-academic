@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
+
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>	
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -10,16 +11,25 @@
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 	<h:outputText value="<h2>#{bundle['link.writtenTests.enrolment']}</h2>" escape="false"
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
+	<h:outputText value="<div class='infoop2'>
+	<b>Sincronizar Calendário</b><br/>
+    Pode ficar a par de novidades relacionadas com testes e exames directamente no seu calendário pessoal.
+    A funcionalidade \"Sincronizar Calendário\" permite-lhe sincronizar o calendário de testes e exames com o seu calendário digital.
+    Para mais informações consulte a página <a href='/ciapl/student/ICalTimeTable.do?method=prepare'>Sincronizar Calendário</a>.
+	</div>" escape="false"/>
+	  
 	<h:form>
 		<h:inputHidden binding="#{manageEvaluationsForStudent.evaluationTypeHidden}"/>
-		<h:outputText value="<div class='evalcontainer'>	" escape="false"/>
+		<h:outputText value="<div class='evalcontainer' style='padding-bottom: 0;'>	" escape="false"/>
 		<h:panelGrid columns="2" columnClasses="alignright," styleClass="search">
 			<h:outputText value="#{bundle['label.student.enrollment.executionPeriod']}: " styleClass="" />
 			<fc:selectOneMenu value="#{manageEvaluationsForStudent.executionPeriodID}" onchange="this.form.submit();" 
 			   valueChangeListener="#{manageEvaluationsForStudent.changeExecutionPeriod}">
 				<f:selectItems value="#{manageEvaluationsForStudent.executionPeriodsLabels}" />
 			</fc:selectOneMenu>
+			<%-- 
 			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+			--%>
 		</h:panelGrid>
 		<h:outputText value="</div>	" escape="false"/>
 		

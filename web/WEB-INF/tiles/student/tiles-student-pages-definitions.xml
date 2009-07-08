@@ -397,5 +397,15 @@
 	<definition name="df.page.manage.passwords" extends="definition.student.masterPage">
 		<put name="body" value="/student/managePasswords.jsp"/>
 	</definition>
+	
+		<!-- start: ICalendar Informaton -->
+	<definition name="icalendar-view-options" extends="definition.student.masterPage">
+        <put name="body" value="/student/iCalendar/viewCalendarInformation.jsp"/>
+    </definition>
+    
+    <definition name="icalendar-choose-registration" extends="definition.student.masterPage">
+        <put name="body" value="/student/iCalendar/chooseRegistration.jsp"/>
+    </definition>
+    <!-- end: ICalendar Informaton -->
 
 </tiles-definitions>
