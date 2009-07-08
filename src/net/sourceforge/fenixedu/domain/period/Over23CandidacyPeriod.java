@@ -21,16 +21,10 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
 
     private void init(final Over23CandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
 	    final DateTime start, final DateTime end) {
-	checkParameters(candidacyProcess);
+	check(candidacyProcess, "error.Over23CandidacyPeriod.invalid.candidacy.process");
 	checkIfCanCreate(executionInterval);
 	super.init(executionInterval, start, end);
 	addCandidacyProcesses(candidacyProcess);
-    }
-
-    private void checkParameters(final Over23CandidacyProcess candidacyProcess) {
-	if (candidacyProcess == null) {
-	    throw new DomainException("error.Over23CandidacyPeriod.invalid.candidacy.process");
-	}
     }
 
     private void checkIfCanCreate(final ExecutionInterval executionInterval) {

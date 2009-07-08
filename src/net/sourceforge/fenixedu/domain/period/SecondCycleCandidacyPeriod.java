@@ -42,13 +42,6 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	}
     }
 
-    private boolean intercept(final DateTime start, final DateTime end) {
-	if (start.isAfter(end)) {
-	    throw new DomainException("error.CandidacyPeriod.begin.cannot.be.after.end");
-	}
-	return contains(start) || contains(end);
-    }
-
     public SecondCycleCandidacyProcess getSecondCycleCandidacyProcess() {
 	return (SecondCycleCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
     }

@@ -671,10 +671,8 @@
 </schema>
 
 <schema name="Public.PhdCandidacyDocumentUploadBean.edit.with.type" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
-	<slot name="type" layout="menu-select">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA$PhdCandidacyDocumentUploadBeanTypes" />
-		<property name="eachLayout" value="not.existing" />
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,GUIDER_ACCEPTANCE_LETTER" />
 	</slot>
 	<slot name="file" key="label.phd.public.document">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />

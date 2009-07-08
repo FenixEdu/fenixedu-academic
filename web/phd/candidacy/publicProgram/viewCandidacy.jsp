@@ -39,6 +39,12 @@
 </logic:equal>
 
 <p style="margin-bottom: 0.5em;">
+	<bean:define id="startDate" name="candidacyPeriod" property="start" type="org.joda.time.DateTime" />
+	<bean:define id="endDate" name="candidacyPeriod" property="end" type="org.joda.time.DateTime" />
+	<em><bean:message key="message.candidacy.period" arg0="<%= startDate.toString("dd/MM/yyyy") %>" arg1="<%= endDate.toString("dd/MM/yyyy") %>" bundle="PHD_RESOURCES"/></em>
+</p>
+
+<p style="margin-bottom: 0.5em;">
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
 </p>
 

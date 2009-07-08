@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,6 +15,7 @@ import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -115,6 +118,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     public boolean hasAnyStandaloneCandidacyPeriod() {
 	return hasCandidacyPeriods(StandaloneCandidacyPeriod.class);
+    }
+
+    public PhdCandidacyPeriod getPhdCandidacyPeriod(final DateTime date) {
+	for (final CandidacyPeriod period : getCandidacyPeriods(PhdCandidacyPeriod.class)) {
+	    if (period.contains(date)) {
+		return (PhdCandidacyPeriod) period;
+	    }
+	}
+	return null;
     }
 
     public PaymentCode findNewCodeInPaymentCodeMapping(final PaymentCode oldCode) {

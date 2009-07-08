@@ -1086,4 +1086,7 @@
 	<definition name="phdProgram.uploadPhoto" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/uploadPhoto.jsp"/>
 	</definition>
+	<definition name="phdProgram.outOfCandidacyPeriod" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/outOfCandidacyPeriod.jsp"/>
+	</definition>
 </tiles-definitions>

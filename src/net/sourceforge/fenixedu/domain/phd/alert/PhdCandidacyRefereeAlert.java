@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
@@ -52,7 +53,13 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-	return getReferee().hasLetter(); // or candidacy period is over
+	return getReferee().hasLetter() || isOutOfCandidacyPeriod();
+    }
+
+    private boolean isOutOfCandidacyPeriod() {
+	final ExecutionYear executionYear = getReferee().getIndividualProgramProcess().getExecutionYear();
+	final LocalDate candidacyDate = getReferee().getPhdProgramCandidacyProcess().getCandidacyDate();
+	return executionYear.getPhdCandidacyPeriod(candidacyDate.toDateTimeAtStartOfDay()).contains(new DateTime());
     }
 
     @Override

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.CandidacyProcessCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -31,9 +31,9 @@ import dml.runtime.RelationAdapter;
 public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_Base {
 
     static {
-	CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyPeriod>() {
+	CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyProcessCandidacyPeriod>() {
 	    @Override
-	    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyPeriod candidacyPeriod) {
+	    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyProcessCandidacyPeriod candidacyPeriod) {
 		super.beforeAdd(candidacyProcess, candidacyPeriod);
 		if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof DegreeChangeCandidacyPeriod) {
 		    if (candidacyPeriod.hasAnyCandidacyProcesses()) {

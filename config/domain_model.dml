@@ -6093,25 +6093,30 @@ class period.CandidacyPeriod extends DomainObject {
 	DateTime start;
 	DateTime end;
 }
+	class period.CandidacyProcessCandidacyPeriod extends period.CandidacyPeriod {
+	} 
 
-	class period.Over23CandidacyPeriod extends period.CandidacyPeriod {
-	}
+		class period.Over23CandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
+		
+		class period.SecondCycleCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
+		
+		class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
+		
+		class period.DegreeChangeCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
+		
+		class period.DegreeTransferCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
+		
+		class period.StandaloneCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+		}
 	
-	class period.SecondCycleCandidacyPeriod extends period.CandidacyPeriod {
+	class phd.candidacy.PhdCandidacyPeriod extends period.CandidacyPeriod {
 	}
-	
-	class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyPeriod {
-	}
-	
-	class period.DegreeChangeCandidacyPeriod extends period.CandidacyPeriod {
-	}
-	
-	class period.DegreeTransferCandidacyPeriod extends period.CandidacyPeriod {
-	}
-	
-	class period.StandaloneCandidacyPeriod extends period.CandidacyPeriod {
-	}
-	
+
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	CandidacyProcessState state;
 }
@@ -15132,7 +15137,7 @@ relation CandidacyPeriodExecutionInterval {
 }
 
 relation CandidacyPeriodCandidacyProcess {
-	period.CandidacyPeriod playsRole candidacyPeriod;
+	period.CandidacyProcessCandidacyPeriod playsRole candidacyPeriod;
 	candidacyProcess.CandidacyProcess playsRole candidacyProcesses {
 		multiplicity *;
 	}
