@@ -139,16 +139,18 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    canEditCandidacy(request, bean.getCandidacyHashCode());
 	}
 
-	return filterDispatch(mapping, actionForm, request, response);
+	return filterDispatchMethod(bean, mapping, actionForm, request, response);
     }
 
-    private ActionForward filterDispatch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    private ActionForward filterDispatchMethod(final PhdProgramCandidacyProcessBean bean, ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+	final PhdProgramPublicCandidacyHashCode hashCode = (bean != null ? bean.getCandidacyHashCode() : null);
 	final String methodName = getMethodName(mapping, actionForm, request, response, mapping.getParameter());
+
 	if (methodName == null || !DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS.contains(methodName)) {
-	    if (isOutOfCandidacyPeriod()) {
-		request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod());
+	    if (isOutOfCandidacyPeriod(hashCode)) {
+		request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
 		return mapping.findForward("out.of.candidacy.period");
 	    }
 	}
@@ -156,16 +158,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    private boolean isOutOfCandidacyPeriod() {
-	return !getPhdCandidacyPeriod().contains(new DateTime());
+    private boolean isOutOfCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
+	return !getPhdCandidacyPeriod(hashCode).contains(new DateTime());
     }
 
-    private PhdCandidacyPeriod getPhdCandidacyPeriod() {
-	/*
-	 * TODO: refactor to get most recent to given date
-	 * (PhdCandidacyPeriod.getLastCandidacyPeriod(NOW))
-	 */
-	return PhdCandidacyPeriod.getLastCandidacyPeriod();
+    private PhdCandidacyPeriod getPhdCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
+	final LocalDate localDate = (hashCode != null && hashCode.hasCandidacyProcess()) ? hashCode
+		.getPhdProgramCandidacyProcess().getCandidacyDate() : new LocalDate();
+	return PhdCandidacyPeriod.getCandidacyPeriod(localDate.toDateTimeAtStartOfDay());
     }
 
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
@@ -759,8 +759,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("individualProgramProcess", hashCode.getIndividualProgramProcess());
 	canEditCandidacy(request, bean.getCandidacyHashCode());
 	canEditPersonalInformation(request, hashCode.getPerson());
-	
-	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod());
+
+	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
 
 	return mapping.findForward("viewCandidacy");
     }

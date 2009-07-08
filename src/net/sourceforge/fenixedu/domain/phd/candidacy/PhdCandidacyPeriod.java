@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -25,10 +21,8 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 
     private void checkIfCanCreate(final DateTime start, final DateTime end) {
 	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (isPhdCandidacyPeriod(period)) {
-		if (period.intercept(start, end)) {
-		    throw new DomainException("error.PhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
-		}
+	    if (isPhdCandidacyPeriod(period) && period.intercept(start, end)) {
+		throw new DomainException("error.PhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
 	    }
 	}
     }
@@ -42,13 +36,12 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 	return period.getClass().equals(PhdCandidacyPeriod.class);
     }
 
-    static public PhdCandidacyPeriod getLastCandidacyPeriod() {
-	final List<PhdCandidacyPeriod> result = new ArrayList<PhdCandidacyPeriod>();
+    static public PhdCandidacyPeriod getCandidacyPeriod(final DateTime date) {
 	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (isPhdCandidacyPeriod(period)) {
-		result.add((PhdCandidacyPeriod) period);
+	    if (isPhdCandidacyPeriod(period) && period.contains(date)) {
+		return (PhdCandidacyPeriod) period;
 	    }
 	}
-	return result.isEmpty() ? null : Collections.max(result, LAST_CANDIDACY_PERIOD);
+	return null;
     }
 }
