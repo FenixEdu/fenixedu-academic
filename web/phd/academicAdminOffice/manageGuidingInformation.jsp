@@ -22,7 +22,7 @@ function toggle(obj) {
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.academicAdminOffice.manageGuidingInformation" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.manageGuidingInformation" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
@@ -59,7 +59,7 @@ function toggle(obj) {
 
 	<%-- ### Guiding ### --%>
 	<br/>
-	<strong><bean:message key="label.phd.academicAdminOffice.guiding" bundle="PHD_RESOURCES" /></strong>
+	<strong><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="guiding">
 
 		<%-- ### add new guiding ### --%>
@@ -140,7 +140,7 @@ function toggle(obj) {
 	<%-- ### Assistant Guiding ### --%>
 	<br/>
 	<br/>
-	<strong id="assistant"><bean:message key="label.phd.academicAdminOffice.assistant.guidings" bundle="PHD_RESOURCES" /></strong>
+	<strong id="assistant"><bean:message key="label.phd.assistant.guidings" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="assistantGuidingBean">
 		<html:link action="<%= "/phdIndividualProgramProcess.do?method=prepareAddAssistantGuidingInformation&amp;processId=" + processId +"#assistant" %>">
 			<bean:message key="label.add" bundle="PHD_RESOURCES" />

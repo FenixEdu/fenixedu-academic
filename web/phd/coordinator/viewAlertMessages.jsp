@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<logic:present role="COORDINATOR">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 

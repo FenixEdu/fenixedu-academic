@@ -9,7 +9,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.academicAdminOffice.editQualificationsAndJobsInformation" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.editQualificationsAndJobsInformation" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
@@ -41,7 +41,7 @@
 
 	<%-- ### Qualifications ### --%>
 	<br/>
-	<strong><bean:message key="label.phd.academicAdminOffice.editQualificationsInformation" bundle="PHD_RESOURCES" /></strong>
+	<strong><bean:message key="label.phd.editQualificationsInformation" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="qualification">
 		<html:link action="<%= "/phdIndividualProgramProcess.do?method=prepareAddQualification&amp;processId=" + processId %>">
 			<bean:message key="label.add" bundle="PHD_RESOURCES" />
@@ -82,7 +82,7 @@
 
 	<%-- ### Jobs ### --%>
 	<br/>
-	<strong><bean:message key="label.phd.academicAdminOffice.editJobsInformation" bundle="PHD_RESOURCES" /></strong>
+	<strong><bean:message key="label.phd.editJobsInformation" bundle="PHD_RESOURCES" /></strong>
 	<logic:notPresent name="job">
 		<html:link action="<%= "/phdIndividualProgramProcess.do?method=prepareAddJobInformation&amp;processId=" + processId %>">
 			<bean:message key="label.add" bundle="PHD_RESOURCES" />

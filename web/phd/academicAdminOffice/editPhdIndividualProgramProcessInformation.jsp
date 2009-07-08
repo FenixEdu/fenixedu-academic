@@ -10,7 +10,7 @@
 
 <%-- ### Title #### --%>
 	<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-	<h2><bean:message key="label.phd.academicAdminOffice.editPhdIndividualProgramProcessInformation" bundle="PHD_RESOURCES" /></h2>
+	<h2><bean:message key="label.phd.editPhdIndividualProgramProcessInformation" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -40,7 +40,7 @@
 	<fr:form action="<%= "/phdIndividualProgramProcess.do?processId=" + processId %>">
 		<input type="hidden" name="method" value="" />
 
-		<strong><bean:message key="label.phd.academicAdminOffice.editPhdIndividualProgramProcessInformation.details" bundle="PHD_RESOURCES" /></strong>
+		<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.details" bundle="PHD_RESOURCES" /></strong>
 		<fr:edit id="phdIndividualProgramProcessBean" name="phdIndividualProgramProcessBean" schema="PhdIndividualProgramProcessBean.editDetails">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Job;
@@ -636,7 +637,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	for (final Process each : processesToSearch) {
 	    if (each instanceof PhdIndividualProgramProcess) {
 		final PhdIndividualProgramProcess phdIndividualProgramProcess = (PhdIndividualProgramProcess) each;
-		if (matchesExecutionYear(searchBean, phdIndividualProgramProcess)
+		if (matchesPhdPrograms(searchBean, phdIndividualProgramProcess)
+			&& matchesExecutionYear(searchBean, phdIndividualProgramProcess)
 			&& matchesProcessState(searchBean, phdIndividualProgramProcess)) {
 		    result.add(phdIndividualProgramProcess);
 		}
@@ -644,6 +646,22 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	return result;
+    }
+
+    private static boolean matchesPhdPrograms(SearchPhdIndividualProgramProcessBean searchBean,
+	    PhdIndividualProgramProcess phdIndividualProgramProcess) {
+
+	if (!searchBean.getFilterPhdPrograms()) {
+	    return true;
+	}
+
+	if (phdIndividualProgramProcess.hasPhdProgram()) {
+	    return searchBean.getPhdPrograms().contains(phdIndividualProgramProcess.getPhdProgram());
+	} else {
+	    return !CollectionUtils.intersection(searchBean.getPhdPrograms(),
+		    phdIndividualProgramProcess.getPhdProgramFocusArea().getPhdPrograms()).isEmpty();
+	}
+
     }
 
     static private boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
@@ -681,4 +699,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
+    public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {
+	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
+
+	for (final PhdAlertMessage each : getAlertMessages()) {
+	    if (each.isFor(person)) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+    }
 }

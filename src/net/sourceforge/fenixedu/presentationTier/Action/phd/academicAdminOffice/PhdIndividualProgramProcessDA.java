@@ -89,6 +89,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	if (searchBean == null) {
 	    searchBean = new SearchPhdIndividualProgramProcessBean();
 	    searchBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	    searchBean.setFilterPhdPrograms(false);
 	}
 
 	request.setAttribute("searchProcessBean", searchBean);
@@ -501,7 +502,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	getAlertMessage(request).setTaskPerformed(true);
 
-	// TODO: finish
 	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
 		|| request.getParameter("global").equals("true") ? true : false;
 
@@ -516,7 +516,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("alertMessages", getProcess(request).getAlertMessages());
+	request.setAttribute("alertMessages", getProcess(request).getAlertMessagesFor(getLoggedPerson(request)));
 
 	return mapping.findForward("viewProcessAlertMessages");
     }

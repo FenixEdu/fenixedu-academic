@@ -69,4 +69,8 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	return getTaskPerformed().booleanValue();
     }
 
+    public boolean isFor(Person person) {
+	return getPerson() == person;
+    }
+
 }

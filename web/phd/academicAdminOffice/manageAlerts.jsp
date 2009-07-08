@@ -10,7 +10,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.academicAdminOffice.manageAlerts" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.manageAlerts" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -41,7 +41,7 @@
 <strong><bean:message  key="label.phd.alerts" bundle="PHD_RESOURCES"/></strong>
 <br/><br/>
 <html:link action="/phdIndividualProgramProcess.do?method=prepareCreateCustomAlert" paramId="processId" paramName="process" paramProperty="externalId">
-	<bean:message bundle="PHD_RESOURCES" key="label.phd.academicAdminOffice.createCustomAlert"/>
+	<bean:message bundle="PHD_RESOURCES" key="label.phd.createCustomAlert"/>
 </html:link>
 <br/>
 

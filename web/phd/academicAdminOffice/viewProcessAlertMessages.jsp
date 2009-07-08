@@ -11,7 +11,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.academicAdminOffice.alertMessages" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -38,7 +38,7 @@
 <br/><br/>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<strong><bean:message  key="label.phd.messages" bundle="PHD_RESOURCES"/></strong>
+<strong><bean:message  key="label.phd.messages" bundle="PHD_RESOURCES"/></strong><br/>
 <logic:notEmpty name="alertMessages">
 	<fr:view schema="PhdAlertMessage.view.for.process" name="alertMessages">
 		<fr:layout name="tabular">

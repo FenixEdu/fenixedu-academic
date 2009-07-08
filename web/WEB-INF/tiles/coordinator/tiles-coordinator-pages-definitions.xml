@@ -352,5 +352,28 @@
 	</definition>
 	
 	<!-- End: Equivalence Management -->
-    
+
+	<!-- Phd Module -->
+
+	<definition name="phd.manageProcesses" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/coordinator/manageProcesses.jsp"/>
+	</definition>
+	
+	<definition name="phd.viewProcess" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/coordinator/viewProcess.jsp"/>
+	</definition>
+
+	<definition name="phd.viewAlertMessages" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/coordinator/viewAlertMessages.jsp"/>
+	</definition>
+
+	<definition name="phd.viewProcessAlertMessages" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/coordinator/viewProcessAlertMessages.jsp"/>
+	</definition>
+	
+	<!-- End of Phd Module -->    
 </tiles-definitions>
