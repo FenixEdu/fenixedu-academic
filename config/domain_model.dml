@@ -3979,6 +3979,9 @@ class DomainObject {
 			class organizationalStructure.ResearchUnit extends organizationalStructure.Unit {
 			}
 
+			class organizationalStructure.ManagementCouncilUnit extends organizationalStructure.Unit {
+			}
+			
 			class organizationalStructure.ScientificAreaUnit extends organizationalStructure.Unit {
 			}
 
@@ -5997,6 +6000,9 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			}
 			 
 			class StudentsSite extends UnitSite {
+			}
+			
+			class ManagementCouncilSite extends UnitSite {
 			}
 			
 			class InstitutionSite extends UnitSite {

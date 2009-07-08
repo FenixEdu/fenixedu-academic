@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -16,6 +12,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ManagementCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
@@ -29,16 +26,18 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit extends FenixService {
 
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
-    public static Unit run(Unit parentUnit, MultiLanguageString unitName, String unitCostCenter, String acronym, YearMonthDay begin,
-	    YearMonthDay end, PartyTypeEnum type, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
-	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException {
+    public static Unit run(Unit parentUnit, MultiLanguageString unitName, String unitCostCenter, String acronym,
+	    YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, Integer departmentID, Integer degreeID,
+	    Integer administrativeOfficeID, AccountabilityType accountabilityType, String webAddress,
+	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID) throws FenixServiceException {
 
 	Integer costCenterCode = getCostCenterCode(unitCostCenter);
 	Campus campus = (Campus) rootDomainObject.readResourceByOID(campusID);
@@ -99,6 +98,10 @@ public class CreateUnit extends FenixService {
 	    case RESEARCH_UNIT:
 		return ResearchUnit.createNewResearchUnit(unitName, costCenterCode, acronym, begin, end, parentUnit,
 			accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+
+	    case MANAGEMENT_COUNCIL:
+		return ManagementCouncilUnit.createManagementCouncilUnit(unitName, costCenterCode, acronym, begin, end,
+			parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
 	    }
 
 	} else {
