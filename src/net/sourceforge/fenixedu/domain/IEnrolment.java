@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public interface IEnrolment extends ICurriculumEntry {
@@ -34,8 +35,6 @@ public interface IEnrolment extends ICurriculumEntry {
     Double getEctsCredits();
 
     Double getWeigth();
-
-    YearMonthDay getApprovementDate();
 
     Unit getAcademicUnit();
 

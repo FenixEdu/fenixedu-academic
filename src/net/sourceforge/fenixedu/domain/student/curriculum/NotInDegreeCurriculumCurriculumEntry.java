@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
@@ -52,6 +53,11 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     @Override
     public DateTime getCreationDateDateTime() {
 	return getEnrolment().getCreationDateDateTime();
+    }
+
+    @Override
+    public YearMonthDay getApprovementDate() {
+	return getEnrolment().getApprovementDate();
     }
 
 }

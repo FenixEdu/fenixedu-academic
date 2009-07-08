@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 
 import java.math.BigDecimal;
 
+import org.joda.time.YearMonthDay;
+
 public class GivenCreditsEntry extends CreditsCurriculumEntry {
 
     private Double givenCredits;
@@ -16,6 +18,11 @@ public class GivenCreditsEntry extends CreditsCurriculumEntry {
 
     public Integer getIdInternal() {
 	return givenCredits.intValue();
+    }
+
+    @Override
+    public YearMonthDay getApprovementDate() {
+	throw new Error("not.implemented");
     }
 
 }
