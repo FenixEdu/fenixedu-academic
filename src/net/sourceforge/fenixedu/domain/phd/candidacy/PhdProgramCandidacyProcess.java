@@ -254,4 +254,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 	return documents;
     }
+
+    public boolean hasAnyDocuments(final PhdIndividualProgramDocumentType type) {
+	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+	    if (document.hasType(type)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public int getDocumentsCount(final PhdIndividualProgramDocumentType type) {
+	int total = 0;
+	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+	    if (document.hasType(type)) {
+		total++;
+	    }
+	}
+	return total;
+    }
 }

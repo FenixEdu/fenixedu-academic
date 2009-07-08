@@ -761,6 +761,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	canEditPersonalInformation(request, hashCode.getPerson());
 
 	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
+	addValidationMessages(request, hashCode);
 
 	return mapping.findForward("viewCandidacy");
     }
@@ -836,6 +837,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdCandidacyDocumentUploadBean uploadBean = new PhdCandidacyDocumentUploadBean();
 	uploadBean.setIndividualProgramProcess(bean.getCandidacyHashCode().getIndividualProgramProcess());
 	request.setAttribute("documentByType", uploadBean);
+
+	addDocumentsValidationMessages(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
 
 	return mapping.findForward("uploadCandidacyDocuments");
     }
@@ -1277,6 +1280,40 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    value = !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
 	}
 	request.setAttribute("canEditCandidacy", value);
+    }
+
+    private void addValidationMessages(final HttpServletRequest request, final PhdProgramPublicCandidacyHashCode hashCode) {
+	final PhdIndividualProgramProcess process = hashCode.getIndividualProgramProcess();
+
+	if (!process.hasPhdProgramFocusArea()) {
+	    addValidationMessage(request, "message.validation.missing.focus.area");
+	}
+	if (process.getPhdCandidacyReferees().size() < MINIMUM_CANDIDACY_REFEREES) {
+	    addValidationMessage(request, "message.validation.missing.minimum.candidacy.referees", String
+		    .valueOf(MINIMUM_CANDIDACY_REFEREES));
+	}
+	addDocumentsValidationMessages(request, process);
+    }
+
+    private void addDocumentsValidationMessages(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
+	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.CV)) {
+	    addValidationMessage(request, "message.validation.missing.cv");
+	}
+	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.ID_DOCUMENT)) {
+	    addValidationMessage(request, "message.validation.missing.id.document");
+	}
+	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.MOTIVATION_LETTER)) {
+	    addValidationMessage(request, "message.validation.missing.motivation.letter");
+	}
+	if (process.getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT) < process
+		.getQualifications().size()) {
+	    addValidationMessage(request, "message.validation.missing.qualification.documents", String.valueOf(process
+		    .getQualifications().size()));
+	}
+    }
+
+    private void addValidationMessage(final HttpServletRequest request, final String key, final String... args) {
+	addActionMessage("validation", request, key, args);
     }
 
     @Override

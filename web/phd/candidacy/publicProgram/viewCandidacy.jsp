@@ -44,6 +44,14 @@
 	<em><bean:message key="message.candidacy.period" arg0="<%= startDate.toString("dd/MM/yyyy") %>" arg1="<%= endDate.toString("dd/MM/yyyy") %>" bundle="PHD_RESOURCES"/></em>
 </p>
 
+<logic:messagesPresent message="true" property="validation">
+	<div class="warning1 mbottom05" style="width: 700px;">
+		<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
+			<p class="mvert025"><bean:write name="messages" /></p>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
+
 <p style="margin-bottom: 0.5em;">
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
 </p>

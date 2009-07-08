@@ -46,6 +46,14 @@
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
+	<logic:messagesPresent message="true" property="validation">
+		<div class="warning1 mbottom05" style="width: 700px;">
+			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
+				<p class="mvert025"><bean:write name="messages" /></p>
+			</html:messages>
+		</div>
+	</logic:messagesPresent>
+	
 	<p class="mtop15">
 		<em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em><br/>
 		<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>

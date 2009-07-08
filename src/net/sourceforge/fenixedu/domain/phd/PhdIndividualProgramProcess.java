@@ -48,14 +48,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    if (process != null && process.isCancelled()) {
 		throw new PreConditionNotValidException("error.PhdIndividualProgramProcess.is.cancelled");
 	    }
-
-	    // TODO: change this due to public candidacy (move to each
-	    // activity?) test is isMasterDegreeAdministrativeOfficeEmployee or
-	    // person?
-
-	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    // throw new PreConditionNotValidException();
-	    // }
 	}
 
 	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
@@ -612,6 +604,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getDocuments();
     }
 
+    public boolean hasCandidacyProcessDocument(final PhdIndividualProgramDocumentType type) {
+	return getCandidacyProcess().hasAnyDocuments(type);
+    }
+
+    public int getCandidacyProcessDocumentsCount(final PhdIndividualProgramDocumentType type) {
+	return getCandidacyProcess().getDocumentsCount(type);
+    }
+
     public PhdProgramPublicCandidacyHashCode getCandidacyProcessHashCode() {
 	return getCandidacyProcess().getCandidacyHashCode();
     }
@@ -680,4 +680,5 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return result;
     }
+
 }
