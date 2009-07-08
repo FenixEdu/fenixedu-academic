@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class RootDomainObject extends RootDomainObject_Base {
