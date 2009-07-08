@@ -184,13 +184,14 @@
 			<td>
 				<bean:write name="infoStudent" property="number"/>
 			</td>
+			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>	
 			<logic:notPresent name="showPhotos">
 				<td class="acenter">
-					<bean:define id="personID" name="infoStudent.registration.person" property="idInternal"/>
+					<bean:define id="person" name="infoPerson" property="person"/>
+					<bean:define id="personID" name="person" property="idInternal"/>
 					<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 				</td>
-			</logic:notPresent>	
-			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
+			</logic:notPresent>		
 			<td>
 				<bean:write name="infoPerson" property="nome"/>
 			</td>
