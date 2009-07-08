@@ -97,13 +97,28 @@
 					<h:outputText value=" | " escape="false"/>
 					<h:outputText rendered="#{writtenTest.isAfterCurrentDate}" value="#{bundle['label.editReport']}"/>					
 					<h:outputLink rendered="#{!writtenTest.isAfterCurrentDate}" value="#{evaluationManagementBackingBean.contextPath}/teacher/evaluation/vigilancy/vigilantsForEvaluation.do?method=editReport&executionCourseID=#{evaluationManagementBackingBean.executionCourseID}&evaluationOID=#{writtenTest.idInternal}"><h:outputText value="#{bundle['label.editReport']}"/></h:outputLink>					
+	
+					<fc:dataRepeater value="#{true}" var="firstCurricularCourse"/>
 
-
+					<h:outputText value="<p class='indent1 mvert05 xpto'>#{bundle['label.teacher.evaluation.associated.curricular.courses']}: " escape="false"/>
+					<fc:dataRepeater value="#{writtenTest.associatedExecutionCourses}" var="associatedExecutionCourse">
+						<fc:dataRepeater value="#{writtenTest.degreeModuleScopes}" var="degreeModuleScope">
+							<fc:dataRepeater value="#{associatedExecutionCourse.associatedCurricularCoursesSet}" var ="curricularCourse">
+								<h:outputText rendered="#{(degreeModuleScope.curricularCourse == curricularCourse) && !firstCurricularCourse}" value=" | " escape="false"/>
+								<h:outputLink rendered="#{(degreeModuleScope.curricularCourse == curricularCourse)}" value="../../publico/executionCourse.do">
+									<h:outputText value="#{curricularCourse.degreeCurricularPlan.degree.sigla}" escape="false"/>
+									<f:param name="method" value="firstPage"/>
+									<f:param name="executionCourseID" value="#{associatedExecutionCourse.idInternal}"/>
+								</h:outputLink>
+								<fc:dataRepeater rendered="#{(degreeModuleScope.curricularCourse == curricularCourse) && firstCurricularCourse}" value="#{false}" var="firstCurricularCourse"/>
+							</fc:dataRepeater>
+						</fc:dataRepeater>
+					</fc:dataRepeater>
+					<h:outputText value="<br/>" escape="false"/>
 					<h:outputText value="</p>" escape="false"/>
-
 				<h:outputText value="</div>" escape="false"/>
 			</fc:dataRepeater>
-		</h:panelGrid>	
+		</h:panelGrid>
 	</h:form>
 
 </ft:tilesView>

@@ -2,6 +2,7 @@
 
 /* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
 
+
 /* ----------------------
 ------ Headings --------
 ----------------------- */
@@ -2643,3 +2644,10 @@ div.flowerror span span span span span { color: #000; background: #fff; }
 div.flowerror ul.autoCompleteItems { color: #000; }
 
 div.flowerror_hide span span span span { display: none; }
+
+
+
+.xpto a {
+color: #777 !important;
+border-bottom: 1px dotted #aaa !important;
+}
