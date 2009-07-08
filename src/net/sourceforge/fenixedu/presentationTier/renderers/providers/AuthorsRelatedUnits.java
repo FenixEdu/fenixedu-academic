@@ -43,9 +43,8 @@ public class AuthorsRelatedUnits implements DataProvider {
 		    units.add(unit);
 		}
 	    }
-	    Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
-	    if (person.hasEmployee() && currentWorkingPlace != null && !result.isAssociatedWithUnit(currentWorkingPlace)) {
-		units.add(currentWorkingPlace);
+	    if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null && !result.isAssociatedWithUnit(person.getEmployee().getCurrentWorkingPlace())) {
+		units.add(person.getEmployee().getCurrentWorkingPlace());
 	    }
 
 	    if (person.hasTeacher()) {
