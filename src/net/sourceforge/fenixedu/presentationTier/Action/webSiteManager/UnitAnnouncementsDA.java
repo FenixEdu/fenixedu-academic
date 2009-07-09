@@ -11,4 +11,15 @@ public class UnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
 	return mapping.getPath() + ".do";
     }
 
+    @Override
+    protected String getExtraRequestParameters(HttpServletRequest request) {
+	StringBuilder builder = new StringBuilder();
+
+	addExtraParameter(request, builder, "siteId");
+	addExtraParameter(request, builder, "tabularVersion");
+	addExtraParameter(request, builder, "oid");
+	
+	return builder.toString();
+    }
+
 }

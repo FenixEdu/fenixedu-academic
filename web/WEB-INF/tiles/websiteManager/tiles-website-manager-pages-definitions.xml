@@ -946,4 +946,9 @@
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>
     
+     <definition name="website-announcement-boards-approvers-management-edit-unit-board" extends="definition.basicUnit.site.announcements.management">
+       <put name="body" value="/messaging/announcements/editUnitAnnouncementBoardApprovers.jsp" />
+    </definition>
+    
+    
 </tiles-definitions>

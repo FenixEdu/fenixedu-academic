@@ -9,18 +9,19 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-public class ManagerAnnouncementForwardAction extends FenixAction {
+public class AnnouncementForwardAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	
 	String forwardTo = "/announcements/manageUnitAnnouncementBoard.do?method=" + request.getParameter("method") + "&oid="
 		+ request.getParameter("oid") + "&announcementBoardId=" + request.getParameter("announcementBoardId")
 		+ "&returnAction=" + request.getParameter("returnAction") + "&returnMethod="
 		+ request.getParameter("returnMethod") + "&tabularVersion=" + request.getParameter("tabularVersion");
 
 	ActionForward forward = new ActionForward(forwardTo);
-	forward.setModule("/manager");
+	forward.setModule("/messaging");
 
 	return forward;
     }

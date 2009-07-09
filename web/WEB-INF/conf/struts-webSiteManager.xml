@@ -10,7 +10,8 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 		
-
+		<form-bean name="unitAnnouncementBoardsManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.UnitAnnouncementBoardsManagementForm" dynamic="false"/>
+		
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -311,9 +312,21 @@
     </action>
     
      <action path="/manageUnitAnnouncementBoard"
-        type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ManagerAnnouncementForwardAction"
+        type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.AnnouncementForwardAction"
 		/>
             
+     <action path="/announcements/manageUnitAnnouncementBoard"
+              type="net.sourceforge.fenixedu.presentationTier.Action.messaging.UnitAnnouncementBoardsManagement"
+              name="unitAnnouncementBoardsManagementForm"
+              parameter="method"
+              validate="false"
+              scope="request"
+              >
+
+		  <forward name="editAnnouncementBoardApprovers" path="website-announcement-boards-approvers-management-edit-unit-board"/>
+     </action>
+     
+     
     <action path="/managePedagogicalCouncilSite" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PedagogicalCouncilSiteManagementDA">
         <forward name="start" path="pedagogicalCouncil-start"/>
         <forward name="editIntroduction" path="pedagogicalCouncil-edit-introduction"/>

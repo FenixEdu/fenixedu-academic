@@ -93,7 +93,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 	return builder.toString();
     }
 
-    private void addExtraParameter(HttpServletRequest request, StringBuilder builder, String name) {
+    protected void addExtraParameter(HttpServletRequest request, StringBuilder builder, String name) {
 	String parameter = request.getParameter(name);
 	if (parameter != null) {
 	    if (builder.length() != 0) {

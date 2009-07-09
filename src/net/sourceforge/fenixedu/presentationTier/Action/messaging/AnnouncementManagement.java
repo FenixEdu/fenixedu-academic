@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.AnnouncementArchive;
@@ -68,7 +69,11 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
 	request.setAttribute("contextPrefix", getContextPrefix(mapping, request));
 	request.setAttribute("extraParameters", getExtraRequestParameters(request));
+	AnnouncementBoard requestedAnnouncementBoard = getRequestedAnnouncementBoard(request);
 
+	if (requestedAnnouncementBoard != null && requestedAnnouncementBoard instanceof UnitAnnouncementBoard) {
+	    request.setAttribute("site", ((UnitAnnouncementBoard) requestedAnnouncementBoard).getUnit().getSite());
+	}
 	final Person person = getLoggedPerson(request);
 	if (person != null) {
 	    request.setAttribute("person", person);

@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -489,7 +490,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	}
 
 	String username = bean.getString();
-	Login login = Login.readLoginByUsername(username);
+	Login login = StringUtils.isEmpty(username) ? null : Login.readLoginByUsername(username);
 
 	if (login == null) {
 	    addActionMessage("addPersonError", request, "site.functions.addPerson.noUsername");
