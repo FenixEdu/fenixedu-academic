@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Reject Invalid Photo" deleteInvalidPhoto.sql IST

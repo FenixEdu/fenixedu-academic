@@ -1,0 +1,1 @@
+update PHOTOGRAPH set STATE = 'REJECTED' where ID_INTERNAL = 48739;
