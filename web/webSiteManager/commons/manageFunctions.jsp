@@ -64,7 +64,7 @@
                 <fr:property name="columnClasses" value=",,tdclear tderror1"/>
             </fr:layout>
             
-            <fr:destination name="invalid" path="<%= String.format("%s?method=selectPersonFunctions&amp;%s", actionName, context) %>"/>
+            <fr:destination name="invalid" path="<%= String.format("%s?method=manageFunctions&amp;%s", actionName, context) %>"/>
         </fr:edit>
 
         <html:submit styleClass="mtop05">
