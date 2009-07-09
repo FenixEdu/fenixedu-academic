@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create the missing table for the PersistentRoot" createPersistentRootTable.sql
+execute "Add new column to Process table" alterTableProcess.sql
