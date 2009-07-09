@@ -85,8 +85,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new UploadDocuments());
 
 	activities.add(new AddCustomAlert());
-
 	activities.add(new DeleteCustomAlert());
+
+	activities.add(new ValidatedByCandidate());
     }
 
     @StartActivity
@@ -441,10 +442,23 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    ((PhdCustomAlert) object).delete();
-
 	    return process;
 	}
+    }
 
+    static public class ValidatedByCandidate extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.getCandidacyProcess().executeActivity(userView,
+		    PhdProgramCandidacyProcess.ValidatedByCandidate.class.getSimpleName(), null);
+	    return process;
+	}
     }
 
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -698,7 +712,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return result;
     }
-
+    
     public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
@@ -710,4 +724,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return result;
     }
+
+    public boolean isValidatedByCandidate() {
+	return getCandidacyProcess().isValidatedByCandidate();
+    }
+
 }

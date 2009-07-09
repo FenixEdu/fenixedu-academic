@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQua
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
@@ -105,7 +106,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "uploadPhoto", path = "phdProgram.uploadPhoto"),
 
-@Forward(name = "out.of.candidacy.period", path = "phdProgram.outOfCandidacyPeriod")
+@Forward(name = "out.of.candidacy.period", path = "phdProgram.outOfCandidacyPeriod"),
+
+@Forward(name = "validateCandidacy", path = "phdProgram.validateCandidacy")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -761,7 +764,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	canEditPersonalInformation(request, hashCode.getPerson());
 
 	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
-	addValidationMessages(request, hashCode);
+	validateProcess(request, hashCode.getIndividualProgramProcess());
 
 	return mapping.findForward("viewCandidacy");
     }
@@ -838,7 +841,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	uploadBean.setIndividualProgramProcess(bean.getCandidacyHashCode().getIndividualProgramProcess());
 	request.setAttribute("documentByType", uploadBean);
 
-	addDocumentsValidationMessages(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
+	validateProcessDocuments(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
 
 	return mapping.findForward("uploadCandidacyDocuments");
     }
@@ -1279,41 +1282,84 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
 	    value = !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
 	}
-	request.setAttribute("canEditCandidacy", value);
+	request.setAttribute("canEditCandidacy", value || hashCode.getIndividualProgramProcess().isValidatedByCandidate());
     }
 
-    private void addValidationMessages(final HttpServletRequest request, final PhdProgramPublicCandidacyHashCode hashCode) {
-	final PhdIndividualProgramProcess process = hashCode.getIndividualProgramProcess();
+    private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
+	boolean result = true;
 
 	if (!process.hasPhdProgramFocusArea()) {
 	    addValidationMessage(request, "message.validation.missing.focus.area");
+	    result &= false;
 	}
 	if (process.getPhdCandidacyReferees().size() < MINIMUM_CANDIDACY_REFEREES) {
 	    addValidationMessage(request, "message.validation.missing.minimum.candidacy.referees", String
 		    .valueOf(MINIMUM_CANDIDACY_REFEREES));
+	    result &= false;
 	}
-	addDocumentsValidationMessages(request, process);
+	return validateProcessDocuments(request, process);
     }
 
-    private void addDocumentsValidationMessages(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
+    private boolean validateProcessDocuments(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
+	boolean result = true;
+
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.CV)) {
 	    addValidationMessage(request, "message.validation.missing.cv");
+	    result &= false;
 	}
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.ID_DOCUMENT)) {
 	    addValidationMessage(request, "message.validation.missing.id.document");
+	    result &= false;
 	}
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.MOTIVATION_LETTER)) {
 	    addValidationMessage(request, "message.validation.missing.motivation.letter");
+	    result &= false;
 	}
 	if (process.getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT) < process
 		.getQualifications().size()) {
 	    addValidationMessage(request, "message.validation.missing.qualification.documents", String.valueOf(process
 		    .getQualifications().size()));
+	    result &= false;
 	}
+
+	return result;
     }
 
     private void addValidationMessage(final HttpServletRequest request, final String key, final String... args) {
 	addActionMessage("validation", request, key, args);
+    }
+
+    public ActionForward prepareValidateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	validateProcess(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
+	request.setAttribute("candidacyBean", bean);
+
+	return mapping.findForward("validateCandidacy");
+    }
+
+    public ActionForward validateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	final PhdIndividualProgramProcess process = bean.getCandidacyHashCode().getIndividualProgramProcess();
+	
+	if (!validateProcess(request, process)) {
+	    request.setAttribute("candidacyBean", bean);
+	    return mapping.findForward("validateCandidacy");
+	}
+
+	try {
+	    ExecuteProcessActivity.run(process, ValidatedByCandidate.class, null);
+	    addSuccessMessage(request, "message.validation.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return prepareValidateCandidacy(mapping, actionForm, request, response);
+	}
+
+	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
     }
 
     @Override

@@ -138,6 +138,19 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class ValidatedByCandidate extends PhdActivity {
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    process.setValidatedByCandidate(true);
+	    return process;
+	}
+
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -157,6 +170,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new DeleteDocument());
 	activities.add(new EditCandidacyDate());
 	activities.add(new AddCandidacyReferees());
+	activities.add(new ValidatedByCandidate());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -164,6 +178,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
 	setCandidacyDate(bean.getCandidacyDate());
+	setValidatedByCandidate(false);
 
 	// TODO: receive person as argument?
 	// TODO: public candidacies, do not create student and user: pay
@@ -190,7 +205,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public boolean isPublicCandidacy() {
 	// TODO: add some state to hash code to be changed after create some
-	// student and identification or when changed by other entity
+	// student and identification or when changed by other entity?
 	return hasCandidacyHashCode();
     }
 
@@ -272,5 +287,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    }
 	}
 	return total;
+    }
+
+    public boolean isValidatedByCandidate() {
+	return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
     }
 }

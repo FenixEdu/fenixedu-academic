@@ -1089,4 +1089,7 @@
 	<definition name="phdProgram.outOfCandidacyPeriod" extends="definition.candidacy.process">
 		<put name="body" value="/phd/candidacy/publicProgram/outOfCandidacyPeriod.jsp"/>
 	</definition>
+	<definition name="phdProgram.validateCandidacy" extends="definition.candidacy.process">
+		<put name="body" value="/phd/candidacy/publicProgram/validateCandidacy.jsp"/>
+	</definition>
 </tiles-definitions>
