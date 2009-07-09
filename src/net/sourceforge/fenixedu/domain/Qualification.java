@@ -35,6 +35,19 @@ public class Qualification extends Qualification_Base {
 	}
     };
 
+    static public Comparator<Qualification> COMPARATOR_BY_MOST_RECENT_ATTENDED_END = new Comparator<Qualification>() {
+	@Override
+	public int compare(Qualification o1, Qualification o2) {
+	    if (o1.getAttendedEnd() == null) {
+		return 1;
+	    }
+	    if (o2.getAttendedEnd() == null) {
+		return -1;
+	    }
+	    return -1 * o1.getAttendedEnd().compareTo(o2.getAttendedEnd());
+	}
+    };
+
     public Qualification() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -615,6 +616,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPerson().getAssociatedQualifications();
     }
 
+    public List<Qualification> getQualificationsSortedByAttendedEndDate() {
+	final List<Qualification> result = new ArrayList<Qualification>(getQualifications());
+	Collections.sort(result, Qualification.COMPARATOR_BY_MOST_RECENT_ATTENDED_END);
+	return result;
+    }
+
     public List<PhdProgramCandidacyProcessDocument> getCandidacyProcessDocuments() {
 	return getCandidacyProcess().getDocuments();
     }
@@ -712,7 +719,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return result;
     }
-    
+
     public Set<PhdAlertMessage> getAlertMessagesFor(Person person) {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 

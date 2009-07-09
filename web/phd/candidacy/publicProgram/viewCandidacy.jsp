@@ -117,7 +117,7 @@
 <logic:notEmpty name="individualProgramProcess" property="qualifications">
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 	
-	<logic:iterate id="qualification" name="individualProgramProcess" property="qualifications" indexId="index" >
+	<logic:iterate id="qualification" name="individualProgramProcess" property="qualificationsSortedByAttendedEndDate" indexId="index" >
 		<strong><%= index.intValue() + 1 %>.</strong>
 		<fr:view name="qualification" schema="Phd.Qualification.view">
 			<fr:layout name="tabular">

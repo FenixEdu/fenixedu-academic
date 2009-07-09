@@ -1282,7 +1282,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
 	    value = !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
 	}
-	request.setAttribute("canEditCandidacy", value || hashCode.getIndividualProgramProcess().isValidatedByCandidate());
+	request.setAttribute("canEditCandidacy", value || !hashCode.getIndividualProgramProcess().isValidatedByCandidate());
     }
 
     private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
