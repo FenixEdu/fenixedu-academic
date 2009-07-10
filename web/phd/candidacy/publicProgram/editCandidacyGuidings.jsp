@@ -44,7 +44,7 @@
 		<logic:notEmpty name="candidacyBean" property="guidings">
 		
 			<div class="fs_form">
-			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+			<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 			<fieldset style="display: block;">
 			
 				<logic:iterate id="guidingBean" name="candidacyBean" property="guidings" indexId="index">

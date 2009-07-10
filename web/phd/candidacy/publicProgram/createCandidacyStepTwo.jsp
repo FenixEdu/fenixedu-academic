@@ -35,7 +35,7 @@
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
 
 	<div class="fs_form">
-		<p class="mvert05"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+		<p class="mvert05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 	</div>
 
 	<div class="fs_form">

@@ -43,7 +43,7 @@
 		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>	
 		
 		<logic:notEmpty name="qualificationBean">
-			<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+			<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 	
 			<div class="fs_form">
 			<fieldset style="display: block;">

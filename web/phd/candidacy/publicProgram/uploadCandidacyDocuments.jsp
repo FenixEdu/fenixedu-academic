@@ -55,7 +55,7 @@
 	</logic:messagesPresent>
 	
 	<p class="mtop15">
-		<em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em><br/>
+		<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
 		<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
 	</p>
 	

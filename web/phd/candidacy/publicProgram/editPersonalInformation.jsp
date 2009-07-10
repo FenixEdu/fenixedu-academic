@@ -53,7 +53,7 @@
 		</logic:equal>
 	
 		<logic:equal name="canEditPersonalInformation" value="true">
-				<p class="mtop15"><em><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></em></p>
+				<p class="mtop15"><em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em></p>
 				
 				<div class="fs_form">
 				<fieldset style="display: block;">
