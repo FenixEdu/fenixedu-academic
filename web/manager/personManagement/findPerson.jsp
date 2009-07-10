@@ -50,7 +50,7 @@
 		<td>
 			<html:text bundle="HTMLALT_RESOURCES" altKey="text.email" property="email" size="25"/>
 		</td>		
-	</tr>
+	</tr>		<tr>		<td>			<bean:message bundle="MANAGER_RESOURCES" key="label.mechanographical.number" />		</td>		<td>			<html:text bundle="HTMLALT_RESOURCES" altKey="text.mechanoGraphicalNumber" property="mechanoGraphicalNumber" size="25"/>		</td>			</tr>	
 	<tr>
 		<td>
 			<br /><br />

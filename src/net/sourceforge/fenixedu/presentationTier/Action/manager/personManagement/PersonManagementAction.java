@@ -83,14 +83,25 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    username = (String) findPersonForm.get("username");
 	    request.setAttribute("username", username);
 	}
+
 	String documentIdNumber = null;
 	if (findPersonForm.get("documentIdNumber") != null) {
 	    documentIdNumber = (String) findPersonForm.get("documentIdNumber");
 	    request.setAttribute("documentIdNumber", documentIdNumber);
 	}
 
+	String mechanoGraphicalNumber = null;
+	if (findPersonForm.get("mechanoGraphicalNumber") != null) {
+	    mechanoGraphicalNumber = (String) findPersonForm.get("mechanoGraphicalNumber");
+	    request.setAttribute("mechanoGraphicalNumber", mechanoGraphicalNumber);
+	}
+
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null,
 		null, null, null, null, null, null, null);
+
+	if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
+	    searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
+	}
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

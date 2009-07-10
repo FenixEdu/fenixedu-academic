@@ -321,6 +321,7 @@
     		<form-property name="email" type="java.lang.String"/>
     		<form-property name="username" type="java.lang.String"/>
     		<form-property name="documentIdNumber" type="java.lang.String"/>
+    		<form-property name="mechanoGraphicalNumber" type="java.lang.String"/>
     		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
     </form-bean>  
     
