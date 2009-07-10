@@ -15,7 +15,7 @@
 	<b>Sincronizar Calendário</b><br/>
     Pode ficar a par de novidades relacionadas com testes e exames directamente no seu calendário pessoal.
     A funcionalidade \"Sincronizar Calendário\" permite-lhe sincronizar o calendário de testes e exames com o seu calendário digital.
-    Para mais informações consulte a página <a href='/ciapl/student/ICalTimeTable.do?method=prepare'>Sincronizar Calendário</a>.
+    Para mais informações consulte a página <a href='/student/ICalTimeTable.do?method=prepare'>Sincronizar Calendário</a>.
 	</div>" escape="false"/>
 	  
 	<h:form>
