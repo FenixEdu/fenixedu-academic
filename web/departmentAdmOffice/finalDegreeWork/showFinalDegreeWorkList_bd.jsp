@@ -1,11 +1,12 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp"%>
+<html:xhtml/>
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
-
 <bean:define id="confirmDelete">return confirm('<bean:message key="message.confirm.delete"/>')</bean:define>
 
 <strong>
@@ -330,6 +331,17 @@
 	</html:submit>
 </html:form>
 <br />
+
+<logic:present name="collectionPager">
+	<logic:notEqual name="numberOfPages" value="1">
+		<p>
+			<bean:message key="label.pages" bundle="APPLICATION_RESOURCES"/>:
+			<bean:define id="pageUrl" >/coordinator/manageFinalDegreeWork.do?method=prepare&degreeCurricularPlanID=<%= degreeCurricularPlanID %>&amp;executionDegreeOID=<%= executionDegreeOID.toString() %></bean:define>
+			<cp:collectionPages url="<%= pageUrl %>" numberOfVisualizedPages="11" pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages"/>
+		</p>
+	</logic:notEqual>
+</logic:present>
+
 <logic:present name="finalDegreeWorkProposalHeaders">
 	<logic:greaterEqual name="finalDegreeWorkProposalHeaders" value="1">
 	<html:form action="/manageFinalDegreeWork">
@@ -370,7 +382,7 @@
 		        	<bean:message key="finalDegreeWorkProposalHeader.coorientatorName"/>
 	    	    </th>
 			</tr>
-			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
+			<logic:iterate id="finalDegreeWorkProposalHeader" name="resultPage">
 				<tr>
 					<th class="listClasses-header" rowspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.proposal"/>

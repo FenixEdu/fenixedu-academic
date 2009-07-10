@@ -89,6 +89,7 @@ import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
@@ -213,6 +214,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 		Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
 
 		request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
+		final CollectionPager<FinalDegreeWorkProposalHeader> collectionPager = new CollectionPager<FinalDegreeWorkProposalHeader>(finalDegreeWorkProposalHeaders, 50);
+		request.setAttribute("collectionPager", collectionPager);
+		request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
+
+		final String pageParameter = request.getParameter("pageNumber");
+		final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
+		request.setAttribute("pageNumber", page);
+		request.setAttribute("resultPage", collectionPager.getPage(page));
 	    }
 	} catch (FenixFilterException e) {
 	    ActionErrors actionErrors = new ActionErrors();
