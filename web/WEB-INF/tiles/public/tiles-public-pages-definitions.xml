@@ -295,7 +295,13 @@
 	</definition>
 	<definition name="execution-course-student-inquiries-result" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesResult.jsp"/>
-	</definition>	
+	</definition>
+	<definition name="execution-course-student-inquiries-full-result" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesFullResult.jsp"/>
+	</definition>
+	<definition name="execution-course-student-inquiries-result-notAvailable" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesResultsNotAvailable.jsp"/>
+	</definition>		
     <definition name="definition.public.executionCourse.site" extends="definition.public.executionCourse">
         <put name="page-context" value="/publico/executionCourse/siteContext.jsp"/>
     </definition>

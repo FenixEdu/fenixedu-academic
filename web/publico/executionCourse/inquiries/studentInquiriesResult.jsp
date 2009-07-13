@@ -19,77 +19,32 @@
 		<br/>
 
 		<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-		<%
-			final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-			final ExecutionYear executionYear = executionSemester.getExecutionYear();
-			final int year = executionYear.getBeginDateYearMonthDay().getYear();
-			// TODO: Refactor this... instead check if it is before now and has no response period defined.
-			if (year < 2007 || (year == 2007 && executionSemester.getSemester().intValue() == 1)) {
-		%>
-			    <bean:message key="message.teachingInquiries.noResults.msg2" bundle="INQUIRIES_RESOURCES"/>
-		<%
-			} else {			    
-				final InquiryResponsePeriod inquiryResponsePeriod = executionSemester.getInquiryResponsePeriod(InquiryResponsePeriodType.TEACHING);
-				if (inquiryResponsePeriod == null) {
-		%>
-				<bean:message key="message.teachingInquiries.noResults.msg4b" bundle="INQUIRIES_RESOURCES"/>
-					
-				<logic:present role="STUDENT">
-					<bean:message key="message.teachingInquiries.noResults.msg4b.participate" bundle="INQUIRIES_RESOURCES"/>
-					<html:link href="<%= request.getContextPath() + "/student/studentInquiry.do?method=showCoursesToAnswer"%>">
-						<bean:message key="message.teachingInquiries.noResults.msg4b.link" bundle="INQUIRIES_RESOURCES"/>	
-					</html:link>!
-				</logic:present>					
-					
-		<%
-				} else if (!inquiryResponsePeriod.getBegin().plusDays(12).isBeforeNow()) {
-		%>
-				    <bean:message key="message.teachingInquiries.noResults.msg3" bundle="INQUIRIES_RESOURCES"/>
-		<%
-				} else {
-		%>
-					<logic:empty name="studentInquiriesCourseResults">
-		<%
-						if (executionCourse.getAvailableForInquiries().booleanValue()) {
-		%>
-							<bean:message key="message.teachingInquiries.noResults.msg1" bundle="INQUIRIES_RESOURCES"/>
-		<%
-						} else {
-		%>
-							<bean:message key="message.teachingInquiries.noResults.msg0" bundle="INQUIRIES_RESOURCES"/>
-		<%
-						}
-		%>
-		<% %>
-					</logic:empty>
-					<logic:notEmpty name="studentInquiriesCourseResults">
-						<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
-							<p class="mtop2">
-								<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/> - 
-								<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
-									<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
-									<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
-								</html:link>
-							</p>
+	
+		<logic:notEmpty name="studentInquiriesCourseResults">
+			<logic:iterate id="courseResult" name="studentInquiriesCourseResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiriesCourseResultBean" >
+				<p class="mtop2"><b>
+					<bean:message key="link.teachingInquiries.cuResults" bundle="INQUIRIES_RESOURCES"/></b> - 
+					<html:link page="<%= "/executionCourse.do?method=showInquiryCourseResult&resultId=" + courseResult.getStudentInquiriesCourseResult().getIdInternal() %>" target="_blank">
+						<bean:write name="courseResult" property="studentInquiriesCourseResult.executionCourse.nome" /> - 				
+						<bean:write name="courseResult" property="studentInquiriesCourseResult.executionDegree.degreeCurricularPlan.name" />
+					</html:link>
+				</p>
 
-							<logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
-								<ul>
-									<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
-										<li>
-											<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
-												<bean:write name="teachingResult" property="professorship.person.name" />
-												&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
-											</html:link>
-										</li>			
-									</logic:iterate>
-								</ul>
-							</logic:notEmpty>
+				<logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
+					<ul>
+						<logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
+							<li>
+								<html:link page="<%= "/executionCourse.do?method=showInquiryTeachingResult&resultId=" + teachingResult.getIdInternal() %>" target="_blank">
+									<bean:write name="teachingResult" property="professorship.person.name" />
+									&nbsp;(<bean:message name="teachingResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>)<br/>
+								</html:link>
+							</li>			
 						</logic:iterate>
-					</logic:notEmpty>
-		<%
-				}
-			}
-		%>
+					</ul>
+				</logic:notEmpty>
+			</logic:iterate>
+		</logic:notEmpty>
+
 </logic:present>
 
 <logic:notPresent role="PERSON">
