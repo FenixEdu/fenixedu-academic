@@ -73,4 +73,11 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 	return executionSemester.getInquiryResponsePeriod(type);
     }
 
+    public boolean isBeforeNow() {
+	return getEnd().isBeforeNow();
+    }
+
+    public boolean isAfterNow() {
+	return getBegin().isAfterNow();
+    }
 }
