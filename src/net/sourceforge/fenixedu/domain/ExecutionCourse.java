@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -2097,6 +2098,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return answeredTeachingInquiries;
+    }
+    
+    public TeachingInquiry getResponsibleTeachingInquiry() {
+	for (Professorship professorship : getProfessorships()) {
+	    if (professorship.isResponsibleFor()) {
+		return professorship.getTeachingInquiry();
+	    }
+	}
+	return null;
     }
 
 }
