@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.AllStudentsByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurricularCourseStudentsByExecutionPeriodGroup;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeAllCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegateCurricularCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
@@ -187,6 +189,8 @@ public class GroupBuilderRegistry {
 		new ExecutionCourseResponsibleTeachersGroup.Builder());
 	register("executionCourseTeachersAndStudents", ExecutionCourseTeachersAndStudentsGroup.class,
 		new ExecutionCourseTeachersAndStudentsGroup.Builder());
+	register("degreesOfExecutionCourse", DegreesOfExecutionCourseGroup.class, new DegreesOfExecutionCourseGroup.Builder());
+	register("competenceCourse", CompetenceCourseGroup.class, new CompetenceCourseGroup.Builder());
 	register("degreeStudents", DegreeStudentsGroup.class, new DegreeStudentsGroup.Builder());
 	register("degreeTeachers", DegreeTeachersGroup.class, new DegreeTeachersGroup.Builder());
 	register("departmentEmployeesByYear", DepartmentEmployeesByExecutionYearGroup.class,

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
+import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -57,6 +59,8 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 
 	groups.add(new ExecutionCourseTeachersGroup(executionCourse));
 	groups.add(new ExecutionCourseTeachersAndStudentsGroup(executionCourse));
+	groups.add(new DegreesOfExecutionCourseGroup(executionCourse));
+	groups.add(new CompetenceCourseGroup(executionCourse));
 
 	return groups;
     }
