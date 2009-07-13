@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 public enum ApplicantOverallPromise {
-
-    UNABLE_TO_EVALUATE,
-
-    BELOW_AVERAGE,
-
-    AVERAGE,
-
-    GOOD,
-
+    
     OUTSTANDING,
-
-    EXCEPTIONAL;
+    
+    EXCELLENT, 
+    
+    GOOD,
+    
+    ABOVE_AVERAGE,
+    
+    BELOW_AVERAGE,
+    
+    UNABLE_TO_COMMENT;
 
 }

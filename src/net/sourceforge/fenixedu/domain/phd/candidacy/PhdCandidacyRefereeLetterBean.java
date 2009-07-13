@@ -4,16 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
-
-import org.joda.time.LocalDate;
-
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class PhdCandidacyRefereeLetterBean implements Serializable {
@@ -23,10 +18,16 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     private DomainReference<PhdCandidacyReferee> candidacyReferee;
     private DomainReference<PhdCandidacyRefereeLetter> letter;
 
-    private ApplicantOverallPromise overallPromise;
+    private String howLongKnownApplicant;
+    private String capacity;
     private String comparisonGroup;
-    private String rankValue;
-    private ApplicantRank rank;
+    private String rankInClass;
+
+    private ApplicantOverallPromise academicPerformance;
+    private ApplicantOverallPromise socialAndCommunicationSkills;
+    private ApplicantOverallPromise potencialToExcelPhd;
+
+    private String comments;
 
     private String refereeName;
     private String refereePosition;
@@ -35,26 +36,30 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
     private String refereeCity;
     private String refereeZipCode;
     private DomainReference<Country> refereeCountry;
-    private String refereePhone;
-    private LocalDate date;
-    private String comments;
 
     private transient InputStream file;
     private byte[] fileContent;
     private String filename;
 
-    private String existingFileFilename;
-    private String existingFileSize;
-
     public PhdCandidacyRefereeLetterBean() {
-	setDate(new LocalDate());
     }
 
     public PhdCandidacyRefereeLetterBean(final PhdCandidacyRefereeLetter letter) {
-	setOverallPromise(letter.getOverallPromise());
+
+	setCandidacyReferee(letter.getCandidacyReferee());
+	setLetter(letter);
+
+	setHowLongKnownApplicant(letter.getHowLongKnownApplicant());
+	setCapacity(letter.getCapacity());
 	setComparisonGroup(letter.getComparisonGroup());
-	setRank(letter.getRank());
-	setRankValue(letter.getRankValue());
+	setRankInClass(letter.getRankInClass());
+
+	setAcademicPerformance(letter.getAcademicPerformance());
+	setSocialAndCommunicationSkills(letter.getSocialAndCommunicationSkills());
+	setPotencialToExcelPhd(letter.getPotencialToExcelPhd());
+
+	setComments(letter.getComments());
+
 	setRefereeName(letter.getRefereeName());
 	setRefereePosition(letter.getRefereePosition());
 	setRefereeInstitution(letter.getRefereeInstitution());
@@ -62,19 +67,6 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 	setRefereeCity(letter.getRefereeCity());
 	setRefereeZipCode(letter.getRefereeZipCode());
 	setRefereeCountry(letter.getRefereeCountry());
-	setRefereePhone(letter.getRefereePhone());
-	setDate(letter.getDate());
-	setComments(letter.getComments());
-
-	if (letter.hasFile()) {
-	    // TODO: check this
-	    setExistingFileFilename(letter.getFile().getFilename());
-	    setExistingFileSize(new BigDecimal(letter.getFile().getSize()).divide(new BigDecimal("1024")).setScale(2,
-		    RoundingMode.HALF_EVEN).toString());
-	}
-
-	setCandidacyReferee(letter.getCandidacyReferee());
-	setLetter(letter);
     }
 
     public PhdCandidacyReferee getCandidacyReferee() {
@@ -93,36 +85,12 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 	this.letter = (letter != null) ? new DomainReference<PhdCandidacyRefereeLetter>(letter) : null;
     }
 
-    public ApplicantOverallPromise getOverallPromise() {
-	return overallPromise;
-    }
-
-    public void setOverallPromise(ApplicantOverallPromise overallPromise) {
-	this.overallPromise = overallPromise;
-    }
-
     public String getComparisonGroup() {
 	return comparisonGroup;
     }
 
     public void setComparisonGroup(String comparisonGroup) {
 	this.comparisonGroup = comparisonGroup;
-    }
-
-    public ApplicantRank getRank() {
-	return rank;
-    }
-
-    public void setRank(ApplicantRank rank) {
-	this.rank = rank;
-    }
-
-    public String getRankValue() {
-	return rankValue;
-    }
-
-    public void setRankValue(String rankValue) {
-	this.rankValue = rankValue;
     }
 
     public String getRefereeName() {
@@ -179,22 +147,6 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 
     public void setRefereeCountry(Country refereeCountry) {
 	this.refereeCountry = (refereeCountry != null) ? new DomainReference<Country>(refereeCountry) : null;
-    }
-
-    public String getRefereePhone() {
-	return refereePhone;
-    }
-
-    public void setRefereePhone(String refereePhone) {
-	this.refereePhone = refereePhone;
-    }
-
-    public LocalDate getDate() {
-	return date;
-    }
-
-    public void setDate(LocalDate date) {
-	this.date = date;
     }
 
     public String getComments() {
@@ -262,20 +214,60 @@ public class PhdCandidacyRefereeLetterBean implements Serializable {
 	setFile(null);
     }
 
-    public String getExistingFileFilename() {
-	return existingFileFilename;
+    public String getHowLongKnownApplicant() {
+	return howLongKnownApplicant;
     }
 
-    public void setExistingFileFilename(String existingFileFilename) {
-	this.existingFileFilename = existingFileFilename;
+    public void setHowLongKnownApplicant(String howLongKnownApplicant) {
+	this.howLongKnownApplicant = howLongKnownApplicant;
     }
 
-    public String getExistingFileSize() {
-	return existingFileSize;
+    public String getCapacity() {
+	return capacity;
     }
 
-    public void setExistingFileSize(String existingFileSize) {
-	this.existingFileSize = existingFileSize;
+    public void setCapacity(String capacity) {
+	this.capacity = capacity;
+    }
+
+    public String getRankInClass() {
+	return rankInClass;
+    }
+
+    public void setRankInClass(String rankInClass) {
+	this.rankInClass = rankInClass;
+    }
+
+    public ApplicantOverallPromise getAcademicPerformance() {
+	return academicPerformance;
+    }
+
+    public void setAcademicPerformance(ApplicantOverallPromise academicPerformance) {
+	this.academicPerformance = academicPerformance;
+    }
+
+    public ApplicantOverallPromise getSocialAndCommunicationSkills() {
+	return socialAndCommunicationSkills;
+    }
+
+    public void setSocialAndCommunicationSkills(ApplicantOverallPromise socialAndCommunicationSkills) {
+	this.socialAndCommunicationSkills = socialAndCommunicationSkills;
+    }
+
+    public ApplicantOverallPromise getPotencialToExcelPhd() {
+	return potencialToExcelPhd;
+    }
+
+    public void setPotencialToExcelPhd(ApplicantOverallPromise potencialToExcelPhd) {
+	this.potencialToExcelPhd = potencialToExcelPhd;
+    }
+
+    public void setCandidacyReferee(DomainReference<PhdCandidacyReferee> candidacyReferee) {
+	this.candidacyReferee = candidacyReferee;
+    }
+
+    public void setFileContent(byte[] fileContent) {
+	this.fileContent = fileContent;
     }
 
 }

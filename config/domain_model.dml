@@ -176,7 +176,6 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType       
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
-enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantRank														  as ApplicantRank;
 
 /*
  * Value types that need special externalization
@@ -6537,19 +6536,23 @@ class phd.candidacy.PhdCandidacyReferee extends PublicCandidacyHashCode {
 }
 
 class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
-	 ApplicantOverallPromise overallPromise;
-	 String comparisonGroup;
-	 ApplicantRank rank;
-	 String rankValue;
-	 String refereeName;
-	 String refereePosition;
-	 String refereeInstitution;
-	 String refereeAddress;
-	 String refereeCity;
-	 String refereeZipCode;
-	 String refereePhone;
-	 LocalDate date;
-	 String comments;
+	String howLongKnownApplicant;
+	String capacity;
+	String comparisonGroup;
+	String rankInClass;
+	
+	ApplicantOverallPromise academicPerformance;
+	ApplicantOverallPromise socialAndCommunicationSkills;
+	ApplicantOverallPromise potencialToExcelPhd;
+	
+	String comments;
+	
+	String refereeName;
+	String refereePosition;
+	String refereeInstitution;
+	String refereeAddress;
+	String refereeCity;
+	String refereeZipCode;
 }
 
 class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgramCandidacyProcessDocument {

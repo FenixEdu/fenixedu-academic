@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -1192,7 +1191,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 	final PhdCandidacyRefereeLetterBean bean = (PhdCandidacyRefereeLetterBean) getRenderedObject("createRefereeLetterBean");
 	request.setAttribute("createRefereeLetterBean", bean);
-	RenderUtils.invalidateViewState("createRefereeLetterBean.file");
+	RenderUtils.invalidateViewState("createRefereeLetterBean.comments");
 	bean.removeFile();
 	return mapping.findForward("createRefereeLetter");
     }

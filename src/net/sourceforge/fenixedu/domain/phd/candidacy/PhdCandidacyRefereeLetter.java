@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StringUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
@@ -18,20 +16,20 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
     }
 
     private void edit(final PhdCandidacyReferee referee, final PhdCandidacyRefereeLetterBean bean) {
-	check(referee, "error.PhdCandidacyRefereeLetter.invalid.referee");
-	check(referee.getPhdProgramCandidacyProcess(), "error.PhdCandidacyRefereeLetter.invalid.process");
 
-	check(bean.getOverallPromise(), "error.PhdCandidacyRefereeLetter.invalid.overallPromise");
-	check(bean.getComparisonGroup(), "error.PhdCandidacyRefereeLetter.invalid.comparisonGroup");
-	checkOr(bean.getRankValue(), bean.getRank(), "error.PhdCandidacyRefereeLetter.invalid.rank");
+	check(referee, bean);
 
 	setCandidacyReferee(referee);
 	setPhdProgramCandidacyProcess(referee.getPhdProgramCandidacyProcess());
 
-	setOverallPromise(bean.getOverallPromise());
+	setHowLongKnownApplicant(bean.getHowLongKnownApplicant());
+	setCapacity(bean.getCapacity());
 	setComparisonGroup(bean.getComparisonGroup());
-	setRankValue(bean.getRankValue());
-	setRank(bean.getRank());
+	setRankInClass(bean.getRankInClass());
+
+	setAcademicPerformance(bean.getAcademicPerformance());
+	setSocialAndCommunicationSkills(bean.getSocialAndCommunicationSkills());
+	setPotencialToExcelPhd(bean.getPotencialToExcelPhd());
 
 	setComments(bean.getComments());
 	if (bean.hasFileContent()) {
@@ -48,21 +46,30 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
 	setRefereeCity(bean.getRefereeCity());
 	setRefereeZipCode(bean.getRefereeZipCode());
 	setRefereeCountry(bean.getRefereeCountry());
-	setRefereePhone(bean.getRefereePhone());
-	setDate(bean.getDate());
+    }
+
+    private void check(final PhdCandidacyReferee referee, final PhdCandidacyRefereeLetterBean bean) {
+	check(referee, "error.PhdCandidacyRefereeLetter.invalid.referee");
+	check(referee.getPhdProgramCandidacyProcess(), "error.PhdCandidacyRefereeLetter.invalid.process");
+
+	check(bean.getHowLongKnownApplicant(), "error.PhdCandidacyRefereeLetter.invalid.howLongKnownApplicant");
+	check(bean.getCapacity(), "error.PhdCandidacyRefereeLetter.invalid.capacity");
+	check(bean.getComparisonGroup(), "error.PhdCandidacyRefereeLetter.invalid.comparisonGroup");
+
+	check(bean.getAcademicPerformance(), "error.PhdCandidacyRefereeLetter.invalid.academicPerformance");
+	check(bean.getSocialAndCommunicationSkills(), "error.PhdCandidacyRefereeLetter.invalid.socialAndCommunicationSkills");
+	check(bean.getPotencialToExcelPhd(), "error.PhdCandidacyRefereeLetter.invalid.potencialToExcelPhd");
+
+	check(bean.getRefereeName(), "error.PhdCandidacyRefereeLetter.invalid.refereeName");
+	check(bean.getRefereeInstitution(), "error.PhdCandidacyRefereeLetter.invalid.refereeInstitution");
+	check(bean.getRefereeAddress(), "error.PhdCandidacyRefereeLetter.invalid.refereeAddress");
+	check(bean.getRefereeCity(), "error.PhdCandidacyRefereeLetter.invalid.refereeCity");
+	check(bean.getRefereeZipCode(), "error.PhdCandidacyRefereeLetter.invalid.refereeZipCode");
+	check(bean.getRefereeCountry(), "error.PhdCandidacyRefereeLetter.invalid.refereeCountry");
     }
 
     private void edit(final PhdCandidacyRefereeLetterBean bean) {
 	edit(getCandidacyReferee(), bean);
-    }
-
-    private void checkOr(final String rankValue, final ApplicantRank rank, final String message) {
-	if (StringUtils.isEmpty(rankValue) && rank == null) {
-	    throw new DomainException(message);
-	}
-	if (!StringUtils.isEmpty(rankValue) && rank != null) {
-	    throw new DomainException(message);
-	}
     }
 
     public String getRefereeEmail() {
