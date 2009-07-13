@@ -98,6 +98,25 @@
 		</java>
     </target>
 
+    <target name="CheckOids"
+            depends="set-properties"
+    		description="Checks that all OIDs are ok.">
+		<java classname="pt.ist.fenixframework.pstm.repository.CheckOids" fork="true"
+				jvmargs="-Xmx1024m">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+			    <fileset dir="${build.home.webinf.lib}">
+			        <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+			<arg value="${db.alias}"/>
+			<arg value="${db.user}"/>
+			<arg value="${db.pass}"/>
+			<arg value="${build.home.webinf.classes}/domain_model.dml"/>
+		</java>
+    </target>
+
     <target name="initialize-database"
     		description="Generate sql schema for fenix database."
     		depends="compile">
