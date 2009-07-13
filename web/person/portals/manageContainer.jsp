@@ -67,12 +67,14 @@
 		</html:link>
 </logic:equal>
 
+<%--
 <html:link page="<%= "/contentManagement.do?method=activateLogging&amp;contentId=" + cid %>">
 	<bean:message key="label.activate.logging" bundle="CONTENT_RESOURCES"/>
 </html:link>
 <html:link page="<%= "/contentManagement.do?method=deactivateLogging&amp;contentId=" + cid %>">
 	<bean:message key="label.deactivate.logging" bundle="CONTENT_RESOURCES"/>
 </html:link>
+ --%>
 
 <fr:form action="<%= "/contentManagement.do?method=organizeStructure&amp;contentId=" + cid %>">
 	    <input alt="input.tree" id="tree-structure" type="hidden" name="tree" value="" />
