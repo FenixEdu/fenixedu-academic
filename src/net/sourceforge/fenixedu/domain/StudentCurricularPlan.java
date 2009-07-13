@@ -958,8 +958,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final ExecutionSemester executionSemester) {
 
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.getCurricularCourse().equals(curricularCourse)
-		    && enrolment.getExecutionPeriod().equals(executionSemester)) {
+	    if (enrolment.getCurricularCourse().equals(curricularCourse) && enrolment.isValid(executionSemester)) {
 		return enrolment;
 	    }
 	}
