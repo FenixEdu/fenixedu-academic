@@ -9,6 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento" />
 <meta name="description" content="O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal." />
+<logic:present name="dont-cache-pages-in-search-engines">
+	<logic:equal name="dont-cache-pages-in-search-engines" value="true">
+		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
+	</logic:equal>
+</logic:present>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css"/>
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/iststyle_print.css"/>
