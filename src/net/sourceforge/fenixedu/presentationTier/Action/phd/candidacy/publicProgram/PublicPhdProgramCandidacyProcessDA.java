@@ -130,11 +130,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     static private final int MINIMUM_HABILITATIONS_AND_CERTIFICATES = 2;
     static private final int MINIMUM_CANDIDACY_REFEREES = 3;
-    static private final int MAXIMUM_DAYS_TO_EDIT_CANDIDACY = 2;
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+
+	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	if (bean != null && bean.hasCandidacyHashCode()) {
@@ -517,7 +518,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	bean.setPhdGuidingLetters(createPhdGuidingLetters(bean));
 
 	request.setAttribute("candidacyBean", bean);
-	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepThree");
@@ -557,7 +557,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward createCandidacyStepThreeInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
-	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	return mapping.findForward("createCandidacyStepThree");
     }
 
@@ -606,8 +605,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward showCandidacySuccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	// TODO: remove if validate button created
-	request.setAttribute("maximumDaysToEditCandidacy", MAXIMUM_DAYS_TO_EDIT_CANDIDACY);
 	return mapping.findForward("showCandidacySuccess");
     }
 
@@ -1323,16 +1320,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     private void canEditCandidacy(final HttpServletRequest request, final PhdProgramPublicCandidacyHashCode hashCode) {
-	Boolean value = Boolean.FALSE;
-	if (hashCode.hasPhdProgramCandidacyProcess()) {
-	    final LocalDate whenCreated = hashCode.getPhdProgramCandidacyProcess().getWhenCreated().toLocalDate();
-	    value = !new LocalDate().isAfter(whenCreated.plusDays(MAXIMUM_DAYS_TO_EDIT_CANDIDACY));
-	}
-	request.setAttribute("canEditCandidacy", value || isValidatedByCandidate(hashCode));
+	request.setAttribute("canEditCandidacy", !isValidatedByCandidate(hashCode));
     }
 
     private boolean isValidatedByCandidate(final PhdProgramPublicCandidacyHashCode hashCode) {
-	return hashCode.hasPhdProgramCandidacyProcess() && !hashCode.getIndividualProgramProcess().isValidatedByCandidate();
+	return hashCode.hasPhdProgramCandidacyProcess() && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
     }
 
     private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {

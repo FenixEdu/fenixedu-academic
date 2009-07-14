@@ -164,8 +164,6 @@
 		</div>
 	</logic:notEmpty>
 
-	<bean:define id="maximumDaysToEditCandidacy" name="maximumDaysToEditCandidacy" />
-	<p><em><bean:message key="label.phd.public.documents.habilitationCertificateDocuments.note" arg0="<%= maximumDaysToEditCandidacy.toString() %>" bundle="PHD_RESOURCES" /></em></p>
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="<%= "javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='returnCreateCandidacyStepTwo';javascript:document.getElementById('candidacyForm').submit();" %>">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
