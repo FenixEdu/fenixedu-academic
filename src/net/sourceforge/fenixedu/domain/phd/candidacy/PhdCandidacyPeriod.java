@@ -21,7 +21,7 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 
     private void checkIfCanCreate(final DateTime start, final DateTime end) {
 	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (isPhdCandidacyPeriod(period) && period.intercept(start, end)) {
+	    if (!period.equals(this) && isPhdCandidacyPeriod(period) && period.intercept(start, end)) {
 		throw new DomainException("error.PhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
 	    }
 	}
