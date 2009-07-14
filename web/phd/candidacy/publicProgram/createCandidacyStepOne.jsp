@@ -40,7 +40,7 @@
 
 		<div class="fs_form">
 		<fieldset style="display: block;">
-			<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
+			<legend><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></legend>
 			<p class="mvert05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 			
 			<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
