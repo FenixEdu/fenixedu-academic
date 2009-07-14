@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix invalid OID columns and clean up some inconsistent data." updates.sql IST
