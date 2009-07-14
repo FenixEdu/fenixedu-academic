@@ -7,12 +7,14 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -140,8 +142,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("tipo aluno");
 	spreadsheet.setHeader("regime ingresso (código)");
 	spreadsheet.setHeader("regime ingresso (designação)");
+	spreadsheet.setHeader("estabelecimento de proveniência (qd aplicável)");
 	spreadsheet.setHeader("estabelecimento curso anterior");
 	spreadsheet.setHeader("curso anterior");
+	spreadsheet.setHeader("nº de inscrições no curso anterior");
 	spreadsheet.setHeader("nota ingresso");
 	spreadsheet.setHeader("opção ingresso");
 	spreadsheet.setHeader("nº outras candidaturas ensino superior");
@@ -159,14 +163,15 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("profissão aluno");
 	spreadsheet.setHeader("estatuto trabalhador estudante introduzido (info. RAIDES)");
 	spreadsheet.setHeader("estatuto trabalhador 1º semestre ano (info. oficial)");
+	spreadsheet.setHeader("estatuto trabalhador 2º semestre ano (info. oficial)");
 	spreadsheet.setHeader("bolseiro (info. RAIDES)");
+	spreadsheet.setHeader("instituição que atribuiu a bolsa (qd aplicável)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
 	spreadsheet.setHeader("habilitação anterior");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nº retenções ensino secundário");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
-	spreadsheet.setHeader("reingresso ano dados");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. disciplinas inscritas ano lectivo anterior dados");
 	spreadsheet.setHeader("nº. disciplinas aprovadas ano lectivo anterior dados");
@@ -179,7 +184,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("nº. ECTS 2º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
-	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
     }
 
     private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration, ExecutionYear executionYear,
@@ -187,8 +191,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	final Row row = sheet.addRow();
 	final Person graduate = registration.getPerson();
-	final CandidacyInformationBean candidacyInformationBean = getSourceRegistrationToExtractInformation(registration)
-		.getCandidacyInformationBean();
+	Registration sourceRegistration = getSourceRegistrationToExtractInformation(registration);
+	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
 
 	// Ciclo
 	row.setCell(cycleType.getDescription());
@@ -247,7 +251,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(registration.getCurricularYear());
 
 	// Ano de Ingresso no Curso Actual
-	row.setCell(getSourceRegistrationToExtractInformation(registration).getStartExecutionYear().getName());
+	row.setCell(sourceRegistration.getStartExecutionYear().getName());
 
 	// Nº de anos lectivos de inscrição no Curso actual
 
@@ -260,11 +264,16 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
 
 	// Regime de Ingresso no Curso Actual (código)
-	final Ingression ingression = getSourceRegistrationToExtractInformation(registration).getIngression();
+	final Ingression ingression = sourceRegistration.getIngression();
 	row.setCell(ingression != null ? ingression.getName() : "");
 
 	// Regime de Ingresso no Curso Actual (designação)
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
+
+	// Estabelecimento de proveniência: Instituição onde esteve inscrito mas
+	// não obteve grau, (e.g: transferencias, mudanças de curso...)
+	PrecedentDegreeInformation precedence = sourceRegistration.getPrecedentDegreeInformation();
+	row.setCell(precedence != null && precedence.getInstitutionName() != null ? precedence.getInstitutionName() : "");
 
 	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
 	// diferente CNA, e deve
@@ -275,6 +284,15 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// deve ser IST caso o aluno
 	// tenha estado matriculado noutro curso do IST)
 	row.setCell(candidacyInformationBean.getDegreeDesignation());
+
+	// Nº de inscrições no curso anterior"
+	if (sourceRegistration.getIndividualCandidacy() != null
+		&& sourceRegistration.getIndividualCandidacy().getPrecedentDegreeInformation() != null) {
+	    row.setCell(sourceRegistration.getIndividualCandidacy().getPrecedentDegreeInformation()
+		    .getNumberOfEnroledCurricularCourses());
+	} else {
+	    row.setCell("");
+	}
 
 	// Nota de Ingresso
 	row.setCell(candidacyInformationBean.getEntryGrade());
@@ -376,19 +394,39 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se referem
 	// os dados
-	boolean workingFound = false;
+	boolean working1Found = false;
 	for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
 	    if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
 		    && statute.isValidInExecutionPeriod(executionYear.getFirstExecutionPeriod())) {
-		workingFound = true;
+		working1Found = true;
 		break;
 	    }
 	}
-	row.setCell(String.valueOf(workingFound));
+	row.setCell(String.valueOf(working1Found));
+
+	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se referem
+	// os dados
+	boolean working2Found = false;
+	for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
+	    if (statute.getStatuteType() == StudentStatuteType.WORKING_STUDENT
+		    && statute.isValidInExecutionPeriod(executionYear.getLastExecutionPeriod())) {
+		working2Found = true;
+		break;
+	    }
+	}
+	row.setCell(String.valueOf(working2Found));
 
 	// Bolseiro (info. RAIDES)
 	if (candidacyInformationBean.getGrantOwnerType() != null) {
 	    row.setCell(candidacyInformationBean.getGrantOwnerType().getName());
+	} else {
+	    row.setCell("");
+	}
+
+	// Instituição que atribuiu a bolsa
+	if (candidacyInformationBean.getGrantOwnerType() != null
+		&& candidacyInformationBean.getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER)) {
+	    row.setCell(candidacyInformationBean.getGrantOwnerProviderName());
 	} else {
 	    row.setCell("");
 	}
@@ -423,9 +461,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	} else {
 	    row.setCell("");
 	}
-
-	// Reingresso no ano a que se referem os dados?
-	row.setCell(String.valueOf(registration.isReingression(executionYear)));
 
 	int totalEnrolmentsInPreviousYear = 0;
 	int totalEnrolmentsApprovedInPreviousYear = 0;
@@ -529,14 +564,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Tem situação de propinas no lectivo dos dados
 	row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasAnyGratuityEventFor(executionYear)));
-
-	// Se alunos de Doutoramento, inscrito na Parte Curricular?
-	if (registration.isDEA()) {
-	    row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasEnrolments(executionYear)));
-	} else {
-	    row.setCell("not DEA");
-	}
-
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {

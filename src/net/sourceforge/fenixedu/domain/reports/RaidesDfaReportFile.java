@@ -152,7 +152,6 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
-	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
     }
 
     private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration, ExecutionYear executionYear,
@@ -373,14 +372,6 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
 	// Tem situação de propinas no lectivo dos dados?
 	row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasAnyGratuityEventFor(executionYear)));
-
-	// Se alunos de Doutoramento, inscrito na Parte Curricular?
-	if (registration.isDEA()) {
-	    row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasEnrolments(executionYear)));
-	} else {
-	    row.setCell("not DEA");
-	}
-
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {
