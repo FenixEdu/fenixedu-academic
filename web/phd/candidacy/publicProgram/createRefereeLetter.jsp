@@ -105,9 +105,12 @@
 			
 				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
 			</fr:edit>
-			
-			<p><em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em></p>
 		</fieldset>
+		
+		<p>
+			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at.
+		</p>
+		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
 	</fr:form>
 </div>

@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramUnit;
@@ -23,6 +24,10 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	    PhdProgramCandidacyProcess candidacyProcess) {
 	this();
 	init(administrativeOffice, person, candidacyProcess);
+    }
+
+    public PhdProgramCandidacyEvent(final Person person, final PhdProgramCandidacyProcess process) {
+	this(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person, process);
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {

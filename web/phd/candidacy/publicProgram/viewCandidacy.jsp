@@ -33,8 +33,8 @@
 		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPhdIndividualProgramProcessInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/></a> |
 		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyGuidings';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/></a> | 
 		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyReferees';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/></a> | 
-		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a> <%-- |   
-		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareValidateCandidacy';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/></a>--%>
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a> |   
+		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareValidateCandidacy';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/></a>
 	</fr:form>
 
 </logic:equal>
@@ -100,8 +100,8 @@
 	</fr:layout>
 </fr:view>
 
+<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="guidings">
-	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/></h2>
 	
 	<logic:iterate id="guiding" name="individualProgramProcess" property="guidings" indexId="index" >
 		<strong><%= index.intValue() + 1 %>.</strong>
@@ -114,8 +114,8 @@
 	</logic:iterate>
 </logic:notEmpty>
 
+<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="qualifications">
-	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 	
 	<logic:iterate id="qualification" name="individualProgramProcess" property="qualificationsSortedByAttendedEndDate" indexId="index" >
 		<strong><%= index.intValue() + 1 %>.</strong>

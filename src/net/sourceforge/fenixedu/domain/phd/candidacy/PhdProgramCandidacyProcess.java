@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -197,9 +195,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	if (!bean.hasCollaborationType() || bean.getCollaborationType().generateCandidacyDebt()) {
-	    new PhdProgramCandidacyEvent(AdministrativeOffice
-		    .readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), bean.getOrCreatePersonFromBean(),
-		    this);
+	    new PhdProgramCandidacyEvent(person, this);
 	}
     }
 

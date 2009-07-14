@@ -826,12 +826,19 @@
 	<slot name="candidacyDate">
 		<property name="classes" value="bold nowrap"/>
 	</slot>
-	<slot name="phdProgramFocusArea.name" />
+	<slot name="phdProgramFocusArea" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdProgramFocusArea.name" />
+	</slot>
 	<slot name="thesisTitle" />
 	<slot name="collaborationTypeName" />
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
+</schema>
+
+<schema name="PhdProgramFocusArea.name" type="net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea" bundle="PHD_RESOURCES">
+	<slot name="name" />
 </schema>
 
 <schema name="Public.PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding" bundle="PHD_RESOURCES">

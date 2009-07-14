@@ -465,7 +465,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
-	checkParameters(person, bean.getExecutionYear(), bean.getFocusArea(), bean.getProgram());
+	checkParameters(person, bean.getExecutionYear());
 	setPerson(person);
 
 	setPhdProgramFocusArea(bean.getFocusArea());
@@ -487,15 +487,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    private void checkParameters(Person person, ExecutionYear executionYear, final PhdProgramFocusArea phdProgramFocusArea,
-	    final PhdProgram phdProgram) {
+    private void checkParameters(final Person person, final ExecutionYear executionYear) {
 
 	check(person, "error.phd.PhdIndividualProgramProcess.person.cannot.be.null");
 	check(executionYear, "error.phd.PhdIndividualProgramProcess.executionYear.cannot.be.null");
 
-	if (phdProgramFocusArea == null && phdProgram == null) {
-	    check(phdProgram, "error.phd.PhdIndividualProgramProcess.phdProgram.or.focus.area.cannot.be.null");
-	}
+	// if (phdProgramFocusArea == null && phdProgram == null) {
+	// check(phdProgram,
+	// "error.phd.PhdIndividualProgramProcess.phdProgram.or.focus.area.cannot.be.null");
+	// }
     }
 
     @Override
@@ -575,7 +575,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     private PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
 
-	checkParameters(getPerson(), getExecutionYear(), bean.getFocusArea(), bean.getPhdProgram());
+	checkParameters(getPerson(), getExecutionYear());
 
 	if (hasCandidacyProcess() && !getCandidacyDate().equals(bean.getCandidacyDate())) {
 	    getCandidacyProcess().executeActivity(userView, PhdProgramCandidacyProcess.EditCandidacyDate.class.getSimpleName(),
