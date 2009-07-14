@@ -22,11 +22,6 @@
 	<input type="hidden" id="methodForm" name="method" value="editPersonalInformation" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
 	
-	<noscript>
-		<html:submit onclick="this.form.method.value='prepareEditPersonalInformation';"><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES" /></html:submit>
-	</noscript>
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-
 <logic:equal name="canEditCandidacy" value="true">
 
 	<%--  ### Error Messages  ### --%>
@@ -34,6 +29,8 @@
 	<%--  ### End of Error Messages  ### --%>
 	
 	<%--  ### Operation Area ### --%>
+	
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
@@ -50,14 +47,15 @@
 				</fr:layout>
 			</fr:view>
 			<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
+			<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 		</logic:equal>
 	
 		<logic:equal name="canEditPersonalInformation" value="true">
-				<p class="mtop15"><em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em></p>
 				
 				<div class="fs_form">
 				<fieldset style="display: block;">
-					<legend><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></legend>
+					<legend><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></legend>
+					<p class="mtop05"><em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em></p>
 			
 					<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
 						schema="Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
@@ -71,7 +69,10 @@
 					</fr:edit>
 				</fieldset>
 				</div>
-				<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit></p>
+				<p class="mtop15">
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
+					<html:submit onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
+				</p>
 		</logic:equal>
 	</logic:present>
 </logic:equal>
