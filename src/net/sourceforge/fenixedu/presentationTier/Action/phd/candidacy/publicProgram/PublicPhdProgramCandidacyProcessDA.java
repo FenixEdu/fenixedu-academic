@@ -911,6 +911,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, "error.documentToUpload.not.valid");
 	}
 	RenderUtils.invalidateViewState();
+	validateProcessDocuments(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
+	
 	return mapping.findForward("uploadCandidacyDocuments");
     }
 

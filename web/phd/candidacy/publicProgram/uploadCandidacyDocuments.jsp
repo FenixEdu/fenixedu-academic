@@ -25,9 +25,6 @@
 
 <h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
-<h2><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES" /></h2>
-
-
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -37,7 +34,7 @@
 	<input type="hidden" id="methodForm" name="method" value="uploadDocuments" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<p><a href="#" onclick="javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a></p>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -46,18 +43,25 @@
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
+	<style>
+	.warning0 {
+	background-color: #fbf8cc;
+	/*color: #805500;*/
+	padding: 0.5em 1em;
+	}
+	</style>
+
+	<h2><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES" /></h2>
 	<logic:messagesPresent message="true" property="validation">
-		<div class="warning1 mbottom05" style="width: 700px;">
-			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
-				<p class="mvert025"><bean:write name="messages" /></p>
-			</html:messages>
+		<div class="warning0 mvert1">
+			<p class="mvert05">Please, upload the following documents:</p>
+			<ul class="mvert05">
+				<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
+					<li><bean:write name="messages" /></li>
+				</html:messages>
+			</ul>
 		</div>
 	</logic:messagesPresent>
-	
-	<p class="mtop15">
-		<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
-		<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
-	</p>
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
@@ -66,6 +70,12 @@
 	<logic:present name="candidacyBean">
 			<div class="fs_form">
 			<fieldset style="display: block;">
+				<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
+				<p class="mtop05">
+					<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
+					<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
+				</p>
+			
 				<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
@@ -76,7 +86,7 @@
 				</fr:edit>
 			</fieldset>
 			</div>	
-			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
+			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></html:submit></p>
 	</logic:present>
 </logic:equal>
 </fr:form>
