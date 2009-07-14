@@ -1224,15 +1224,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	final PhdCandidacyRefereeLetterBean bean;
-	if (hashCode.hasLetter()) {
-	    bean = new PhdCandidacyRefereeLetterBean(hashCode.getLetter());
-	} else {
+	if (!hashCode.hasLetter()) {
 	    bean = new PhdCandidacyRefereeLetterBean();
 	    bean.setCandidacyReferee(hashCode);
 	    bean.setRefereeName(hashCode.getName());
+	    request.setAttribute("createRefereeLetterBean", bean);
 	}
 
-	request.setAttribute("createRefereeLetterBean", bean);
 	return mapping.findForward("createRefereeLetter");
     }
 
@@ -1255,7 +1253,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	try {
-	    PhdCandidacyRefereeLetter.createOrEdit(bean);
+	    PhdCandidacyRefereeLetter.create(bean);
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
@@ -50,6 +51,10 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
 
     private void check(final PhdCandidacyReferee referee, final PhdCandidacyRefereeLetterBean bean) {
 	check(referee, "error.PhdCandidacyRefereeLetter.invalid.referee");
+	if (referee.hasLetter()) {
+	    throw new DomainException("error.PhdCandidacyRefereeLetter.referee.already.has.letter");
+	}
+
 	check(referee.getPhdProgramCandidacyProcess(), "error.PhdCandidacyRefereeLetter.invalid.process");
 
 	check(bean.getHowLongKnownApplicant(), "error.PhdCandidacyRefereeLetter.invalid.howLongKnownApplicant");
@@ -68,10 +73,6 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
 	check(bean.getRefereeCountry(), "error.PhdCandidacyRefereeLetter.invalid.refereeCountry");
     }
 
-    private void edit(final PhdCandidacyRefereeLetterBean bean) {
-	edit(getCandidacyReferee(), bean);
-    }
-
     public String getRefereeEmail() {
 	return getCandidacyReferee().getEmail();
     }
@@ -86,13 +87,8 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
     }
 
     @Service
-    static public PhdCandidacyRefereeLetter createOrEdit(PhdCandidacyRefereeLetterBean bean) {
-	if (bean.hasLetter()) {
-	    bean.getLetter().edit(bean);
-	    return bean.getLetter();
-	} else {
-	    return new PhdCandidacyRefereeLetter(bean.getCandidacyReferee(), bean);
-	}
+    static public PhdCandidacyRefereeLetter create(PhdCandidacyRefereeLetterBean bean) {
+	return new PhdCandidacyRefereeLetter(bean.getCandidacyReferee(), bean);
     }
 
 }

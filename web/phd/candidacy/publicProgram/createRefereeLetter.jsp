@@ -22,8 +22,9 @@
 <%--  ### End of Error Messages  ### --%>
 
 <logic:notPresent name="createRefereeLetterBean">
-	<em><bean:message key="label.phd.public.refereeLetter.no.information" bundle="PHD_RESOURCES" /></em>
-</logic:notPresent> 
+	<h2>Referee form</h2>
+	<em>Once you have submitted the recommendation, you will no longer be able to modify it.</em>
+</logic:notPresent>
 
 <logic:present name="createRefereeLetterBean">
 
@@ -108,10 +109,10 @@
 		</fieldset>
 		
 		<p>
-			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at.
+			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL.
 		</p>
 		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	</fr:form>
 </div>
 

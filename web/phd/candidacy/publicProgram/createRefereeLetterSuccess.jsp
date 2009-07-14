@@ -17,4 +17,4 @@
 <h1>IST-EPFL Joint Doctoral Initiative</h1>
 <%-- ### End of Title ### --%>
 
-<p><span class="success0"><bean:message key="message.application.submited.success" bundle="PHD_RESOURCES"/>.</span></p>
+<p>Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL .</p>
