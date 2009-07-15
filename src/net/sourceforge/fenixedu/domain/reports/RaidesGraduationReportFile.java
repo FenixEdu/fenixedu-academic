@@ -86,10 +86,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 		count++;
 
-//		if (count % 20 == 0) {
-//		    System.out.println("Processed " + count);
-//		    return;
-//		}
+		// if (count % 20 == 0) {
+		// System.out.println("Processed " + count);
+		// return;
+		// }
 	    }
 
 	}
@@ -205,10 +205,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 		executionYear.getPreviousExecutionYear()).getAverage().toPlainString() : "n/a");
 
 	// Data de Conclusão
-	row.setCell(conclusionDate != null ? conclusionDate.toString("yyyy/MM/dd") : "");
+	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
 
 	// Data de Início
-	row.setCell(registration.getStartDate() != null ? registration.getStartDate().toString("yyyy/MM/dd") : "");
+	row.setCell(registration.getStartDate() != null ? registration.getStartDate().toString("dd-MM-yyyy") : "");
 
 	// Nº de aluno
 	row.setCell(registration.getNumber());
@@ -226,7 +226,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(graduate.getGender().toString());
 
 	// Data de Nascimento
-	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("yyyy/MM/dd")
+	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("dd-MM-yyyy")
 		: "n/a");
 
 	// País de Nascimento
@@ -254,7 +254,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(sourceRegistration.getStartExecutionYear().getName());
 
 	// Nº de anos lectivos de inscrição no Curso actual
-
 	row.setCell(calculateNumberOfEnrolmentYears(registration));
 
 	// Regime de frequência curso: Tempo integral/Tempo Parcial
@@ -264,7 +263,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
 
 	// Regime de Ingresso no Curso Actual (código)
-	final Ingression ingression = sourceRegistration.getIngression();
+	Ingression ingression = sourceRegistration.getIngression();
+	if (ingression == null && sourceRegistration.getStudentCandidacy() != null) {
+	    ingression = sourceRegistration.getStudentCandidacy().getIngression();
+	}
 	row.setCell(ingression != null ? ingression.getName() : "");
 
 	// Regime de Ingresso no Curso Actual (designação)
@@ -529,7 +531,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateType().getDescription() : "n/a");
 
 	// Data do estado de matrícula
-	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateDate().toString("yyyy/MM/dd") : "n/a");
+	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateDate().toString("dd-MM-yyyy") : "n/a");
 
 	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo anterior ao
 	// que se referem os dados

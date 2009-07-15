@@ -178,10 +178,10 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 		conclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString() : "n/a");
 
 	// Data de conclusão
-	row.setCell(conclusionDate != null ? conclusionDate.toString("yyyy/MM/dd") : "");
+	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
 
 	// Data de Início
-	row.setCell(registration.getStartDate() != null ? registration.getStartDate().toString("yyyy/MM/dd") : "");
+	row.setCell(registration.getStartDate() != null ? registration.getStartDate().toString("dd-MM-yyyy") : "");
 
 	// Nº de aluno
 	row.setCell(registration.getNumber());
@@ -199,7 +199,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(graduate.getGender().toString());
 
 	// Data de Nascimento
-	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("yyyy/MM/dd")
+	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("dd-MM-yyyy")
 		: "n/a");
 
 	// País de Nascimento
