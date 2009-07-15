@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.CalculateDailyWorkSheetStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.strategys.ICalculateDailyWorkSheetStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
@@ -261,7 +263,9 @@ public class ExportClosedMonth extends FenixService {
 		clockings = new ArrayList<AssiduousnessRecord>();
 	    }
 	    workDaySheet = new WorkDaySheet(thisDay, workSchedule, clockings, list);
-	    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday, true);
+	    ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
+		    .getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
+	    workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet, isDayHoliday);
 	}
 	return workDaySheet;
     }

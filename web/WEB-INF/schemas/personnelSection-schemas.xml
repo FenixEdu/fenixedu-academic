@@ -1313,9 +1313,10 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="show.negativeAssiduousnessClosedMonths" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth">
 	<slot name="assiduousnessStatusHistory.assiduousness.employee" key="label.employee" schema="view.extraWorkEmployee" layout="values"/>
-	<slot name="thisMonthArticle66" key="label.a66Acumulated"/>
+	<slot name="accumulatedArticle66Days" key="label.accumulatedArticle66Days"/>
 	<slot name="article66" key="label.a66"/>
-	<slot name="thisMonthUnjustifiedDays" key="label.totalUnjustified"/>
+	<slot name="accumulatedUnjustifiedDays" key="label.accumulatedUnjustifiedDays"/>
+	<slot name="unjustifiedDays" key="label.unjustifiedDays"/>
 </schema>
 
 

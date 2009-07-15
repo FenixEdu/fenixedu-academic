@@ -56,6 +56,12 @@ public class EmployeeWorkSheet implements Serializable {
 
     AssiduousnessStatusHistory lastAssiduousnessStatusHistory;
 
+    Integer unjustifiedDays;
+
+    Integer accumulatedUnjustifiedDays;
+
+    Integer accumulatedArticle66Days;
+
     public EmployeeWorkSheet() {
     }
 
@@ -275,6 +281,34 @@ public class EmployeeWorkSheet implements Serializable {
 	    addComplementaryWeeklyRest(assiduousnessClosedMonth.getSaturdayBalance());
 	    addWeeklyRest(assiduousnessClosedMonth.getSundayBalance());
 	    addHolidayRest(assiduousnessClosedMonth.getHolidayBalance());
+	    setUnjustifiedDays(assiduousnessClosedMonth.getUnjustifiedDays());
+	    setAccumulatedUnjustifiedDays(assiduousnessClosedMonth.getAccumulatedUnjustifiedDays());
+	    setAccumulatedArticle66Days(assiduousnessClosedMonth.getAccumulatedArticle66Days());
 	}
     }
+
+    public Integer getUnjustifiedDays() {
+	return unjustifiedDays;
+    }
+
+    public void setUnjustifiedDays(Integer unjustifiedDays) {
+	this.unjustifiedDays = unjustifiedDays;
+    }
+
+    public Integer getAccumulatedUnjustifiedDays() {
+	return accumulatedUnjustifiedDays;
+    }
+
+    public void setAccumulatedUnjustifiedDays(Integer accumulatedUnjustifiedDays) {
+	this.accumulatedUnjustifiedDays = accumulatedUnjustifiedDays;
+    }
+
+    public Integer getAccumulatedArticle66Days() {
+	return accumulatedArticle66Days;
+    }
+
+    public void setAccumulatedArticle66Days(Integer accumulatedArticle66Days) {
+	this.accumulatedArticle66Days = accumulatedArticle66Days;
+    }
+
 }

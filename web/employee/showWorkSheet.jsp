@@ -77,6 +77,22 @@
 		<logic:present name="employeeWorkSheet" property="unjustifiedBalance">
 			<p class="mvert05"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString"/></b></p>
 		</logic:present>
+		<logic:present name="employeeWorkSheet" property="unjustifiedDays">
+			<logic:notEqual name="employeeWorkSheet" property="unjustifiedDays" value="0">
+				<p class="mvert05"><bean:message key="label.unjustifiedDays" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedDays"/></b></p>
+			</logic:notEqual>
+		</logic:present>
+		<logic:present name="employeeWorkSheet" property="accumulatedUnjustifiedDays">
+			<logic:notEqual name="employeeWorkSheet" property="accumulatedUnjustifiedDays" value="0">
+				<p class="mvert05"><bean:message key="label.accumulatedUnjustifiedDays" />: <b><bean:write name="employeeWorkSheet" property="accumulatedUnjustifiedDays"/></b></p>
+			</logic:notEqual>
+		</logic:present>
+		<logic:present name="employeeWorkSheet" property="accumulatedArticle66Days">
+			<logic:notEqual name="employeeWorkSheet" property="accumulatedArticle66Days" value="0">
+				<p class="mvert05"><bean:message key="label.accumulatedArticle66Days" />: <b><bean:write name="employeeWorkSheet" property="accumulatedArticle66Days"/></b></p>
+			</logic:notEqual>
+		</logic:present>
+		
 <%-- 	<logic:present name="employeeWorkSheet" property="complementaryWeeklyRest">
 			<p class="mvert05"><bean:message key="label.totalSaturday" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></p>
 		</logic:present>

@@ -59,6 +59,8 @@ public class WorkDaySheet implements Serializable {
 
     Boolean irregular;
 
+    Boolean unjustifiedDay;
+
     Duration balanceToCompensate;
 
     Duration extraWorkFirstLevel;
@@ -542,6 +544,20 @@ public class WorkDaySheet implements Serializable {
 	Duration currentBalance = getBalanceTime().toDurationFrom(new YearMonthDay().toDateTimeAtMidnight());
 	setBalanceTime(currentBalance.plus(workSchedule.getWorkScheduleType().getNormalWorkPeriod().getHalfWorkPeriodDuration())
 		.toPeriod());
+    }
+
+    public void setUnjustifiedDay() {
+	this.unjustifiedDay = true;
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+	addNote(bundle.getString("label.unjustifiedDay"));
+    }
+
+    public Boolean getUnjustifiedDay() {
+	return unjustifiedDay == null ? false : unjustifiedDay;
+    }
+
+    public void setUnjustifiedDay(Boolean unjustifiedDay) {
+	this.unjustifiedDay = unjustifiedDay;
     }
 
 }

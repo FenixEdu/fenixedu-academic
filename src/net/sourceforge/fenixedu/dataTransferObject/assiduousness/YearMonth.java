@@ -80,6 +80,12 @@ public class YearMonth implements Serializable {
 	return ClosedMonth.getCanCloseMonth(yearMonth);
     }
 
+    public boolean getCanOpenMonth() {
+	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
+		DateTimeFieldType.year(), getYear());
+	return ClosedMonth.getCanOpenMonth(yearMonth);
+    }
+
     public void addMonth() {
 	if (getNumberOfMonth() == 12) {
 	    setMonth(Month.values()[0]);

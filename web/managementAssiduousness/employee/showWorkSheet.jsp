@@ -89,14 +89,17 @@
 			<tr>
 				<td><bean:message key="label.totalBalance" />: <b><bean:write name="employeeWorkSheet" property="totalBalanceString" /></b></td>
 				<td><bean:message key="label.totalSaturday" />: <b><bean:write name="employeeWorkSheet" property="complementaryWeeklyRestString"/></b></td>
+				<td><bean:message key="label.unjustifiedDays" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedDays"/></b></td>
 			</tr>
 			<tr>
 				<td style="padding-right: 2em;"><bean:message key="label.totalUnjustified" />: <b><bean:write name="employeeWorkSheet" property="unjustifiedBalanceString" /></b></td>
 				<td><bean:message key="label.totalSunday" />: <b><bean:write name="employeeWorkSheet" property="weeklyRestString"/></b></td>
+				<td><bean:message key="label.accumulatedUnjustifiedDays" />: <b><bean:write name="employeeWorkSheet" property="accumulatedUnjustifiedDays"/></b></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td><bean:message key="label.totalHoliday" />: <b><bean:write name="employeeWorkSheet" property="holidayRestString"/></b></td>
+				<td><bean:message key="label.accumulatedArticle66Days" />: <b><bean:write name="employeeWorkSheet" property="accumulatedArticle66Days"/></b></td>
 			</tr>
 		</table>
 	</div>

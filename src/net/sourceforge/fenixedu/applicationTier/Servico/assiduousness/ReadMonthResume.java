@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.CalculateDailyWorkSheetStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.strategys.ICalculateDailyWorkSheetStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessMonthlyResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
@@ -94,7 +96,11 @@ public class ReadMonthResume extends FenixService {
 		    workDaySheet.setAssiduousnessRecords(getDayClockings(clockingsMap, thisDay));
 		    List<Leave> leavesList = getDayLeaves(leavesMap, thisDay);
 		    workDaySheet.setLeaves(leavesList);
-		    workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday, true);
+		    ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
+			    .getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
+		    workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet,
+			    isDayHoliday);
+
 		    if (workSchedule != null && !isDayHoliday) {
 			Duration thisDayBalance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
 			if (!workSchedule.getWorkScheduleType().getScheduleClockingType().equals(

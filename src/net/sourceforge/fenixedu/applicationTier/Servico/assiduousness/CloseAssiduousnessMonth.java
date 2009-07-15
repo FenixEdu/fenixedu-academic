@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.CalculateDailyWorkSheetStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.strategys.ICalculateDailyWorkSheetStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeBalanceResume;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
@@ -117,6 +119,7 @@ public class CloseAssiduousnessMonth extends FenixService {
 	double tolerance = 0;
 	double article17 = 0;
 	double article66 = 0;
+	int unjustifiedDays = 0;
 	int maximumWorkingDays = 0;
 	Integer workedDaysWithBonusDaysDiscount = 0;
 	Integer workedDaysWithA17VacationsDaysDiscount = 0;
@@ -133,12 +136,14 @@ public class CloseAssiduousnessMonth extends FenixService {
 		workDaySheet.setAssiduousnessRecords(getDayClockings(clockingsMap, thisDay));
 		List<Leave> leavesList = getDayLeaves(leavesMap, thisDay);
 		workDaySheet.setLeaves(leavesList);
-		workDaySheet = assiduousnessStatusHistory.getAssiduousness().calculateDailyBalance(workDaySheet, isDayHoliday,
-			true);
+		ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
+			.getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
+		workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousnessStatusHistory
+			.getAssiduousness(), workDaySheet, isDayHoliday, true);
 		Duration thisDayWorkedTime = Duration.ZERO;
 		Duration timeLeaveToDiscount = Duration.ZERO;
 		if (workSchedule != null && !isDayHoliday) {
-		    final StringBuilder notes = new StringBuilder();
+		    final StringBuilder notes = new StringBuilder(workDaySheet.getNotes());
 		    for (final Leave leave : leavesList) {
 			if (notes.length() != 0) {
 			    notes.append(" / ");
@@ -253,6 +258,9 @@ public class CloseAssiduousnessMonth extends FenixService {
 			thisDayWorkedTime = thisDayWorkedTime.minus(timeLeaveToDiscount);
 		    }
 		    totalWorkedTime = totalWorkedTime.plus(thisDayWorkedTime);
+		    if (workDaySheet.getUnjustifiedDay()) {
+			unjustifiedDays = unjustifiedDays + 1;
+		    }
 		} else {
 		    StringBuilder notes = new StringBuilder();
 		    for (final Leave leave : leavesList) {
@@ -335,31 +343,19 @@ public class CloseAssiduousnessMonth extends FenixService {
 		    totalUnjustified);
 	}
 
-	assiduousnessClosedMonth.setAllUnjustifiedAndAccumulatedArticle66();
+	assiduousnessClosedMonth.setAllUnjustifiedAndAccumulatedArticle66(unjustifiedDays);
 
-	int unjustifiedDays = 0;
-	int article66Days = 0;
-	double unjustified = assiduousnessClosedMonth.getAccumulatedUnjustified();
-	double accumulatedArticle66 = assiduousnessClosedMonth.getAccumulatedArticle66();
-	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = assiduousnessClosedMonth
-		.getPreviousAssiduousnessClosedMonth();
-	if (previousAssiduousnessClosedMonth != null) {
-	    unjustifiedDays = (int) Math.floor(unjustified
-		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedUnjustified()));
-	    article66Days = (int) Math.floor(accumulatedArticle66
-		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedArticle66()));
-	} else {
-	    unjustifiedDays = (int) Math.floor(unjustified);
-	    article66Days = (int) Math.floor(accumulatedArticle66);
-	}
+	Integer accumulatedUnjustifiedDays = assiduousnessClosedMonth.getAccumulatedUnjustifiedDays();
+	Integer article66Days = assiduousnessClosedMonth.getAccumulatedArticle66Days();
 	assiduousnessClosedMonth
-		.setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount - unjustifiedDays >= 0 ? workedDaysWithBonusDaysDiscount
-			- unjustifiedDays
+		.setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount - accumulatedUnjustifiedDays >= 0 ? workedDaysWithBonusDaysDiscount
+			- accumulatedUnjustifiedDays
 			: 0);
 	assiduousnessClosedMonth.setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount
-		- unjustifiedDays >= 0 ? workedDaysWithA17VacationsDaysDiscount - unjustifiedDays : 0);
+		- accumulatedUnjustifiedDays >= 0 ? workedDaysWithA17VacationsDaysDiscount - accumulatedUnjustifiedDays : 0);
 
-	if (unjustifiedDays > 0 || article66Days > 0 || assiduousnessClosedMonth.getArticle66().doubleValue() > 0) {
+	if (unjustifiedDays > 0 || accumulatedUnjustifiedDays > 0 || article66Days > 0
+		|| assiduousnessClosedMonth.getArticle66().doubleValue() > 0) {
 	    return assiduousnessClosedMonth;
 	}
 	return null;

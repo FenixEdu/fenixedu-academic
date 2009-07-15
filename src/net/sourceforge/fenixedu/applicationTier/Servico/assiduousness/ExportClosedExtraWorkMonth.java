@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.LeaveBean;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecordMonthIndex;
@@ -128,9 +129,10 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	StringBuilder extraWorkResult = new StringBuilder();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    state.unjustifiedDays = new ArrayList<LocalDate>();
-	    String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
-		    .getAssiduousnessStatusHistory().getAssiduousness()), state);
 	    if (getWorkAbsences) {
+		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
+			.getAssiduousnessStatusHistory().getAssiduousness()), state);
+
 		result.append(lineResult);
 		List<LeaveBean> leaveBeanList = allUnpaidLicenseLeaves.get(assiduousnessClosedMonth
 			.getAssiduousnessStatusHistory().getAssiduousness());
@@ -328,25 +330,21 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    }
 	}
 
-	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = assiduousnessClosedMonth
-		.getPreviousAssiduousnessClosedMonth();
-	double previousA66 = 0;
-	double previousUnjustified = 0;
-	double previousNotCompleteA66 = 0;
-	double previousNotCompleteUnjustified = 0;
-	if (previousAssiduousnessClosedMonth != null) {
-	    previousA66 = previousAssiduousnessClosedMonth.getAccumulatedArticle66();
-	    previousNotCompleteA66 = previousA66 - (int) previousA66;
-	    previousUnjustified = previousAssiduousnessClosedMonth.getAccumulatedUnjustified();
-	    previousNotCompleteUnjustified = previousUnjustified - (int) previousUnjustified;
-	}
-	int A66ToDiscount = (int) ((assiduousnessClosedMonth.getAccumulatedArticle66() - previousA66) + previousNotCompleteA66);
-	int unjustifiedToDiscount = (int) ((assiduousnessClosedMonth.getAccumulatedUnjustified() - previousUnjustified) + previousNotCompleteUnjustified);
+	int A66ToDiscount = assiduousnessClosedMonth.getAccumulatedArticle66Days();
+	int unjustifiedToDiscount = assiduousnessClosedMonth.getAccumulatedUnjustifiedDays();
 
 	if (A66ToDiscount != 0) {
 	    result
 		    .append(getLeaveLine(assiduousnessClosedMonth, state.a66JustificationMotive, A66ToDiscount, leavesBeans,
 			    state));
+	}
+
+	for (AssiduousnessClosedDay assiduousnessClosedDay : assiduousnessClosedMonth.getAssiduousnessClosedDays()) {
+	    if (assiduousnessClosedDay.getUnjustifiedDay()) {
+		result.append(getLine(assiduousnessClosedMonth, state.unjustifiedJustificationMotive, assiduousnessClosedDay
+			.getDay()));
+		state.unjustifiedDays.add(assiduousnessClosedDay.getDay());
+	    }
 	}
 
 	if (unjustifiedToDiscount != 0) {
@@ -363,19 +361,26 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		leavesBeans, state);
 	StringBuilder line = new StringBuilder();
 	for (LocalDate day : daysToUnjustify) {
-	    LocalDate nextMontDate = day.plusMonths(1);
-	    String code = justificationMotive.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
-	    if (!emptyCodes.contains(code)) {
-		line.append(nextMontDate.getYear()).append(fieldSeparator);
-		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
-		line.append(
-			employeeNumberFormat.format(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
-				.getEmployee().getEmployeeNumber())).append(fieldSeparator);
-		line.append("F").append(fieldSeparator);
-		line.append(code).append(fieldSeparator);
-		line.append(dateFormat.print(day)).append(fieldSeparator).append(dateFormat.print(day)).append(fieldSeparator)
-			.append("100").append(fieldSeparator).append("100\r\n");
-	    }
+	    line.append(getLine(assiduousnessClosedMonth, justificationMotive, day));
+	}
+	return line;
+    }
+
+    private static StringBuilder getLine(AssiduousnessClosedMonth assiduousnessClosedMonth,
+	    JustificationMotive justificationMotive, LocalDate day) {
+	LocalDate nextMontDate = day.plusMonths(1);
+	String code = justificationMotive.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
+	StringBuilder line = new StringBuilder();
+	if (!emptyCodes.contains(code)) {
+	    line.append(nextMontDate.getYear()).append(fieldSeparator);
+	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
+	    line.append(
+		    employeeNumberFormat.format(assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness()
+			    .getEmployee().getEmployeeNumber())).append(fieldSeparator);
+	    line.append("F").append(fieldSeparator);
+	    line.append(code).append(fieldSeparator);
+	    line.append(dateFormat.print(day)).append(fieldSeparator).append(dateFormat.print(day)).append(fieldSeparator)
+		    .append("100").append(fieldSeparator).append("100\r\n");
 	}
 	return line;
     }

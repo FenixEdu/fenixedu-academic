@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.CalculateDailyWorkSheetStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.assiduousness.strategys.ICalculateDailyWorkSheetStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeWorkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -102,7 +104,7 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	Duration totalWeeklyRestBalance = Duration.ZERO;
 	Duration totalHolidayBalance = Duration.ZERO;
 	Duration totalBalanceToCompensate = Duration.ZERO;
-
+	int unjustifiedDays = 0;
 	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    WorkDaySheet workDaySheet = new WorkDaySheet();
 	    workDaySheet.setDate(thisDay);
@@ -142,16 +144,26 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 		    workDaySheet.setNotes(notes.toString());
 
 		    if (thisDay.isBefore(today)) {
-			workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
+			ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
+				.getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
+			workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet,
+				isDayHoliday);
+
 			Duration balance = workDaySheet.getBalanceTime().toDurationFrom(new DateMidnight());
 			totalBalance = totalBalance.plus(balance);
 			totalUnjustified = totalUnjustified.plus(workDaySheet.getUnjustifiedTime());
 			setExtraWork(workDaySheet, balance, extraWork);
 		    }
 		    workSheet.add(workDaySheet);
+		    if (workDaySheet.getUnjustifiedDay()) {
+			unjustifiedDays++;
+		    }
 		} else {
 		    if (!thisDay.equals(today)) {
-			workDaySheet = assiduousness.calculateDailyBalance(workDaySheet, isDayHoliday);
+			ICalculateDailyWorkSheetStrategy calculateDailyWorkSheetStrategy = CalculateDailyWorkSheetStrategyFactory
+				.getInstance().getCalculateDailyWorkSheetStrategy(thisDay);
+			workDaySheet = calculateDailyWorkSheetStrategy.calculateDailyBalance(assiduousness, workDaySheet,
+				isDayHoliday, false);
 			totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance.plus(workDaySheet
 				.getComplementaryWeeklyRest());
 			totalWeeklyRestBalance = totalWeeklyRestBalance.plus(workDaySheet.getWeeklyRest());
@@ -182,7 +194,7 @@ public class ReadAssiduousnessWorkSheet extends FenixService {
 	}
 	EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet(assiduousness.getEmployee(), beginDate, endDate);
 	employeeWorkSheet.setWorkDaySheetList(workSheet);
-
+	employeeWorkSheet.setUnjustifiedDays(unjustifiedDays);
 	employeeWorkSheet.setTotalBalance(totalBalance);
 	employeeWorkSheet.setUnjustifiedBalance(totalUnjustified);
 	employeeWorkSheet.setComplementaryWeeklyRest(totalComplementaryWeeklyRestBalance);

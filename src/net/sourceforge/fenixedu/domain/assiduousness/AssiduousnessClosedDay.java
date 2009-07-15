@@ -22,6 +22,7 @@ public class AssiduousnessClosedDay extends AssiduousnessClosedDay_Base {
 	setNightlyExtraWorkSecondLevel(workDaySheet.getNightExtraWorkSecondLevel());
 	setNightlyExtraWorkSecondLevelWithLimit(workDaySheet.getNightExtraWorkSecondLevelWithLimit());
 	setNightlyWorkBalance(workDaySheet.getNightWorkBalance());
+	setUnjustifiedDay(workDaySheet.getUnjustifiedDay());
     }
 
     public void delete() {

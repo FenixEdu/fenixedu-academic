@@ -7,24 +7,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
-import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
-import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -210,100 +203,6 @@ public class Assiduousness extends Assiduousness_Base {
 	    }
 	}
 	return leavesMap;
-    }
-
-    private Timeline getTimeline(WorkDaySheet workDaySheet, List<Leave> timeLeaves) {
-	Timeline timeline = new Timeline(workDaySheet.getWorkSchedule().getWorkScheduleType());
-	Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
-	timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), timeLeaves, attributesIt, workDaySheet.getDate());
-	return timeline;
-    }
-
-    public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, boolean isDayHoliday) {
-	return calculateDailyBalance(workDaySheet, isDayHoliday, false);
-    }
-
-    public WorkDaySheet calculateDailyBalance(WorkDaySheet workDaySheet, boolean isDayHoliday, boolean closingMonth) {
-	if (workDaySheet.getWorkSchedule() != null
-		&& !isDayHoliday
-		&& (!workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType().equals(
-			ScheduleClockingType.NOT_MANDATORY_CLOCKING) || closingMonth)) {
-
-	    List<Leave> dayOccurrences = getLeavesByType(workDaySheet.getLeaves(), JustificationType.OCCURRENCE);
-
-	    if (dayOccurrences.isEmpty() || !workDaySheet.getAssiduousnessRecords().isEmpty()) {
-		List<Leave> timeLeaves = getLeavesByType(workDaySheet.getLeaves(), JustificationType.TIME);
-		List<Leave> halfOccurrenceTimeLeaves = getLeavesByType(workDaySheet.getLeaves(),
-			JustificationType.HALF_OCCURRENCE_TIME);
-		List<Leave> balanceLeaves = getLeavesByType(workDaySheet.getLeaves(), JustificationType.BALANCE);
-		balanceLeaves.addAll(getLeavesByType(workDaySheet.getLeaves(), JustificationType.HALF_MULTIPLE_MONTH_BALANCE));
-		List<Leave> balanceOcurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(),
-			JustificationType.MULTIPLE_MONTH_BALANCE);
-		List<Leave> halfOccurrenceLeaves = getLeavesByType(workDaySheet.getLeaves(), JustificationType.HALF_OCCURRENCE);
-		if (!workDaySheet.getAssiduousnessRecords().isEmpty() || !timeLeaves.isEmpty()) {
-		    workDaySheet.setTimeline(getTimeline(workDaySheet, timeLeaves));
-		    workDaySheet = workDaySheet.getWorkSchedule().calculateWorkingPeriods(workDaySheet, timeLeaves);
-		    if (!dayOccurrences.isEmpty()) {
-			workDaySheet.setIrregular(true);
-		    }
-		} else {
-		    workDaySheet.setBalanceTime(Duration.ZERO.minus(
-			    workDaySheet.getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())
-			    .toPeriod());
-		    if (workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod() != null) {
-			workDaySheet.setUnjustifiedTime(workDaySheet.getWorkSchedule().getWorkScheduleType().getFixedWorkPeriod()
-				.getWorkPeriodDuration());
-		    }
-		    if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty() && halfOccurrenceTimeLeaves.isEmpty()) {
-			workDaySheet.addNote("FALTA");
-		    }
-		}
-		workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
-		workDaySheet.discountBalanceOcurrenceLeaveInFixedPeriod(balanceOcurrenceLeaves);
-		workDaySheet.discountBalance(halfOccurrenceTimeLeaves);
-
-		if (!halfOccurrenceLeaves.isEmpty()) {
-		    workDaySheet.discountHalfOccurrence();
-		}
-
-	    }
-	} else {
-	    if (!workDaySheet.getAssiduousnessRecords().isEmpty()) {
-		DateTime firstClocking = workDaySheet.getAssiduousnessRecords().get(0).getDate();
-		DateTime lastClocking = workDaySheet.getAssiduousnessRecords().get(
-			workDaySheet.getAssiduousnessRecords().size() - 1).getDate();
-		final Timeline timeline = new Timeline(workDaySheet.getDate(), firstClocking, lastClocking);
-		Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
-		final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(workDaySheet.getDate().toDateTimeAtStartOfDay());
-		if (dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY) || isDayHoliday) {
-		    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), new ArrayList<Leave>(), attributesIt,
-			    workDaySheet.getDate());
-		} else {
-		    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), workDaySheet.getLeaves(), attributesIt,
-			    workDaySheet.getDate());
-		}
-		Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints().iterator().next(),
-			new TimePoint(defaultStartWeeklyRestDay, AttributeType.NULL), new TimePoint(lastClocking.toLocalTime(),
-				lastClocking.toLocalDate().equals(workDaySheet.getDate()) ? false : true, AttributeType.NULL),
-			null, null);
-		Duration weeklyRestDuration = worked;
-		// TODO Remove coments in 2007
-		// if (worked.isLongerThan(normalWorkDayDuration)) {
-		// weeklyRestDuration = normalWorkDayDuration;
-		// }
-
-		if (isDayHoliday) {
-		    workDaySheet.setHolidayRest(weeklyRestDuration);
-		} else if (dayOfWeek.equals(WeekDay.SATURDAY)) {
-		    workDaySheet.setComplementaryWeeklyRest(weeklyRestDuration);
-		} else if (dayOfWeek.equals(WeekDay.SUNDAY)) {
-		    workDaySheet.setWeeklyRest(weeklyRestDuration);
-		}
-		// TODO Remove coment in 2007
-		// workDaySheet.setBalanceTime(worked.toPeriod());
-	    }
-	}
-	return workDaySheet;
     }
 
     public List<Leave> getLeavesByType(List<Leave> leaves, JustificationType justificationType) {

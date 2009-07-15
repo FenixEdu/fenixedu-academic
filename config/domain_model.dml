@@ -2208,6 +2208,8 @@ class DomainObject {
 		Duration sundayBalance;
 		Double tolerance;
 		Integer unjustifiedDays;
+		Integer accumulatedArticle66Days;
+		Integer accumulatedUnjustifiedDays;
 		Double vacations;
 		Integer maximumWorkingDays;
 		Integer workedDaysWithBonusDaysDiscount;
@@ -2233,6 +2235,7 @@ class DomainObject {
 	    Duration nightlyExtraWorkSecondLevel;
 	    Duration nightlyExtraWorkSecondLevelWithLimit;
 	    Duration nightlyWorkBalance;		
+	    Boolean unjustifiedDay;
 	}
 
 	class assiduousness.AssiduousnessExemption extends DomainObject {

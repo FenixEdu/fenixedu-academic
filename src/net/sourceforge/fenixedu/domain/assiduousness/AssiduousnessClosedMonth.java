@@ -37,7 +37,6 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setArticle66(article66);
 	setAccumulatedArticle66(0.0);
 	setAccumulatedUnjustified(0.0);
-	setUnjustifiedDays(0);
 	setMaximumWorkingDays(maximumWorkingDays);
 	setWorkedDaysWithBonusDaysDiscount(workedDaysWithBonusDaysDiscount);
 	setWorkedDaysWithA17VacationsDaysDiscount(workedDaysWithA17VacationsDaysDiscount);
@@ -153,16 +152,20 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	deleteDomainObject();
     }
 
-    public void setAllUnjustifiedAndAccumulatedArticle66() {
+    public void setAllUnjustifiedAndAccumulatedArticle66(int unjustifiedDays) {
 	AssiduousnessClosedMonth lastAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
 	double unjustified = 0;
 	double a66 = 0;
 	double previousAccumulatedA66 = 0;
 	double previousUnjustified = 0;
+	double previousNotCompleteA66 = 0;
+	double previousNotCompleteUnjustified = 0;
 
 	if (lastAssiduousnessClosedMonth != null) {
 	    previousAccumulatedA66 = lastAssiduousnessClosedMonth.getAccumulatedArticle66();
+	    previousNotCompleteA66 = previousAccumulatedA66 - (int) previousAccumulatedA66;
 	    previousUnjustified = lastAssiduousnessClosedMonth.getAccumulatedUnjustified();
+	    previousNotCompleteUnjustified = previousUnjustified - (int) previousUnjustified;
 	}
 	LocalDate beginDate = new LocalDate(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()), getClosedMonth()
 		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
@@ -189,7 +192,12 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	setAccumulatedArticle66(previousAccumulatedA66 + a66);
 	setAccumulatedUnjustified(previousUnjustified + unjustified);
 
-	int countUnjustifiedWorkingDays = 0;
+	int A66ToDiscount = (int) (a66 + previousNotCompleteA66);
+	int unjustifiedToDiscount = (int) (unjustified + previousNotCompleteUnjustified);
+	setAccumulatedUnjustifiedDays((int) Math.floor(unjustifiedToDiscount));
+	setAccumulatedArticle66Days((int) Math.floor(A66ToDiscount));
+
+	int countUnjustifiedWorkingDays = unjustifiedDays;
 	for (Leave leave : getAssiduousnessStatusHistory().getAssiduousness().getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
 		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
@@ -197,6 +205,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    }
 	}
 	setUnjustifiedDays(countUnjustifiedWorkingDays);
+
     }
 
     public AssiduousnessClosedMonth getPreviousAssiduousnessClosedMonth() {
@@ -261,32 +270,6 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    nightWorkByWorkScheduleType.put(assiduousnessExtraWork.getWorkScheduleType(), duration);
 	}
 	return nightWorkByWorkScheduleType;
-    }
-
-    public int getThisMonthUnjustifiedDays() {
-	int unjustifiedDays = 0;
-	double unjustified = getAccumulatedUnjustified();
-	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
-	if (previousAssiduousnessClosedMonth != null) {
-	    unjustifiedDays = (int) Math.floor(unjustified
-		    - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedUnjustified()));
-	} else {
-	    unjustifiedDays = (int) Math.floor(unjustified);
-	}
-
-	return unjustifiedDays;
-    }
-
-    public int getThisMonthArticle66() {
-	int article66Days = 0;
-	double article66 = getAccumulatedArticle66();
-	AssiduousnessClosedMonth previousAssiduousnessClosedMonth = getPreviousAssiduousnessClosedMonth();
-	if (previousAssiduousnessClosedMonth != null) {
-	    article66Days = (int) Math.floor(article66 - Math.floor(previousAssiduousnessClosedMonth.getAccumulatedArticle66()));
-	} else {
-	    article66Days = (int) Math.floor(article66);
-	}
-	return article66Days;
     }
 
 }
