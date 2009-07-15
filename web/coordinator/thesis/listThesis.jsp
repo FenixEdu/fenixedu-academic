@@ -57,7 +57,7 @@
     <fr:view name="theses" schema="coordinator.thesis.table">
         <fr:layout name="tabular-sortable">
             	<fr:property name="classes" value="tstyle1"/>
-            
+
             <fr:property name="link(create)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId)  %>"/>
             <fr:property name="key(create)" value="link.coordinator.list.create"/>
             <fr:property name="param(create)" value="student.externalId/studentID,enrolmentOID/enrolmentOID"/>
@@ -76,28 +76,34 @@
             <fr:property name="order(print)" value="3"/>
             <fr:property name="visibleIf(print)" value="submitted"/>
 
+            <fr:property name="link(approveJuri)" value="<%= String.format("/manageThesis.do?method=viewSubmitted&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
+            <fr:property name="key(approveJuri)" value="link.coordinator.approve.jury"/>
+            <fr:property name="param(approveJuri)" value="thesisId/thesisID"/>
+            <fr:property name="order(approveJuri)" value="4"/>
+            <fr:property name="visibleIf(approveJuri)" value="submittedAndIsCoordinatorAndNotOrientator"/>
+
             <fr:property name="link(confirm)" value="<%= String.format("/manageThesis.do?method=viewApproved&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(confirm)" value="link.coordinator.list.confirm"/>
             <fr:property name="param(confirm)" value="thesisId/thesisID"/>
-            <fr:property name="order(confirm)" value="4"/>
+            <fr:property name="order(confirm)" value="5"/>
             <fr:property name="visibleIf(confirm)" value="waitingConfirmation"/>
 
             <fr:property name="link(revise)" value="<%= String.format("/manageThesis.do?method=viewConfirmed&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(revise)" value="link.coordinator.list.revise"/>
             <fr:property name="param(revise)" value="thesisId/thesisID"/>
-            <fr:property name="order(revise)" value="5"/>
+            <fr:property name="order(revise)" value="6"/>
             <fr:property name="visibleIf(revise)" value="confirmed"/>
 
             <fr:property name="link(evaluated)" value="<%= String.format("/manageThesis.do?method=viewEvaluated&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(evaluated)" value="link.coordinator.list.evaluated"/>
             <fr:property name="param(evaluated)" value="thesisId/thesisID"/>
-            <fr:property name="order(evaluated)" value="6"/>
+            <fr:property name="order(evaluated)" value="7"/>
             <fr:property name="visibleIf(evaluated)" value="evaluated"/>
 
             <fr:property name="link(recreate)" value="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(recreate)" value="link.coordinator.list.create"/>
             <fr:property name="param(recreate)" value="student.externalId/studentID,thesisId/thesisID,enrolmentOID/enrolmentOID"/>
-            <fr:property name="order(recreate)" value="7"/>
+            <fr:property name="order(recreate)" value="8"/>
             <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
 
             <fr:property name="sortParameter" value="sortBy"/>

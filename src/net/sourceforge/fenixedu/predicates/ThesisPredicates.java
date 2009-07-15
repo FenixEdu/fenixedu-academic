@@ -28,6 +28,14 @@ public class ThesisPredicates {
 
     };
 
+    public static final AccessControlPredicate<Thesis> isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator = new AccessControlPredicate<Thesis>() {
+
+	public boolean evaluate(Thesis thesis) {
+	    return isScientificCouncil.evaluate(thesis) || thesis.isCoordinatorAndNotOrientator();
+	}
+
+    };
+
     public static final AccessControlPredicate<Thesis> student = new AccessControlPredicate<Thesis>() {
 
 	public boolean evaluate(Thesis thesis) {

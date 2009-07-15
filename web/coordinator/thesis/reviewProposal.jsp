@@ -53,23 +53,41 @@
     </html:messages>
 </logic:messagesPresent>
 
-<%-- content --%>
-<h3><bean:message key="title.coordinator.thesis.edit.proposal"/></h3>
-
-<fr:view name="thesis" schema="coordinator.thesis.state.submitted">
-    <fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-		<fr:property name="columnClasses" value="width12em,,"/>
-    </fr:layout>
-</fr:view>
-
-<logic:equal name="thesis" property="valid" value="true">
-    <logic:equal name="thesis" property="submitted" value="true">
-		<div class="infoop2 mtop1">
-			<p class="mvert0"><bean:message key="message.coordinator.thesis.submitted.waiting"/></p>
-		</div>
-	</logic:equal>
-</logic:equal>
+<%-- rejection comment --%>
+<logic:present name="confirmReject">
+    <div class="warning0" style="padding: 1em">
+        <p class="mtop0 mbottom1">
+            <strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
+            <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+        </p>
+    
+	    <fr:form action="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+	        <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
+	            <fr:layout name="tabular">
+		           <fr:property name="classes" value="thtop thlight mbottom0"/>
+		           <fr:property name="columnClasses" value="width125px,,tdclear tderror1"/>
+	            </fr:layout>
+	            <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=viewSubmitted&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"/>
+	            <fr:destination name="invalid" path="<%= String.format("/manageThesis.do?method=confirmRejectProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"/>
+	        </fr:edit>
+	        
+	        <table class="mtop0 tgluetop">
+	        <tr>
+		        <td class="width125px">
+		        </td>
+		        <td>
+		            <html:submit>
+		                <bean:message key="button.submit"/>
+		            </html:submit>
+		            <html:cancel>
+		                <bean:message key="button.cancel"/>
+		            </html:cancel>
+		        </td>
+	        </tr>
+	        </table>
+	    </fr:form>
+    </div>
+</logic:present>
 
 <%-- Dissertation --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.dissertation"/></h3>

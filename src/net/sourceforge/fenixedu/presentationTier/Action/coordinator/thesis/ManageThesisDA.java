@@ -792,6 +792,29 @@ public class ManageThesisDA extends FenixDispatchAction {
 	return mapping.findForward("view-evaluated");
     }
 
+    public ActionForward approveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	if (thesis != null) {
+	    executeService("ApproveThesisProposal", new Object[] { thesis });
+	    addActionMessage("mail", request, "thesis.approved.mail.sent");
+	}
+
+	return listThesis(mapping, actionForm, request, response);
+    }
+
+    public ActionForward confirmRejectProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("confirmReject", true);
+	return reviewProposal(mapping, actionForm, request, response);
+    }
+
+    public ActionForward reviewProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return mapping.findForward("review-proposal");
+    }
+
     public ActionForward downloadIdentificationSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Thesis thesis = getThesis(request);

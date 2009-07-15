@@ -582,6 +582,7 @@ public class Thesis extends Thesis_Base {
     // }
 
     // SUBMITTED -> APPROVED
+    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void approveProposal() {
 	if (getState() != ThesisState.APPROVED) {
 	    if (getState() != ThesisState.SUBMITTED) {
@@ -596,7 +597,7 @@ public class Thesis extends Thesis_Base {
     }
 
     // (SUBMITTED | APPROVED) -> DRAFT
-    @Checked("ThesisPredicates.isScientificCouncil")
+    @Checked("ThesisPredicates.isScientificCouncilOrCoordinatorAndNotOrientatorOrCoorientator")
     public void rejectProposal(String rejectionComment) {
 	if (getState() != ThesisState.SUBMITTED && getState() != ThesisState.APPROVED) {
 	    throw new DomainException("thesis.reject.notSubmittedNorApproved");
@@ -1050,6 +1051,40 @@ public class Thesis extends Thesis_Base {
     public boolean isWaitingConfirmation() {
 	ThesisState state = getState();
 	return state == ThesisState.APPROVED || state == ThesisState.REVISION;
+    }
+
+    public boolean isSubmittedAndIsCoordinatorAndNotOrientator() {
+	return isSubmitted() && isCoordinatorAndNotOrientator();
+    }
+
+    public boolean isCoordinatorAndNotOrientator() {
+	final Person loggedPerson = AccessControl.getPerson();
+	return loggedPerson != null && isCoordinator(loggedPerson) && !isOrientatorOrCoorientator(loggedPerson);
+    }
+
+    public boolean isCoordinator() {
+	final Person loggedPerson = AccessControl.getPerson();
+	return loggedPerson != null && isCoordinator(loggedPerson);
+    }
+
+    private boolean isCoordinator(final Person loggedPerson) {
+	for (final Coordinator coordinator : loggedPerson.getCoordinatorsSet()) {
+	    if (coordinator.isResponsible() && getDegree() == coordinator.getExecutionDegree().getDegree()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean isOrientatorOrCoorientator(final Person person) {
+	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
+	    final ThesisParticipationType type = thesisEvaluationParticipant.getType();
+	    if ((type == ThesisParticipationType.ORIENTATOR || type == ThesisParticipationType.COORIENTATOR)
+		    && thesisEvaluationParticipant.getPerson() == person) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public boolean isConfirmed() {

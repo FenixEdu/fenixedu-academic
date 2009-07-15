@@ -164,9 +164,6 @@
         <name>ApproveThesisProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis.ApproveThesisProposal</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ScientificCouncilAuthorization"/>
-        </filterChains>
     </service>
 
     <service>

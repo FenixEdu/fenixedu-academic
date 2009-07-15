@@ -963,6 +963,7 @@
   			<forward name="collect-basic-information" path="thesis-collect-basic-information"/>
   			<forward name="edit-thesis" path="thesis-edit"/>
   			<forward name="view-submitted" path="thesis-view-submitted"/>
+  			<forward name="review-proposal" path="thesis-review-proposal"/>
   			<forward name="view-approved" path="thesis-view-approved"/>
   			<forward name="view-confirmed" path="thesis-view-confirmed"/>
   			<forward name="view-evaluated" path="thesis-view-evaluated"/>
@@ -1005,6 +1006,7 @@
     
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+	<message-resources parameter="resources.ScientificCouncilResources" key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
 	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>

@@ -302,6 +302,9 @@
     <definition name="thesis-view-submitted" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/viewSubmitted.jsp"/>
     </definition>
+    <definition name="thesis-review-proposal" extends="definition.coordinator.two-column">
+        <put name="body" value="/coordinator/thesis/reviewProposal.jsp"/>
+    </definition>
     <definition name="thesis-view-approved" extends="definition.coordinator.two-column">
         <put name="body" value="/coordinator/thesis/viewApproved.jsp"/>
     </definition>

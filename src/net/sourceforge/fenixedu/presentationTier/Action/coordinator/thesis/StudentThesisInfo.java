@@ -102,4 +102,8 @@ public class StudentThesisInfo {
 	return isEvaluated() && !getThesis().isFinalThesis();
     }
 
+    public boolean isSubmittedAndIsCoordinatorAndNotOrientator() {
+	return getThesis() != null && getThesis().isSubmittedAndIsCoordinatorAndNotOrientator();
+    }
+
 }
