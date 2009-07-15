@@ -26,7 +26,7 @@
 	
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editQualificationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	<br/>
-<%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES" /></h2>
 
 <logic:equal name="canEditCandidacy" value="true">
 
@@ -40,13 +40,13 @@
 	
 	<logic:present name="candidacyBean">
 	
-		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>	
-		
 		<logic:notEmpty name="qualificationBean">
-			<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 	
 			<div class="fs_form">
 			<fieldset style="display: block;">
+				<legend><bean:message key="label.public.phd.add.qualification" bundle="PHD_RESOURCES" /></legend>
+				<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+				
 				<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
@@ -57,7 +57,7 @@
 				</fr:edit>	
 			</fieldset>
 			</div>
-			<p><html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
+			<p><html:submit onclick="document.getElementById('methodId').value='addQualificationToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.public.phd.add.qualification"/></html:submit></p>
 			<br/>
 		</logic:notEmpty>
 		
@@ -74,8 +74,7 @@
 				<p class="mtop05"><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + qualificationId + "; document.getElementById(\"methodId\").value=\"removeQualificationFromExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
 			</logic:iterate>
 		</logic:notEmpty>
-		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-			
+		<%-- <p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddQualificationToExistingCandidacy\"; document.getElementById(\"editQualificationForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p> --%>
 	</logic:present>
 </logic:equal>
 

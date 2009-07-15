@@ -137,7 +137,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
-	//TODO: for now just use this locale
+	// TODO: for now just use this locale
 	Language.setDefaultLocale(Locale.ENGLISH);
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
@@ -395,8 +395,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final List<PhdProgramGuidingBean> result = new ArrayList<PhdProgramGuidingBean>();
 
 	final PhdProgramGuidingBean g1 = new PhdProgramGuidingBean();
+	g1.setGuidingType(PhdProgramGuidingType.EXTERNAL);
 	g1.setWorkLocation("IST");
+
 	final PhdProgramGuidingBean g2 = new PhdProgramGuidingBean();
+	g2.setGuidingType(PhdProgramGuidingType.EXTERNAL);
 	// TODO: change this according to collaboration type acronym
 	g2.setWorkLocation("EPFL");
 
@@ -915,7 +918,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 	RenderUtils.invalidateViewState();
 	validateProcessDocuments(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
-	
+
 	return mapping.findForward("uploadCandidacyDocuments");
     }
 
@@ -987,21 +990,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditCandidacyGuidings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	request.setAttribute("candidacyBean", bean);
-
-	if (!bean.getCandidacyHashCode().getIndividualProgramProcess().hasAnyGuidings()) {
-	    bean.setGuidings(createGuidingsMinimumList());
-	} else {
-	    bean.setGuidings(null);
-	}
-
-	return mapping.findForward("editCandidacyGuidings");
+	return prepareAddGuidingToExistingCandidacy(mapping, actionForm, request, response);
     }
 
     public ActionForward editCandidacyGuidingsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	return mapping.findForward("editCandidacyGuidings");
     }
@@ -1012,14 +1005,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	request.setAttribute("candidacyBean", bean);
 
-	if (!bean.hasAnyGuiding()) {
+	if (!bean.getCandidacyHashCode().getIndividualProgramProcess().hasAnyGuidings()) {
+	    bean.setGuidings(createGuidingsMinimumList());
+	} else {
 	    bean.setGuidings(new ArrayList<PhdProgramGuidingBean>());
+	    bean.addGuiding(new PhdProgramGuidingBean());
 	}
 
-	final PhdProgramGuidingBean guiding = new PhdProgramGuidingBean();
-	guiding.setGuidingType(PhdProgramGuidingType.EXTERNAL);
-	bean.addGuiding(guiding);
-
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("editCandidacyGuidings");
     }
 
@@ -1027,7 +1020,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	bean.removeGuiding(getIntegerFromRequest(request, "removeIndex").intValue());
+	if (bean.getGuidings().size() > 1) {
+	    bean.removeGuiding(getIntegerFromRequest(request, "removeIndex").intValue());
+	}
 
 	request.setAttribute("candidacyBean", bean);
 	RenderUtils.invalidateViewState();
@@ -1047,8 +1042,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    request.setAttribute("candidacyBean", bean);
-	    return mapping.findForward("editCandidacyGuidings");
+	    return editCandidacyGuidingsInvalid(mapping, actionForm, request, response);
 	}
 
 	bean.setGuidings(null);
@@ -1069,6 +1063,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return editCandidacyGuidingsInvalid(mapping, actionForm, request, response);
 	}
 
 	return prepareEditCandidacyGuidings(mapping, actionForm, request, response);
@@ -1147,12 +1142,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getCandidacyBean());
-	return mapping.findForward("editQualifications");
+	return prepareAddQualificationToExistingCandidacy(mapping, actionForm, request, response);
     }
 
     public ActionForward editQualificationsInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	request.setAttribute("qualificationBean", getRenderedObject("qualificationBean"));
 	return mapping.findForward("editQualifications");
@@ -1169,26 +1164,24 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward addQualificationToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("candidacyBean", getCandidacyBean());
-
 	try {
 	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
 		    AddQualification.class, getRenderedObject("qualificationBean"));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
+	    RenderUtils.invalidateViewState("qualificationBean");
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    request.setAttribute("qualificationBean", getRenderedObject("qualificationBean"));
+	    return editQualificationsInvalid(mapping, actionForm, request, response);
 	}
 
-	return mapping.findForward("editQualifications");
+	return prepareEditQualifications(mapping, actionForm, request, response);
     }
 
     public ActionForward removeQualificationFromExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	request.setAttribute("candidacyBean", getCandidacyBean());
 
 	final String externalId = (String) getFromRequest(request, "removeIndex");
 	final Qualification qualification = getQualification(bean.getCandidacyHashCode().getIndividualProgramProcess(),
@@ -1203,7 +1196,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	}
 
-	return mapping.findForward("editQualifications");
+	RenderUtils.invalidateViewState("qualificationBean");
+	return prepareEditQualifications(mapping, actionForm, request, response);
     }
 
     private Qualification getQualification(final PhdIndividualProgramProcess individualProgramProcess, final String externalId) {
