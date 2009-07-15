@@ -614,6 +614,27 @@
 </schema>
 
 <!-- TUTORSHIP -->
+<schema name="tutorship.teacher.search" bundle="PEDAGOGICAL_COUNCIL"
+	type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorStudentsPerformanceGridDA$TutorSearchBean">
+	<slot name="department" layout="menu-select-postback" key="label.teacher.department">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="key" value="true" />
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
+		<property name="format" value="${nameI18n}" />
+		<property name="sortBy" value="name" />
+		<property name="destination" value="departmentPostBack" />
+	</slot>
+	<slot name="teacher" layout="menu-select-postback" key="label.teacher"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorStudentsPerformanceGridDA$DepartmentTeachersProvider" />
+		<property name="format" value="${teacherNumber} - ${employee.person.name}" />
+		<property name="sortBy" value="teacherNumber" />
+		<property name="destination" value="teacherSelection" />
+	</slot>
+</schema>
+
 <schema name="tutorship.student.number" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.TutorateBean">
 	<slot name="personNumber" key="label.student.number">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />

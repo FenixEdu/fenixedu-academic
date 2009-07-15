@@ -8,34 +8,24 @@
 <!-- showTutorPerformanceGrid.jsp -->
 
 <em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
-<h2><bean:message key="title.tutorship.tutor.tutorships" bundle="PEDAGOGICAL_COUNCIL" /></h2>
+<h2><bean:message key="title.tutorship.tutor.performanceGrids" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <fr:form action="/tutorStudentsPerformanceGrid.do?method=prepare">
-
-	<fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.tutor.number">
+	<fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.teacher.search">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="departmentPostBack" path="/tutorStudentsPerformanceGrid.do?method=prepare"/>
+        <fr:destination name="teacherSelection" path="/tutorStudentsPerformanceGrid.do?method=prepare"/>
 		<fr:destination name="invalid" path="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch" />
 	</fr:edit>
 
-	<html:submit>
-		<bean:message key="label.submit" bundle="PEDAGOGICAL_COUNCIL" />
-	</html:submit>
-
-<br/>
-
-<p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
+<html:messages id="message" message="true" bundle="PEDAGOGICAL_COUNCIL">
+    <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
 
 <logic:present name="tutor">
-
-<fr:view name="tutor" schema="teacher.tutor.name">
-    <fr:layout name="tabular">
-        <fr:property name="classes" value="tstyle2 thright thlight"/>
-        <fr:property name="rowClasses" value="bold,,"/>
-    </fr:layout>
-</fr:view>
 
 <logic:equal name="tutor" property="teacher.numberOfTutorships" value="0">
     <p class="mtop1">
