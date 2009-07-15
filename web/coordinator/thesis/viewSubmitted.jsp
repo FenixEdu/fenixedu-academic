@@ -30,6 +30,7 @@
 	                <bean:message key="label.coordinator.list.submitted.thesis.print"/>
 	            </html:link>
 	        </li>
+<%--
 		    <logic:equal name="thesis" property="coordinatorAndNotOrientator" value="true">
 		        <li>
 	    	        <html:link page="<%= String.format("/manageThesis.do?method=approveProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
@@ -42,6 +43,7 @@
 	            	</html:link>
 	        	</li>
         	</logic:equal>
+--%>
         </logic:equal>
     </logic:equal>
 </ul>

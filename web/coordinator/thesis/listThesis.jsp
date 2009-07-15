@@ -76,11 +76,13 @@
             <fr:property name="order(print)" value="3"/>
             <fr:property name="visibleIf(print)" value="submitted"/>
 
+<%--
             <fr:property name="link(approveJuri)" value="<%= String.format("/manageThesis.do?method=viewSubmitted&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(approveJuri)" value="link.coordinator.approve.jury"/>
             <fr:property name="param(approveJuri)" value="thesisId/thesisID"/>
             <fr:property name="order(approveJuri)" value="4"/>
             <fr:property name="visibleIf(approveJuri)" value="submittedAndIsCoordinatorAndNotOrientator"/>
+ --%>
 
             <fr:property name="link(confirm)" value="<%= String.format("/manageThesis.do?method=viewApproved&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
             <fr:property name="key(confirm)" value="link.coordinator.list.confirm"/>
