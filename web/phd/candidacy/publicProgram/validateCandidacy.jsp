@@ -22,7 +22,6 @@
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodForm" name="method" value="validateCandidacy" />
 	
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('validateCandidacyForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -31,19 +30,37 @@
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
+	<style>
+	.warning0 {
+	background-color: #fbf8cc;
+	/*color: #805500;*/
+	padding: 0.5em 1em;
+	}
+	</style>
+	
 	<logic:messagesPresent message="true" property="validation">
-		<div class="warning1 mbottom05" style="width: 700px;">
-			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
-				<p class="mvert025"><bean:write name="messages" /></p>
-			</html:messages>
+		<div class="warning0 mvert1">
+			<p class="mvert05">Before you submit the aplication you must:</p>
+			<ul class="mvert05">
+				<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
+					<li><bean:write name="messages" /></li>
+				</html:messages>
+			</ul>
 		</div>
 	</logic:messagesPresent>
 	
-	<p>
-		After you validate your application you can not change information.
-		Do you want to submit?
-	</p>
+	<logic:messagesNotPresent message="true" property="validation">
+		<p>After you submit your application you can not change the information. Do you want to submit now?</p>
+	</logic:messagesNotPresent>
 	
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit></p>
+	<p>
+		<logic:messagesPresent message="true" property="validation">
+			<html:submit onclick="javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('validateCandidacyForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
+		</logic:messagesPresent>
+		<logic:messagesNotPresent message="true" property="validation">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>
+			<html:submit onclick="javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('validateCandidacyForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
+		</logic:messagesNotPresent>
+	</p>
 </logic:equal>
 </fr:form>
