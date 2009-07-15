@@ -252,7 +252,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	int separatorPos = pages.indexOf("-");
 	Integer first = null;
 	try {
-	    first = Integer.valueOf(pages.substring(0, separatorPos).replaceAll("{", "").trim());
+	    first = Integer.valueOf(pages.substring(0, separatorPos).replaceAll("\\{", "").trim());
 	} catch (Exception e) {
 	}
 	return first;
@@ -265,7 +265,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	int separatorPos = pages.lastIndexOf("-");
 	Integer last = null;
 	try {
-	    last = Integer.valueOf(pages.substring(separatorPos + 1).replaceAll("}", "").trim());
+	    last = Integer.valueOf(pages.substring(separatorPos + 1).replaceAll("\\}", "").trim());
 	} catch (Exception e) {
 	}
 	return last;
