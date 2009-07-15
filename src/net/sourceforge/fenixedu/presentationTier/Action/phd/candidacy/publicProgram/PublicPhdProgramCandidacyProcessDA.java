@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -136,6 +137,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
+	//TODO: for now just use this locale
+	Language.setDefaultLocale(Locale.ENGLISH);
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	if (bean != null && bean.hasCandidacyHashCode()) {

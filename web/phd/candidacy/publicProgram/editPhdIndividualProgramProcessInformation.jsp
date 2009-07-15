@@ -24,8 +24,6 @@
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
-	<br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -34,16 +32,19 @@
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
-	<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+	<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES" /></h2>
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+		<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
 		<div class="fs_form">
 		<fieldset style="display: block;">
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES" /></legend>
+			<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+			
 			<fr:edit id="individualProcessBean" name="individualProcessBean" schema="Public.PhdIndividualProgramProcessBean.editDetails">		
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="thlight thleft"/>
@@ -54,7 +55,10 @@
 			</fr:edit>
 			</fieldset>
 			</div>
-			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit></p>
+			<p>
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
+				<html:submit onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
+			</p>
 	</logic:present>
 </logic:equal>
 
