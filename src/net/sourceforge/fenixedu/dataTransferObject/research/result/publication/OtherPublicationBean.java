@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -57,6 +59,10 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
+	
+	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setHowPublished(getStringValueFromBibtexEntry("howpublished", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));

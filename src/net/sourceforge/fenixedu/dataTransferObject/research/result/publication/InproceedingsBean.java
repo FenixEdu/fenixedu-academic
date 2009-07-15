@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -59,11 +61,13 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
+	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	// booktitle will be used to event name
 	// setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
-	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
 	if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
 	    setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
 	    setLastPage(getLastPageFromBibtexEntry(bibtexEntry));

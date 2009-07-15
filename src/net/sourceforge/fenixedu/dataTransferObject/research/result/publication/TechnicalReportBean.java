@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import bibtex.dom.BibtexEntry;
@@ -56,11 +58,13 @@ public class TechnicalReportBean extends ResultPublicationBean implements Serial
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
+	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setTechnicalReportType(getStringValueFromBibtexEntry("type", bibtexEntry));
 	setNumber(getStringValueFromBibtexEntry("number", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
-	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
     }
 
     @Override

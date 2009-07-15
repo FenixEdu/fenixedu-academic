@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
@@ -70,12 +72,13 @@ public class BookBean extends ResultPublicationBean implements Serializable {
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));
 	setSeries(getStringValueFromBibtexEntry("series", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
 	setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));
-	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
     }
 
     public String getAddress() {

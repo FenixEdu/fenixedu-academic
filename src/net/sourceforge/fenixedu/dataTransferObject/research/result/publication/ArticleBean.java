@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
@@ -97,11 +99,12 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
 	setYearFromBibtexEntry(entry);
 	setMonthFromBibtexEntry(entry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",entry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",entry)));
 	setTitle(getStringValueFromBibtexEntry("title", entry));
 	setVolume(getStringValueFromBibtexEntry("volume", entry));
 	setJournal(getStringValueFromBibtexEntry("journal", entry));
 	setNumber(getStringValueFromBibtexEntry("number", entry));
-	setNote(getStringValueFromBibtexEntry("note", entry));
 	if (getFirstPageFromBibtexEntry(entry) != null) {
 	    setFirstPage(getFirstPageFromBibtexEntry(entry));
 	    setLastPage(getLastPageFromBibtexEntry(entry));

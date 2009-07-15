@@ -237,7 +237,9 @@ public abstract class ResultPublicationBean implements Serializable {
 	string = string.trim();
 	if (string.length() == 0)
 	    return null;
-	return string;
+
+	return (string.indexOf('{') == 0 && string.indexOf('}') == string.length() - 1) ? string
+		.substring(1, string.length() - 1) : string;
     }
 
     protected Integer getFirstPageFromBibtexEntry(BibtexEntry entry) {
@@ -247,7 +249,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	int separatorPos = pages.indexOf("-");
 	Integer first = null;
 	try {
-	    first = Integer.valueOf(pages.substring(0, separatorPos).trim());
+	    first = Integer.valueOf(pages.substring(0, separatorPos).replaceAll("{", "").trim());
 	} catch (Exception e) {
 	}
 	return first;
@@ -260,7 +262,7 @@ public abstract class ResultPublicationBean implements Serializable {
 	int separatorPos = pages.lastIndexOf("-");
 	Integer last = null;
 	try {
-	    last = Integer.valueOf(pages.substring(separatorPos + 1).trim());
+	    last = Integer.valueOf(pages.substring(separatorPos + 1).replaceAll("}", "").trim());
 	} catch (Exception e) {
 	}
 	return last;

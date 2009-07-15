@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication;
 
 import java.io.Serializable;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import bibtex.dom.BibtexEntry;
@@ -121,6 +123,8 @@ public class BookPartBean extends ResultPublicationBean implements Serializable 
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setChapter(getStringValueFromBibtexEntry("chapter", bibtexEntry));
 	setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));
@@ -128,7 +132,6 @@ public class BookPartBean extends ResultPublicationBean implements Serializable 
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
 	setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));
 	setBookTitle(getStringValueFromBibtexEntry("booktitle", bibtexEntry));
-	setNote(getStringValueFromBibtexEntry("note", bibtexEntry));
 	if (getFirstPageFromBibtexEntry(bibtexEntry) != null) {
 	    setFirstPage(getFirstPageFromBibtexEntry(bibtexEntry));
 	    setLastPage(getLastPageFromBibtexEntry(bibtexEntry));
