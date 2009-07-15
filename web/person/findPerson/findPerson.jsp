@@ -248,17 +248,17 @@ function check(e,v){
 				  		<bean:define id="personID" name="personalInfo" property="idInternal"/>	  	    		  	  	
 			  			<html:img src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 		  			</logic:equal>
+
+	                <logic:notEqual name="personalInfo" property="photoAvailableToCurrentUser" value="true">
+	                    <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
+	                    <img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/>
+	                </logic:notEqual>
 	  			</logic:notEmpty>
 
                 <logic:empty name="personalInfo" property="personalPhoto">
                     <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
                     <img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/>
                 </logic:empty>
-
-                <logic:notEqual name="personalInfo" property="photoAvailableToCurrentUser" value="true">
-	                <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
-	                <img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/>
-                </logic:notEqual>
 		   	</logic:equal>
 
 			<table class="ppdetails">
