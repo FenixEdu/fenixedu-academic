@@ -56,13 +56,11 @@ public class OtherPublicationBean extends ResultPublicationBean implements Seria
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// TODO: rearrange importation
 	// setUnitFromBibtexEntry("publisher", bibtexEntry);
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
-	
-	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setHowPublished(getStringValueFromBibtexEntry("howpublished", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));

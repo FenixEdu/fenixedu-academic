@@ -96,11 +96,10 @@ public class ArticleBean extends ResultPublicationBean implements Serializable {
     }
 
     protected void fillBibTeXFields(BibtexEntry entry) {
+	super.fillBibTeXFields(entry);
 	setYearFromBibtexEntry(entry);
 	setMonthFromBibtexEntry(entry);
-
-	setNote(getStringValueFromBibtexEntry("abstract",entry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",entry)));
+	
 	setTitle(getStringValueFromBibtexEntry("title", entry));
 	setVolume(getStringValueFromBibtexEntry("volume", entry));
 	setJournal(getStringValueFromBibtexEntry("journal", entry));

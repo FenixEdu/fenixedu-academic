@@ -112,7 +112,10 @@ public abstract class ResultPublicationBean implements Serializable {
 
     protected abstract void fillSpecificFields(ResearchResultPublication publication);
 
-    protected abstract void fillBibTeXFields(BibtexEntry bibtexEntry);
+    protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
+	setKeywords(new MultiLanguageString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
+    }
 
     public ResultPublicationBean() {
 	this.setUnit(null);

@@ -69,11 +69,11 @@ public class BookBean extends ResultPublicationBean implements Serializable {
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// setUnitFromBibtexEntry("publisher", bibtexEntry);
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
-
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
+	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));
 	setSeries(getStringValueFromBibtexEntry("series", bibtexEntry));

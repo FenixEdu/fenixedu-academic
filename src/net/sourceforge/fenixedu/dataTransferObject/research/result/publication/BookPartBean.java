@@ -120,11 +120,11 @@ public class BookPartBean extends ResultPublicationBean implements Serializable 
 
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setChapter(getStringValueFromBibtexEntry("chapter", bibtexEntry));
 	setVolume(getStringValueFromBibtexEntry("volume", bibtexEntry));

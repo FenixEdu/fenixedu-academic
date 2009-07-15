@@ -64,12 +64,11 @@ public class ThesisBean extends ResultPublicationBean implements Serializable {
 	else
 	    setThesisType(ThesisType.PhD_Thesis);
 
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 	// setUnitFromBibtexEntry("organization", bibtexEntry);// school
-
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
 	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));

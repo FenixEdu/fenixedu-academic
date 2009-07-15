@@ -46,12 +46,11 @@ public class ManualBean extends ResultPublicationBean implements Serializable {
     @Override
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// setUnitFromBibtexEntry("organization", bibtexEntry);
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
-	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	setAddress(getStringValueFromBibtexEntry("address", bibtexEntry));
 	setEdition(getStringValueFromBibtexEntry("edition", bibtexEntry));

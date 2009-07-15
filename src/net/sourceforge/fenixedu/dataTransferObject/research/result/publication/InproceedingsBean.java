@@ -58,12 +58,11 @@ public class InproceedingsBean extends ConferenceArticlesBean implements Seriali
     protected void fillBibTeXFields(BibtexEntry bibtexEntry) {
 	// setUnitFromBibtexEntry("publisher", bibtexEntry);
 	// setUnitFromBibtexEntry("organization", bibtexEntry);
+	super.fillBibTeXFields(bibtexEntry);
+	
 	setYearFromBibtexEntry(bibtexEntry);
 	setMonthFromBibtexEntry(bibtexEntry);
 
-	setNote(getStringValueFromBibtexEntry("abstract",bibtexEntry));
-	setKeywords(MultiLanguageString.importFromString(getStringValueFromBibtexEntry("keywords",bibtexEntry)));
-	
 	setTitle(getStringValueFromBibtexEntry("title", bibtexEntry));
 	// booktitle will be used to event name
 	// setBookTitle(getStringValueFromBibtexEntry("booktitle", entry));
