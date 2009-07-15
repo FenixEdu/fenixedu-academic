@@ -47,7 +47,7 @@
 			<div class="fs_form">
 				<fieldset style="display: block;">
 					<legend><bean:message key="label.public.phd.add.referee" bundle="PHD_RESOURCES"/></legend>
-					<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+					<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 			
 					<fr:edit id="refereeBean" name="refereeBean" schema="Public.PhdProgramCandidacyProcess.referee">
 						<fr:layout name="tabular-editable">
