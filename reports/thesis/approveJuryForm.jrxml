@@ -346,7 +346,7 @@ Assinatura: ]]></text>
 					<textElement>
 						<font fontName="Verdana" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
+				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
