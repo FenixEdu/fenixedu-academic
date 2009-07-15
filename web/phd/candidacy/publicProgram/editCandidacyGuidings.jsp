@@ -71,7 +71,7 @@
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.guidings">
 			<logic:iterate id="guiding" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.guidings" indexId="index" >
-				<strong><%= index.intValue() + 1 %>.</strong>
+				<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 				<bean:define id="guidingId" name="guiding" property="externalId" />
 				<fr:view name="guiding" schema="Public.PhdProgramGuiding.view">
 					<fr:layout name="tabular">

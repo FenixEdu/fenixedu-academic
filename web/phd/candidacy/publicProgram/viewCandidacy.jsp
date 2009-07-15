@@ -38,6 +38,7 @@
 
 </logic:equal>
 
+<%--  ### Candidacy Period ### --%>
 <bean:define id="startDate" name="candidacyPeriod" property="start" type="org.joda.time.DateTime" />
 <bean:define id="endDate" name="candidacyPeriod" property="end" type="org.joda.time.DateTime" />
 <p class="mtop15"><b><bean:message key="message.candidacy.period" bundle="PHD_RESOURCES"/>: </b><%= startDate.toString("dd/MM/yyyy") %> <bean:message key="label.until" bundle="PHD_RESOURCES"/> <%= endDate.toString("dd/MM/yyyy") %></p>
@@ -49,7 +50,7 @@ background-color: #fbf8cc;
 padding: 0.5em 1em;
 }
 </style>
-
+<%--  ### Validation messages ### --%>
 <logic:messagesPresent message="true" property="validation">
 	<div class="warning0 mvert1">
 		<p class="mvert05">For the candidacy to be ready you must:</p>
@@ -73,6 +74,7 @@ padding: 0.5em 1em;
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualProgramProcess" property="processNumber"/>
 </p>
 
+<%--  ### Personal Information ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditPersonalInformation" value="true">
 	<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
@@ -95,6 +97,7 @@ padding: 0.5em 1em;
 	<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
 </logic:equal>
 
+<%--  ### Photo ### --%>
 <logic:equal name="canEditCandidacy" value="true">
 	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
 		<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
@@ -110,6 +113,7 @@ padding: 0.5em 1em;
 	</div>
 </logic:notEmpty>
 
+<%--  ### Candidacy Information ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
 <fr:view name="individualProgramProcess" schema="Public.PhdIndividualProgramProcess.view">
 	<fr:layout name="tabular">
@@ -121,10 +125,11 @@ padding: 0.5em 1em;
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditPhdIndividualProgramProcessInformation';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/></a></p>
 </logic:equal>
 
+<%--  ### Phd Supervisors ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
 <logic:notEmpty name="individualProgramProcess" property="guidings">
 	<logic:iterate id="guiding" name="individualProgramProcess" property="guidings" indexId="index" >
-		<strong><%= index.intValue() + 1 %>.</strong>
+		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 		<fr:view name="guiding" schema="Public.PhdProgramGuiding.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -140,10 +145,11 @@ padding: 0.5em 1em;
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyGuidings';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/></a></p>
 </logic:equal>
 
+<%--  ### Academic Degrees ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="qualifications">
 	<logic:iterate id="qualification" name="individualProgramProcess" property="qualificationsSortedByAttendedEndDate" indexId="index" >
-		<strong><%= index.intValue() + 1 %>.</strong>
+		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 		<fr:view name="qualification" schema="Phd.Qualification.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -159,11 +165,11 @@ padding: 0.5em 1em;
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/></a></p>
 </logic:equal>
 
-
+<%--  ### Referees ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 <logic:notEmpty name="individualProgramProcess" property="phdCandidacyReferees">
 	<logic:iterate id="candidacyReferee" name="individualProgramProcess" property="phdCandidacyReferees" indexId="index" >
-		<strong><%= index.intValue() + 1 %>.</strong>
+		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 		<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -179,6 +185,7 @@ padding: 0.5em 1em;
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyReferees';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/></a></p>
 </logic:equal>
 
+<%--  ### Documents ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a></p>

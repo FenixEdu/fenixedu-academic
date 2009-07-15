@@ -63,7 +63,7 @@
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications">
 			<logic:iterate id="qualification" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.qualifications" indexId="index" >
-				<strong><%= index.intValue() + 1 %>.</strong>
+				<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 				<bean:define id="qualificationId" name="qualification" property="externalId" />
 				<fr:view name="qualification" schema="Phd.Qualification.view">
 					<fr:layout name="tabular">

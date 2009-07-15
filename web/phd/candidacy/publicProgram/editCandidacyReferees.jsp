@@ -26,6 +26,8 @@
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
 	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editCandidacyRefereeForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<br/>
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -39,31 +41,30 @@
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
-	
-		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/></h2>	
-		
 		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddCandidacyRefereeToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
-		
-		<logic:notEmpty name="refereeBean">
-			<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 	
-			<fr:edit id="refereeBean" name="refereeBean" schema="Public.PhdProgramCandidacyProcess.referee">
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="thlight thleft"/>
-					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyRefereesInvalid" />
-			</fr:edit>	
-			<html:submit onclick="document.getElementById('methodId').value='addCandidacyRefereeToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
-			<br/>
-			<br/>
+		<logic:notEmpty name="refereeBean">
+			<div class="fs_form">
+				<fieldset style="display: block;">
+					<legend><bean:message key="label.public.phd.add.referee" bundle="PHD_RESOURCES"/></legend>
+					<p class="mtop15"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+			
+					<fr:edit id="refereeBean" name="refereeBean" schema="Public.PhdProgramCandidacyProcess.referee">
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="thlight thleft"/>
+							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="true" />
+						</fr:layout>
+						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyRefereesInvalid" />
+					</fr:edit>
+				</fieldset>
+			</div>
+			<p><html:submit onclick="document.getElementById('methodId').value='addCandidacyRefereeToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.public.phd.add.referee"/></html:submit></p>
 		</logic:notEmpty>
-		
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees">
 			<logic:iterate id="candidacyReferee" name="candidacyBean" property="candidacyHashCode.individualProgramProcess.phdCandidacyReferees" indexId="index" >
-				<strong><%= index.intValue() + 1 %>.</strong>
+				<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 				<bean:define id="candidacyRefereeId" name="candidacyReferee" property="externalId" />
 				<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
 					<fr:layout name="tabular">
