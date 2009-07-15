@@ -138,7 +138,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
 	// TODO: for now just use this locale
-	Language.setDefaultLocale(Locale.ENGLISH);
+	Language.setLocale(Locale.ENGLISH);
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	if (bean != null && bean.hasCandidacyHashCode()) {
