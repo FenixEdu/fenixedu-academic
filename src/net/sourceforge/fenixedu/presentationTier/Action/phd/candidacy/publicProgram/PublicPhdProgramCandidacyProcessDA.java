@@ -1122,7 +1122,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdCandidacyReferee referee = getReferee(bean.getCandidacyHashCode().getIndividualProgramProcess(), request);
 	referee.sendEmail();
 	addSuccessMessage(request, "message.candidacy.referee.email.sent.with.success", referee.getName());
-	
+
 	return prepareEditCandidacyReferees(mapping, actionForm, request, response);
     }
 
@@ -1212,17 +1212,19 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		.getParameter("hash"));
 
 	if (hashCode == null) {
-	    return mapping.findForward("createRefereeLetter");
+	    request.setAttribute("no-information", Boolean.TRUE);
+	    return mapping.findForward("createRefereeLetterSuccess");
 	}
 
-	final PhdCandidacyRefereeLetterBean bean;
-	if (!hashCode.hasLetter()) {
-	    bean = new PhdCandidacyRefereeLetterBean();
-	    bean.setCandidacyReferee(hashCode);
-	    bean.setRefereeName(hashCode.getName());
-	    request.setAttribute("createRefereeLetterBean", bean);
+	if (hashCode.hasLetter()) {
+	    request.setAttribute("has-letter", Boolean.TRUE);
+	    return mapping.findForward("createRefereeLetterSuccess");
 	}
 
+	final PhdCandidacyRefereeLetterBean bean = new PhdCandidacyRefereeLetterBean();
+	bean.setCandidacyReferee(hashCode);
+	bean.setRefereeName(hashCode.getName());
+	request.setAttribute("createRefereeLetterBean", bean);
 	return mapping.findForward("createRefereeLetter");
     }
 
@@ -1253,6 +1255,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return mapping.findForward("createRefereeLetter");
 	}
 
+	request.setAttribute("created-with-success", Boolean.TRUE);
 	return mapping.findForward("createRefereeLetterSuccess");
     }
 

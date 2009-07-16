@@ -15,6 +15,19 @@
 <br/>
 
 <h1>IST-EPFL Joint Doctoral Initiative</h1>
+
+<h2>Reference Letter</h2>
+
 <%-- ### End of Title ### --%>
 
-<p>Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at http://www.ist.utl.pt/en/about-IST/global-cooperation/IST-EPFL .</p>
+<logic:present name="has-letter">
+	<p>You have already submitted the recommendation. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the <a href="http://ist.utl.pt">IST</a> doctoral program at ist-epfl@ist.utl.pt.</p>
+</logic:present>
+
+<logic:present name="created-with-success">
+	<p>Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the <a href="http://ist.utl.pt">IST</a> doctoral program at ist-epfl@ist.utl.pt.</p>
+</logic:present>
+
+<logic:present name="no-information">
+	<p>No information found</p>
+</logic:present>

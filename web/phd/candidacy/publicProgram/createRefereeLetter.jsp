@@ -12,32 +12,25 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<br/>
-
 <h1>IST-EPFL Joint Doctoral Initiative</h1>
+
+<h2>Reference Letter</h2>
+
 <%-- ### End of Title ### --%>
 
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp?viewStateId=createRefereeLetterBean.overall.promise" />
 <%--  ### End of Error Messages  ### --%>
 
-<logic:notPresent name="createRefereeLetterBean">
-	<h2>Referee form</h2>
-	<em>Once you have submitted the recommendation, you will no longer be able to modify it.</em>
-</logic:notPresent>
-
 <logic:present name="createRefereeLetterBean">
 
-<table class="thlight thleft thtop mtop05">
-	<tr>
-		<td><strong>Applicant's Name:</strong></td>
-		<td><bean:write name="createRefereeLetterBean" property="person.name" /></td>
-	</tr>
-	<tr>
-		<td><strong>Focus Area:</strong></td>
-		<td><bean:write name="createRefereeLetterBean" property="focusArea.name.content" /></td>
-	</tr>
-</table>
+<p class="mbottom05"><strong>Applicant's Name:</strong><bean:write name="createRefereeLetterBean" property="person.name" /></p>
+<p class="mtop05"><strong>Focus Area:</strong>
+	<logic:notEmpty name="createRefereeLetterBean" property="focusArea">
+		<bean:write name="createRefereeLetterBean" property="focusArea.name.content" />
+	</logic:notEmpty>
+	<logic:empty name="createRefereeLetterBean" property="focusArea"> -- </logic:empty>
+</p>
 
 <p>You have been indicated as a referee on behalf of a prospective student applying to the IST-EPFL Joint Doctoral Initiative. We would appreciate your personal evaluation concerning the applicant's intellectual ability, aptitude in research or professional skill.</p>
 
@@ -58,7 +51,8 @@
 		<fr:edit id="createRefereeLetterBean" name="createRefereeLetterBean" visible="false" />
 
 		<fieldset style="display: block;">
-		<legend>Referee form</legend>
+			<legend>Referee form</legend>
+			<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 		
 			<fr:edit id="Public.PhdCandidacyRefereeLetterBean.applicant.information" name="createRefereeLetterBean" 
 				schema="Public.PhdCandidacyRefereeLetterBean.applicant.information">
