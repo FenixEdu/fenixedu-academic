@@ -61,14 +61,14 @@
 		<p class="mtop05"><em><bean:message key="label.over23.has.no.qualifications" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
 	
-	<logic:notEmpty name="process.candidacy" property="concludedFormationList">
+	<logic:notEmpty name="process" property="candidacy.concludedFormationList">
 		<table class="tstyle4 thlight thleft">
 		<tr>
 			<th><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.over23.execution.year.conclusion" bundle="CANDIDATE_RESOURCES"/></th>
 		</tr>
-		<logic:iterate id="qualification" name="process.candidacy" property="concludedFormationList" indexId="index">
+		<logic:iterate id="qualification" name="process" property="candidacy.concludedFormationList" indexId="index">
 		<tr>
 			<td>
 				<fr:view 	name="qualification"
@@ -95,17 +95,17 @@
 	
 	<h3 style="margin-bottom: 0.5em;"><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
 	
-	<logic:empty name="process.candidacy" property="nonConcludedFormationList">
+	<logic:empty name="process" property="candidacy.nonConcludedFormationList">
 		<p class="mtop05"><em><bean:message key="label.over23.has.no.qualifications" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
 	
-	<logic:notEmpty name="process.candidacy" property="nonConcludedFormationList">
+	<logic:notEmpty name="process" property="candidacy.nonConcludedFormationList">
 		<table class="tstyle4 thlight thleft">
 			<tr>
 				<th><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/></th>
 				<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/></th>
 			</tr>
-			<logic:iterate id="qualification" name="process.candidacy" property="nonConcludedFormationList" indexId="index">
+			<logic:iterate id="qualification" name="process" property="candidacy.nonConcludedFormationList" indexId="index">
 			<tr>
 				<td>
 					<fr:view 	name="qualification"
