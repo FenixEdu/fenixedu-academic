@@ -875,7 +875,7 @@
 
 <schema name="Public.PhdCandidacyRefereeLetterBean.applicant.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="howLongKnownApplicant" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="input-with-comment">
-        <property name="subProperty(size)" value="30" />
+        <property name="subProperty(size)" value="15" />
         <property name="bundle" value="PHD_RESOURCES"/>
 		<property name="comment" value="label.candidacyRefereeLetter.howLongKnownApplicant.example"/>
 		<property name="commentLocation" value="right" />
@@ -893,7 +893,7 @@
 		<property name="commentLocation" value="right" />
 	</slot>
 	<slot name="rankInClass" layout="input-with-comment">
-		<property name="subProperty(size)" value="30" />
+		<property name="subProperty(size)" value="15" />
         <property name="bundle" value="PHD_RESOURCES"/>
 		<property name="comment" value="label.candidacyRefereeLetter.rankInClass.example"/>
 		<property name="commentLocation" value="right" />
@@ -909,7 +909,7 @@
 <schema name="Public.PhdCandidacyRefereeLetterBean.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="file" layout="input-with-comment">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="maxSize" value="3mb" />
+			<property name="maxSize" value="1mb" />
 			<property name="acceptedExtensions" value="pdf" />
 		</validator>
 		<property name="subProperty(fileNameSlot)" value="filename"/>
@@ -919,7 +919,7 @@
 		<property name="commentLocation" value="right" />
 	</slot>
 	<slot name="comments" layout="longText">
-		<property name="columns" value="100"/>
+		<property name="columns" value="70"/>
 		<property name="rows" value="4"/>
 	</slot>
 </schema>
