@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.StandaloneIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
@@ -46,11 +47,17 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
+
     }
 
     @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
 	    final IndividualCandidacyProcessBean bean) {
+	if (hasValidStandaloneIndividualCandidacy(bean, process.getCandidacyExecutionInterval())) {
+	    throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
+		    .getCandidacyExecutionInterval().getName());
+	}
+
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	checkParameters(person, process, candidacyDate);
     }
@@ -58,11 +65,19 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
 	super.checkParameters(person, process, candidacyDate);
+    }
 
-	if (person.hasValidStandaloneIndividualCandidacy(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.StandaloneIndividualCandidacy.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
+    private <T extends CandidacyProcess> boolean hasValidIndividualCandidacy(final Class<T> clazz,
+	    final ExecutionInterval executionInterval, final IndividualCandidacyProcessBean bean) {
+	T candidacyProcess = CandidacyProcess.getCandidacyProcessByExecutionInterval(clazz, executionInterval);
+	IndividualCandidacyProcess individualCandidacyProcess = candidacyProcess.getChildProcessByDocumentId(bean.getPersonBean()
+		.getIdDocumentType(), bean.getPersonBean().getDocumentIdNumber());
+	return individualCandidacyProcess != null && !individualCandidacyProcess.isCandidacyCancelled();
+    }
+
+    public boolean hasValidStandaloneIndividualCandidacy(final IndividualCandidacyProcessBean bean,
+	    final ExecutionInterval executionInterval) {
+	return hasValidIndividualCandidacy(StandaloneCandidacyProcess.class, executionInterval, bean);
     }
 
     private void addSelectedCurricularCourses(final List<CurricularCourse> curricularCourses,

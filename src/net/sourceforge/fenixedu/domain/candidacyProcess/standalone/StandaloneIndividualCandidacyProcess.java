@@ -11,13 +11,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy;
 
 public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCandidacyProcess_Base {
 
@@ -30,6 +29,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
 	activities.add(new CreateRegistration());
+	activities.add(new BindPersonToCandidacy());
     }
 
     private StandaloneIndividualCandidacyProcess() {
@@ -277,6 +277,45 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	private void createRegistration(final StandaloneIndividualCandidacyProcess process) {
 	    process.getCandidacy().createRegistration(DegreeCurricularPlan.readEmptyDegreeCurricularPlan(), null, Ingression.STC);
 	}
+    }
+
+    static private class BindPersonToCandidacy extends Activity<StandaloneIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyInternal()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	}
+
+	@Override
+	protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    StandaloneIndividualCandidacyProcessBean bean = (StandaloneIndividualCandidacyProcessBean) object;
+
+	    // First edit personal information
+	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    // Then bind to person
+	    process.bindPerson(bean.getChoosePersonBean());
+
+	    return process;
+
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
     @Override

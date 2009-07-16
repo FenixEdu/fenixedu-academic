@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -312,7 +313,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
 	editMainCandidacyInformation(bean);
-	editPrecedentDegreeInformation(bean);
+
+	if (!this.getClass().equals(StandaloneIndividualCandidacy.class))
+	    editPrecedentDegreeInformation(bean);
     }
 
     public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {

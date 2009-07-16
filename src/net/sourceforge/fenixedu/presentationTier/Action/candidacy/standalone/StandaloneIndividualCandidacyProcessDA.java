@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExe
 import net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
@@ -43,7 +44,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/standalone/editCandidacyInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/standalone/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp")
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
+	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
+	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp")
 
 })
 public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -96,7 +99,22 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final StandaloneIndividualCandidacyProcessBean bean = new StandaloneIndividualCandidacyProcessBean();
 	bean.setCandidacyProcess(getParentProcess(request));
-	bean.setChoosePersonBean(new ChoosePersonBean());
+
+	/*
+	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
+	 * office is external So we dont require ChoosePersonBean because a
+	 * Person will not be associated or created at individual candidacy
+	 * creation stage. Instead we bind with an empty PersonBean.
+	 * 
+	 * bean.setChoosePersonBean(new ChoosePersonBean());
+	 */
+	bean.setPersonBean(new PersonBean());
+	bean.setCandidacyInformationBean(new CandidacyInformationBean());
+
+	/*
+	 * 06/05/2009 - Also we mark the bean as an external candidacy.
+	 */
+	bean.setInternalPersonCandidacy(Boolean.FALSE);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
@@ -306,8 +324,14 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
     @Override
     protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
 	    IndividualCandidacyProcess process) {
-	// TODO Auto-generated method stub
-	
+	final StandaloneIndividualCandidacyProcessBean bean = new StandaloneIndividualCandidacyProcessBean(
+		(StandaloneIndividualCandidacyProcess) process);
+	bean.setCandidacyProcess(getParentProcess(request));
+
+	bean.setChoosePersonBean(new ChoosePersonBean(process.getCandidacy().getPersonalDetails()));
+	bean.setPersonBean(new PersonBean(process.getCandidacy().getPersonalDetails()));
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
 }

@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.joda.time.DateTime;
 
@@ -63,5 +66,42 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
     @Override
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
+    }
+
+    public static <T extends CandidacyProcess> T getCandidacyProcessByDate(Class<T> clazz, final DateTime date) {
+	Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+
+	for (T process : candidacyProcessList) {
+	    if (process.hasCandidacyPeriod() && process.getCandidacyPeriod().isOpen(date))
+		return process;
+	}
+
+	return null;
+    }
+
+    public static <T extends CandidacyProcess> T getCandidacyProcessByExecutionInterval(Class<T> clazz,
+	    final ExecutionInterval executionInterval) {
+	Set<T> candidacyProcessList = RootDomainObject.readAllDomainObjects(clazz);
+
+	for (T process : candidacyProcessList) {
+	    if (process.hasCandidacyPeriod() && executionInterval.equals(process.getCandidacyPeriod().getExecutionInterval()))
+		;
+	    return process;
+	}
+
+	return null;
+    }
+
+    public IndividualCandidacyProcess getChildProcessByDocumentId(IDDocumentType type, String identification) {
+	for (IndividualCandidacyProcess individualCandidacyProcess : getChildProcesses()) {
+	    if (individualCandidacyProcess.getCandidacy() != null
+		    && identification
+			    .equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getDocumentIdNumber())
+		    && type.equals(individualCandidacyProcess.getCandidacy().getPersonalDetails().getIdDocumentType())) {
+		return individualCandidacyProcess;
+	    }
+	}
+
+	return null;
     }
 }
