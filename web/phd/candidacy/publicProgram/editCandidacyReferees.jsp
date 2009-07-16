@@ -41,7 +41,11 @@
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
-		<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddCandidacyRefereeToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p>
+		<%-- <p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"methodId\").value=\"prepareAddCandidacyRefereeToExistingCandidacy\"; document.getElementById(\"editCandidacyRefereeForm\").submit();" %>' href="#" >+ <bean:message key="label.add" bundle="PHD_RESOURCES"/></a></p> --%>
+	
+		<p>
+			When you add a referee an email will be sent to him with a link to an online form (the reference letter). The referee should then fill and submit the form. When the form is submited by the referee the "Referee form submitted" field will be set to "Yes".
+		</p>
 	
 		<logic:notEmpty name="refereeBean">
 			<div class="fs_form">

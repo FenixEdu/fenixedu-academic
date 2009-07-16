@@ -1080,8 +1080,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward prepareEditCandidacyReferees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getCandidacyBean());
-	return mapping.findForward("editCandidacyReferees");
+	return prepareAddCandidacyRefereeToExistingCandidacy(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareAddCandidacyRefereeToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
@@ -1102,19 +1101,18 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward addCandidacyRefereeToExistingCandidacy(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("candidacyBean", getCandidacyBean());
-
 	try {
 	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
 		    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
+	    RenderUtils.invalidateViewState("refereeBean");
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    request.setAttribute("refereeBean", getRenderedObject("refereeBean"));
+	    return editCandidacyRefereesInvalid(mapping, actionForm, request, response);
 	}
 
-	return mapping.findForward("editCandidacyReferees");
+	return prepareEditCandidacyReferees(mapping, actionForm, request, response);
     }
 
     public ActionForward sendCandidacyRefereeEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -1122,12 +1120,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	final PhdCandidacyReferee referee = getReferee(bean.getCandidacyHashCode().getIndividualProgramProcess(), request);
-
 	referee.sendEmail();
-	request.setAttribute("candidacyBean", bean);
 	addSuccessMessage(request, "message.candidacy.referee.email.sent.with.success", referee.getName());
-
-	return mapping.findForward("editCandidacyReferees");
+	
+	return prepareEditCandidacyReferees(mapping, actionForm, request, response);
     }
 
     private PhdCandidacyReferee getReferee(final PhdIndividualProgramProcess process, final HttpServletRequest request) {
