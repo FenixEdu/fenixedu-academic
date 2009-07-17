@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
+import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,23 +14,33 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.commons.lang.StringUtils;
@@ -63,7 +74,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp"),
 
-	@Forward(name = "viewProcessAlertMessages", path = "/phd/academicAdminOffice/viewProcessAlertMessages.jsp")
+	@Forward(name = "viewProcessAlertMessages", path = "/phd/academicAdminOffice/viewProcessAlertMessages.jsp"),
+
+	@Forward(name = "manageStudyPlan", path = "/phd/academicAdminOffice/manageStudyPlan.jsp"),
+
+	@Forward(name = "createStudyPlan", path = "/phd/academicAdminOffice/createStudyPlan.jsp"),
+
+	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -522,4 +539,135 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Alerts Management
+
+    // Study plan management
+
+    public ActionForward manageStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanDocumentUploadBean", new PhdCandidacyDocumentUploadBean(
+		PhdIndividualProgramDocumentType.STUDY_PLAN));
+
+	return mapping.findForward("manageStudyPlan");
+    }
+
+    public ActionForward uploadStudyPlanDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("studyPlanDocumentUploadBean");
+
+	if (!bean.hasAnyInformation()) {
+	    request.setAttribute("studyPlanDocumentUploadBean", bean);
+
+	    addErrorMessage(request, "message.no.documents.to.upload");
+
+	    return mapping.findForward("manageStudyPlan");
+	}
+
+	final ActionForward result = executeActivity(PhdProgramCandidacyProcess.UploadDocuments.class, Collections
+		.singletonList(bean), request, mapping, "manageStudyPlan", "manageStudyPlan",
+		"message.documents.uploaded.with.success");
+
+	RenderUtils.invalidateViewState("studyPlanDocumentUploadBean");
+	request.setAttribute("studyPlanDocumentUploadBean", new PhdCandidacyDocumentUploadBean(
+		PhdIndividualProgramDocumentType.STUDY_PLAN));
+
+	return result;
+    }
+
+    public ActionForward uploadStudyPlanDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanDocumentUploadBean", getRenderedObject("studyPlanDocumentUploadBean"));
+
+	return mapping.findForward("manageStudyPlan");
+    }
+
+    public ActionForward prepareCreateStudyPlanInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
+
+	return mapping.findForward("createStudyPlan");
+    }
+
+    public ActionForward prepareCreateStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", new PhdStudyPlanBean(getProcess(request)));
+
+	return mapping.findForward("createStudyPlan");
+    }
+
+    public ActionForward createStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return executeActivity(AddStudyPlan.class, getRenderedObject("studyPlanBean"), request, mapping, "createStudyPlan",
+		"manageStudyPlan", "message.study.plan.created.with.success");
+    }
+
+    public ActionForward prepareCreateStudyPlanEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanEntryBean", new PhdStudyPlanEntryBean(getProcess(request).getStudyPlan()));
+
+	return mapping.findForward("createStudyPlanEntry");
+
+    }
+
+    public ActionForward prepareCreateStudyPlanEntryInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanEntryBean", getStudyPlanEntryBean());
+
+	return mapping.findForward("createStudyPlanEntry");
+    }
+
+    public ActionForward createStudyPlanEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanEntryBean", getStudyPlanEntryBean());
+
+	return executeActivity(AddStudyPlanEntry.class, getStudyPlanEntryBean(), request, mapping, "createStudyPlanEntry",
+		"manageStudyPlan", "message.study.plan.entry.created.with.success");
+
+    }
+
+    private Object getStudyPlanEntryBean() {
+	return getRenderedObject("studyPlanEntryBean");
+    }
+
+    public ActionForward studyPlanEntryPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanEntryBean", getStudyPlanEntryBean());
+
+	RenderUtils.invalidateViewState("studyPlanEntryBean");
+
+	return mapping.findForward("createStudyPlanEntry");
+    }
+
+    public ActionForward deleteStudyPlanEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return executeActivity(DeleteStudyPlanEntry.class, getStudyPlanEntry(request), request, mapping, "manageStudyPlan",
+		"manageStudyPlan", "message.study.plan.entry.deleted.successfuly");
+
+    }
+
+    private PhdStudyPlanEntry getStudyPlanEntry(HttpServletRequest request) {
+	return getDomainObject(request, "studyPlanEntryId");
+
+    }
+
+    public ActionForward deleteStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return executeActivity(DeleteStudyPlan.class, getProcess(request).getStudyPlan(), request, mapping, "manageStudyPlan",
+		"manageStudyPlan", "message.study.plan.deleted.successfuly");
+
+    }
+
+    // End of study plan management
+
 }

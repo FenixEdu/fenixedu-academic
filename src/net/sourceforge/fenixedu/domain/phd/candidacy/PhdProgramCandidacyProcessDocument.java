@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.Collections;
+import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -16,6 +15,16 @@ import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProcessDocument_Base {
+
+    public static Comparator<PhdProgramCandidacyProcessDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<PhdProgramCandidacyProcessDocument>() {
+	public int compare(PhdProgramCandidacyProcessDocument leftPhdProgramCandidacyProcessDocument,
+		PhdProgramCandidacyProcessDocument rightPhdProgramCandidacyProcessDocument) {
+	    int comparationResult = leftPhdProgramCandidacyProcessDocument.getUploadTime().compareTo(
+		    rightPhdProgramCandidacyProcessDocument.getUploadTime());
+	    return (comparationResult == 0) ? leftPhdProgramCandidacyProcessDocument.getIdInternal().compareTo(
+		    rightPhdProgramCandidacyProcessDocument.getIdInternal()) : comparationResult;
+	}
+    };
 
     protected PhdProgramCandidacyProcessDocument() {
 	super();

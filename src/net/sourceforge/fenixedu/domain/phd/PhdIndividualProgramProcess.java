@@ -89,6 +89,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new DeleteCustomAlert());
 
 	activities.add(new ValidatedByCandidate());
+
+	activities.add(new AddStudyPlan());
+
+	activities.add(new AddStudyPlanEntry());
+
+	activities.add(new DeleteStudyPlanEntry());
+
+	activities.add(new DeleteStudyPlan());
+
     }
 
     @StartActivity
@@ -462,6 +471,88 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
+    static public class AddStudyPlan extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    final PhdStudyPlanBean bean = (PhdStudyPlanBean) object;
+
+	    new PhdStudyPlan(bean.getProcess(), bean.getDegree());
+
+	    return process;
+	}
+
+    }
+
+    static public class AddStudyPlanEntry extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    process.getStudyPlan().createEntry((PhdStudyPlanEntryBean) object);
+
+	    return process;
+	}
+
+    }
+
+    static public class DeleteStudyPlanEntry extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    ((PhdStudyPlanEntry) object).delete();
+
+	    return process;
+	}
+
+    }
+
+    static public class DeleteStudyPlan extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    ((PhdStudyPlan) object).delete();
+
+	    return process;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -734,6 +825,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isValidatedByCandidate() {
 	return getCandidacyProcess().isValidatedByCandidate();
+    }
+
+    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanDocuments() {
+	return getCandidacyProcess().getStudyPlanDocuments();
     }
 
 }

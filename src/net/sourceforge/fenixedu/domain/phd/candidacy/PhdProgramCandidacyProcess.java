@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -287,5 +291,18 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public boolean isValidatedByCandidate() {
 	return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
+    }
+
+    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanDocuments() {
+	final Set<PhdProgramCandidacyProcessDocument> result = new HashSet<PhdProgramCandidacyProcessDocument>();
+
+	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
+	    if (each.hasType(PhdIndividualProgramDocumentType.STUDY_PLAN)) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+
     }
 }

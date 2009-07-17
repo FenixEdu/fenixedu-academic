@@ -29,6 +29,14 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 
     private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
 
+    public PhdCandidacyDocumentUploadBean() {
+
+    }
+
+    public PhdCandidacyDocumentUploadBean(PhdIndividualProgramDocumentType type) {
+	setType(type);
+    }
+
     public byte[] getFileContent() {
 	return this.fileContent;
     }
@@ -87,16 +95,11 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
     }
 
     public PhdIndividualProgramProcess getIndividualProgramProcess() {
-	return (this.
-		individualProgramProcess != null) ? this.
-		individualProgramProcess.getObject() : null;
+	return (this.individualProgramProcess != null) ? this.individualProgramProcess.getObject() : null;
     }
 
-    public void setIndividualProgramProcess(final PhdIndividualProgramProcess 
-		individualProgramProcess) {
-	this.
-		individualProgramProcess = (
-		individualProgramProcess != null) ? new DomainReference<PhdIndividualProgramProcess>(
+    public void setIndividualProgramProcess(final PhdIndividualProgramProcess individualProgramProcess) {
+	this.individualProgramProcess = (individualProgramProcess != null) ? new DomainReference<PhdIndividualProgramProcess>(
 		individualProgramProcess) : null;
     }
 }
