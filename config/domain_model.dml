@@ -176,6 +176,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType       
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
+enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	  as PhdStudyPlanEntryType;
 
 /*
  * Value types that need special externalization
@@ -6587,6 +6588,23 @@ class phd.alert.PhdAlertMessage extends DomainObject {
 	Boolean taskPerformed;
 }
 
+class phd.PhdStudyPlan extends DomainObject {
+	
+}
+
+class phd.PhdStudyPlanEntry extends DomainObject {
+	PhdStudyPlanEntryType type;
+	
+}
+
+	class phd.ExternalPhdStudyPlanEntry extends phd.PhdStudyPlanEntry {
+		String courseName;
+	}
+	
+	class phd.InternalPhdStudyPlanEntry extends phd.PhdStudyPlanEntry {
+		
+	}
+	
 
 /* End of Phd Module */
 
@@ -6836,6 +6854,47 @@ relation PhdCandidacyRefereeAlertPhdCandidacyReferee {
 relation PhdAlertMessagePhdIndividualProgramProcess {
 	phd.PhdIndividualProgramProcess playsRole process;
 	phd.alert.PhdAlertMessage playsRole alertMessages {
+		multiplicity *;
+	}
+}
+
+
+relation RootDomainObjectPhdStudyPlan {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdStudyPlan playsRole phdStudyPlans {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectPhdStudyPlanEntry {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdStudyPlanEntry playsRole phdStudyPlanEntries {
+		multiplicity *;
+	}
+}
+
+relation PhdStudyPlanPhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.PhdStudyPlan playsRole studyPlan;
+}
+
+relation InternalPhdStudyPlanEntryCompetenceCourse {
+	CompetenceCourse playsRole competenceCourse;
+	phd.InternalPhdStudyPlanEntry playsRole phdStudyPlanEntries {
+		multiplicity *;
+	}
+}
+
+relation PhdStudyPlanPhdStudyPlanEntry {
+	phd.PhdStudyPlan playsRole studyPlan;
+	phd.PhdStudyPlanEntry playsRole entries {
+		multiplicity *;
+	}
+}
+
+relation DegreePhdStudyPlan {
+	Degree playsRole degree;
+	phd.PhdStudyPlan playsRole phdStudyPlans {
 		multiplicity *;
 	}
 }
