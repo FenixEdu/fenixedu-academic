@@ -40,14 +40,14 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 		for (final Registration registration : degree.getRegistrationsSet()) {
 		    LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
 		    states.addAll(registration.getRegistrationStates());
-		    Collections.sort(states, RegistrationState.DATE_COMPARATOR);
 		    CollectionUtils.filter(states, new Predicate() {
 			@Override
 			public boolean evaluate(Object item) {
 			    return ((RegistrationState) item).getExecutionYear() != null
-				    && ((RegistrationState) item).getExecutionYear().isBeforeOrEquals(getExecutionYear());
+				    && ((RegistrationState) item).getExecutionYear().equals(getExecutionYear());
 			}
 		    });
+		    Collections.sort(states, RegistrationState.DATE_COMPARATOR);
 		    if (!states.isEmpty() && states.getLast().getStateType().equals(RegistrationStateType.FLUNKED)) {
 			final Row row = spreadsheet.addRow();
 			row.setCell(registration.getNumber());
