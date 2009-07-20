@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -67,7 +68,11 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 			count(enrolment);
 		    }
 		}
-		current = current.getSourceRegistration();
+		if (!current.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+		    current = current.getSourceRegistration();
+		} else {
+		    current = null;
+		}
 	    }
 	}
 
