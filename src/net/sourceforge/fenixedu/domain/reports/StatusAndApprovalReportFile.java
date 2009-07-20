@@ -21,7 +21,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 
     @Override
     public String getJobName() {
-	return "Estatuto e aprovações entre 2003/2004 e " + getExecutionYear().getYear();
+	return "Estatutos e aprovações desde 2003/2004";
     }
 
     public static class EnrolmentAndAprovalCounter {
@@ -60,14 +60,14 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
 		final ExecutionSemester lastExecutionSemester, final Registration registration) {
 	    this(firstExecutionSemester, lastExecutionSemester);
-	    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
-		if (otherRegistration.getDegree() == registration.getDegree()) {
-		    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration.getStudentCurricularPlansSet()) {
-			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
-			    count(enrolment);
-			}
+	    Registration current = registration;
+	    while (current != null) {
+		for (final StudentCurricularPlan studentCurricularPlan : current.getStudentCurricularPlansSet()) {
+		    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+			count(enrolment);
 		    }
 		}
+		current = current.getSourceRegistration();
 	    }
 	}
 
@@ -95,19 +95,6 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
     @Override
     protected String getPrefix() {
 	return "statusAndAproval";
-    }
-
-    public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {
-	ExecutionYear executionYearFourYearsBack = executionYear;
-	if (executionYear != null) {
-	    for (int i = 5; i > 1; i--) {
-		final ExecutionYear previousExecutionYear = executionYearFourYearsBack.getPreviousExecutionYear();
-		if (previousExecutionYear != null) {
-		    executionYearFourYearsBack = previousExecutionYear;
-		}
-	    }
-	}
-	return executionYearFourYearsBack;
     }
 
     @Override
