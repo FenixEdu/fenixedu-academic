@@ -22,6 +22,6 @@
 	<li><html:link page="/exercisesManagement.do?method=exercisesFirstPage" paramId="objectCode" paramName="objectCode"><bean:message key="link.showExercises"/></html:link></li>
 </ul>
 <ul style="margin-top: 1em;">
-	<li><html:link page="/evaluation/evaluationIndex.faces" paramId="executionCourseID" paramName="objectCode"><bean:message key="link.evaluation"/></html:link></li>
+	<li><html:link page="/evaluationManagement.do?method=evaluationIndex" paramId="executionCourseID" paramName="objectCode"><bean:message key="link.evaluation"/></html:link></li>
 	<li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="objectCode"><bean:message key="link.executionCourseAdministration"/></html:link></li>
 </ul>
