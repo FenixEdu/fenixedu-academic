@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.reports;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -14,14 +14,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
@@ -146,6 +144,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("regime ingresso (código)");
 	spreadsheet.setHeader("regime ingresso (designação)");
 	spreadsheet.setHeader("estabelecimento de proveniência (qd aplicável)");
+	spreadsheet.setHeader("curso de proveniência (qd aplicável)");
 	spreadsheet.setHeader("estabelecimento curso anterior");
 	spreadsheet.setHeader("curso anterior");
 	spreadsheet.setHeader("nº de inscrições no curso anterior");
@@ -200,12 +199,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
     private void reportRaidesGraduate(final Spreadsheet sheet, final Registration registration, ExecutionYear executionYear,
 	    final CycleType cycleType, final boolean concluded, final YearMonthDay conclusionDate) {
 
-	if (registration.getStudent().getNumber() != 54328)
-	    return;
-
 	final Row row = sheet.addRow();
 	final Person graduate = registration.getPerson();
-	Registration sourceRegistration = getSourceRegistrationToExtractInformation(registration);
+	List<Registration> registrationPath = getFullRegistrationPath(registration);
+	Registration sourceRegistration = registrationPath.get(0);
 	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
 
 	// Ciclo
@@ -268,7 +265,11 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(sourceRegistration.getStartExecutionYear().getName());
 
 	// Nº de anos lectivos de inscrição no Curso actual
-	row.setCell(calculateNumberOfEnrolmentYears(registration));
+	int numberOfEnrolmentYears = 0;
+	for (Registration current : registrationPath) {
+	    numberOfEnrolmentYears += current.getEnrolmentsExecutionYears().size();
+	}
+	row.setCell(numberOfEnrolmentYears);
 
 	// Regime de frequência curso: Tempo integral/Tempo Parcial
 	row.setCell(registration.getRegimeType(executionYear) != null ? registration.getRegimeType(executionYear).getName() : "");
@@ -286,10 +287,14 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Regime de Ingresso no Curso Actual (designação)
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
 
-	// Estabelecimento de proveniência: Instituição onde esteve inscrito mas
+	// Estabelecimento de proveniência: Instituição onde esteve
+	// inscrito mas
 	// não obteve grau, (e.g: transferencias, mudanças de curso...)
 	PrecedentDegreeInformation precedence = sourceRegistration.getPrecedentDegreeInformation();
 	row.setCell(precedence != null && precedence.getInstitutionName() != null ? precedence.getInstitutionName() : "");
+
+	// Curso de proveniência
+	row.setCell(precedence != null && precedence.getDegreeDesignation() != null ? precedence.getDegreeDesignation() : "");
 
 	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
 	// diferente CNA, e deve
@@ -366,14 +371,16 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação do Pai
+	// Condição perante a situação na profissão/Ocupação do
+	// Pai
 	if (candidacyInformationBean.getFatherProfessionalCondition() != null) {
 	    row.setCell(candidacyInformationBean.getFatherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação da Mãe
+	// Condição perante a situação na profissão/Ocupação da
+	// Mãe
 	if (candidacyInformationBean.getMotherProfessionalCondition() != null) {
 	    row.setCell(candidacyInformationBean.getMotherProfessionalCondition().getName());
 	} else {
@@ -408,7 +415,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    row.setCell("");
 	}
 
-	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se referem
+	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se
+	// referem
 	// os dados
 	boolean working1Found = false;
 	for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
@@ -420,7 +428,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	}
 	row.setCell(String.valueOf(working1Found));
 
-	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se referem
+	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se
+	// referem
 	// os dados
 	boolean working2Found = false;
 	for (StudentStatute statute : registration.getStudent().getStudentStatutes()) {
@@ -502,19 +511,23 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	}
 
-	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao que se
+	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao
+	// que se
 	// referem os dados (neste caso até ao fim de 2007/08) no curso actual
 	row.setCell(printDouble(totalEctsConcludedUntilPreviousYear));
 
-	// Nº de Disciplinas Inscritos no ano lectivo anterior ao que se referem
+	// Nº de Disciplinas Inscritos no ano lectivo anterior ao que se
+	// referem
 	// os dados
 	row.setCell(totalEnrolmentsInPreviousYear);
 
-	// Nº de Disciplinas Aprovadas no ano lectivo anterior ao que se referem
+	// Nº de Disciplinas Aprovadas no ano lectivo anterior ao que se
+	// referem
 	// os dados
 	row.setCell(totalEnrolmentsApprovedInPreviousYear);
 
-	// Nº de Disciplinas Inscritos no 1º Semestre do ano a que se referem os
+	// Nº de Disciplinas Inscritos no 1º Semestre do ano a que se
+	// referem os
 	// dados
 	row.setCell(totalEnrolmentsInFirstSemester);
 
@@ -547,14 +560,16 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Data do estado de matrícula
 	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateDate().toString("dd-MM-yyyy") : "n/a");
 
-	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo anterior ao
+	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
+	// anterior ao
 	// que se referem os dados
 	final CycleCurriculumGroup firstCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
 		.getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
 	row.setCell(firstCycleCurriculumGroup != null ? printDouble(firstCycleCurriculumGroup.getCreditsConcluded(executionYear
 		.getPreviousExecutionYear())) : "");
 
-	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo anterior ao
+	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
+	// anterior ao
 	// que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
 		.getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
@@ -582,51 +597,5 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Tem situação de propinas no lectivo dos dados
 	row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasAnyGratuityEventFor(executionYear)));
-    }
-
-    private int calculateNumberOfEnrolmentYears(Registration registration) {
-	final Set<ExecutionYear> executionYears = new HashSet<ExecutionYear>();
-	final Set<Registration> toExtract = new HashSet<Registration>();
-	toExtract.add(registration);
-	toExtract.add(getSourceRegistrationToExtractInformation(registration));
-
-	for (final Registration each : toExtract) {
-	    executionYears.addAll(each.getEnrolmentsExecutionYears());
-	}
-
-	return executionYears.size();
-
-    }
-
-    private Registration getSourceRegistrationToExtractInformation(final Registration registration) {
-
-	if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE
-		|| registration.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    if (registration.hasSourceRegistration() && !registration.getSourceRegistration().isBolonha()) {
-		return getSourceRegistrationToExtractInformation(registration.getSourceRegistration());
-	    } else if (findSourceByEquivalencePlan(registration) != null) {
-		return findSourceByEquivalencePlan(registration);
-	    } else {
-		return registration;
-	    }
-	} else {
-	    return registration;
-	}
-
-    }
-
-    private Registration findSourceByEquivalencePlan(Registration targetRegistration) {
-	final DegreeCurricularPlan targetDegreeCurricularPlan = targetRegistration.getLastDegreeCurricularPlan();
-	if (targetDegreeCurricularPlan.getEquivalencePlan() != null) {
-	    for (Registration sourceRegistration : targetRegistration.getStudent().getRegistrations()) {
-		final DegreeCurricularPlan sourceDegreeCurricularPlan = sourceRegistration.getLastDegreeCurricularPlan();
-		if (sourceRegistration != targetRegistration
-			&& sourceRegistration.getActiveStateType() == RegistrationStateType.TRANSITED
-			&& targetDegreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().equals(
-				sourceDegreeCurricularPlan))
-		    return sourceRegistration;
-	    }
-	}
-	return null;
     }
 }

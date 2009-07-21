@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -8,7 +11,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -141,5 +146,38 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     public String getUpperCaseType() {
 	return this.getType().toUpperCase();
+    }
+
+    protected static List<Registration> getFullRegistrationPath(final Registration current) {
+	if (current.getDegreeType() == DegreeType.BOLONHA_DEGREE
+		|| current.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+	    List<Registration> path = new ArrayList<Registration>();
+	    path.add(current);
+	    Registration source;
+	    if (current.hasSourceRegistration() && !(source = current.getSourceRegistration()).isBolonha()) {
+		path.addAll(getFullRegistrationPath(source));
+	    } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
+		path.addAll(getFullRegistrationPath(source));
+	    }
+	    Collections.sort(path, Registration.COMPARATOR_BY_START_DATE);
+	    return path;
+	} else {
+	    return Collections.singletonList(current);
+	}
+    }
+
+    private static Registration findSourceRegistrationByEquivalencePlan(Registration targetRegistration) {
+	final DegreeCurricularPlan targetDegreeCurricularPlan = targetRegistration.getLastDegreeCurricularPlan();
+	if (targetDegreeCurricularPlan.getEquivalencePlan() != null) {
+	    for (Registration sourceRegistration : targetRegistration.getStudent().getRegistrations()) {
+		final DegreeCurricularPlan sourceDegreeCurricularPlan = sourceRegistration.getLastDegreeCurricularPlan();
+		if (sourceRegistration != targetRegistration
+			&& sourceRegistration.getActiveStateType() == RegistrationStateType.TRANSITED
+			&& targetDegreeCurricularPlan.getEquivalencePlan().getSourceDegreeCurricularPlan().equals(
+				sourceDegreeCurricularPlan))
+		    return sourceRegistration;
+	    }
+	}
+	return null;
     }
 }
