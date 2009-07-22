@@ -339,4 +339,11 @@ public class Announcement extends Announcement_Base {
 	removeCampus();
     }
 
+    public boolean isInPublicationPeriod() {
+	DateTime beginPublication = getPublicationBegin();
+	DateTime endPublication = getPublicationEnd();
+	
+	return (beginPublication == null || beginPublication.isBeforeNow()) && (endPublication == null || endPublication.isAfterNow());
+    }
+
 }

@@ -199,12 +199,12 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public void addVisibleAnnouncements(final AnnouncementPresentationBean announcementPresentationBean) {
 	for (Announcement announcement : getChildren(Announcement.class)) {
-	    if (announcement.getVisible()) {
+	    if (announcement.getVisible() && announcement.isInPublicationPeriod()) {
 		announcementPresentationBean.add(announcement);
 	    }
 	}
     }
-
+    
     @Override
     public boolean isDeletable() {
 	return super.isDeletable() && !hasAnyChildren();
