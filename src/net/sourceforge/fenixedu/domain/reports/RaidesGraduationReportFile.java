@@ -114,7 +114,12 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
     private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
-	    result.addAll(executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans());
+	    for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
+		    .getStudentCurricularPlans()) {
+		if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
+		    result.add(studentCurricularPlan);
+		}
+	    }
 	}
     }
 
