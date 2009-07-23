@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -552,18 +554,34 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	row.setCell(extraCurricularEnrolmentsCount);
 
+	// Estados de matrícula
+	SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
+	for (Registration current : registrationPath) {
+	    states.addAll(current.getRegistrationStates());
+	}
+	RegistrationState previousYearState = null;
+	RegistrationState currentYearState = null;
+	for (RegistrationState state : states) {
+	    if (previousYearState == null
+		    || !state.getStateDate().isAfter(
+			    executionYear.getPreviousExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		previousYearState = state;
+	    }
+	    if (currentYearState == null
+		    || !state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+		currentYearState = state;
+	    }
+	}
+
 	// Estado da matrícula no ano lectivo anterior ao que se referem os
 	// dados
-	final RegistrationState stateInPreviousYear = registration.getLastRegistrationState(executionYear
-		.getPreviousExecutionYear());
-	row.setCell(stateInPreviousYear != null ? stateInPreviousYear.getStateType().getDescription() : "n/a");
+	row.setCell(previousYearState != null ? previousYearState.getStateType().getDescription() : "n/a");
 
 	// Estado (da matrícula) no ano a que se referem os dados
-	final RegistrationState stateInCurrentYear = registration.getLastRegistrationState(executionYear);
-	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateType().getDescription() : "n/a");
+	row.setCell(currentYearState != null ? currentYearState.getStateType().getDescription() : "n/a");
 
 	// Data do estado de matrícula
-	row.setCell(stateInCurrentYear != null ? stateInCurrentYear.getStateDate().toString("dd-MM-yyyy") : "n/a");
+	row.setCell(currentYearState != null ? currentYearState.getStateDate().toString("dd-MM-yyyy") : "n/a");
 
 	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
 	// anterior ao
