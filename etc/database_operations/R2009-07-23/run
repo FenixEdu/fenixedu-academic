@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing permitted group in file" dataFix.sql IST
 
