@@ -374,7 +374,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public boolean isConclusionProcessed() {
 	if (!isBolonhaDegree()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.use.this.method.to.pre.bolonha");
+	    return getRegistration().hasConclusionProcess();
 	}
 
 	for (final CycleCurriculumGroup cycleCurriculumGroup : getInternalCycleCurriculumGrops()) {
