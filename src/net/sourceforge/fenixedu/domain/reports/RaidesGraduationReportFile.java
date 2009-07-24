@@ -562,13 +562,11 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	RegistrationState previousYearState = null;
 	RegistrationState currentYearState = null;
 	for (RegistrationState state : states) {
-	    if (previousYearState == null
-		    || !state.getStateDate().isAfter(
-			    executionYear.getPreviousExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+	    if (!state.getStateDate().isAfter(
+		    executionYear.getPreviousExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight())) {
 		previousYearState = state;
 	    }
-	    if (currentYearState == null
-		    || !state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
+	    if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateTimeAtMidnight())) {
 		currentYearState = state;
 	    }
 	}
