@@ -2,6 +2,10 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.joda.time.DateTime;
+
 import dml.runtime.RelationAdapter;
 
 abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
@@ -22,6 +26,10 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
     protected PhdStudyPlanEntry() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
+	if (AccessControl.getPerson() != null) {
+	    setCreatedBy(AccessControl.getPerson().getUsername());
+	}
     }
 
     protected PhdStudyPlanEntry(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan) {
@@ -58,7 +66,6 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
     public void delete() {
 	super.setRootDomainObject(null);
 	super.setStudyPlan(null);
-	
 
 	super.deleteDomainObject();
 

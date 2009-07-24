@@ -66,7 +66,7 @@
 			</li>
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=manageStudyPlan" paramId="processId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.studyPlan"/>
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.studyPlanAndQualificationExams"/>
 				</html:link>
 			</li>
 			<li>

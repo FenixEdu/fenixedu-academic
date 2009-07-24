@@ -1,6 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType"%><html:xhtml/>
+<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
@@ -11,7 +10,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.createStudyPlanEntry" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.editQualificationExams" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -34,32 +33,21 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
-<br/>
-<strong><bean:message  key="label.phd.studyPlan" bundle="PHD_RESOURCES"/></strong><br/>
-<fr:view schema="PhdStudyPlan.view" name="process" property="studyPlan">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-	</fr:layout>
-</fr:view>
-	
 <%--  ### End Of Context Information  ### --%>
 
 <br/>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<bean:define id="internalEntry" name="studyPlanEntryBean" property="internalEntry" type="java.lang.Boolean"/>
-
-<fr:edit id="studyPlanEntryBean"
-	name="studyPlanEntryBean"
-	schema="<%= "PhdStudyPlanEntryBean.edit." + (internalEntry ? "internal" : "external") %>"
-	action="<%= "/phdIndividualProgramProcess.do?method=createStudyPlanEntry&processId=" + processId.toString() %>">
+<fr:edit id="editQualificationExamsBean"
+	name="editQualificationExamsBean"
+	schema="PhdIndividualProgramProcessBean.edit.qualification.exams"
+	action="<%= "/phdIndividualProgramProcess.do?method=editQualificationExams&processId=" + processId.toString() %>">
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareCreateStudyPlanEntryInvalid&processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareEditQualificationExamsInvalid&processId=" + processId.toString() %>" />
 		<fr:destination name="cancel" path="<%="/phdIndividualProgramProcess.do?method=manageStudyPlan&processId=" + processId.toString() %>" />
-		<fr:destination name="studyPlanEntryPostBack" path="<%="/phdIndividualProgramProcess.do?method=studyPlanEntryPostBack&processId=" + processId.toString() %>" />
 	</fr:layout>
 </fr:edit>
 

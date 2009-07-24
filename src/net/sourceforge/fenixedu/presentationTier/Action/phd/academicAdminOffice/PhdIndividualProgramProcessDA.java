@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
-import java.util.Collections;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
@@ -36,11 +34,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStu
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.commons.lang.StringUtils;
@@ -80,7 +77,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "createStudyPlan", path = "/phd/academicAdminOffice/createStudyPlan.jsp"),
 
-	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp")
+	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp"),
+
+	@Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -545,41 +544,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward manageStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("studyPlanDocumentUploadBean", new PhdCandidacyDocumentUploadBean(
-		PhdIndividualProgramDocumentType.STUDY_PLAN));
-
-	return mapping.findForward("manageStudyPlan");
-    }
-
-    public ActionForward uploadStudyPlanDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("studyPlanDocumentUploadBean");
-
-	if (!bean.hasAnyInformation()) {
-	    request.setAttribute("studyPlanDocumentUploadBean", bean);
-
-	    addErrorMessage(request, "message.no.documents.to.upload");
-
-	    return mapping.findForward("manageStudyPlan");
-	}
-
-	final ActionForward result = executeActivity(PhdProgramCandidacyProcess.UploadDocuments.class, Collections
-		.singletonList(bean), request, mapping, "manageStudyPlan", "manageStudyPlan",
-		"message.documents.uploaded.with.success");
-
-	RenderUtils.invalidateViewState("studyPlanDocumentUploadBean");
-	request.setAttribute("studyPlanDocumentUploadBean", new PhdCandidacyDocumentUploadBean(
-		PhdIndividualProgramDocumentType.STUDY_PLAN));
-
-	return result;
-    }
-
-    public ActionForward uploadStudyPlanDocumentInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("studyPlanDocumentUploadBean", getRenderedObject("studyPlanDocumentUploadBean"));
-
 	return mapping.findForward("manageStudyPlan");
     }
 
@@ -665,6 +629,32 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	return executeActivity(DeleteStudyPlan.class, getProcess(request).getStudyPlan(), request, mapping, "manageStudyPlan",
 		"manageStudyPlan", "message.study.plan.deleted.successfuly");
+
+    }
+
+    public ActionForward prepareEditQualificationExams(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("editQualificationExamsBean", new PhdIndividualProgramProcessBean(getProcess(request)));
+
+	return mapping.findForward("editQualificationExams");
+    }
+
+    public ActionForward prepareEditQualificationExamsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("editQualificationExamsBean", getRenderedObject("editQualificationExamsBean"));
+
+	return mapping.findForward("editQualificationExams");
+    }
+
+    public ActionForward editQualificationExams(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("editQualificationExamsBean", getRenderedObject("editQualificationExamsBean"));
+
+	return executeActivity(EditQualificationExams.class, getRenderedObject("editQualificationExamsBean"), request, mapping,
+		"editQualificationExams", "manageStudyPlan");
 
     }
 

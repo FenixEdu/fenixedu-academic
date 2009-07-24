@@ -12,7 +12,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.studyPlan" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.studyPlanAndQualificationExams" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -41,13 +41,26 @@
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
-<%--  Study Plan Documents --%>
-<strong><bean:message  key="label.phd.submited.study.plan.documents" bundle="PHD_RESOURCES"/></strong><br/>
-<logic:empty name="process" property="studyPlanDocuments">
+<%--  Qualification Exams --%>
+<strong><bean:message  key="label.phd.qualification.exams" bundle="PHD_RESOURCES"/></strong><br/>
+<fr:view schema="PhdIndividualProgramProcess.view.qualification.exams.information" name="process">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop15" />
+	</fr:layout>
+</fr:view>
+<html:link action="/phdIndividualProgramProcess.do?method=prepareEditQualificationExams" paramId="processId" paramName="process" paramProperty="externalId"> 
+	<bean:message bundle="PHD_RESOURCES" key="label.edit"/>
+</html:link>
+
+<br/><br/>
+
+<%--  Study Plan Relevant Documents --%>
+<strong><bean:message  key="label.phd.relevant.documents" bundle="PHD_RESOURCES"/></strong><br/>
+<logic:empty name="process" property="studyPlanRelevantDocuments">
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty> 
-<logic:notEmpty name="process" property="studyPlanDocuments">
-	<fr:view schema="PhdProgramCandidacyProcessDocument.view.without.type" name="process" property="studyPlanDocuments">
+<logic:notEmpty name="process" property="studyPlanRelevantDocuments">
+	<fr:view schema="PhdProgramCandidacyProcessDocument.view.without.type" name="process" property="studyPlanRelevantDocuments">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
@@ -62,30 +75,6 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
-
-<br/><br/>
-
-<fr:form action="<%= "/phdIndividualProgramProcess.do?method=uploadStudyPlanDocument&processId=" + processId.toString() %>" encoding="multipart/form-data">
-	
-	<% if (request.getAttribute("studyPlanDocumentUploadBean") == null) {
-	    	request.setAttribute("studyPlanDocumentUploadBean",new PhdCandidacyDocumentUploadBean(PhdIndividualProgramDocumentType.STUDY_PLAN)); 	
-		}
-	%>
-	
-	<fr:edit id="studyPlanDocumentUploadBean"
-		name="studyPlanDocumentUploadBean"
-		schema="PhdCandidacyDocumentUploadBean.edit.without.documentType">
-	
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=uploadStudyPlanDocumentInvalid&processId=" + processId.toString() %>" />
-		</fr:layout>
-	</fr:edit>
-	
-	<html:submit><bean:message key="label.submit" /></html:submit>	
-
-</fr:form>
 
 <br/><br/>
 

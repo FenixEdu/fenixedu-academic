@@ -1064,11 +1064,20 @@
 		<property name="destination" value="studyPlanEntryPostBack"/>
 		<property name="format" value="${presentationName}" />
 	</slot>
-	<slot name="competenceCourse" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.CompetenceCourseForStudyPlanEntryProvider" />
-		<property name="format" value="${name}" />
+	<slot name="competenceCourses" layout="option-select">
+		<property name="saveOptions" value="true"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.CompetenceCourseForStudyPlanEntryProvider"/>
+		<property name="eachSchema" value="CompetenceCourse.view.name.only"/>
+		<property name="eachLayout" value="values"/>
+		<property name="classes" value="nobullet noindent"/>
 	</slot>
 </schema>
+
+
+<schema name="CompetenceCourse.view.name.only" type="net.sourceforge.fenixedu.domain.CompetenceCourse" bundle="PHD_RESOURCES">
+	<slot name="name" />
+</schema>
+
 
 <schema name="PhdStudyPlanEntryBean.edit.external" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">
 	<slot name="internalEntry" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -1082,4 +1091,23 @@
 	<slot name="courseName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
+
+<schema name="PhdIndividualProgramProcess.view.qualification.exams.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="qualificationExamsRequired" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+	<slot name="qualificationExamsPerformed" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
+
+<schema name="PhdIndividualProgramProcessBean.edit.qualification.exams" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+	<slot name="qualificationExamsRequired">
+		<property name="defaultOptionHidden" value="true" />
+	</slot>	
+	<slot name="qualificationExamsPerformed">
+		<property name="defaultOptionHidden" value="true" />
+	</slot>
+</schema>
 

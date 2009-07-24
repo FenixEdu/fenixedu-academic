@@ -6,9 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.joda.time.DateTime;
+
 import dml.runtime.RelationAdapter;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
@@ -32,6 +37,10 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     protected PhdStudyPlan() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
+	if (AccessControl.getPerson() != null) {
+	    setCreatedBy(AccessControl.getPerson().getUsername());
+	}
     }
 
     public PhdStudyPlan(PhdIndividualProgramProcess process, Degree degree) {
@@ -116,11 +125,13 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	return false;
     }
 
-    public PhdStudyPlanEntry createEntry(PhdStudyPlanEntryBean bean) {
+    public void createEntries(PhdStudyPlanEntryBean bean) {
 	if (bean.getInternalEntry().booleanValue()) {
-	    return new InternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), bean.getCompetenceCourse());
+	    for (final CompetenceCourse each : bean.getCompetenceCourses()) {
+		new InternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), each);
+	    }
 	} else {
-	    return new ExternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), bean.getCourseName());
+	    new ExternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), bean.getCourseName());
 	}
 
     }

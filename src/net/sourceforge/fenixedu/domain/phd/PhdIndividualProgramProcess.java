@@ -98,6 +98,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	activities.add(new DeleteStudyPlan());
 
+	activities.add(new EditQualificationExams());
+
     }
 
     @StartActivity
@@ -506,7 +508,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 
-	    process.getStudyPlan().createEntry((PhdStudyPlanEntryBean) object);
+	    process.getStudyPlan().createEntries((PhdStudyPlanEntryBean) object);
 
 	    return process;
 	}
@@ -547,6 +549,26 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    ((PhdStudyPlan) object).delete();
+
+	    return process;
+	}
+
+    }
+
+    static public class EditQualificationExams extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+
+	    process.edit(userView, (PhdIndividualProgramProcessBean) object);
 
 	    return process;
 	}
@@ -681,6 +703,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    check(bean.getOtherCollaborationType(), "error.PhdIndividualProgramProcess.invalid.other.collaboration.type");
 	    setOtherCollaborationType(bean.getOtherCollaborationType());
 	}
+
+	setQualificationExamsRequired(bean.getQualificationExamsRequiredBooleanValue());
+	setQualificationExamsPerformed(bean.getQualificationExamsPerformedBooleanValue());
 
 	return this;
     }
@@ -827,8 +852,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().isValidatedByCandidate();
     }
 
-    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanDocuments() {
-	return getCandidacyProcess().getStudyPlanDocuments();
+    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanRelevantDocuments() {
+	return getCandidacyProcess().getStudyPlanRelevantDocuments();
     }
 
 }

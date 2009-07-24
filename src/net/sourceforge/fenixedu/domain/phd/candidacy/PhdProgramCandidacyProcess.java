@@ -293,11 +293,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
     }
 
-    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanDocuments() {
+    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanRelevantDocuments() {
 	final Set<PhdProgramCandidacyProcessDocument> result = new HashSet<PhdProgramCandidacyProcessDocument>();
 
 	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
-	    if (each.hasType(PhdIndividualProgramDocumentType.STUDY_PLAN)) {
+	    if (each.hasType(PhdIndividualProgramDocumentType.STUDY_PLAN)
+		    || each.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
 		result.add(each);
 	    }
 	}

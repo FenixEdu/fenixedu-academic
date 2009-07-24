@@ -6488,6 +6488,9 @@ class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
 	String thesisTitle;
 	PhdIndividualProgramCollaborationType collaborationType;
 	String otherCollaborationType;
+	Boolean qualificationExamsRequired;
+	Boolean qualificationExamsPerformed;
+
 }
 
 class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
@@ -6590,12 +6593,14 @@ class phd.alert.PhdAlertMessage extends DomainObject {
 }
 
 class phd.PhdStudyPlan extends DomainObject {
-	
+	DateTime whenCreated;
+	String createdBy;
 }
 
 class phd.PhdStudyPlanEntry extends DomainObject {
 	PhdStudyPlanEntryType type;
-	
+	DateTime whenCreated;
+	String createdBy;
 }
 
 	class phd.ExternalPhdStudyPlanEntry extends phd.PhdStudyPlanEntry {

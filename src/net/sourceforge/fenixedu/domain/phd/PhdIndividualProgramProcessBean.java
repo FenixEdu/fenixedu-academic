@@ -10,6 +10,36 @@ import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcessBean implements Serializable {
 
+    public static enum QualificationExamsResult {
+	NULL(null),
+
+	YES(Boolean.TRUE),
+
+	NO(Boolean.FALSE);
+
+	private Boolean value;
+
+	private QualificationExamsResult(Boolean value) {
+	    this.value = value;
+	}
+
+	public Boolean getValue() {
+	    return value;
+	}
+
+	static public QualificationExamsResult fromValue(Boolean value) {
+	    if (value == null) {
+		return QualificationExamsResult.NULL;
+	    } else if (value == Boolean.TRUE) {
+		return QualificationExamsResult.YES;
+	    } else {
+		return QualificationExamsResult.NO;
+	    }
+
+	}
+
+    }
+
     static private final long serialVersionUID = 909403079500457245L;
 
     private LocalDate candidacyDate;
@@ -20,6 +50,9 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
     private DomainReference<PhdProgram> phdProgram;
     private DomainReference<PhdProgramFocusArea> focusArea;
+
+    private QualificationExamsResult qualificationExamsRequired;
+    private QualificationExamsResult qualificationExamsPerformed;
 
     public PhdIndividualProgramProcessBean() {
     }
@@ -35,6 +68,9 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	setOtherCollaborationType(process.getOtherCollaborationType());
 
 	setIndividualProgramProcess(process);
+
+	setQualificationExamsRequired(QualificationExamsResult.fromValue(process.getQualificationExamsRequired()));
+	setQualificationExamsPerformed(QualificationExamsResult.fromValue(process.getQualificationExamsPerformed()));
     }
 
     public LocalDate getCandidacyDate() {
@@ -97,4 +133,29 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     public void setFocusArea(final PhdProgramFocusArea focusArea) {
 	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
     }
+
+    public QualificationExamsResult getQualificationExamsRequired() {
+	return qualificationExamsRequired;
+    }
+    
+    public Boolean getQualificationExamsRequiredBooleanValue() {
+	return qualificationExamsRequired.getValue();
+    }
+
+    public void setQualificationExamsRequired(QualificationExamsResult qualificationExamsRequired) {
+	this.qualificationExamsRequired = qualificationExamsRequired;
+    }
+
+    public QualificationExamsResult getQualificationExamsPerformed() {
+	return qualificationExamsPerformed;
+    }
+    
+    public Boolean getQualificationExamsPerformedBooleanValue() {
+	return qualificationExamsPerformed.getValue();
+    }
+
+    public void setQualificationExamsPerformed(QualificationExamsResult qualificationExamsPerformed) {
+	this.qualificationExamsPerformed = qualificationExamsPerformed;
+    }
+
 }

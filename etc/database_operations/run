@@ -44,3 +44,6 @@ function executeWithTempFile() {
 }
 
 execute "Add when created information to PublicCandidacyHashCode" alterTablePublicCandidacyHashCode.sql
+execute "Adding columns to Phd Study Plan Tables" updates.sql
+
+

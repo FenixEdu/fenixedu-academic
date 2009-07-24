@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class CompetenceCourseForStudyPlanEntryProvider extends AbstractDomainObjectProvider {
+public class CompetenceCourseForStudyPlanEntryProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object current) {
@@ -14,5 +16,10 @@ public class CompetenceCourseForStudyPlanEntryProvider extends AbstractDomainObj
 	return bean.getDegree() != null ? bean.getDegree().getLastActiveDegreeCurricularPlan().getCompetenceCourses()
 		: Collections.EMPTY_LIST;
 
+    }
+
+    @Override
+    public Converter getConverter() {
+	return new DomainObjectKeyArrayConverter();
     }
 }

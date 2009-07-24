@@ -20,20 +20,10 @@ public class InternalPhdStudyPlanEntry extends InternalPhdStudyPlanEntry_Base {
 
 	check(competenceCourse, "error.net.sourceforge.fenixedu.domain.phd.enclosing_type.competenceCourse.cannot.be.null");
 
-	checkRulesToCreate(type, studyPlan, competenceCourse);
-
 	super.setCompetenceCourse(competenceCourse);
 
 	super.init(type, studyPlan);
 
-    }
-
-    private void checkRulesToCreate(PhdStudyPlanEntryType type, PhdStudyPlan studyPlan, CompetenceCourse competenceCourse) {
-	if (type == PhdStudyPlanEntryType.NORMAL && !studyPlan.getDegree().isEmpty()
-		&& !studyPlan.getDegree().getLastActiveDegreeCurricularPlan().getCompetenceCourses().contains(competenceCourse)) {
-	    throw new DomainException(
-		    "error.net.sourceforge.fenixedu.domain.phd.InternalPhdStudyPlanEntry.competenceCourse.must.belong.to.study.plan.degree");
-	}
     }
 
     @Override
