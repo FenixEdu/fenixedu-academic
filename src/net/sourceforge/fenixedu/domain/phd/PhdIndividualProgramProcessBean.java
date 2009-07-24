@@ -55,6 +55,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private QualificationExamsResult qualificationExamsPerformed;
 
     public PhdIndividualProgramProcessBean() {
+	setQualificationExamsRequired(QualificationExamsResult.NULL);
+	setQualificationExamsPerformed(QualificationExamsResult.NULL);
     }
 
     public PhdIndividualProgramProcessBean(final PhdIndividualProgramProcess process) {
@@ -137,7 +139,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     public QualificationExamsResult getQualificationExamsRequired() {
 	return qualificationExamsRequired;
     }
-    
+
     public Boolean getQualificationExamsRequiredBooleanValue() {
 	return qualificationExamsRequired.getValue();
     }
@@ -149,7 +151,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     public QualificationExamsResult getQualificationExamsPerformed() {
 	return qualificationExamsPerformed;
     }
-    
+
     public Boolean getQualificationExamsPerformedBooleanValue() {
 	return qualificationExamsPerformed.getValue();
     }
