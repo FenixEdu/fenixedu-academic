@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import pt.ist.fenixWebFramework.services.Service;
@@ -15,6 +17,7 @@ abstract public class PublicCandidacyHashCode extends PublicCandidacyHashCode_Ba
     protected PublicCandidacyHashCode() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
     }
 
     @Service

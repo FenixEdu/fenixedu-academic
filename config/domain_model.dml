@@ -6456,6 +6456,7 @@ class messaging.AnnouncementCategory extends DomainObject {
 }
 
 class PublicCandidacyHashCode extends DomainObject {
+	DateTime whenCreated;
 	String email;
 	String value;
 }

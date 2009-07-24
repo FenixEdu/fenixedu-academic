@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add when created information to PublicCandidacyHashCode" alterTablePublicCandidacyHashCode.sql
