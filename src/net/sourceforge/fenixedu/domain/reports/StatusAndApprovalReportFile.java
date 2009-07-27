@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -64,6 +65,20 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 		for (final StudentCurricularPlan studentCurricularPlan : current.getStudentCurricularPlansSet()) {
 		    for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
 			count(enrolment);
+		    }
+		}
+		for (RegistrationState state : current.getRegistrationStates()) {
+		    if (state.isActive()) {
+			// ensure the entries exist if there is an active state
+			// in the target years
+			ExecutionSemester first = state.getExecutionYear().getFirstExecutionPeriod();
+			ExecutionSemester second = state.getExecutionYear().getLastExecutionPeriod();
+			if (firstExecutionSemester.isBeforeOrEquals(first) && first.isBeforeOrEquals(lastExecutionSemester)) {
+			    get(first);
+			}
+			if (firstExecutionSemester.isBeforeOrEquals(second) && second.isBeforeOrEquals(lastExecutionSemester)) {
+			    get(second);
+			}
 		    }
 		}
 	    }
