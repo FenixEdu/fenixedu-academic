@@ -45,5 +45,6 @@ function executeWithTempFile() {
 
 execute "Add when created information to PublicCandidacyHashCode" alterTablePublicCandidacyHashCode.sql
 execute "Adding columns to Phd Study Plan Tables" updates.sql
-
-
+execute "Add Report fields in SIBS payment related with Candidacies" addFieldsToSibsPaymentFileProcessReport.sql
+execute "Add Is Utl Student to Individual Candidacy" addUtlStudentToIndividualCandidacy.sql
+execute "Change Student to Person in Payment Code Table" changeStudentToPersonInPaymentCodeTable.sql
