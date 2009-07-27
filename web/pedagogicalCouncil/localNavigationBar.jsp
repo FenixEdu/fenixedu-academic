@@ -115,7 +115,7 @@
 			<html:link page="/studentTutorship.do?method=prepareStudentSearch"><bean:message key="link.teacher.tutorship.history" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
 		<li>
-			<html:link page="/tutorTutorship.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
+			<html:link page="/viewStudentsByTutor.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
         <li>
             <html:link page="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialperformance" bundle="APPLICATION_RESOURCES"/></html:link>
@@ -137,7 +137,7 @@
             <html:link page="/studentTutorship.do?method=prepareStudentSearch"><bean:message key="link.teacher.tutorship.history" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
         <li>
-            <html:link page="/tutorTutorship.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
+            <html:link page="/viewStudentsByTutor.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
         <li>
             <html:link page="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialperformance" bundle="APPLICATION_RESOURCES"/></html:link>

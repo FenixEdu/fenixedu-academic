@@ -42,10 +42,12 @@
 		<fr:view name="student" schema="tutorship.tutorate.student">
 			<fr:layout name="tabular">
 		   	    <fr:property name="classes" value="tstyle2 thright thlight"/>
-		   	    <fr:property name="rowClasses" value="bold,,"/>
+		   	    <fr:property name="rowClasses" value="bold,,,"/>
 		    </fr:layout>
 		</fr:view>
 		<logic:notEmpty name="performanceGridTable" property="performanceGridTableLines">
+		
+		
 			<bean:define id="degreeMaxYears" value="<%= request.getAttribute("degreeCurricularPeriods").toString() %>" />
 			<%
 				Integer numberOfFixedColumns = Integer.valueOf(degreeMaxYears) * 2 + 2;

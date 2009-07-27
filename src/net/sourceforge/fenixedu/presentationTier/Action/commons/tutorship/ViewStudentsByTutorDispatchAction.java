@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,38 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
-public class ViewStudentsByTutorDispatchAction extends FenixDispatchAction {
+public abstract class ViewStudentsByTutorDispatchAction extends FenixDispatchAction {
 
-    public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final Person person = getLoggedPerson(request);
-	final Teacher teacher = person.getTeacher();
-
-	getTutorships(request, teacher);
-
-	request.setAttribute("tutor", person);
-	return mapping.findForward("viewStudentsByTutor");
-    }
-
-    /*
-     * AUXILIARY METHODS
-     */
     protected void getTutorships(HttpServletRequest request, final Teacher teacher) {
 
 	if (!teacher.getTutorships().isEmpty()) {
@@ -54,7 +34,7 @@ public class ViewStudentsByTutorDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    private List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships) {
+    protected List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships) {
 	Map<ExecutionYear, StudentsByTutorBean> tutorshipsMapByEntryYear = new HashMap<ExecutionYear, StudentsByTutorBean>();
 
 	for (final Tutorship tutorship : tutorships) {

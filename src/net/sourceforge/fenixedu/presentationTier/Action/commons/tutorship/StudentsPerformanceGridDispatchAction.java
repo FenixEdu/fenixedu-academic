@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.commons;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship;
 
 import java.util.ArrayList;
 import java.util.Collections;

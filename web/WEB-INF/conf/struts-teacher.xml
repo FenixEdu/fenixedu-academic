@@ -1576,12 +1576,6 @@
 			<forward name="tutorMenu" path="firstPageTutorSection"/>
 		</action>
 		
-		<action path="/viewStudentsByTutor"
-		   	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsByTutorDispatchAction"
-	       	parameter="method">
-			<forward name="viewStudentsByTutor" path="studentsByTutor"/>        	
-	    </action>
-		
 		<action path="/viewStudentsPerformanceGrid"
 		   	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.tutor.ViewStudentsPerformanceGridDispatchAction"
 	       	parameter="method">

@@ -5,26 +5,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<!-- showTutorPerformanceGrid.jsp -->
-
 <em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.tutor.tutorships" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
-<fr:form action="/tutorTutorship.do?method=viewStudentsByTutor">
-
-	<fr:edit id="filterForm" name="tutorateBean" schema="tutorship.tutor.number">
-		<fr:edit id="tutorateBean" name="tutorateBean" visible="false" />
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="/tutorTutorship.do?method=prepareTutorSearch" />
-	</fr:edit>
-
-	<html:submit>
-		<bean:message key="label.submit" bundle="PEDAGOGICAL_COUNCIL" />
-	</html:submit>
-
+<fr:form action="/viewStudentsByTutor.do?method=viewStudentsByTutor">
+    <fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.teacher.search">
+        <fr:layout>
+            <fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
+            <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        </fr:layout>
+        <fr:destination name="departmentPostBack" path="/viewStudentsByTutor.do?method=viewStudentsByTutor"/>
+        <fr:destination name="teacherSelection" path="/viewStudentsByTutor.do?method=viewStudentsByTutor"/>
+        <fr:destination name="invalid" path="/viewStudentsByTutor.do?method=prepareTutorSearch" />
+    </fr:edit>
 </fr:form>
 
 <br/>

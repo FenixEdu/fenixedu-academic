@@ -10,14 +10,14 @@
 <em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.tutor.performanceGrids" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
-<fr:form action="/tutorStudentsPerformanceGrid.do?method=prepare">
+<fr:form action="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid">
 	<fr:edit id="tutorateBean" name="tutorateBean" schema="tutorship.teacher.search">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop0"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="departmentPostBack" path="/tutorStudentsPerformanceGrid.do?method=prepare"/>
-        <fr:destination name="teacherSelection" path="/tutorStudentsPerformanceGrid.do?method=prepare"/>
+		<fr:destination name="departmentPostBack" path="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid"/>
+        <fr:destination name="teacherSelection" path="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid"/>
 		<fr:destination name="invalid" path="/tutorStudentsPerformanceGrid.do?method=prepareTutorSearch" />
 	</fr:edit>
 
@@ -43,8 +43,8 @@
 	            <fr:property name="classes" value="tstyle5 thlight thleft mbottom0"/>
 	            <fr:property name="columnClasses" value="width12em,width35em,tdclear tderror1"/>
 	        </fr:layout>
-	        <fr:destination name="invalid" path="/tutorStudentsPerformanceGrid.do?method=prepare&gridSet=" />
-	        <fr:destination name="post-back" path="/tutorStudentsPerformanceGrid.do?method=prepare&gridSet=" />
+	        <fr:destination name="invalid" path="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid&gridSet=" />
+	        <fr:destination name="post-back" path="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid&gridSet=" />
 	    </fr:edit>
     </logic:present>
 
