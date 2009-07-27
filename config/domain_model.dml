@@ -1885,6 +1885,9 @@ class DomainObject {
 
 			class accounting.paymentCodes.InstallmentPaymentCode extends accounting.paymentCodes.AccountingEventPaymentCode {
 			}
+			
+			class accounting.paymentCodes.IndividualCandidacyPaymentCode extends accounting.paymentCodes.AccountingEventPaymentCode {
+			}
 
 		class accounting.paymentCodes.GratuitySituationPaymentCode extends accounting.PaymentCode {
 		}
@@ -2148,6 +2151,10 @@ class DomainObject {
 		Money totalCost;
 		Money transactionsTotalAmount;
 		Money residencePayment;
+		Money degreeChangeIndividualCandidacyAmount;
+		Money degreeTransferIndividualCandidacyAmount;
+		Money secondCycleIndividualCandidacyAmount;
+		Money degreeCandidacyForGraduatedPersonAmount;
 		DateTime whenProcessed;
 		YearMonthDay whenProcessedBySibs;
 	}
@@ -6195,9 +6202,9 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 	ProfessionType spouseProfessionType;
 	ProfessionalSituationConditionType spouseProfessionalCondition;
 	
-	Boolean hasPaidForCandidacy;
 	String observations;
 	String formerStudentNumber;
+	Boolean utlStudent;
 }
 
 	class candidacyProcess.IndividualCandidacyDocumentFile extends File {
@@ -13745,7 +13752,7 @@ relation StudentGroupBelongsToGrouping {
 }
 
 relation StudentPaymentCode {
-	student.Student playsRole student;
+	Person playsRole person;
 	accounting.PaymentCode playsRole paymentCodes {
 		multiplicity *;
 	}
