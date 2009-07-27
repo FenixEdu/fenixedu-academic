@@ -1,22 +1,43 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="java.util.Locale"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
 <html:xhtml/>
 
-<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.create" bundle="APPLICATION_RESOURCES"/></h2>
+<bean:define id="mappingPath" name="mappingPath"/>
+<bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
-<p class="breadcumbs">
-	<span><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 1</strong>: <bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" /> </span> &gt;
-	<span class="actual"><strong><bean:message key="label.step" bundle="APPLICATION_RESOURCES" /> 2</strong>: <bean:message key="label.candidacy.candidacyInformation" bundle="APPLICATION_RESOURCES" /> </span>
+<div class="breadcumbs">
+	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<a href='<%= fullPath + "?method=beginCandidacyProcessIntro" %>'><bean:write name="application.name"/> </a> &gt;
+	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
+</div>
+
+<h1><bean:write name="application.name"/></h1>
+
+<p class="steps">
+	<span><bean:message key="label.step.one.personal.details" bundle="CANDIDATE_RESOURCES"/></span> &gt; 
+	<span class="actual"><bean:message key="label.step.two.habilitations.document.files" bundle="CANDIDATE_RESOURCES"/></span>
 </p>
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<span class="error0"> <bean:write name="message" /> </span>
-	<br />
+<p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
+
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
-<fr:hasMessages for="individualCandidacyProcessBean.precedentDegreeInformation" type="conversion">
+
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
+
+<fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
 			<li><span class="error0"><fr:message/></span></li>
@@ -24,64 +45,36 @@
 	</ul>
 </fr:hasMessages>
 
-<bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
-
-<fr:form action='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="secondCycleCandidacyForm">
-
-	<input type="hidden" id="methodId" name="method" value="createNewProcess"/>
-	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
-	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
- 	
-	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
-
-	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
-	
-		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
-			 name="individualCandidacyProcessBean"
-			 schema="SecondCycleIndividualCandidacyProcessBean.candidacyDate">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-		</fr:edit>
-
-		<p class="mbottom05"><bean:message key="label.ist.student.number" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
-			<fr:edit id="individualCandidacyProcessBean.formerStudentIstNumber"
-				name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.second.cycle.former.student.ist.number">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>			
-		</div>
-	
-		<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
-		<fr:edit id="individualCandidacyProcessBean.degree"
-			name="individualCandidacyProcessBean"
-			schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-		</fr:edit>
+<fr:form id="secondCycleCandidacyForm" action='<%= mappingPath + ".do?userAction=createCandidacy" %>' encoding="multipart/form-data">
+		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+		
+		<input type="hidden" id="methodId" name="method" value="submitCandidacy"/>
+		<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
+		<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
+		
+		
+		
+		
 		
 		<h2 class="mtop1"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
+
+		<% 
+			Locale locale = Language.getLocale();
+		%>
 		
 		<p><strong><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></strong></p>
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.institutionUnitName"
 			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.institutionUnitName.manage.autoComplete">
+			schema="PublicCandidacyProcessBean.institutionUnitName.manage">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
 		</fr:edit>
 		</div>
 		
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.previously.attended.country" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.previously.attended.country" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.country"
 			name="individualCandidacyProcessBean"
@@ -92,7 +85,7 @@
 		</fr:edit>			
 		</div>
 		
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.previously.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.previously.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.degreeDesignation"
 			name="individualCandidacyProcessBean"
@@ -103,7 +96,7 @@
 		</fr:edit>
 		</div>
 	
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.conclusionDate"
 			name="individualCandidacyProcessBean"
@@ -114,7 +107,7 @@
 		</fr:edit>
 		</div>
 		
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.bachelor.degree.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.conclusionGrade"
 			name="individualCandidacyProcessBean"
@@ -124,7 +117,11 @@
 			</fr:layout>
 		</fr:edit>
 		</div>
-
+		
+		<% 
+			if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+		%>
+		
 		<p class="mtop15 mbottom05"><strong><bean:message key="title.other.academic.titles" bundle="CANDIDATE_RESOURCES"/></strong></p>
 		<logic:iterate id="academicTitle" name="individualCandidacyProcessBean" property="formationConcludedBeanList" indexId="index">
 			<bean:define id="academicTitleId" name="academicTitle" property="id"/>
@@ -136,7 +133,7 @@
 			
 			<table class="tstyle5 thlight thleft mtop0 mbottom0">
 				<tr>
-					<th><bean:message key="label.other.academic.titles.program.name" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></th>
+					<th><bean:message key="label.other.academic.titles.program.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
 						<div class="flowerror_hide">
 							<fr:edit 	id='<%= designationId %>' 
@@ -154,7 +151,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th><bean:message key="label.other.academic.titles.institution" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></th>
+					<th><bean:message key="label.other.academic.titles.institution" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
 						<div class="flowerror_hide">
 							<fr:edit 	id='<%= institutionNameId %>' 
@@ -169,7 +166,7 @@
 					</td>					
 				</tr>
 				<tr>
-					<th><bean:message key="label.other.academic.titles.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></th>
+					<th><bean:message key="label.other.academic.titles.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
 						<div class="flowerror_hide">
 							<fr:edit 	id='<%= endYearId %>'
@@ -185,7 +182,7 @@
 					</td>					
 				</tr>
 				<tr>
-					<th><bean:message key="label.other.academic.titles.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="redtxt">*</span></th>
+					<th><bean:message key="label.other.academic.titles.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
 						<div class="flowerror_hide">
 							<fr:edit 	id='<%= conclusionGradeId %>'
@@ -200,9 +197,32 @@
 					</td>					
 				</tr>
 			</table>
-			<p/>
 		</logic:iterate>
 		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
+
+		<% 
+			}		
+		%>
+
+		<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/></h3>
+		<fr:edit id="individualCandidacyProcessBean.utlStudent" name="individualCandidacyProcessBean"
+			schema="PublicCandidacyProcessBean.utl.student">
+			<fr:layout name="flow">
+				<fr:property name="labelExcluded" value="true"/>
+			</fr:layout>
+		</fr:edit>
+
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+			<div class="flowerror mtop1">
+			<fr:edit id="individualCandidacyProcessBean.selectedDegree"
+				name="individualCandidacyProcessBean"
+				schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
+				<fr:layout name="flow">
+				  <fr:property name="labelExcluded" value="true"/>
+				</fr:layout>
+			</fr:edit>
+			<span class="red">*</span>
+		</div>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<fr:edit id="individualCandidacyProcessBean.observations"
@@ -213,11 +233,24 @@
 		  </fr:layout>
 		</fr:edit>
 
-	</logic:notEmpty>
-	
-	<p></p>
-	
-	<html:submit onclick="this.form.method.value='createNewProcess'; return true;"><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel onclick="this.form.method.value='listProcesses'; return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
+		<h2 style="margin-top: 1em;"><bean:message key="title.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
+		<p><bean:message key="message.second.cycle.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+		<p>
+			<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
+						name="individualCandidacyProcessBean"
+						schema="PublicCandidacyProcessBean.honor.agreement">
+				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+			</fr:edit>
+			<bean:message key="label.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span>
+		</p>
 
+		<p><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
+
+		<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
+
+		<p class="mtop2">
+			<html:submit onclick="document.getElementById('skipValidationId').value='false'; document.getElementById('methodId').value='submitCandidacy'; this.form.submit();"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
+			<html:submit onclick="document.getElementById('skipValidationId').value='false'; document.getElementById('methodId').value='backCandidacyCreation'; this.form.submit();"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:submit>
+		</p>
 </fr:form>
+

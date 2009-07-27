@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
@@ -88,6 +87,7 @@
 		</logic:iterate>
 		</table>
 	</logic:notEmpty>
+
 	
 	<%-- show person information --%>
 	<br />
@@ -98,13 +98,23 @@
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 	</fr:view>
+	
+	<%-- show person address information --%>
+	<logic:notEmpty name="process" property="personalDetails">
+		<fr:view name="process" property="personalDetails" schema="CandidacyProcess.personPhysicalAddress">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 
 	<%-- Observations --%>
 	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
 	<fr:view name="process"
 		property="candidacy.observations">
 	</fr:view>
-	
+
 	<%-- show documents--%>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

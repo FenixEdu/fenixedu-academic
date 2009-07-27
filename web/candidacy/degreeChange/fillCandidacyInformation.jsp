@@ -29,7 +29,7 @@
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
-<fr:form action='<%= "/caseHandling" + processName + ".do?parentProcessId=" + parentProcessId.toString() %>'>
+<fr:form action='<%= "/caseHandling" + processName + ".do?parentProcessId=" + parentProcessId.toString() %>' id="candidacyForm">
  	<html:hidden property="method" value="createNewProcess" />
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
@@ -60,6 +60,94 @@
 		<%@ include file="/candidacy/fillPrecedentDegreeInformation.jsp" %>
 		<%@ include file="/candidacy/fillPrecedentCurricularCoursesInformation.jsp" %>
 		<%-- --%>
+
+		<p class="mtop15 mbottom05"><strong><bean:message key="title.other.academic.titles" bundle="CANDIDATE_RESOURCES"/></strong></p>
+		<logic:iterate id="academicTitle" name="individualCandidacyProcessBean" property="formationConcludedBeanList" indexId="index">
+			<bean:define id="academicTitleId" name="academicTitle" property="id"/>
+			<bean:define id="designationId"><%= "individualCandidacyProcessBean.habilitation.concluded.designation:" + academicTitleId %></bean:define>
+			<bean:define id="institutionNameId"><%= "individualCandidacyProcessBean.habilitation.concluded.institutionName:" + academicTitleId %></bean:define>
+			<bean:define id="beginYearId"><%= "individualCandidacyProcessBean.habilitation.concluded.begin.year:" + academicTitleId %></bean:define>
+			<bean:define id="endYearId"><%= "individualCandidacyProcessBean.habilitation.concluded.end.year:" + academicTitleId %></bean:define>
+			<bean:define id="conclusionGradeId"><%= "individualCandidacyProcessBean.habilitation.concluded.conclusion.grade:" + academicTitleId %></bean:define>
+			
+			<table class="tstyle5 thlight thleft mtop0 mbottom0">
+				<tr>
+					<th><bean:message key="label.other.academic.titles.program.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<div class="flowerror_hide">
+							<fr:edit 	id='<%= designationId %>' 
+										name="academicTitle"
+										schema="PublicCandidacyProcessBean.formation.designation">
+								<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+							</fr:edit>
+						</div>
+					</td>
+					<td rowspan="4">
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES"/></a></p>
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= designationId %>"/></span>
+					</td>
+				</tr>
+				<tr>
+					<th><bean:message key="label.other.academic.titles.institution" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<div class="flowerror_hide">
+							<fr:edit 	id='<%= institutionNameId %>' 
+								name="academicTitle"
+								schema="PublicCandidacyProcessBean.formation.institutionUnitName">
+								<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+							</fr:edit>
+						</div>
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= institutionNameId %>"/></span>
+					</td>					
+				</tr>
+				<tr>
+					<th><bean:message key="label.other.academic.titles.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<div class="flowerror_hide">
+							<fr:edit 	id='<%= endYearId %>'
+										name="academicTitle"
+										schema="PublicCandidacyProcessBean.formation.conclusion.date">
+								<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+							</fr:edit>
+							dd/mm/aaaa
+						</div>
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= endYearId %>"/></span>					
+					</td>					
+				</tr>
+				<tr>
+					<th><bean:message key="label.other.academic.titles.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
+					<td>
+						<div class="flowerror_hide">
+							<fr:edit 	id='<%= conclusionGradeId %>'
+										name="academicTitle"
+										schema="PublicCandidacyProcessBean.formation.conclusion.grade">
+								<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+							</fr:edit>
+						</div>
+					</td>
+					<td class="tdclear">
+						<span class="error0"><fr:message for="<%= conclusionGradeId %>"/></span>					
+					</td>					
+				</tr>
+			</table>
+		</logic:iterate>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('candidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
+		
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<fr:edit id="individualCandidacyProcessBean.observations"
+			name="individualCandidacyProcessBean"
+			schema="PublicCandidacyProcessBean.observations">
+			  <fr:layout name="flow">
+		    <fr:property name="labelExcluded" value="true"/>
+		  </fr:layout>
+		</fr:edit>
+		
 	</logic:notEmpty>
 	<br/>
 	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>

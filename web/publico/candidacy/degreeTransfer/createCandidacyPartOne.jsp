@@ -8,25 +8,6 @@
 
 <html:xhtml/>
 
-<script language="javascript">
-	function set_image_size(imagetag, image) {
-		var image_width = image.width;
-		var image_height = image.height;
-		
-		if(image_width > 400 || image_height > 300) {
-			var width_ratio = 400 / image_width;
-			var height_ratio = 300 / image_height;
-
-			imagetag.width = image_width * Math.min(width_ratio, height_ratio);
-			imagetag.height = image_height * Math.min(width_ratio, height_ratio);
-		} else {
-			imagetag.width = image_width;
-			imagetag.height = image_height;
-		}
-	}
-</script>
-
-
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
@@ -52,23 +33,15 @@
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
 
-<fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
-	<ul class="nobullet list6">
-		<fr:messages>
-			<li><span class="error0"><fr:message/></span></li>
-		</fr:messages>
-	</ul>
-</fr:hasMessages>
-
 <html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="individualCandidacyMessages">
 	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
 
-<fr:form id="over23CandidacyForm" action='<%= mappingPath + ".do?method=continueCandidacyCreation" %>' encoding="multipart/form-data">
+<fr:form id="degreeChangeCandidacyForm" action='<%= mappingPath + ".do?method=continueCandidacyCreation" %>' encoding="multipart/form-data">
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 		
  		<h2><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
-
+		
 		<fr:edit id="candidacyProcess.personalDataBean"
 			name="individualCandidacyProcessBean" 
 			schema="PublicCandidacyProcess.candidacyDataBean">
@@ -97,7 +70,7 @@
 						</fr:layout>
 					</fr:edit>
 				</td>
-			</tr>
+			</tr>			
 		</table>
 
 		<table>
@@ -122,6 +95,7 @@
 			</tr>			
 		</table>
 		
+
 		<p class="mtop15">
 			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application" bundle="CANDIDATE_RESOURCES"/></html:submit>
 			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>

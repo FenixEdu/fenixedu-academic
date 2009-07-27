@@ -55,20 +55,6 @@
 
 		<% 
 			Locale locale = Language.getLocale();
-			if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
-		%>
-		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
-			<fr:edit id="individualCandidacyProcessBean.formerStudentIstNumber"
-				name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.second.cycle.former.student.ist.number">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>			
-		</div>
-		<%
-			}
 		%>
 		
 		<h3 style="margin-bottom: 0.5em;"><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>

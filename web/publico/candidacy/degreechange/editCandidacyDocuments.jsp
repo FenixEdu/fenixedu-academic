@@ -3,52 +3,51 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
 <html:xhtml/>
 
 <!-- START MAIN PAGE CONTENTS HERE -->
 
-<!--LANGUAGE SWITCHER -->
-<div id="version">
-	<img class="activeflag" src="Candidato%20%20Licenciatura%20_%20IST_files/icon_pt.gif" alt="Português">
-	<a href="http://www.ist.utl.pt/en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
-</div>
-<!--END LANGUAGE SWITCHER -->
+<bean:define id="mappingPath" name="mappingPath"/>
+<bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="#">IST</a> &gt;
-	<a href="#">Candidato</a> &gt;
-	<a href="#">Candidaturas</a> &gt;
-	<a href="<%= request.getContextPath() + "/publico/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=candidacyIntro" %>">Licenciaturas</a> &gt;
-	<a href="<%= request.getContextPath() + "/publico/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=beginCandidacyProcessIntro" %>">Mudanças de Curso</a> &gt;
-	Editar Documentos da Candidatura
+	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<a href='<%= fullPath + "?method=beginCandidacyProcessIntro" %>'><bean:write name="application.name"/> </a> &gt;
+	<bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.candidacy" bundle="APPLICATION_RESOURCES"/>: <bean:message key="label.change.degree" bundle="APPLICATION_RESOURCES"/></h1>
+<h1><bean:write name="application.name"/></h1>
 
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
 
+<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
+
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
-<fr:form action='/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=editCandidacyDocuments' encoding="multipart/form-data">
-	<fr:edit id="individualCandidacyProcessBean.documents"
+<fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
+	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
 		schema="PublicCandidacyProcessBean.documentUpload.edit">
-		<fr:destination name="cancel" path='<%= "/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=backToViewCandidacy&individualCandidacyProcess=" +  individualCandidacyProcessOID %>' />
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thleft"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
 	</fr:edit>
-
-	<p/>
-	<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
-	<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>		
+	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>
 
-<p/>
-<table class="tstyle8">
+<logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">
+<table class="tstyle2 thlight thcenter mtop15">
 	<tr>
 		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
 		<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
 		<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
 	</tr>
-
+	
 	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
@@ -57,4 +56,7 @@
 	</tr>	
 	</logic:iterate>
 </table>
+</logic:notEmpty>
+
+<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
 

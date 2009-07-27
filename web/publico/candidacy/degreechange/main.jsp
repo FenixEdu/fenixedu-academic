@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <!--LANGUAGE SWITCHER -->
@@ -15,26 +16,23 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="#">IST</a> &gt;
-	<a href="#">Candidato</a> &gt;
-	<a href="#">Candidaturas</a> &gt;
-	<a href='<%= fullPath + "?method=candidacyIntro" %>'>Licenciaturas</a> &gt;
-	Mudança de Curso
+	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<bean:message key="title.application.name.degreeChange" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
 <div id="contextual_nav">
 <h2 class="brown">Nesta página</h2>
 	<ul>
-    	<li><a href="#1">Critérios de selecção</a></li>
-    	<li><a href="#2">Vagas</a></li>
-    	<li><a href="#3">Propinas</a></li>
-    	<li><a href="#4">Prazos</a></li>
-		<li><a href="#5">FAQs</a></li>
-    	<li><a href="<%= request.getContextPath() + "/publico/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=preparePreCreationOfCandidacy" %>"><b>Submeter Candidatura</b></a></li>
-    	<li><a href="<%= request.getContextPath() + "/publico/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess.do?method=prepareAutheticationCandidacyRequest" %>"><b>Consultar Candidatura</b></a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#1">Critérios de selecção</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#2">Vagas</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#3">Propinas</a></li>
+    	<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#4">Prazos</a></li>
+		<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#5">FAQs</a></li>
+    	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submeter Candidatura</b></a></li>
+    	<li><a href="<%= fullPath + "?method=prepareAutheticationCandidacyRequest" %>"><b>Consultar Candidatura</b></a></li>
    </ul>
 </div>
-
 
 <h1>Mudanças de Curso</h1>
 
@@ -201,3 +199,4 @@ qualquer outra escola nacional ou estrangeira.</p>
 
 <h2 id="5">FAQ's</h2>
 <p>Em falta.</p>
+

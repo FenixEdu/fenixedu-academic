@@ -21,11 +21,7 @@
 
 <h1><bean:write name="application.name" bundle="CANDIDATE_RESOURCES"/></h1>
 
-<logic:equal name="isApplicationSubmissionPeriodValid" value="true">
-
-<bean:message key="message.form.details.submission.note" bundle="CANDIDATE_RESOURCES"/>
-
-<bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/>
+<bean:message key="message.form.details.submission.note.new" bundle="CANDIDATE_RESOURCES"/>
 
 <p class="mtop15">
 	<bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/>
@@ -40,13 +36,3 @@
 	<p class="mtop2"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES"/> »</html:submit></p>
 </fr:form>
 
-</logic:equal>
-
-<logic:notEqual name="isApplicationSubmissionPeriodValid" value="true">
-	<em><bean:message key="message.application.submission.period.ended" bundle="CANDIDATE_RESOURCES"/>.</em>
-	<p class="mtop15">
-		<bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES"/>.
-	</p>
-	
-	<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
-</logic:notEqual>

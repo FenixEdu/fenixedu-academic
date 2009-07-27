@@ -116,7 +116,7 @@
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.conclusionDate"
 			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.conclusionDate">
+			schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionDate">
 		  	<fr:layout name="flow">
 				   <fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -127,7 +127,7 @@
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.conclusionGrade"
 			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.conclusionGrade">
+			schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionGrade">
 		  	<fr:layout name="flow">
 				   <fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -220,11 +220,6 @@
 			}		
 		%>
 
-
-
-
-
-
 		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 			<div class="flowerror mtop1">
 			<fr:edit id="individualCandidacyProcessBean.selectedDegree"
@@ -237,87 +232,6 @@
 			<span class="red">*</span>
 		</div>
 
-
-		<h2 style="margin-top: 1.5em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
-		<p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-		
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.curriculum.vitae.academic.professional" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-		<fr:edit id="individualCandidacyProcessBean.document.file.curriculum.vitae"
-			name="individualCandidacyProcessBean"
-			property="curriculumVitaeDocument"
-			schema="PublicCandidacyProcessBean.documentUploadBean">
-		  <fr:layout name="flow">
-		    <fr:property name="labelExcluded" value="true"/>
-		  </fr:layout>
-		</fr:edit>
-
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.legalized.transcript" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-		<logic:iterate id="document" name="individualCandidacyProcessBean" property="habilitationCertificateList" indexId="index">
-			<bean:define id="documentId" name="document" property="id"/>
-			<div class="mbottom05">
-			<fr:edit id="<%= "individualCandidacyProcessBean.document.file.qualification.certificate:" + index %>" 
-				name="document"
-				schema="PublicCandidacyProcessBean.documentUploadBean">
-			  <fr:layout name="flow">
-			    <fr:property name="labelExcluded" value="true"/>
-			  </fr:layout>
-			</fr:edit>
-			<% if(index > 0) { %>
-			<a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeHabilitationCertificateDocumentFileEntry\"; document.getElementById(\"secondCycleCandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES"/> </a>
-			<% } %>
-
-			</div>	
-		</logic:iterate>
-		<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addHabilitationCertificateDocumentFileEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
-
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.extra.documents.recomendations.portfolios" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<logic:iterate id="document" name="individualCandidacyProcessBean" property="reportOrWorkDocumentList" indexId="index">
-			<div class="mbottom05">
-			<bean:define id="documentId" name="document" property="id"/>
-			<fr:edit id="<%= "individualCandidacyProcessBean.document.file.reports.works:" + index.toString() %>" 
-				name="document"
-				schema="PublicCandidacyProcessBean.documentUploadBean">
-			  <fr:layout name="flow">
-			    <fr:property name="labelExcluded" value="true"/>
-			  </fr:layout>
-			</fr:edit>
-			<% if(index > 0) { %>
-			<a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeReportsOrWorksDocumentFileEntry\"; document.getElementById(\"secondCycleCandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES"/>:</a>
-			<% } %>
-			</div>
-		</logic:iterate>
-		<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addReportsOrWorksDocumentFileEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
-		
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.copy.document.id" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-		<fr:edit id="individualCandidacyProcessBean.document.file.identity.card.copy"
-			name="individualCandidacyProcessBean" 
-			property="documentIdentificationDocument"
-			schema="PublicCandidacyProcessBean.documentUploadBean">
-		  <fr:layout name="flow">
-		    <fr:property name="labelExcluded" value="true"/>
-		  </fr:layout>
-		</fr:edit>
-
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.vat.card.copy" bundle="CANDIDATE_RESOURCES"/>: </p>
-		<fr:edit id="individualCandidacyProcessBean.document.file.vat.card.copy"
-			name="individualCandidacyProcessBean"
-			property="vatCatCopyDocument" 
-			schema="PublicCandidacyProcessBean.documentUploadBean">
-		  <fr:layout name="flow">
-		    <fr:property name="labelExcluded" value="true"/>
-		  </fr:layout>
-		</fr:edit>
-
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.copy.back.transfer.with.payment" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
-		<fr:edit id="individualCandidacyProcessBean.document.file.payment.report"
-			name="individualCandidacyProcessBean"
-			property="paymentDocument" 
-			schema="PublicCandidacyProcessBean.documentUploadBean">
-		  <fr:layout name="flow">
-		    <fr:property name="labelExcluded" value="true"/>
-		  </fr:layout>
-		</fr:edit>
-
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<fr:edit id="individualCandidacyProcessBean.observations"
 			name="individualCandidacyProcessBean"
@@ -327,26 +241,17 @@
 		  </fr:layout>
 		</fr:edit>
 
-<%-- 
-		<div class="mtop1 mbottom1">
-			<label for="captcha"><bean:message key="label.captcha" bundle="ALUMNI_RESOURCES" />:</label>
-			<div class="mbottom05">
-				<img src="<%= request.getContextPath() + "/publico/jcaptcha.do" %>" style="border: 1px solid #bbb; padding: 5px;"/>
-			</div>
-			<span class="color777"><bean:message key="label.captcha.process" bundle="ALUMNI_RESOURCES" /></span><br/>
-			<input type="text" name="j_captcha_response" size="30" style="margin-bottom: 1em;"/>
-			
-			<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="captcha.error">
-				<span class="error0"><bean:write name="message"/></span>
-			</html:messages>
-			
-			<br/>
-		</div>
---%>
+		<h2 style="margin-top: 1em;"><bean:message key="title.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>
+		<p><bean:message key="message.second.cycle.honor.declaration.detail" bundle="CANDIDATE_RESOURCES"/></p>
+		<p>
+			<fr:edit 	id="individualCandidacyProcessBean.honor.declaration"
+						name="individualCandidacyProcessBean"
+						schema="PublicCandidacyProcessBean.honor.agreement">
+				<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
+			</fr:edit>
+			<bean:message key="label.second.cycle.honor.declaration" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span>
+		</p>
 
-		<h3><bean:message key="label.payment.title" bundle="CANDIDATE_RESOURCES"/></h3>
-		<p><bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/></p> 
-		
 		<p><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 		<div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>

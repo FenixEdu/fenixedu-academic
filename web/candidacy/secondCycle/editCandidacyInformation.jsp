@@ -104,7 +104,7 @@
 	<div class="flowerror">
 	<fr:edit id="individualCandidacyProcessBean.conclusionDate"
 		name="individualCandidacyProcessBean"
-		schema="PublicCandidacyProcessBean.second.cycle.conclusionDate">
+		schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionDate">
 	  	<fr:layout name="flow">
 			   <fr:property name="labelExcluded" value="true"/>
 		</fr:layout>
@@ -115,7 +115,7 @@
 	<div class="flowerror">
 	<fr:edit id="individualCandidacyProcessBean.conclusionGrade"
 		name="individualCandidacyProcessBean"
-		schema="PublicCandidacyProcessBean.second.cycle.conclusionGrade">
+		schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionGrade">
 	  	<fr:layout name="flow">
 			   <fr:property name="labelExcluded" value="true"/>
 		</fr:layout>

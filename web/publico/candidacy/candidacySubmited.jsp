@@ -25,6 +25,24 @@
 <bean:define id="endSubmissionDate" name="endSubmissionDate"/>
 <bean:message key="message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
 
+<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+<p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+<table>
+	<tr>
+		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><bean:message key="message.sibs.ist.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+	</tr>
+</table>
+</logic:notEmpty>
+
 <p><bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES" />.</p>
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">

@@ -25,12 +25,12 @@
 
 <h1><bean:write name="application.name"/></h1>
 
-<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.allRequiredFilesUploaded" value="false">
+<logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 <div class="h_box_alt">
 	<div class="lightbulb">
 		<p><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
 		<ul>
-			<logic:iterate id="missingDocumentFileType" name="individualCandidacyProcessBean" property="individualCandidacyProcess.missingRequiredDocumentFiles">
+			<logic:iterate id="missingDocumentFileType" name="individualCandidacyProcess" property="missingRequiredDocumentFiles">
 				<li><fr:view name="missingDocumentFileType" property="localizedName"/></li>
 			</logic:iterate>
 		</ul>
@@ -73,18 +73,35 @@
 	<tr>
 		<td class="width175px"><bean:message key="label.photo" bundle="CANDIDATE_RESOURCES"/>:</td>
 		<td>
-			<logic:present name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
-			<bean:define id="photo" name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo"/>
+			<logic:present name="individualCandidacyProcess" property="photo">
+			<bean:define id="photo" name="individualCandidacyProcess" property="photo"/>
 			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
 			</logic:present>
 			
-			<logic:notPresent name="individualCandidacyProcessBean" property="individualCandidacyProcess.photo">
+			<logic:notPresent name="individualCandidacyProcess" property="photo">
 				<em><bean:message key="message.does.not.have.photo" bundle="CANDIDATE_RESOURCES"/></em>
 			</logic:notPresent>
 		</td>
 	</tr>
 </table>
 
+<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+<p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+<table>
+	<tr>
+		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><bean:message key="message.sibs.ist.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+	</tr>
+	<tr>
+		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+	</tr>
+</table>
+</logic:notEmpty>
 
 
 <h2 style="margin-top: 1em;"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
@@ -157,7 +174,7 @@
 	<td><bean:message key="label.bachelor.degree.conclusion.date" bundle="CANDIDATE_RESOURCES"/>:</td>
 	<td>
 		<fr:view name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.conclusionDate">
+			schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionDate">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -168,7 +185,7 @@
 	<td><bean:message key="label.bachelor.degree.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>:</td>
 	<td>
 		<fr:view name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.conclusionGrade">
+			schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionGrade">
 			<fr:layout name="flow">
 				<fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
@@ -242,9 +259,14 @@
 	</fr:layout>
 </fr:view></p>
 
+<%-- Observations --%>
+<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</h2>
+<fr:view name="individualCandidacyProcess"
+	property="candidacy.observations">
+</fr:view>
+
+
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
-
-
 
 
 <logic:empty name="individualCandidacyProcess" property="candidacy.documents">

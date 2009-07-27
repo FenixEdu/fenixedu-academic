@@ -1,4 +1,4 @@
-<%@ page language="java"%>
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -30,10 +30,10 @@
 <p><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 
-<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES" property="error">
-	<span class="error0"> <bean:write name="message" /> </span>
-	<br />
+<html:messages id="message" message="true" bundle="CANDIDATE_RESOURCES" property="error">
+	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
+
 <fr:hasMessages for="CandidacyProcess.personalDataBean" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
@@ -42,7 +42,7 @@
 	</ul>
 </fr:hasMessages>
 
-<fr:form action='<%= mappingPath + ".do?userAction=editCandidacyQualifications" %>' id="secondCycleCandidacyForm">
+<fr:form action='<%= mappingPath + ".do?userAction=editCandidacyQualifications" %>' id="candidacyForm">
 		<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" >
 		</fr:edit>
 	
@@ -55,25 +55,19 @@
 
 		<% 
 			Locale locale = Language.getLocale();
-			if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 		%>
-		<p class="mbottom05"><bean:message key="label.ist.number.if.former.ist.student" bundle="CANDIDATE_RESOURCES"/>:</p>
-		<div class="flowerror">
-			<fr:edit id="individualCandidacyProcessBean.formerStudentIstNumber"
-				name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.second.cycle.former.student.ist.number">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>			
-		</div>
-		<%
-			}
-		%>
-		
+
 		<h3 style="margin-bottom: 0.5em;"><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>
 
+		<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="false">
+			<fr:view name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
+				<fr:layout name="tabular">
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
 
+
+		<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">		
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 			<fr:edit id="individualCandidacyProcessBean.institutionUnitName"
@@ -84,66 +78,24 @@
 				</fr:layout>
 			</fr:edit>
 		</div>
-		
-<table class="tstyle5 thlight thleft mtop1">
-	<tr>
-		<td style="width: 260px;"><bean:message key="label.university.previously.attended.country" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></td>
-		<td>
-			<div class="flowerror">
-				<fr:edit id="individualCandidacyProcessBean.country"
-					name="individualCandidacyProcessBean"
-					schema="PublicCandidacyProcessBean.institution.country.manage">
-				  	<fr:layout name="flow">
-						   <fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-				</fr:edit>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.bachelor.degree.previously.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></td>
-		<td>
-			<div class="flowerror">
-				<fr:edit id="individualCandidacyProcessBean.degreeDesignation"
-					name="individualCandidacyProcessBean"
-					schema="PublicCandidacyProcessBean.degreeDesignation.manage">
-				  	<fr:layout name="flow">
-						   <fr:property name="labelExcluded" value="true"/>
-					</fr:layout>
-				</fr:edit>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.bachelor.degree.conclusion.date" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></td>
-		<td>
-			<div class="flowerror">
-			<fr:edit id="individualCandidacyProcessBean.conclusionDate"
-				name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionDate">
-			  	<fr:layout name="flow">
-					   <fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.bachelor.degree.conclusion.grade" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></td>
-		<td>
-			<div class="flowerror">
-			<fr:edit id="individualCandidacyProcessBean.conclusionGrade"
-				name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.precedent.degree.information.conclusionGrade">
-			  	<fr:layout name="flow">
-					   <fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>
-			</div>
-		</td>
-	</tr>
-</table>
-		
+
+		<table class="tstyle5 thlight thleft mtop1">
+			<tr>
+				<td><bean:message key="label.bachelor.degree.previously.enrolled" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></td>
+				<td>
+					<div class="flowerror">
+						<fr:edit id="individualCandidacyProcessBean.degreeDesignation"
+							name="individualCandidacyProcessBean"
+							schema="PublicCandidacyProcessBean.degreeDesignation.manage">
+						  	<fr:layout name="flow">
+								   <fr:property name="labelExcluded" value="true"/>
+							</fr:layout>
+						</fr:edit>
+					</div>
+				</td>
+			</tr>
+		</table>
+		</logic:equal>		
 		
 			
 
@@ -172,7 +124,7 @@
 						</fr:edit>
 					</td>
 					<td rowspan="4">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"secondCycleCandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES"/></a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"candidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES"/></a></p>
 					</td>
 					<td class="tdclear">
 						<span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -219,17 +171,17 @@
 				</tr>
 			</table>
 		</logic:iterate>
-		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('candidacyForm').submit();" href="#">+ <bean:message key="label.add" bundle="CANDIDATE_RESOURCES"/></a></p>
 
 		<% 
 			}
 		%>
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
+			schema="PublicCandidacyProcessBean.degree.change.selectedDegree.manage">
 			<fr:layout name="flow">
 			  <fr:property name="labelExcluded" value="true"/>
 			</fr:layout>
