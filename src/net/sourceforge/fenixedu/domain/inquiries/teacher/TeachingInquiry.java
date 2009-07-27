@@ -133,6 +133,11 @@ public class TeachingInquiry extends TeachingInquiry_Base {
 		"responsibleTeacherReportDisclosureToAcademicComunity").getValueAsBoolean());
     }
 
+    @Override
+    public Boolean getResultsDisclosureToAcademicComunity() {
+	return super.getResultsDisclosureToAcademicComunity() != null && super.getResultsDisclosureToAcademicComunity();
+    }
+
     public void delete() {
 	removeProfessorship();
 	removeRootDomainObject();
