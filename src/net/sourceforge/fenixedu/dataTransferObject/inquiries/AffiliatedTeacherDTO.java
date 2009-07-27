@@ -13,31 +13,31 @@ import net.sourceforge.fenixedu.domain.Teacher;
  */
 public class AffiliatedTeacherDTO extends TeacherDTO {
 
-    private DomainReference<Teacher> teacher;
+    private DomainReference<Person> person;
 
-    public AffiliatedTeacherDTO(Teacher teacher) {
-	this.teacher = new DomainReference<Teacher>(teacher);
+    public AffiliatedTeacherDTO(Person person) {
+	this.person = new DomainReference<Person>(person);
     }
 
     @Override
     public Teacher getTeacher() {
-	return teacher.getObject();
+	return person.getObject().getTeacher();
     }
 
     @Override
     public String getName() {
-	return getTeacher().getPerson().getName();
+	return person.getObject().getName();
     }
 
     @Override
     public boolean isPhotoAvailable() {
-	final Person person = getTeacher().getPerson();
-	final Boolean availablePhoto = person.getAvailablePhoto();
-	return availablePhoto != null && availablePhoto && person.hasPersonalPhoto();
+	final Person pPerson = person.getObject();
+	final Boolean availablePhoto = pPerson.getAvailablePhoto();
+	return availablePhoto != null && availablePhoto && pPerson.hasPersonalPhoto();
     }
 
     @Override
     public Integer getPersonID() {
-	return getTeacher().getPerson().getIdInternal();
+	return person.getObject().getIdInternal();
     }
 }

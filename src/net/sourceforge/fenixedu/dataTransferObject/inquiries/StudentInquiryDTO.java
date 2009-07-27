@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -85,16 +86,16 @@ public class StudentInquiryDTO implements Serializable {
 
     private void fillTeachersInquiriesWithAffiliatedTeachers(final ExecutionCourse executionCourse,
 	    final Set<ShiftType> shiftTypes) {
-	Map<Teacher, Map<ShiftType, TeacherInquiryDTO>> teachersShifts = new HashMap<Teacher, Map<ShiftType, TeacherInquiryDTO>>();
+	Map<Person, Map<ShiftType, TeacherInquiryDTO>> teachersShifts = new HashMap<Person, Map<ShiftType, TeacherInquiryDTO>>();
 	for (final Professorship professorship : executionCourse.getProfessorships()) {
 
-	    final Teacher teacher = professorship.getTeacher();
-	    if (!teachersShifts.containsKey(teacher)) {
-		teachersShifts.put(teacher, new HashMap<ShiftType, TeacherInquiryDTO>());
+	    final Person person = professorship.getPerson();
+	    if (!teachersShifts.containsKey(person)) {
+		teachersShifts.put(person, new HashMap<ShiftType, TeacherInquiryDTO>());
 	    }
 
-	    final Map<ShiftType, TeacherInquiryDTO> teacherShift = teachersShifts.get(teacher);
-	    final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(teacher);
+	    final Map<ShiftType, TeacherInquiryDTO> teacherShift = teachersShifts.get(person);
+	    final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
 		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
@@ -112,7 +113,7 @@ public class StudentInquiryDTO implements Serializable {
 
 	}
 
-	for (Entry<Teacher, Map<ShiftType, TeacherInquiryDTO>> entry : teachersShifts.entrySet()) {
+	for (Entry<Person, Map<ShiftType, TeacherInquiryDTO>> entry : teachersShifts.entrySet()) {
 	    teachersInquiries.put(new AffiliatedTeacherDTO(entry.getKey()), new ArrayList<TeacherInquiryDTO>(entry.getValue()
 		    .values()));
 	}
