@@ -4,8 +4,8 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
@@ -31,9 +31,9 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public static InstallmentPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
 	    final YearMonthDay endDate, final Event event, final Installment installment, final Money minAmount,
 	    final Money maxAmount, final Student student) {
-	return PaymentCodeGenerator.canGenerateNewCode(paymentCodeType, student) ? new InstallmentPaymentCode(paymentCodeType,
-		startDate, endDate, event, installment, minAmount, maxAmount, student) : findAndReuseExistingCode(
-		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student, installment);
+	return PaymentCode.canGenerateNewCode(InstallmentPaymentCode.class, paymentCodeType, student.getPerson()) ? new InstallmentPaymentCode(
+		paymentCodeType, startDate, endDate, event, installment, minAmount, maxAmount, student)
+		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student, installment);
 
     }
 
@@ -59,15 +59,19 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
 
     protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, final Event event,
 	    Installment installment, final Money minAmount, final Money maxAmount, final Student student) {
-	super.init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student);
-	checkParameters(installment);
+	super.init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student.getPerson());
+	checkParameters(installment, student);
 	super.setInstallment(installment);
 
     }
 
-    private void checkParameters(Installment installment) {
+    private void checkParameters(Installment installment, final Student student) {
 	if (installment == null) {
 	    throw new DomainException("error.accounting.paymentCodes.InstallmentPaymentCode.installment.cannot.be.null");
+	}
+
+	if (student == null) {
+	    throw new DomainException("error.accounting.paymentCodes.InstallmentPaymentCode.student.cannot.be.null");
 	}
 
     }

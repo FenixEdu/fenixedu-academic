@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
@@ -22,7 +22,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     private String professionalStatus;
 
     private String otherEducation;
-    
+
     private String istStudentNumber;
 
     private List<CandidacyProcessDocumentUploadBean> habilitationCertificateList;
@@ -36,6 +36,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	initializeDocumentUploadBeans();
 	setObservations("");
 	setIstStudentNumber("");
+	setPrecedentDegreeType(PrecedentDegreeType.EXTERNAL_DEGREE);
     }
 
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
@@ -105,77 +106,81 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
 	return true;
     }
-    
+
     public List<CandidacyProcessDocumentUploadBean> getHabilitationCertificateList() {
-        return habilitationCertificateList;
+	return habilitationCertificateList;
     }
 
     public void setHabilitationCertificateList(List<CandidacyProcessDocumentUploadBean> habilitationCertificateList) {
-        this.habilitationCertificateList = habilitationCertificateList;
+	this.habilitationCertificateList = habilitationCertificateList;
     }
 
     public List<CandidacyProcessDocumentUploadBean> getReportOrWorkDocumentList() {
-        return reportOrWorkDocumentList;
+	return reportOrWorkDocumentList;
     }
 
     public void setReportOrWorkDocumentList(List<CandidacyProcessDocumentUploadBean> reportOrWorkDocumentList) {
-        this.reportOrWorkDocumentList = reportOrWorkDocumentList;
+	this.reportOrWorkDocumentList = reportOrWorkDocumentList;
     }
 
     public CandidacyProcessDocumentUploadBean getHandicapProofDocument() {
-        return handicapProofDocument;
+	return handicapProofDocument;
     }
 
     public void setHandicapProofDocument(CandidacyProcessDocumentUploadBean handicapProofDocument) {
-        this.handicapProofDocument = handicapProofDocument;
+	this.handicapProofDocument = handicapProofDocument;
     }
 
     public CandidacyProcessDocumentUploadBean getCurriculumVitaeDocument() {
-        return curriculumVitaeDocument;
+	return curriculumVitaeDocument;
     }
 
     public void setCurriculumVitaeDocument(CandidacyProcessDocumentUploadBean curriculumVitaeDocument) {
-        this.curriculumVitaeDocument = curriculumVitaeDocument;
+	this.curriculumVitaeDocument = curriculumVitaeDocument;
     }
 
     public void addHabilitationCertificateDocument() {
-	this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
+	this.habilitationCertificateList.add(new CandidacyProcessDocumentUploadBean(
+		IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT));
     }
-    
+
     public void removeHabilitationCertificateDocument(final int index) {
 	this.habilitationCertificateList.remove(index);
     }
-    
+
     public void addReportOrWorkDocument() {
-	this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT));
+	this.reportOrWorkDocumentList.add(new CandidacyProcessDocumentUploadBean(
+		IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT));
     }
-    
+
     public void removeReportOrWorkDocument(final int index) {
 	this.reportOrWorkDocumentList.remove(index);
     }
-    
+
     public String getIstStudentNumber() {
 	return this.istStudentNumber;
     }
-    
+
     public void setIstStudentNumber(String value) {
 	this.istStudentNumber = value;
     }
-    
+
     @Override
     protected void initializeDocumentUploadBeans() {
-        setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
-        setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
-        setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT));
-        
-        this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
-        addHabilitationCertificateDocument();
-        
-        this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
-        addReportOrWorkDocument();
-        
-        this.handicapProofDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.HANDICAP_PROOF_DOCUMENT);
-        this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
-        setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
-    }    
+	setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(
+		IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
+	setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
+	setVatCatCopyDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT));
+
+	this.habilitationCertificateList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+	addHabilitationCertificateDocument();
+
+	this.reportOrWorkDocumentList = new ArrayList<CandidacyProcessDocumentUploadBean>();
+	addReportOrWorkDocument();
+
+	this.handicapProofDocument = new CandidacyProcessDocumentUploadBean(
+		IndividualCandidacyDocumentFileType.HANDICAP_PROOF_DOCUMENT);
+	this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
+	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
 }

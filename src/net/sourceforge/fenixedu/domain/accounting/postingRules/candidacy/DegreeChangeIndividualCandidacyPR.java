@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
@@ -73,11 +74,28 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
 	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy().getPrecedentDegreeInformation();
 
-	if (information.isInternal() || hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
+	if (information.isInternal()
+		|| (information.getCandidacy().getUtlStudent() != null && information.getCandidacy().getUtlStudent())
+		|| hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
 		|| belongsToInstitutionGroup(information.getInstitution())) {
 	    return getAmountForInstitutionStudent();
 	} else {
 	    return getAmountForExternalStudent();
+	}
+    }
+
+    @Override
+    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
+	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
+		.getIndividualCandidacy().getPrecedentDegreeInformation();
+
+	if (information.isInternal()
+		|| (information.getCandidacy().getUtlStudent() != null && information.getCandidacy().getUtlStudent())
+		|| hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
+		|| belongsToInstitutionGroup(information.getInstitution())) {
+	    return PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
+	} else {
+	    return PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
 	}
     }
 

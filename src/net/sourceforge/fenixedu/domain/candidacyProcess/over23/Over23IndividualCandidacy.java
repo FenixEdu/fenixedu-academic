@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
@@ -62,7 +60,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	}
     }
 
-    private void createFormationEntries(List<FormationBean> formationConcludedBeanList,
+    protected void createFormationEntries(List<FormationBean> formationConcludedBeanList,
 	    List<FormationBean> formationNonConcludedBeanList) {
 	for (FormationBean formation : formationConcludedBeanList) {
 	    this.addFormations(new Formation(this, formation));
@@ -187,51 +185,6 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	setAcceptedDegree(acceptedDegree);
 	if (isCandidacyResultStateValid(state)) {
 	    setState(state);
-	}
-    }
-
-    void editFormationEntries(List<FormationBean> formationConcludedBeanList, List<FormationBean> formationNonConcludedBeanList) {
-	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
-	for (final Formation formation : this.getFormations()) {
-	    if (formation.getConcluded())
-		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
-	}
-
-	for (final Formation formation : this.getFormations()) {
-	    if (!formation.getConcluded())
-		editFormationEntry(formationNonConcludedBeanList, formationsToBeRemovedList, formation);
-	}
-
-	for (Formation formation : formationsToBeRemovedList) {
-	    this.getFormations().remove(formation);
-	    formation.delete();
-	}
-
-	for (FormationBean bean : formationConcludedBeanList) {
-	    if (bean.getFormation() == null)
-		this.addFormations(new Formation(this, bean));
-	}
-
-	for (FormationBean bean : formationNonConcludedBeanList) {
-	    if (bean.getFormation() == null)
-		this.addFormations(new Formation(this, bean));
-	}
-    }
-
-    private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
-	    final Formation formation) {
-	FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		FormationBean bean = (FormationBean) arg0;
-		return bean.getFormation() == formation;
-	    }
-	});
-
-	if (bean == null) {
-	    formationsToBeRemovedList.add(formation);
-	} else {
-	    formation.edit(bean);
 	}
     }
 

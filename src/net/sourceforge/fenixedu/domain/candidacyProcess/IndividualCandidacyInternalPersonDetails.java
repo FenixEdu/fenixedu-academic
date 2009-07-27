@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
@@ -186,15 +187,15 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
     @Override
     public void setAddress(String address) {
 	this.getPerson().getDefaultPhysicalAddress().setAddress(address);
-	
+
     }
 
     @Override
     public void setArea(String area) {
 	this.getPerson().getDefaultPhysicalAddress().setArea(area);
-	
+
     }
-    
+
     @Override
     public void setAreaCode(String areaCode) {
 	this.getPerson().getDefaultPhysicalAddress().setAreaCode(areaCode);
@@ -234,17 +235,32 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public void setTelephoneContact(String telephoneContact) {
-	this.getPerson().setDefaultPhoneNumber(telephoneContact);	
+	this.getPerson().setDefaultPhoneNumber(telephoneContact);
     }
-    
+
     @Override
     public String getProfession() {
 	return this.getPerson().getProfession();
     }
-    
+
     @Override
     public void setProfession(String profession) {
 	this.getPerson().setProfession(profession);
     }
-    
+
+    @Override
+    public Boolean hasAnyRole() {
+	return !this.getPerson().getPersonRoles().isEmpty();
+    }
+
+    @Override
+    public Boolean isEmployee() {
+	return this.getPerson().hasRole(RoleType.EMPLOYEE);
+    }
+
+    @Override
+    public void editPublic(PersonBean personBean) {
+	this.getPerson().editByPublicCandidate(personBean);
+    }
+
 }

@@ -101,9 +101,9 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	executeActivity(process, activityId, null);
     }
 
-    protected void executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
+    protected Process executeActivity(Process process, String activityId, Object object) throws FenixFilterException,
 	    FenixServiceException {
-	ExecuteProcessActivity.run(process, activityId, object);
+	return ExecuteProcessActivity.run(process, activityId, object);
     }
 
 }

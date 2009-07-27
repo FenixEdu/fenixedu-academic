@@ -233,4 +233,9 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
 	}
     }
+
+    void editSelectedDegree(final Degree selectedDegree) {
+	setSelectedDegree(selectedDegree);
+    }
+
 }

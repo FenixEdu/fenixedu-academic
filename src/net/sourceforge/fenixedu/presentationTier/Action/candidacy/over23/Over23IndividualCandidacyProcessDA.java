@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
@@ -78,7 +79,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
+	final IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	bean.setCandidacyProcess(getParentProcess(request));
 
 	/*
@@ -146,7 +147,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
+	final IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
@@ -172,7 +173,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward prepareExecuteEditCommonCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
+	final IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	bean.setCandidacyInformationBean(getProcess(request).getCandidacyInformationBean());
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-common-candidacy-information");
@@ -296,7 +297,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	bean.addConcludedFormationBean();
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -306,7 +307,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward addNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	bean.addNonConcludedFormationBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
@@ -315,7 +316,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationConcludedBean(index);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -325,7 +326,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward removeNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse reponse) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationNonConcludedBean(index);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -364,7 +365,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	return super.createNewProcess(mapping, form, request, response);
     }
 
-    private void copyToInformationBeanOnePrecendentInstitution(Over23IndividualCandidacyProcessBean bean) {
+    private void copyToInformationBeanOnePrecendentInstitution(IndividualCandidacyProcessBean bean) {
 	if (!bean.getFormationConcludedBeanList().isEmpty()) {
 	    bean.getCandidacyInformationBean().setInstitution(bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
 	    bean.getCandidacyInformationBean().setInstitutionName(
@@ -411,7 +412,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
      */
     protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
 	    IndividualCandidacyProcess process) {
-	final Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(
+	final IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(
 		(Over23IndividualCandidacyProcess) process);
 	bean.setCandidacyProcess(getParentProcess(request));
 

@@ -46,11 +46,13 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
 
     public abstract void edit(PersonBean personBean);
 
+    public abstract void editPublic(PersonBean personBean);
+
     public abstract void ensurePersonInternalization();
 
     public static void createDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
 	if (bean.getInternalPersonCandidacy()) {
-	    Person person = bean.getOrCreatePersonFromBean();
+	    Person person = bean.getPersonBean().getPerson();
 	    bean.getPersonBean().setPerson(person);
 	    new IndividualCandidacyInternalPersonDetails(candidacy, person);
 	} else {
@@ -207,5 +209,9 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
      */
     @Deprecated
     public abstract PhysicalAddress getDefaultPhysicalAddress();
+
+    public abstract Boolean isEmployee();
+
+    public abstract Boolean hasAnyRole();
 
 }

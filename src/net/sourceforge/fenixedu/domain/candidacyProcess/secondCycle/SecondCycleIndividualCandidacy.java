@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.Formation;
-import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
@@ -22,8 +19,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.joda.time.LocalDate;
 
 public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandidacy_Base {
@@ -54,13 +49,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
-	}
-    }
-
-    private void createFormationEntries(List<FormationBean> formationConcludedBeanList,
-	    List<FormationBean> formationNonConcludedBeanList) {
-	for (FormationBean formation : formationConcludedBeanList) {
-	    this.addFormations(new Formation(this, formation));
 	}
     }
 
@@ -229,41 +217,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
-    }
-
-    void editFormationEntries(List<FormationBean> formationConcludedBeanList) {
-	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
-	for (final Formation formation : this.getFormations()) {
-	    if (formation.getConcluded())
-		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
-	}
-
-	for (Formation formation : formationsToBeRemovedList) {
-	    this.getFormations().remove(formation);
-	    formation.delete();
-	}
-
-	for (FormationBean bean : formationConcludedBeanList) {
-	    if (bean.getFormation() == null)
-		this.addFormations(new Formation(this, bean));
-	}
-    }
-
-    private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
-	    final Formation formation) {
-	FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		FormationBean bean = (FormationBean) arg0;
-		return bean.getFormation() == formation;
-	    }
-	});
-
-	if (bean == null) {
-	    formationsToBeRemovedList.add(formation);
-	} else {
-	    formation.edit(bean);
-	}
     }
 
     void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {

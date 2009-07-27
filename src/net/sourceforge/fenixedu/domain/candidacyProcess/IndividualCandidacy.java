@@ -50,8 +50,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	/*
 	 * 08/05/2009 - Now all candidacies are external (even made in academic
 	 * administrative office)
-	 * 
-	 * TODO Anil : Are other candidacies created as an external?
+	 */
+	/*
+	 * 06/07/2009 - Due to payments the applications will be created with an
+	 * associated person. This person might be created or associated with an
+	 * existing.
 	 */
 	Person person = null;
 	if (bean.getInternalPersonCandidacy().booleanValue()) {
@@ -66,6 +69,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setCandidacyDate(bean.getCandidacyDate());
 	setState(IndividualCandidacyState.STAND_BY);
 	editObservations(bean);
+	setUtlStudent(bean.getUtlStudent());
 
 	return person;
     }
@@ -113,6 +117,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public void editPersonalCandidacyInformation(final PersonBean personBean) {
 	getPersonalDetails().edit(personBean);
+    }
+
+    public void editPersonalCandidacyInformationPublic(final PersonBean personBean) {
+	getPersonalDetails().editPublic(personBean);
     }
 
     public void cancel(final Person person) {
@@ -394,6 +402,17 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	createDebt(this.getPersonalDetails().getPerson());
     }
 
+    protected void createFormationEntries(List<FormationBean> formationConcludedBeanList,
+	    List<FormationBean> formationNonConcludedBeanList) {
+	for (FormationBean formation : formationConcludedBeanList) {
+	    this.addFormations(new Formation(this, formation));
+	}
+
+	for (FormationBean formation : formationNonConcludedBeanList) {
+	    this.addFormations(new Formation(this, formation));
+	}
+    }
+
     public List<Formation> getConcludedFormationList() {
 	return new ArrayList<Formation>(CollectionUtils.select(getFormations(), new Predicate() {
 
@@ -415,4 +434,59 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
 	}));
     }
+
+    public Boolean isCandidacyBelongsToStudent() {
+	return this.isCandidacyInternal() && this.getPersonalDetails().getPerson().hasRole(RoleType.STUDENT);
+    }
+
+    public Boolean isCandidacyBelongsToEmployee() {
+	return this.isCandidacyInternal() && this.getPersonalDetails().getPerson().hasRole(RoleType.EMPLOYEE);
+    }
+
+    public void editFormationEntries(List<FormationBean> formationConcludedBeanList,
+	    List<FormationBean> formationNonConcludedBeanList) {
+	List<Formation> formationsToBeRemovedList = new ArrayList<Formation>();
+	for (final Formation formation : this.getFormations()) {
+	    if (formation.getConcluded())
+		editFormationEntry(formationConcludedBeanList, formationsToBeRemovedList, formation);
+	}
+
+	for (final Formation formation : this.getFormations()) {
+	    if (!formation.getConcluded())
+		editFormationEntry(formationNonConcludedBeanList, formationsToBeRemovedList, formation);
+	}
+
+	for (Formation formation : formationsToBeRemovedList) {
+	    this.getFormations().remove(formation);
+	    formation.delete();
+	}
+
+	for (FormationBean bean : formationConcludedBeanList) {
+	    if (bean.getFormation() == null)
+		this.addFormations(new Formation(this, bean));
+	}
+
+	for (FormationBean bean : formationNonConcludedBeanList) {
+	    if (bean.getFormation() == null)
+		this.addFormations(new Formation(this, bean));
+	}
+    }
+
+    private void editFormationEntry(List<FormationBean> formationConcludedBeanList, List<Formation> formationsToBeRemovedList,
+	    final Formation formation) {
+	FormationBean bean = (FormationBean) CollectionUtils.find(formationConcludedBeanList, new Predicate() {
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		FormationBean bean = (FormationBean) arg0;
+		return bean.getFormation() == formation;
+	    }
+	});
+
+	if (bean == null) {
+	    formationsToBeRemovedList.add(formation);
+	} else {
+	    formation.edit(bean);
+	}
+    }
+
 }

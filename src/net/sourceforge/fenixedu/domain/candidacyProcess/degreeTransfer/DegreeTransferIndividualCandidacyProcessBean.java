@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -24,6 +26,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     public DegreeTransferIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
+	setObservations("");
     }
 
     public DegreeTransferIndividualCandidacyProcessBean(final DegreeTransferIndividualCandidacyProcess process) {
@@ -36,6 +39,8 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 		process.getCandidacyPrecedentDegreeInformation());
 	precedentDegreeInformation.initCurricularCoursesInformation(process.getCandidacyPrecedentDegreeInformation());
 	setPrecedentDegreeInformation(precedentDegreeInformation);
+	initializeFormation(process.getCandidacy().getFormations());
+	setObservations(process.getCandidacy().getObservations());
     }
 
     @Override
@@ -98,4 +103,10 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     public void setSelectedDegree(final Degree selectDegree) {
 	this.selectDegree = (selectDegree != null) ? new DomainReference<Degree>(selectDegree) : null;
     }
+
+    @Override
+    protected void initializeDocumentUploadBeans() {
+	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
+
 }

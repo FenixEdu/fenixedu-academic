@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -37,6 +38,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new EditDocuments());
 	activities.add(new BindPersonToCandidacy());
 	activities.add(new ChangeProcessCheckedState());
+	activities.add(new SendEmailForApplicationSubmission());
 
     }
 
@@ -162,10 +164,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
-    }
-
-    private void editCandidacyHabilitations(SecondCycleIndividualCandidacyProcessBean bean) {
-	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList());
     }
 
     private void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
@@ -516,6 +514,26 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     public Boolean isCandidacyProcessComplete() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    static private class SendEmailForApplicationSubmission extends Activity<SecondCycleIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
+	    hashCode.sendEmailForApplicationSuccessfullySubmited();
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
 }

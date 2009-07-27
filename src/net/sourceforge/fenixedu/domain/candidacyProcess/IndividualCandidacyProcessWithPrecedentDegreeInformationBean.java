@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -10,6 +12,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBean extends IndividualCandidacyProcessBean {
 
@@ -78,6 +81,12 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 	return studentCurricularPlans;
     }
 
+    public StudentCurricularPlan getLastPrecedentStudentCurricularPlan() {
+	List<StudentCurricularPlan> studentCurricularPlanList = getPrecedentStudentCurricularPlans();
+	return studentCurricularPlanList.isEmpty() ? null : Collections.max(studentCurricularPlanList,
+		StudentCurricularPlan.DATE_COMPARATOR);
+    }
+
     /**
      * If cycle is not concluded, this represents the minimum number of ects
      * that student must have to candidate in order to conclude the degree with
@@ -125,5 +134,15 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 	public static PrecedentDegreeType valueOf(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
 	    return precedentDegreeInformation.isExternal() ? EXTERNAL_DEGREE : INSTITUTION_DEGREE;
 	}
+
+	public String getLocalizedName() {
+	    return getLocalizedName(Language.getLocale());
+	}
+
+	public String getLocalizedName(final Locale locale) {
+	    return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(
+		    this.getClass().getSimpleName() + "." + name());
+	}
+
     }
 }

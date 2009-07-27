@@ -122,6 +122,14 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
 		addColumn(bundle.getString("label.reports.propdfa"), line.getDfaGratuityTotalAmount());
 		addColumn(bundle.getString("label.reports.pgrad.fee"), line.getAfterGraduationInsuranceTotalAmount());
 		addColumn(bundle.getString("label.reports.residence"), line.getResidencePayment());
+		addColumn(bundle.getString("label.reports.degreeCandidacyForGraduatedPerson"), line
+			.getDegreeCandidacyForGraduatedPersonAmount());
+		addColumn(bundle.getString("label.reports.degreeChangeIndividualCandidacy"), line
+			.getDegreeChangeIndividualCandidacyAmount());
+		addColumn(bundle.getString("label.reports.degreeTransferIndividualCandidacy"), line
+			.getDegreeTransferIndividualCandidacyAmount());
+		addColumn(bundle.getString("label.reports.secondCycleIndividualCandidacy"), line
+			.getSecondCycleIndividualCandidacyAmount());
 		addColumn(bundle.getString("label.reports.totrans"), line.getTransactionsTotalAmount());
 		addColumn(bundle.getString("label.reports.totarif"), line.getTotalCost());
 	    }

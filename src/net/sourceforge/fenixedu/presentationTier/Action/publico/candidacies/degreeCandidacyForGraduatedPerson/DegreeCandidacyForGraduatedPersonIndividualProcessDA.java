@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.IndividualCandidacyProcessPublicDA;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,9 +28,8 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
+//@Mapping(path = "/candidacies/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( {
 	@Forward(name = "show-candidacy-creation-page", path = "degree.candidacy.for.graduated.person.candidacy.creation.page"),
 	@Forward(name = "inform-submited-candidacy", path = "inform.submited.candidacy"),

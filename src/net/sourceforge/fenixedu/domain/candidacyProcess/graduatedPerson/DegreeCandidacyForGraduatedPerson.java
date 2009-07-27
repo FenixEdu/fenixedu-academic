@@ -29,27 +29,28 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 	createPrecedentDegreeInformation(bean);
-	
+
+	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create
-	 * an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
-	if(bean.getInternalPersonCandidacy()) {
+	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
     }
 
     @Override
-    protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final IndividualCandidacyProcessBean bean) {
-	DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyProcess = (DegreeCandidacyForGraduatedPersonIndividualProcess)
-		process;
-	DegreeCandidacyForGraduatedPersonIndividualProcessBean degreeCandidacyBean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean)
-		bean;
-	
+    protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
+	    final IndividualCandidacyProcessBean bean) {
+	DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyProcess = (DegreeCandidacyForGraduatedPersonIndividualProcess) process;
+	DegreeCandidacyForGraduatedPersonIndividualProcessBean degreeCandidacyBean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean) bean;
+
 	LocalDate candidacyDate = degreeCandidacyBean.getCandidacyDate();
 	Degree selectedDegree = degreeCandidacyBean.getSelectedDegree();
 	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = degreeCandidacyBean.getPrecedentDegreeInformation();
-	
+
 	checkParameters(person, degreeCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
@@ -58,21 +59,20 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(person, process, candidacyDate);
-	
+
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not
-	 * in administrative office)
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it
+	 * is submited externally (not in administrative office)
 	 * 
-	 * if (person == null) {
-	 * 	throw new DomainException("error.IndividualCandidacy.invalid.person");
-	 * } 
-	 
-	if (person.hasValidDegreeCandidacyForGraduatedPerson(process.getCandidacyExecutionInterval())) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy", process
-		    .getCandidacyExecutionInterval().getName());
-	}
+	 * if (person == null) { throw new
+	 * DomainException("error.IndividualCandidacy.invalid.person"); }
+	 * 
+	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process.
+	 * getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy"
+	 * , process .getCandidacyExecutionInterval().getName()); }
 	 */
-	
+
 	if (selectedDegree == null) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
 	}
@@ -81,7 +81,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
 	}
     }
-    
+
     @Override
     protected void createDebt(final Person person) {
 	new DegreeCandidacyForGraduatedPersonEvent(this, person);
@@ -136,6 +136,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
 	}
+    }
+
+    void editSelectedDegree(final Degree selectedDegree) {
+	setSelectedDegree(selectedDegree);
     }
 
     @Override

@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
+import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGeneratorFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
@@ -52,33 +52,28 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     protected void init(final PaymentCodeType paymentCodeType, final YearMonthDay startDate, final YearMonthDay endDate,
-	    final Money minAmount, final Money maxAmount, final Student student) {
+	    final Money minAmount, final Money maxAmount, final Person person) {
 
-	checkParameters(paymentCodeType, startDate, endDate, maxAmount, maxAmount, student);
+	checkParameters(paymentCodeType, startDate, endDate, maxAmount, maxAmount, person);
 
-	super.setCode(PaymentCodeGenerator.generateNewCodeFor(paymentCodeType, student));
+	super.setCode(getPaymentCodeGenerator().generateNewCodeFor(paymentCodeType, person));
 
 	super.setType(paymentCodeType);
 	super.setStartDate(startDate);
 	super.setEndDate(endDate);
 	super.setMinAmount(minAmount);
 	super.setMaxAmount(maxAmount);
-	super.setStudent(student);
+	super.setPerson(person);
     }
 
     private void checkParameters(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-	    Money maxAmount, final Student student) {
+	    Money maxAmount, final Person person) {
 
 	if (paymentCodeType == null) {
 	    throw new DomainException("error.accounting.PaymentCode.paymentCodeType.cannot.be.null");
 	}
 
-	if (student == null) {
-	    throw new DomainException("error.accounting.PaymentCode.student.cannot.be.null");
-	}
-
 	checkParameters(startDate, endDate, minAmount, maxAmount);
-
     }
 
     private void checkParameters(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount) {
@@ -162,11 +157,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	throw new DomainException("error.accounting.PaymentCode.cannot.modify.entityCode");
     }
 
-    @Override
-    public void setStudent(Student student) {
-	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.student");
-    }
-
     public boolean isNew() {
 	return getState() == PaymentCodeState.NEW;
     }
@@ -224,7 +214,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	    throw new DomainException("error.accounting.PaymentCode.cannot.delete.processed.codes");
 	}
 
-	super.setStudent(null);
+	super.setPerson(null);
 
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -248,6 +238,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return null;
     }
 
+    protected PaymentCodeGenerator getPaymentCodeGenerator() {
+	return PaymentCodeGeneratorFactory.getGenerator(this.getClass());
+    }
+
     static public PaymentCode readByCode(final String code) {
 	if (StringUtils.isEmpty(code)) {
 	    return null;
@@ -260,4 +254,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return null;
     }
 
+    public static boolean canGenerateNewCode(Class<? extends PaymentCode> paymentCodeClass, PaymentCodeType paymentCodeType,
+	    final Person person) {
+	return PaymentCodeGeneratorFactory.getGenerator(paymentCodeClass).canGenerateNewCode(paymentCodeType, person);
+    }
 }

@@ -5,6 +5,9 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -53,6 +56,14 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money residenceAmount;
 
+    private Money degreeChangeIndividualCandidacyAmount;
+
+    private Money degreeTransferIndividualCandidacyAmount;
+
+    private Money secondCycleIndividualCandidacyAmount;
+
+    private Money degreeCandidacyForGraduatedPersonAmount;
+
     private Money totalCost;
 
     public SibsPaymentFileProcessReportDTO() {
@@ -72,6 +83,10 @@ public class SibsPaymentFileProcessReportDTO {
 	this.transactionsTotalAmount = Money.ZERO;
 	this.totalCost = Money.ZERO;
 	this.residenceAmount = Money.ZERO;
+	this.degreeChangeIndividualCandidacyAmount = Money.ZERO;
+	this.degreeTransferIndividualCandidacyAmount = Money.ZERO;
+	this.secondCycleIndividualCandidacyAmount = Money.ZERO;
+	this.degreeCandidacyForGraduatedPersonAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -251,6 +266,12 @@ public class SibsPaymentFileProcessReportDTO {
 	    addAfterGraduationInsuranceAmount(detailLine.getAmount());
 	} else if (event instanceof ResidenceEvent) {
 	    addResidenceAmount(detailLine.getAmount());
+	} else if (event instanceof SecondCycleIndividualCandidacyEvent) {
+	    addSecondCycleIndividualCandidacyAmount(detailLine.getAmount());
+	} else if (event instanceof DegreeChangeIndividualCandidacyEvent) {
+	    addDegreeChangeIndividualCandidacyAmount(detailLine.getAmount());
+	} else if (event instanceof DegreeCandidacyForGraduatedPersonEvent) {
+	    addDegreeCandidacyForGraduatedPersonAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}
@@ -304,5 +325,37 @@ public class SibsPaymentFileProcessReportDTO {
 	    throw new RuntimeException("Unknown specialization "
 		    + gratuitySituation.getStudentCurricularPlan().getSpecialization().name());
 	}
+    }
+
+    public Money getDegreeChangeIndividualCandidacyAmount() {
+	return degreeChangeIndividualCandidacyAmount;
+    }
+
+    public Money getDegreeTransferIndividualCandidacyAmount() {
+	return degreeTransferIndividualCandidacyAmount;
+    }
+
+    public Money getSecondCycleIndividualCandidacyAmount() {
+	return secondCycleIndividualCandidacyAmount;
+    }
+
+    public Money getDegreeCandidacyForGraduatedPersonAmount() {
+	return degreeCandidacyForGraduatedPersonAmount;
+    }
+
+    public void addDegreeChangeIndividualCandidacyAmount(Money money) {
+	this.degreeChangeIndividualCandidacyAmount = this.degreeChangeIndividualCandidacyAmount.add(money);
+    }
+
+    public void addDegreeTransferIndividualCandidacyAmount(Money money) {
+	this.degreeTransferIndividualCandidacyAmount = this.degreeTransferIndividualCandidacyAmount.add(money);
+    }
+
+    public void addSecondCycleIndividualCandidacyAmount(Money money) {
+	this.secondCycleIndividualCandidacyAmount = this.secondCycleIndividualCandidacyAmount.add(money);
+    }
+
+    public void addDegreeCandidacyForGraduatedPersonAmount(Money money) {
+	this.degreeCandidacyForGraduatedPersonAmount = this.degreeCandidacyForGraduatedPersonAmount.add(money);
     }
 }

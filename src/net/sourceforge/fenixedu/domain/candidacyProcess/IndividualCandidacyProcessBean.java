@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
 
@@ -17,7 +18,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private static final long serialVersionUID = 2860833709120576930L;
 
-    // TODO: this must be set to false if you want to use external persons
+    // this must be set to false if you want to use external persons
     private Boolean internalPersonCandidacy = Boolean.TRUE;
 
     private DomainReference<CandidacyProcess> candidacyProcess;
@@ -38,9 +39,9 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private Boolean processChecked;
 
-    /*
-     * FIXME USE CandidacyDocumentUploadBean
-     */
+    private String istUsername;
+
+    private Boolean publicCandidacyCreationOrEdition;
 
     private CandidacyProcessDocumentUploadBean documentIdentificationDocument;
     private CandidacyProcessDocumentUploadBean paymentDocument;
@@ -52,7 +53,14 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     private List<FormationBean> formationConcludedBeanList;
     private List<FormationBean> formationNonConcludedBeanList;
 
+    protected Boolean honorAgreement;
+
+    protected Boolean utlStudent;
+
     public IndividualCandidacyProcessBean() {
+	setFormationConcludedBeanList(new ArrayList<FormationBean>());
+	setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
+	setPublicCandidacy(Boolean.TRUE);
     }
 
     public Boolean getInternalPersonCandidacy() {
@@ -112,7 +120,16 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 	    Person person = new Person(getPersonBean());
 	    return person;
 	}
-	return getPersonBean().getPerson().edit(personBean);
+
+	if (getPersonBean().getPerson().hasRole(RoleType.EMPLOYEE)) {
+	    return getPersonBean().getPerson();
+	} else if (!getPersonBean().getPerson().getPersonRoles().isEmpty() && this.isPublicCandidacy()) {
+	    return getPersonBean().getPerson();
+	} else if (getPersonBean().getPerson().getPersonRoles().isEmpty() && this.isPublicCandidacy()) {
+	    return getPersonBean().getPerson().editByPublicCandidate(personBean);
+	} else {
+	    return getPersonBean().getPerson().edit(getPersonBean());
+	}
     }
 
     public ExecutionInterval getCandidacyExecutionInterval() {
@@ -261,6 +278,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 	this.firstCycleAccessHabilitationDocument = new CandidacyProcessDocumentUploadBean(
 		IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_DOCUMENT);
 	this.vatCatCopyDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
+	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
     }
 
     public Boolean getProcessChecked() {
@@ -269,6 +287,38 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public void setProcessChecked(Boolean value) {
 	this.processChecked = value;
+    }
+
+    public String getIstUsername() {
+	return this.istUsername;
+    }
+
+    public void setIstUsername(String istUsername) {
+	this.istUsername = istUsername;
+    }
+
+    public Boolean isPublicCandidacy() {
+	return this.publicCandidacyCreationOrEdition;
+    }
+
+    public void setPublicCandidacy(Boolean value) {
+	this.publicCandidacyCreationOrEdition = value;
+    }
+
+    public Boolean getHonorAgreement() {
+	return this.honorAgreement;
+    }
+
+    public void setHonorAgreement(Boolean value) {
+	this.honorAgreement = value;
+    }
+
+    public Boolean getUtlStudent() {
+	return utlStudent;
+    }
+
+    public void setUtlStudent(Boolean utlStudent) {
+	this.utlStudent = utlStudent;
     }
 
 }

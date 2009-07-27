@@ -67,5 +67,10 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
     public Degree getCandidacyDegree() {
 	return getIndividualCandidacy().getSelectedDegree();
     }
-    
+
+    @Override
+    protected EntryType getEntryType() {
+	return EntryType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_FEE;
+    }
+
 }

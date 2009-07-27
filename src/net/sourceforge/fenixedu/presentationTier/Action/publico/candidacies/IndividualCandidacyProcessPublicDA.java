@@ -370,8 +370,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	return link + request.getContextPath() + getLinkFromPublicCandidacyHashCode(mapping, request, hashCode);
     }
 
-    protected String getLinkForSubmissionFromPublicCandidacyHashCode(ActionMapping mapping, HttpServletRequest request,
-	    PublicCandidacyHashCode hashCode) {
+    protected String getLinkForSubmissionFromPublicCandidacyHashCode(PublicCandidacyHashCode hashCode) {
 	return getRootPortalCandidacySubmission() + "?hash=" + hashCode.getValue() + "&locale="
 		+ Language.getLocale().getLanguage();
     }
@@ -381,7 +380,7 @@ public abstract class IndividualCandidacyProcessPublicDA extends IndividualCandi
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
 	String link = bundle.getString(LINK_HTTP_HOSTNAME);
 
-	return link + request.getContextPath() + getLinkForSubmissionFromPublicCandidacyHashCode(mapping, request, hashCode);
+	return link + request.getContextPath() + getLinkForSubmissionFromPublicCandidacyHashCode(hashCode);
     }
 
     protected boolean candidacyIndividualProcessExistsForThisEmail(String email) {

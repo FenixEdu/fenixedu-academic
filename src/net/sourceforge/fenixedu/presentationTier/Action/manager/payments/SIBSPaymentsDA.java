@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +17,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
@@ -272,36 +268,17 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     }
 
     private PaymentCode getPaymentCode(final String code, ProcessResult result) {
-	final Integer studentNumber = PaymentCodeGenerator.getStudentNumberFrom(code);
-	Student student = Student.readStudentByNumber(studentNumber);
+	/*
+	 * TODO:
+	 * 
+	 * 09/07/2009 - Payments are not related only to students. readAll() may
+	 * be heavy to get the PaymentCode.
+	 * 
+	 * 
+	 * Ask Nadir and Joao what is best way to deal with PaymentCode
+	 * retrieval.
+	 */
 
-	// TODO: remove this temporary workaround
-	if (student == null) {
-	    final List<Registration> registrations = Registration.readByNumber(studentNumber);
-
-	    if (registrations.isEmpty()) {
-		result.addMessage("error.manager.SIBS.noSuchStudent", String.valueOf(studentNumber));
-		return null;
-	    }
-
-	    if (registrations.size() == 1) {
-		student = registrations.iterator().next().getStudent();
-	    } else {
-		for (final Registration registration : registrations) {
-		    if (student == null) {
-			student = registration.getStudent();
-		    } else if (student != registration.getStudent()) {
-			result.addMessage("warning.manager.SIBS.multipleRegistrations", String.valueOf(studentNumber));
-		    }
-		}
-	    }
-	}
-
-	if (student == null) {
-	    result.addMessage("error.manager.SIBS.studentNotFound", String.valueOf(studentNumber));
-	    return null;
-	}
-
-	return student.getPaymentCodeBy(code);
+	return PaymentCode.readByCode(code);
     }
 }

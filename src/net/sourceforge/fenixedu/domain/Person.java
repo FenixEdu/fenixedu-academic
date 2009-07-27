@@ -353,6 +353,21 @@ public class Person extends Person_Base {
 	return this;
     }
 
+    public Person editByPublicCandidate(PersonBean personBean) {
+	setName(personBean.getName());
+	setGender(personBean.getGender());
+	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
+	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
+	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
+	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
+	setCountry(personBean.getNationality());
+	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
+	setDefaultPhoneNumber(personBean.getPhone());
+	setDefaultEmailAddressValue(personBean.getEmail());
+
+	return this;
+    }
+
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
     public Person edit(IndividualCandidacyPersonalDetails candidacyExternalDetails) {
 	this.setCountry(candidacyExternalDetails.getCountry());

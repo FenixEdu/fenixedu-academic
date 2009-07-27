@@ -476,6 +476,10 @@ public class Student extends Student_Base {
 	return null;
     }
 
+    private Set<PaymentCode> getPaymentCodesSet() {
+	return getPerson().getPaymentCodesSet();
+    }
+
     // TODO: This should be removed when master degree payments start using
     // Events and Posting Rules for payments
     public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
@@ -756,7 +760,7 @@ public class Student extends Student_Base {
 	return getDissertationEnrolment(null);
     }
 
-   final public TreeSet<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
+    final public TreeSet<Enrolment> getDissertationEnrolments(DegreeCurricularPlan degreeCurricularPlan) {
 	final TreeSet<Enrolment> enrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	for (final Registration registration : getRegistrations()) {
 	    final Enrolment dissertationEnrolment = registration.getDissertationEnrolment(degreeCurricularPlan);

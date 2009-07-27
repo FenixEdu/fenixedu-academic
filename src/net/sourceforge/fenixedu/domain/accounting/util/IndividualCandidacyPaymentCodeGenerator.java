@@ -1,0 +1,96 @@
+package net.sourceforge.fenixedu.domain.accounting.util;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * Code Format: 8<sequentialNumber{4}><typeDigit{2}><controlDigits{2}>
+ * 
+ */
+public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerator {
+
+    public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
+	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
+	    final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
+	    final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
+
+	    int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
+
+	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal())
+		    : comparationResult;
+	}
+    };
+
+    private static final String CODE_FILLER = "0";
+    private static final int NUM_TYPE_DIGITS = 2;
+    private static final int NUM_CONTROL_DIGITS = 2;
+    private static final int NUM_SEQUENTIAL_NUMBERS = 4;
+    private static final String START = "8";
+
+    @Override
+    public boolean canGenerateNewCode(PaymentCodeType paymentCodeType, Person person) {
+	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
+	return lastPaymentCode == null ? true : Integer.valueOf(getSequentialNumber(lastPaymentCode)) < 9999;
+    }
+
+    private PaymentCode findLastPaymentCode(PaymentCodeType paymentCodeType) {
+	final List<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes = getAllIndividualCandidacyPaymentCodesForType(paymentCodeType);
+	return individualCandidacyPaymentCodes.isEmpty() ? null : Collections.max(individualCandidacyPaymentCodes,
+		COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS);
+    }
+
+    private List<IndividualCandidacyPaymentCode> getAllIndividualCandidacyPaymentCodesForType(
+	    final PaymentCodeType paymentCodeType) {
+	Set<IndividualCandidacyPaymentCode> allPaymentCodes = RootDomainObject
+		.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+
+	List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
+	CollectionUtils.select(allPaymentCodes, new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		IndividualCandidacyPaymentCode paymentCode = (IndividualCandidacyPaymentCode) arg0;
+		return paymentCodeType.equals(paymentCode.getType());
+	    }
+
+	}, outputList);
+
+	return outputList;
+    }
+
+    @Override
+    public String generateNewCodeFor(PaymentCodeType paymentCodeType, Person person) {
+	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType);
+	int nextSequentialNumber = lastPaymentCode == null ? 0 : Integer.valueOf(getSequentialNumber(lastPaymentCode)) + 1;
+
+	String sequentialNumberPadded = StringUtils.leftPad(String.valueOf(nextSequentialNumber), NUM_SEQUENTIAL_NUMBERS,
+		CODE_FILLER);
+	String typeDigitsPadded = StringUtils.leftPad(String.valueOf(paymentCodeType.getTypeDigit()), NUM_TYPE_DIGITS,
+		CODE_FILLER);
+	String controDigitsPadded = StringUtils.leftPad(String.valueOf((new Random()).nextInt(99)), NUM_CONTROL_DIGITS,
+		CODE_FILLER);
+
+	return START + sequentialNumberPadded + typeDigitsPadded + controDigitsPadded;
+    }
+
+    private static String getSequentialNumber(PaymentCode paymentCode) {
+	String sequentialNumber = paymentCode.getCode().substring(1,
+		paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
+
+	return sequentialNumber;
+    }
+}

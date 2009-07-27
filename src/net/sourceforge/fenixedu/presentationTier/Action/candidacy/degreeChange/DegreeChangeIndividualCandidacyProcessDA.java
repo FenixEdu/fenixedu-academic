@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -32,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
 	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/degreeChange/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
 	@Forward(name = "fill-common-candidacy-information", path = "/candidacy/fillCommonCandidacyInformation.jsp"),
@@ -44,7 +45,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeChange/editCandidacyCurricularCoursesInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeChange/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp")
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp")
 
 })
 public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -79,6 +81,13 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 	final DegreeChangeIndividualCandidacyProcessBean bean = new DegreeChangeIndividualCandidacyProcessBean();
 	bean.setCandidacyProcess(getParentProcess(request));
 	bean.setChoosePersonBean(new ChoosePersonBean());
+
+	/*
+	 * 18/07/2009 - A informacao para o RAIDs nao e introduzidas mas temos
+	 * de criar este bean
+	 */
+	bean.setCandidacyInformationBean(new CandidacyInformationBean());
+
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
@@ -159,8 +168,10 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), new DegreeChangeIndividualCandidacyProcessBean(
-		getProcess(request)));
+	DegreeChangeIndividualCandidacyProcessBean bean = new DegreeChangeIndividualCandidacyProcessBean(getProcess(request));
+	bean.setCandidacyInformationBean(new CandidacyInformationBean(getProcess(request).getCandidacy()));
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -173,6 +184,10 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
+	    DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
+
 	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -258,6 +273,30 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     protected void prepareInformationForBindPersonToCandidacyOperation(HttpServletRequest request,
 	    IndividualCandidacyProcess process) {
 	// TODO Auto-generated method stub
-	
+
     }
+
+    @Override
+    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	boolean isValid = hasInvalidViewState();
+	if (!isValid) {
+	    invalidateDocumentFileRelatedViewStates();
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("fill-candidacy-information");
+	}
+
+	/*
+	 * 18/07/2009 - Since we step candidacy information form we must copy
+	 * some fields
+	 */
+	bean.copyInformationToCandidacyBean();
+
+	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
+
+	return super.createNewProcess(mapping, form, request, response);
+    }
+
 }

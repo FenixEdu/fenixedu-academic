@@ -148,10 +148,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
     }
 
-    private void editCandidacyHabilitations(Over23IndividualCandidacyProcessBean bean) {
-	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
-    }
-
     private void saveChosenDegrees(final List<Degree> degrees) {
 	this.getCandidacy().saveChoosedDegrees(degrees);
     }
@@ -212,7 +208,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
+	    final IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
 	    process.editPersonalCandidacyInformation(bean.getPersonBean());
 	    return process;
 	}
@@ -233,7 +229,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
+	    final IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
 	    process.editCommonCandidacyInformation(bean.getCandidacyInformationBean());
 	    return process;
 	}
@@ -254,7 +250,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    process.editCandidacyHabilitations((Over23IndividualCandidacyProcessBean) object);
+	    process.editCandidacyHabilitations((IndividualCandidacyProcessBean) object);
 	    return process.editCandidacyInformation((Over23IndividualCandidacyProcessBean) object);
 	}
     }
@@ -366,7 +362,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
+	    IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
 
 	    // First edit personal information
 	    process.editPersonalCandidacyInformation(bean.getPersonBean());
@@ -396,8 +392,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    process.editPersonalCandidacyInformation(((Over23IndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((Over23IndividualCandidacyProcessBean) object).getCandidacyInformationBean());
+	    process.editPersonalCandidacyInformation(((IndividualCandidacyProcessBean) object).getPersonBean());
+	    process.editCommonCandidacyInformation(((IndividualCandidacyProcessBean) object).getCandidacyInformationBean());
 	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    return process;
 	}
@@ -445,7 +441,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    process.editCandidacyHabilitations((Over23IndividualCandidacyProcessBean) object);
+	    process.editCandidacyHabilitations((IndividualCandidacyProcessBean) object);
 	    process.saveChosenDegrees(((Over23IndividualCandidacyProcessBean) object).getSelectedDegrees());
 	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    process.getCandidacy().setDisabilities(((Over23IndividualCandidacyProcessBean) object).getDisabilities());

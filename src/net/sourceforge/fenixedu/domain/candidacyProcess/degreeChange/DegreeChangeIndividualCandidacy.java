@@ -35,6 +35,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
+
+	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+
 	createPrecedentDegreeInformation(bean);
 
 	/*
@@ -231,4 +234,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	    }
 	}
     }
+
+    void editSelectedDegree(final Degree selectedDegree) {
+	setSelectedDegree(selectedDegree);
+    }
+
 }

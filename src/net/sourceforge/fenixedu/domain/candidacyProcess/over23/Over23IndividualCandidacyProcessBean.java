@@ -36,8 +36,6 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
     private CandidacyProcessDocumentUploadBean handicapProofDocument;
     private CandidacyProcessDocumentUploadBean curriculumVitaeDocument;
 
-    private Boolean honorAgreement;
-
     public Over23IndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	setSelectedDegrees(Collections.EMPTY_LIST);
@@ -209,14 +207,6 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
 
     public void setLanguagesSpeak(String value) {
 	this.languagesSpeak = value;
-    }
-
-    public Boolean getHonorAgreement() {
-	return this.honorAgreement;
-    }
-
-    public void setHonorAgreement(Boolean value) {
-	this.honorAgreement = value;
     }
 
     public void addHabilitationCertificateDocument() {

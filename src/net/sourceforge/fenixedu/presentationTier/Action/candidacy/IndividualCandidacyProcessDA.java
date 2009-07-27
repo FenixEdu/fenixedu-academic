@@ -31,8 +31,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEm
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -168,7 +171,8 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	     * 
 	     * return mapping.findForward("prepare-create-new-process");
 	     */
-	    return mapping.findForward("fill-personal-information");
+	    return mapping.findForward("prepare-create-new-process");
+	    // return mapping.findForward("fill-personal-information");
 	}
     }
 
@@ -243,6 +247,12 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    return mapping.findForward("prepare-create-new-process");
 	}
 
+	if (existsIndividualCandidacyProcessForDocumentId(request, bean.getChoosePersonBean().getPerson().getIdDocumentType(),
+		bean.getChoosePersonBean().getPerson().getDocumentIdNumber())) {
+	    addActionMessage(request, "error.candidacy.already.exists.for.this.person");
+	    return mapping.findForward("prepare-create-new-process");
+	}
+
 	bean.setPersonBean(new PersonBean(bean.getChoosePersonBean().getPerson()));
 	bean.removeChoosePersonBean();
 	return mapping.findForward("fill-personal-information");
@@ -286,6 +296,18 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
 	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	if (!StringUtils.isEmpty(bean.getPersonBean().getSocialSecurityNumber())) {
+	    Party existingSocialSecurityNumberParty = Person.readByContributorNumber(bean.getPersonBean()
+		    .getSocialSecurityNumber());
+
+	    if (existingSocialSecurityNumberParty != null
+		    && existingSocialSecurityNumberParty != bean.getPersonBean().getPerson()) {
+		// found person with same contributor number
+		addActionMessage(request, "error.party.existing.contributor.number");
+		return mapping.findForward("fill-personal-information");
+	    }
+	}
 
 	try {
 	    DegreeOfficePublicCandidacyHashCode candidacyHashCode = DegreeOfficePublicCandidacyHashCode
@@ -577,4 +599,43 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    }
 	}
     }
+
+    protected boolean existsIndividualCandidacyProcessForDocumentId(HttpServletRequest request, IDDocumentType documentType,
+	    String identification) {
+	return getParentProcess(request).getOpenChildProcessByDocumentId(documentType, identification) != null;
+    }
+
+    public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	bean.addConcludedFormationBean();
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	Integer index = getIntegerFromRequest(request, "removeIndex");
+	bean.removeFormationConcludedBean(index);
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    private ActionForward forwardTo(ActionMapping mapping, HttpServletRequest request) {
+	if (getFromRequest(request, "userAction").equals("createCandidacy")) {
+	    return mapping.findForward("fill-candidacy-information");
+	} else if (getFromRequest(request, "userAction").equals("editCandidacyQualifications")) {
+	    return mapping.findForward("edit-candidacy-information");
+	}
+
+	return null;
+    }
+
 }

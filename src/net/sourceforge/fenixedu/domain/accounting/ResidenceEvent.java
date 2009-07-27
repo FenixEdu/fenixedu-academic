@@ -110,8 +110,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
 	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE, new YearMonthDay(),
-		getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()
-			.getStudent()));
+		getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
     }
 
     @Override

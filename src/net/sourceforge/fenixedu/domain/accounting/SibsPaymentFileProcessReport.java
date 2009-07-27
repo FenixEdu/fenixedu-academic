@@ -56,6 +56,14 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	super.setTransactionsTotalAmount(sibsPaymentFileProcessReportDTO.getTransactionsTotalAmount());
 	super.setTotalCost(sibsPaymentFileProcessReportDTO.getTotalCost());
 	super.setResidencePayment(sibsPaymentFileProcessReportDTO.getResidenceAmount());
+	super.setDegreeCandidacyForGraduatedPersonAmount(sibsPaymentFileProcessReportDTO
+		.getDegreeCandidacyForGraduatedPersonAmount());
+	super
+		.setDegreeChangeIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
+			.getDegreeChangeIndividualCandidacyAmount());
+	super.setDegreeTransferIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
+		.getDegreeTransferIndividualCandidacyAmount());
+	super.setSecondCycleIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO.getSecondCycleIndividualCandidacyAmount());
     }
 
     private void checkRulesToCreate(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {

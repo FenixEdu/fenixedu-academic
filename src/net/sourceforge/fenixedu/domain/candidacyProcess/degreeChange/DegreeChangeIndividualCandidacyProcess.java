@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +10,15 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.CancelCandidacy;
 
 public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividualCandidacyProcess_Base {
 
@@ -35,7 +33,10 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	activities.add(new CancelCandidacy());
 	activities.add(new CreateRegistration());
 	activities.add(new EditPublicCandidacyPersonalInformation());
+	activities.add(new EditPublicCandidacyHabilitations());
 	activities.add(new EditPublicCandidacyDocumentFile());
+	activities.add(new SendEmailForApplicationSubmission());
+	activities.add(new EditDocuments());
     }
 
     private DegreeChangeIndividualCandidacyProcess() {
@@ -54,8 +55,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
     @Override
     protected void createIndividualCandidacy(IndividualCandidacyProcessBean bean) {
-	new DegreeChangeIndividualCandidacy(this, 
-		(DegreeChangeIndividualCandidacyProcessBean) bean);
+	new DegreeChangeIndividualCandidacy(this, (DegreeChangeIndividualCandidacyProcessBean) bean);
     }
 
     @Override
@@ -137,14 +137,13 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
-		/* 
-		 * 06/04/2009
-		 * The candidacy may be submited by someone who's not authenticated in the system
-		 *
-	     *if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		 *throw new PreConditionNotValidException();
-	     *}
-		 */
+	    /*
+	     * 06/04/2009 The candidacy may be submited by someone who's not
+	     * authenticated in the system
+	     * 
+	     * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
+	     * PreConditionNotValidException();}
+	     */
 	}
 
 	@Override
@@ -153,6 +152,26 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    final DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) object;
 	    return new DegreeChangeIndividualCandidacyProcess(bean);
 	}
+    }
+
+    static public class SendEmailForApplicationSubmission extends Activity<DegreeChangeIndividualCandidacyProcess> {
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
+	    hashCode.sendEmailForApplicationSuccessfullySubmited();
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
     static private class CandidacyPayment extends Activity<DegreeChangeIndividualCandidacyProcess> {
@@ -195,44 +214,83 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    return process;
 	}
     }
-    
+
     static private class EditPublicCandidacyPersonalInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editPersonalCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object).getCandidacyInformationBean());
+	    process.editPersonalCandidacyInformationPublic(((DegreeChangeIndividualCandidacyProcessBean) object).getPersonBean());
+	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
 	    return process;
 	}
-	
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
-    
+
     static private class EditPublicCandidacyDocumentFile extends Activity<DegreeChangeIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
-	    }	    
+	    }
 	}
 
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object; 
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
 	    process.bindIndividualCandidacyDocumentFile(bean);
 	    return process;
 	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
-    
+
+    static private class EditPublicCandidacyHabilitations extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editCandidacyHabilitations((DegreeChangeIndividualCandidacyProcessBean) object);
+	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object)
+		    .getCandidacyInformationBean());
+	    process.getCandidacy().editSelectedDegree(((DegreeChangeIndividualCandidacyProcessBean) object).getSelectedDegree());
+	    process.getCandidacy().editObservations((DegreeChangeIndividualCandidacyProcessBean) object);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
     static private class EditCommonCandidacyInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
 
 	@Override
@@ -269,6 +327,8 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
+	    process.editCandidacyHabilitations((DegreeChangeIndividualCandidacyProcessBean) object);
+	    process.getCandidacy().editObservations((DegreeChangeIndividualCandidacyProcessBean) object);
 	    process.editCandidacyInformation((DegreeChangeIndividualCandidacyProcessBean) object);
 	    return process;
 	}
@@ -376,11 +436,28 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	}
     }
 
+    static private class EditDocuments extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
+	    process.bindIndividualCandidacyDocumentFile(bean);
+	    return process;
+	}
+    }
+
     @Override
     public Boolean isCandidacyProcessComplete() {
 	// TODO Auto-generated method stub
 	return null;
     }
-    
-    
+
 }

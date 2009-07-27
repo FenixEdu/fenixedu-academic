@@ -3,19 +3,14 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.student.Student;
-
-import org.joda.time.YearMonthDay;
 
 public class IndividualCandidacyExternalPersonDetails extends IndividualCandidacyExternalPersonDetails_Base {
     public IndividualCandidacyExternalPersonDetails(IndividualCandidacy candidacy, IndividualCandidacyProcessBean bean) {
 	super();
 	setCandidacy(candidacy);
 	setInternalized(Boolean.FALSE);
-	
+
 	PersonBean personBean = bean.getPersonBean();
 	edit(personBean);
     }
@@ -28,24 +23,24 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     @Override
     public void edit(PersonBean personBean) {
 	setNationality(personBean.getNationality());
-	
+
 	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
 	setDocumentIdNumber(personBean.getDocumentIdNumber());
 	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
 	setGender(personBean.getGender());
 	setIdDocumentType(personBean.getIdDocumentType());
 	setName(personBean.getName());
-	
+
 	/*
 	 * 08/05/2009 - After social security number is the correct property for
 	 * VAT Number
 	 */
 	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
-	
+
 	setAddress(personBean.getAddress());
 	setArea(personBean.getArea());
 	setAreaCode(personBean.getAreaCode());
-	
+
 	setTelephoneContact(personBean.getPhone());
 	setEmail(personBean.getEmail());
 	setCountryOfResidence(personBean.getCountryOfResidence());
@@ -85,10 +80,25 @@ public class IndividualCandidacyExternalPersonDetails extends IndividualCandidac
     }
 
     /**
-     *  External candidacy submissions dont use PhysicalAddress
+     * External candidacy submissions dont use PhysicalAddress
      */
     @Override
     public PhysicalAddress getDefaultPhysicalAddress() {
 	return null;
+    }
+
+    @Override
+    public Boolean hasAnyRole() {
+	return false;
+    }
+
+    @Override
+    public Boolean isEmployee() {
+	return false;
+    }
+
+    @Override
+    public void editPublic(PersonBean personBean) {
+	this.edit(personBean);
     }
 }

@@ -137,7 +137,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	final Money totalAmount = calculateTotalAmount();
 	return Collections.singletonList(AccountingEventPaymentCode.create(
 		PaymentCodeType.ADMINISTRATIVE_OFFICE_FEE_AND_INSURANCE, new YearMonthDay(), calculatePaymentCodeEndDate(), this,
-		totalAmount, totalAmount, getPerson().getStudent()));
+		totalAmount, totalAmount, getPerson()));
     }
 
     @Override

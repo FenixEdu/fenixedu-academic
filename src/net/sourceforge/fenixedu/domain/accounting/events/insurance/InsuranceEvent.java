@@ -118,8 +118,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
 	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.INSURANCE, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()
-			.getStudent()));
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getPerson()));
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {

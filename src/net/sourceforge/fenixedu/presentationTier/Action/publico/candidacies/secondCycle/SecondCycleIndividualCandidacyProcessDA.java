@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingSecondCycleCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/candidacies/caseHandlingAncientSecondCycleCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "candidacy-types-information-intro", path = "candidacy.types.information.intro"),
 	@Forward(name = "candidacy-types-information-intro-en", path = "candidacy.types.information.intro.en"),
 	@Forward(name = "candidacy-process-intro", path = "candidacy.process.intro"),
@@ -58,7 +58,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "show-application-access-recovery-email-sent", path = "show.application.access.recovery.email.sent") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessPublicDA {
     private static final LocalDateTime start = new LocalDateTime(2009, 4, 28, 0, 0);
-    private static final LocalDateTime end = new LocalDateTime(2009, 6, 16, 12, 00);
+    private static final LocalDateTime end = new LocalDateTime(2009, 6, 30, 12, 00);
 
     @Override
     protected String getCandidacyNameKey() {

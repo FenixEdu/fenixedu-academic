@@ -75,7 +75,8 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
 
 	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.TOTAL_GRATUITY, new YearMonthDay(),
-		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()));
+		calculatePaymentCodeEndDate(), this, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), getStudent()
+			.getPerson()));
     }
 
     private Student getStudent() {

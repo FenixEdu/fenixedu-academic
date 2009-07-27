@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.util.Money;
@@ -36,4 +37,10 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
 	return candidacyEvent.hasSecondCycleIndividualCandidacyExemption() ? Money.ZERO : super.calculateTotalAmountToPay(event,
 		when, applyDiscount);
     }
+
+    @Override
+    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
+	return PaymentCodeType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_PROCESS;
+    }
+
 }

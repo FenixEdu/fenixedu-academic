@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
@@ -18,7 +20,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 
     public DegreeCandidacyForGraduatedPersonIndividualProcessBean() {
 	setCandidacyDate(new LocalDate());
+	setFormationConcludedBeanList(new ArrayList<FormationBean>());
 	initializeDocumentUploadBeans();
+	setObservations("");
+	setPrecedentDegreeType(PrecedentDegreeType.EXTERNAL_DEGREE);
     }
 
     public DegreeCandidacyForGraduatedPersonIndividualProcessBean(final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
@@ -28,6 +33,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process
 		.getCandidacyPrecedentDegreeInformation()));
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	initializeFormation(process.getCandidacy().getFormations());
+	setObservations(process.getCandidacy().getObservations());
     }
 
     @Override

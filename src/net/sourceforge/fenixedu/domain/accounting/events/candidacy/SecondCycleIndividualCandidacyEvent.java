@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -16,6 +17,8 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
     public SecondCycleIndividualCandidacyEvent(final SecondCycleIndividualCandidacy candidacy, final Person person) {
 	this();
 	super.init(candidacy, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, person);
+
+	attachAvailablePaymentCode(person);
     }
 
     @Override
@@ -40,4 +43,10 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
 	}
 	return null;
     }
+
+    @Override
+    protected EntryType getEntryType() {
+	return EntryType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY_FEE;
+    }
+
 }

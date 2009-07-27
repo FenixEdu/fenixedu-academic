@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -53,10 +54,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	 * 11/04/2009 - An external candidacy submission requires documents like
 	 * identification and habilitation certificate documents
 	 */
-	setCandidacyDocumentFiles(bean);
 	setCandidacyHashCode(bean.getPublicCandidacyHashCode());
 
 	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
+	setCandidacyDocumentFiles(bean);
+
 	setProcessCodeForThisIndividualCandidacy(bean.getCandidacyProcess());
     }
 
@@ -70,21 +72,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     private void setCandidacyDocumentFiles(IndividualCandidacyProcessBean bean) {
-	if (bean.getDocumentIdentificationDocument() != null)
-	    bindIndividualCandidacyDocumentFile(bean.getDocumentIdentificationDocument());
-
-	if (bean.getFirstCycleAccessHabilitationDocument() != null)
-	    bindIndividualCandidacyDocumentFile(bean.getFirstCycleAccessHabilitationDocument());
-
-	if (bean.getHabilitationCertificationDocument() != null)
-	    bindIndividualCandidacyDocumentFile(bean.getHabilitationCertificationDocument());
-
-	if (bean.getPaymentDocument() != null)
-	    bindIndividualCandidacyDocumentFile(bean.getPaymentDocument());
-
-	if (bean.getVatCatCopyDocument() != null)
-	    bindIndividualCandidacyDocumentFile(bean.getVatCatCopyDocument());
-
+	/*
+	 * 06/07/2009 - Lots of candidates camplaint about the upload of
+	 * documents in application submission. The upload of documents will be
+	 * done in application edit right after submission
+	 */
 	if (bean.getPhotoDocument() != null)
 	    bindIndividualCandidacyDocumentFile(bean.getPhotoDocument());
     }
@@ -218,7 +210,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     protected void editPersonalCandidacyInformation(final PersonBean personBean) {
-	getCandidacy().editPersonalCandidacyInformation(personBean);
+	getCandidacy().editPersonalCandidacyInformationPublic(personBean);
+    }
+
+    protected void editPersonalCandidacyInformationPublic(final PersonBean personBean) {
+	getCandidacy().editPersonalCandidacyInformationPublic(personBean);
     }
 
     public CandidacyInformationBean getCandidacyInformationBean() {
@@ -311,6 +307,27 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public void bindPerson(ChoosePersonBean choosePersonBean) {
 	this.getCandidacy().bindPerson(choosePersonBean);
+    }
+
+    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+	if (getCandidacy().getEvent() != null) {
+	    return (IndividualCandidacyPaymentCode) (getCandidacy().getEvent().getAllPaymentCodes().isEmpty() ? null
+		    : getCandidacy().getEvent().getAllPaymentCodes().get(0));
+	}
+
+	return null;
+    }
+
+    public Boolean getIsCandidateEmployee() {
+	return this.getCandidacy().getPersonalDetails().isEmployee();
+    }
+
+    public Boolean getIsCandidateWithRoles() {
+	return this.getCandidacy().getPersonalDetails().hasAnyRole();
+    }
+
+    protected void editCandidacyHabilitations(IndividualCandidacyProcessBean bean) {
+	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
     }
 
 }

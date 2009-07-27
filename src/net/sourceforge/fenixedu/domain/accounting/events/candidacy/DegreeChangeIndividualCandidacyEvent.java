@@ -30,6 +30,8 @@ public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividual
     public DegreeChangeIndividualCandidacyEvent(final DegreeChangeIndividualCandidacy candidacy, final Person person) {
 	this();
 	super.init(candidacy, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY, person);
+
+	attachAvailablePaymentCode(person);
     }
 
     @Override
@@ -58,13 +60,19 @@ public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividual
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
 	return Collections.singleton(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE);
     }
-    
+
     @Override
     public DegreeChangeIndividualCandidacy getIndividualCandidacy() {
-        return (DegreeChangeIndividualCandidacy) super.getIndividualCandidacy();
+	return (DegreeChangeIndividualCandidacy) super.getIndividualCandidacy();
     }
-    
+
     public Degree getCandidacyDegree() {
 	return getIndividualCandidacy().getSelectedDegree();
     }
+
+    @Override
+    protected EntryType getEntryType() {
+	return EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_FEE;
+    }
+
 }

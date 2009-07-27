@@ -327,12 +327,16 @@ public abstract class PostingRule extends PostingRule_Base {
 	return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
 		this.getClass().getSimpleName() + ".formulaDescription");
     }
-    
+
     protected boolean has(final EventType eventType) {
 	return getEventType().equals(eventType);
     }
 
     abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
+
+    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
+	throw new DomainException("error.accounting.PostingRule.cannot.calculate.payment.code.type");
+    }
 
     abstract public List<EntryDTO> calculateEntries(Event event, DateTime when);
 

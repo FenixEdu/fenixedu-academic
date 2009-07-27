@@ -72,7 +72,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     @Override
-    protected SecondCycleIndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
+    public SecondCycleIndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
 	return (SecondCycleIndividualCandidacyProcessBean) super.getIndividualCandidacyProcessBean();
     }
 
@@ -96,6 +96,11 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	 * 
 	 * bean.setChoosePersonBean(new ChoosePersonBean());
 	 */
+	/*
+	 * 21/07/2009 - Now we create a person to process the payments
+	 * imediately
+	 */
+	bean.setChoosePersonBean(new ChoosePersonBean());
 	bean.setPersonBean(new PersonBean());
 	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
@@ -103,7 +108,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	/*
 	 * 06/05/2009 - Also we mark the bean as an external candidacy.
 	 */
-	bean.setInternalPersonCandidacy(Boolean.FALSE);
+	bean.setInternalPersonCandidacy(Boolean.TRUE);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
@@ -293,39 +298,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);
-    }
-
-    public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-	bean.addConcludedFormationBean();
-
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	invalidateDocumentFileRelatedViewStates();
-
-	return forwardTo(mapping, request);
-    }
-
-    public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-	Integer index = getIntegerFromRequest(request, "removeIndex");
-	bean.removeFormationConcludedBean(index);
-
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	invalidateDocumentFileRelatedViewStates();
-
-	return forwardTo(mapping, request);
-    }
-
-    private ActionForward forwardTo(ActionMapping mapping, HttpServletRequest request) {
-	if (getFromRequest(request, "userAction").equals("createCandidacy")) {
-	    return mapping.findForward("fill-candidacy-information");
-	} else if (getFromRequest(request, "userAction").equals("editCandidacyQualifications")) {
-	    return mapping.findForward("edit-candidacy-information");
-	}
-
-	return null;
     }
 
     public ActionForward prepareExecuteChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,

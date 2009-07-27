@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -31,23 +31,28 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
 
     private void init(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
 	    Money maxAmount, Student student, ExecutionYear executionYear) {
-	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student);
+	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student.getPerson());
 
-	checkParameters(executionYear);
+	checkParameters(executionYear, student);
 	super.setExecutionYear(executionYear);
     }
 
-    private void checkParameters(final ExecutionYear executionYear) {
+    private void checkParameters(final ExecutionYear executionYear, final Student student) {
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.executionYear.cannot.be.null");
+	}
+
+	if (student == null) {
+	    throw new DomainException("error.accounting.paymentCodes.MasterDegreeInsurancePaymentCode.student.cannot.be.null");
 	}
     }
 
     public static MasterDegreeInsurancePaymentCode create(final YearMonthDay startDate, final YearMonthDay endDate,
 	    final Money minAmount, final Money maxAmount, final Student student, final ExecutionYear executionYear) {
 
-	if (PaymentCodeGenerator.canGenerateNewCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, student)) {
+	if (PaymentCode.canGenerateNewCode(MasterDegreeInsurancePaymentCode.class,
+		PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, student.getPerson())) {
 	    return new MasterDegreeInsurancePaymentCode(PaymentCodeType.PRE_BOLONHA_MASTER_DEGREE_INSURANCE, startDate, endDate,
 		    minAmount, maxAmount, student, executionYear);
 	}
@@ -68,17 +73,22 @@ public class MasterDegreeInsurancePaymentCode extends MasterDegreeInsurancePayme
     }
 
     private PersonAccount getPersonAccount() {
-	return getStudent().getPerson().getAssociatedPersonAccount();
+	return getPerson().getAssociatedPersonAccount();
     }
 
     private Registration getRegistration() {
-	return getStudent().getActiveRegistrationByDegreeType(DegreeType.MASTER_DEGREE);
+	return getPerson().getStudent().getActiveRegistrationByDegreeType(DegreeType.MASTER_DEGREE);
     }
 
     @Override
     public void delete() {
 	super.setExecutionYear(null);
 	super.delete();
+    }
+
+    @Override
+    public void setPerson(Person student) {
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
     }
 
 }

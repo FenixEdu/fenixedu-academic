@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocument
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
@@ -70,7 +71,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    HttpServletResponse response) {
 	Over23IndividualCandidacyProcess individualCandidacyProcess = (Over23IndividualCandidacyProcess) request
 		.getAttribute("individualCandidacyProcess");
-	Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(individualCandidacyProcess);
+	IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(individualCandidacyProcess);
 	bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
 	bean.setCandidacyInformationBean(new CandidacyInformationBean(individualCandidacyProcess.getCandidacy()));
 
@@ -132,7 +133,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	IndividualCandidacyDocumentFile photoDocumentFile = createIndividualCandidacyDocumentFile(bean.getPhotoDocument(), bean
 		.getPersonBean().getDocumentIdNumber());
 	bean.getPhotoDocument().setDocumentFile(photoDocumentFile);
@@ -208,7 +209,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	}
     }
 
-    private void copyToInformationBeanOnePrecendentInstitution(Over23IndividualCandidacyProcessBean bean) {
+    private void copyToInformationBeanOnePrecendentInstitution(IndividualCandidacyProcessBean bean) {
 	if (!bean.getFormationConcludedBeanList().isEmpty()) {
 	    bean.getCandidacyInformationBean().setInstitution(bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
 	    bean.getCandidacyInformationBean().setInstitutionName(
@@ -245,7 +246,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward editCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    /*
 	     * 10/05/2009 - Since we step candidacy information form we must
@@ -313,7 +314,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	bean.addConcludedFormationBean();
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -324,7 +325,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward addNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	bean.addNonConcludedFormationBean();
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -335,7 +336,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationConcludedBean(index);
 
@@ -347,7 +348,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward removeNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse reponse) {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationNonConcludedBean(index);
 

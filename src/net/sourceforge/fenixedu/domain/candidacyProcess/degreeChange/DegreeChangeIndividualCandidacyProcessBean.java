@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -24,6 +26,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
     public DegreeChangeIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
+	setObservations("");
     }
 
     public DegreeChangeIndividualCandidacyProcessBean(final DegreeChangeIndividualCandidacyProcess process) {
@@ -36,6 +39,8 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 		process.getCandidacyPrecedentDegreeInformation());
 	precedentDegreeInformation.initCurricularCoursesInformation(process.getCandidacyPrecedentDegreeInformation());
 	setPrecedentDegreeInformation(precedentDegreeInformation);
+	initializeFormation(process.getCandidacy().getFormations());
+	setObservations(process.getCandidacy().getObservations());
     }
 
     @Override
@@ -62,7 +67,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 	for (final Registration registration : student.getRegistrations()) {
-	    
+
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
@@ -99,4 +104,10 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
     public void setSelectedDegree(final Degree selectDegree) {
 	this.selectDegree = (selectDegree != null) ? new DomainReference<Degree>(selectDegree) : null;
     }
+
+    @Override
+    protected void initializeDocumentUploadBeans() {
+	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
+
 }

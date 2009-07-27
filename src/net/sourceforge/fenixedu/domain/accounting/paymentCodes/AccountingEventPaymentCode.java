@@ -4,11 +4,10 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.util.PaymentCodeGenerator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.log4j.Logger;
@@ -39,24 +38,24 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super();
     }
 
-    private AccountingEventPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Student student) {
+    protected AccountingEventPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Person person) {
 	this();
-	init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student);
+	init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
     }
 
     public static AccountingEventPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Student student) {
-	return PaymentCodeGenerator.canGenerateNewCode(paymentCodeType, student) ? new AccountingEventPaymentCode(
-		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student) : findAndReuseExistingCode(
-		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student);
+	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Person person) {
+	return PaymentCode.canGenerateNewCode(AccountingEventPaymentCode.class, paymentCodeType, person) ? new AccountingEventPaymentCode(
+		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person)
+		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
 
     }
 
-    private static AccountingEventPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
+    protected static AccountingEventPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
 	    final YearMonthDay startDate, final YearMonthDay endDate, final Event event, final Money minAmount,
-	    final Money maxAmount, final Student student) {
-	final AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) student
+	    final Money maxAmount, final Person person) {
+	final AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) person.getStudent()
 		.getAvailablePaymentCodeBy(paymentCodeType);
 	accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
 
@@ -64,21 +63,29 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     }
 
     protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Event event,
-	    Money minAmount, Money maxAmount, Student student) {
-	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student);
-	checkParameters(event);
+	    Money minAmount, Money maxAmount, Person person) {
+	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, person);
+	checkParameters(event, person);
 	super.setAccountingEvent(event);
     }
 
-    private void checkParameters(Event event) {
+    protected void checkParameters(Event event, final Person person) {
 	if (event == null) {
 	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.event.cannot.be.null");
+	}
+
+	if (person == null || person.getStudent() == null) {
+	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.student.cannot.be.null");
 	}
     }
 
     @Override
     public void setAccountingEvent(Event accountingEvent) {
 	throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
+    }
+
+    protected void _setAccountingEvent(Event accountingEvent) {
+	super.setAccountingEvent(accountingEvent);
     }
 
     public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount, final Money maxAmount,
@@ -114,4 +121,12 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super.delete();
     }
 
+    @Override
+    public void setPerson(Person student) {
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
+    }
+
+    protected void _setPerson(Person person) {
+	super.setPerson(person);
+    }
 }
