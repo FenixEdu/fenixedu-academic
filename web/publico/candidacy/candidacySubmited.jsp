@@ -29,21 +29,23 @@
 <p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
 <table>
 	<tr>
-		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><bean:message key="message.sibs.ist.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><bean:write name="sibsEntityCode"/></td>
 	</tr>
 	<tr>
-		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
 		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
 	</tr>
 	<tr>
-		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
 		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
 	</tr>
 </table>
 </logic:notEmpty>
 
-<p><bean:message key="message.any.question.application.submission" bundle="CANDIDATE_RESOURCES" />.</p>
+<p><bean:message key="message.difficulties.payment" bundle="CANDIDATE_RESOURCES"/></p>
+<p><bean:message key="message.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+<p class="mvert05"><b><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</b> <fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></p>
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 <div class="infoop1">
@@ -56,6 +58,8 @@
 	<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
 </div>
 </logic:equal>
+<p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
+
 
 <div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 

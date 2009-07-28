@@ -39,6 +39,10 @@
 </div>
 </logic:equal>
 
+<logic:equal name="individualCandidacyProcess" property="candidacyHasVatDocument" value="false">
+	<p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
+</logic:equal>
+
 <logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>
@@ -61,6 +65,17 @@
 
 <h2 style="margin-top: 1em;"><bean:message key="title.personal.data" bundle="CANDIDATE_RESOURCES"/></h2>
 
+<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="true">
+<fr:view name="individualCandidacyProcessBean" 
+	schema="PublicCandidacyProcess.candidacyDataBean.internal.candidate.view">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="thlight thleft"/>
+        <fr:property name="columnClasses" value="width175px,,,,"/>
+	</fr:layout>
+</fr:view>
+</logic:equal>
+
+<logic:equal name="individualCandidacyProcessBean" property="individualCandidacyProcess.isCandidateWithRoles" value="false">
 <fr:view name="individualCandidacyProcessBean" 
 	schema="PublicCandidacyProcess.candidacyDataBean">
 	<fr:layout name="tabular">
@@ -68,6 +83,7 @@
         <fr:property name="columnClasses" value="width175px,,,,"/>
 	</fr:layout>
 </fr:view>
+</logic:equal>
 
 <table>
 	<tr>
@@ -90,7 +106,7 @@
 <table>
 	<tr>
 		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><bean:message key="message.sibs.ist.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><bean:write name="sibsEntityCode"/></td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>
@@ -292,16 +308,6 @@
 </table>
 </logic:notEmpty>
 
-<logic:notEmpty name="individualCandidacyProcessBean" property="observations">
-<p class="mbottom05"><bean:message key="title.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
-<fr:view 
-	name="individualCandidacyProcessBean"
-	schema="PublicCandidacyProcessBean.observations">
-	  <fr:layout name="flow">
-    <fr:property name="labelExcluded" value="true"/>
-  </fr:layout>
-</fr:view>
-</logic:notEmpty>
 
 <div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 

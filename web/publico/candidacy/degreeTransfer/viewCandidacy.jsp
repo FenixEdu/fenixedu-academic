@@ -90,7 +90,7 @@
 <table>
 	<tr>
 		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><bean:message key="message.sibs.ist.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
+		<td><bean:write name="sibsEntityCode"/></td>
 	</tr>
 	<tr>
 		<td><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></td>

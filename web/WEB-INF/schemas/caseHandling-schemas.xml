@@ -1421,7 +1421,43 @@
 		<property name="maxLength" value="15"/>
     </slot>
 	
-	<slot name="personBean.email" key="label.email" read-only="true"/>
+</schema>
+
+<schema name="PublicCandidacyProcess.candidacyDataBean.internal.candidate.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="personBean.name" key="label.full.name">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="100"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="100"/>
+	</slot>
+
+	<slot name="personBean.dateOfBirth" key="label.dateOfBirth">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.AdvancedDateValidator">
+			<property name="validationPeriod" value="PAST"/>
+			<property name="bundle" value="CANDIDATE_RESOURCES"/>
+			<property name="message" value="error.birth.date.not.less.actual.date"/>
+		</validator>
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+
+	<slot name="personBean.documentIdNumber" key="label.identificationNumber" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="50"/>
+		</validator>
+		<property name="size" value="50"/>
+		<property name="maxlength" value="50"/>			
+	</slot>
+
+	<slot name="personBean.idDocumentType" key="label.idDocumentType" >
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
 </schema>
 
 <schema name="PublicCandidacyProcess.candidacyDataBean.istUsername" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
