@@ -30,12 +30,13 @@ public class CreateCandidacy extends FenixService {
 	}
 
 	person.setSocialSecurityNumber(contributorNumber);
-	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	if (!person.hasStudent()) {
 	    new Student(person);
 	}
+
+	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.setIstUsername();
 
 	Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
