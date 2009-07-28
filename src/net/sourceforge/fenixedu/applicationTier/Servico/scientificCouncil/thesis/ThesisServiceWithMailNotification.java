@@ -30,7 +30,7 @@ public abstract class ThesisServiceWithMailNotification extends FenixService {
 
     private void sendEmail(Thesis thesis) {
 	Sender sender = PersonSender.newInstance(AccessControl.getPerson());
-	new Message(sender, sender.getConcreteReplyTos(), getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
+	new Message(sender, null, getRecipients(thesis), getSubject(thesis), getMessage(thesis), "");
     }
 
     protected String getMessage(String key, Object... args) {

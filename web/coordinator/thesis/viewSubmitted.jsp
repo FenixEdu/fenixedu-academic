@@ -75,9 +75,11 @@
 				<br/>
 				<br/>
 				<bean:message key="message.coordinator.thesis.submitted.aprove.send.papers"/>
+<!--
 				<br/>
 				<br/>
 				<bean:message key="message.coordinator.thesis.submitted.aprove.cannot"/>
+ -->
 			</logic:equal>
 			</p>
 		</div>

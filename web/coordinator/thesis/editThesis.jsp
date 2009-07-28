@@ -149,6 +149,12 @@
 <%-- Jury --%>
 <h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
 
+<div style="padding: 1em;">
+	<p class="mtop0">
+		<bean:message key="label.thesis.external.orientators"/>
+	</p>
+</div>
+
 <%-- problems in the jury --%>
 <logic:notEmpty name="conditions">
 	<div class="warning0" style="padding: 1em;">
