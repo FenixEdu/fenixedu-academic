@@ -84,15 +84,6 @@
 			</td>	
 		</tr>			
 	</logic:equal>
-	<logic:equal name="candidacy" property="activeCandidacySituation.canGeneratePass" value="true">
-		<tr>
-			<td class="listClasses">
-				<html:link target="_blank" action="<%= "/dfaCandidacy.do?method=generatePass&candidacyNumber=" + candidacy_number.toString() %>">
-					<bean:message key="link.candidacy.generate.password" bundle="ADMIN_OFFICE_RESOURCES"/>
-				</html:link>
-			</td>
-		</tr>
-	</logic:equal>
 	<tr>
 		<td class="listClasses">
 			<html:link action="/payments.do?method=showOperations" paramName="candidacy" paramProperty="person.idInternal" paramId="personId" 
