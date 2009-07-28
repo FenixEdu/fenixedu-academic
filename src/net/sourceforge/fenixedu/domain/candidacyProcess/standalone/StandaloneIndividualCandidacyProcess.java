@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -320,6 +321,12 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     @Override
     public Boolean isCandidacyProcessComplete() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
 	// TODO Auto-generated method stub
 	return null;
     }

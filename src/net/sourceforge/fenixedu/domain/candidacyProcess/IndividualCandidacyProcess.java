@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -267,26 +266,14 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	}
     }
 
-    public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
-	List<IndividualCandidacyDocumentFileType> missingDocumentFiles = new ArrayList<IndividualCandidacyDocumentFileType>();
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
-	}
-
-	if (getFileForType(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT) == null) {
-	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
-	}
-
-	return missingDocumentFiles;
-    }
+    public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
 
     public Boolean getAllRequiredFilesUploaded() {
 	return getMissingRequiredDocumentFiles().isEmpty();
+    }
+
+    public Boolean getCandidacyHasVatDocument() {
+	return getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) != null;
     }
 
     /**

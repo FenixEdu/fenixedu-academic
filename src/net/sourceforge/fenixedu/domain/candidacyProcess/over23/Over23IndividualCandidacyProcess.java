@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -511,5 +512,11 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     private boolean isCandidacyPersonalInformationComplete() {
 	return true;
+    }
+
+    @Override
+    public List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

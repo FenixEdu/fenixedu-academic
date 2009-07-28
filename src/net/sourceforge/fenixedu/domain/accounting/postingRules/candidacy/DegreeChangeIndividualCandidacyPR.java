@@ -74,13 +74,15 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
 	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy().getPrecedentDegreeInformation();
 
-	if (information.isInternal()
-		|| (information.getCandidacy().getUtlStudent() != null && information.getCandidacy().getUtlStudent())
-		|| hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
-		|| belongsToInstitutionGroup(information.getInstitution())) {
-	    return getAmountForInstitutionStudent();
+	if (information.getCandidacy().getUtlStudent() != null) {
+	    return information.getCandidacy().getUtlStudent() ? getAmountForInstitutionStudent() : getAmountForExternalStudent();
 	} else {
-	    return getAmountForExternalStudent();
+	    if (information.isInternal() || hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
+		    || belongsToInstitutionGroup(information.getInstitution())) {
+		return getAmountForInstitutionStudent();
+	    } else {
+		return getAmountForExternalStudent();
+	    }
 	}
     }
 
@@ -89,13 +91,16 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
 	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy().getPrecedentDegreeInformation();
 
-	if (information.isInternal()
-		|| (information.getCandidacy().getUtlStudent() != null && information.getCandidacy().getUtlStudent())
-		|| hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
-		|| belongsToInstitutionGroup(information.getInstitution())) {
-	    return PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
+	if (information.getCandidacy().getUtlStudent() != null) {
+	    return information.getCandidacy().getUtlStudent() ? PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS
+		    : PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
 	} else {
-	    return PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
+	    if (information.isInternal() || hasAnyValidRegistration((DegreeChangeIndividualCandidacyEvent) event)
+		    || belongsToInstitutionGroup(information.getInstitution())) {
+		return PaymentCodeType.INTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
+	    } else {
+		return PaymentCodeType.EXTERNAL_DEGREE_CHANGE_INDIVIDUAL_CANDIDACY_PROCESS;
+	    }
 	}
     }
 

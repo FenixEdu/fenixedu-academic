@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -48,6 +49,8 @@ import com.octo.captcha.service.CaptchaServiceException;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
 
+    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -55,6 +58,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
 	request.setAttribute("mappingPath", mapping.getPath());
 	request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
+	request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
 
 	setProcess(request);
 	return super.execute(mapping, actionForm, request, response);
@@ -201,7 +205,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(), personBean
 		.getDocumentIdNumber())) {
-	    addActionMessage("individualCandidacyMessages", request, "error.candidacy.already.exists.for.this.person");
+	    addActionMessage("individualCandidacyMessages", request, "error.candidacy.for.person.already.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
 
