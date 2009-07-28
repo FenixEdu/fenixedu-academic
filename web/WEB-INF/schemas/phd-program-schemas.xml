@@ -336,7 +336,7 @@
 
 <schema name="PhdCandidacyDocumentUploadBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="type">
-		<property name="excludedValues" value="CANDIDACY_REVIEW" />
+		<property name="excludedValues" value="CANDIDACY_REVIEW,CANDIDACY_RATIFICATION" />
 	</slot>
 	<slot name="remarks">
 		<property name="maxLength" value="100" />
@@ -1110,4 +1110,15 @@
 		<property name="defaultOptionHidden" value="true" />
 	</slot>
 </schema>
+
+
+
+<schema name="RatifyCandidacyBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean" bundle="PHD_RESOURCES">
+	<slot name="whenRatified" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="ratificationFile.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="ratificationFile.filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
 

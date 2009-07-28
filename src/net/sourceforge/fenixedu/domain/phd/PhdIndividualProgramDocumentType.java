@@ -37,6 +37,8 @@ public enum PhdIndividualProgramDocumentType {
 
     RESEARCH_PLAN,
 
+    CANDIDACY_RATIFICATION,
+
     OTHER(true);
 
     private boolean multipleDocumentsAllowed;

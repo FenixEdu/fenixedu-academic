@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -50,8 +51,18 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
 	new ConfigurationReader().readAll(getServlet().getServletContext());
     }
 
+    /**
+     * First read value from request attribute to allow overriding of processId
+     * value
+     * 
+     * @param request
+     * @return
+     */
     protected Process getProcess(HttpServletRequest request) {
-	return getDomainObject(request, "processId");
+	final String processIdAttribute = (String) request.getAttribute("processId");
+	return (Process) DomainObject.fromExternalId(processIdAttribute != null ? processIdAttribute : (String) request
+		.getParameter("processId"));
+
     }
 
     protected ActionForward executeActivity(Class<? extends Activity<? extends Process>> activity, Object activityParameter,

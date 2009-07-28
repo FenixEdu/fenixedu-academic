@@ -23,7 +23,9 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadDocuments;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -47,7 +49,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
 
-@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp")
+@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
+
+@Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
+
+@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess")
 
 })
 public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
@@ -286,6 +292,44 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     private PhdProgramCandidacyProcessDocument getDocument(HttpServletRequest request) {
 	return getDomainObject(request, "documentId");
+    }
+
+    public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("ratifyCandidacyBean", new RatifyCandidacyBean(getProcess(request)));
+
+	return mapping.findForward("ratifyCandidacy");
+    }
+
+    public ActionForward prepareRatifyCandidacyInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("ratifyCandidacyBean", getRenderedObject("ratifyCandidacyBean"));
+
+	return mapping.findForward("ratifyCandidacy");
+    }
+
+    public ActionForward ratifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final RatifyCandidacyBean bean = (RatifyCandidacyBean) getRenderedObject("ratifyCandidacyBean");
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RatifyCandidacy.class, bean);
+	    addSuccessMessage(request, "message.candidacy.ratified.successfuly");
+
+	    request.setAttribute("processId", getProcess(request).getIndividualProgramProcess().getExternalId());
+
+	    return mapping.findForward("viewProcess");
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+
+	    request.setAttribute("ratifyCandidacyBean", bean);
+
+	    return mapping.findForward("ratifyCandidacy");
+	}
+
     }
 
 }

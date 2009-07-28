@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -78,12 +76,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	    for (final PhdCandidacyDocumentUploadBean each : documents) {
 		if (each.hasAnyInformation()) {
-		    if (!each.getType().isMultipleDocumentsAllowed()) {
-			process.removeDocumentsByType(each.getType());
-		    }
-
-		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
-			    each.getFilename(), userView != null ? userView.getPerson() : null);
+		    process.addDocument(each, userView != null ? userView.getPerson() : null);
 		}
 	    }
 
@@ -153,9 +146,50 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
+    static public class RatifyCandidacy extends PhdActivity {
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+
+	    process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
+
+	    return process;
+	}
+
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    }
+
+    public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
+	if (!each.getType().isMultipleDocumentsAllowed()) {
+	    removeDocumentsByType(each.getType());
+	}
+
+	new PhdProgramCandidacyProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(),
+		each.getFilename(), responsible);
+
+    }
+
+    public void ratify(RatifyCandidacyBean bean, Person responsible) {
+
+	check(bean.getWhenRatified(), "error.phd.candidacy.PhdProgramCandidacyProcess.when.ratified.cannot.be.null");
+
+	if (!bean.getRatificationFile().hasAnyInformation()) {
+	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.ratification.document.is.required");
+	}
+
+	setWhenRatified(bean.getWhenRatified());
+	addDocument(bean.getRatificationFile(), responsible);
+
     }
 
     public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
@@ -173,6 +207,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new EditCandidacyDate());
 	activities.add(new AddCandidacyReferees());
 	activities.add(new ValidatedByCandidate());
+	activities.add(new RatifyCandidacy());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {

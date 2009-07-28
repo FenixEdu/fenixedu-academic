@@ -99,6 +99,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessages"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacy" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.ratifyCandidacy"/>
+				</html:link>
+			</li>
 		</ul>
     </td>
   </tr>
