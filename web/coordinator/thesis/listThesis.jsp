@@ -21,6 +21,18 @@
     </html:messages>
 </logic:messagesPresent>
 
+<logic:messagesPresent message="true" property="mail">
+    <html:messages id="message" message="true" property="mail">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="nextAction">
+    <html:messages id="message" message="true" property="nextAction">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
 <%-- select execution Year --%>
 <logic:present name="contextBean">
     <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId %>">

@@ -228,6 +228,9 @@ public class OidSqlGenerator {
 	domainModel = MetadataManager.getDomainModel();
 
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
+	    if (!shouldProcess(domainClass)) {
+		continue;
+	    }
 	    final int domainClassHierarchyLevel = calculateHierarchyLevel(domainClass);
 	    if (domainClassHierarchyLevel == 1) {
 		final Slot slot = domainClass.findSlot("ojbConcreteClass");
@@ -242,6 +245,19 @@ public class OidSqlGenerator {
 
 	alterTableRegistry.write();
 	updateRegistry.write();
+    }
+
+    private static boolean shouldProcess(final DomainClass domainClass) {
+	if (domainClass != null && !domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.DomainObject")) {
+	    if (domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.contents.Content")
+		    || domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.contents.Node")
+		    || domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy")
+		    || domainClass.getFullName().equals("net.sourceforge.fenixedu.domain.functionalities.ExecutionPath")) {
+		return true;
+	    }
+	    return shouldProcess((DomainClass) domainClass.getSuperclass());
+	}
+	return false;
     }
 
     private static void writeSqlInstructions(final DomainModel domainModel, final DomainClass domainClass) throws IOException {

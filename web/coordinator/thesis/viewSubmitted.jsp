@@ -30,7 +30,6 @@
 	                <bean:message key="label.coordinator.list.submitted.thesis.print"/>
 	            </html:link>
 	        </li>
-<%--
 		    <logic:equal name="thesis" property="coordinatorAndNotOrientator" value="true">
 		        <li>
 	    	        <html:link page="<%= String.format("/manageThesis.do?method=approveProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
@@ -43,7 +42,6 @@
 	            	</html:link>
 	        	</li>
         	</logic:equal>
---%>
         </logic:equal>
     </logic:equal>
 </ul>
@@ -68,7 +66,18 @@
 <logic:equal name="thesis" property="valid" value="true">
     <logic:equal name="thesis" property="submitted" value="true">
 		<div class="infoop2 mtop1">
-			<p class="mvert0"><bean:message key="message.coordinator.thesis.submitted.waiting"/></p>
+			<p class="mvert0">
+				<!--
+				<bean:message key="message.coordinator.thesis.submitted.waiting"/>
+				 -->
+				<bean:message key="message.coordinator.thesis.submitted.aprove.message"/>
+				<br/>
+				<br/>
+				<bean:message key="message.coordinator.thesis.submitted.aprove.send.papers"/>
+				<br/>
+				<br/>
+				<bean:message key="message.coordinator.thesis.submitted.aprove.cannot"/>
+			</p>
 		</div>
 	</logic:equal>
 </logic:equal>

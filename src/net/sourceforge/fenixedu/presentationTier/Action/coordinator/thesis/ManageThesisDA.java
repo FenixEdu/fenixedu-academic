@@ -799,6 +799,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 	if (thesis != null) {
 	    executeService("ApproveThesisProposal", new Object[] { thesis });
 	    addActionMessage("mail", request, "thesis.approved.mail.sent");
+	    addActionMessage("nextAction", request, "thesis.approved.next.action");
 	}
 
 	return listThesis(mapping, actionForm, request, response);
