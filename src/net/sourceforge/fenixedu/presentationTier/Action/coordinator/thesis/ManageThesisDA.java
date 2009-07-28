@@ -547,6 +547,15 @@ public class ManageThesisDA extends FenixDispatchAction {
 	} else {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    Thesis thesis = getThesis(request);
+	    final PersonTarget personTarget = bean.getTargetType();
+	    if (personTarget == PersonTarget.president) {
+		final Enrolment enrolment = thesis.getEnrolment();
+		final ExecutionYear executionYear = enrolment.getExecutionYear();
+		if (selectedPerson == null || !degreeCurricularPlan.isScientificCommissionMember(executionYear, selectedPerson)) {
+		    addActionMessage("info", request, "thesis.selectPerson.president.required.scientific.commission");
+		    return mapping.findForward("select-person");
+		}
+	    }
 	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean
 		    .getTarget()));
 

@@ -975,6 +975,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public boolean isScientificCommissionMember() {
 	final Person person = AccessControl.getPerson();
+	return isScientificCommissionMember(person);
+    }
+
+    public boolean isScientificCommissionMember(final Person person) {
 	for (final ScientificCommission scientificCommission : getScientificCommissionMembersSet()) {
 	    if (person == scientificCommission.getPerson()) {
 		return true;

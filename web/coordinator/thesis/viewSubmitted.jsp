@@ -67,9 +67,10 @@
     <logic:equal name="thesis" property="submitted" value="true">
 		<div class="infoop2 mtop1">
 			<p class="mvert0">
-				<!--
+			<logic:notEqual name="thesis" property="coordinatorAndNotOrientator" value="true">
 				<bean:message key="message.coordinator.thesis.submitted.waiting"/>
-				 -->
+			</logic:notEqual>
+		    <logic:equal name="thesis" property="coordinatorAndNotOrientator" value="true">
 				<bean:message key="message.coordinator.thesis.submitted.aprove.message"/>
 				<br/>
 				<br/>
@@ -77,6 +78,7 @@
 				<br/>
 				<br/>
 				<bean:message key="message.coordinator.thesis.submitted.aprove.cannot"/>
+			</logic:equal>
 			</p>
 		</div>
 	</logic:equal>

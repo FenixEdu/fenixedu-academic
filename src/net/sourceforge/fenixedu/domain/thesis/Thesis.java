@@ -1623,4 +1623,5 @@ public class Thesis extends Thesis_Base {
 	final Enrolment enrolment = getEnrolment();
 	return enrolment.isAnual();
     }
+
 }
