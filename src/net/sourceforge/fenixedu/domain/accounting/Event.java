@@ -694,7 +694,7 @@ public abstract class Event extends Event_Base {
 	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
@@ -706,7 +706,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 

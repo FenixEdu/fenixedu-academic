@@ -19,7 +19,19 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
  */
 public class DocumentRequestTypeProvider implements DataProvider {
 
+    static public class PreBolonhaTypes extends DocumentRequestTypeProvider {
+
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return super.provide(source, currentValue, true);
+	}
+    }
+
     public Object provide(Object source, Object currentValue) {
+	return provide(source, currentValue, false);
+    }
+
+    public Object provide(Object source, Object currentValue, boolean includePreBolonhaTypes) {
 
 	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
 		.getAdministrativeOfficeType();
@@ -28,7 +40,8 @@ public class DocumentRequestTypeProvider implements DataProvider {
 
 	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
 	    if (documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)
-		    && !documentRequestType.isAllowedToQuickDeliver()) {
+		    && !documentRequestType.isAllowedToQuickDeliver()
+		    && (includePreBolonhaTypes || !documentRequestType.isPreBolonha())) {
 		result.add(documentRequestType);
 	    }
 	}

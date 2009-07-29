@@ -20,7 +20,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 	super();
     }
 
-    protected void init(final RegistrationAcademicServiceRequestCreateBean bean) {
+    public void init(final RegistrationAcademicServiceRequestCreateBean bean) {
 	checkParameters(bean);
 	super.setRegistration(bean.getRegistration());
 	super.init(bean);

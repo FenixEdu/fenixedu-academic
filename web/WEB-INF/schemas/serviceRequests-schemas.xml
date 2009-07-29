@@ -229,6 +229,15 @@
 	</slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.chooseDocumentRequestType_preBolonha"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider$PreBolonhaTypes" />
+		<property name="eachLayout" value=""/>
+		<property name="destination" value="documentRequestTypeChosenPostBack"/>
+	</slot>
+</schema>
+
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestQuickType"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
@@ -400,6 +409,24 @@
 	<slot name="institutionName" layout="format" key="label.institutionUnitName">
 		<property name="format" value="${unit.name}"/>
 	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.PAST_DIPLOMA_REQUEST.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="pastRequestDate" key="label.requestDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="pastPaymentDate" key="label.payments.payedDate" />
+	<slot name="pastPaymentAmount" key="label.payments.payedAmount" />
+	<slot name="pastEmissionDate" key="label.emissionDate" />
+	<slot name="pastDispatchDate" key="label.dispatchDate" />
+</schema>
+
+<schema name="DocumentRequestCreateBean.PAST_DIPLOMA_REQUEST.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="pastRequestDate" key="label.requestDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="pastPaymentDate" key="label.payments.payedDate" />
+	<slot name="pastPaymentAmount" key="label.payments.payedAmount" />
+	<slot name="pastEmissionDate" key="label.emissionDate" />
+	<slot name="pastDispatchDate" key="label.dispatchDate" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation"

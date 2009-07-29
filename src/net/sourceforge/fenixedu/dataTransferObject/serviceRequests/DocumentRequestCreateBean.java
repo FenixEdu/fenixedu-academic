@@ -18,7 +18,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.util.Money;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean {
@@ -75,10 +77,21 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private Integer numberOfPrograms;
 
+    private Money pastPaymentAmount;
+
+    private LocalDate pastRequestDate;
+
+    private LocalDate pastPaymentDate;
+
+    private LocalDate pastEmissionDate;
+
+    private LocalDate pastDispatchDate;
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
 	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
 	this.exams = new ArrayList<DomainReference<Exam>>();
+	pastRequestDate = new LocalDate();
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -373,4 +386,47 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 	return getBranchCurriculumGroup().getName().getContent();
     }
 
+    public boolean getIsDiploma() {
+	return (chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isPastDiploma());
+    }
+
+    public void setPastPaymentAmount(Money paymentAmount) {
+	this.pastPaymentAmount = paymentAmount;
+    }
+
+    public Money getPastPaymentAmount() {
+	return pastPaymentAmount;
+    }
+
+    public void setPastPaymentDate(LocalDate paymentDate) {
+	this.pastPaymentDate = paymentDate;
+    }
+
+    public LocalDate getPastPaymentDate() {
+	return pastPaymentDate;
+    }
+
+    public LocalDate getPastEmissionDate() {
+	return pastEmissionDate;
+    }
+
+    public void setPastEmissionDate(LocalDate emissionDate) {
+	this.pastEmissionDate = emissionDate;
+    }
+
+    public LocalDate getPastDispatchDate() {
+	return pastDispatchDate;
+    }
+
+    public void setPastDispatchDate(LocalDate dispatchDate) {
+	this.pastDispatchDate = dispatchDate;
+    }
+
+    public LocalDate getPastRequestDate() {
+	return pastRequestDate;
+    }
+
+    public void setPastRequestDate(LocalDate pastRequestDate) {
+	this.pastRequestDate = pastRequestDate;
+    }
 }

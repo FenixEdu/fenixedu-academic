@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DiplomaRequest extends DiplomaRequest_Base {
 
-    protected DiplomaRequest() {
+    public DiplomaRequest() {
 	super();
     }
 

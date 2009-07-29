@@ -29,6 +29,8 @@ public enum DocumentRequestType {
 
     DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
 
+    PAST_DIPLOMA_REQUEST(true, false, false, true /*, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE*/),
+
     PHOTOCOPY(false, false),
 
     COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
@@ -38,18 +40,20 @@ public enum DocumentRequestType {
     PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
 
     EXTERNAL_PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
-    
-    EXTRA_CURRICULAR_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/),
-    
-    STANDALONE_ENROLMENT_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/);
-    
-    private boolean hasAdditionalInformation;
 
-    private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
+    EXTRA_CURRICULAR_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/),
+
+    STANDALONE_ENROLMENT_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/);
+
+    private boolean hasAdditionalInformation;
 
     private boolean allowedToQuickDeliver;
 
     private boolean withBranch;
+
+    private boolean preBolonha;
+
+    private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
 
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
 	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD, EXTERNAL_COURSE_LOAD,
@@ -59,16 +63,22 @@ public enum DocumentRequestType {
 	    IRS_DECLARATION, GENERIC_DECLARATION);
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
-	    AdministrativeOfficeType... administrativeOfficeTypes) {
+	    boolean preBolonha, AdministrativeOfficeType... administrativeOfficeTypes) {
 	this.hasAdditionalInformation = hasAdditionalInformation;
 	this.allowedToQuickDeliver = allowedToQuickDeliver;
 	this.withBranch = withBranch;
+	this.preBolonha = preBolonha;
 	this.administrativeOfficeTypes = Arrays.asList(administrativeOfficeTypes);
+    }
+
+    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
+	    AdministrativeOfficeType... administrativeOfficeTypes) {
+	this(hasAdditionalInformation, allowedToQuickDeliver, withBranch, false, administrativeOfficeTypes);
     }
 
     private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
 	    AdministrativeOfficeType... administrativeOfficeTypes) {
-	this(hasAdditionalInformation, allowedToQuickDeliver, false, administrativeOfficeTypes);
+	this(hasAdditionalInformation, allowedToQuickDeliver, false, false, administrativeOfficeTypes);
     }
 
     public String getName() {
@@ -99,6 +109,10 @@ public enum DocumentRequestType {
 	return this == DIPLOMA_REQUEST;
     }
 
+    public boolean isPastDiploma() {
+	return this == PAST_DIPLOMA_REQUEST;
+    }
+
     final public boolean getHasAdditionalInformation() {
 	return hasAdditionalInformation;
     }
@@ -109,6 +123,10 @@ public enum DocumentRequestType {
 
     public boolean isAllowedToQuickDeliver() {
 	return allowedToQuickDeliver;
+    }
+
+    public boolean isPreBolonha() {
+	return preBolonha;
     }
 
     public boolean withBranch() {

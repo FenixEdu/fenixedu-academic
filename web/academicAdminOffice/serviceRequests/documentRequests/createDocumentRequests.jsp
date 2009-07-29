@@ -116,7 +116,7 @@
 			</logic:equal>
 	
 			<!-- Purposes -->
-			<logic:notEqual name="documentRequestCreateBean" property="chosenDocumentRequestType" value="<%=DocumentRequestType.DIPLOMA_REQUEST.name()%>">
+			<logic:notEqual name="documentRequestCreateBean" property="isDiploma" value="true">
 				<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>

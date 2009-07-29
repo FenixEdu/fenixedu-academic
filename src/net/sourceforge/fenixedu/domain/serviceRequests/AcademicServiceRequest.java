@@ -206,6 +206,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee));
     }
 
+    final public void process(final Employee employee, final YearMonthDay situationDate) throws DomainException {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee, situationDate, ""));
+    }
+
     final public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
 	final Employee employee = getEmployee();
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee, sendDate,
@@ -237,8 +241,15 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public void conclude(final YearMonthDay situationDate, final String justification) {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, getEmployee(), situationDate,
-		justification));
+	conclude(getEmployee(), situationDate, justification);
+    }
+
+    final public void conclude(final Employee employee, final YearMonthDay situationDate) {
+	conclude(employee, situationDate, "");
+    }
+
+    final public void conclude(final Employee employee, final YearMonthDay situationDate, final String justification) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee, situationDate, justification));
     }
 
     final public void delivered() {
@@ -247,6 +258,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public void delivered(final Employee employee) {
 	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee));
+    }
+
+    final public void delivered(final Employee employee, final YearMonthDay situationDate) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee, situationDate, ""));
     }
 
     public void delete() {

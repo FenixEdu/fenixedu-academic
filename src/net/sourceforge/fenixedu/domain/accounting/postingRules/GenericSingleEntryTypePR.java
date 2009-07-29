@@ -46,7 +46,7 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
 	    Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
 

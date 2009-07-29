@@ -18,9 +18,10 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
     }
 
     public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final DiplomaRequest diplomaRequest) {
+	    final DiplomaRequest diplomaRequest, final Money pastAmount) {
 	this();
 	super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, diplomaRequest);
+	super.setPastAmount(pastAmount);
     }
 
     @Override

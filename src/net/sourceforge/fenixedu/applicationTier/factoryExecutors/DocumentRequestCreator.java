@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.CreatePastDiplomaRequest;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -26,6 +27,9 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
 
 	} else if (getChosenDocumentRequestType().isDiploma()) {
 	    return new DiplomaRequest(this);
+
+	} else if (getChosenDocumentRequestType().isPastDiploma()) {
+	    return CreatePastDiplomaRequest.create(this);
 	}
 
 	return null;

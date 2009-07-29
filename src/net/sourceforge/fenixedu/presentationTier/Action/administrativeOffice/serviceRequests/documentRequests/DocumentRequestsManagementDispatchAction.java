@@ -135,10 +135,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
-	String registrationID = request.getParameter("registrationId");
-	if (registrationID == null) {
-	    registrationID = (String) request.getAttribute("registrationId");
-	}
+	String registrationID = (String) getFromRequest(request, "registrationId");
 	final Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(registrationID));
 	request.setAttribute("registration", registration);
 	return registration;
@@ -146,8 +143,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward prepareCreateDocumentRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return prepareCreateDocumentRequest(mapping, form, request, response,
-		"DocumentRequestCreateBean.chooseDocumentRequestType");
+	String schema = "DocumentRequestCreateBean.chooseDocumentRequestType";
+	if (!getRegistration(request).isBolonha()) {
+	    schema += "_preBolonha";
+	}
+	return prepareCreateDocumentRequest(mapping, form, request, response, schema);
     }
 
     public ActionForward prepareCreateDocumentRequestQuick(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -201,20 +201,20 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	schemaName.append("DocumentRequestCreateBean.");
 	schemaName.append(requestType.name());
 
-	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
+	final Registration registration = requestCreateBean.getRegistration();
+
+	if (!registration.isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
 	}
 
 	schemaName.append(".AdditionalInformation");
 	request.setAttribute("additionalInformationSchemaName", schemaName.toString());
 
-	final Registration registration = requestCreateBean.getRegistration();
-
 	if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
 	    requestCreateBean.setEnrolments(registration.getLastStudentCurricularPlan()
 		    .getExtraCurricularAprovedEnrolmentsNotInDismissal());
 	} else if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
-	    requestCreateBean.setEnrolments((ArrayList<Enrolment>) registration.getLastStudentCurricularPlan()
+	    requestCreateBean.setEnrolments(registration.getLastStudentCurricularPlan()
 		    .getStandaloneAprovedEnrolmentsNotInDismissal());
 	}
     }
