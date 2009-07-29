@@ -25,7 +25,7 @@ public class ReviewProjectAccess extends FenixService {
 	    ExcepcaoPersistencia {
 
 	Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
-	if(it) {
+	if (it) {
 	    role = Role.getRoleByRoleType(RoleType.IT_PROJECTS_MANAGER);
 	}
 	if (ProjectAccess.getAllByPersonAndCostCenter(person, false, true, it).size() == 0) {
@@ -38,13 +38,13 @@ public class ReviewProjectAccess extends FenixService {
 	    }
 	}
 	role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-	if (ProjectAccess.getAllByPersonAndCostCenter(person, true, true, it).size() == 0) {
+	if (ProjectAccess.getAllByPersonAndCostCenter(person, true, true, false).size() == 0) {
 	    Integer personNumber = getPersonNumber(person);
 	    if (personNumber == null) {
 		throw new FenixServiceException();
 	    }
-	    if ((new PersistentProjectUser().getInstitucionalProjectCoordId(personNumber, it).size() == 0)) {
-		cleanProjectsAccess(person, personNumber, role, true, false, it);
+	    if ((new PersistentProjectUser().getInstitucionalProjectCoordId(personNumber, false).size() == 0)) {
+		cleanProjectsAccess(person, personNumber, role, true, false, false);
 	    }
 	}
     }
