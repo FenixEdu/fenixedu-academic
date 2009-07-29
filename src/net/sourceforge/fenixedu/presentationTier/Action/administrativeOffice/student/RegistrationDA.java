@@ -106,9 +106,6 @@ public class RegistrationDA extends StudentRegistrationDA {
 	request.setAttribute("registrationCurriculumBean", registrationCurriculumBean);
 	request.setAttribute("registration", registrationCurriculumBean.getRegistration());
 
-	request.setAttribute("degreeCurricularPlanID", registrationCurriculumBean.getCycleCurriculumGroup()
-		.getStudentCurricularPlan().getDegreeCurricularPlan().getIdInternal());
-
 	return mapping.findForward("view-registration-curriculum");
     }
 
