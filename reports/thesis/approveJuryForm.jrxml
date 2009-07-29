@@ -353,7 +353,7 @@ Assinatura: ]]></text>
 					<reportElement
 						x="0"
 						y="445"
-						width="372"
+						width="432"
 						height="15"
 						key="staticText-8"
 						positionType="FixRelativeToBottom"/>
