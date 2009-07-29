@@ -128,12 +128,20 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	this.phdProgram = (phdProgram != null) ? new DomainReference<PhdProgram>(phdProgram) : null;
     }
 
+    public boolean hasPhdProgram() {
+	return getPhdProgram() != null;
+    }
+
     public PhdProgramFocusArea getFocusArea() {
 	return (this.focusArea != null) ? this.focusArea.getObject() : null;
     }
 
     public void setFocusArea(final PhdProgramFocusArea focusArea) {
 	this.focusArea = (focusArea != null) ? new DomainReference<PhdProgramFocusArea>(focusArea) : null;
+    }
+
+    public boolean hasFocusArea() {
+	return getFocusArea() != null;
     }
 
     public QualificationExamsResult getQualificationExamsRequired() {

@@ -4,7 +4,7 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
-	<slot name="state"/>
+	<slot name="activeState"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -22,7 +22,7 @@
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
 	<slot name="collaborationTypeName" />
-	<slot name="state"/>
+	<slot name="activeState"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -42,7 +42,7 @@
 		<property name="subSchema" value="PhdProgram.name" />
 	</slot>
 	<slot name="collaborationTypeName" />
-	<slot name="state"/>
+	<slot name="activeState"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
@@ -54,7 +54,7 @@
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-	<slot name="state"/>
+	<slot name="activeState"/>
 	<slot name="whenCreated" />
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
@@ -368,9 +368,16 @@
 <schema name="PhdProgramCandidacyProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES">
 	<slot name="documentType"/>
 	<slot name="uploadTime" />
-	<slot name="uploader.name" />
+	<slot name="uploader" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="Person.name" />
+	</slot>
 	<slot name="filename" />
 	<slot name="remarks"/>
+</schema>
+
+<schema name="Person.name" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
+	<slot name="name" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcessDocument.view.without.type" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument" bundle="PHD_RESOURCES"
@@ -452,6 +459,18 @@
 	<slot name="candidacyDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="phdProgram" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProviderForEditDetails" />
+		<property name="format" value="${presentationName}" />
+		<property name="sortBy" value="presentationName"/>
+        <property name="destination" value="editDetailsPostback"/>
+	</slot>
+	<slot name="focusArea" layout="menu-select-postback">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramFocusAreasProviderForEditDetails" />
+		<property name="format" value="${name}" />
+        <property name="sortBy" value="name"/>
+        <property name="destination" value="editDetailsPostback"/>
 	</slot>
 	<slot name="thesisTitle" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="80"/>

@@ -107,6 +107,10 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	return null;
     }
 
+    public Activity getActivity(Class<? extends Activity> clazz) {
+	return getActivity(clazz.getSimpleName());
+    }
+
     public int compareTo(Process process) {
 	return getIdInternal().compareTo(process.getIdInternal());
     }

@@ -49,6 +49,7 @@
 			</fr:layout>
 		
 			<fr:destination name="invalid" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationInvalid&amp;processId=" + processId %>" />
+			<fr:destination name="editDetailsPostback" path="<%= "/phdIndividualProgramProcess.do?method=editPhdIndividualProgramProcessInformationPostback&amp;processId=" + processId %>" />
 			<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
 		</fr:edit>
 

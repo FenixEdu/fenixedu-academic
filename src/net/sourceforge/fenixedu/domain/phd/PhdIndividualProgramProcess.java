@@ -99,7 +99,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new DeleteStudyPlan());
 
 	activities.add(new EditQualificationExams());
-
     }
 
     @StartActivity
@@ -383,7 +382,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    process.setState(PhdIndividualProgramProcessState.CANCELLED);
+	    process.createState(PhdIndividualProgramProcessState.CANCELLED, userView.getPerson());
 	    process.getCandidacyProcess().cancelDebt(userView.getPerson().getEmployee());
 	    return process;
 	}
@@ -586,10 +585,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setExecutionYear(bean.getExecutionYear());
 
 	setCollaborationType(bean);
-	setState(PhdIndividualProgramProcessState.CANDIDACY);
+	createState(PhdIndividualProgramProcessState.CANDIDACY, person);
 	setThesisTitle(bean.getThesisTitle());
 
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
+    }
+
+    private void createState(final PhdIndividualProgramProcessState state, final Person person) {
+	createState(state, person, null);
+    }
+
+    private void createState(final PhdIndividualProgramProcessState state, final Person person, final String remarks) {
+	new PhdProgramProcessState(this, state, person, remarks);
     }
 
     private void setCollaborationType(PhdProgramCandidacyProcessBean bean) {
@@ -695,9 +702,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    bean.getCandidacyDate());
 	}
 
+	setPhdProgram(bean.getPhdProgram());
+	setPhdProgramFocusArea(bean.getFocusArea());
+
 	setThesisTitle(bean.getThesisTitle());
 	setCollaborationType(bean.getCollaborationType());
-	setPhdProgramFocusArea(bean.getFocusArea());
 
 	if (bean.getCollaborationType().needExtraInformation()) {
 	    check(bean.getOtherCollaborationType(), "error.PhdIndividualProgramProcess.invalid.other.collaboration.type");
@@ -715,7 +724,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCancelled() {
-	return getState() == PhdIndividualProgramProcessState.CANCELLED;
+	return getActiveState() == PhdIndividualProgramProcessState.CANCELLED;
     }
 
     private boolean hasAnyPayments() {
@@ -803,7 +812,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     static private boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
 	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-	return searchBean.getProcessState() == null || searchBean.getProcessState() == phdIndividualProgramProcess.getState();
+	return searchBean.getProcessState() == null
+		|| searchBean.getProcessState() == phdIndividualProgramProcess.getActiveState();
     }
 
     static private boolean matchesExecutionYear(SearchPhdIndividualProgramProcessBean searchBean,
@@ -856,4 +866,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getStudyPlanRelevantDocuments();
     }
 
+    public PhdIndividualProgramProcessState getActiveState() {
+	final PhdProgramProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
+	return (state != null) ? state.getType() : null;
+    }
 }

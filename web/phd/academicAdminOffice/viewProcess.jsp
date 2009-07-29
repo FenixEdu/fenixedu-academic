@@ -1,9 +1,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview"%>
+
+<html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
@@ -48,6 +52,8 @@
 		</fr:view>
 	</td>
     <td style="vertical-align: top; padding-top: 1em;">
+		<bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
+		
     	<ul class="operations">
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=prepareEditPersonalInformation" paramId="processId" paramName="process" paramProperty="externalId">
@@ -59,11 +65,13 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
 				</html:link>
 			</li>
-			<li>
-				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
-				</html:link>
-			</li>
+			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= UploadCandidacyReview.class %>">
+				<li>
+					<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
+					</html:link>
+				</li>
+			</phd:activityAvailable>
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=manageStudyPlan" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.studyPlanAndQualificationExams"/>
@@ -99,6 +107,13 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessages"/>
 				</html:link>
 			</li>
+			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RequestCandidacyReview.class %>">
+				<li>
+					<html:link action="/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.request.candidacy.review"/>
+				</html:link>
+				</li>
+			</phd:activityAvailable>
 			<li>
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacy" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.ratifyCandidacy"/>

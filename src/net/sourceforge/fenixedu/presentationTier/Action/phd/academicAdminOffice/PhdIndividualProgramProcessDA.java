@@ -109,7 +109,6 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 
 	request.setAttribute("searchProcessBean", searchBean);
-
 	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean));
 
 	return mapping.findForward("manageProcesses");
@@ -291,6 +290,13 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward editPhdIndividualProgramProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("phdIndividualProgramProcessBean", getRenderedObject("phdIndividualProgramProcessBean"));
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward editPhdIndividualProgramProcessInformationPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdIndividualProgramProcessBean", getRenderedObject("phdIndividualProgramProcessBean"));
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("editPhdIndividualProgramProcessInformation");
     }
 

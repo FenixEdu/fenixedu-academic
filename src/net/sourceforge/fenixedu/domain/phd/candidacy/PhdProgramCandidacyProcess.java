@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,7 +17,10 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 
 import org.joda.time.LocalDate;
 
@@ -49,8 +54,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final Object[] values = (Object[]) object;
 	    final PhdProgramCandidacyProcessBean bean = getBean(values);
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, getPerson(values));
-	    result.setState(bean.getState());
+	    final Person person = getPerson(values);
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person);
+	    result.createState(bean.getState(), person);
 	    return result;
 	}
 
@@ -143,9 +149,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.setValidatedByCandidate(true);
 	    return process;
 	}
-
     }
-
+    
     static public class RatifyCandidacy extends PhdActivity {
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -164,11 +169,72 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
+    static public class RequestCandidacyReview extends PhdActivity {
+
+	static final private List<PhdProgramCandidacyProcessState> PREVIOUS_STATE = Arrays.asList(
+
+	PhdProgramCandidacyProcessState.PRE_CANDIDATE,
+
+	PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION,
+
+	PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
+
+	PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (PREVIOUS_STATE.contains(process.getActiveState())) {
+		return;
+	    }
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson());
+	    return process;
+	}
+    }
+
+    static public class UploadCandidacyReview extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+		    || process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    // TODO: is the same logic from UploadDocuments -> refactor
+
+	    final List<PhdCandidacyDocumentUploadBean> documents = (List<PhdCandidacyDocumentUploadBean>) object;
+
+	    for (final PhdCandidacyDocumentUploadBean each : documents) {
+		if (each.hasAnyInformation()) {
+		    if (!each.getType().isMultipleDocumentsAllowed()) {
+			process.removeDocumentsByType(each.getType());
+		    }
+
+		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
+			    each.getFilename(), userView != null ? userView.getPerson() : null);
+		}
+	    }
+
+	    return process;
+	}
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
-
+    
     public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
 	if (!each.getType().isMultipleDocumentsAllowed()) {
 	    removeDocumentsByType(each.getType());
@@ -208,6 +274,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new AddCandidacyReferees());
 	activities.add(new ValidatedByCandidate());
 	activities.add(new RatifyCandidacy());
+
+	activities.add(new RequestCandidacyReview());
+	activities.add(new UploadCandidacyReview());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -339,6 +408,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	return result;
-
     }
+
+    public void createState(final PhdProgramCandidacyProcessState state, final Person person) {
+	createState(state, person, null);
+    }
+
+    public void createState(final PhdProgramCandidacyProcessState state, final Person person, final String remarks) {
+	new PhdCandidacyProcessState(this, state, person, null);
+    }
+
+    public PhdProgramCandidacyProcessState getActiveState() {
+	final PhdCandidacyProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
+	return (state != null) ? state.getType() : null;
+    }
+
+    public boolean isInState(final PhdProgramCandidacyProcessState state) {
+	return getActiveState().equals(state);
+    }
+
 }

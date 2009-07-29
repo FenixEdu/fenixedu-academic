@@ -6487,17 +6487,27 @@ class phd.PhdProgramFocusArea extends DomainObject {
 }
 
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
-		
 }
 
-class phd.PhdIndividualProgramProcess  extends caseHandling.Process {
-	PhdIndividualProgramProcessState state;
+class phd.PhdProcessState extends DomainObject {
+	DateTime whenCreated;
+	String remarks;
+}
+
+	class phd.PhdProgramProcessState extends phd.PhdProcessState {
+		PhdIndividualProgramProcessState type;
+	}
+
+	class phd.PhdCandidacyProcessState extends phd.PhdProcessState {
+		PhdProgramCandidacyProcessState type;
+	}
+
+class phd.PhdIndividualProgramProcess extends caseHandling.Process {
 	String thesisTitle;
 	PhdIndividualProgramCollaborationType collaborationType;
 	String otherCollaborationType;
 	Boolean qualificationExamsRequired;
 	Boolean qualificationExamsPerformed;
-
 }
 
 class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
@@ -6507,7 +6517,6 @@ class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
 
 class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
 	LocalDate candidacyDate;
-	PhdProgramCandidacyProcessState state;
 	Boolean validatedByCandidate;
 	LocalDate whenRatified;
 }
@@ -6666,6 +6675,12 @@ relation PhdIndividualProgramProcessNumberPhdIndividualProgramProcess {
 	phd.PhdIndividualProgramProcessNumber playsRole phdIndividualProcessNumber;
 }
 
+relation PhdIndividualProgramProcessPhdProcessState {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.PhdProgramProcessState playsRole states {
+		multiplicity *;
+	}
+}
 
 relation PhdProgramPhdProgramUnit {
 	phd.PhdProgram playsRole phdProgram;
@@ -6726,27 +6741,20 @@ relation PhdIndividualProgramProcessExecutionYear {
 	ExecutionYear playsRole executionYear;
 }
 
-
 relation PhdProgramServiceAgreementTemplatePhdProgram {
-	
 	phd.PhdProgramServiceAgreementTemplate playsRole serviceAgreementTemplate;
-		
 	phd.PhdProgram playsRole phdProgram;
 }
 
 relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
-
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
-
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
 		multiplicity *;
 	}
 }
 
 relation PhdProgramCandidacyProcessDocumentPerson {
-	
 	Person playsRole uploader;
-	
 	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole uploadedPhdCandidacyProcessDocuments {
 		multiplicity *;
 	}
@@ -6764,6 +6772,20 @@ relation InternalGuidingPerson {
 		multiplicity *;
 	}
 	Person playsRole person;
+}
+
+relation phd.PhdProcessState {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProcessState playsRole phdProgramStates {
+		multiplicity *;
+	}
+}
+
+relation PersonPhdProgramState {
+	Person playsRole person;
+	phd.PhdProcessState playsRole phdProgramStates {
+		multiplicity *;
+	}
 }
 
 relation PhdIndividualProgramProcessGuiding {
@@ -6788,6 +6810,13 @@ relation PhdProgramPublicCandidacyHashCodePhdProgramCandidacyProcess {
 relation PhdProgramCandidacyProcessPhdCandidacyReferee {
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcess;
 	phd.candidacy.PhdCandidacyReferee playsRole candidacyReferees {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramCandidacyProcessPhdProcessState {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole process;
+	phd.PhdCandidacyProcessState playsRole states {
 		multiplicity *;
 	}
 }

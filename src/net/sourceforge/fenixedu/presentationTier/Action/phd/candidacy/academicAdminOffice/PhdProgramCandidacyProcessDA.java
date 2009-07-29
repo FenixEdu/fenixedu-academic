@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -26,7 +27,8 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessD
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -48,6 +50,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
 
 @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
+
+@Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
 
 @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
 
@@ -80,9 +84,12 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
+	bean.setState(PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION);
 	bean.setPersonBean(new PersonBean());
 	bean.setChoosePersonBean(new ChoosePersonBean());
+
 	request.setAttribute("createCandidacyBean", bean);
 	request.setAttribute("persons", Collections.emptyList());
 
@@ -232,6 +239,31 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	return (List<PhdCandidacyDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
     }
 
+    public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("requestCandidacyReview");
+    }
+
+    public ActionForward requestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    final PhdProgramCandidacyProcess process = getProcess(request);
+	    ExecuteProcessActivity.run(process, RequestCandidacyReview.class.getSimpleName(), null);
+	    return viewIndividualProgramProcess(request, process);
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return mapping.findForward("requestCandidacyReview");
+	}
+
+    }
+
+    private ActionForward viewIndividualProgramProcess(HttpServletRequest request, final PhdProgramCandidacyProcess process) {
+	return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
+		.getIndividualProgramProcess().getExternalId()), request);
+    }
+
     public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
@@ -254,7 +286,7 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	RenderUtils.invalidateViewState();
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), UploadDocuments.class, Collections.singletonList(bean));
+	    ExecuteProcessActivity.run(getProcess(request), UploadCandidacyReview.class, Collections.singletonList(bean));
 	    addSuccessMessage(request, "message.document.uploaded.with.success");
 
 	} catch (DomainException e) {
