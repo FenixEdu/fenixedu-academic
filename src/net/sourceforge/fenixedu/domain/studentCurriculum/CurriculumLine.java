@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -286,4 +287,6 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     }
 
     abstract protected void createCurriculumLineLog(final EnrolmentAction action);
+
+    abstract public BigDecimal getEctsCreditsForCurriculum();
 }

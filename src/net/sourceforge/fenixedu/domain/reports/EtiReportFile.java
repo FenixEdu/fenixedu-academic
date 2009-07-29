@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -32,6 +31,7 @@ public class EtiReportFile extends EtiReportFile_Base {
 	return "etiGrades";
     }
 
+    @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("número Aluno");
 	setDegreeHeaders(spreadsheet, "aluno");
@@ -107,16 +107,16 @@ public class EtiReportFile extends EtiReportFile_Base {
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
 	row.setCell(enrolment.getGradeValue());
 
-	final EnrolmentEvaluation normal = enrolment.getLatestNormalEnrolmentEvaluation();
+	final EnrolmentEvaluation normal = enrolment.getLatestFinalNormalEnrolmentEvaluation();
 	row.setCell(normal == null ? "" : normal.getGradeValue());
-	final EnrolmentEvaluation special = enrolment.getLatestSpecialSeasonEnrolmentEvaluation();
+	final EnrolmentEvaluation special = enrolment.getLatestFinalSpecialSeasonEnrolmentEvaluation();
 	row.setCell(special == null ? "" : special.getGradeValue());
-	final EnrolmentEvaluation improvement = enrolment.getLatestImprovementEnrolmentEvaluation();
+	final EnrolmentEvaluation improvement = enrolment.getLatestFinalImprovementEnrolmentEvaluation();
 	row.setCell(improvement == null ? "" : improvement.getGradeValue());
 
 	row.setCell(registration.getRegistrationAgreement().getName());
 	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
-	Attends attends = null; //enrolment.getAttendsFor(executionSemester);
+	Attends attends = null; // enrolment.getAttendsFor(executionSemester);
 	for (final Attends a : enrolment.getAttendsSet()) {
 	    if (a.isFor(executionSemester)) {
 		if (attends == null) {

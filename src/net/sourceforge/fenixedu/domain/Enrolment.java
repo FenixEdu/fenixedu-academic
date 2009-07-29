@@ -1002,20 +1002,31 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getLatestEnrolmentEvalution(getEnrolmentEvaluationsByEnrolmentEvaluationType(evaluationType));
     }
 
-    final public EnrolmentEvaluation getLatestNormalEnrolmentEvaluation() {
-	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.NORMAL);
+    final public EnrolmentEvaluation getLatestFinalNormalEnrolmentEvaluation() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL));
     }
 
-    final public EnrolmentEvaluation getLatestSpecialSeasonEnrolmentEvaluation() {
-	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON);
+    final public EnrolmentEvaluation getLatestFinalSpecialSeasonEnrolmentEvaluation() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON));
     }
 
-    final public EnrolmentEvaluation getLatestImprovementEnrolmentEvaluation() {
-	return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT);
+    final public EnrolmentEvaluation getLatestFinalImprovementEnrolmentEvaluation() {
+	return getLatestEnrolmentEvalution(getFinalEnrolmentEvaluationsByEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT));
+    }
+
+    final private List<EnrolmentEvaluation> getFinalEnrolmentEvaluationsByEnrolmentEvaluationType(
+	    final EnrolmentEvaluationType evaluationType) {
+	List<EnrolmentEvaluation> result = new ArrayList<EnrolmentEvaluation>();
+	for (EnrolmentEvaluation evaluation : getEvaluationsSet()) {
+	    if (evaluation.isFinal() && evaluation.getEnrolmentEvaluationType().equals(evaluationType)) {
+		result.add(evaluation);
+	    }
+	}
+	return result;
     }
 
     final public EnrolmentEvaluation getImprovementEvaluation() {
-	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestImprovementEnrolmentEvaluation();
+	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestFinalImprovementEnrolmentEvaluation();
 
 	if (latestImprovementEnrolmentEvaluation != null
 		&& latestImprovementEnrolmentEvaluation.getEnrolmentEvaluationState().equals(
@@ -1216,6 +1227,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return isExtraCurricular() || isPropaedeutic() ? Double.valueOf(0d) : getEctsCreditsForCurriculum().doubleValue();
     }
 
+    @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getCurricularCourse().getEctsCredits(getExecutionPeriod()));
     }
@@ -1287,7 +1299,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
-	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestSpecialSeasonEnrolmentEvaluation();
+	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestFinalSpecialSeasonEnrolmentEvaluation();
 
 	if (latestSpecialSeasonEnrolmentEvaluation != null
 		&& latestSpecialSeasonEnrolmentEvaluation.getEnrolmentEvaluationState().equals(

@@ -147,6 +147,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 		getExecutionPeriod());
     }
 
+    @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getEctsCredits());
     }

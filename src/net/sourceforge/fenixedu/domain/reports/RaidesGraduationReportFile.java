@@ -192,6 +192,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("nº. ECTS 1º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS 2º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
+	spreadsheet.setHeader("nº. ECTS Propedeuticas concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
     }
 
@@ -604,7 +605,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	Double extraCurricularEcts = 0d;
 	for (final CurriculumLine curriculumLine : registration.getLastStudentCurricularPlan().getExtraCurriculumGroup()
 		.getAllCurriculumLines()) {
-	    extraCurricularEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
+	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
+		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
+		extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+	    }
 	}
 	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		.getExternalCurriculumGroups()) {
@@ -615,6 +619,18 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    }
 	}
 	row.setCell(printDouble(extraCurricularEcts));
+
+	// Nº ECTS Propaedeutic concluídos até ao fim do ano lectivo
+	// anterior que ao se referem os dados
+	Double propaedeuticEcts = 0d;
+	for (final CurriculumLine curriculumLine : registration.getLastStudentCurricularPlan().getPropaedeuticCurriculumGroup()
+		.getAllCurriculumLines()) {
+	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
+		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
+		propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+	    }
+	}
+	row.setCell(printDouble(propaedeuticEcts));
 
 	// Tem situação de propinas no lectivo dos dados
 	row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasAnyGratuityEventFor(executionYear)));
