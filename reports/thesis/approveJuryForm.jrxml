@@ -53,7 +53,7 @@
 		<group  name="a" isReprintHeaderOnEachPage="true" >
 			<groupExpression><![CDATA[]]></groupExpression>
 			<groupHeader>
-			<band height="425"  isSplitAllowed="false" >
+			<band height="460"  isSplitAllowed="false" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="161"
@@ -296,7 +296,7 @@ Assinatura: ]]></text>
 					<reportElement
 						x="0"
 						y="295"
-						width="232"
+						width="332"
 						height="15"
 						key="staticText-7"
 						positionType="FixRelativeToBottom"/>
@@ -308,7 +308,7 @@ Assinatura: ]]></text>
 					<textElement>
 						<font fontName="Verdana" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[HOMOLOGAÇÃO DO JURI PELO COORDENADOR DE CURSO]]></text>
+				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO COORDENADOR DE CURSO]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -334,7 +334,7 @@ Assinatura: ]]></text>
 					<reportElement
 						x="0"
 						y="366"
-						width="352"
+						width="372"
 						height="15"
 						key="staticText-8"
 						positionType="FixRelativeToBottom"/>
@@ -346,8 +346,28 @@ Assinatura: ]]></text>
 					<textElement>
 						<font fontName="Verdana" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
+				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO *]]></text>
 				</staticText>
+
+				<staticText>
+					<reportElement
+						x="0"
+						y="445"
+						width="372"
+						height="15"
+						key="staticText-8"
+						positionType="FixRelativeToBottom"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="8" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+					</textElement>
+				<text><![CDATA[(*) Esta homologação só é necessária no caso do coordenador de curso ser orientador/co-orientador da tese.]]></text>
+				</staticText>
+
 				<line direction="TopDown">
 					<reportElement
 						x="26"
