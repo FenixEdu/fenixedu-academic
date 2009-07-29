@@ -150,7 +150,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    return process;
 	}
     }
-    
+
     static public class RatifyCandidacy extends PhdActivity {
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -208,21 +208,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    throw new PreConditionNotValidException();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    // TODO: is the same logic from UploadDocuments -> refactor
 
-	    final List<PhdCandidacyDocumentUploadBean> documents = (List<PhdCandidacyDocumentUploadBean>) object;
-
-	    for (final PhdCandidacyDocumentUploadBean each : documents) {
+	    for (final PhdCandidacyDocumentUploadBean each : (List<PhdCandidacyDocumentUploadBean>) object) {
 		if (each.hasAnyInformation()) {
-		    if (!each.getType().isMultipleDocumentsAllowed()) {
-			process.removeDocumentsByType(each.getType());
-		    }
-
-		    new PhdProgramCandidacyProcessDocument(process, each.getType(), each.getRemarks(), each.getFileContent(),
-			    each.getFilename(), userView != null ? userView.getPerson() : null);
+		    process.addDocument(each, userView != null ? userView.getPerson() : null);
 		}
 	    }
 
@@ -233,37 +225,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
-    }
-    
-    public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
-	if (!each.getType().isMultipleDocumentsAllowed()) {
-	    removeDocumentsByType(each.getType());
-	}
-
-	new PhdProgramCandidacyProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(),
-		each.getFilename(), responsible);
-
-    }
-
-    public void ratify(RatifyCandidacyBean bean, Person responsible) {
-
-	check(bean.getWhenRatified(), "error.phd.candidacy.PhdProgramCandidacyProcess.when.ratified.cannot.be.null");
-
-	if (!bean.getRatificationFile().hasAnyInformation()) {
-	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.ratification.document.is.required");
-	}
-
-	setWhenRatified(bean.getWhenRatified());
-	addDocument(bean.getRatificationFile(), responsible);
-
-    }
-
-    public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
-	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
-	    if (each.getDocumentType() == type) {
-		each.delete();
-	    }
-	}
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -425,6 +386,36 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public boolean isInState(final PhdProgramCandidacyProcessState state) {
 	return getActiveState().equals(state);
+    }
+
+    public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
+	if (!each.getType().isMultipleDocumentsAllowed()) {
+	    removeDocumentsByType(each.getType());
+	}
+
+	new PhdProgramCandidacyProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(),
+		each.getFilename(), responsible);
+
+    }
+
+    public void ratify(RatifyCandidacyBean bean, Person responsible) {
+
+	check(bean.getWhenRatified(), "error.phd.candidacy.PhdProgramCandidacyProcess.when.ratified.cannot.be.null");
+
+	if (!bean.getRatificationFile().hasAnyInformation()) {
+	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.ratification.document.is.required");
+	}
+
+	setWhenRatified(bean.getWhenRatified());
+	addDocument(bean.getRatificationFile(), responsible);
+    }
+
+    public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
+	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
+	    if (each.getDocumentType() == type) {
+		each.delete();
+	    }
+	}
     }
 
 }
