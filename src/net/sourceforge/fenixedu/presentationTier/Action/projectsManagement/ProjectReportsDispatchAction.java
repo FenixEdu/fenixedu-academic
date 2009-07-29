@@ -41,9 +41,8 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 	final String reportTypeStr = request.getParameter("reportType");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
-	final ReportType reportType = new ReportType(reportTypeStr);
 	getCostCenterName(request, costCenter, it);
+	final ReportType reportType = new ReportType(reportTypeStr);
 	request.setAttribute("reportType", reportTypeStr);
 	if (reportType.getReportType() != null
 		&& (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.REVENUE)
@@ -76,7 +75,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
+	getCostCenterName(request, costCenter, it);
 	if (reportType.getReportType() != null) {
 	    request.setAttribute("reportType", reportTypeStr);
 	    getCostCenterName(request, costCenter, it);
@@ -120,7 +119,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
+	getCostCenterName(request, costCenter, it);
 	HSSFWorkbook wb = new HSSFWorkbook();
 	String fileName = "listagem";
 	InfoProjectReport infoProjectReport = null;

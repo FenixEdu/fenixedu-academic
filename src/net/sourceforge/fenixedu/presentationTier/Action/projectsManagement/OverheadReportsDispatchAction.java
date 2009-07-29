@@ -37,6 +37,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
+	getCostCenterName(request, costCenter, it);
 	if (reportType.getReportType() != null) {
 	    if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
 		    || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
@@ -60,6 +61,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = request.getParameter("it") != null ? true : false;
+	getCostCenterName(request, costCenter, it);
 	HSSFWorkbook wb = new HSSFWorkbook();
 	String fileName = "listagem";
 

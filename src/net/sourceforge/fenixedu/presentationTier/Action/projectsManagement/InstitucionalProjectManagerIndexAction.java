@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class InstitucionalProjectManagerIndexAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixFilterException, FenixServiceException {
 

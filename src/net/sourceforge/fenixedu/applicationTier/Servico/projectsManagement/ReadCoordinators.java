@@ -12,7 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Susana Fernandes
@@ -36,7 +39,12 @@ public class ReadCoordinators extends FenixService {
 	}
 
 	if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator)) {
-	    coordinatorsCodes.add(thisCoordinator);
+	    if ((StringUtils.isEmpty(costCenter)) && new PersistentProject().countUserProject(thisCoordinator, it) != 0) {
+		coordinatorsCodes.add(thisCoordinator);
+	    } else if ((!StringUtils.isEmpty(costCenter))
+		    && new PersistentProjectUser().getInstitucionalProjectCoordId(thisCoordinator, false).size() != 0) {
+		coordinatorsCodes.add(thisCoordinator);
+	    }
 	}
 	PersistentProjectUser persistentProjectUser = new PersistentProjectUser();
 	for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {

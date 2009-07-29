@@ -40,7 +40,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final IUserView userView = UserView.getUser();
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
 	getCostCenterName(request, costCenter, it);
 	try {
 	    final List projectsAccessesList = (List) ServiceManagerServiceFactory.executeService("ReadProjectAccesses",
@@ -72,7 +71,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	request.setAttribute("username", username);
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
 	getCostCenterName(request, costCenter, it);
 	if (username != null && !username.equals("")) {
 	    try {
@@ -81,8 +79,8 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 			    new Object[] { userView.getUtilizador(), costCenter, username, it });
 		    request.setAttribute("personAccessesList", personAccessesList);
 		    if (personAccessesList == null || personAccessesList.size() == 0) {
-			final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
-				"ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(),
+			final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory
+				.executeService("ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(),
 					costCenter, username, it });
 			request.setAttribute("infoPerson", infoPerson);
 		    }
@@ -107,7 +105,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final Integer projectCode = (Integer) ((DynaActionForm) form).get("projectCode");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
 	getCostCenterName(request, costCenter, it);
 	final String username = (String) ((DynaActionForm) form).get("username");
 	final String beginDay = (String) ((DynaActionForm) form).get("beginDay");
@@ -148,7 +145,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final String personUsername = request.getParameter("username");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
+	getCostCenterName(request, costCenter, it);
 	ServiceManagerServiceFactory.executeService("RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
 		personUsername, projectCode, it });
 	return showProjectsAccesses(mapping, form, request, response);
@@ -161,6 +158,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final String personUsername = request.getParameter("username");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
+	getCostCenterName(request, costCenter, it);
 	ServiceManagerServiceFactory.executeService("RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
 		personUsername, projectCode, it });
 	return showPersonAccesses(mapping, form, request, response);
@@ -173,7 +171,6 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final Integer personCode = getCodeFromRequest(request, "personCode");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
 	getCostCenterName(request, costCenter, it);
 	final InfoProjectAccess infoProjectAccess = (InfoProjectAccess) ServiceManagerServiceFactory.executeService(
 		"ReadProjectAccesses", new Object[] { userView.getUtilizador(), costCenter, personCode, projectCode, it });
@@ -195,7 +192,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 	final Integer projectCode = (Integer) ((DynaActionForm) form).get("projectCode");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
+	getCostCenterName(request, costCenter, it);
 	final Integer personCode = (Integer) ((DynaActionForm) form).get("personCode");
 	final String beginDay = (String) ((DynaActionForm) form).get("beginDay");
 	final String beginMonth = (String) ((DynaActionForm) form).get("beginMonth");

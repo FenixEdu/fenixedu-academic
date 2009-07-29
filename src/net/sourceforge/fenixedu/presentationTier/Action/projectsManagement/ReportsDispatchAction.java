@@ -36,7 +36,6 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	final String helpPage = request.getParameter("helpPage");
 	final String costCenter = request.getParameter("costCenter");
 	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
 	getCostCenterName(request, costCenter, it);
 	final RubricType rubricType = RubricType.getRubricType(helpPage);
 	if (rubricType != null) {
@@ -100,6 +99,7 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 
     protected void getCostCenterName(HttpServletRequest request, String costCenter, Boolean it) throws FenixServiceException,
 	    FenixFilterException {
+	request.setAttribute("it", it);
 	if (costCenter != null && !costCenter.equals("")) {
 	    final IUserView userView = UserView.getUser();
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
