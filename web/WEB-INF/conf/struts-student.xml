@@ -832,6 +832,7 @@
 						key="error.message.StudentCannotBeACandidateForSelectedDegree"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
+			<forward name="showDissertationsInfo" path="df.page.finalDegreeWork.dissertations"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
 		</action>
 

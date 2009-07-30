@@ -158,6 +158,9 @@
 	<definition name="df.page.finalDegreeWork.candidacy" extends="definition.student.masterPage">
 		<put name="body" value="/student/finalDegreeWork/candidacy.jsp"/>
 	</definition>
+	<definition name="df.page.finalDegreeWork.dissertations" extends="definition.student.masterPage">
+		<put name="body" value="/student/finalDegreeWork/dissertations.jsp"/>
+	</definition>
 	<definition name="df.page.finalDegreeWork.selectProposals" extends="definition.student.masterPage">
 		<put name="body" value="/student/finalDegreeWork/selectProposals.jsp"/>
 	</definition>

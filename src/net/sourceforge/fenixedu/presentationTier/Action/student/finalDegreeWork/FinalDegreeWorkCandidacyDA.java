@@ -32,8 +32,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -53,6 +56,55 @@ import pt.ist.fenixWebFramework.security.UserView;
 public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     public class NoDegreeStudentCurricularPlanFoundException extends Exception {
+    }
+
+    public ActionForward dissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+
+	final ExecutionYear executionYear;
+	final String executionYearOID = (String) dynaActionForm.get("executionYearOID");
+	if (executionYearOID == null || executionYearOID.equals("")) {
+	    executionYear = ExecutionYear.readCurrentExecutionYear();
+	    dynaActionForm.set("executionYearOID", executionYear.getIdInternal().toString());
+	} else {
+	    executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+	}
+
+	final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
+	request.setAttribute("executionYears", executionYears);
+
+	List infoExecutionDegrees = placeListOfExecutionDegreesInRequest(request, executionYear);
+
+	return mapping.findForward("showDissertationsInfo");
+    }
+
+    public ActionForward selectDissertationsExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
+	if (executionDegreeOID != null && executionDegreeOID.length() > 0) {
+	    ExecutionDegree executionDegree = RootDomainObject.getInstance().readExecutionDegreeByOID(
+		    Integer.valueOf(executionDegreeOID));
+	    Scheduleing scheduling = executionDegree.getScheduling();
+	    request.setAttribute("executionDegree", executionDegree);
+	    request.setAttribute("scheduling", scheduling);
+	}
+	return dissertations(mapping, form, request, response);
+    }
+
+    public ActionForward selectDissertationsExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	DynaActionForm dynaActionForm = (DynaActionForm) form;
+	String executionYearOID = (String) dynaActionForm.get("executionYearOID");
+	if (executionYearOID != null && executionYearOID.length() > 0) {
+	    ExecutionYear executionYear = RootDomainObject.getInstance()
+		    .readExecutionYearByOID(Integer.valueOf(executionYearOID));
+	    placeListOfExecutionDegreesInRequest(request, executionYear);
+	}
+	return dissertations(mapping, form, request, response);
     }
 
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
