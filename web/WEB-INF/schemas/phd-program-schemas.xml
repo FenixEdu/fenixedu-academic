@@ -1051,8 +1051,6 @@
 	
 </schema>
 
-
-
 <schema name="PhdStudyPlanBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES">	
 	<slot name="degree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.DegreesProviderForStudyPlan" />
@@ -1130,8 +1128,6 @@
 	</slot>
 </schema>
 
-
-
 <schema name="RatifyCandidacyBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean" bundle="PHD_RESOURCES">
 	<slot name="whenRatified" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="ratificationFile.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -1140,4 +1136,10 @@
 	</slot>
 </schema>
 
-
+<schema name="PhdProgramCandidacyProcessStateBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean" 
+		bundle="PHD_RESOURCES">
+	<slot name="remarks" layout="longText">
+		<property name="columns" value="80"/>
+		<property name="rows" value="8"/>
+	</slot>
+</schema>

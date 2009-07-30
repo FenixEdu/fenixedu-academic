@@ -91,11 +91,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ValidatedByCandidate());
 
 	activities.add(new AddStudyPlan());
-
 	activities.add(new AddStudyPlanEntry());
-
 	activities.add(new DeleteStudyPlanEntry());
-
 	activities.add(new DeleteStudyPlan());
 
 	activities.add(new EditQualificationExams());
@@ -476,9 +473,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
+	    final PhdProgramCandidacyProcess candidacyProcess = process.getCandidacyProcess();
+	    if (candidacyProcess.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)
+		    || candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+
+		return;
 	    }
+
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override

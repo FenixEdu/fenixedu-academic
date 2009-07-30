@@ -109,8 +109,8 @@
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadDocumentsInvalid" />
 		</fr:layout>
+		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadDocumentsInvalid" />
 	</fr:edit>
 	
 <%--  ### Buttons (e.g. Submit)  ### --%>

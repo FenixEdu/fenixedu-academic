@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
@@ -241,6 +242,9 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcessStateBean bean = new PhdProgramCandidacyProcessStateBean();
+	bean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
+	request.setAttribute("stateBean", bean);
 	return mapping.findForward("requestCandidacyReview");
     }
 
@@ -249,19 +253,14 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	try {
 	    final PhdProgramCandidacyProcess process = getProcess(request);
-	    ExecuteProcessActivity.run(process, RequestCandidacyReview.class.getSimpleName(), null);
+	    ExecuteProcessActivity.run(process, RequestCandidacyReview.class.getSimpleName(), getRenderedObject("stateBean"));
 	    return viewIndividualProgramProcess(request, process);
 
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("stateBean", getRenderedObject("stateBean"));
 	    return mapping.findForward("requestCandidacyReview");
 	}
-
-    }
-
-    private ActionForward viewIndividualProgramProcess(HttpServletRequest request, final PhdProgramCandidacyProcess process) {
-	return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
-		.getIndividualProgramProcess().getExternalId()), request);
     }
 
     public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -361,7 +360,16 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
 	    return mapping.findForward("ratifyCandidacy");
 	}
+    }
 
+    public ActionForward viewIndividualProgramProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    private ActionForward viewIndividualProgramProcess(HttpServletRequest request, final PhdProgramCandidacyProcess process) {
+	return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
+		.getIndividualProgramProcess().getExternalId()), request);
     }
 
 }

@@ -154,16 +154,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     static public class RatifyCandidacy extends PhdActivity {
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-
 	    process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
-
 	    return process;
 	}
 
@@ -191,7 +189,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson());
+	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
+	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(), bean
+		    .getRemarks());
 	    return process;
 	}
     }
@@ -200,8 +200,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
-		    || process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)
+		    || process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+
 		return;
 	    }
 
@@ -376,7 +377,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public void createState(final PhdProgramCandidacyProcessState state, final Person person, final String remarks) {
-	new PhdCandidacyProcessState(this, state, person, null);
+	new PhdCandidacyProcessState(this, state, person, remarks);
     }
 
     public PhdProgramCandidacyProcessState getActiveState() {

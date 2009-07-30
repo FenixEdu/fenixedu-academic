@@ -56,13 +56,21 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 <bean:define id="processId" name="process" property="externalId" />
 
-<fr:form action="/phdProgramCandidacyProcess.do?method=requestCandidacyReview">
-  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
+<fr:form action="<%= "/phdProgramCandidacyProcess.do?processId=" + processId.toString()%>">
+	<input type="hidden" name="method" value="requestCandidacyReview" />
   	
   	<p><strong><bean:message key="label.phd.send.to.coordinator.question" bundle="PHD_RESOURCES" /></strong></p>
   	
+  	<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
+  	
 	<%--  ### Buttons (e.g. Submit)  ### --%>
   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.phd.send.to.coordinator"/></html:submit>
+  	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewIndividualProgramProcess';" ><bean:message bundle="PHD_RESOURCES" key="label.back"/></html:cancel>
 	<%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 </fr:form>
