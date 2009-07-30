@@ -30,6 +30,8 @@ public class DegreeTransferIndividualCandidacyEvent extends DegreeTransferIndivi
     public DegreeTransferIndividualCandidacyEvent(final DegreeTransferIndividualCandidacy candidacy, final Person person) {
 	this();
 	super.init(candidacy, EventType.DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY, person);
+
+	attachAvailablePaymentCode(person);
     }
 
     @Override

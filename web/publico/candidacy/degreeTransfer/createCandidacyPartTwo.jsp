@@ -60,7 +60,7 @@
 		<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
 
 		<logic:empty name="individualCandidacyProcessBean" property="precedentDegreeType">
-			<p>TODO: A sua ultima matricula no ensino superior é ou foi </p>
+			<p><bean:message key="message.candidacy.last.registration" bundle="CANDIDATE_RESOURCES"/></p>
 			<ul>
 				<li><html:radio onclick="this.form.method.value='fillInternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.INSTITUTION_DEGREE.getName() %>" >no Instituto Superior Técnico</html:radio></li>
 				<li><html:radio onclick="this.form.method.value='fillExternalPrecedentInformation'; this.form.skipValidation.value='true'; this.form.submit();" name="individualCandidacyProcessBean" property="precedentDegreeType" value="<%=  PrecedentDegreeType.EXTERNAL_DEGREE.getName() %>" >numa instituição externa</html:radio></li>
@@ -106,14 +106,6 @@
 					</fr:layout>
 				</fr:view>
 			</logic:equal>
-
-			<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/></h3>
-			<fr:edit id="individualCandidacyProcessBean.utlStudent" name="individualCandidacyProcessBean"
-				schema="PublicCandidacyProcessBean.utl.student">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:edit>
 						 
 			<% 
 				if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
@@ -220,6 +212,14 @@
 	 		  <fr:layout name="flow">
 			    <fr:property name="labelExcluded" value="true"/>
 			  </fr:layout>
+			</fr:edit>
+
+			<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/></h3>
+			<fr:edit id="individualCandidacyProcessBean.utlStudent" name="individualCandidacyProcessBean"
+				schema="PublicCandidacyProcessBean.utl.student">
+				<fr:layout name="flow">
+					<fr:property name="labelExcluded" value="true"/>
+				</fr:layout>
 			</fr:edit>
 
 			<h2 style="margin-top: 1em;"><bean:message key="title.degree.change.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>

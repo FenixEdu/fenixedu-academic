@@ -204,4 +204,5 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	// TODO Auto-generated method stub
 	return null;
     }
+
 }

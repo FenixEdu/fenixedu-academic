@@ -215,7 +215,7 @@
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
+			schema="PublicCandidacyProcessBean.degree.change.selectedDegree.manage">
 			<fr:layout name="flow">
 			  <fr:property name="labelExcluded" value="true"/>
 			</fr:layout>

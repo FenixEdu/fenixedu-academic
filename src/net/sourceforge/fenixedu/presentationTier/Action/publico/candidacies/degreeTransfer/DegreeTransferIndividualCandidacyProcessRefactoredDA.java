@@ -9,10 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
@@ -253,6 +255,19 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 
 	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());
 	return backToViewCandidacyInternal(mapping, form, request, response);
+    }
+
+    @Override
+    protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
+	    StudentCurricularPlan studentCurricularPlan) {
+
+	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
+
+	info.setDegreeDesignation(studentCurricularPlan.getName());
+	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());
+	info.initCurricularCoursesInformation(studentCurricularPlan);
+
+	bean.setPrecedentDegreeInformation(info);
     }
 
 }

@@ -1460,8 +1460,8 @@
 	</slot>
 </schema>
 
-<schema name="PublicCandidacyProcess.candidacyDataBean.istUsername" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="istUsername" key="label.istUsername">
+<schema name="PublicCandidacyProcess.candidacyDataBean.personNumber" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="personNumber" key="label.personNumber">
 		<property name="size" value="15"/>
 		<property name="maxLength" value="15"/>
 	</slot>
@@ -1555,6 +1555,50 @@
 <schema name="PublicCandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.degreechange.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$DegreeChangeOrTransferIndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.degreetransfer.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$DegreeChangeOrTransferIndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.degreecandidacy.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$DegreeCandidacyForGraduatedPersonIndividualCandidacyDocumentFileTypeEditProvider"/>
+		<property name="format" value="${localizedName}"/>
+	</slot>
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+  </slot>
+</schema>
+
+<schema name="PublicCandidacyProcessBean.secondcycle.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$SecondCycleIndividualCandidacyDocumentFileTypeEditProvider"/>
 		<property name="format" value="${localizedName}"/>
 	</slot>
   <slot name="stream" key="label.candidacy.document.file">

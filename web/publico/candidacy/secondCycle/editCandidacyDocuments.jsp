@@ -25,13 +25,14 @@
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-<p><em>Os documentos deverão ser preferencialmente no formato pdf</em></p>
+<p><em><bean:message key="message.candidacy.upload.pdf.documents" bundle="CANDIDATE_RESOURCES"/></em></p>
+
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
 <fr:form action='<%= mappingPath + ".do?method=editCandidacyDocuments" %>' encoding="multipart/form-data">
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean" 
-		schema="PublicCandidacyProcessBean.documentUpload.edit">
+		schema="PublicCandidacyProcessBean.secondcycle.documentUpload.edit">
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>

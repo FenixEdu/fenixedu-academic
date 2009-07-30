@@ -81,12 +81,12 @@
 			</tr>
 			<tr>
 				<td class="width175px">
-					<bean:message key="label.istUsername" bundle="CANDIDATE_RESOURCES"/>:
+					<bean:message key="label.studentOrEmployeeNumber" bundle="CANDIDATE_RESOURCES"/>:
 				</td>
 				<td>
 					<fr:edit id="individualCandidacyProcessBean.istUsername"
 						name="individualCandidacyProcessBean" 
-						schema="PublicCandidacyProcess.candidacyDataBean.istUsername">
+						schema="PublicCandidacyProcess.candidacyDataBean.personNumber">
 						<fr:layout name="flow">
 							<fr:property name="labelExcluded" value="true"/>
 						</fr:layout>

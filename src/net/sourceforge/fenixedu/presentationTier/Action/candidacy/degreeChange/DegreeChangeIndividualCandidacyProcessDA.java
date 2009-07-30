@@ -46,7 +46,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeChange/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp")
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp")
 
 })
 public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -297,6 +298,14 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);
+    }
+
+    public ActionForward prepareExecuteChangeProcessCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new DegreeChangeIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("change-process-checked-state");
     }
 
 }

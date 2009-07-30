@@ -29,7 +29,7 @@
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
-<fr:form action='<%= "/caseHandling" + processName + ".do?parentProcessId=" + parentProcessId.toString() %>' id="candidacyForm">
+<fr:form action='<%= "/caseHandling" + processName + ".do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="candidacyForm">
  	<html:hidden property="method" value="createNewProcess" />
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
@@ -147,7 +147,7 @@
 		    <fr:property name="labelExcluded" value="true"/>
 		  </fr:layout>
 		</fr:edit>
-		
+
 	</logic:notEmpty>
 	<br/>
 	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>

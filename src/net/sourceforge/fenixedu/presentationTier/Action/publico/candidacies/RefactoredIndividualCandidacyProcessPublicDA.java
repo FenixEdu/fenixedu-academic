@@ -214,7 +214,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	// check if person already exists
 	if (person != null) {
-	    if (person.getIstUsername().equals(bean.getIstUsername())) {
+	    if (isPersonStudentOrEmployeeAndNumberIsCorrect(person, bean.getPersonNumber())) {
 		if (!person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
 		    // found person with diff date
 		    addActionMessage("individualCandidacyMessages", request,
@@ -243,7 +243,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	    }
 
-	    if (!StringUtils.isEmpty(bean.getIstUsername())) {
+	    if (!StringUtils.isEmpty(bean.getPersonNumber())) {
 		// person must fill ist userid
 		addActionMessage("individualCandidacyMessages", request,
 			"error.public.candidacies.fill.personal.information.and.institution.id");
@@ -259,6 +259,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
 	return mapping.findForward("candidacy-continue-creation");
+    }
+
+    private boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
+	return (person.hasStudent() && person.getStudent().getNumber().toString().equals(personNumber))
+		|| (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber));
     }
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
@@ -301,9 +306,14 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	if (studentCurricularPlan == null) {
 	    addActionMessage("candidacyMessages", request, "error.public.candidacies.message.no.student.curricular.plan", null);
 	} else {
-	    bean.setPrecedentDegreeType(PrecedentDegreeType.INSTITUTION_DEGREE);
-	    bean.setPrecedentStudentCurricularPlan(studentCurricularPlan);
-	    createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
+	    if (studentCurricularPlan.getRegistration().isTransited()) {
+		addActionMessage("candidacyMessages", request, "error.public.candidacies.message.no.student.curricular.plan",
+			null);
+	    } else {
+		bean.setPrecedentDegreeType(PrecedentDegreeType.INSTITUTION_DEGREE);
+		bean.setPrecedentStudentCurricularPlan(studentCurricularPlan);
+		createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
+	    }
 	}
 
 	// super.fillPrecedentInformationPostback(mapping, actionForm, request,

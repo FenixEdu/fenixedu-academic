@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
@@ -74,10 +75,33 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
 	final DegreeTransferIndividualCandidacyEvent event = (DegreeTransferIndividualCandidacyEvent) eventArg;
 	final CandidacyPrecedentDegreeInformation information = event.getIndividualCandidacy().getPrecedentDegreeInformation();
 
-	if (information.isInternal() || hasAnyValidRegistration(event) || belongsToInstitutionGroup(information.getInstitution())) {
-	    return getAmountForInstitutionStudent();
+	if (information.getCandidacy().getUtlStudent() != null) {
+	    return information.getCandidacy().getUtlStudent() ? getAmountForInstitutionStudent() : getAmountForExternalStudent();
 	} else {
-	    return getAmountForExternalStudent();
+	    if (information.isInternal() || hasAnyValidRegistration((DegreeTransferIndividualCandidacyEvent) event)
+		    || belongsToInstitutionGroup(information.getInstitution())) {
+		return getAmountForInstitutionStudent();
+	    } else {
+		return getAmountForExternalStudent();
+	    }
+	}
+    }
+
+    @Override
+    public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
+	final CandidacyPrecedentDegreeInformation information = ((DegreeTransferIndividualCandidacyEvent) event)
+		.getIndividualCandidacy().getPrecedentDegreeInformation();
+
+	if (information.getCandidacy().getUtlStudent() != null) {
+	    return information.getCandidacy().getUtlStudent() ? PaymentCodeType.INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS
+		    : PaymentCodeType.EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS;
+	} else {
+	    if (information.isInternal() || hasAnyValidRegistration((DegreeTransferIndividualCandidacyEvent) event)
+		    || belongsToInstitutionGroup(information.getInstitution())) {
+		return PaymentCodeType.INTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS;
+	    } else {
+		return PaymentCodeType.EXTERNAL_DEGREE_TRANSFER_INDIVIDUAL_CANDIDACY_PROCESS;
+	    }
 	}
     }
 

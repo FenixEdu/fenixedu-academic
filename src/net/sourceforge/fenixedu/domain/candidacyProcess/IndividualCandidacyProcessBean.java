@@ -39,7 +39,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private Boolean processChecked;
 
-    private String istUsername;
+    private String personNumber;
 
     private Boolean publicCandidacyCreationOrEdition;
 
@@ -289,12 +289,12 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 	this.processChecked = value;
     }
 
-    public String getIstUsername() {
-	return this.istUsername;
+    public String getPersonNumber() {
+	return this.personNumber;
     }
 
-    public void setIstUsername(String istUsername) {
-	this.istUsername = istUsername;
+    public void setPersonNumber(String personNumber) {
+	this.personNumber = personNumber;
     }
 
     public Boolean isPublicCandidacy() {
