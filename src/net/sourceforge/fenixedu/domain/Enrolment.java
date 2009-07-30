@@ -1026,7 +1026,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public EnrolmentEvaluation getImprovementEvaluation() {
-	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestFinalImprovementEnrolmentEvaluation();
+	final EnrolmentEvaluation latestImprovementEnrolmentEvaluation = getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.IMPROVEMENT);
 
 	if (latestImprovementEnrolmentEvaluation != null
 		&& latestImprovementEnrolmentEvaluation.getEnrolmentEvaluationState().equals(
@@ -1299,7 +1299,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private EnrolmentEvaluation getTempSpecialSeasonEvaluation() {
-	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestFinalSpecialSeasonEnrolmentEvaluation();
+	final EnrolmentEvaluation latestSpecialSeasonEnrolmentEvaluation = getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.SPECIAL_SEASON);
 
 	if (latestSpecialSeasonEnrolmentEvaluation != null
 		&& latestSpecialSeasonEnrolmentEvaluation.getEnrolmentEvaluationState().equals(
