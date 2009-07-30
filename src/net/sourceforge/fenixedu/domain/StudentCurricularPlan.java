@@ -2187,11 +2187,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List<Enrolment> getExtraCurricularAprovedEnrolmentsNotInDismissal() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
-	for (final Enrolment each : getExtraCurricularEnrolments()) {
-	    if (!each.isApproved() || each.isSourceOfAnyCreditsInCurriculum()) {
+	for (final Enrolment enrolment : getExtraCurricularEnrolments()) {
+	    if (!enrolment.isApproved() || enrolment.isSourceOfAnyCreditsInCurriculum()) {
 		continue;
 	    }
-	    result.add(each);
+	    result.add(enrolment);
 	}
 
 	return result;
@@ -2199,12 +2199,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List<Enrolment> getStandaloneAprovedEnrolmentsNotInDismissal() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
-
-	for (final Enrolment each : getStandaloneCurriculumGroup().getEnrolments()) {
-	    if (!each.isApproved() || each.isSourceOfAnyCreditsInCurriculum()) {
+	StandaloneCurriculumGroup standaloneGroup = getStandaloneCurriculumGroup();
+	if (standaloneGroup == null) {
+	    return result;
+	}
+	for (final Enrolment enrolment : standaloneGroup.getEnrolments()) {
+	    if (!enrolment.isApproved() || enrolment.isSourceOfAnyCreditsInCurriculum()) {
 		continue;
 	    }
-	    result.add(each);
+	    result.add(enrolment);
 	}
 
 	return result;
