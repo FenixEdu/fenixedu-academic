@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Correct fire date column type from phd alert table" changePhdAlertTable.sql

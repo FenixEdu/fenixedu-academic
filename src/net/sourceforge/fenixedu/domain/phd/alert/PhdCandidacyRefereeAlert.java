@@ -64,8 +64,11 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     protected boolean isToFire() {
+	if (isToDiscard()) {
+	    return false;
+	}
 	int days = Days.daysBetween(calculateStartDate().toDateMidnight(), new LocalDate().toDateMidnight()).getDays();
-	return days % INTERVAL == 0;
+	return days >= INTERVAL;
     }
 
     private LocalDate calculateStartDate() {
