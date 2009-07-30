@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -209,6 +211,30 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
+    public ActionForward downloadTeachersListFromAplica(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createTeachersListReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
+    @SuppressWarnings("unused")
+    public ActionForward downloadTeachersListFromGiaf(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createTeachersListFromGiafReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
+    @SuppressWarnings("unused")
     public ActionForward downloadDissertationsProposals(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
@@ -353,6 +379,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return RaidesPhdReportFile.class;
 	case 16:
 	    return TutorshipProgramReportFile.class;
+	case 17:
+	    return TeachersListReportFile.class;
+	case 18:
+	    return TeachersListFromGiafReportFile.class;
 	default:
 	    return null;
 	}

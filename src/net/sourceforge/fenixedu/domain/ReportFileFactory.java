@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
+import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -55,6 +57,25 @@ public class ReportFileFactory {
 	dissertationsWithExternalAffiliationsReportFile.setDegreeType(degreeType);
 	dissertationsWithExternalAffiliationsReportFile.setExecutionYear(executionYear);
 	return dissertationsWithExternalAffiliationsReportFile;
+    }
+
+    @Service
+    public static GepReportFile createTeachersListReportFile(String type, DegreeType degreeType, ExecutionYear executionYear) {
+	final TeachersListReportFile teachersListReportFile = new TeachersListReportFile();
+	teachersListReportFile.setType(type);
+	teachersListReportFile.setDegreeType(degreeType);
+	teachersListReportFile.setExecutionYear(executionYear);
+	return teachersListReportFile;
+    }
+
+    @Service
+    public static GepReportFile createTeachersListFromGiafReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final TeachersListFromGiafReportFile teachersListFromGiafReportFile = new TeachersListFromGiafReportFile();
+	teachersListFromGiafReportFile.setType(type);
+	teachersListFromGiafReportFile.setDegreeType(degreeType);
+	teachersListFromGiafReportFile.setExecutionYear(executionYear);
+	return teachersListFromGiafReportFile;
     }
 
     @Service
