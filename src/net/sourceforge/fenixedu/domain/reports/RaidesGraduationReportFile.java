@@ -80,7 +80,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 				&& (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
 			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, true,
 				    registrationConclusionBean.getConclusionDate());
-			} else if (registration.isActive()
+			} else if ((registration.isActive() || registration.isConcluded())
 				&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
 			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null);
 			}
@@ -191,6 +191,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("data do estado de matrícula");
 	spreadsheet.setHeader("nº. ECTS 1º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS 2º ciclo concluídos fim ano lectivo anterior");
+	spreadsheet.setHeader("nº. ECTS extra 1º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS Propedeuticas concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
@@ -583,22 +584,33 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(currentYearState != null ? currentYearState.getStateDate().toString("dd-MM-yyyy") : "n/a");
 
 	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
-	// anterior ao
-	// que se referem os dados
+	// anterior ao que se referem os dados
 	final CycleCurriculumGroup firstCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
 		.getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
 	row.setCell(firstCycleCurriculumGroup != null ? printDouble(firstCycleCurriculumGroup.getCreditsConcluded(executionYear
 		.getPreviousExecutionYear())) : "");
 
 	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
-	// anterior ao
-	// que se referem os dados
+	// anterior ao que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
 		.getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
 	row
 		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printDouble(secondCycleCurriculumGroup
 			.getCreditsConcluded(executionYear.getPreviousExecutionYear()))
 			: "");
+
+	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
+	// lectivo anterior ao que se referem os dados
+	Double extraFirstCycleEcts = 0d;
+	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
+		.getExternalCurriculumGroups()) {
+	    for (final CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
+		if (curriculumLine.getExecutionYear() == executionYear.getPreviousExecutionYear()) {
+		    extraFirstCycleEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
+		}
+	    }
+	}
+	row.setCell(printDouble(extraFirstCycleEcts));
 
 	// Nº ECTS Extracurriculares concluídos até ao fim do ano lectivo
 	// anterior que ao se referem os dados
@@ -608,14 +620,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
 		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
 		extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
-	    }
-	}
-	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		.getExternalCurriculumGroups()) {
-	    for (final CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
-		if (curriculumLine.getExecutionYear() == executionYear.getPreviousExecutionYear()) {
-		    extraCurricularEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
-		}
 	    }
 	}
 	row.setCell(printDouble(extraCurricularEcts));
