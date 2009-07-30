@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -1456,7 +1457,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     public boolean isSourceOfAnyCreditsInCurriculum() {
-	for (final InternalEnrolmentWrapper enrolmentWrapper : this.getEnrolmentWrappers()) {
+	for (final InternalEnrolmentWrapper enrolmentWrapper : getEnrolmentWrappers()) {
 	    if (enrolmentWrapper.getCredits().hasAnyDismissalInCurriculum()) {
 		return true;
 	    }
