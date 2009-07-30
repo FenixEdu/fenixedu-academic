@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -277,7 +278,7 @@ public class SearchPerson extends FenixService {
 	    final Teacher teacher = Teacher.readByNumber(searchParameters.getMechanoGraphicalNumber());
 	    final Employee employee = Employee.readByNumber(searchParameters.getMechanoGraphicalNumber());
 	    final Student student = Student.readStudentByNumber(searchParameters.getMechanoGraphicalNumber());
-	    persons = new ArrayList<Person>();
+	    persons = new TreeSet<Person>();
 	    if (teacher != null) {
 		persons.add(teacher.getPerson());
 	    }
