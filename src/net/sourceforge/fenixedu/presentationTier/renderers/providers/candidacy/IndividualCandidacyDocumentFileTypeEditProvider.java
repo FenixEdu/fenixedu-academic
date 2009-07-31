@@ -49,8 +49,7 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	    }
 
-	    if (individualCandidacyProcess.getCandidacy().getPrecedentDegreeInformation().isExternal()
-		    && individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	    }
 

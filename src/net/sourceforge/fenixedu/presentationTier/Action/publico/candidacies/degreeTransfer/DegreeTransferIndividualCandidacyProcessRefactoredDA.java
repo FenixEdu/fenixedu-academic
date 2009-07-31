@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -110,13 +109,6 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 	bean.setCandidacyProcess(candidacyProcess);
 	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
-
-	bean.getPersonBean().setName("Anil Mamede Ali Kassamali");
-	bean.getPersonBean().setAddress("Rua Vasco Da Gama nº4");
-	bean.getPersonBean().setArea("Odivelas");
-	bean.getPersonBean().setAreaCode("2675-460");
-	bean.getPersonBean().setGender(Gender.MALE);
-	bean.getPersonBean().setPhone("939584538");
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	bean.getPersonBean().setEmail(candidacyHashCode.getEmail());
@@ -277,7 +269,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-	return "link.candidacy.information.english.transfer.degreeTransfer";
+	return "link.candidacy.information.english.degreeTransfer";
     }
 
 }

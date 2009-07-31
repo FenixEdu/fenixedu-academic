@@ -64,7 +64,12 @@
 </p>
 
 <p class="mtop15"><span><bean:message key="message.fields.required" bundle="CANDIDATE_RESOURCES"/></span></p>
-<p><em><bean:message key="message.national.candidates.must.fill.social.security.number" bundle="CANDIDATE_RESOURCES"/></em></p>
+
+<% 
+	if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+%>
+	<p><em><bean:message key="message.national.candidates.must.fill.social.security.number" bundle="CANDIDATE_RESOURCES"/></em></p>
+<% 	} %>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
 

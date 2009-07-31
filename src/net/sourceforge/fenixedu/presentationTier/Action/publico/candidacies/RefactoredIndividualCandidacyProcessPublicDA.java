@@ -460,4 +460,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	}
     }
 
+    public ActionForward backCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("show-candidacy-creation-page");
+    }
+
 }

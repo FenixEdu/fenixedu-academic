@@ -889,6 +889,7 @@
 	
 	<definition name="show.application.submission.conditions" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/applicationSubmissionConditions.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="show.application.access.recovery.form" extends="definition.candidacy.process">
@@ -903,10 +904,12 @@
 	<!--  Degree Change -->
     <definition name="degree.change.candidacy.creation.page" extends="definition.candidacy.process">
     	<put name="body" value="/publico/candidacy/degreechange/createCandidacyPartOne.jsp"/>
+    	<put name="hideLanguage" value="true" />
     </definition>    
 	
 	<definition name="degree.change.candidacy.continue.creation" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreechange/createCandidacyPartTwo.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.change.candidacy.process.intro" extends="definition.candidacy.process">
@@ -929,19 +932,18 @@
 
 	<definition name="degree.change.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacyDocuments.jsp"/>
-	</definition>
-
-	<definition name="degree.change.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/degreechange/viewCandidacy.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<!--  Degree Transfer -->
     <definition name="degree.transfer.candidacy.creation.page" extends="definition.candidacy.process">
     	<put name="body" value="/publico/candidacy/degreeTransfer/createCandidacyPartOne.jsp"/>
+    	<put name="hideLanguage" value="true" />
     </definition>    
 
 	<definition name="degree.transfer.candidacy.continue.creation" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeTransfer/createCandidacyPartTwo.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.transfer.candidacy.process.intro" extends="definition.candidacy.process">
@@ -954,6 +956,7 @@
 	
 	<definition name="degree.transfer.edit.candidacy" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacy.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<definition name="degree.transfer.edit.candidacy.habilitations" extends="definition.candidacy.process">
@@ -963,11 +966,13 @@
 	
 	<definition name="degree.transfer.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacyDocuments.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 
 	<!--  Degree Candidacy For Graduated Person -->
     <definition name="degree.candidacy.for.graduated.person.candidacy.creation.page" extends="definition.candidacy.process">
     	<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/createCandidacyPartOne.jsp"/>
+    	<put name="hideLanguage" value="true" />
     </definition>    
 
     <definition name="degree.candidacy.for.graduated.person.candidacy.continue.creation" extends="definition.candidacy.process">
@@ -981,6 +986,7 @@
 	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacy.jsp"/>
+		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy.documents" extends="definition.candidacy.process">

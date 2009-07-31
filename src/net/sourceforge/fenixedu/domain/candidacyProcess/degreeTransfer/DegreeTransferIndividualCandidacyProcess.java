@@ -506,7 +506,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	}
 
-	if (!this.getCandidacy().isCandidacyInternal()
+	if (!getCandidacy().hasStudent()
 		&& getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	}

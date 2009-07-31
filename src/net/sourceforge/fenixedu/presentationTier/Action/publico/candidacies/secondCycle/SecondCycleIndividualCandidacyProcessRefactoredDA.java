@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -113,13 +112,6 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 	bean.setCandidacyProcess(candidacyProcess);
 	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
-
-	bean.getPersonBean().setName("Anil Mamede Ali Kassamali");
-	bean.getPersonBean().setAddress("Rua Vasco Da Gama nº4");
-	bean.getPersonBean().setArea("Odivelas");
-	bean.getPersonBean().setAreaCode("2675-460");
-	bean.getPersonBean().setGender(Gender.MALE);
-	bean.getPersonBean().setPhone("939584538");
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	bean.getPersonBean().setEmail(candidacyHashCode.getEmail());
