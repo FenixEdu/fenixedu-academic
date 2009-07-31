@@ -474,9 +474,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
 	    final PhdProgramCandidacyProcess candidacyProcess = process.getCandidacyProcess();
-	    if (candidacyProcess.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)
-		    || candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+	    if (candidacyProcess.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		return;
+	    }
 
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+		    && candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
 		return;
 	    }
 

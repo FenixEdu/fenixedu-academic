@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 
@@ -265,15 +266,23 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 
     public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
 	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
+
+	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
+	stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
+
 	request.setAttribute("documentToUpload", bean);
+	request.setAttribute("stateBean", stateBean);
+
 	return mapping.findForward("manageCandidacyReview");
     }
 
     public ActionForward uploadCandidacyReviewInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("documentToUpload", getRenderedObject("documentToUpload"));
+	request.setAttribute("stateBean", getRenderedObject("stateBean"));
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("manageCandidacyReview");
     }
@@ -282,7 +291,10 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("documentToUpload");
-	RenderUtils.invalidateViewState();
+
+	if (!bean.hasAnyInformation()) {
+	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
+	}
 
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), UploadCandidacyReview.class, Collections.singletonList(bean));
@@ -291,11 +303,25 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    bean.removeFile();
-	    request.setAttribute("documentToUpload", bean);
-	    return mapping.findForward("manageCandidacyReview");
+	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
 	}
 
+	RenderUtils.invalidateViewState();
 	return manageCandidacyReview(mapping, actionForm, request, response);
+    }
+
+    public ActionForward requestRatifyCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    final PhdProgramCandidacyProcess process = getProcess(request);
+	    ExecuteProcessActivity.run(process, RequestRatifyCandidacy.class, getRenderedObject("stateBean"));
+	    return viewIndividualProgramProcess(request, process);
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
+	}
     }
 
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,

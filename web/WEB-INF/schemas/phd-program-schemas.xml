@@ -354,13 +354,13 @@
 </schema>
 
 <schema name="PhdCandidacyDocumentUploadBean.review.document" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean" bundle="PHD_RESOURCES">
-	<slot name="remarks">
-		<property name="maxLength" value="100" />
-		<property name="size" value="20" />
-	</slot>
 	<slot name="file">
 		<property name="fileNameSlot" value="filename"/>
 		<property name="size" value="20"/>
+	</slot>
+	<slot name="remarks">
+		<property name="maxLength" value="100" />
+		<property name="size" value="20" />
 	</slot>
 </schema>
 

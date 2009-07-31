@@ -57,35 +57,37 @@
 <br/>
 
 <%--  ### Documents  ### --%>
-<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 
-<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		
-		<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
-		<fr:property name="key(view)" value="label.view"/>
-		<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-		<fr:property name="order(view)" value="0" />
-		<fr:property name="module(view)" value="" />
-		<fr:property name="hasContext(view)" value="true" />
+<logic:notEmpty name="process" property="candidacyReviewDocuments">
+	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
+	
+	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
-		<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteCandidacyReview&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
-		<fr:property name="key(delete)" value="label.delete"/>
-		<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-		<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />
-		<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-		<fr:property name="order(delete)" value="1" />
-		
-		<fr:property name="sortBy" value="documentType=asc" />
-	</fr:layout>
-</fr:view>
-
+			<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
+			<fr:property name="key(view)" value="label.view"/>
+			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
+			<fr:property name="order(view)" value="0" />
+			<fr:property name="module(view)" value="" />
+			<fr:property name="hasContext(view)" value="true" />
+				
+			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteCandidacyReview&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
+			<fr:property name="key(delete)" value="label.delete"/>
+			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
+			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />
+			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+			<fr:property name="order(delete)" value="1" />
+			
+			<fr:property name="sortBy" value="documentType=asc" />
+		</fr:layout>
+	</fr:view>
+	<br/>
+</logic:notEmpty>
 <%--  ### End Of Documents  ### --%>
-<br/><br/>
 
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<fr:form action="/phdProgramCandidacyProcess.do?method=uploadCandidacyReview" encoding="multipart/form-data">
+<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
   	<input type="hidden" name="method" value="" />
   	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
   	
@@ -102,10 +104,28 @@
 		</fr:layout>
 	</fr:edit>
 	
-<%--  ### Buttons (e.g. Submit)  ### --%>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadCandidacyReview';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
+</fr:form>
 
+	<br />
+	<br />
+	<br />
+	<br />
+
+<fr:form action="/phdProgramCandidacyProcess.do?method=requestRatifyCandidacy">
+  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
+
+	<strong><bean:message key="label.phd.request.ratify.candidacy.question" bundle="PHD_RESOURCES" /></strong>
+	<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+	</fr:edit>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
+	</p>
+	
 </fr:form>
 
 <br/><br/>

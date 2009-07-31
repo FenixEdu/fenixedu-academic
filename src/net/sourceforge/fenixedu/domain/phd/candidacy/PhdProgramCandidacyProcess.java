@@ -151,6 +151,25 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class RequestRatifyCandidacy extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
+	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
+		    bean.getRemarks());
+	    return process;
+	}
+
+    }
+
     static public class RatifyCandidacy extends PhdActivity {
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -235,6 +254,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new EditCandidacyDate());
 	activities.add(new AddCandidacyReferees());
 	activities.add(new ValidatedByCandidate());
+
+	activities.add(new RequestRatifyCandidacy());
 	activities.add(new RatifyCandidacy());
 
 	activities.add(new RequestCandidacyReview());
@@ -409,6 +430,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	setWhenRatified(bean.getWhenRatified());
 	addDocument(bean.getRatificationFile(), responsible);
+	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
     }
 
     public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
