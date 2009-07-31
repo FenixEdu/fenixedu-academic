@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # -----------------------------------------------------------------------------
 #
@@ -43,5 +42,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Updating Phd Alerts Tables" updates.sql
 
