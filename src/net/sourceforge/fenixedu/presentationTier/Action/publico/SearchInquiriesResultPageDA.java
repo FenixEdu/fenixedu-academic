@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.inquiries.teacher.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -95,10 +96,15 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 
 	Collection<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 	for (StudentInquiriesCourseResult studentInquiriesCourseResult : executionDegree.getStudentInquiriesCourseResults()) {
-	    final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
-	    if (publicDisclosure != null && publicDisclosure.booleanValue() && studentInquiriesCourseResult.hasExecutionCourse()
-		    && studentInquiriesCourseResult.getExecutionCourse().getExecutionPeriod() == executionSemester) {
-		executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
+	    final ExecutionCourse executionCourse = studentInquiriesCourseResult.getExecutionCourse();
+	    if (executionCourse != null && executionCourse.getExecutionPeriod() == executionSemester) {
+		final Boolean publicDisclosure = studentInquiriesCourseResult.getPublicDisclosure();
+		final TeachingInquiry responsibleTeachingInquiry = executionCourse.getResponsibleTeachingInquiry();
+		if ((publicDisclosure != null && publicDisclosure.booleanValue())
+			|| (responsibleTeachingInquiry != null && responsibleTeachingInquiry
+				.getResultsDisclosureToAcademicComunity())) {
+		    executionCourses.add(studentInquiriesCourseResult.getExecutionCourse());
+		}
 	    }
 	}
 	Collections.sort((List<ExecutionCourse>) executionCourses, ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
