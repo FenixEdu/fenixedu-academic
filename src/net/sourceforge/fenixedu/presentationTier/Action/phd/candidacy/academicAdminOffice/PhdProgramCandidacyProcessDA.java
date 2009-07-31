@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
+package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice;
 
 import java.util.Arrays;
 import java.util.Collection;
