@@ -1012,19 +1012,14 @@
 </schema>
 
 
-<schema name="PhdAlert.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">	
+<schema name="PhdAlert.view" type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlert" bundle="PHD_RESOURCES">
 	
-	<slot name="subject" />
-	
-	<slot name="body" />
-	
-	<slot name="sendEmail" />
-	
-	<slot name="targetGroup.name"/>
+	<slot name="toSendMail" />
+		
+	<slot name="description"/>
 	
 	<slot name="systemAlert"/>
 	
-	<slot name="description"/>
 	
 </schema>
 
@@ -1036,7 +1031,7 @@
 	
 	<slot name="body" />
 	
-	<slot name="taskPerformed" />
+	<slot name="readed" />
 	
 </schema>
 
@@ -1047,7 +1042,7 @@
 	
 	<slot name="body" />
 	
-	<slot name="taskPerformed" />
+	<slot name="readed" />
 	
 </schema>
 

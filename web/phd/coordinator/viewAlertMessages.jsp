@@ -37,13 +37,13 @@
 				<fr:property name="bundle(viewProcess)" value="PHD_RESOURCES"/>
 				<fr:property name="order(viewProcess)" value="0"/>
 
-				<fr:property name="linkFormat(markTaskAsPerformed)" value="/phdIndividualProgramProcess.do?method=markAlertMessageTaskAsPerformed&global=true&processId=${process.externalId}&alertMessageId=${externalId}"/>
-				<fr:property name="key(markTaskAsPerformed)" value="label.mark.task.as.performed"/>
-				<fr:property name="bundle(markTaskAsPerformed)" value="PHD_RESOURCES"/>
-				<fr:property name="order(markTaskAsPerformed)" value="1"/>
-				<fr:property name="visibleIfNot(markTaskAsPerformed)" value="taskPerformed"/>
-				<fr:property name="confirmationKey(markTaskAsPerformed)" value="message.confirm.alertMessage.mark.task.as.performed" />
-				<fr:property name="confirmationBundle(markTaskAsPerformed)" value="PHD_RESOURCES" />
+				<fr:property name="linkFormat(markAsReaded)" value="/phdIndividualProgramProcess.do?method=markAlertMessageAsReaded&global=true&processId=${process.externalId}&alertMessageId=${externalId}"/>
+				<fr:property name="key(markAsReaded)" value="label.mark.alert.message.as.readed"/>
+				<fr:property name="bundle(markAsReaded)" value="PHD_RESOURCES"/>
+				<fr:property name="order(markAsReaded)" value="1"/>
+				<fr:property name="visibleIfNot(markAsReaded)" value="readed"/>
+				<fr:property name="confirmationKey(markAsReaded)" value="message.confirm.alertMessage.mark.as.readed" />
+				<fr:property name="confirmationBundle(markAsReaded)" value="PHD_RESOURCES" />
 
 		</fr:layout>
 	</fr:view>	

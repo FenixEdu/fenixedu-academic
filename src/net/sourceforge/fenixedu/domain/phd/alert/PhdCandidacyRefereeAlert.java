@@ -26,7 +26,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     public PhdCandidacyRefereeAlert(final PhdCandidacyReferee referee) {
 	this();
 	check(referee, "error.PhdCandidacyRefereeAlert.invalid.referee");
-	init(referee.getIndividualProgramProcess(), null, generateSubject(referee), generateBody(referee), true);
+	init(referee.getIndividualProgramProcess(), generateSubject(referee), generateBody(referee));
 	setReferee(referee);
     }
 
@@ -106,6 +106,11 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     protected void disconnect() {
 	removeReferee();
 	super.disconnect();
+    }
+
+    @Override
+    public boolean isToSendMail() {
+	return true;
     }
 
 }

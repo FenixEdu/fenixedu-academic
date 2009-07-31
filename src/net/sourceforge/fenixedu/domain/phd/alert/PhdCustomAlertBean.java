@@ -7,9 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
@@ -18,7 +17,7 @@ public class PhdCustomAlertBean implements Serializable {
 
     static enum PhdAlertTargetGroupType {
 
-	ACADEMIC_ADMINISTRATIVE_OFFICE_PERSONS,
+	MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS,
 
 	ONLY_FOR_ME;
 
@@ -107,9 +106,8 @@ public class PhdCustomAlertBean implements Serializable {
     public Group getTargetGroup() {
 	switch (getTargetGroupType()) {
 
-	case ACADEMIC_ADMINISTRATIVE_OFFICE_PERSONS:
-	    return new RoleGroup(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
-
+	case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
+	    return new MasterDegreeAdministrativeOfficeGroup();
 	case ONLY_FOR_ME:
 	    return new PersonGroup(AccessControl.getPerson());
 

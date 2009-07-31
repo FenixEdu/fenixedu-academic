@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -840,11 +841,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
-    public Set<PhdAlertMessage> getAlertMessagesWithTasksToPerform() {
+    public Set<PhdAlertMessage> getUnreadedAlertMessagesFor(final Person person) {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
 	for (final PhdAlertMessage each : getAlertMessages()) {
-	    if (!each.isTaskPerformed()) {
+	    if (!each.isReaded() && each.isFor(person)) {
 		result.add(each);
 	    }
 	}
@@ -872,6 +873,24 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getStudyPlanRelevantDocuments();
     }
 
+    public boolean isRegistrationFormalized() {
+	return getWhenFormalizedRegistration() != null;
+    }
+
+    private boolean hasAnyActiveAlertFor(Class<? extends PhdAlert> type) {
+	for (final PhdAlert alert : getActiveAlerts()) {
+	    if (alert.getClass().equals(type)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean hasAnyRegistrationFormalizationActiveAlert() {
+	return hasAnyActiveAlertFor(PhdRegistrationFormalizationAlert.class);
+    }
+
     public PhdIndividualProgramProcessState getActiveState() {
 	if (!hasAnyStates()) {
 	    return null;
@@ -879,4 +898,5 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	final PhdProgramProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
 	return (state != null) ? state.getType() : null;
     }
+
 }

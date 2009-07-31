@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 
 import org.joda.time.LocalDate;
 
@@ -433,7 +434,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	setWhenRatified(bean.getWhenRatified());
 	addDocument(bean.getRatificationFile(), responsible);
-	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
+
+	if (!getIndividualProgramProcess().hasAnyRegistrationFormalizationActiveAlert()) {
+	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess());
+	}
+	
+		createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
+
     }
 
     public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {

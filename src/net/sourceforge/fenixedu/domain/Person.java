@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
@@ -3272,34 +3271,34 @@ public class Person extends Person_Base {
 	    if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)) {
 		responsible = executionCourses.contains(executionCourse.getIdInternal());
 		if (!professorship.getResponsibleFor().equals(Boolean.valueOf(responsible)) && this.getTeacher() != null) {
-		    ResponsibleForValidator.getInstance().validateResponsibleForList(this.getTeacher(), executionCourse, professorship);
+		    ResponsibleForValidator.getInstance().validateResponsibleForList(this.getTeacher(), executionCourse,
+			    professorship);
 		    professorship.setResponsibleFor(responsible);
 		}
 	    }
 	}
     }
-    
+
     @SuppressWarnings("unchecked")
-    public List<Professorship> getResponsableProfessorships(){
+    public List<Professorship> getResponsableProfessorships() {
 	List<Professorship> result = new ArrayList<Professorship>();
-	for(Professorship professorship : getProfessorships()){
-	    if(professorship.isResponsibleFor()){
+	for (Professorship professorship : getProfessorships()) {
+	    if (professorship.isResponsibleFor()) {
 		result.add(professorship);
 	    }
 	}
 	return result;
     }
-    
+
     public boolean hasProfessorshipForExecutionCourse(final ExecutionCourse executionCourse) {
 	return (getProfessorshipByExecutionCourse(executionCourse) != null);
     }
 
-
-    public Set<PhdAlertMessage> getPhdAlertMessagesWithTasksToPerfom() {
+    public Set<PhdAlertMessage> getUnreadedPhdAlertMessages() {
 	final Set<PhdAlertMessage> result = new HashSet<PhdAlertMessage>();
 
 	for (final PhdAlertMessage message : getPhdAlertMessages()) {
-	    if (!message.isTaskPerformed()) {
+	    if (!message.isReaded()) {
 		result.add(message);
 	    }
 	}
@@ -3307,4 +3306,3 @@ public class Person extends Person_Base {
 	return result;
     }
 }
-

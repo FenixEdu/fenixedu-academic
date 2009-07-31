@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu._development.LogLevel;
@@ -99,6 +100,12 @@ public abstract class DomainObject extends DomainObject_Base {
 
     protected void check(final Object[] obj, final String message, final String... args) {
 	if (obj == null || obj.length == 0) {
+	    throw new DomainException(message, args);
+	}
+    }
+
+    protected void check(final Collection<Object> obj, final String message, final String... args) {
+	if (obj == null || obj.size() == 0) {
 	    throw new DomainException(message, args);
 	}
     }

@@ -6510,6 +6510,8 @@ class phd.PhdIndividualProgramProcess extends caseHandling.Process {
 	String otherCollaborationType;
 	Boolean qualificationExamsRequired;
 	Boolean qualificationExamsPerformed;
+	LocalDate whenFormalizedRegistration;
+	LocalDate whenStartedStudies;
 }
 
 class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
@@ -6586,10 +6588,8 @@ class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgr
 }
 
 class phd.alert.PhdAlert extends DomainObject {
-	Group targetGroup;
 	MultiLanguageString subject;
 	MultiLanguageString body;
-	Boolean sendEmail;
 	Boolean active;
 	DateTime fireDate;
 }
@@ -6599,16 +6599,22 @@ class phd.alert.PhdAlert extends DomainObject {
 	}
 	
 	class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
+		Group targetGroup;
+		Boolean sendEmail;
 		LocalDate whenToFire;
 	}
 	
 	class phd.alert.PhdCandidacyRefereeAlert extends phd.alert.PhdAlert {
 	}
 	
+	class phd.alert.PhdRegistrationFormalizationAlert extends phd.alert.PhdAlert {
+		
+	}
+	
 class phd.alert.PhdAlertMessage extends DomainObject {
 	MultiLanguageString subject;
 	MultiLanguageString body;
-	Boolean taskPerformed;
+	Boolean readed;
 }
 
 class phd.PhdStudyPlan extends DomainObject {
@@ -6876,8 +6882,18 @@ relation RootDomainObjectPhdAlertMessage {
 }
 
 relation PhdAlertMessagePerson {
-	Person playsRole person;
+	Person playsRole persons {
+		multiplicity *;
+	}
 	phd.alert.PhdAlertMessage playsRole phdAlertMessages {
+		multiplicity *;
+	}
+}
+
+relation PhdAlertMessagePersonWhoMarkedAsReaded {
+	Person playsRole personWhoMarkedAsReaded;
+	
+	phd.alert.PhdAlertMessage playsRole phdAlertMessagesMarkedAsReaded {
 		multiplicity *;
 	}
 }

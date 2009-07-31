@@ -1,17 +1,11 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
-import java.util.HashSet;
-import java.util.Set;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.joda.time.DateTime;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class PhdAlert extends PhdAlert_Base {
@@ -22,28 +16,18 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	setRootDomainObjectForActivePhdAlerts(RootDomainObject.getInstance());
     }
 
-    protected void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendEmail) {
-	checkParameters(process, targetGroup, subject, body, sendEmail);
+    protected void init(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
+	checkParameters(process, subject, body);
 	super.setProcess(process);
-	super.setTargetGroup(targetGroup);
 	super.setSubject(subject);
 	super.setBody(body);
-	super.setSendEmail(sendEmail);
 	super.setActive(Boolean.TRUE);
     }
 
-    protected void checkParameters(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendEmail) {
+    protected void checkParameters(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
 	check(process, "error.phd.alert.PhdAlert.process.cannot.be.null");
 	check(subject, "error.phd.alert.PhdAlert.subject.cannot.be.null");
 	check(body, "error.phd.alert.PhdAlert.body.cannot.be.null");
-	check(sendEmail, "error.phd.alert.PhdAlert.sendEmail.cannot.be.null");
-    }
-
-    @Override
-    public void setTargetGroup(Group targetGroup) {
-	throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.targetGroup");
     }
 
     @Override
@@ -57,11 +41,6 @@ abstract public class PhdAlert extends PhdAlert_Base {
     }
 
     @Override
-    public void setSendEmail(Boolean sendEmail) {
-	throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.sendEmail");
-    }
-
-    @Override
     public void setProcess(PhdIndividualProgramProcess process) {
 	throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.process");
     }
@@ -71,14 +50,10 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlert.cannot.modify.active");
     }
 
-    public boolean isToSendEmail() {
-	return getSendEmail().booleanValue();
-    }
-
     protected String buildMailBody() {
 	final StringBuilder result = new StringBuilder();
 
-	for (final String eachContent : getBody().getAllContents()) {
+	for (final String eachContent : getFormattedBody().getAllContents()) {
 	    result.append(eachContent).append("\n").append(" ------------------------- ");
 	}
 
@@ -88,10 +63,14 @@ abstract public class PhdAlert extends PhdAlert_Base {
 
     }
 
+    protected MultiLanguageString getFormattedBody() {
+	return super.getBody();
+    }
+
     protected String buildMailSubject() {
 	final StringBuilder result = new StringBuilder();
 
-	for (final String eachContent : getSubject().getAllContents()) {
+	for (final String eachContent : getFormattedSubject().getAllContents()) {
 	    result.append(eachContent).append(" / ");
 	}
 
@@ -100,6 +79,10 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	}
 
 	return result.toString();
+    }
+
+    protected MultiLanguageString getFormattedSubject() {
+	return super.getSubject();
     }
 
     public void fire() {
@@ -113,19 +96,6 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	if (isToDiscard()) {
 	    discard();
 	}
-    }
-
-    protected void generateMessage() {
-	final Set<Person> toSendEmail = new HashSet<Person>();
-	for (final Person person : getTargetGroup().getElements()) {
-	    if (isToSendEmail()) {
-		toSendEmail.add(person);
-	    }
-
-	    new PhdAlertMessage(getProcess(), person, getSubject(), getBody());
-	}
-
-	new Message(getRootDomainObject().getSystemSender(), new Recipient(toSendEmail), buildMailSubject(), buildMailBody());
     }
 
     public void discard() {
@@ -143,6 +113,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 
     protected void disconnect() {
 	super.setProcess(null);
+	removeRootDomainObjectForActivePhdAlerts();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
@@ -155,10 +126,24 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	return getFireDate() != null;
     }
 
+    @Override
+    public MultiLanguageString getBody() {
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlert.use.getFormattedBody.instead");
+    }
+
+    @Override
+    public MultiLanguageString getSubject() {
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlert.use.getFormattedSubject.instead");
+    }
+
     abstract public String getDescription();
 
     abstract protected boolean isToDiscard();
 
     abstract protected boolean isToFire();
+
+    abstract protected void generateMessage();
+
+    abstract public boolean isToSendMail();
 
 }

@@ -1,7 +1,16 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.LocalDate;
 
@@ -27,17 +36,16 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     private void init(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendEmail, LocalDate fireDate) {
-	check(fireDate, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.fireDate.cannot.be.null");
-	super.init(process, targetGroup, subject, body, sendEmail);
-	super.setWhenToFire(fireDate);
-    }
+	    MultiLanguageString body, Boolean sendEmail, LocalDate whenToFire) {
 
-    @Override
-    protected void checkParameters(PhdIndividualProgramProcess process, Group targetGroup, MultiLanguageString subject,
-	    MultiLanguageString body, Boolean sendEmail) {
+	super.init(process, subject, body);
+
+	check(whenToFire, "error.net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert.whenToFire.cannot.be.null");
 	check(targetGroup, "error.phd.alert.PhdAlert.targetGroup.cannot.be.null");
-	super.checkParameters(process, targetGroup, subject, body, sendEmail);
+	check(sendEmail, "error.phd.alert.PhdAlert.sendEmail.cannot.be.null");
+	super.setWhenToFire(whenToFire);
+	super.setSendEmail(sendEmail);
+	super.setTargetGroup(targetGroup);
     }
 
     @Override
@@ -57,11 +65,45 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     @Override
     public String getDescription() {
-	return getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT);
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getDefaultLocale());
+
+	return MessageFormat.format(bundle.getString("message.phd.alert.custom.description"), getTargetGroup().getName(),
+		getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(), getFormattedBody());
     }
 
     public void delete() {
 	disconnect();
+
+    }
+
+    @Override
+    protected void generateMessage() {
+
+	for (final Person person : getTargetGroup().getElements()) {
+	    new PhdAlertMessage(getProcess(), person, getFormattedSubject(), getFormattedBody());
+	}
+
+	if (isToSendMail()) {
+	    new Message(getRootDomainObject().getSystemSender(), new Recipient(getTargetGroup().getElements()),
+		    buildMailSubject(), buildMailBody());
+
+	}
+
+    }
+
+    @Override
+    public void setTargetGroup(Group targetGroup) {
+	throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.targetGroup");
+    }
+
+    @Override
+    public void setSendEmail(Boolean sendEmail) {
+	throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.sendEmail");
+    }
+
+    @Override
+    public boolean isToSendMail() {
+	return getSendEmail().booleanValue();
     }
 
 }

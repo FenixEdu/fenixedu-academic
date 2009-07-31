@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
 import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
@@ -235,6 +236,9 @@ public class GroupBuilderRegistry {
 	register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());
 	register("unitMembersGroup", UnitMembersGroup.class, new UnitMembersGroup.Builder());
 	register("vigilancyGroup", VigilancyGroup.class, new VigilancyGroup.Builder());
+	register("masterDegreeAdministrativeOfficeGroup", MasterDegreeAdministrativeOfficeGroup.class,
+		new MasterDegreeAdministrativeOfficeGroup.Builder());
+
 	registerGroupsWithNoArguments();
     }
 

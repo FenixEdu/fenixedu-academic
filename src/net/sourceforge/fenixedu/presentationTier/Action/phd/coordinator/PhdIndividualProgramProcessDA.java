@@ -45,7 +45,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	final PhdIndividualProgramProcess process = getProcess(request);
 
 	if (process != null) {
-	    request.setAttribute("processAlertMessagesToNotify", process.getAlertMessagesWithTasksToPerform());
+	    request.setAttribute("processAlertMessagesToNotify", process.getUnreadedAlertMessagesFor(getLoggedPerson(request)));
 
 	}
 
@@ -93,10 +93,10 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("viewAlertMessages");
     }
 
-    public ActionForward markAlertMessageTaskAsPerformed(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward markAlertMessageAsReaded(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	getAlertMessage(request).setTaskPerformed(true);
+	getAlertMessage(request).markAsReaded(getLoggedPerson(request));
 
 	boolean globalMessagesView = StringUtils.isEmpty(request.getParameter("global"))
 		|| request.getParameter("global").equals("true") ? true : false;

@@ -26,4 +26,15 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 	throw new RuntimeException("TODO!!");
     }
 
+    @Override
+    protected void generateMessage() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean isToSendMail() {
+	return true;
+    }
+
 }
