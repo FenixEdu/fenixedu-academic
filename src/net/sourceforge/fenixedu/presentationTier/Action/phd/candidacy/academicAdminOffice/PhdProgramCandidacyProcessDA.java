@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
@@ -31,7 +30,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -62,7 +61,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess")
 
 })
-public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
+public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -264,20 +263,23 @@ public class PhdProgramCandidacyProcessDA extends PhdProcessDA {
 	}
     }
 
-    public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
-	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
-
-	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
-	stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
-
-	request.setAttribute("documentToUpload", bean);
-	request.setAttribute("stateBean", stateBean);
-
-	return mapping.findForward("manageCandidacyReview");
-    }
+    // XPTO public ActionForward manageCandidacyReview(ActionMapping mapping,
+    // ActionForm actionForm, HttpServletRequest request,
+    // HttpServletResponse response) {
+    //
+    // final PhdCandidacyDocumentUploadBean bean = new
+    // PhdCandidacyDocumentUploadBean();
+    // bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
+    //
+    // final PhdProgramCandidacyProcessStateBean stateBean = new
+    // PhdProgramCandidacyProcessStateBean();
+    // stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
+    //
+    // request.setAttribute("documentToUpload", bean);
+    // request.setAttribute("stateBean", stateBean);
+    //
+    // return mapping.findForward("manageCandidacyReview");
+    // }
 
     public ActionForward uploadCandidacyReviewInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {

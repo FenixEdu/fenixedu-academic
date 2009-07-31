@@ -402,6 +402,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public PhdProgramCandidacyProcessState getActiveState() {
+	if (!hasAnyStates()) {
+	    return null;
+	}
 	final PhdCandidacyProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
 	return (state != null) ? state.getType() : null;
     }

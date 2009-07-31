@@ -808,11 +808,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	if (phdIndividualProgramProcess.hasPhdProgram()) {
 	    return searchBean.getPhdPrograms().contains(phdIndividualProgramProcess.getPhdProgram());
-	} else {
+	} else if (phdIndividualProgramProcess.hasPhdProgramFocusArea()) {
 	    return !CollectionUtils.intersection(searchBean.getPhdPrograms(),
 		    phdIndividualProgramProcess.getPhdProgramFocusArea().getPhdPrograms()).isEmpty();
+	} else {
+	    return false;
 	}
-
     }
 
     static private boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
@@ -872,6 +873,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdIndividualProgramProcessState getActiveState() {
+	if (!hasAnyStates()) {
+	    return null;
+	}
 	final PhdProgramProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
 	return (state != null) ? state.getType() : null;
     }
