@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # -----------------------------------------------------------------------------
 #
@@ -42,4 +41,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Correct fire date column type from phd alert table" changePhdAlertTable.sql
 
