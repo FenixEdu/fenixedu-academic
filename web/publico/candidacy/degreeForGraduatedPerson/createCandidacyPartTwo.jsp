@@ -231,7 +231,7 @@
 			</fr:layout>
 		</fr:edit>
 
-		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
+		<h2 style="margin-top: 1em;"><bean:message key="title.master.degree.change.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 			<div class="flowerror mtop1">
 			<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 				name="individualCandidacyProcessBean"
