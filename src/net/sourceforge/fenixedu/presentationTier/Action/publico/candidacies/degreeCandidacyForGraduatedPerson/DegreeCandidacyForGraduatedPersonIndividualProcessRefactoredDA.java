@@ -262,4 +262,14 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 	return backToViewCandidacyInternal(mapping, form, request, response);
     }
 
+    @Override
+    protected String getCandidacyInformationLinkDefaultLanguage() {
+	return "link.candidacy.information.default.degreeCandidacyForGraduatedPerson";
+    }
+
+    @Override
+    protected String getCandidacyInformationLinkEnglish() {
+	return "link.candidacy.information.english.degreeCandidacyForGraduatedPerson";
+    }
+
 }

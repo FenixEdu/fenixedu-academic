@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@ page import="java.util.Locale"%>
+<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 
 <html:xhtml/>
 
@@ -58,8 +60,13 @@
 	<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
 </div>
 </logic:equal>
-<p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
 
+<% 
+	Locale locale = Language.getLocale();
+	if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+%>
+<p><em><bean:message key="message.national.candidates.must.send.vat.number.document" bundle="CANDIDATE_RESOURCES"/></em></p>
+<% 	} %>
 
 <div class="mtop15"><bean:message key="message.nape.contacts" bundle="CANDIDATE_RESOURCES"/></div>
 

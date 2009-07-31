@@ -59,6 +59,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	request.setAttribute("mappingPath", mapping.getPath());
 	request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
 	request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
+	request.setAttribute("application.information.link.default", bundle
+		.getString(getCandidacyInformationLinkDefaultLanguage()));
+	request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));
 
 	setProcess(request);
 	return super.execute(mapping, actionForm, request, response);
@@ -170,6 +173,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected abstract String getCandidacyNameKey();
+
+    protected abstract String getCandidacyInformationLinkDefaultLanguage();
+
+    protected abstract String getCandidacyInformationLinkEnglish();
 
     public abstract ActionForward viewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response);

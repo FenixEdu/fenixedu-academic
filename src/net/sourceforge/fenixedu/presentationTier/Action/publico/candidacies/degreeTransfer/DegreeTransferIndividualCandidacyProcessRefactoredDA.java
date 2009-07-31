@@ -270,4 +270,14 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 	bean.setPrecedentDegreeInformation(info);
     }
 
+    @Override
+    protected String getCandidacyInformationLinkDefaultLanguage() {
+	return "link.candidacy.information.default.degreeTransfer";
+    }
+
+    @Override
+    protected String getCandidacyInformationLinkEnglish() {
+	return "link.candidacy.information.english.transfer.degreeTransfer";
+    }
+
 }

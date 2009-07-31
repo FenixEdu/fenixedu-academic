@@ -276,4 +276,14 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	return backToViewCandidacyInternal(mapping, form, request, response);
     }
 
+    @Override
+    protected String getCandidacyInformationLinkDefaultLanguage() {
+	return "link.candidacy.information.default.degreeChange";
+    }
+
+    @Override
+    protected String getCandidacyInformationLinkEnglish() {
+	return "link.candidacy.information.english.degreeChange";
+    }
+
 }
