@@ -28,7 +28,7 @@
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-<fr:view schema="PhdIndividualProgramProcess.view" name="process">
+<fr:view schema="PhdIndividualProgramProcess.view.simple" name="process">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>

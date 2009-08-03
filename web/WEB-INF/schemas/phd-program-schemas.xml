@@ -35,8 +35,19 @@
 	<slot name="updatedBy" />
 </schema>
 
+<schema name="PhdIndividualProgramProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+	<slot name="processNumber" />
+	<slot name="person.name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="activeState"/>
+</schema>
+
 <schema name="Coordinator.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
+	<slot name="person.name">
+		<property name="classes" value="bold"/>
+	</slot>
 	<slot name="phdProgram" layout="null-as-label">
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
@@ -46,19 +57,24 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
-	<slot name="person.name">
-		<property name="classes" value="bold"/>
-	</slot>
-	<slot name="whenCreated" />
-	<slot name="whenUpdated" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-	<slot name="activeState"/>
+	<slot name="activeState">
+		<property name="classes" value="bold"/>
+	</slot>
 	<slot name="whenCreated" />
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
+	<slot name="activeStateRemarks"/>
+</schema>
+
+<schema name="PhdProgramCandidacyProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
+	<slot name="activeState">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="activeStateRemarks"/>
 </schema>
 
 <schema name="PhdProgramCandidacyProcessBean.editProgramInformation" 

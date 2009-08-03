@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<logic:present role="COORDINATOR">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -29,27 +29,33 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
+<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 <table>
-  <tr style="vertical-align: top;">
-    <td style="width: 55%">
-    	<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
+  <tr>
+    <td>
+		<fr:view schema="PhdIndividualProgramProcess.view.simple" name="process" property="individualProgramProcess">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
+				<fr:property name="classes" value="tstyle2 thlight mtop10" />
 			</fr:layout>
 		</fr:view>
 	</td>
-    <td>
-	    <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdProgramCandidacyProcess.view" name="process">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-			</fr:layout>
-		</fr:view>
-    </td>
   </tr>
 </table>
 
+<br/>
+
+<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<table>
+  <tr>
+    <td>
+		<fr:view schema="PhdProgramCandidacyProcess.view.simple" name="process">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			</fr:layout>
+		</fr:view>
+	</td>
+  </tr>
+</table>
 
 <%--  ### End Of Context Information  ### --%>
 
@@ -112,7 +118,8 @@
 	<br />
 	<br />
 
-<fr:form action="/phdProgramCandidacyProcess.do?method=requestRatifyCandidacy">
+<fr:form action="/phdProgramCandidacyProcess.do">
+	<input type="hidden" name="method" value="requestRatifyCandidacy" />
   	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
 
 	<strong><bean:message key="label.phd.request.ratify.candidacy.question" bundle="PHD_RESOURCES" /></strong>
@@ -124,8 +131,8 @@
 	</fr:edit>
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacy';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
 	</p>
-	
 </fr:form>
 
 <br/><br/>

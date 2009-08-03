@@ -33,7 +33,7 @@
   <tr style="vertical-align: top;">
     <td style="width: 55%">
     	<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
+		<fr:view schema="PhdIndividualProgramProcess.view.simple" name="process" property="individualProgramProcess">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>
@@ -41,7 +41,7 @@
 	</td>
     <td>
 	    <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdProgramCandidacyProcess.view" name="process">
+		<fr:view schema="PhdProgramCandidacyProcess.view.simple" name="process">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>

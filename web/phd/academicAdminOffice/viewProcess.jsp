@@ -62,18 +62,6 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.editPersonalInformation"/>
 				</html:link>
 			</li>
-			<li>
-				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
-				</html:link>
-			</li>
-			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= UploadCandidacyReview.class %>">
-				<li>
-					<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.manageCandidacyReview"/>
-					</html:link>
-				</li>
-			</phd:activityAvailable>
 			<phd:activityAvailable process="<%= process %>" activity="<%= AddStudyPlan.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=manageStudyPlan" paramId="processId" paramName="process" paramProperty="externalId">
@@ -111,29 +99,52 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessages"/>
 				</html:link>
 			</li>
-			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RequestCandidacyReview.class %>">
-				<li>
-					<html:link action="/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.request.candidacy.review"/>
-				</html:link>
-				</li>
-			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RatifyCandidacy.class %>" >
-				<li>
-					<html:link action="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacy" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.ratifyCandidacy"/>
-					</html:link>
-				</li>
-			</phd:activityAvailable>
 		</ul>
     </td>
   </tr>
 </table>
 
-
-
-
-	
+<br/>
+<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<table>
+  <tr>
+    <td>
+		<fr:view schema="PhdProgramCandidacyProcess.view" name="process" property="candidacyProcess">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop10" />
+			</fr:layout>
+		</fr:view>
+	</td>
+  </tr>
+</table>
+<ul class="operations">
+	<li style="display: inline;">
+		<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
+		</html:link>
+	</li>
+	<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= UploadCandidacyReview.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.manageCandidacyReview"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
+	<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RequestCandidacyReview.class %>">
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.request.candidacy.review"/>
+		</html:link>
+		</li>
+	</phd:activityAvailable>
+	<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RatifyCandidacy.class %>" >
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacy" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.ratifyCandidacy"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
+</ul>	
 
 
 <%--  ### End Of Context Information  ### --%>

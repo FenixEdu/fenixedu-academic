@@ -6,10 +6,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<logic:present role="COORDINATOR">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.candidacy.academicAdminOffice.manageCandidacyDocuments" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -52,10 +52,6 @@
   </tr>
 </table>
 
-
-
-
-
 <%--  ### End Of Context Information  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
@@ -94,35 +90,5 @@
 
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
-
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<fr:form action="/phdProgramCandidacyProcess.do?method=uploadDocuments" encoding="multipart/form-data">
-  	<input type="hidden" name="method" value="" />
-  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
-  	
-  	<strong><bean:message  key="label.phd.add.documents" bundle="PHD_RESOURCES"/></strong>
-	<fr:edit id="documentsToUpload"
-		name="documentsToUpload"
-		schema="PhdCandidacyDocumentUploadBean.edit"
-		action="/phdProgramCandidacyProcess.do?method=uploadDocuments">
-	
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		</fr:layout>
-		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadDocumentsInvalid" />
-	</fr:edit>
-	
-<%--  ### Buttons (e.g. Submit)  ### --%>
-  <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadDocuments';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</fr:form>
-
-<br/><br/>
-
-
-<%--  ### End of Operation Area  ### --%>
-
 
 </logic:present>

@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 
 import org.apache.struts.action.ActionForm;
@@ -74,11 +72,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	}
 
 	return super.execute(mapping, actionForm, request, response);
-    }
-
-    @Override
-    protected PhdProgramCandidacyProcess getProcess(HttpServletRequest request) {
-	return (PhdProgramCandidacyProcess) super.getProcess(request);
     }
 
     // Create Candidacy Steps
@@ -163,7 +156,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    setIsEmployeeAttributeAndMessage(request, getCreateCandidacyProcessBean().getChoosePersonBean().getPerson());
-	    getCreateCandidacyProcessBean().getPersonBean().setPerson(null);
 	    request.setAttribute("createCandidacyBean", getCreateCandidacyProcessBean());
 	    return mapping.findForward("createCandidacy");
 	}
@@ -184,6 +176,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	return mapping.findForward("manageProcesses");
     }
 
+    @Override
     public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -263,69 +256,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	}
     }
 
-    // XPTO public ActionForward manageCandidacyReview(ActionMapping mapping,
-    // ActionForm actionForm, HttpServletRequest request,
-    // HttpServletResponse response) {
-    //
-    // final PhdCandidacyDocumentUploadBean bean = new
-    // PhdCandidacyDocumentUploadBean();
-    // bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
-    //
-    // final PhdProgramCandidacyProcessStateBean stateBean = new
-    // PhdProgramCandidacyProcessStateBean();
-    // stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
-    //
-    // request.setAttribute("documentToUpload", bean);
-    // request.setAttribute("stateBean", stateBean);
-    //
-    // return mapping.findForward("manageCandidacyReview");
-    // }
-
-    public ActionForward uploadCandidacyReviewInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("documentToUpload", getRenderedObject("documentToUpload"));
-	request.setAttribute("stateBean", getRenderedObject("stateBean"));
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("manageCandidacyReview");
-    }
-
-    public ActionForward uploadCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("documentToUpload");
-
-	if (!bean.hasAnyInformation()) {
-	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
-	}
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), UploadCandidacyReview.class, Collections.singletonList(bean));
-	    addSuccessMessage(request, "message.document.uploaded.with.success");
-
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    bean.removeFile();
-	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
-	}
-
-	RenderUtils.invalidateViewState();
-	return manageCandidacyReview(mapping, actionForm, request, response);
-    }
-
-    public ActionForward requestRatifyCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	try {
-	    final PhdProgramCandidacyProcess process = getProcess(request);
-	    ExecuteProcessActivity.run(process, RequestRatifyCandidacy.class, getRenderedObject("stateBean"));
-	    return viewIndividualProgramProcess(request, process);
-
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
-	}
-    }
-
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -388,16 +318,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	    return mapping.findForward("ratifyCandidacy");
 	}
-    }
-
-    public ActionForward viewIndividualProgramProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return viewIndividualProgramProcess(request, getProcess(request));
-    }
-
-    private ActionForward viewIndividualProgramProcess(HttpServletRequest request, final PhdProgramCandidacyProcess process) {
-	return redirect(String.format("/phdIndividualProgramProcess.do?method=viewProcess&processId=%s", process
-		.getIndividualProgramProcess().getExternalId()), request);
     }
 
 }

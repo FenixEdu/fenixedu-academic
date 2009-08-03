@@ -184,6 +184,23 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
 	    return process;
 	}
+    }
+
+    static public class CoordinatorRejectCandidacy extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
+	    process.createState(PhdProgramCandidacyProcessState.REJECTED_BY_COORDINATOR, userView.getPerson(), bean.getRemarks());
+	    return process;
+	}
 
     }
 
@@ -197,7 +214,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
 
-	PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
+	PhdProgramCandidacyProcessState.REJECTED_BY_COORDINATOR);
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -256,11 +273,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new AddCandidacyReferees());
 	activities.add(new ValidatedByCandidate());
 
-	activities.add(new RequestRatifyCandidacy());
-	activities.add(new RatifyCandidacy());
-
 	activities.add(new RequestCandidacyReview());
 	activities.add(new UploadCandidacyReview());
+	activities.add(new CoordinatorRejectCandidacy());
+
+	activities.add(new RequestRatifyCandidacy());
+	activities.add(new RatifyCandidacy());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -402,12 +420,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	new PhdCandidacyProcessState(this, state, person, remarks);
     }
 
+    private PhdCandidacyProcessState getMostRecentState() {
+	return hasAnyStates() ? Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE) : null;
+    }
+
     public PhdProgramCandidacyProcessState getActiveState() {
-	if (!hasAnyStates()) {
-	    return null;
-	}
-	final PhdCandidacyProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
+	final PhdCandidacyProcessState state = getMostRecentState();
 	return (state != null) ? state.getType() : null;
+    }
+
+    public String getActiveStateRemarks() {
+	return getMostRecentState().getRemarks();
     }
 
     public boolean isInState(final PhdProgramCandidacyProcessState state) {
@@ -421,7 +444,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	new PhdProgramCandidacyProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(),
 		each.getFilename(), responsible);
-
     }
 
     public void ratify(RatifyCandidacyBean bean, Person responsible) {

@@ -378,5 +378,15 @@
 		<put name="body" value="/phd/coordinator/viewProcessAlertMessages.jsp"/>
 	</definition>
 	
+	<definition name="phd.manageCandidacyReview" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/candidacy/coordinator/manageCandidacyReview.jsp"/>
+	</definition>
+	
+	<definition name="phd.manageCandidacyDocuments" extends="definition.coordinator.two-column">
+		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
+		<put name="body" value="/phd/candidacy/coordinator/manageCandidacyDocuments.jsp"/>
+	</definition>
+	
 	<!-- End of Phd Module -->    
 </tiles-definitions>
