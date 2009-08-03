@@ -231,6 +231,10 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
+	    if (e.getMessage().equals("error.IndividualCandidacyEvent.invalid.payment.code")) {
+		throw e;
+	    }
+
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("edit-candidacy");

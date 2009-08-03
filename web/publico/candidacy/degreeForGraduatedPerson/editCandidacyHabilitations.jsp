@@ -76,10 +76,10 @@
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
 
-		<h3 style="margin-bottom: 0.5em;"><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>
+		<h3 style="margin-bottom: 0.5em;"><bean:message key="title.degree.candidacy.for.graduated.person.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>
 
 
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.degree.candidacy.for.graduated.person.institution.attended" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 			<fr:edit id="individualCandidacyProcessBean.institutionUnitName"
 				name="individualCandidacyProcessBean"

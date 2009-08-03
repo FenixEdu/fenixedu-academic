@@ -81,8 +81,8 @@
 		
 		<h2 class="mtop1"><bean:message key="title.educational.background" bundle="CANDIDATE_RESOURCES"/></h2>
 
-		<p><strong><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></strong></p>
-		<p style="margin-bottom: 0.5em;"><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
+		<p><strong><bean:message key="title.degree.candidacy.for.graduated.person.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></strong></p>
+		<p style="margin-bottom: 0.5em;"><bean:message key="label.degree.candidacy.for.graduated.person.institution.attended" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></p>
 		<div class="flowerror">
 		<fr:edit id="individualCandidacyProcessBean.institutionUnitName"
 			name="individualCandidacyProcessBean"

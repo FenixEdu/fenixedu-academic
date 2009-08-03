@@ -490,7 +490,8 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
+	if (!getCandidacy().hasStudent()
+		&& getFileForType(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.HABILITATION_CERTIFICATE_DOCUMENT);
 	}
 
@@ -502,7 +503,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
+	if (!getCandidacy().hasStudent() && getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	}
 
@@ -511,7 +512,8 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	}
 
-	if (getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
+	if (!getCandidacy().hasStudent()
+		&& getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	}
 
