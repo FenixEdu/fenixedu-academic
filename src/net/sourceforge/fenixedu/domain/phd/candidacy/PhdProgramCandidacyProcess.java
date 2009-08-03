@@ -186,7 +186,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
-    static public class CoordinatorRejectCandidacy extends PhdActivity {
+    static public class RejectCandidacyProcess extends PhdActivity {
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -198,7 +198,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-	    process.createState(PhdProgramCandidacyProcessState.REJECTED_BY_COORDINATOR, userView.getPerson(), bean.getRemarks());
+	    process.createState(PhdProgramCandidacyProcessState.REJECTED, userView.getPerson(), bean.getRemarks());
 	    return process;
 	}
 
@@ -214,7 +214,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
 
-	PhdProgramCandidacyProcessState.REJECTED_BY_COORDINATOR);
+	PhdProgramCandidacyProcessState.REJECTED);
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
@@ -275,7 +275,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	activities.add(new RequestCandidacyReview());
 	activities.add(new UploadCandidacyReview());
-	activities.add(new CoordinatorRejectCandidacy());
+	activities.add(new RejectCandidacyProcess());
 
 	activities.add(new RequestRatifyCandidacy());
 	activities.add(new RatifyCandidacy());

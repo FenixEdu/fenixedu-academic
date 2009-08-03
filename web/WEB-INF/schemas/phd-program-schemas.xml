@@ -17,6 +17,9 @@
 
 <schema name="PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
+	<slot name="person.name">
+		<property name="classes" value="bold"/>
+	</slot>
 	<slot name="phdProgram" layout="null-as-label">
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="PhdProgram.name" />
@@ -25,9 +28,6 @@
 	<slot name="activeState"/>
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
-	</slot>
-	<slot name="person.name">
-		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="whenCreated" />
 	<slot name="createdBy" />

@@ -54,6 +54,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
 
+@Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
+
 @Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
 
 @Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess")

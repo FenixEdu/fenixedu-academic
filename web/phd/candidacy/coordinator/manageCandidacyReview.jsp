@@ -131,7 +131,7 @@
 	</fr:edit>
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacy';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacyProcess';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
 	</p>
 </fr:form>
 

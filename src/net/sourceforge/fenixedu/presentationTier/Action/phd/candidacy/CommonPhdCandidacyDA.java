@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
@@ -88,6 +89,29 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
 	RenderUtils.invalidateViewState();
 	return manageCandidacyReview(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareRejectCandidacyProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
+	request.setAttribute("stateBean", stateBean);
+	return mapping.findForward("rejectCandidacyProcess");
+    }
+
+    public ActionForward rejectCandidacyProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) getRenderedObject("stateBean");
+	    bean.setState(PhdProgramCandidacyProcessState.REJECTED);
+	    ExecuteProcessActivity.run(getProcess(request), RejectCandidacyProcess.class, bean);
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
     }
 
     public ActionForward requestRatifyCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
