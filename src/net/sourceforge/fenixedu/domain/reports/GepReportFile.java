@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -95,6 +96,10 @@ public abstract class GepReportFile extends GepReportFile_Base {
 
     protected static boolean checkExecutionYear(ExecutionYear executionYear, final CurricularCourse curricularCourse) {
 	return executionYear == null || curricularCourse.isActive(executionYear);
+    }
+
+    protected static boolean checkExecutionYear(ExecutionYear executionYear, ExecutionCourse executionCourse) {
+	return executionYear == null || executionCourse.getExecutionYear().equals(executionYear);
     }
 
     protected boolean isActive(final Degree degree) {
