@@ -228,6 +228,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 			    "error.public.candidacies.fill.personal.information.and.institution.id");
 		    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 		} else if (!StringUtils.isEmpty(personBean.getSocialSecurityNumber())
+			&& !StringUtils.isEmpty(person.getSocialSecurityNumber())
 			&& !person.getSocialSecurityNumber().equals(personBean.getSocialSecurityNumber())) {
 		    // found person with diff social security number
 		    addActionMessage("individualCandidacyMessages", request,
@@ -270,7 +271,8 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     private boolean isPersonStudentOrEmployeeAndNumberIsCorrect(Person person, String personNumber) {
 	return (person.hasStudent() && person.getStudent().getNumber().toString().equals(personNumber))
-		|| (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber));
+		|| (person.hasEmployee() && person.getEmployee().getEmployeeNumber().toString().equals(personNumber))
+		|| (!person.hasStudent() && !person.hasEmployee() && StringUtils.isEmpty(personNumber));
     }
 
     public ActionForward executeCreateCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
