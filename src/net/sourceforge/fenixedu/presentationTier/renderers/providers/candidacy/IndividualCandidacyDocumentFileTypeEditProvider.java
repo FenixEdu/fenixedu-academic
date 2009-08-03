@@ -57,6 +57,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
+	    if (individualCandidacyProcess
+		    .getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
+	    }
+
 	    return fileTypesList;
 	}
     }
