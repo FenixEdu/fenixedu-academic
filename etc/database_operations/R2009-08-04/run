@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # -----------------------------------------------------------------------------
 #
@@ -42,4 +41,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add new columns and removed not null restriction in phd alert table" alterTablePhdAlert.sql
 
