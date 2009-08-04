@@ -55,7 +55,7 @@
 			</fr:edit>
 		</fieldset>
 		</div>
-		<%-- 
+		
 		<div class="fs_form">
 		<fieldset style="display: block;">
 			<legend><bean:message key="title.public.phd.institution.id" bundle="PHD_RESOURCES"/></legend>
@@ -72,7 +72,6 @@
 			</fr:edit>
 		</fieldset>
 		</div>
-		--%>
 		
 		<p>Note: all the information required for the application process will be shared by both <a href="http://www.ist.utl.pt/">IST</a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
 		

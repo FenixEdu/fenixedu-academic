@@ -316,13 +316,19 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {
+	// TODO: check this - in august candidacy dates will not be contained in
+	// given execution year
+
 	check(candidacyDate, "error.phd.candidacy.PhdProgramCandidacyProcess.invalid.candidacy.date");
-	if (!executionYear.containsDate(candidacyDate)) {
-	    throw new DomainException(
-		    "error.phd.candidacy.PhdProgramCandidacyProcess.executionYear.doesnot.contains.candidacy.date", candidacyDate
-			    .toString("dd/MM/yyyy"), executionYear.getQualifiedName(), executionYear.getBeginDateYearMonthDay()
-			    .toString("dd/MM/yyyy"), executionYear.getEndDateYearMonthDay().toString("dd/MM/yyyy"));
-	}
+	// if (!executionYear.containsDate(candidacyDate)) {
+	// throw new DomainException(
+	// "error.phd.candidacy.PhdProgramCandidacyProcess.executionYear.doesnot.contains.candidacy.date",
+	// candidacyDate
+	// .toString("dd/MM/yyyy"), executionYear.getQualifiedName(),
+	// executionYear.getBeginDateYearMonthDay()
+	// .toString("dd/MM/yyyy"),
+	// executionYear.getEndDateYearMonthDay().toString("dd/MM/yyyy"));
+	// }
     }
 
     @Override
@@ -460,8 +466,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	if (!getIndividualProgramProcess().hasAnyRegistrationFormalizationActiveAlert()) {
 	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess());
 	}
-	
-		createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
+
+	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
 
     }
 
