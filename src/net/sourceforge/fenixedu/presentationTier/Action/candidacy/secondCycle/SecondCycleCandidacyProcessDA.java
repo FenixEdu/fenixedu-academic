@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
@@ -347,4 +348,27 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return candidacyDegreeBeans;
     }
 
+    protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
+	    final IndividualCandidacyProcess individualCandidacyProcess) {
+	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) individualCandidacyProcess;
+	ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
+	ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+
+	final Row row = spreadsheet.addRow();
+	row.setCell(secondCycleIndividualCandidacyProcess.getProcessCode());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getName());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getConclusionDate().toString(
+		dateFormat));
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
+	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+	row.setCell(candidateBundle.getString(secondCycleIndividualCandidacyProcess.getProcessChecked() != null
+		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+	return spreadsheet;
+    }
 }

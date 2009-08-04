@@ -31,6 +31,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendToCoordinator());
 	activities.add(new PrintCandidacies());
+	activities.add(new ExportCandidacies());
 	activities.add(new IntroduceCandidacyResults());
 	activities.add(new SendToScientificCouncil());
 	activities.add(new PublishCandidacyResults());
@@ -210,6 +211,22 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+		Object object) {
+	    return process; // for now, nothing to be done
+	}
+    }
+
+    static private class ExportCandidacies extends Activity<SecondCycleCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}

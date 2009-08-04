@@ -52,6 +52,7 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 	activities.add(new SendToScientificCouncil());
 	activities.add(new PrintCandidaciesFromInstitutionDegrees());
 	activities.add(new PrintCandidaciesFromExternalDegrees());
+	activities.add(new ExportCandidacies());
 	activities.add(new IntroduceCandidacyResults());
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
@@ -355,6 +356,22 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 		    DegreeTransferIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
 	}
 	values.add(process);
+    }
+
+    static private class ExportCandidacies extends Activity<DegreeTransferCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeTransferCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeTransferCandidacyProcess executeActivity(DegreeTransferCandidacyProcess process, IUserView userView,
+		Object object) {
+	    return process; // for now, nothing to be done
+	}
     }
 
 }

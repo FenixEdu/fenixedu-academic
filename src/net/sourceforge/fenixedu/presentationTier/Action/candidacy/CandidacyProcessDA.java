@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,7 +34,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -282,6 +288,56 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    return mapping.findForward("create-registrations");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareExecuteExportCandidacies(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition", "attachment; filename=" + getReportFilename());
+
+	final ServletOutputStream writer = response.getOutputStream();
+	writeCandidaciesReport(getProcess(request), writer);
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+
+    private void writeCandidaciesReport(final CandidacyProcess process, final ServletOutputStream writer) throws IOException {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+	final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("title.candidacies"), getCandidacyHeader());
+
+	for (final IndividualCandidacyProcess individualProcess : process.getChildProcesses()) {
+	    buildIndividualCandidacyReport(spreadsheet, individualProcess);
+	}
+	new SpreadsheetXLSExporter().exportToXLSSheet(spreadsheet, writer);
+    }
+
+    protected final String MESSAGE_YES = "message.yes";
+    protected final String MESSAGE_NO = "message.no";
+    protected static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("yyyy/MM/dd");
+
+    protected abstract Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
+	    final IndividualCandidacyProcess individualCandidacyProcess);
+
+    private List<Object> getCandidacyHeader() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+	final List<Object> result = new ArrayList<Object>();
+
+	result.add(bundle.getString("label.spreadsheet.processCode"));
+	result.add(bundle.getString("label.spreadsheet.name"));
+	result.add(bundle.getString("label.spreadsheet.identificationType"));
+	result.add(bundle.getString("label.spreadsheet.identificationNumber"));
+	result.add(bundle.getString("label.spreadsheet.nationality"));
+	result.add(bundle.getString("label.spreadsheet.precedent.institution"));
+	result.add(bundle.getString("label.spreadsheet.precedent.degree.designation"));
+	result.add(bundle.getString("label.spreadsheet.precedent.degree.conclusion.date"));
+	result.add(bundle.getString("label.spreadsheet.precedent.degree.conclusion.grade"));
+	result.add(bundle.getString("label.spreadsheet.selected.degree"));
+	result.add(bundle.getString("label.spreadsheet.state"));
+	result.add(bundle.getString("label.spreadsheet.verified"));
+
+	return result;
     }
 
 }

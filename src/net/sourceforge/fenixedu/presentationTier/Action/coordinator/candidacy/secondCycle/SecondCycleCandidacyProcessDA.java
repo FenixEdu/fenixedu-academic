@@ -373,4 +373,11 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
 	return null;
     }
+
+    @Override
+    protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
+	    IndividualCandidacyProcess individualCandidacyProcess) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

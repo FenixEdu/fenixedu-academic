@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean;
@@ -35,7 +36,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingDegreeTransferCandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -384,6 +387,29 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	    result.add(new DegreeTransferCandidacyDegreeBean(child));
 	}
 	return result;
+    }
+
+    protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
+	    final IndividualCandidacyProcess individualCandidacyProcess) {
+	DegreeTransferIndividualCandidacyProcess degreeTransferIndividualCandidacyProcess = (DegreeTransferIndividualCandidacyProcess) individualCandidacyProcess;
+	ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
+	ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+
+	final Row row = spreadsheet.addRow();
+	row.setCell(degreeTransferIndividualCandidacyProcess.getProcessCode());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getName());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
+		.getContent());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation()
+		.getDegreeAndInstitutionName());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
+	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+	row.setCell(candidateBundle.getString(degreeTransferIndividualCandidacyProcess.getProcessChecked() != null
+		&& degreeTransferIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+	return spreadsheet;
     }
 
 }

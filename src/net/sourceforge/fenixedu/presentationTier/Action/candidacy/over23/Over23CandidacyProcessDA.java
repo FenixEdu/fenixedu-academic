@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
@@ -256,6 +257,13 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
 	Collections.sort(candidacyDegreeBeans);
 	return candidacyDegreeBeans;
+    }
+
+    @Override
+    protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
+	    IndividualCandidacyProcess individualCandidacyProcess) {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

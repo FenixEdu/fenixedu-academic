@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean;
@@ -304,5 +305,12 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("standaloneIndividualCandidacyResultBeans",
 		getRenderedObject("standaloneIndividualCandidacyResultBeans"));
 	return mapping.findForward("insert-candidacy-results");
+    }
+
+    @Override
+    protected Spreadsheet buildIndividualCandidacyReport(Spreadsheet spreadsheet,
+	    IndividualCandidacyProcess individualCandidacyProcess) {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

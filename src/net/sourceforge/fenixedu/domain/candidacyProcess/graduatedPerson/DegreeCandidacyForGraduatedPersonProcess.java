@@ -53,6 +53,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	activities.add(new SendToCoordinator());
 	activities.add(new SendToScientificCouncil());
 	activities.add(new PrintCandidacies());
+	activities.add(new ExportCandidacies());
 	activities.add(new IntroduceCandidacyResults());
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
@@ -323,4 +324,21 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	    return process;
 	}
     }
+
+    static private class ExportCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    return process; // for now, nothing to be done
+	}
+    }
+
 }

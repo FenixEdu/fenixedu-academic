@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
@@ -250,6 +251,32 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	}
 	Collections.sort(candidacyDegreeBeans);
 	return candidacyDegreeBeans;
+    }
+
+    protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
+	    final IndividualCandidacyProcess individualCandidacyProcess) {
+	DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyForGraduatedPersonProcess = (DegreeCandidacyForGraduatedPersonIndividualProcess) individualCandidacyProcess;
+	ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
+	ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+
+	final Row row = spreadsheet.addRow();
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getProcessCode());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getName());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getDocumentIdNumber());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getCountry().getCountryNationality()
+		.getContent());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation()
+		.getDegreeAndInstitutionName());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getConclusionDate()
+		.toString(dateFormat));
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacy().getSelectedDegree().getName());
+	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
+	row.setCell(candidateBundle.getString(degreeCandidacyForGraduatedPersonProcess.getProcessChecked() != null
+		&& degreeCandidacyForGraduatedPersonProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+	return spreadsheet;
     }
 
 }
