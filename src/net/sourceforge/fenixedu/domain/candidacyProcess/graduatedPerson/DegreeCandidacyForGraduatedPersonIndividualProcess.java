@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocument
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -235,7 +233,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
+	    process.editCandidacyHabilitations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    process.editCandidacyInformation((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    return process;
 	}
@@ -414,18 +412,18 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	}
     }
 
-    static private class ChangeProcessCheckedState extends Activity<SecondCycleIndividualCandidacyProcess> {
+    static private class ChangeProcessCheckedState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
 	@Override
-	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-		IUserView userView, Object object) {
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
+		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
 	    return process;
 	}

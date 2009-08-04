@@ -211,6 +211,15 @@
 		</fr:edit>
 		
 		<br/>
+		
+		<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span></h3>
+		<fr:edit id="individualCandidacyProcessBean.utlStudent" name="individualCandidacyProcessBean"
+			schema="PublicCandidacyProcessBean.utl.student">
+			<fr:layout name="flow">
+				<fr:property name="labelExcluded" value="true"/>
+			</fr:layout>
+		</fr:edit>
+		
 	</logic:notEmpty>
 
 	<p>	

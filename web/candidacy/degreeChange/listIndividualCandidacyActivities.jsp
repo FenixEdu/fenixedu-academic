@@ -114,6 +114,25 @@
 	<fr:view name="process"
 		property="candidacy.observations">
 	</fr:view>
+	
+	<%-- Payment Code --%>
+	<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+	<p><bean:message key="message.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></p>
+	<table>
+		<tr>
+			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><bean:write name="sibsEntityCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+		</tr>
+	</table>
+	</logic:notEmpty>
 
 	<%-- show documents--%>
 	<br/>

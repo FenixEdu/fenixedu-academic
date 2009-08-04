@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -49,8 +48,6 @@ import com.octo.captcha.service.CaptchaServiceException;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
 
-    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
-
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -58,7 +55,6 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
 	request.setAttribute("mappingPath", mapping.getPath());
 	request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
-	request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
 	request.setAttribute("application.information.link.default", bundle
 		.getString(getCandidacyInformationLinkDefaultLanguage()));
 	request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));

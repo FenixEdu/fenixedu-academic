@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -75,12 +76,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
+    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+
     abstract protected Class getParentProcessType();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setParentProcess(request);
+	request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
+
 	return super.execute(mapping, actionForm, request, response);
     }
 
