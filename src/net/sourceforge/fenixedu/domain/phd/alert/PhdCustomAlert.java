@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.text.MessageFormat;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;

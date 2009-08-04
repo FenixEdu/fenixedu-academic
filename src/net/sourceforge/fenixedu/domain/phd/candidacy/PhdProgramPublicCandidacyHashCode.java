@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.UUID;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyAlert;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
 
@@ -39,6 +39,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 	final PhdProgramPublicCandidacyHashCode hash = new PhdProgramPublicCandidacyHashCode();
 	hash.setEmail(email);
 	hash.setValue(UUID.randomUUID().toString());
+	new PublicPhdMissingCandidacyAlert(hash);
 	return hash;
     }
 

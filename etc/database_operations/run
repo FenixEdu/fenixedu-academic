@@ -43,5 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
-
+execute "Add new columns and removed not null restriction in phd alert table" alterTablePhdAlert.sql

@@ -6607,6 +6607,12 @@ class phd.alert.PhdAlert extends DomainObject {
 	class phd.alert.PhdCandidacyRefereeAlert extends phd.alert.PhdAlert {
 	}
 	
+	class phd.alert.PublicPhdMissingCandidacyAlert extends phd.alert.PhdAlert {
+	}
+	
+	class phd.alert.PublicPhdMissingCandidacyValidationAlert extends phd.alert.PhdAlert {
+	}
+	
 	class phd.alert.PhdRegistrationFormalizationAlert extends phd.alert.PhdAlert {
 		
 	}
@@ -6908,6 +6914,13 @@ relation PhdAlertPhdIndividualProgramProcess {
 relation PhdCandidacyRefereeAlertPhdCandidacyReferee {
 	phd.candidacy.PhdCandidacyReferee playsRole referee;
 	phd.alert.PhdCandidacyRefereeAlert playsRole alerts {
+		multiplicity *;
+	}
+}
+
+relation PublicPhdMissingCandidacyAlertPhdProgramPublicCandidacyHashCode {
+	phd.candidacy.PhdProgramPublicCandidacyHashCode playsRole candidacyHashCode;
+	phd.alert.PublicPhdMissingCandidacyAlert playsRole alerts {
 		multiplicity *;
 	}
 }

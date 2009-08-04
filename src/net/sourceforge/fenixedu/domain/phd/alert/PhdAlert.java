@@ -16,16 +16,21 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	setRootDomainObjectForActivePhdAlerts(RootDomainObject.getInstance());
     }
 
-    protected void init(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
-	checkParameters(process, subject, body);
-	super.setProcess(process);
+    //TODO: remove NOT null from process column
+    protected void init(MultiLanguageString subject, MultiLanguageString body) {
+	checkParameters(subject, body);
 	super.setSubject(subject);
 	super.setBody(body);
 	super.setActive(Boolean.TRUE);
     }
 
-    protected void checkParameters(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
+    protected void init(PhdIndividualProgramProcess process, MultiLanguageString subject, MultiLanguageString body) {
 	check(process, "error.phd.alert.PhdAlert.process.cannot.be.null");
+	super.setProcess(process);
+	init(subject, body);
+    }
+
+    private void checkParameters(MultiLanguageString subject, MultiLanguageString body) {
 	check(subject, "error.phd.alert.PhdAlert.subject.cannot.be.null");
 	check(body, "error.phd.alert.PhdAlert.body.cannot.be.null");
     }

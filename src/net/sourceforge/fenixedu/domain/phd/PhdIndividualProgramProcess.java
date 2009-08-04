@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -119,9 +120,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    PhdProgramCandidacyProcess.class, new Object[] { bean, person });
 
 	    candidacyProcess.setIndividualProgramProcess(createdProcess);
+	    if (bean.hasCandidacyHashCode()) {
+		new PublicPhdMissingCandidacyValidationAlert(createdProcess);
+	    }
 
 	    return createdProcess;
-
 	}
 
 	private Person getOrCreatePerson(final PhdProgramCandidacyProcessBean bean) {
