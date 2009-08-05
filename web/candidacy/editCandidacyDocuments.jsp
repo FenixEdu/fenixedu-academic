@@ -20,8 +20,9 @@
 
 
 
-<fr:form action='<%="/caseHandling" + processName + ".do?method=uploadDocument&processId=" + processId.toString() %>' encoding="multipart/form-data">
- 	<html:hidden property="method" value="executeEditCandidacyPersonalInformation" />
+<fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>' encoding="multipart/form-data" id="candidacyFormId">
+	<input type="hidden" name="method" id="methodId" value="uploadDocument"/>
+	<input type="hidden" name="documentFileOid" id="documentFileOidId" />
 	
 	<fr:edit id="individualCandidacyProcessBean.document"
 		name="candidacyDocumentUploadBean" 
@@ -34,7 +35,7 @@
 	<span class="error0"><fr:messages for="individualCandidacyProcessBean.document" type="global"/></span>
 	
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
-</fr:form>
+
 
 <bean:define id="individualCandidacyProcess" name="process"/>
  	
@@ -48,18 +49,23 @@
 		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
 		<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
 		<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
+		<th><bean:message key="label.document.file.active" bundle="CANDIDATE_RESOURCES"/></th>
 		<th></th>
 	</tr>
 
 	
 	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
+	<bean:define id="documentOid" name="documentFile" property="externalId"/>
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
 		<td><fr:view name="documentFile" property="uploadTime"/></td>
 		<td><fr:view name="documentFile" property="filename"/></td>
+		<td><fr:view name="documentFile" property="candidacyFileActive"/></td>
 		<td><fr:view name="documentFile" layout="link"/></td>
+		<td><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#" onclick='<%= "document.getElementById('methodId').value='revokeDocumentFile'; document.getElementById('documentFileOidId').value='" + documentOid + "'; document.getElementById('candidacyFormId').submit(); " %>'><bean:message key="label.document.file.revoke" bundle="CANDIDATE_RESOURCES"/></html:link></td>
 	</tr>	
 	</logic:iterate>
 </table>
 </logic:notEmpty>
- 	
+ </fr:form>
+ 

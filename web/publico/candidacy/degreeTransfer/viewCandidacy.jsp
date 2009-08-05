@@ -281,7 +281,7 @@
 	<p><em><bean:message key="message.documents.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>
 </logic:empty>
 
-<logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">
+<logic:notEmpty name="individualCandidacyProcess" property="activeDocumentFiles">
 <table class="tstyle2 thlight thcenter">
 	<tr>
 		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
@@ -290,7 +290,7 @@
 	</tr>
 
 	
-	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
+	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
 		<td><fr:view name="documentFile" property="uploadTime"/></td>

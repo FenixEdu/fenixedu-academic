@@ -11,10 +11,12 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 
     public IndividualCandidacyDocumentFile() {
 	super();
+	this.setCandidacyFileActive(Boolean.TRUE);
     }
 
     public IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
 	    byte[] contents, String filename) {
+	this.setCandidacyFileActive(Boolean.TRUE);
 	setIndividualCandidacy(candidacy);
 	setCandidacyFileType(type);
 	init(getVirtualPath(), filename, filename, null, contents, null);
@@ -24,7 +26,9 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	}
     }
 
-    private IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename, VirtualPath path) {
+    private IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename,
+	    VirtualPath path) {
+	this.setCandidacyFileActive(Boolean.TRUE);
 	setCandidacyFileType(type);
 	init(path, filename, filename, null, contents, null);
 
@@ -60,7 +64,8 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     }
 
     @Service
-    public static IndividualCandidacyDocumentFile createCandidacyDocument(byte[] contents, String filename, IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
+    public static IndividualCandidacyDocumentFile createCandidacyDocument(byte[] contents, String filename,
+	    IndividualCandidacyDocumentFileType type, String processName, String documentIdNumber) {
 	return new IndividualCandidacyDocumentFile(type, contents, filename, obtainVirtualPath(processName, documentIdNumber));
     }
 }

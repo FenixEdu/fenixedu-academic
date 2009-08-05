@@ -643,4 +643,15 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return null;
     }
 
+    public ActionForward revokeDocumentFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document");
+	String documentExternalId = (String) request.getParameter("documentFileOid");
+	IndividualCandidacyDocumentFile documentFile = IndividualCandidacyDocumentFile.fromExternalId(documentExternalId);
+	uploadBean.setDocumentFile(documentFile);
+
+	executeActivity(getProcess(request), "RevokeDocumentFile", uploadBean);
+
+	return prepareExecuteEditDocuments(mapping, form, request, response);
+    }
 }

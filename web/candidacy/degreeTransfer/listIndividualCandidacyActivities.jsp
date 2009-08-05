@@ -148,6 +148,7 @@
 			<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES"/></th>
 			<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
+			<th><bean:message key="label.document.file.active" bundle="CANDIDATE_RESOURCES"/></th>
 			<th></th>
 		</tr>
 	
@@ -157,6 +158,7 @@
 			<td><fr:view name="documentFile" property="candidacyFileType"/></td>
 			<td><fr:view name="documentFile" property="uploadTime"/></td>
 			<td><fr:view name="documentFile" property="filename"/></td>
+			<td><fr:view name="documentFile" property="candidacyFileActive"/></td>
 			<td><fr:view name="documentFile" layout="link"/></td>
 		</tr>	
 		</logic:iterate>

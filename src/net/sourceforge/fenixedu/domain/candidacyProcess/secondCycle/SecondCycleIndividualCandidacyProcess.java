@@ -40,6 +40,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new BindPersonToCandidacy());
 	activities.add(new ChangeProcessCheckedState());
 	activities.add(new SendEmailForApplicationSubmission());
+	activities.add(new RevokeDocumentFile());
 
     }
 
@@ -563,4 +564,28 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	return missingDocumentFiles;
     }
+
+    static protected class RevokeDocumentFile extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
 }

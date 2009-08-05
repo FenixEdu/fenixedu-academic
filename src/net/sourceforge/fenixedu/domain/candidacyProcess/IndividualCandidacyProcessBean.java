@@ -320,5 +320,4 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public void setUtlStudent(Boolean utlStudent) {
 	this.utlStudent = utlStudent;
     }
-
 }

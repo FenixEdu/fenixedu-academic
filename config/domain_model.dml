@@ -6208,7 +6208,8 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 }
 
 	class candidacyProcess.IndividualCandidacyDocumentFile extends File {
-		IndividualCandidacyDocumentFileType candidacyFileType;		
+		IndividualCandidacyDocumentFileType candidacyFileType;
+		Boolean candidacyFileActive;
 	} 
 
 class candidacyProcess.IndividualCandidacyPersonalDetails extends DomainObject {

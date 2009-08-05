@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +19,8 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
@@ -246,6 +249,18 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return null;
     }
 
+    public static IndividualCandidacyProcess findIndividualCandidacyProcessByCode(
+	    Class<? extends IndividualCandidacyProcess> individualCandidacyProcessClass, final String processCode) {
+	Set<IndividualCandidacyProcess> candidacies = RootDomainObject.readAllDomainObjects(individualCandidacyProcessClass);
+
+	for (IndividualCandidacyProcess process : candidacies) {
+	    if (processCode.equals(process.getProcessCode()))
+		return process;
+	}
+
+	return null;
+    }
+
     public IndividualCandidacyDocumentFile getPhoto() {
 	IndividualCandidacyDocumentFile photo = getFileForType(IndividualCandidacyDocumentFileType.PHOTO);
 	return photo;
@@ -253,7 +268,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public IndividualCandidacyDocumentFile getFileForType(IndividualCandidacyDocumentFileType type) {
 	for (IndividualCandidacyDocumentFile document : this.getCandidacy().getDocuments()) {
-	    if (document.getCandidacyFileType().equals(type))
+	    if (document.getCandidacyFileType().equals(type) && document.getCandidacyFileActive())
 		return document;
 	}
 
@@ -267,6 +282,23 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     public abstract List<IndividualCandidacyDocumentFileType> getMissingRequiredDocumentFiles();
+
+    public List<IndividualCandidacyDocumentFile> getActiveDocumentFiles() {
+	List<IndividualCandidacyDocumentFile> documentList = new ArrayList<IndividualCandidacyDocumentFile>();
+
+	CollectionUtils.select(getCandidacy().getDocuments(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		IndividualCandidacyDocumentFile file = (IndividualCandidacyDocumentFile) arg0;
+
+		return file.getCandidacyFileActive();
+	    }
+
+	}, documentList);
+
+	return documentList;
+    }
 
     public Boolean getAllRequiredFilesUploaded() {
 	return getMissingRequiredDocumentFiles().isEmpty();

@@ -39,6 +39,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	activities.add(new EditDocuments());
 	activities.add(new ChangeProcessCheckedState());
 	activities.add(new SendEmailForApplicationSubmission());
+	activities.add(new RevokeDocumentFile());
 
     }
 
@@ -487,6 +488,29 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	}
 
 	return missingDocumentFiles;
+
+    }
+
+    static protected class RevokeDocumentFile extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
+		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+	    ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
 
     }
 

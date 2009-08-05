@@ -66,7 +66,7 @@
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>
 
-<logic:notEmpty name="individualCandidacyProcess" property="candidacy.documents">
+<logic:notEmpty name="individualCandidacyProcess" property="activeDocumentFiles">
 <table class="tstyle2 thlight thcenter mtop15">
 	<tr>
 		<th><bean:message key="label.candidacy.document.kind" bundle="CANDIDATE_RESOURCES"/></th>
@@ -74,7 +74,7 @@
 		<th><bean:message key="label.document.file.name" bundle="CANDIDATE_RESOURCES"/></th>
 	</tr>
 	
-	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="candidacy.documents">
+	<logic:iterate id="documentFile" name="individualCandidacyProcess" property="activeDocumentFiles">
 	<tr>
 		<td><fr:view name="documentFile" property="candidacyFileType"/></td>
 		<td><fr:view name="documentFile" property="uploadTime"/></td>

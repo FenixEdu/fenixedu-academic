@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Candidacy File Active to File Table" addCandidacyFileActiveColumnToFileTable.sql
