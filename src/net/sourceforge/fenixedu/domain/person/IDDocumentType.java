@@ -28,7 +28,9 @@ public enum IDDocumentType {
 
     EXTERNAL,
 
-    CITIZEN_CARD;
+    CITIZEN_CARD,
+
+    RESIDENCE_AUTHORIZATION;
 
     public String getName() {
 	return name();
