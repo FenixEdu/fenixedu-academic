@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -272,6 +273,8 @@ public class SibsPaymentFileProcessReportDTO {
 	    addDegreeChangeIndividualCandidacyAmount(detailLine.getAmount());
 	} else if (event instanceof DegreeCandidacyForGraduatedPersonEvent) {
 	    addDegreeCandidacyForGraduatedPersonAmount(detailLine.getAmount());
+	} else if (event instanceof DegreeTransferIndividualCandidacyEvent) {
+	    addDegreeTransferIndividualCandidacyAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}
