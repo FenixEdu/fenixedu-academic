@@ -213,6 +213,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	List<Registration> registrationPath = getFullRegistrationPath(registration);
 	Registration sourceRegistration = registrationPath.get(0);
 	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
+	StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	// Ciclo
 	row.setCell(cycleType.getDescription());
@@ -221,7 +222,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(String.valueOf(concluded));
 
 	// Média do Ciclo
-	row.setCell(concluded ? printBigDecimal(registration.getLastStudentCurricularPlan().getCycle(cycleType).getCurriculum(
+	row.setCell(concluded ? printBigDecimal(lastStudentCurricularPlan.getCycle(cycleType).getCurriculum(
 		executionYear.getPreviousExecutionYear()).getAverage()) : "n/a");
 
 	// Data de Conclusão
@@ -500,8 +501,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	int totalEnrolmentsApprovedInPreviousYear = 0;
 	int totalEnrolmentsInFirstSemester = 0;
 	double totalEctsConcludedUntilPreviousYear = 0d;
-	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		.getInternalCycleCurriculumGrops()) {
+	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getInternalCycleCurriculumGrops()) {
 
 	    totalEctsConcludedUntilPreviousYear += cycleCurriculumGroup.getCreditsConcluded(executionYear
 		    .getPreviousExecutionYear());
@@ -541,17 +541,16 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(totalEnrolmentsInFirstSemester);
 
 	// Nº de Inscrições Externas no ano a que se referem os dados
-	int extraCurricularEnrolmentsCount = registration.getLastStudentCurricularPlan().getExtraCurriculumGroup()
-		.getEnrolmentsBy(executionYear).size();
+	int extraCurricularEnrolmentsCount = lastStudentCurricularPlan.getExtraCurriculumGroup().getEnrolmentsBy(executionYear)
+		.size();
 
-	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		.getExternalCurriculumGroups()) {
+	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
 	    extraCurricularEnrolmentsCount += cycleCurriculumGroup.getEnrolmentsBy(executionYear).size();
 	}
 
-	if (registration.getLastStudentCurricularPlan().hasPropaedeuticsCurriculumGroup()) {
-	    extraCurricularEnrolmentsCount += registration.getLastStudentCurricularPlan().getPropaedeuticCurriculumGroup()
-		    .getEnrolmentsBy(executionYear).size();
+	if (lastStudentCurricularPlan.hasPropaedeuticsCurriculumGroup()) {
+	    extraCurricularEnrolmentsCount += lastStudentCurricularPlan.getPropaedeuticCurriculumGroup().getEnrolmentsBy(
+		    executionYear).size();
 	}
 
 	row.setCell(extraCurricularEnrolmentsCount);
@@ -585,15 +584,15 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
 	// anterior ao que se referem os dados
-	final CycleCurriculumGroup firstCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
-		.getCycleCurriculumGroup(CycleType.FIRST_CYCLE);
+	final CycleCurriculumGroup firstCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
+		CycleType.FIRST_CYCLE);
 	row.setCell(firstCycleCurriculumGroup != null ? printDouble(firstCycleCurriculumGroup.getCreditsConcluded(executionYear
 		.getPreviousExecutionYear())) : "");
 
 	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
 	// anterior ao que se referem os dados
-	final CycleCurriculumGroup secondCycleCurriculumGroup = registration.getLastStudentCurricularPlan().getRoot()
-		.getCycleCurriculumGroup(CycleType.SECOND_CYCLE);
+	final CycleCurriculumGroup secondCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
+		CycleType.SECOND_CYCLE);
 	row
 		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printDouble(secondCycleCurriculumGroup
 			.getCreditsConcluded(executionYear.getPreviousExecutionYear()))
@@ -602,8 +601,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
 	// lectivo anterior ao que se referem os dados
 	Double extraFirstCycleEcts = 0d;
-	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		.getExternalCurriculumGroups()) {
+	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
 	    for (final CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
 		if (curriculumLine.getExecutionYear() == executionYear.getPreviousExecutionYear()) {
 		    extraFirstCycleEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
@@ -615,8 +613,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Nº ECTS Extracurriculares concluídos até ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double extraCurricularEcts = 0d;
-	for (final CurriculumLine curriculumLine : registration.getLastStudentCurricularPlan().getExtraCurriculumGroup()
-		.getAllCurriculumLines()) {
+	for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getExtraCurriculumGroup().getAllCurriculumLines()) {
 	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
 		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
 		extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
@@ -627,16 +624,18 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Nº ECTS Propaedeutic concluídos até ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double propaedeuticEcts = 0d;
-	for (final CurriculumLine curriculumLine : registration.getLastStudentCurricularPlan().getPropaedeuticCurriculumGroup()
-		.getAllCurriculumLines()) {
-	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
-		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
-		propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+	if (lastStudentCurricularPlan.getPropaedeuticCurriculumGroup() != null) {
+	    for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
+		    .getAllCurriculumLines()) {
+		if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
+			&& curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
+		    propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+		}
 	    }
 	}
 	row.setCell(printDouble(propaedeuticEcts));
 
 	// Tem situação de propinas no lectivo dos dados
-	row.setCell(String.valueOf(registration.getLastStudentCurricularPlan().hasAnyGratuityEventFor(executionYear)));
+	row.setCell(String.valueOf(lastStudentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
     }
 }
