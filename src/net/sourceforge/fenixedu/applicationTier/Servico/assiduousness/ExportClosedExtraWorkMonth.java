@@ -78,9 +78,11 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     public static String extraWorkHolidayMovementCode = "212";
 
-    public static String extraWorkWeekDayFirstLevelMovementCode = "200";
+    public static String extraWorkWeekDayFirstLevelMovementCode = "201";// "200";//
+    // 201
 
-    public static String extraWorkWeekDaySecondLevelMovementCode = "201";
+    public static String extraWorkWeekDaySecondLevelMovementCode = "203";// "201";//
+    // 203
 
     public static String extraNightWorkFirstLevelMovementCode = "202";
 
