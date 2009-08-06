@@ -177,6 +177,8 @@ enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState        
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
 enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	  as PhdStudyPlanEntryType;
+enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
+enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
 
 /*
  * Value types that need special externalization
@@ -1018,7 +1020,7 @@ class DomainObject {
     class documents.CreditNoteGeneratedDocument extends documents.GeneratedDocument;
 
     class documents.ReceiptGeneratedDocument extends documents.GeneratedDocument;
-
+    
     class documents.DocumentRequestGeneratedDocument extends documents.GeneratedDocument;
 
 		    class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
@@ -6643,6 +6645,16 @@ class phd.PhdStudyPlanEntry extends DomainObject {
 		
 	}
 	
+class phd.notification.PhdNotification extends DomainObject {
+	Integer year;
+	Integer number;
+	DateTime whenCreated;
+	String createdBy;
+	PhdNotificationType type;
+	PhdNotificationState state;
+
+}
+	
 
 /* End of Phd Module */
 
@@ -6654,6 +6666,7 @@ class phd.PhdStudyPlanEntry extends DomainObject {
 
  
 /* Phd Module */
+
 
 relation PhdProgramRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
@@ -6970,6 +6983,20 @@ relation PhdStudyPlanPhdStudyPlanEntry {
 relation DegreePhdStudyPlan {
 	Degree playsRole degree;
 	phd.PhdStudyPlan playsRole phdStudyPlans {
+		multiplicity *;
+	}
+}
+
+relation PhdNotificationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.notification.PhdNotification playsRole phdNotifications {
+		multiplicity *;
+	}
+}
+
+relation PhdNotificationPhdProgramCandidacyProcess {
+	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
+	phd.notification.PhdNotification playsRole notifications {
 		multiplicity *;
 	}
 }

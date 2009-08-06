@@ -22,6 +22,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
+import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
+import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 
 import org.joda.time.LocalDate;
 
@@ -260,6 +262,22 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class AddNotification extends PhdActivity {
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    new PhdNotification((PhdNotificationBean) object);
+
+	    return process;
+	}
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -279,6 +297,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	activities.add(new RequestRatifyCandidacy());
 	activities.add(new RatifyCandidacy());
+
+	activities.add(new AddNotification());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {

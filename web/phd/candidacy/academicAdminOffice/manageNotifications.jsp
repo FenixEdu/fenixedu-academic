@@ -8,7 +8,7 @@
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.ratifyCandidacy" bundle="PHD_RESOURCES" /></h2>
+<h2><bean:message key="label.phd.notifications" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -56,54 +56,47 @@
 <bean:define id="processId" name="process" property="externalId" />
 <br/>
 
-<%--  ### Documents  ### --%>
-<strong><bean:message  key="label.phd.candidacy.review.documents" bundle="PHD_RESOURCES"/></strong>
+<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+<strong><bean:message  key="label.phd.notifications" bundle="PHD_RESOURCES"/></strong>
 <br/>
-<logic:empty name="process" property="candidacyReviewDocuments">
-	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
+<logic:empty name="process" property="notifications">
+	<bean:message  key="label.phd.noNotifications" bundle="PHD_RESOURCES"/>
 </logic:empty>
-<logic:notEmpty name="process" property="candidacyReviewDocuments">
-	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
+<logic:notEmpty name="process" property="notifications">
+	<fr:view schema="PhdNotification.view" name="process" property="notifications">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
+			<fr:property name="linkFormat(markAsSent)" value="/phdProgramCandidacyProcess.do?method=markNotificationAsSent&notificationId=${externalId}&processId=${candidacyProcess.externalId}"/>
+			<fr:property name="key(markAsSent)" value="label.mark.notification.as.sent"/>
+			<fr:property name="bundle(markAsSent)" value="PHD_RESOURCES"/>
+			<fr:property name="order(markAsSent)" value="0"/>
+			<fr:property name="visibleIfNot(markAsSent)" value="sent"/>
 			
-			<fr:property name="linkFormat(view)" value="${downloadUrl}"/>
-			<fr:property name="key(view)" value="label.view"/>
-			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
-			<fr:property name="order(view)" value="0" />
-			<fr:property name="module(view)" value="" />
-			<fr:property name="hasContext(view)" value="true" />
-			
-			<fr:property name="sortBy" value="documentType=asc" />
+			<fr:property name="linkFormat(print)" value="/phdProgramCandidacyProcess.do?method=printNotification&notificationId=${externalId}&processId=${candidacyProcess.externalId}"/>
+			<fr:property name="key(print)" value="label.print"/>
+			<fr:property name="bundle(print)" value="PHD_RESOURCES"/>
+			<fr:property name="order(print)" value="1"/>
 		</fr:layout>
+		
+
 	</fr:view>
 </logic:notEmpty>
 
-<%--  ### End Of Documents  ### --%>
-<br/><br/>
 
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<fr:form action="<%= "/phdProgramCandidacyProcess.do?method=ratifyCandidacy&processId=" + processId.toString() %>" encoding="multipart/form-data">
-  	
-	<fr:edit id="ratifyCandidacyBean"
-	name="ratifyCandidacyBean"
-	schema="RatifyCandidacyBean.edit">
+<%--  ### End of Operation Area (e.g. Create Candidacy)  ### --%>
 
-	<fr:layout name="layout">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacyInvalid" />
-	</fr:layout>
-</fr:edit>
+
 	
 <%--  ### Buttons (e.g. Submit)  ### --%>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
+
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
 
-</fr:form>
 
 <br/><br/>
 
+<html:link action="/phdProgramCandidacyProcess.do?method=prepareCreateNotification" paramId="processId" paramName="process" paramProperty="externalId">
+	<bean:message bundle="PHD_RESOURCES" key="label.phd.createNotification"/>
+</html:link>
 
 <%--  ### End of Operation Area  ### --%>
 

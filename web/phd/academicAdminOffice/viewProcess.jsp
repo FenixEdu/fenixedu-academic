@@ -152,6 +152,11 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+	<li style="display: inline;">
+		<html:link action="/phdProgramCandidacyProcess.do?method=manageNotifications" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+			<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
+		</html:link>
+	</li>
 </ul>	
 
 

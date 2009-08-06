@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
@@ -25,11 +28,17 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddNotification;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
+import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
+import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -58,7 +67,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
 
-@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess")
+@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
+
+@Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
+
+@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -321,5 +334,81 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	    return mapping.findForward("ratifyCandidacy");
 	}
     }
+
+    // Notification Management
+
+    public ActionForward manageNotifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return mapping.findForward("manageNotifications");
+    }
+
+    public ActionForward prepareCreateNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("notificationBean", new PhdNotificationBean(getProcess(request)));
+
+	return mapping.findForward("createNotification");
+    }
+
+    public ActionForward prepareCreateNotificationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("notificationBean", getRenderedObject("notificationBean"));
+
+	return mapping.findForward("createNotification");
+    }
+
+    public ActionForward createNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdNotificationBean bean = (PhdNotificationBean) getRenderedObject("notificationBean");
+
+	final ActionForward result = executeActivity(AddNotification.class, bean, request, mapping, "createNotification",
+		"manageNotifications", "message.notification.created.with.success");
+
+	request.setAttribute("notificationBean", bean);
+
+	return result;
+    }
+
+    private PhdNotification getNotification(HttpServletRequest request) {
+	return getDomainObject(request, "notificationId");
+    }
+
+    public ActionForward printNotification(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws JRException, IOException {
+
+	final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request));
+	final byte[] generateDocument = ReportsUtils.exportToProcessedPdfAsByteArray(report);
+
+	response.setContentLength(generateDocument.length);
+	response.setContentType("application/pdf");
+	response.addHeader("Content-Disposition", "attachment; filename=\"" + report.getReportFileName() + ".pdf\"");
+
+	ServletOutputStream outputStream = null;
+	try {
+	    outputStream = response.getOutputStream();
+	    outputStream.write(generateDocument);
+	    outputStream.flush();
+	} finally {
+	    IOUtils.closeQuietly(outputStream);
+	    response.flushBuffer();
+	}
+
+	return null;
+
+    }
+
+    public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	getNotification(request).markAsSent();
+
+	return manageNotifications(mapping, form, request, response);
+
+    }
+
+    // End of Notification Management
 
 }

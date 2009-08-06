@@ -1154,3 +1154,16 @@
 		<property name="rows" value="8"/>
 	</slot>
 </schema>
+
+<schema name="PhdNotification.view" type="net.sourceforge.fenixedu.domain.phd.notification.PhdNotification" bundle="PHD_RESOURCES">
+	<slot name="notificationNumber" />
+	<slot name="type" />
+	<slot name="state" />
+	<slot name="whenCreated" />
+</schema>
+
+<schema name="PhdNotificationBean.edit" type="net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean" bundle="PHD_RESOURCES">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+
