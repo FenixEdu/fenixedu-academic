@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.se
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -170,11 +171,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	final DocumentRequestCreateBean requestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
 
+	if (requestCreateBean.getChosenDocumentRequestType() != null) {
+	    getAndSetSpecialEnrolments(request, requestCreateBean);
+	}
 	setAdditionalInformationSchemaName(request, requestCreateBean);
 	request.setAttribute("documentRequestCreateBean", requestCreateBean);
-
 	return mapping.findForward("createDocumentRequests");
-
     }
 
     public ActionForward documentRequestTypeChosenPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -187,9 +189,31 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		.getMetaObject().getObject();
 	RenderUtils.invalidateViewState();
 
+	if (requestCreateBean.getChosenDocumentRequestType() != null) {
+	    getAndSetSpecialEnrolments(request, requestCreateBean);
+	}
 	setAdditionalInformationSchemaName(request, requestCreateBean);
 	request.setAttribute("documentRequestCreateBean", requestCreateBean);
 	return mapping.findForward("createDocumentRequests");
+    }
+
+    private void getAndSetSpecialEnrolments(HttpServletRequest request, DocumentRequestCreateBean requestCreateBean) {
+	final StudentCurricularPlan curricularPlan = requestCreateBean.getRegistration().getLastStudentCurricularPlan();
+	final DocumentRequestType requestType = requestCreateBean.getChosenDocumentRequestType();
+	if (requestType.equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
+	    List<Enrolment> enrolments = curricularPlan.getExtraCurricularApprovedEnrolmentsNotInDismissal();
+	    if (enrolments.size() == 0) {
+		addActionMessage("warning", request, "warning.ExtraCurricularCertificateRequest.no.enrolments.available");
+	    }
+	    requestCreateBean.setEnrolments(enrolments);
+	}
+	if (requestType.equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
+	    List<Enrolment> enrolments = curricularPlan.getStandaloneApprovedEnrolmentsNotInDismissal();
+	    if (enrolments.size() == 0) {
+		addActionMessage("warning", request, "warning.StandaloneEnrolmentCertificateRequest.no.enrolments.available");
+	    }
+	    requestCreateBean.setEnrolments(enrolments);
+	}
     }
 
     private void setAdditionalInformationSchemaName(HttpServletRequest request, final DocumentRequestCreateBean requestCreateBean) {
@@ -201,22 +225,12 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	schemaName.append("DocumentRequestCreateBean.");
 	schemaName.append(requestType.name());
 
-	final Registration registration = requestCreateBean.getRegistration();
-
-	if (!registration.isBolonha() && requestType.withBranch()) {
+	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
 	}
 
 	schemaName.append(".AdditionalInformation");
 	request.setAttribute("additionalInformationSchemaName", schemaName.toString());
-
-	if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.EXTRA_CURRICULAR_CERTIFICATE)) {
-	    requestCreateBean.setEnrolments(registration.getLastStudentCurricularPlan()
-		    .getExtraCurricularAprovedEnrolmentsNotInDismissal());
-	} else if (requestCreateBean.getChosenDocumentRequestType().equals(DocumentRequestType.STANDALONE_ENROLMENT_CERTIFICATE)) {
-	    requestCreateBean.setEnrolments(registration.getLastStudentCurricularPlan()
-		    .getStandaloneAprovedEnrolmentsNotInDismissal());
-	}
     }
 
     public ActionForward executionYearToCreateDocumentChangedPostBack(ActionMapping mapping, ActionForm form,

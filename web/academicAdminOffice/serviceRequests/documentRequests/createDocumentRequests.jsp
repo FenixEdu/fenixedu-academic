@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType" %> 
+<%@ page import="org.apache.struts.action.ActionMessages"%>
 
 <html:xhtml/>
 
@@ -12,9 +13,14 @@
 	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="documentRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
-	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="<%= ActionMessages.GLOBAL_MESSAGE %>">
 		<p>
 			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+		</p>
+	</html:messages>
+	<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="warning">
+		<p>
+			<span class="warning0"><!-- Warning messages go here --><bean:write name="message" /></span>
 		</p>
 	</html:messages>
 	

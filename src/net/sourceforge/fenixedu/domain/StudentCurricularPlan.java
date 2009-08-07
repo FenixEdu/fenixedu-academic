@@ -2184,20 +2184,23 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
-    public List<Enrolment> getExtraCurricularAprovedEnrolmentsNotInDismissal() {
+    public List<Enrolment> getExtraCurricularApprovedEnrolmentsNotInDismissal() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
-	for (final Enrolment enrolment : getExtraCurricularEnrolments()) {
-	    if (!enrolment.isApproved() || enrolment.isSourceOfAnyCreditsInCurriculum()) {
+	for (final CurriculumLine curriculumLine : getExtraCurriculumGroup().getApprovedCurriculumLines()) {
+	    if (!curriculumLine.isEnrolment()) {
 		continue;
 	    }
-	    result.add(enrolment);
+	    final Enrolment enrolment = (Enrolment) curriculumLine;
+	    if (!enrolment.isSourceOfAnyCreditsInCurriculum()) {
+		result.add(enrolment);
+	    }
 	}
 
 	return result;
     }
 
-    public List<Enrolment> getStandaloneAprovedEnrolmentsNotInDismissal() {
+    public List<Enrolment> getStandaloneApprovedEnrolmentsNotInDismissal() {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 	StandaloneCurriculumGroup standaloneGroup = getStandaloneCurriculumGroup();
 	if (standaloneGroup == null) {

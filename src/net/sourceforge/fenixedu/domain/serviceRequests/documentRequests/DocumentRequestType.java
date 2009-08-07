@@ -41,9 +41,9 @@ public enum DocumentRequestType {
 
     EXTERNAL_PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
 
-    EXTRA_CURRICULAR_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/),
+    EXTRA_CURRICULAR_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
 
-    STANDALONE_ENROLMENT_CERTIFICATE(true, false /*, AdministrativeOfficeType.DEGREE*/);
+    STANDALONE_ENROLMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE);
 
     private boolean hasAdditionalInformation;
 

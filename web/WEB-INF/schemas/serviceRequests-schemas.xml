@@ -519,10 +519,14 @@
 <schema name="DocumentRequestCreateBean.EXTRA_CURRICULAR_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
-	<slot name="enrolments" key="label.documentRequestsManagement.searchDocumentRequests.extraCurricularCourses" layout="values" schema="Enrolment.view-curricular-course-name-only" read-only="true">
+	<slot name="enrolments" key="label.documentRequestsManagement.searchDocumentRequests.extraCurricularCourses" layout="option-select">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.ExtraCurricularApprovedEnrolmentsProvider" />
+        <property name="eachLayout" value="values" />
 		<property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
 		<property name="htmlSeparator" value="&lt;br/&gt;"/>
+		<property name="selectAllShown" value="true"/>
 	</slot>
 </schema>
 
@@ -539,10 +543,14 @@
 <schema name="DocumentRequestCreateBean.STANDALONE_ENROLMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
-	<slot name="enrolments" key="label.documentRequestsManagement.searchDocumentRequests.standaloneCourses" layout="values" schema="Enrolment.view-curricular-course-name-only" read-only="true">
+	<slot name="enrolments" key="label.documentRequestsManagement.searchDocumentRequests.standaloneCourses" layout="option-select">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.enrollment.StandaloneApprovedEnrolmentsProvider" />
+        <property name="eachLayout" value="values" />
 		<property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
 		<property name="htmlSeparator" value="&lt;br/&gt;"/>
+		<property name="selectAllShown" value="true"/>
 	</slot>
 </schema>
 
