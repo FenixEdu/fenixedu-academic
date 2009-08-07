@@ -14,10 +14,10 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setRootDomainObjectForActivePhdAlerts(RootDomainObject.getInstance());
+	setWhenCreated(new DateTime());
     }
 
-    //TODO: remove NOT null from process column
-    protected void init(MultiLanguageString subject, MultiLanguageString body) {
+    protected void init(final MultiLanguageString subject, final MultiLanguageString body) {
 	checkParameters(subject, body);
 	super.setSubject(subject);
 	super.setBody(body);
@@ -91,6 +91,11 @@ abstract public class PhdAlert extends PhdAlert_Base {
     }
 
     public void fire() {
+	if (isToDiscard()) {
+	    discard();
+	    return;
+	}
+
 	if (!isToFire()) {
 	    return;
 	}
@@ -98,6 +103,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	generateMessage();
 	super.setFireDate(new DateTime());
 
+	// check again, because alert may be discarded after send messages
 	if (isToDiscard()) {
 	    discard();
 	}

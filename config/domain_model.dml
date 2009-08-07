@@ -6591,6 +6591,7 @@ class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgr
 }
 
 class phd.alert.PhdAlert extends DomainObject {
+	DateTime whenCreated;
 	MultiLanguageString subject;
 	MultiLanguageString body;
 	Boolean active;
@@ -6654,7 +6655,6 @@ class phd.notification.PhdNotification extends DomainObject {
 	PhdNotificationState state;
 
 }
-	
 
 /* End of Phd Module */
 

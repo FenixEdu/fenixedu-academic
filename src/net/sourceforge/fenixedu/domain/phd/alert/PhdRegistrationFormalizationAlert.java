@@ -16,7 +16,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizationAlert_Base {
 
-    private static final int MAX_DAYS = 1;
+    private static final int MAX_DAYS = 20;
 
     public PhdRegistrationFormalizationAlert(PhdIndividualProgramProcess process) {
 	super();

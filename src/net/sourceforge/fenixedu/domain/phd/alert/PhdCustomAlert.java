@@ -53,7 +53,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-	return true;
+	return getFireDate() != null;
     }
 
     @Override

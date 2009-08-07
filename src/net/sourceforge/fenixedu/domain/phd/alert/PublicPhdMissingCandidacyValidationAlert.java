@@ -61,28 +61,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
     }
 
     @Override
-    public void fire() {
-	if (!isToFire()) {
-	    if (isToDiscard()) {
-		discard();
-	    }
-	    return;
-	}
-
-	generateMessage();
-	setFireDate(new DateTime());
-
-	if (isToDiscard()) {
-	    discard();
-	}
-    }
-
-    @Override
     protected boolean isToFire() {
-	if (isToDiscard()) {
-	    return false;
-	}
-
 	int days = Days.daysBetween(calculateStartDate().toDateMidnight(), new LocalDate().toDateMidnight()).getDays();
 	return days >= INTERVAL;
     }
