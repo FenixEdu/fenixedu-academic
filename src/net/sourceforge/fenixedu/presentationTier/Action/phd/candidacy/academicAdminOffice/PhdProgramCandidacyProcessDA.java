@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,10 +34,10 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
+import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,6 +46,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -380,21 +380,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	    HttpServletResponse response) throws JRException, IOException {
 
 	final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request));
-	final byte[] generateDocument = ReportsUtils.exportToProcessedPdfAsByteArray(report);
-
-	response.setContentLength(generateDocument.length);
-	response.setContentType("application/pdf");
-	response.addHeader("Content-Disposition", "attachment; filename=\"" + report.getReportFileName() + ".pdf\"");
-
-	ServletOutputStream outputStream = null;
-	try {
-	    outputStream = response.getOutputStream();
-	    outputStream.write(generateDocument);
-	    outputStream.flush();
-	} finally {
-	    IOUtils.closeQuietly(outputStream);
-	    response.flushBuffer();
-	}
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
+		.exportToProcessedPdfAsByteArray(report));
 
 	return null;
 
@@ -406,6 +393,28 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	getNotification(request).markAsSent();
 
 	return manageNotifications(mapping, form, request, response);
+
+    }
+
+    public ActionForward printCandidacyDeclarationPt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException, JRException {
+
+	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request), Language.pt);
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
+		.exportToProcessedPdfAsByteArray(report));
+
+	return null;
+
+    }
+
+    public ActionForward printCandidacyDeclarationEn(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException, JRException {
+
+	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request), Language.en);
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
+		.exportToProcessedPdfAsByteArray(report));
+
+	return null;
 
     }
 

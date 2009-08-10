@@ -35,7 +35,7 @@ public class PhdNotificationDocument extends FenixReport {
     @Override
     public String getReportFileName() {
 	return "Notification-" + getNotification().getNotificationNumber().replace("/", "-") + "-"
-		+ new DateTime().toString(YYYYMMDDHHMMSS, getLocale());
+		+ new DateTime().toString(YYYYMMDDHHMMSS);
     }
 
     @Override

@@ -157,6 +157,18 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
 		</html:link>
 	</li>
+	<logic:notEmpty name="candidacyProcess" property="individualProgramProcess.phdProgram">
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclarationPt" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.pt"/>
+			</html:link>
+		</li>
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclarationEn" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.printCandidacyDeclaration.en"/>
+			</html:link>
+		</li>
+	</logic:notEmpty>
 </ul>	
 
 
