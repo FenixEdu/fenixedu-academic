@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.base;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -188,7 +191,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final String requestParameter = request.getParameter(name);
 	return (!StringUtils.isEmpty(requestParameter) ? Long.valueOf(requestParameter) : (Long) request.getAttribute(name));
     }
-    
+
     public ActionForward processException(HttpServletRequest request, ActionMapping mapping, ActionForward input, Exception e) {
 	if (!(e instanceof DomainException)) {
 	    return null;
@@ -425,4 +428,23 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return result;
 
     }
+
+    protected void writeFile(final HttpServletResponse response, final String filename, final String contentType,
+	    final byte[] content) throws IOException {
+
+	response.setContentLength(content.length);
+	response.setContentType(contentType);
+	response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+	ServletOutputStream outputStream = null;
+	try {
+	    outputStream = response.getOutputStream();
+	    outputStream.write(content);
+	    outputStream.flush();
+	} finally {
+	    IOUtils.closeQuietly(outputStream);
+	    response.flushBuffer();
+	}
+    }
+
 }
