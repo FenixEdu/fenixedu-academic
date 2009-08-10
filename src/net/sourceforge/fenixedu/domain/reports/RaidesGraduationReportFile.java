@@ -586,16 +586,16 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup firstCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.FIRST_CYCLE);
-	row.setCell(firstCycleCurriculumGroup != null ? printDouble(firstCycleCurriculumGroup.getCreditsConcluded(executionYear
-		.getPreviousExecutionYear())) : "");
+	row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(firstCycleCurriculumGroup.getCurriculum(executionYear)
+		.getSumEctsCredits()) : "");
 
 	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.SECOND_CYCLE);
 	row
-		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printDouble(secondCycleCurriculumGroup
-			.getCreditsConcluded(executionYear.getPreviousExecutionYear()))
+		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
+			.getCurriculum(executionYear).getSumEctsCredits())
 			: "");
 
 	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
@@ -603,7 +603,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	Double extraFirstCycleEcts = 0d;
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
 	    for (final CurriculumLine curriculumLine : cycleCurriculumGroup.getAllCurriculumLines()) {
-		if (curriculumLine.getExecutionYear() == executionYear.getPreviousExecutionYear()) {
+		if (!curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    extraFirstCycleEcts += curriculumLine.getCreditsConcluded(executionYear.getPreviousExecutionYear());
 		}
 	    }
@@ -615,7 +615,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	Double extraCurricularEcts = 0d;
 	for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getExtraCurriculumGroup().getAllCurriculumLines()) {
 	    if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
-		    && curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
+		    && !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 	    }
 	}
@@ -628,7 +628,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
 		    .getAllCurriculumLines()) {
 		if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
-			&& curriculumLine.getExecutionYear().equals(executionYear.getPreviousExecutionYear())) {
+			&& !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 		}
 	    }
