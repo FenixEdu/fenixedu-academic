@@ -441,9 +441,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	    outputStream = response.getOutputStream();
 	    outputStream.write(content);
 	    outputStream.flush();
+	    response.flushBuffer();
 	} finally {
 	    IOUtils.closeQuietly(outputStream);
-	    response.flushBuffer();
 	}
     }
 
