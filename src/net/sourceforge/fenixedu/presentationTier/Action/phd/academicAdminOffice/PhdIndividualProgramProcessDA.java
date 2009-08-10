@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
+import java.io.IOException;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
@@ -39,6 +43,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
+import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -79,7 +84,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp"),
 
-	@Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp")
+	@Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp"),
+
+	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -665,5 +672,59 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of study plan management
+
+    // Photo Upload
+
+    public ActionForward prepareUploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("uploadPhotoBean", new PhotographUploadBean());
+	return mapping.findForward("uploadPhoto");
+    }
+
+    public ActionForward uploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	final PhotographUploadBean photo = (PhotographUploadBean) getRenderedObject("uploadPhotoBean");
+
+	if (!RenderUtils.getViewState("uploadPhotoBean").isValid()) {
+	    addErrorMessage(request, "error.photo.upload.invalid.information");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	if (ContentType.getContentType(photo.getContentType()) == null) {
+	    addErrorMessage(request, "error.photo.upload.unsupported.file");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	try {
+
+	    photo.processImage();
+
+	    StorePersonalPhoto.uploadPhoto(photo, getProcess(request).getPerson());
+
+	    addSuccessMessage(request, "message.photo.updated.with.success");
+
+	} catch (final UnableToProcessTheImage e) {
+	    addErrorMessage(request, "error.photo.upload.unable.to.process.image");
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewProcess(mapping, actionForm, request, response);
+    }
+
+    public ActionForward uploadPhotoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("uploadPhotoBean", getRenderedObject("uploadPhotoBean"));
+	RenderUtils.invalidateViewState("uploadPhotoBean");
+	return mapping.findForward("uploadPhoto");
+    }
+
+    // End of Photo Upload
 
 }

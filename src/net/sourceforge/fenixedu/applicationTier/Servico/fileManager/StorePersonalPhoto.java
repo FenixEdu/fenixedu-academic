@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoType;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -42,5 +46,14 @@ public class StorePersonalPhoto extends FenixService {
     private static void storePersonalPhoto(byte[] contents, byte[] compressed, ContentType contentType, Person person) {
 	person.setPersonalPhoto(new Photograph(contentType, new ByteArray(contents), new ByteArray(compressed),
 		PhotoType.INSTITUTIONAL));
+    }
+
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Service
+    static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person) throws FileNotFoundException,
+	    IOException {
+	person.setPersonalPhoto(new Photograph(ContentType.getContentType(photoBean.getContentType()), new ByteArray(photoBean
+		.getFileInputStream()), new ByteArray(photoBean.getCompressedInputStream()), PhotoType.INSTITUTIONAL));
+
     }
 }

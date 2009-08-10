@@ -42,11 +42,17 @@
 <jsp:include page="/phd/academicAdminOffice/alertMessagesNotifier.jsp?global=false" />
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
+<logic:notEmpty name="process" property="person.personalPhotoEvenIfPending">
+	<div style="float: right;">
+		<bean:define id="photoCode" name="process" property="person.personalPhotoEvenIfPending.idInternal" />
+		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+	</div>
+</logic:notEmpty>
+ 
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 <table>
   <tr>
     <td>
-
 		<fr:view schema="PhdIndividualProgramProcess.view" name="process">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -61,6 +67,11 @@
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=prepareEditPersonalInformation" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.editPersonalInformation"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=prepareUploadPhoto" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.edit.photo"/>
 				</html:link>
 			</li>
 			<phd:activityAvailable process="<%= process %>" activity="<%= AddStudyPlan.class %>">
