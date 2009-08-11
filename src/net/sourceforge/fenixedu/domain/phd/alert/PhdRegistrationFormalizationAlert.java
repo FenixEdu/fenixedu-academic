@@ -44,29 +44,18 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 	return getResourceBundle().getString("message.phd.alert.registration.formalization.description");
     }
 
-    private ResourceBundle getResourceBundle() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getDefaultLocale());
-	return bundle;
-    }
-
     private LocalDate getWhenToFire() {
 	return PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getCandidacyProcess().getWhenRatified(), MAX_DAYS);
     }
 
     @Override
     protected boolean isToDiscard() {
-	return getProcess().isRegistrationFormalized();
+	return hasFireDate() || getProcess().isRegistrationFormalized();
     }
 
     @Override
     protected boolean isToFire() {
-
-	if (getProcess().isRegistrationFormalized()) {
-	    return false;
-	}
-
-	return new LocalDate().isBefore(getWhenToFire());
-
+	return !new LocalDate().isBefore(getWhenToFire());
     }
 
     @Override

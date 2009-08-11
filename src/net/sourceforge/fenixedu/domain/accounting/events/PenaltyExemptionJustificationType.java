@@ -43,6 +43,9 @@ public enum PenaltyExemptionJustificationType {
 		    DIRECTIVE_COUNCIL_AUTHORIZATION, NUCLEUS_COORDINATOR_AUTHORIZATION, SEPARATION_CYCLES_AUTHORIZATION });
 	case IMPROVEMENT_OF_APPROVED_ENROLMENT:
 	    return Arrays.asList(new PenaltyExemptionJustificationType[] { NUCLEUS_COORDINATOR_AUTHORIZATION });
+	case PHD_REGISTRATION_FEE:
+	    return Arrays.asList(new PenaltyExemptionJustificationType[] { DIRECTIVE_COUNCIL_AUTHORIZATION,
+		    NUCLEUS_COORDINATOR_AUTHORIZATION });
 	default:
 	    return Collections.EMPTY_LIST;
 	}

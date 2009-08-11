@@ -8,8 +8,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan"%>
-
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
@@ -168,6 +168,13 @@
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
 		</html:link>
 	</li>
+	<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RegistrationFormalization.class %>" >
+		<li style="display: inline;">
+			<html:link action="/phdProgramCandidacyProcess.do?method=prepareRegistrationFormalization" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.registrationFormalization"/>
+			</html:link>
+		</li>
+	</phd:activityAvailable>
 	<logic:notEmpty name="candidacyProcess" property="individualProgramProcess.phdProgram">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=printCandidacyDeclarationPt" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">

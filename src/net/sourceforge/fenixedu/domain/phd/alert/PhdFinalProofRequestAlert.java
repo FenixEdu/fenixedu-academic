@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCalendarUtil;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -14,66 +12,60 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSeminarAlert_Base {
+public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
-    static private int MAX_DAYS = 24 * 30; // months * days
+    static private int MAX_DAYS = 5 * 365; // years * days
 
-    private PhdPublicPresentationSeminarAlert() {
+    private PhdFinalProofRequestAlert() {
 	super();
     }
 
-    public PhdPublicPresentationSeminarAlert(final PhdIndividualProgramProcess process) {
+    public PhdFinalProofRequestAlert(final PhdIndividualProgramProcess process) {
 	this();
 	super.init(process, buildSubject(), buildBody());
     }
 
     private MultiLanguageString buildSubject() {
 	return new MultiLanguageString(Language.getDefaultLanguage(), getResourceBundle().getString(
-		"message.phd.alert.public.presentation.seminar.subject"));
+		"message.phd.alert.final.proof.request.subject"));
     }
 
     private MultiLanguageString buildBody() {
 	return new MultiLanguageString(Language.getDefaultLanguage(), getResourceBundle().getString(
-		"message.phd.alert.public.presentation.seminar.body"));
+		"message.phd.alert.final.proof.request.body"));
     }
 
     @Override
     public String getDescription() {
-	return getResourceBundle().getString("message.phd.alert.public.presentation.seminar.description");
+	return getResourceBundle().getString("message.phd.alert.final.proof.request.description");
     }
 
     @Override
     protected boolean isToDiscard() {
-	return getProcess().hasPublicPresentationSeminar();
+	return getProcess().hasRequestedFinalProof();
     }
 
     @Override
-    public boolean isToFire() {
-	// TODO: method to add months?
+    protected boolean isToFire() {
+	// TODO: method to add years?
 	return !new LocalDate().isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getWhenStartedStudies(), MAX_DAYS));
     }
 
     @Override
     protected void generateMessage() {
-	// TODO: coordinator?
-
-	final Group academicOfficeGroup = new MasterDegreeAdministrativeOfficeGroup();
-	new PhdAlertMessage(getProcess(), academicOfficeGroup.getElements(), getFormattedSubject(), getFormattedBody());
-	new Message(getRootDomainObject().getSystemSender(), new Recipient(academicOfficeGroup), buildMailSubject(),
-		buildMailBody());
-
+	// TODO: add missing elements
 	new PhdAlertMessage(getProcess(), getProcess().getPerson(), getFormattedSubject(), getFormattedBody());
 	new Message(getRootDomainObject().getSystemSender(), new Recipient(Collections.singletonList(getProcess().getPerson())),
 		buildMailSubject(), buildMailBody());
     }
 
     @Override
-    public boolean isSystemAlert() {
+    public boolean isToSendMail() {
 	return true;
     }
 
     @Override
-    public boolean isToSendMail() {
+    public boolean isSystemAlert() {
 	return true;
     }
 

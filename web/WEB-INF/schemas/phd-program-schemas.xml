@@ -1166,4 +1166,6 @@
 	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-
+<schema name="RegistrationFormalizationBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean" bundle="PHD_RESOURCES">
+	<slot name="whenStartedStudies" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>

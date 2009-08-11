@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
@@ -27,9 +28,11 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddNotification;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
@@ -71,7 +74,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
 
-@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp")
+@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
+
+@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -420,4 +425,53 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     // End of Notification Management
 
+    // Begin RegistrationFormalization
+
+    public ActionForward prepareRegistrationFormalization(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	checkCandidacyDocuments(request);
+	final RegistrationFormalizationBean bean = new RegistrationFormalizationBean();
+	request.setAttribute("registrationFormalizationBean", bean);
+	return mapping.findForward("registrationFormalization");
+    }
+
+    private void checkCandidacyDocuments(final HttpServletRequest request) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final Person person = process.getPerson();
+
+	request.setAttribute("idDocument", process.hasAnyDocuments(PhdIndividualProgramDocumentType.ID_DOCUMENT));
+	request.setAttribute("personalPhoto", process.getPerson().hasPersonalPhoto());
+	request.setAttribute("healthBulletin", process.hasAnyDocuments(PhdIndividualProgramDocumentType.HEALTH_BULLETIN));
+	request.setAttribute("habilitationsCertificates", person.getAssociatedQualificationsCount() == process
+		.getDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT));
+    }
+
+    public ActionForward registrationFormalizationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	checkCandidacyDocuments(request);
+	request.setAttribute("registrationFormalizationBean", getRenderedObject("registrationFormalizationBean"));
+	return mapping.findForward("registrationFormalization");
+    }
+
+    public ActionForward registrationFormalization(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RegistrationFormalization.class,
+		    getRenderedObject("registrationFormalizationBean"));
+
+	    // TODO: message and warning due to insurance, enrolment debts, etc
+	    // etc
+	    // addSuccessMessage(request,
+	    // "message.candidacy.ratified.successfuly");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return registrationFormalizationInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+    // End of RegistrationFormalization
 }

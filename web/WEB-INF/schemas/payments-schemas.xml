@@ -272,6 +272,18 @@
     <slot name="reason" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
 </schema>
 
+<schema name="CreatePhdRegistrationFeePenaltyExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean" 
+		bundle="APPLICATION_RESOURCES" >
+   	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
+   	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
+        <property name="saveOptions" value="true"/>
+    </slot>
+    <slot name="dispatchDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.dispatchDate" />
+    <slot name="reason" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
+</schema>
+
 <schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
 		bundle="APPLICATION_RESOURCES">
@@ -303,6 +315,13 @@
 
 <schema name="ImprovementOfApprovedEnrolmentPenaltyExemption.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentPenaltyExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
+    <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />
+</schema>
+
+<schema name="PhdRegistrationFeePenaltyExemption.view" 
+		type="net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePenaltyExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
     <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />

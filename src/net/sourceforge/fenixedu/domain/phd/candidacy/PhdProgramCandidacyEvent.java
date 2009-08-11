@@ -73,17 +73,23 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     }
 
     @Override
-    public Account getToAccount() {
-	return getUnit().getAccountBy(AccountType.INTERNAL);
-    }
-
-    @Override
     protected Account getFromAccount() {
 	return getPerson().getAccountBy(AccountType.EXTERNAL);
     }
 
+    @Override
+    public Account getToAccount() {
+	return getUnit().getAccountBy(AccountType.INTERNAL);
+    }
+
     private PhdProgramUnit getUnit() {
 	return getPhdProgram().getPhdProgramUnit();
+    }
+
+    @Override
+    protected void disconnect() {
+	removeCandidacyProcess();
+	super.disconnect();
     }
 
 }

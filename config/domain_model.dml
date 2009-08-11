@@ -1823,7 +1823,7 @@ class DomainObject {
 
 			class accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends accounting.events.PenaltyExemption {
 			}
-
+			
 		class accounting.events.gratuity.GratuityExemption extends accounting.Exemption {
 		}
 
@@ -2013,7 +2013,7 @@ class DomainObject {
 
 					class accounting.postingRules.dfa.DfaRegistrationPR extends accounting.postingRules.FixedAmountWithPenaltyPR {
 					}
-
+					
 				class accounting.postingRules.serviceRequests.DeclarationRequestPR extends accounting.postingRules.FixedAmountPR {
 				}
 
@@ -6533,11 +6533,7 @@ class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
 	String remarks;
 }
 
-class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
-}
-
 class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
-
 }
 
 class phd.candidacy.PHDProgramCandidacy extends candidacy.StudentCandidacy {
@@ -6598,28 +6594,30 @@ class phd.alert.PhdAlert extends DomainObject {
 	DateTime fireDate;
 }
 
-	class phd.alert.PhdPublicPresentationSeminarAlert extends phd.alert.PhdAlert {
-			
-	}
-	
 	class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
 		Group targetGroup;
 		Boolean sendEmail;
 		LocalDate whenToFire;
 	}
 	
-	class phd.alert.PhdCandidacyRefereeAlert extends phd.alert.PhdAlert {
-	}
-	
-	class phd.alert.PublicPhdMissingCandidacyAlert extends phd.alert.PhdAlert {
-	}
-	
-	class phd.alert.PublicPhdMissingCandidacyValidationAlert extends phd.alert.PhdAlert {
-	}
-	
-	class phd.alert.PhdRegistrationFormalizationAlert extends phd.alert.PhdAlert {
+		class phd.alert.PhdCandidacyRefereeAlert extends phd.alert.PhdAlert {
+		}
 		
-	}
+		class phd.alert.PublicPhdMissingCandidacyAlert extends phd.alert.PhdAlert {
+		}
+		
+		class phd.alert.PublicPhdMissingCandidacyValidationAlert extends phd.alert.PhdAlert {
+		}
+		
+		class phd.alert.PhdRegistrationFormalizationAlert extends phd.alert.PhdAlert {
+		}
+		
+		class phd.alert.PhdFinalProofRequestAlert extends phd.alert.PhdAlert {
+		}
+		
+		class phd.alert.PhdPublicPresentationSeminarAlert extends phd.alert.PhdAlert {
+		}
+		
 	
 class phd.alert.PhdAlertMessage extends DomainObject {
 	MultiLanguageString subject;
@@ -6653,8 +6651,20 @@ class phd.notification.PhdNotification extends DomainObject {
 	String createdBy;
 	PhdNotificationType type;
 	PhdNotificationState state;
-
 }
+
+class phd.candidacy.PhdProgramCandidacyEvent extends accounting.AcademicEvent {
+}
+
+class phd.PhdRegistrationFee extends accounting.AcademicEvent {
+}
+
+class phd.PhdRegistrationFeePR extends accounting.postingRules.FixedAmountWithPenaltyPR {
+}
+
+class phd.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
+}
+
 
 /* End of Phd Module */
 
@@ -6754,6 +6764,11 @@ relation PhdIndividualProgramProcessPhdProgramCandidacyProcess {
 relation PhdProgramCandidacyProcessPhdProgramCandidacyEvent {
 	phd.candidacy.PhdProgramCandidacyProcess playsRole candidacyProcess;
 	phd.candidacy.PhdProgramCandidacyEvent playsRole event;
+}
+
+relation PhdIndividualProgramProcessPhdRegistrationFee {
+	phd.PhdIndividualProgramProcess playsRole process;
+	phd.PhdRegistrationFee playsRole registrationFee;
 }
 
 relation PhdProgramCandidacyProcessPhdProgramCandidacy {

@@ -63,8 +63,7 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
     @Override
     public String getDescription() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getDefaultLocale());
-
+	final ResourceBundle bundle = getResourceBundle();
 	return MessageFormat.format(bundle.getString("message.phd.alert.custom.description"), getTargetGroup().getName(),
 		getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(), getFormattedBody());
     }

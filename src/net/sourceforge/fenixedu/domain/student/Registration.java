@@ -3515,6 +3515,14 @@ public class Registration extends Registration_Base {
 	setStudiesStartDate(studiesStartDate);
     }
 
+    public void setHomologationDate(final LocalDate homologationDate) {
+	setHomologationDate(new YearMonthDay(homologationDate));
+    }
+
+    public void setStudiesStartDate(final LocalDate studiesStartDate) {
+	setStudiesStartDate(new YearMonthDay(studiesStartDate));
+    }
+
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void deleteActualInfo() {
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();

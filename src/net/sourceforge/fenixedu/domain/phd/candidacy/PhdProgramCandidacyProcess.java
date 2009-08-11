@@ -10,9 +10,15 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PhotoState;
+import net.sourceforge.fenixedu.domain.Photograph;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -20,10 +26,18 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdRegistrationFee;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.LocalDate;
 
@@ -38,9 +52,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	protected void processPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView) {
-	    // if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    // throw new PreConditionNotValidException();
-	    // }
 	}
 
 	abstract protected void activityPreConditions(final PhdProgramCandidacyProcess process, final IUserView userView);
@@ -278,6 +289,22 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class RegistrationFormalization extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    return process.registrationFormalization((RegistrationFormalizationBean) object, userView.getPerson());
+	}
+
+    }
+
     static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
@@ -299,6 +326,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new RatifyCandidacy());
 
 	activities.add(new AddNotification());
+	activities.add(new RegistrationFormalization());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
@@ -307,15 +335,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
 	setCandidacyDate(bean.getCandidacyDate());
 	setValidatedByCandidate(false);
-
-	// TODO: receive person as argument?
-	// TODO: public candidacies, do not create student and user: pay
-	// attention to public candidacies
-	// if (!person.hasStudent()) {
-	// TODO: generate when creating registration?
-	// new Student(person);
-	// }
-	// person.setIstUsername();
 
 	setCandidacyHashCode(bean.getCandidacyHashCode());
 	setCandidacy(new PHDProgramCandidacy(person));
@@ -330,8 +349,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean isPublicCandidacy() {
-	// TODO: add some state to hash code to be changed after create some
-	// student and identification or when changed by other entity?
 	return hasCandidacyHashCode();
     }
 
@@ -497,6 +514,107 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		each.delete();
 	    }
 	}
+    }
+
+    private PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
+	    final Person responsible) {
+
+	createState(PhdProgramCandidacyProcessState.CONCLUDED, responsible);
+
+	getIndividualProgramProcess().setWhenFormalizedRegistration(new LocalDate());
+	getIndividualProgramProcess().setWhenStartedStudies(bean.getWhenStartedStudies());
+
+	assertPersonInformation();
+
+	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
+
+	if (hasCurricularStudyPlan()) {
+	    final DegreeCurricularPlan dcp = getLastActiveDegreeCurricularPlan();
+	    assertCandidacy(dcp, executionYear);
+	    assertRegistration(bean, dcp, executionYear);
+	}
+
+	assertDebts(executionYear);
+	assertRegistrationFormalizationAlerts();
+
+	return this;
+    }
+
+    private void assertPersonInformation() {
+	final Person person = getPerson();
+
+	if (!person.hasStudent()) {
+	    new Student(person);
+	}
+
+	person.addPersonRoleByRoleType(RoleType.PERSON);
+	person.addPersonRoleByRoleType(RoleType.STUDENT);
+	person.setIstUsername();
+
+	if (!person.hasPersonalPhoto()) {
+	    final Photograph photograph = person.getPersonalPhotoEvenIfPending();
+	    if (photograph != null) {
+		photograph.setState(PhotoState.APPROVED);
+	    }
+	}
+    }
+
+    private void assertCandidacy(final DegreeCurricularPlan dcp, final ExecutionYear executionYear) {
+	if (!getCandidacy().hasExecutionDegree()) {
+	    final ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionYear.getAcademicInterval());
+	    getCandidacy().setExecutionDegree(executionDegree);
+	}
+
+	getCandidacy().setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
+	getCandidacy().setIngression(Ingression.CIA3C); // TODO: check
+    }
+
+    private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
+	    final ExecutionYear executionYear) {
+
+	if (getPerson().getStudent().hasActiveRegistrationFor(dcp)) {
+	    throw new DomainException("error.PhdProgramCandidacyProcess.regisration.formalization.already.has.registration");
+	}
+
+	final Registration registration = new Registration(getPerson(), dcp, getCandidacy(), RegistrationAgreement.NORMAL, null,
+		executionYear);
+
+	registration.setHomologationDate(getWhenRatified());
+	registration.setStudiesStartDate(bean.getWhenStartedStudies());
+    }
+
+    private void assertDebts(final ExecutionYear executionYear) {
+	assertPhdRegistrationFee();
+	assertInsuranceEvent(executionYear);
+    }
+
+    private void assertPhdRegistrationFee() {
+	new PhdRegistrationFee(getPerson(), getIndividualProgramProcess());
+    }
+
+    private void assertInsuranceEvent(final ExecutionYear executionYear) {
+	if (!getPerson().hasInsuranceEventFor(executionYear)
+		&& !getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
+	    new InsuranceEvent(getPerson(), executionYear);
+	}
+    }
+
+    private void assertRegistrationFormalizationAlerts() {
+	new PhdPublicPresentationSeminarAlert(getIndividualProgramProcess());
+	new PhdFinalProofRequestAlert(getIndividualProgramProcess());
+    }
+
+    private boolean hasCurricularStudyPlan() {
+	return getIndividualProgramProcess().hasStudyPlan()
+		&& getIndividualProgramProcess().getStudyPlan().isToEnrolInCurricularCourses();
+    }
+
+    private DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
+	return getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan();
+    }
+
+    private PhdProgram getPhdProgram() {
+	return getIndividualProgramProcess().getPhdProgram();
     }
 
 }

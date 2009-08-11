@@ -96,6 +96,7 @@ public class PhdProgram extends PhdProgram_Base {
 
 	getPhdProgramUnit().delete();
 	removeDegree();
+	removeServiceAgreementTemplate();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

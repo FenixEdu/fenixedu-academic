@@ -89,6 +89,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
 </schema>
 
+<schema name="PhdRegistrationFeePR.view"
+	type="net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.view">
+</schema>
+
 <schema name="DFAGratuityPR.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"  
 		extends="PostingRule.view" bundle="APPLICATION_RESOURCES">
@@ -297,6 +302,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
 </schema>
 
+<schema name="PhdRegistrationFeePR.edit"
+	type="net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountWithPenaltyPR.edit">
+</schema>
+
 <schema name="BaseAmountPlusAmountPerUnitPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerUnitPR"
 	bundle="APPLICATION_RESOURCES">
@@ -408,6 +418,9 @@
 </schema>
 
 <schema name="DfaRegistrationPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.dfa.DfaRegistrationPR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="PhdRegistrationFeePR.view-student" type="net.sourceforge.fenixedu.domain.phd.PhdRegistrationFeePR" extends="FixedAmountWithPenaltyPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="AdministrativeOfficeFeePR.view-student"

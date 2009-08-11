@@ -149,4 +149,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     }
 
+    public boolean isToEnrolInCurricularCourses() {
+	return hasAnyEntries();
+    }
 }

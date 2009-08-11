@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class PhdAlert extends PhdAlert_Base {
@@ -145,6 +149,14 @@ abstract public class PhdAlert extends PhdAlert_Base {
     @Override
     public MultiLanguageString getSubject() {
 	throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.alert.PhdAlert.use.getFormattedSubject.instead");
+    }
+
+    final protected ResourceBundle getResourceBundle() {
+	return getResourceBundle(Language.getDefaultLocale());
+    }
+
+    final protected ResourceBundle getResourceBundle(final Locale locale) {
+	return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
 
     abstract public String getDescription();

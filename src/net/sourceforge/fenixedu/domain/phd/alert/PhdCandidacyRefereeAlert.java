@@ -32,7 +32,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     private MultiLanguageString generateSubject(final PhdCandidacyReferee referee) {
 	// TODO: if collaboration type change, then message must be different
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Locale.ENGLISH);
+	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	final String subject = String.format(bundle.getString("message.phd.email.subject.referee"), referee
 		.getIndividualProgramProcess().getPerson().getName());
 	return MultiLanguageString.i18n().add("en", subject).finish();
@@ -40,14 +40,14 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     private MultiLanguageString generateBody(final PhdCandidacyReferee referee) {
 	// TODO: if collaboration type change, then message must be different
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Locale.ENGLISH);
+	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	final String body = String.format(bundle.getString("message.phd.email.body.referee"), referee.getValue());
 	return MultiLanguageString.i18n().add("en", body).finish();
     }
 
     @Override
     public String getDescription() {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Locale.ENGLISH);
+	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	return bundle.getString(String.format("message.phd.referee.alert", INTERVAL));
     }
 
@@ -93,4 +93,8 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 	return true;
     }
 
+    @Override
+    public boolean isSystemAlert() {
+	return true;
+    }
 }

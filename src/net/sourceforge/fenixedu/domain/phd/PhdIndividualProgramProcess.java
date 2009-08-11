@@ -902,4 +902,22 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return (state != null) ? state.getType() : null;
     }
 
+    final public boolean hasPublicPresentationSeminar() {
+	/*
+	 * TODO: MUST IMPLEMENT THIS CORRECTLY
+	 * 
+	 * (used final to get compilation error when creating entity)
+	 */
+	return false;
+
+    }
+
+    final public boolean hasRequestedFinalProof() {
+	/*
+	 * TODO: MUST IMPLEMENT THIS CORRECTLY
+	 * 
+	 * (used final to get compilation error when creating entity)
+	 */
+	return false;
+    }
 }

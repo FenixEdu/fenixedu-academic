@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateImprovementOfApprovedEnrolmentPenaltyExemption;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePhdRegistrationFeePenaltyExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateSecondCycleIndividualCandidacyExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.DeleteExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.ExemptionsManagement;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.phd.PhdRegistrationFee;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.struts.action.ActionForm;
@@ -46,12 +49,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"),
 	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
 	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
+	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp"),
 	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp"),
 	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
 	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
-	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp")
+	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp"),
+	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp")
 
 })
 public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePaymentsManagementDispatchAction {
@@ -215,6 +220,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    return mapping.findForward("showForImprovementOfApprovedEnrolmentEvent");
 	} else if (event instanceof SecondCycleIndividualCandidacyEvent) {
 	    return mapping.findForward("showForSecondCycleIndividualCandidacyEvent");
+	} else if (event instanceof PhdRegistrationFee) {
+	    return mapping.findForward("showForPhdRegistrationFee");
 	} else {
 	    throw new UnsupportedOperationException();
 	}
@@ -372,4 +379,34 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 
 	return showExemptions(mapping, form, request, response);
     }
+
+    public ActionForward prepareCreatePhdRegistrationFeePenaltyExemption(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("createPenaltyExemptionBean", new CreatePhdRegistrationFeePenaltyExemptionBean(
+		(PhdRegistrationFee) getEvent(request)));
+	return mapping.findForward("createPhdRegistrationFeePenaltyExemption");
+    }
+
+    public ActionForward createPhdRegistrationFeePenaltyExemptionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("createPenaltyExemptionBean", getRenderedObject("create-penalty-exemption-bean"));
+	return mapping.findForward("createPhdRegistrationFeePenaltyExemption");
+    }
+
+    public ActionForward createPhdRegistrationFeePenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final CreatePhdRegistrationFeePenaltyExemptionBean penaltyExemptionBean = (CreatePhdRegistrationFeePenaltyExemptionBean) getRenderedObject("create-penalty-exemption-bean");
+	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
+
+	try {
+	    CreatePhdRegistrationFeePenaltyExemption.run(getLoggedPerson(request).getEmployee(), penaltyExemptionBean);
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    return createPhdRegistrationFeePenaltyExemptionInvalid(mapping, form, request, response);
+	}
+
+	return showExemptions(mapping, form, request, response);
+    }
+
 }

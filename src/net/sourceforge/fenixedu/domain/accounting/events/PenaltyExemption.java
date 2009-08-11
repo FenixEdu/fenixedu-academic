@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-public abstract class PenaltyExemption extends PenaltyExemption_Base {
+abstract public class PenaltyExemption extends PenaltyExemption_Base {
 
     protected PenaltyExemption() {
 	super();
