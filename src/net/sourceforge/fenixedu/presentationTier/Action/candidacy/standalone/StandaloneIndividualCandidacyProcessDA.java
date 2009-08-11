@@ -110,6 +110,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
 	 */
 	bean.setPersonBean(new PersonBean());
 	bean.setCandidacyInformationBean(new CandidacyInformationBean());
+	bean.setChoosePersonBean(new ChoosePersonBean());
 
 	/*
 	 * 06/05/2009 - Also we mark the bean as an external candidacy.

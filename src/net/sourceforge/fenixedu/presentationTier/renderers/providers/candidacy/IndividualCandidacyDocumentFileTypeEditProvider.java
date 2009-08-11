@@ -62,6 +62,10 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	    }
 
+	    if (individualCandidacyProcess
+		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
+	    }
 	    return fileTypesList;
 	}
     }
@@ -109,6 +113,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
 	    }
 
+	    if (individualCandidacyProcess
+		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
+	    }
+
 	    fileTypesList.add(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT);
 
 	    return fileTypesList;
@@ -153,6 +162,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 
 	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.VAT_CARD_DOCUMENT);
+	    }
+
+	    if (individualCandidacyProcess
+		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
 	    fileTypesList.add(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT);
@@ -215,6 +229,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    if (individualCandidacyProcess
 		    .getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
+	    }
+
+	    if (individualCandidacyProcess
+		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
 
 	    fileTypesList.add(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT);
