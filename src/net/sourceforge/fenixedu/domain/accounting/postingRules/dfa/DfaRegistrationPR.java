@@ -29,9 +29,9 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 
     public DfaRegistrationPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
 	    Money fixedAmount, Money fixedAmountPenalty) {
+	this();
 	super.init(EntryType.REGISTRATION_FEE, EventType.DFA_REGISTRATION, startDate, endDate, serviceAgreementTemplate,
 		fixedAmount, fixedAmountPenalty);
-
     }
 
     @Override
