@@ -525,8 +525,14 @@ public class SeparationCyclesManagement {
 	if (oldStudentCurricularPlan.getRegistration().hasState(RegistrationStateType.CONCLUDED)) {
 	    return;
 	}
+
+	LocalDate stateDate = new LocalDate();
+	if (stateDate.isAfter(getExecutionYear().getEndDateYearMonthDay())) {
+	    stateDate = getExecutionYear().getEndDateYearMonthDay().toLocalDate();
+	}
+
 	final RegistrationState state = RegistrationStateCreator.createState(oldStudentCurricularPlan.getRegistration(), null,
-		new LocalDate().toDateTimeAtStartOfDay(), RegistrationStateType.CONCLUDED);
+		stateDate.toDateTimeAtStartOfDay(), RegistrationStateType.CONCLUDED);
 	state.setResponsiblePerson(null);
     }
 
