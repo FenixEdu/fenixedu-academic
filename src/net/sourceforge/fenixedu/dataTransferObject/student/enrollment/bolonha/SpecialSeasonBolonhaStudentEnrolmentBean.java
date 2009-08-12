@@ -11,6 +11,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SpecialSeasonBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
+    private static final long serialVersionUID = -7472651937511355140L;
+
     public SpecialSeasonBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 	super(studentCurricularPlan, executionSemester, new SpecialSeasonStudentCurriculumGroupBean(studentCurricularPlan
