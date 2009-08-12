@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 
 public class StudentCurriculumGroupBean extends StudentCurriculumModuleBean {
 
+    private static final long serialVersionUID = 1L;
+
     private static class ComparatorByCurriculumGroupOrder implements Comparator<StudentCurriculumGroupBean> {
 
 	private ExecutionSemester executionSemester;
