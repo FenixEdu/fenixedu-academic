@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
@@ -60,6 +62,12 @@
 				<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
 			</html:select>
 			<html:submit><bean:message key="label.choose"/> </html:submit>
+			
+			<p><bean:message key="label.hide.cancelled.candidacies" bundle="CANDIDATE_RESOURCES"/>
+			<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
+				<fr:layout name="radio-postback"/>
+			</fr:edit>
+			</p>
 		</html:form>
 		<br/>
 	</logic:greaterThan>
@@ -78,9 +86,18 @@
 		<logic:iterate id="activity" name="processActivities">
 			<bean:define id="activityName" name="activity" property="class.simpleName" />
 			<li>
-				<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString()%>'>
-					<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
-				</html:link>
+				<logic:notEmpty name="hideCancelledCandidacies">
+					<bean:define id="hideCancelledCandidacies" name="hideCancelledCandidacies"/>
+	 				<bean:define id="hideCancelledCandidaciesValue" > <%= ((HideCancelledCandidaciesBean) hideCancelledCandidacies).getValue().toString() %></bean:define>
+					<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString() + "&amp;hideCancelledCandidacies=" + hideCancelledCandidaciesValue %>'>
+						<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+					</html:link>
+				</logic:notEmpty>
+				<logic:empty name="hideCancelledCandidacies">
+					<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString()  %>'>
+						<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+					</html:link>
+				</logic:empty>
 			</li>
 		</logic:iterate>
 		</ul>

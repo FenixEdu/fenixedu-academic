@@ -122,13 +122,71 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    request.setAttribute("childProcessName", getChildProcessType().getSimpleName());
 	    request.setAttribute("executionIntervalId", process.getCandidacyExecutionInterval().getIdInternal());
 	    request.setAttribute("individualCandidaciesHashCodesNotBounded", getIndividualCandidacyHashCodesNotBounded());
+	    request.setAttribute("hideCancelledCandidacies", getHideCancelledCandidaciesValue(request));
 	}
 	request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
 	request.setAttribute("executionIntervals", ExecutionInterval
 		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
     }
 
+    public static class HideCancelledCandidaciesBean implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Boolean value = Boolean.FALSE;
+
+	public HideCancelledCandidaciesBean(Boolean value) {
+	    this.value = value;
+	}
+
+	public HideCancelledCandidaciesBean() {
+	}
+
+	public Boolean getValue() {
+	    return this.value;
+	}
+
+	public Boolean isValue() {
+	    return this.value;
+	}
+
+	public void setValue(Boolean value) {
+	    this.value = value;
+	}
+
+	public Boolean getOptionValue() {
+	    return getValue();
+	}
+
+	public void setOptionValue(Boolean value) {
+	    setValue(value);
+	}
+    }
+
+    protected HideCancelledCandidaciesBean getHideCancelledCandidaciesValue(HttpServletRequest request) {
+	Object value = this.getObjectFromViewState("hide.cancelled.candidacies");
+	if (value == null) {
+	    value = getFromRequest(request, "hideCancelledCandidacies") != null ? Boolean.valueOf((String) getFromRequest(
+		    request, "hideCancelledCandidacies")) : null;
+	}
+	return new HideCancelledCandidaciesBean(value != null ? (Boolean) value : Boolean.FALSE);
+    }
+
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+	HideCancelledCandidaciesBean hideCancelledCandidacies = getHideCancelledCandidaciesValue(request);
+	if (hideCancelledCandidacies.getValue()) {
+	    return new ArrayList<IndividualCandidacyProcess>(CollectionUtils.select(process.getChildProcesses(), new Predicate() {
+
+		@Override
+		public boolean evaluate(Object arg0) {
+		    return !((IndividualCandidacyProcess) arg0).isCandidacyCancelled();
+		}
+
+	    }));
+	}
+
 	return process.getChildProcesses();
     }
 
@@ -297,17 +355,21 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	response.setHeader("Content-disposition", "attachment; filename=" + getReportFilename());
 
 	final ServletOutputStream writer = response.getOutputStream();
-	writeCandidaciesReport(getProcess(request), writer);
+	writeCandidaciesReport(request, getProcess(request), writer);
 	writer.flush();
 	response.flushBuffer();
 	return null;
     }
 
-    private void writeCandidaciesReport(final CandidacyProcess process, final ServletOutputStream writer) throws IOException {
+    private void writeCandidaciesReport(HttpServletRequest request, final CandidacyProcess process,
+	    final ServletOutputStream writer) throws IOException {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
 	final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("title.candidacies"), getCandidacyHeader());
+	HideCancelledCandidaciesBean hideCancelledCandidacies = getHideCancelledCandidaciesValue(request);
 
 	for (final IndividualCandidacyProcess individualProcess : process.getChildProcesses()) {
+	    if (hideCancelledCandidacies.getValue() && individualProcess.isCandidacyCancelled())
+		continue;
 	    buildIndividualCandidacyReport(spreadsheet, individualProcess);
 	}
 	new SpreadsheetXLSExporter().exportToXLSSheet(spreadsheet, writer);

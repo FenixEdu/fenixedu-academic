@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
@@ -99,6 +101,14 @@
 				</logic:greaterThan>
 			</logic:notEmpty>
 			<tr>
+				<td><bean:message key="label.hide.cancelled.candidacies" bundle="CANDIDATE_RESOURCES"/></td>
+				<td> 
+				<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
+					<fr:layout name="radio-postback"/>
+				</fr:edit>
+				</td>
+			</tr>					
+			<tr>
 				<td> </td>
 				<td><html:submit><bean:message key="label.choose"/> </html:submit></td>
 			</tr>
@@ -121,9 +131,18 @@
 		<logic:iterate id="activity" name="processActivities">
 			<bean:define id="activityName" name="activity" property="class.simpleName" />
 			<li>
-				<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString()%>'>
-					<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
-				</html:link>
+				<logic:notEmpty name="hideCancelledCandidacies">
+					<bean:define id="hideCancelledCandidacies" name="hideCancelledCandidacies"/>
+	 				<bean:define id="hideCancelledCandidaciesValue" > <%= ((HideCancelledCandidaciesBean) hideCancelledCandidacies).getValue().toString() %></bean:define>
+					<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString() + "&amp;hideCancelledCandidacies=" + hideCancelledCandidaciesValue %>'>
+						<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+					</html:link>
+				</logic:notEmpty>
+				<logic:empty name="hideCancelledCandidacies">
+					<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString()  %>'>
+						<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+					</html:link>
+				</logic:empty>
 			</li>
 		</logic:iterate>
 		</ul>
@@ -140,6 +159,7 @@
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
 		<br/>
+		
 		<fr:view name="childProcesses" schema="IndividualCandidacyProcess.list.processes">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>

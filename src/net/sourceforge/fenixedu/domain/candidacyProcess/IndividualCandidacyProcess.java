@@ -13,7 +13,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
@@ -49,6 +51,16 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
      */
     protected void init(IndividualCandidacyProcessBean bean) {
 	checkParameters(bean.getCandidacyProcess());
+
+	if (bean.getPublicCandidacyHashCode() == null) {
+	    throw new DomainException("error.IndividualCandidacy.hash.code.is.null");
+	}
+
+	if (existsIndividualCandidacyProcessForDocumentId(bean.getCandidacyProcess(), bean.getPersonBean().getIdDocumentType(),
+		bean.getPersonBean().getDocumentIdNumber())) {
+	    throw new DomainException("error.IndividualCandidacy.exists.for.same.document.id");
+	}
+
 	setCandidacyProcess(bean.getCandidacyProcess());
 	createIndividualCandidacy(bean);
 
@@ -62,6 +74,12 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	setCandidacyDocumentFiles(bean);
 
 	setProcessCodeForThisIndividualCandidacy(bean.getCandidacyProcess());
+
+    }
+
+    protected boolean existsIndividualCandidacyProcessForDocumentId(final CandidacyProcess process, IDDocumentType documentType,
+	    String identification) {
+	return process.getOpenChildProcessByDocumentId(documentType, identification) != null;
     }
 
     private void setProcessCodeForThisIndividualCandidacy(CandidacyProcess process) {
