@@ -59,19 +59,19 @@
 <div class="warning1 mbottom05" style="width: 700px;">
 <table>
 	<tr>
-		<td>Documento de Identificação: </td>
+		<td><bean:message  key="label.phd.registrationFormalization.identification.document" bundle="PHD_RESOURCES"/>: </td>
 		<td class="acenter"><logic:equal name="idDocument" value="true"><html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/></logic:equal><logic:equal name="idDocument" value="false"><html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/></logic:equal></td>
 	</tr>
 	<tr>
-		<td>Fotografia: </td>
+		<td><bean:message  key="label.phd.registrationFormalization.photo" bundle="PHD_RESOURCES"/>: </td>
 		<td class="acenter"><logic:equal name="personalPhoto" value="true"><html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/></logic:equal><logic:equal name="personalPhoto" value="false"><html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/></logic:equal></td>
 	</tr>
 	<tr>
-		<td>Boletim individual de saúde devidamente actualizado: </td>
+		<td><bean:message  key="label.phd.registrationFormalization.healthBulletin" bundle="PHD_RESOURCES"/>: </td>
 		<td class="acenter"><logic:equal name="healthBulletin" value="true"><html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/></logic:equal><logic:equal name="healthBulletin" value="false"><html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/></logic:equal></td>
 	</tr>
 	<tr>
-		<td>Certidão Grau(s) Académico(s): </td>
+		<td><bean:message  key="label.phd.registrationFormalization.habilitationsCertificates" bundle="PHD_RESOURCES"/>: </td>
 		<td class="acenter"><logic:equal name="habilitationsCertificates" value="true"><html:img src="<%= request.getContextPath() + "/images/correct.gif" %>"/></logic:equal><logic:equal name="habilitationsCertificates" value="false"><html:img src="<%= request.getContextPath() + "/images/incorrect.gif" %>"/></logic:equal></td>
 	</tr>
 </table>

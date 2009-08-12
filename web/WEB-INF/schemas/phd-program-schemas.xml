@@ -1169,3 +1169,47 @@
 <schema name="RegistrationFormalizationBean.edit" type="net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean" bundle="PHD_RESOURCES">
 	<slot name="whenStartedStudies" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
+
+<schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.scientificCouncil.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
+	<slot name="email" />
+	<slot name="name" layout="null-as-label" />
+	<slot name="candidate" />
+	<slot name="validated" />
+</schema>
+
+<schema name="PhdCandidacyRefereeLetter.applicant.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+	<slot name="howLongKnownApplicant" />
+	<slot name="capacity" />
+	<slot name="comparisonGroup" />
+	<slot name="rankInClass" />
+</schema>
+
+<schema name="PhdCandidacyRefereeLetter.overall.promise" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+	<slot name="academicPerformance" />
+	<slot name="socialAndCommunicationSkills" />
+	<slot name="potencialToExcelPhd" />
+</schema>
+
+<schema name="PhdCandidacyRefereeLetter.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+	<slot name="comments"/>
+</schema>
+
+<schema name="PhdCandidacyRefereeLetter.comments.with.file" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+	<slot name="file" layout="link">
+		<property name="linkFormat" value="${downloadUrl}" />
+		<property name="moduleRelative" value="false" />
+		<property name="contextRelative" value="false" />
+	</slot>
+	<slot name="comments"/>
+</schema>
+
+<schema name="PhdCandidacyRefereeLetter.referee.information" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter" bundle="PHD_RESOURCES">
+	<slot name="refereeName" />
+	<slot name="refereePosition" />
+	<slot name="refereeInstitution" />
+	<slot name="refereeAddress" />
+	<slot name="refereeCity" />
+	<slot name="refereeZipCode" />
+	<slot name="refereeCountry" />
+	<slot name="refereeEmail" />
+</schema>

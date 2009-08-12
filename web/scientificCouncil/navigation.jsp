@@ -176,5 +176,15 @@
 			</html:link>
 		</li>
 		--%>
+		
+		<li class="navheader">
+			<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />
+		</li>
+		<li>
+			<html:link page="/candidacies/phdProgramCandidacyProcess.do?method=listProcesses">
+				<bean:message key="label.viewProcesses" bundle="PHD_RESOURCES" />
+			</html:link>
+		</li>
+
 	</ul> 
 </logic:present>
