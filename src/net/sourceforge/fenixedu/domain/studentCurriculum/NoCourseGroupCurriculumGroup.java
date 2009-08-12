@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -200,11 +199,6 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     @Override
     public int getNumberOfAllApprovedCurriculumLines() {
 	return 0;
-    }
-
-    @Override
-    public Collection<Enrolment> getSpecialSeasonEnrolments(final ExecutionYear executionYear) {
-	return Collections.emptyList();
     }
 
     @Override
