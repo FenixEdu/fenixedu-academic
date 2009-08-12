@@ -932,7 +932,7 @@
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.current.degree" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
@@ -1093,7 +1093,7 @@
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.current.degree" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
