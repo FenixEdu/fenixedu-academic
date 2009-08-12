@@ -98,15 +98,15 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Photo ### --%>
+<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditCandidacy" value="true">
 	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
-		<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 		<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
-		<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.photo" bundle="PHD_RESOURCES"/></a>
 	</logic:empty>
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.photo" bundle="PHD_RESOURCES"/></a>
+	<br/><br/>
 </logic:equal>
 <logic:notEmpty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
-	<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 	<div>
 		<bean:define id="photoCode" name="individualProgramProcess" property="person.personalPhotoEvenIfPending.idInternal" />
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
