@@ -2094,7 +2094,16 @@ public class Registration extends Registration_Base {
     }
 
     final public RegistrationState getActiveState() {
-	return hasAnyRegistrationStates() ? Collections.max(getRegistrationStates(), RegistrationState.DATE_COMPARATOR) : null;
+	if (hasAnyRegistrationStates()) {
+	    List<RegistrationState> states = new ArrayList<RegistrationState>();
+	    for (RegistrationState state : getRegistrationStates()) {
+		if (!state.getStateDate().isAfterNow())
+		    states.add(state);
+	    }
+	    return !states.isEmpty() ? Collections.max(states, RegistrationState.DATE_COMPARATOR) : null;
+	} else {
+	    return null;
+	}
     }
 
     final public RegistrationState getFirstState() {
