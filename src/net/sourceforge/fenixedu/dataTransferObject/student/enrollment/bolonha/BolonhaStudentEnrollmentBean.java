@@ -18,9 +18,6 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentEnrollmentBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5614162187691303580L;
 
     private DomainReference<StudentCurricularPlan> studentCurricularPlan;
