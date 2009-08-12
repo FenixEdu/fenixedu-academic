@@ -14,10 +14,13 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
+
+    private static final long serialVersionUID = 8504847305104217989L;
 
     public SpecialSeasonStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup,
 	    final ExecutionSemester executionSemester) {
@@ -56,7 +59,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
 	    @Override
 	    public boolean eval(Enrolment enrolment) {
-		for (Enrolment specialSeasonEnrolment : getValue()) {
+		for (final Enrolment specialSeasonEnrolment : getValue()) {
 		    if (specialSeasonEnrolment.getDegreeModule().equals(enrolment.getDegreeModule())) {
 			return true;
 		    }
@@ -85,7 +88,11 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
 	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	for (Enrolment enrolment : enrolmentsMap.values()) {
-	    result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
+	    if (enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+		result.add(new NoCourseGroupEnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
+	    } else {
+		result.add(new EnroledCurriculumModuleWrapper(enrolment, enrolment.getExecutionPeriod()));
+	    }
 	}
 
 	return result;
@@ -97,6 +104,12 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	final List<StudentCurriculumGroupBean> result = new ArrayList<StudentCurriculumGroupBean>();
 	for (final CurriculumGroup curriculumGroup : parentGroup.getCurriculumGroupsToEnrolmentProcess()) {
 	    result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+	}
+
+	if (!parentGroup.isNoCourseGroupCurriculumGroup()) {
+	    for (final NoCourseGroupCurriculumGroup curriculumGroup : parentGroup.getNoCourseGroupCurriculumGroups()) {
+		result.add(new SpecialSeasonStudentCurriculumGroupBean(curriculumGroup, executionSemester));
+	    }
 	}
 
 	return result;
