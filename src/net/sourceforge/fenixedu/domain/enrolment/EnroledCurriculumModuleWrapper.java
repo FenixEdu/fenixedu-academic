@@ -97,7 +97,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	return curriculumLine.isEnrolment();
     }
 
-    public boolean isEnroled() {
+    final public boolean isEnroled() {
 	return true;
     }
 
@@ -181,7 +181,7 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	return stringBuilder.toString();
     }
 
-    public boolean isEnroling() {
+    final public boolean isEnroling() {
 	return false;
     }
 
