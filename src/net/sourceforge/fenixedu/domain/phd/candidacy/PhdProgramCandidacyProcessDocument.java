@@ -49,7 +49,7 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
 	super.setUploader(uploader);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, new RoleGroup(
 		RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
-
+	storeToContentManager();
     }
 
     protected void checkParameters(PhdProgramCandidacyProcess candidacyProcess, PhdIndividualProgramDocumentType documentType,
