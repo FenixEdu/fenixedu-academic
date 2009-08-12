@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -600,11 +601,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setPhdIndividualProcessNumber(PhdIndividualProgramProcessNumber.generateNextForYear(bean.getCandidacyDate().getYear()));
     }
 
-    private void createState(final PhdIndividualProgramProcessState state, final Person person) {
+    public void createState(final PhdIndividualProgramProcessState state, final Person person) {
 	createState(state, person, null);
     }
 
-    private void createState(final PhdIndividualProgramProcessState state, final Person person, final String remarks) {
+    public void createState(final PhdIndividualProgramProcessState state, final Person person, final String remarks) {
 	new PhdProgramProcessState(this, state, person, remarks);
     }
 
@@ -900,6 +901,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 	final PhdProgramProcessState state = Collections.max(getStates(), PhdProcessState.COMPARATOR_BY_DATE);
 	return (state != null) ? state.getType() : null;
+    }
+
+    public Student getStudent() {
+	return getPerson().getStudent();
     }
 
     final public boolean hasPublicPresentationSeminar() {

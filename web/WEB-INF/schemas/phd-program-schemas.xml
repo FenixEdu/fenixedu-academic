@@ -1213,3 +1213,8 @@
 	<slot name="refereeCountry" />
 	<slot name="refereeEmail" />
 </schema>
+
+<schema name="PhdIndividualProgramProcess.view.student" type="net.sourceforge.fenixedu.domain.student.Student" bundle="PHD_RESOURCES">
+	<slot name="number" />
+	<slot name="person.istUsername" />
+</schema>

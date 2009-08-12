@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
@@ -536,6 +537,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	assertDebts(executionYear);
 	assertRegistrationFormalizationAlerts();
+
+	getIndividualProgramProcess().createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, responsible);
 
 	return this;
     }
