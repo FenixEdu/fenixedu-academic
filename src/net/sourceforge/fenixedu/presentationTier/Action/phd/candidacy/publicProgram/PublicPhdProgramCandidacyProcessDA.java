@@ -4,19 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
+import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
@@ -66,7 +66,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "publico")
@@ -409,13 +408,15 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return result;
     }
 
-    private List<PhdCandidacyRefereeBean> createCandidacyRefereesMinimumList() {
-	final List<PhdCandidacyRefereeBean> result = new ArrayList<PhdCandidacyRefereeBean>(MINIMUM_CANDIDACY_REFEREES);
-	result.add(new PhdCandidacyRefereeBean());
-	result.add(new PhdCandidacyRefereeBean());
-	result.add(new PhdCandidacyRefereeBean());
-	return result;
-    }
+    // private List<PhdCandidacyRefereeBean>
+    // createCandidacyRefereesMinimumList() {
+    // final List<PhdCandidacyRefereeBean> result = new
+    // ArrayList<PhdCandidacyRefereeBean>(MINIMUM_CANDIDACY_REFEREES);
+    // result.add(new PhdCandidacyRefereeBean());
+    // result.add(new PhdCandidacyRefereeBean());
+    // result.add(new PhdCandidacyRefereeBean());
+    // return result;
+    // }
 
     public ActionForward createCandidacyStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -614,19 +615,22 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("showCandidacySuccess");
     }
 
-    private boolean candidacyRefereesEmailsAreInvalid(final PhdProgramCandidacyProcessBean bean) {
-	final Set<String> emails = new HashSet<String>(bean.getCandidacyReferees().size() + 1);
-	emails.add(bean.getCandidacyHashCode().getEmail());
-
-	for (final PhdCandidacyRefereeBean refereeBean : bean.getCandidacyReferees()) {
-	    if (emails.contains(refereeBean.getEmail())) {
-		return true;
-	    }
-	    emails.add(refereeBean.getEmail());
-	}
-
-	return false;
-    }
+    // private boolean candidacyRefereesEmailsAreInvalid(final
+    // PhdProgramCandidacyProcessBean bean) {
+    // final Set<String> emails = new
+    // HashSet<String>(bean.getCandidacyReferees().size() + 1);
+    // emails.add(bean.getCandidacyHashCode().getEmail());
+    //
+    // for (final PhdCandidacyRefereeBean refereeBean :
+    // bean.getCandidacyReferees()) {
+    // if (emails.contains(refereeBean.getEmail())) {
+    // return true;
+    // }
+    // emails.add(refereeBean.getEmail());
+    // }
+    //
+    // return false;
+    // }
 
     private void sendApplicationSuccessfullySubmitedEmail(final PhdProgramPublicCandidacyHashCode hashCode,
 	    final HttpServletRequest request) {
@@ -641,79 +645,102 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		.getValue()));
     }
 
-    private void sendCandidacyRefereesEmail(final PhdIndividualProgramProcess process, final HttpServletRequest request) {
-	final ResourceBundle data = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	final String subject = String.format(data.getString("message.phd.email.subject.referee"), process.getPerson().getName());
-	final String body = data.getString("message.phd.email.body.referee");
+    // private void sendCandidacyRefereesEmail(final PhdIndividualProgramProcess
+    // process, final HttpServletRequest request) {
+    // final ResourceBundle data =
+    // ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+    // final String subject =
+    // String.format(data.getString("message.phd.email.subject.referee"),
+    // process.getPerson().getName());
+    // final String body = data.getString("message.phd.email.body.referee");
+    //
+    // for (final PhdCandidacyReferee referee :
+    // process.getPhdCandidacyReferees()) {
+    // referee.sendEmail(subject, String.format(body, referee.getValue()));
+    // }
+    // }
 
-	for (final PhdCandidacyReferee referee : process.getPhdCandidacyReferees()) {
-	    referee.sendEmail(subject, String.format(body, referee.getValue()));
-	}
-    }
+    // private boolean hasMinimumDocuments(final HttpServletRequest request) {
+    // boolean result = true;
+    //
+    // if (!RenderUtils.getViewState("candidacyBean.curriculumVitae").isValid())
+    // {
+    // addErrorMessage(request,
+    // "error.candidacyBean.curriculumVitae.not.valid");
+    // result = false;
+    // }
+    //
+    // if
+    // (!RenderUtils.getViewState("candidacyBean.identificationDocument").isValid())
+    // {
+    // addErrorMessage(request,
+    // "error.candidacyBean.identificationDocument.not.valid");
+    // result = false;
+    // }
+    //
+    // if
+    // (!RenderUtils.getViewState("candidacyBean.motivationLetter").isValid()) {
+    // addErrorMessage(request,
+    // "error.candidacyBean.motivationLetter.not.valid");
+    // result = false;
+    // }
+    //
+    // if
+    // (!RenderUtils.getViewState("candidacyBean.socialSecurityDocument").isValid())
+    // {
+    // addErrorMessage(request,
+    // "error.candidacyBean.socialSecurityDocument.not.valid");
+    // result = false;
+    // }
+    //
+    // if (!RenderUtils.getViewState("candidacyBean.researchPlan").isValid()) {
+    // addErrorMessage(request, "error.candidacyBean.researchPlan.not.valid");
+    // result = false;
+    // }
+    //
+    // if
+    // (!RenderUtils.getViewState("candidacyBean.dissertationOrFinalWorkDocument").isValid())
+    // {
+    // addErrorMessage(request,
+    // "error.candidacyBean.dissertationOrFinalWorkDocument.not.valid");
+    // result = false;
+    // }
+    //
+    // if (hasAnyHabilitationCertificateDocumentInvalid()) {
+    // addErrorMessage(request,
+    // "error.candidacyBean.habilitationCertificateDocuments.not.valid");
+    // result = false;
+    // }
+    //
+    // if (hasAnyPhdGuidingLetterInvalid()) {
+    // addErrorMessage(request,
+    // "error.candidacyBean.phdGuidingLetters.not.valid");
+    // result = false;
+    // }
+    //
+    // return result;
+    // }
 
-    private boolean hasMinimumDocuments(final HttpServletRequest request) {
-	boolean result = true;
-
-	if (!RenderUtils.getViewState("candidacyBean.curriculumVitae").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.curriculumVitae.not.valid");
-	    result = false;
-	}
-
-	if (!RenderUtils.getViewState("candidacyBean.identificationDocument").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.identificationDocument.not.valid");
-	    result = false;
-	}
-
-	if (!RenderUtils.getViewState("candidacyBean.motivationLetter").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.motivationLetter.not.valid");
-	    result = false;
-	}
-
-	if (!RenderUtils.getViewState("candidacyBean.socialSecurityDocument").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.socialSecurityDocument.not.valid");
-	    result = false;
-	}
-
-	if (!RenderUtils.getViewState("candidacyBean.researchPlan").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.researchPlan.not.valid");
-	    result = false;
-	}
-
-	if (!RenderUtils.getViewState("candidacyBean.dissertationOrFinalWorkDocument").isValid()) {
-	    addErrorMessage(request, "error.candidacyBean.dissertationOrFinalWorkDocument.not.valid");
-	    result = false;
-	}
-
-	if (hasAnyHabilitationCertificateDocumentInvalid()) {
-	    addErrorMessage(request, "error.candidacyBean.habilitationCertificateDocuments.not.valid");
-	    result = false;
-	}
-
-	if (hasAnyPhdGuidingLetterInvalid()) {
-	    addErrorMessage(request, "error.candidacyBean.phdGuidingLetters.not.valid");
-	    result = false;
-	}
-
-	return result;
-    }
-
-    private boolean hasAnyHabilitationCertificateDocumentInvalid() {
-	for (final IViewState viewState : getViewStatesWithPrefixId("candidacyBean.habilitationCertificateDocument")) {
-	    if (!viewState.isValid()) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean hasAnyPhdGuidingLetterInvalid() {
-	for (final IViewState viewState : getViewStatesWithPrefixId("candidacyBean.phdGuidingLetter")) {
-	    if (!viewState.isValid()) {
-		return true;
-	    }
-	}
-	return false;
-    }
+    // private boolean hasAnyHabilitationCertificateDocumentInvalid() {
+    // for (final IViewState viewState :
+    // getViewStatesWithPrefixId("candidacyBean.habilitationCertificateDocument"))
+    // {
+    // if (!viewState.isValid()) {
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
+    //
+    // private boolean hasAnyPhdGuidingLetterInvalid() {
+    // for (final IViewState viewState :
+    // getViewStatesWithPrefixId("candidacyBean.phdGuidingLetter")) {
+    // if (!viewState.isValid()) {
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
 
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
 	bean.getCurriculumVitae().removeFile();
@@ -769,9 +796,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     // return result;
     // }
 
-    private Pair<Class<?>, Object> pair(final Class<?> class1, final Object object) {
-	return new Pair<Class<?>, Object>(class1, object);
-    }
+    // private Pair<Class<?>, Object> pair(final Class<?> class1, final Object
+    // object) {
+    // return new Pair<Class<?>, Object>(class1, object);
+    // }
 
     public ActionForward addHabilitationCertificateDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -860,8 +888,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	try {
 
-	    ExecuteProcessActivity.run(bean.getCandidacyHashCode().getIndividualProgramProcess(), EditPersonalInformation.class,
-		    bean.getPersonBean());
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getCandidacyHashCode()
+		    .getIndividualProgramProcess(), EditPersonalInformation.class, bean.getPersonBean());
 
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
@@ -938,8 +966,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	}
 	try {
-	    ExecuteProcessActivity.run(uploadBean.getIndividualProgramProcess(), UploadDocuments.class, Collections
-		    .singletonList(uploadBean));
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), uploadBean.getIndividualProgramProcess(),
+		    UploadDocuments.class, Collections.singletonList(uploadBean));
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
 	} catch (final DomainException e) {
@@ -975,7 +1003,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) getRenderedObject("individualProcessBean");
 	try {
-	    ExecuteProcessActivity.run(bean.getIndividualProgramProcess(), EditIndividualProcessInformation.class, bean);
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getIndividualProgramProcess(),
+		    EditIndividualProcessInformation.class, bean);
 	    addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
 
 	} catch (final DomainException e) {
@@ -1036,8 +1065,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
 	try {
-	    ExecuteProcessActivity.run(bean.getCandidacyHashCode().getIndividualProgramProcess(), AddGuidingsInformation.class,
-		    bean.getGuidings());
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getCandidacyHashCode()
+		    .getIndividualProgramProcess(), AddGuidingsInformation.class, bean.getGuidings());
 	    addSuccessMessage(request, "message.guiding.created.with.success");
 
 	} catch (final DomainException e) {
@@ -1057,8 +1086,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	final PhdProgramGuiding guiding = getGuiding(bean.getCandidacyHashCode().getIndividualProgramProcess(), externalId);
 
 	try {
-	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
-		    DeleteGuiding.class, guiding);
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+		    .getIndividualProgramProcess(), DeleteGuiding.class, guiding);
 	    addSuccessMessage(request, "message.guiding.deleted.with.success");
 
 	} catch (final DomainException e) {
@@ -1102,8 +1131,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
-		    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+		    .getIndividualProgramProcess(), AddCandidacyReferees.class, Collections
+		    .singletonList(getRenderedObject("refereeBean")));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
 	    RenderUtils.invalidateViewState("refereeBean");
 
@@ -1161,8 +1191,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
-		    AddQualification.class, getRenderedObject("qualificationBean"));
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+		    .getIndividualProgramProcess(), AddQualification.class, getRenderedObject("qualificationBean"));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
 	    RenderUtils.invalidateViewState("qualificationBean");
 
@@ -1184,8 +1214,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		externalId);
 
 	try {
-	    ExecuteProcessActivity.run(getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess(),
-		    DeleteQualification.class, qualification);
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+		    .getIndividualProgramProcess(), DeleteQualification.class, qualification);
 	    addSuccessMessage(request, "message.qualification.information.delete.success");
 
 	} catch (final DomainException e) {
@@ -1391,7 +1421,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	try {
-	    ExecuteProcessActivity.run(process, ValidatedByCandidate.class, null);
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), process, ValidatedByCandidate.class, null);
 	    addSuccessMessage(request, "message.validation.with.success");
 
 	} catch (final DomainException e) {
@@ -1400,6 +1430,10 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	}
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
+    }
+
+    private IUserView createMockUserView(PhdProgramCandidacyProcessBean candidacyBean) {
+	return new MockUserView(null, Collections.EMPTY_LIST, candidacyBean.getCandidacyHashCode().getPerson());
     }
 
     @Override
