@@ -1538,10 +1538,9 @@ public class CurricularCourse extends CurricularCourse_Base {
      */
     @Deprecated
     final public boolean isPropaedeutic() {
-	if (isBolonhaDegree()) {
-	    throw new DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment.in.bolonha.degrees");
-	}
-
+//	if (isBolonhaDegree()) {
+//	    throw new DomainException("CurricularCourse.must.check.propaedeutic.status.in.enrolment.in.bolonha.degrees");
+//	}
 	return getType().equals(CurricularCourseType.P_TYPE_COURSE);
     }
 
