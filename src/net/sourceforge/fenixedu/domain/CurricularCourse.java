@@ -1777,7 +1777,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     }
 
-    public MarkSheet createRectificationMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
+    private MarkSheet createRectificationMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
 	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
 
