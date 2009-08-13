@@ -18,7 +18,12 @@ public class ExecuteProcessActivity extends FenixService {
 
     @Service
     static public Process run(final Process process, final Class<?> clazz, final Object object) {
-	return process.executeActivity(AccessControl.getUserView(), clazz.getSimpleName(), object);
+	return run(AccessControl.getUserView(), process, clazz, object);
+    }
+
+    @Service
+    static public Process run(final IUserView userView, final Process process, final Class<?> clazz, final Object object) {
+	return process.executeActivity(userView, clazz.getSimpleName(), object);
     }
 
     /**
