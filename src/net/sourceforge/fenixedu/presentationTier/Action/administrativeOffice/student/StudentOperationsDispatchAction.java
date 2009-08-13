@@ -29,12 +29,24 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
+@Mapping(path = "/createStudent", module = "academicAdminOffice")
+@Forwards( {
+	@Forward(name = "chooseNewStudentExecutionDegreeAndIdentification", path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"),
+	@Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp"),
+	@Forward(name = "fillNewPersonDataForEmployee", path = "/academicAdminOffice/fillNewPersonDataForEmployee.jsp"),
+	@Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
+	@Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
+	@Forward(name = "showCreateStudentConfirmation", path = "/academicAdminOffice/showCreateStudentConfirmation.jsp") })
+	//@Forward(name = "printRegistrationDeclarationTemplate", path = "/printRegistrationDeclarationTemplate.jsp", useTile = false) })
 public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -304,13 +316,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("createStudentSuccess");
     }
 
-    public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm,
+    /*public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	Integer registrationID = Integer.valueOf(request.getParameter("registrationID"));
 	request.setAttribute("registration", rootDomainObject.readRegistrationByOID(registrationID));
 
 	return mapping.findForward("printRegistrationDeclarationTemplate");
-    }
+    }*/
 
 }

@@ -35,6 +35,9 @@ import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.CategoryDataset;
 import org.jfree.data.DefaultCategoryDataset;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/viewCurriculumGraph", module = "academicAdminOffice")
 public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

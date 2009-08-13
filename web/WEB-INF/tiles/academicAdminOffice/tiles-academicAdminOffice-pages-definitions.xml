@@ -4,49 +4,19 @@
 
     <definition name="index" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/index.jsp"></put>
-    </definition>	    
-    <definition name="student.chooseNewStudentExecutionDegreeAndIdentification" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"></put>
-    </definition>
-    <definition name="student.fillNewPersonData" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/fillNewPersonData.jsp"></put>
-    </definition>  
-    <definition name="student.fillNewPersonDataForEmployee" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/fillNewPersonDataForEmployee.jsp"></put>
-    </definition>  
-    <definition name="student.fillOriginInformation" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/fillOriginInformation.jsp"></put>
-    </definition>  
-    <definition name="student.createStudentSuccess" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/createStudentSuccess.jsp"></put>
-    </definition>  
-    <definition name="student.showCreateStudentConfirmation" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/showCreateStudentConfirmation.jsp"></put>
-    </definition>
-    <definition name="students.manageStatutes" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/manageStatutes.jsp"></put>
     </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
-	</definition>    
-    <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
-    </definition>
+	</definition>
     <definition name="student.externalEnrolment.chooseExternalUnit" extends="academicAdminOffice.masterPage">
 		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"/>
     </definition>
-    <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
-    </definition>      
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/manageRegistrationState.jsp"></put>
     </definition>
     <definition name="student.deleteActualInfoConfirm" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp"></put>
-    </definition>      
-    <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp"></put>
     </definition>
 
 	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
@@ -82,9 +52,6 @@
 	<!-- ************************************* -->
 
 	<!-- ===================== MarkSheet Management ====================== -->
-	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"></put>
-	</definition>
 	<definition name="show.markSheetManagement.create.page.step1" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
 	</definition>
@@ -94,17 +61,11 @@
 	<definition name="markSheetManagement.viewMarkSheet" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"></put>
 	</definition>
-	<definition name="show.markSheetManagement.remove" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"></put>
-	</definition>
 	<definition name="show.markSheetManagement.rectify.page.step1" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.rectify.page.step2" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
-	</definition>
-	<definition name="show.markSheetManagement.confirm.page" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.edit.page" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"></put>

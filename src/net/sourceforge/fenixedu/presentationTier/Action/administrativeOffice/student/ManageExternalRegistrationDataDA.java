@@ -16,10 +16,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(path = "/manageExternalRegistrationData", module = "academicAdminOffice")
+@Forwards( { @Forward(name = "manageExternalRegistrationData", path = "/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp") })
 public class ManageExternalRegistrationDataDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

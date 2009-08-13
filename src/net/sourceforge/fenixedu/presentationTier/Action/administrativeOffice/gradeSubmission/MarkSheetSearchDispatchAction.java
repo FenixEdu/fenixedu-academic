@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveGradesFromConfirmedMarkSheet;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveGradesFromConfirmedMarkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
@@ -35,8 +34,20 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Input;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@Mapping(path = "/markSheetManagement", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp")
+@Forwards( {
+	@Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"),
+	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"),
+	@Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+	@Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"),
+	@Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet") })
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

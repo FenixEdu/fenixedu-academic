@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +16,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(path = "/studentStatutes", module = "academicAdminOffice")
+@Forwards( { @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
