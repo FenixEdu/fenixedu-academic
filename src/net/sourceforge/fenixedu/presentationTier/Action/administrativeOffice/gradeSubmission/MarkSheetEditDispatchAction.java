@@ -29,7 +29,15 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/editMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
+@Forwards( {
+	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"),
+	@Forward(name = "editArchiveInformation", path = "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp") })
+	//@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
 public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareEditMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -142,13 +150,12 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 	return enrolmentEvaluationBeansToAppend;
     }
 
-    public ActionForward prepareEditArchiveInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    /*public ActionForward prepareEditArchiveInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	DynaActionForm form = (DynaActionForm) actionForm;
 	request.setAttribute("markSheet", rootDomainObject.readMarkSheetByOID((Integer) form.get("msID")));
 	request.setAttribute("url", buildUrl(form));
 	return mapping.findForward("editArchiveInformation");
-    }
-
+    }*/
 }

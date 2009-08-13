@@ -67,9 +67,6 @@
 	<definition name="show.markSheetManagement.rectify.page.step2" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
 	</definition>
-	<definition name="show.markSheetManagement.edit.page" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"></put>
-	</definition>
 	<definition name="show.markSheetManagement.edit.archiveInformation" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp"></put>
 	</definition>
@@ -81,16 +78,7 @@
 	</definition>	
 	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
-	</definition>	
-	<definition name="show.markSheetSendMail.searchSendMail" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/searchSendMail.jsp"></put>
-	</definition>	
-	<!-- <definition name="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareMarkSheetsToConfirmSendMail.jsp"></put>
-	</definition>	
-	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
-	</definition> -->	
+	</definition>
 	<definition name="view-degree-curricular-plan-execution-year" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
 	</definition>
