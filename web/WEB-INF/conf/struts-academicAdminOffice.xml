@@ -158,7 +158,9 @@
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
 	        parameter="method"
 			name="studentCurricularPlanAndEnrollmentsSelectionForm"
-			scope="request">
+			scope="request"
+			validate="true"
+	        input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
 	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
 	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
@@ -169,7 +171,9 @@
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
 	        parameter="method"
 			name="studentCurricularPlanAndEnrollmentsSelectionForm"
-			scope="request">
+			scope="request"
+			validate="true" 
+			input="/viewStudentCurriculum.do?method=prepareView&amp;page=0">
 	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
 	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
 	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
@@ -182,7 +186,8 @@
       	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction"
   	         scope="request"
 	          name="createContributorForm"
-	         input="contributor.createContributor">
+	         input="contributor.createContributor"
+	         validate="true">
    		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
             key="resources.Action.exceptions.ExistingActionException"
             handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
@@ -195,7 +200,8 @@
 		      path="/visualizeContributors"
 		      parameter="method"
 		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
 	         <forward name="PrepareReady" path="contributor.chooseContributor"/>  
 	         <forward name="ActionReady" path="contributor.visualizeContributor"/>  
 	         <forward name="ChooseContributor" path="contributor.selectContributorFromList"/>  
@@ -206,7 +212,9 @@
 		      path="/editContributors"
 		      parameter="method"
 		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+          	  input="contributor.chooseContributor"
+          	  validate="true">
      		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="resources.Action.exceptions.ExistingActionException"
                         handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
@@ -220,7 +228,9 @@
 		      path="/editContributor"
 		      parameter="method"
 		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
+              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              input="contributor.editContributor"
+              validate="true">
      		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
 		                key="resources.Action.exceptions.ExistingActionException"
                         handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
