@@ -1,19 +1,23 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,8 +38,44 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	request.setAttribute("action", getAction());
 	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
 		executionSemester));
-
+		
+	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), request);
+	
 	return mapping.findForward("showDegreeModulesToEnrol");
+    }
+
+    private void addDebtsWarningMessages(final Student student, final HttpServletRequest request) {
+
+	if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student)) {
+	    addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
+	}
+
+	if (hasAnyGratuityDebt(student)) {
+	    addActionMessage("warning", request, "registration.has.not.payed.gratuities");
+	}
+    }
+
+    private boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student) {
+	for (final Event event : student.getPerson().getEvents()) {
+	    if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent) && event.isOpen()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyGratuityDebt(final Student student) {
+	for (final Registration registration : student.getRegistrations()) {
+	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
+		    if (gratuityEvent.isInDebt()) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
     @Override
@@ -51,9 +91,8 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	RenderUtils.invalidateViewState();
 
 	try {
-	    ChangeSpecialSeasonCode.run(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(),
-			    specialSeasonCodeBean.getExecutionPeriod().getExecutionYear(),
-			    specialSeasonCodeBean.getSpecialSeasonCode());
+	    ChangeSpecialSeasonCode.run(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(), specialSeasonCodeBean
+		    .getExecutionPeriod().getExecutionYear(), specialSeasonCodeBean.getSpecialSeasonCode());
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    specialSeasonCodeBean.setSpecialSeasonCode(specialSeasonCodeBean.getStudentCurricularPlan().getRegistration()
