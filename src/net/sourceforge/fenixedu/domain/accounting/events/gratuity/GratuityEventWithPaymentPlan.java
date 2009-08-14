@@ -341,9 +341,18 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 		calculateDiscountPercentage(getGratuityPaymentPlan().calculateOriginalTotalAmount()));
     }
 
+    private boolean hasAnyInstallmentInDebtToday() {
+	for (final Installment installment : getInstallments()) {
+	    if (installmentIsInDebtToday(installment)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     @Override
     public boolean isInDebt() {
-	return isOpen() && (installmentIsInDebtToday(getFirstInstallment()) || installmentIsInDebtToday(getLastInstallment()));
+	return isOpen() && hasAnyInstallmentInDebtToday();
     }
 
     public InstallmentPenaltyExemption getInstallmentPenaltyExemptionFor(final Installment installment) {
