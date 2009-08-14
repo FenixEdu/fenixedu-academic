@@ -66,6 +66,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
 	    }
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
+	    }
+
 	    return fileTypesList;
 	}
     }
@@ -234,6 +239,10 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    if (individualCandidacyProcess
 		    .getFileForType(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE) == null) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.FOREIGN_INSTITUTION_SCALE_CERTIFICATE);
+	    }
+
+	    if (individualCandidacyProcess.getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+		fileTypesList.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	    }
 
 	    fileTypesList.add(IndividualCandidacyDocumentFileType.REPORT_OR_WORK_DOCUMENT);

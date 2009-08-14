@@ -504,18 +504,24 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (!getCandidacy().hasStudent() && getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
+	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+		&& getFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	}
 
-	if (!getCandidacy().hasStudent()
+	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
 		&& getFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	}
 
-	if (!getCandidacy().hasStudent()
+	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
 		&& getFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
+	}
+
+	if (getCandidacy().getPrecedentDegreeInformation().isInternal()
+		&& getFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
+	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	}
 
 	return missingDocumentFiles;

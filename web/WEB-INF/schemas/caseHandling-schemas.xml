@@ -1829,7 +1829,7 @@
 			<property name="type" value="character"/>
 			<property name="length" value="10"/>
 		</validator>			 			
-	</slot>
+	</slot>z 
 </schema>
 
 <schema name="PublicCandidacyProcessBean.degree.change.selectedDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">

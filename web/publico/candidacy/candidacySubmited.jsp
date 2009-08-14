@@ -6,6 +6,8 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess"%>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess" %>
 
 <html:xhtml/>
 
@@ -73,6 +75,18 @@
 		<li><fr:view name="missingDocumentFileType" property="localizedName"/></li>
 	</logic:iterate>
 	</ul>
+
+	<bean:define id="individualCandidacyProcess" name="individualCandidacyProcess"/>
+	<%
+		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
+			if(individualCandidacyProcess instanceof DegreeChangeIndividualCandidacyProcess || individualCandidacyProcess instanceof DegreeTransferIndividualCandidacyProcess) {
+	%>
+	<p><em><bean:message key="message.ist.student.obtain.grades.on.fenix" bundle="CANDIDATE_RESOURCES"/></em></p>
+	<%
+			}
+		}
+	%>
+
 	<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
 </div>
 </logic:equal>
