@@ -147,6 +147,7 @@
 </schema>
 
 <schema name="CourseLoadRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="requestedCycle" layout="null-as-label" key="label.cycleType" />
 	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
@@ -175,6 +176,7 @@
 </schema>
 
 <schema name="ProgramCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="requestedCycle" layout="null-as-label" key="label.cycleType" />
 	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
@@ -363,11 +365,19 @@
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="requestedCycle" layout="menu-select-postback" key="label.cycleType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.CycleTypesByRegistrationToCreateDocumentRequestProvider" />
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="eachLayout" value="no-layout" />
+		<property name="destination" value="useAllPostBack"/>
+	</slot>
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" layout="option-select-postback">
 		<property name="destination" value="useAllPostBack"/>
 	</slot>
 	<slot name="enrolments" layout="option-select" key="label.student.enrolments">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ApprovedEnrolmentsToCreateDocumentRequestProvider" />
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.ApprovedEnrolmentsToCreateDocumentRequestProvider" />
         <property name="eachLayout" value="values" />
         <property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
@@ -377,6 +387,7 @@
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation.view"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="requestedCycle" layout="null-as-label" key="label.cycleType" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
     <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
@@ -432,11 +443,19 @@
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="requestedCycle" layout="menu-select-postback" key="label.cycleType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.CycleTypesByRegistrationToCreateDocumentRequestProvider" />
+		<property name="defaultText" value="label.dropDown.all" />
+		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
+		<property name="key" value="true" />
+		<property name="eachLayout" value="no-layout" />
+		<property name="destination" value="useAllPostBack"/>
+	</slot>
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" layout="option-select-postback">
 		<property name="destination" value="useAllPostBack"/>
 	</slot>
 	<slot name="enrolments" layout="option-select" key="label.student.enrolments">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ApprovedEnrolmentsToCreateDocumentRequestProvider" />
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.ApprovedEnrolmentsToCreateDocumentRequestProvider" />
         <property name="eachLayout" value="values" />
         <property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
@@ -446,6 +465,7 @@
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation.view"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="requestedCycle" layout="null-as-label" key="label.cycleType" />
 	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
     <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>

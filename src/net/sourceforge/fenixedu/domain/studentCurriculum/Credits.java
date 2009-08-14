@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -244,6 +245,16 @@ public class Credits extends Credits_Base {
     public boolean hasAnyDismissalInCurriculum() {
 	for (final Dismissal dismissal : getDismissalsSet()) {
 	    if (!dismissal.parentCurriculumGroupIsNoCourseGroupCurriculumGroup()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasAnyDismissalInCycle(final CycleType cycleType) {
+	for (final Dismissal dismissal : getDismissalsSet()) {
+	    final CycleCurriculumGroup cycle = dismissal.getParentCycleCurriculumGroup();
+	    if (cycle != null && cycle.getCycleType().equals(cycleType)) {
 		return true;
 	    }
 	}

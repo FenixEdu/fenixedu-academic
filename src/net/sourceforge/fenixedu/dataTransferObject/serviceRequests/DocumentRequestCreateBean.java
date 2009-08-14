@@ -25,6 +25,8 @@ import org.joda.time.YearMonthDay;
 
 public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean {
 
+    private static final long serialVersionUID = 1L;
+
     private DocumentRequestType chosenDocumentRequestType;
 
     private DocumentPurposeType chosenDocumentPurposeType;

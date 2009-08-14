@@ -4629,6 +4629,7 @@ class DomainObject {
 					}
 	
 					class serviceRequests.documentRequests.CourseLoadRequest extends serviceRequests.documentRequests.CertificateRequest {
+						CycleType requestedCycle;
 					}
 					
 						class serviceRequests.documentRequests.ExternalCourseLoadRequest extends serviceRequests.documentRequests.CourseLoadRequest {
@@ -4639,6 +4640,7 @@ class DomainObject {
 					}
 					
 					class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
+						CycleType requestedCycle;
 					}
 					
 						class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
