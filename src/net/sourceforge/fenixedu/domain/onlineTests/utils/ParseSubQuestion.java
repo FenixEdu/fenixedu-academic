@@ -40,8 +40,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -59,12 +57,12 @@ public class ParseSubQuestion extends DefaultHandler {
 
     private static final Element SLASH_NOT_ELEMENT = new Element(null, "/not", "/not", null);
 
-    public Question parseSubQuestion(Question question, String path) throws ParseQuestionException, ParseException {
+    public Question parseSubQuestion(Question question, String path) throws ParseQuestionException {
 	if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
 	    try {
 		parseFile(question.getXmlFile(), path);
 	    } catch (Exception e) {
-		throw new ParseException();
+		throw new ParseQuestionException();
 	    }
 	    for (QuestionElement questionElement : questionElementList) {
 		question.addSubQuestion(createSubQuestion(questionElement));
@@ -74,11 +72,11 @@ public class ParseSubQuestion extends DefaultHandler {
     }
 
     // para o preview - só tem 1 item
-    public SubQuestion parseSubQuestion(String fileString, String path) throws ParseQuestionException, ParseException {
+    public SubQuestion parseSubQuestion(String fileString, String path) throws ParseQuestionException {
 	try {
 	    parseFile(fileString, path);
 	} catch (Exception e) {
-	    throw new ParseException();
+	    throw new ParseQuestionException();
 	}
 	return createSubQuestion(questionElementList.get(0));
     }
@@ -89,7 +87,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	    try {
 		parseFile(studentTestQuestion.getQuestion().getXmlFile(), path);
 	    } catch (Exception e) {
-		throw new ParseException();
+		throw new ParseQuestionException();
 	    }
 	    for (QuestionElement questionElement : questionElementList) {
 		studentTestQuestion.addStudentSubQuestion(createSubQuestion(questionElement));
@@ -145,18 +143,22 @@ public class ParseSubQuestion extends DefaultHandler {
 	reader.parse(input);
     }
 
+    @Override
     public void error(SAXParseException e) throws SAXParseException {
 	throw e;
     }
 
+    @Override
     public void fatalError(SAXParseException e) throws SAXParseException {
 	throw e;
     }
 
+    @Override
     public void warning(SAXParseException e) throws SAXParseException {
 	throw e;
     }
 
+    @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
 	current = new Element(uri, localName, qName, new AttributesImpl(attributes));
 
@@ -216,6 +218,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	text = "";
     }
 
+    @Override
     public void endElement(String uri, String localName, String qName) {
 	if (current != null && text != null) {
 	    current.setValue(text.trim());
@@ -238,6 +241,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	}
     }
 
+    @Override
     public void characters(char[] ch, int start, int length) {
 	if (current != null && text != null) {
 	    String value = new String(ch, start, length);
@@ -544,7 +548,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		for (int i = 0; responsesIt.hasNext(); i++) {
 		    ResponseProcessing rp = (ResponseProcessing) responsesIt.next();
 		    if (rp.getFeedback() != null && rp.getFeedback().size() > 0
-			    && ((LabelValueBean) rp.getFeedback().get(0)).getValue().equals(ident))
+			    && (rp.getFeedback().get(0)).getValue().equals(ident))
 			rp.setFeedback(feedbackAuxList);
 		    responses.set(i, rp);
 		}
@@ -670,7 +674,7 @@ public class ParseSubQuestion extends DefaultHandler {
 
 	for (ResponseProcessing responseProcessing : responseList) {
 	    List<ResponseCondition> newResponseConditionList = new ArrayList<ResponseCondition>();
-	    for (ResponseCondition responseCondition : (List<ResponseCondition>) responseProcessing.getResponseConditions()) {
+	    for (ResponseCondition responseCondition : responseProcessing.getResponseConditions()) {
 		String response = responseCondition.getResponse();
 		ResponseCondition newResponseCondition = null;
 		int index = 1;
@@ -714,8 +718,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		}
 	    }
 	    if (fenixCorrectResponseIndex != -1)
-		((ResponseProcessing) subQuestion.getResponseProcessingInstructions().get(fenixCorrectResponseIndex))
-			.setFenixCorrectResponse(true);
+		(subQuestion.getResponseProcessingInstructions().get(fenixCorrectResponseIndex)).setFenixCorrectResponse(true);
 	}
 	return subQuestion;
     }

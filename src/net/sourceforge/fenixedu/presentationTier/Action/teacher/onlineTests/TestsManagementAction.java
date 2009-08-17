@@ -79,8 +79,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -201,8 +199,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    question = parse.parseSubQuestion(question, path);
 	} catch (ParseQuestionException e) {
 	    throw new FenixActionException();
-	} catch (ParseException e) {
-	    throw new FenixActionException();
 	}
 
 	List<String> testQuestionNames = new ArrayList<String>();
@@ -271,8 +267,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 	try {
 	    parse.parseSubQuestion(testQuestion.getQuestion(), getServlet().getServletContext().getRealPath("/"));
 	} catch (ParseQuestionException e) {
-	    throw new FenixActionException();
-	} catch (ParseException e) {
 	    throw new FenixActionException();
 	}
 	List<String> testQuestionNames = new ArrayList<String>();
@@ -450,8 +444,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		parse.parseSubQuestion(testQuestion.getQuestion(), getServlet().getServletContext().getRealPath("/").replace(
 			'\\', '/'));
 	    } catch (ParseQuestionException e) {
-		throw new FenixActionException();
-	    } catch (ParseException e) {
 		throw new FenixActionException();
 	    }
 	}
@@ -1351,8 +1343,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    try {
 		parse.parseSubQuestion(testQuestion.getQuestion(), getServlet().getServletContext().getRealPath("/"));
 	    } catch (ParseQuestionException e) {
-		throw new FenixActionException();
-	    } catch (ParseException e) {
 		throw new FenixActionException();
 	    }
 	}

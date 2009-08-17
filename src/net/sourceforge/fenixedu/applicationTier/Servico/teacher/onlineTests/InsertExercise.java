@@ -50,7 +50,7 @@ public class InsertExercise extends FenixService {
 	List<String> badXmls = new ArrayList<String>();
 	String replacedPath = path.replace('\\', '/');
 	boolean createAny = false;
-	ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
@@ -75,8 +75,6 @@ public class InsertExercise extends FenixService {
 		    questionMap.put(xmlFileName, question);
 		} catch (DomainException domainException) {
 		    throw domainException;
-		} catch (ParseException e) {
-		    metadatas.add(labelValueBean);
 		} catch (ParseQuestionException e) {
 		    badXmls.add(xmlFileName + e);
 		}

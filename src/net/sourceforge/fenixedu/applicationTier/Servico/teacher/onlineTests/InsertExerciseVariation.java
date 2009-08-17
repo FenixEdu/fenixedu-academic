@@ -24,8 +24,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -37,12 +35,12 @@ public class InsertExerciseVariation extends FenixService {
 	    throws FenixServiceException, NotExecuteException {
 	List<String> badXmls = new ArrayList<String>();
 	String replacedPath = path.replace('\\', '/');
-	ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	Metadata metadata = (Metadata) rootDomainObject.readMetadataByOID(metadataId);
+	Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
 	if (metadata == null) {
 	    throw new InvalidArgumentsServiceException();
 	}
@@ -64,8 +62,6 @@ public class InsertExerciseVariation extends FenixService {
 		question.setXmlFile(xmlFile);
 		question.setXmlFileName(metadata.correctFileName(xmlFileName));
 		question.setVisibility(new Boolean("true"));
-	    } catch (ParseException e) {
-		badXmls.add(xmlFileName);
 	    } catch (ParseQuestionException e) {
 		badXmls.add(xmlFileName + e);
 	    }

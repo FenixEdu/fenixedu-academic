@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -43,8 +41,6 @@ public class AddStudentsToDistributedTest extends FenixService {
 		try {
 		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(), contextPath.replace('\\',
 			    '/'));
-		} catch (ParseException e) {
-		    throw new InvalidArgumentsServiceException();
 		} catch (ParseQuestionException e) {
 		    throw new InvalidArgumentsServiceException();
 		}
@@ -71,8 +67,6 @@ public class AddStudentsToDistributedTest extends FenixService {
 		    Question question = null;
 		    try {
 			question = getStudentQuestion(questionList, contextPath.replace('\\', '/'));
-		    } catch (ParseException e) {
-			throw new InvalidArgumentsServiceException();
 		    } catch (ParseQuestionException e) {
 			throw new InvalidArgumentsServiceException();
 		    }
@@ -89,7 +83,7 @@ public class AddStudentsToDistributedTest extends FenixService {
 	}
     }
 
-    private Question getStudentQuestion(List<Question> questions, String path) throws ParseException, ParseQuestionException {
+    private Question getStudentQuestion(List<Question> questions, String path) throws ParseQuestionException {
 	Question question = null;
 	if (questions.size() != 0) {
 	    Random r = new Random();

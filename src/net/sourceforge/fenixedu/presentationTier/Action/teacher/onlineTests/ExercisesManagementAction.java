@@ -55,8 +55,6 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -529,7 +527,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    Collections.sort(metadataList, metadataComparator);
 	}
 
-	request.setAttribute("badXmls", (List) request.getAttribute("badXmls"));
+	request.setAttribute("badXmls", request.getAttribute("badXmls"));
 	request.setAttribute("metadataList", metadataList);
 	request.setAttribute("objectCode", executionCourseId);
 	request.setAttribute("order", order);
@@ -725,8 +723,6 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 		    try {
 			question = parse.parseSubQuestion(question, path);
 		    } catch (ParseQuestionException e) {
-			throw new FenixActionException();
-		    } catch (ParseException e) {
 			throw new FenixActionException();
 		    }
 		}

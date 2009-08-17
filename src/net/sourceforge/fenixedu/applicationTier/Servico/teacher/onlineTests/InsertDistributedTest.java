@@ -34,8 +34,6 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import pt.ist.fenixframework.pstm.Transaction;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 public class InsertDistributedTest extends FenixService {
 
     public void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
@@ -117,6 +115,7 @@ public class InsertDistributedTest extends FenixService {
 	    this.imsFeedback = imsFeedback;
 	}
 
+	@Override
 	public void run() {
 	    Transaction.withTransaction(this);
 	    distributedTestId = tempDistributedTestId;
@@ -188,7 +187,7 @@ public class InsertDistributedTest extends FenixService {
 
     private static class Distribution {
 
-	private Map<InfoStudent, Collection<QuestionPair>> questionMap = new HashMap<InfoStudent, Collection<QuestionPair>>();
+	private final Map<InfoStudent, Collection<QuestionPair>> questionMap = new HashMap<InfoStudent, Collection<QuestionPair>>();
 
 	public Distribution(final List<TestQuestion> testQuestionList, final List<InfoStudent> infoStudentList) {
 	    final int numberOfStudents = infoStudentList.size();
@@ -246,6 +245,7 @@ public class InsertDistributedTest extends FenixService {
 	    this.replacedContextPath = replacedContextPath;
 	}
 
+	@Override
 	public void run() {
 	    Transaction.withTransaction(this);
 	}
@@ -299,6 +299,7 @@ public class InsertDistributedTest extends FenixService {
 	    this.questionList = questionList;
 	}
 
+	@Override
 	public void run() {
 	    Transaction.withTransaction(this);
 	}
@@ -322,8 +323,6 @@ public class InsertDistributedTest extends FenixService {
 		Question question = null;
 		try {
 		    question = getStudentQuestion(questionPair.getQuestion(), replacedContextPath);
-		} catch (ParseException e) {
-		    throw new Error(e);
 		} catch (ParseQuestionException e) {
 		    throw new Error(e);
 		}
@@ -338,7 +337,7 @@ public class InsertDistributedTest extends FenixService {
 	    }
 	}
 
-	private Question getStudentQuestion(final Question question, String path) throws ParseException, ParseQuestionException {
+	private Question getStudentQuestion(final Question question, String path) throws ParseQuestionException {
 	    return question.getSubQuestions() == null || question.getSubQuestions().size() == 0 ? new ParseSubQuestion()
 		    .parseSubQuestion(question, path) : question;
 	}

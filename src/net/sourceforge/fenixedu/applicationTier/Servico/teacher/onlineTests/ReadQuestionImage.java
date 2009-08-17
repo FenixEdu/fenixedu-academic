@@ -23,8 +23,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.services.Service;
 
-import com.sun.faces.el.impl.parser.ParseException;
-
 /**
  * @author Susana Fernandes
  */
@@ -42,8 +40,6 @@ public class ReadQuestionImage extends FenixService {
 		    try {
 			question = parse.parseSubQuestion(question, path);
 		    } catch (ParseQuestionException e) {
-			throw new FenixServiceException();
-		    } catch (ParseException e) {
 			throw new FenixServiceException();
 		    }
 		}
@@ -108,7 +104,7 @@ public class ReadQuestionImage extends FenixService {
 
 	// if (feedbackId != null) {
 	// Iterator feedbackit = ((ResponseProcessing)
-	//infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
+	// infoStudentTestQuestion.getQuestion().getResponseProcessingInstructions
 	// ().get(
 	// new Integer(feedbackId).intValue())).getFeedback().iterator();
 	//
