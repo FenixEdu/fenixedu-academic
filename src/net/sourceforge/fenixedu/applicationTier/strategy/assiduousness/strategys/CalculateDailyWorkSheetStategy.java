@@ -54,7 +54,9 @@ public abstract class CalculateDailyWorkSheetStategy implements ICalculateDailyW
 			workDaySheet.setIrregular(true);
 		    }
 		} else {
-		    setUnjustifiedDay(workDaySheet, halfOccurrenceTimeLeaves, balanceLeaves, balanceOcurrenceLeaves);
+		    if (workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType() != ScheduleClockingType.NOT_MANDATORY_CLOCKING) {
+			setUnjustifiedDay(workDaySheet, halfOccurrenceTimeLeaves, balanceLeaves, balanceOcurrenceLeaves);
+		    }
 		}
 		workDaySheet.discountBalanceLeaveInFixedPeriod(balanceLeaves);
 		workDaySheet.discountBalanceOcurrenceLeaveInFixedPeriod(balanceOcurrenceLeaves);

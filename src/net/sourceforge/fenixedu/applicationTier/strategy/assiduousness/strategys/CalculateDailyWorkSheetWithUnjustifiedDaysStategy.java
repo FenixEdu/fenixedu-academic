@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.WorkDaySheet;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
-import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 
 import org.joda.time.Duration;
 
@@ -13,10 +12,7 @@ public class CalculateDailyWorkSheetWithUnjustifiedDaysStategy extends Calculate
     @Override
     protected void setUnjustifiedDay(WorkDaySheet workDaySheet, List<Leave> halfOccurrenceTimeLeaves, List<Leave> balanceLeaves,
 	    List<Leave> balanceOcurrenceLeaves) {
-	if (balanceLeaves.isEmpty()
-		&& balanceOcurrenceLeaves.isEmpty()
-		&& halfOccurrenceTimeLeaves.isEmpty()
-		&& workDaySheet.getWorkSchedule().getWorkScheduleType().getScheduleClockingType() != ScheduleClockingType.NOT_MANDATORY_CLOCKING) {
+	if (balanceLeaves.isEmpty() && balanceOcurrenceLeaves.isEmpty() && halfOccurrenceTimeLeaves.isEmpty()) {
 	    workDaySheet.setUnjustifiedDay();
 	} else {
 	    workDaySheet.setBalanceTime(Duration.ZERO.minus(
