@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TutorshipLog;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
-@Forwards(@Forward(name = "viewStudentsByTutor", path = "studentsByTutor"))
+@Forwards( { @Forward(name = "viewStudentsByTutor", path = "studentsByTutor"),
+	@Forward(name = "editStudent", path = "editStudent") })
 public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -31,4 +35,16 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 	return mapping.findForward("viewStudentsByTutor");
     }
 
+    public ActionForward editStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
+
+	Registration registration = rootDomainObject.readRegistrationByOID(Integer
+		.valueOf(request.getParameter("registrationID")));
+	TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
+
+	request.setAttribute("student", student);
+	request.setAttribute("tutorshipLog", tutorshipLog);
+	return mapping.findForward("editStudent");
+    }
 }

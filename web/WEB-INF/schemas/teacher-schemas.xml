@@ -117,6 +117,18 @@
 	<slot name="email" />
 </schema>
 
+<schema name="teacher.student.tutorship.log" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.TutorshipLog">
+	<slot name="motivation" key="label.teacher.tutor.edit.motivation.for.degree"/>
+	<slot name="wishesTutor" key="label.teacher.tutor.edit.wishes.to.be.helped.by.a.tutor" />
+	<slot name="relativesSupport" key="label.teacher.tutor.edit.expects.with.help.from.relatives"/>
+	<slot name="countsWithSupport" key="label.teacher.tutor.edit.expects.with.help" />
+	<slot name="difficultiesOrSpecialLimitations" key="label.teacher.tutor.edit.difficulties.or.special.limitations" />
+	<slot name="optionDegree" key="label.teacher.tutor.edit.number.of.option.for.degree" />
+	<slot name="howManyReunions" key="label.teacher.tutor.edit.how.many.reunions" />
+	<slot name="annotations" key="label.teacher.tutor.edit.annotations" />
+	<slot name="spaceToValidateStudentsRegistration" key="label.teacher.tutor.edit.space.to.validate.students.registration" />
+</schema>
+
 <schema name="teacher.tutorshipHistory.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean">
 	<slot name="numberOfCurrentTutorships" key="label.teacher.tutor.tutorshipInfo.currentTutoredStudents"/>
 	<slot name="numberOfPastTutorships" key="label.teacher.tutor.tutorshipInfo.pastTutoredStudents"/>

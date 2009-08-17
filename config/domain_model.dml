@@ -36,6 +36,7 @@ enum net.sourceforge.fenixedu.domain.GraduationType                             
 enum net.sourceforge.fenixedu.domain.GrantOwnerType                                                                       as GrantOwnerType;
 enum net.sourceforge.fenixedu.domain.GuideState                                                                           as GuideState;
 enum net.sourceforge.fenixedu.domain.JobApplicationType                                                                   as JobApplicationType;
+enum net.sourceforge.fenixedu.domain.Level                                                                                as Level;
 enum net.sourceforge.fenixedu.domain.LoginAliasType                                                                       as LoginAliasType;
 enum net.sourceforge.fenixedu.domain.MarkSheetState                                                                       as MarkSheetState;
 enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
@@ -150,6 +151,7 @@ enum net.sourceforge.fenixedu.domain.support.SupportRequestType                 
 enum net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                                               as WhenToSendEmail;
 enum net.sourceforge.fenixedu.domain.teacher.AdviseType                                                                   as AdviseType;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
+enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
 enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad.SchoolClassCalculationMethod            as SchoolClassCalculationMethod;
 enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhaseStatus                                     as TSDProcessPhaseStatus;
 enum net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDValueType                                              as TSDValueType;
@@ -1565,6 +1567,18 @@ class DomainObject {
 	class Tutorship extends DomainObject {
 		Partial startDate;
 		Partial endDate;
+	}
+	
+	class TutorshipLog extends DomainObject {
+		Level motivation;
+		WishesTutor wishesTutor;
+		Boolean relativesSupport;
+		Boolean countsWithSupport;
+		Boolean difficultiesOrSpecialLimitations;
+		Integer optionDegree;
+		Integer howManyReunions;
+		String annotations;
+		String spaceToValidateStudentsRegistration;
 	}
 
 	class UnitFileTag extends DomainObject {
@@ -13264,6 +13278,18 @@ relation RootDomainObjectTutorship {
 	Tutorship playsRole tutorships {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectTutorshipLog {
+	RootDomainObject playsRole rootDomainObject;
+	TutorshipLog playsRole tutorshipLogs {
+		multiplicity *;
+	}
+}
+
+relation TutorshipTutorshipLogs {
+	Tutorship playsRole tutorship;
+	TutorshipLog playsRole tutorshipLog;
 }
 
 relation RootDomainObjectTeacherServiceDistribution {

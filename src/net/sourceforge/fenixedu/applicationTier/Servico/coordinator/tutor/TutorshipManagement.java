@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.TutorshipLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTimeFieldType;
@@ -69,7 +70,13 @@ public abstract class TutorshipManagement extends FenixService {
 
 	Partial tutorshipEndDate = new Partial(new DateTimeFieldType[] { DateTimeFieldType.year(),
 		DateTimeFieldType.monthOfYear() }, new int[] { endYear, endMonth });
+	Tutorship tutorship = new Tutorship(teacher, tutorshipStartDate, tutorshipEndDate);
+	scp.addTutorships(tutorship);
 
-	scp.addTutorships(new Tutorship(teacher, tutorshipStartDate, tutorshipEndDate));
+	TutorshipLog tutorshipLog = new TutorshipLog();
+	if (scp.getRegistration() != null && scp.getRegistration().getStudentCandidacy() != null) {
+	    tutorshipLog.setOptionDegree(scp.getRegistration().getStudentCandidacy().getPlacingOption());
+	}
+	tutorship.setTutorshipLog(tutorshipLog);
     }
 }

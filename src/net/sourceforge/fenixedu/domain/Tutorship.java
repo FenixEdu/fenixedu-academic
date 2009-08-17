@@ -140,4 +140,13 @@ public class Tutorship extends Tutorship_Base {
     public Person getPerson() {
 	return getTeacher().getPerson();
     }
+
+    public boolean getTutorshipLogEditable() {
+	DegreeCurricularPlan degreeCurricularPlan = getStudent().getLastDegreeCurricularPlan();
+	if (degreeCurricularPlan == null || getTutorshipLog() == null) {
+	    return false;
+	} else {
+	    return degreeCurricularPlan.getDegree().getSigla().equalsIgnoreCase("MEC");
+	}
+    }
 }
