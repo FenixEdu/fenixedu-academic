@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add tutorship logs" addTutorshipLogs.sql
+execute "Change timestamp column to datetime" alterTableAcademicServiceRequestSituation.sql
