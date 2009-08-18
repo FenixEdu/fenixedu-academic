@@ -159,7 +159,9 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	    List<Registration> path = new ArrayList<Registration>();
 	    path.add(current);
 	    Registration source;
-	    if (current.hasSourceRegistration() && !(source = current.getSourceRegistration()).isBolonha()) {
+	    if (current.hasSourceRegistration()
+		    && (!(source = current.getSourceRegistration()).isBolonha() || source
+			    .hasState(RegistrationStateType.TRANSITED))) {
 		path.addAll(getFullRegistrationPath(source));
 	    } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
 		path.addAll(getFullRegistrationPath(source));
