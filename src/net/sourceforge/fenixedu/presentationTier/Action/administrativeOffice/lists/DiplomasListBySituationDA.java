@@ -26,6 +26,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
@@ -33,6 +36,9 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
+
+@Mapping(path = "/diplomasListBySituation", module = "academicAdminOffice")
+@Forwards( { @Forward(name = "searchDiplomas", path = "/academicAdminOffice/lists/searchDiplomasBySituation.jsp") })
 public class DiplomasListBySituationDA extends FenixDispatchAction {
 
     @SuppressWarnings("unused")

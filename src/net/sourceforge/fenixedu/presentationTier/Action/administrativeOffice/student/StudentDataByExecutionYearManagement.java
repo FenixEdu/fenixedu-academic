@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.DeleteStudentDataByExecutionYear;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.CreateStudentDataByExecutionYear;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.CreateStudentDataByExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.DeleteStudentDataByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -23,6 +21,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/studentDataByExecutionYear", module = "academicAdminOffice")
+@Forwards( { @Forward(name = "showStudentData", path = "/academicAdminOffice/student/personalDataAuthorization/studentDataByExecutionYear.jsp") })
 public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -25,6 +25,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/degreeCurricularPlan/studentEquivalencyPlan", module = "academicAdminOffice")
+@Forwards( {
+	@Forward(name = "showPlan", path = "/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"),
+	@Forward(name = "addEquivalency", path = "/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp") })
 public class StudentEquivalencyPlanDA extends FenixDispatchAction {
 
     @Override

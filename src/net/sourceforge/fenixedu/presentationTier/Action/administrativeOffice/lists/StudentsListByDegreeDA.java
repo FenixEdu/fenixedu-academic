@@ -29,6 +29,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
@@ -36,6 +39,9 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
+
+@Mapping(path = "/studentsListByDegree", module = "academicAdminOffice")
+@Forwards( { @Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp") })
 public class StudentsListByDegreeDA extends FenixDispatchAction {
 
     public ActionForward prepareByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -60,8 +66,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 
-	final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) SearchStudents
-		.run(searchBean);
+	final List<RegistrationWithStateForExecutionYearBean> registrations = SearchStudents.run(searchBean);
 
 	request.setAttribute("searchParametersBean", searchBean);
 	request.setAttribute("studentCurricularPlanList", registrations);
@@ -74,8 +79,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
 	if (searchBean != null) {
-	    final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) SearchStudents
-		    .run(searchBean);
+	    final List<RegistrationWithStateForExecutionYearBean> registrations = SearchStudents.run(searchBean);
 
 	    try {
 		String filename;

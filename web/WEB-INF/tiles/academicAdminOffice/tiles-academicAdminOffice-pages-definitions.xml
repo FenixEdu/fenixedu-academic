@@ -19,13 +19,6 @@
         <put name="body" value="/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp"></put>
     </definition>
 
-	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
-	</definition>
-	<definition name="add-student-equivalency" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp"/>
-	</definition>
-
 	<!-- ************* Contributors ************* -->
 	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/contributor/createContributorSuccess.jsp"/>
@@ -81,26 +74,5 @@
 	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
 		<put name="body" value="/academicAdminOffice/gradeSubmission/oldMarkSheets/choosePrinterMarkSheet_bd.jsp"></put>
 	</definition>
-
-	<!-- ================================================================= -->
-	
-	<!-- Lists -->
-	<definition name="lists.searchDiplomasBySituations" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/lists/searchDiplomasBySituation.jsp"></put>
-    </definition>
-	<definition name="lists.searchRegistrationsByDegree" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/lists/searchRegistrationsByDegree.jsp"></put>
-    </definition>
-    <definition name="lists.chooseCurricularCourse" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/lists/chooseCurricularCourses.jsp"></put>
-    </definition>
-    <definition name="lists.studentByCurricularCourse" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/lists/studentsByCurricularCourses.jsp"></put>
-    </definition>
-
-	<!-- Manage StudentDataByExecutionYear -->    
-    <definition name="show.studentData.by.executionYear" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/student/personalDataAuthorization/studentDataByExecutionYear.jsp"></put>
-    </definition>
 
 </tiles-definitions>
