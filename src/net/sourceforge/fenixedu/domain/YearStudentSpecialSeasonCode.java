@@ -21,6 +21,7 @@ public class YearStudentSpecialSeasonCode extends YearStudentSpecialSeasonCode_B
 	setExecutionYear(null);
 	setStudent(null);
 	setSpecialSeasonCode(null);
+	removeRootDomainObject();
 	super.deleteDomainObject();
     }
 }

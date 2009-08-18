@@ -30,7 +30,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(path = "/notNeedToEnrolEnrolments", module = "academicAdminOffice", formBean = "notNeedToEnrolForm")
+@Forwards( {
+	@Forward(name = "chooseStudent", path = "/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"),
+	@Forward(name = "chooseNotNeedToEnrol", path = "/academicAdminOffice/notNeedToEnrol/chooseNotNeedToEnrol.jsp"),
+	@Forward(name = "showAprovedEnrolments", path = "/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp") })
 public class NotNeedToEnrolEnrolmentsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

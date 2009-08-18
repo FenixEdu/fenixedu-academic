@@ -84,30 +84,6 @@
 
 	<!-- ================================================================= -->
 	
-	<!-- Bolonha Student Enrollment -->
-	<definition name="student.enrollment.bolonha.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
-	</definition>
-	<definition name="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
-	</definition>
-	<definition name="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"/>
-	</definition>
-	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
-	</definition>
-	
-	<!-- NotNeedToEnrol -->
-	<definition name="notNeedToEnrol.chooseStudent" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"/>
-	</definition>
-	<definition name="notNeedToEnrol.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseNotNeedToEnrol.jsp"/>
-	</definition>
-	<definition name="notNeedToEnrol.showAprovedEnrolments" extends="academicAdminOffice.masterPage">
-		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
-	</definition>	
 	<!-- Lists -->
 	<definition name="lists.searchDiplomasBySituations" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/lists/searchDiplomasBySituation.jsp"></put>

@@ -292,55 +292,6 @@
 	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
 	     		<forward name="searchMarkSheet" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"/>       		
 	</action>
-      
-   		<!-- Begin : Bolonha Student Enrollment -->
-		<action path="/bolonhaStudentEnrollment"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeBolonhaStudentEnrollmentDA" 
-				parameter="method"
-				name="bolonhaStudentEnrollmentForm"
-				scope="request">
-		
-			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
-			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
-			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
-			<forward name="chooseCycleCourseGroupToEnrol" path="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" />
-		</action>
-		
-		<action path="/improvementBolonhaStudentEnrollment"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA" 
-				parameter="method"
-				name="bolonhaStudentEnrollmentForm"
-				scope="request">
-		
-			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
-			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
-			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
-						
-		</action>
-		
-		<action path="/specialSeasonBolonhaStudentEnrollment"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA" 
-				parameter="method"
-				name="bolonhaStudentEnrollmentForm"
-				scope="request">
-		
-			<forward name="showDegreeModulesToEnrol" path="student.enrollment.bolonha.showDegreeModulesToEnrol" />
-			<forward name="chooseOptionalCurricularCourseToEnrol" path="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" />
-			<forward name="showStudentEnrollmentMenu" path="/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules" />
-			<forward name="changeSpecialSeasonCode" path="student.enrollment.bolonha.changeSpecialSeasonCode" />
-		</action>
-		
-		<!-- End : Bolonha Student Enrollment -->
-		
-		<action path="/notNeedToEnrolEnrolments"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.notNeedToEnrol.NotNeedToEnrolEnrolmentsDA"
-				name="notNeedToEnrolForm"
-				parameter="method"
-				scope="request">
-				<forward name="chooseStudent" path="notNeedToEnrol.chooseStudent"/>
-				<forward name="chooseNotNeedToEnrol" path="notNeedToEnrol.chooseNotNeedToEnrol"/>
-				<forward name="showAprovedEnrolments" path="notNeedToEnrol.showAprovedEnrolments"/>
-		</action>	
 		
 		<!-- Begin: Lists -->
 		<action path="/diplomasListBySituation"
