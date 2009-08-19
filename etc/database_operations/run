@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Changed request date from timestamp to datetime" alterTableAcademicServiceRequest.sql
+execute "Add Residence Authorization IdDocumentTypeObject" addResidenceAuthorizationIdDocumentTypeObject.sql
