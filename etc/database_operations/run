@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changed request date from timestamp to datetime" alterTableAcademicServiceRequest.sql
