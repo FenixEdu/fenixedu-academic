@@ -10,7 +10,8 @@
 
 <ul>
     <li>
-        <html:link page="/thesisSubmission.do?method=downloadIdentificationSheet">
+        <html:link page="/thesisSubmission.do?method=downloadIdentificationSheet"
+		        paramId="thesisId" paramName="thesis" paramProperty="externalId">
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
@@ -47,20 +48,24 @@
         </fr:layout>
     </fr:view>
     
-    <html:link page="/thesisSubmission.do?method=changeThesisDetails">
+    <html:link page="/thesisSubmission.do?method=changeThesisDetails"
+    		paramId="thesisId" paramName="thesis" paramProperty="externalId">
         <bean:message key="link.student.thesis.submit.edit"/>
     </html:link>
 </logic:notPresent>
 
+<bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=prepareThesisSubmission&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+<bean:define id="invalidUrl" type="java.lang.String">/thesisSubmission.do?method=changeThesisDetails&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+
 <logic:present name="changeDetails">
-    <fr:form action="/thesisSubmission.do?method=prepareThesisSubmission">
+    <fr:form action="<%= callbackUrl %>">
         <fr:edit id="details" name="thesis" schema="student.thesis.details.edit">
             <fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
             		<fr:property name="columnClasses" value="width12em,,tderror1"/>
             </fr:layout>
             
-            <fr:destination name="invalid" path="/thesisSubmission.do?method=changeThesisDetails"/>
+            <fr:destination name="invalid" path="<%= invalidUrl %>"/>
         </fr:edit>
         
         <html:submit>
@@ -87,7 +92,8 @@
     </fr:view>
 </logic:equal>
 
-<html:link page="/thesisSubmission.do?method=editAbstract">
+<html:link page="/thesisSubmission.do?method=editAbstract"
+		paramId="thesisId" paramName="thesis" paramProperty="externalId">
     <bean:message key="link.student.thesis.submit.edit"/>
 </html:link>
 
@@ -107,7 +113,8 @@
     </fr:view>
 </logic:equal>
 
-<html:link page="/thesisSubmission.do?method=editKeywords">
+<html:link page="/thesisSubmission.do?method=editKeywords"
+		paramId="thesisId" paramName="thesis" paramProperty="externalId">
     <bean:message key="link.student.thesis.submit.edit"/>
 </html:link>
 
@@ -120,7 +127,8 @@
     </fr:layout>
 </fr:view>
 
-<html:link page="/thesisSubmission.do?method=viewDeclaration">
+<html:link page="/thesisSubmission.do?method=viewDeclaration"
+		paramId="thesisId" paramName="thesis" paramProperty="externalId">
     <bean:message key="label.student.thesis.declaration.view"/>
 </html:link>
 
@@ -146,11 +154,13 @@
     
     <p class="mtop05">
         <logic:notEmpty name="thesis" property="dissertation">
-            <html:link page="/thesisSubmission.do?method=removeDissertation">
+            <html:link page="/thesisSubmission.do?method=removeDissertation"
+            		paramId="thesisId" paramName="thesis" paramProperty="externalId">
                 <bean:message key="link.student.thesis.file.remove"/>
             </html:link>, 
         </logic:notEmpty>
-        <html:link page="/thesisSubmission.do?method=prepareUploadDissertation">
+        <html:link page="/thesisSubmission.do?method=prepareUploadDissertation"
+		        paramId="thesisId" paramName="thesis" paramProperty="externalId">
             <bean:message key="link.student.thesis.file.upload"/>
         </html:link>
     </p>
@@ -217,3 +227,102 @@
     </html:submit>
 </fr:form>
 --%>
+
+
+
+
+<%-- Jury --%>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
+
+<%-- Orientation --%>
+<h4 class="mtop25 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h4>
+
+<logic:empty name="thesis" property="orientator">
+    <logic:empty name="thesis" property="coorientator">
+        <p>
+            <em><bean:message key="title.scientificCouncil.thesis.review.orientation.empty" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
+        </p>
+    </logic:empty>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="orientator">
+    <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+            <fr:property name="columnClasses" value="width12em,width35em,"/>
+        </fr:layout>
+    </fr:view>
+    <logic:equal name="thesis" property="orientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="orientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="orientatorCreditsDistribution">
+                        <fr:view name="thesis" property="orientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
+</logic:notEmpty>
+  
+<logic:notEmpty name="thesis" property="coorientator">
+    <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
+            <fr:property name="columnClasses" value="width12em,width35em,"/>
+        </fr:layout>
+    </fr:view>
+    <logic:equal name="thesis" property="coorientatorCreditsDistributionNeeded" value="true">
+        <table class="tstyle2 thlight thright mtop0 mbottom05 tgluetop">
+            <tr>
+                <th class="width12em"><bean:message key="label.scientificCouncil.thesis.edit.teacher.credits" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</th>
+                <td class="width35em">
+                    <logic:empty name="thesis" property="coorientatorCreditsDistribution">-</logic:empty>
+                    <logic:notEmpty name="thesis" property="coorientatorCreditsDistribution">
+                        <fr:view name="thesis" property="coorientatorCreditsDistribution"/> %
+                    </logic:notEmpty>
+                </td>
+            </tr>
+        </table>
+    </logic:equal>
+</logic:notEmpty>
+
+<%-- Jury/President --%>
+<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.jury.president" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h4>
+
+<logic:empty name="thesis" property="president">
+    <p>
+        <bean:message key="title.scientificCouncil.thesis.review.president.empty" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="president">
+    <fr:view name="thesis" property="president" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
+        <fr:layout name="tabular">
+        		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+        		<fr:property name="columnClasses" value="width12em,width35em,"/>
+        </fr:layout>
+    </fr:view>
+</logic:notEmpty>
+
+<%-- Jury/"Vowels" --%>
+<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.vowels" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h4>
+
+<logic:empty name="thesis" property="vowels">
+    <p>
+        <bean:message key="title.scientificCouncil.thesis.review.vowels.empty" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+    </p>
+</logic:empty>
+
+<logic:notEmpty name="thesis" property="vowels">
+    <logic:iterate id="vowel" name="thesis" property="vowels">
+        <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
+            <fr:layout name="tabular">
+            		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
+            		<fr:property name="columnClasses" value="width12em,width35em,"/>
+            </fr:layout>
+        </fr:view>
+    </logic:iterate>
+</logic:notEmpty>

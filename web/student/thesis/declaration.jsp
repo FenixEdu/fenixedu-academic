@@ -10,7 +10,7 @@
 
 <ul>
     <li>
-        <html:link page="/thesisSubmission.do?method=prepareThesisSubmission">
+        <html:link page="/thesisSubmission.do?method=prepareThesisSubmission" paramId="thesisId" paramName="thesis" paramProperty="externalId">
             <bean:message key="link.student.declaration.goBack"/>
         </html:link>
     </li>
@@ -21,7 +21,8 @@
     <div class="warning0" style="padding: 1em;">
         <p class="mtop0 mbottom05"><bean:message key="label.thesis.declaration.reject.deleteFiles"/></p>
         <p class="mtop05 mbottom0">
-        <fr:form action="/thesisSubmission.do?method=changeDeclaration">
+        <bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=changeDeclaration&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+        <fr:form action="<%= callbackUrl %>">
             <html:submit property="confirmReject">
                 <bean:message key="button.confirm"/>
             </html:submit>
@@ -42,7 +43,8 @@
 <bean:define id="degree" name="thesis" property="degree.name"/>
 <bean:define id="title" name="thesis" property="title.content"/>
 
-<fr:form action="/thesisSubmission.do?method=changeDeclaration">
+<bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=changeDeclaration&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+<fr:form action="<%= callbackUrl %>">
     <fr:edit id="declarationBean" name="bean" visible="false"/>
 
 <div style="background: #f5f5f5; color: #444; border: 1px solid #ddd; padding: 0.75em 1em;">

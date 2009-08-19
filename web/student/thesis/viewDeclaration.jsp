@@ -10,7 +10,7 @@
 
 <ul>
     <li>
-        <html:link page="/thesisSubmission.do?method=prepareThesisSubmission">
+        <html:link page="/thesisSubmission.do?method=prepareThesisSubmission" paramId="thesisId" paramName="thesis" paramProperty="externalId">
             <bean:message key="link.student.declaration.goBack"/>
         </html:link>
     </li>

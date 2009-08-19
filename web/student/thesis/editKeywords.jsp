@@ -15,8 +15,9 @@
     </p>
 </div>
 
+<bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=prepareThesisSubmission&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
 <fr:edit name="thesis" schema="student.thesis.keywords.edit"
-         action="/thesisSubmission.do?method=prepareThesisSubmission">
+         action="<%= callbackUrl %>">
     <fr:layout name="tabular">
         <fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>

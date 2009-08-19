@@ -42,9 +42,10 @@
 <%-- 	<li><html:link page="/tests/tests.do?method=viewTests" titleKey="title.tests.view" bundle="TESTS_RESOURCES"><bean:message key="link.tests.view" bundle="TESTS_RESOURCES"/></html:link></li>
 
 	<li><html:link page="/studentGaugingTestResults.do" titleKey="link.title.results.test"><bean:message key="link.results.test"/></html:link></li>
+	<li><html:link page="/thesisSubmission.do?method=prepareThesisSubmission" titleKey="title.student.thesis.submission"><bean:message key="label.student.thesis.submission"/></html:link></li>
 --%>
 
-	<li><html:link page="/thesisSubmission.do?method=prepareThesisSubmission" titleKey="title.student.thesis.submission"><bean:message key="label.student.thesis.submission"/></html:link></li>
+	<li><html:link page="/thesisSubmission.do?method=listThesis" titleKey="title.student.thesis.submission"><bean:message key="label.student.thesis.submission"/></html:link></li>
 
 	<li class="navheader"><bean:message key="enroll"/></li>
 	<li><html:link page="/studentEnrollmentManagement.do?method=showWelcome" titleKey="link.title.student.enrollment"><bean:message key="link.student.enrollment"/></html:link></li>

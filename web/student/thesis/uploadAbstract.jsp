@@ -14,14 +14,16 @@
     </p>
 </div>
 
-<fr:form action="/thesisSubmission.do?method=uploadAbstract" encoding="multipart/form-data">
+<bean:define id="callbackUrl" type="java.lang.String">/thesisSubmission.do?method=prepareThesisSubmission&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+<bean:define id="uploadUrl" type="java.lang.String">/thesisSubmission.do?method=uploadAbstract&amp;thesisId=<bean:write name="thesis" property="externalId"/></bean:define>
+<fr:form action="<%= uploadUrl %>" encoding="multipart/form-data">
     <fr:edit id="dissertationFile" name="fileBean" schema="student.thesisBean.upload">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
             <fr:property name="columnClasses" value=",,tdclear tderror1"/>
         </fr:layout>
         
-        <fr:destination name="cancel" path="/thesisSubmission.do?method=prepareThesisSubmission"/>
+        <fr:destination name="cancel" path="<%= callbackUrl %>"/>
     </fr:edit>
     
     <html:submit>

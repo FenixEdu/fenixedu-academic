@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 
 import java.io.File;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -34,7 +35,9 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 	@Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp"),
 	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
 	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
-	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp") })
+	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp"),
+	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp")
+})
 public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public Student getStudent(HttpServletRequest request) {
@@ -52,7 +55,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
     public Thesis getThesis(HttpServletRequest request) {
 	Thesis thesis = null;
 
-	String idString = request.getParameter("thesisID");
+	String idString = request.getParameter("thesisId");
 	if (idString == null) {
 	    thesis = (Thesis) request.getAttribute("thesis");
 
@@ -65,27 +68,42 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
 		}
 	    }
 	} else {
-	    thesis = RootDomainObject.getInstance().readThesisByOID(new Integer(idString));
+	    thesis = DomainObject.fromExternalId(idString);
 	}
 
 	return thesis;
     }
 
-    public ActionForward prepareThesisSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Student student = getStudent(request);
+	final Student student = getStudent(request);
+	final TreeSet<Enrolment> enrolments = student.getDissertationEnrolments(null);
+	request.setAttribute("enrolments", enrolments);
+	return mapping.findForward("thesis-list-enrolments");	    
+    }
 
-	Enrolment enrolment = student.getDissertationEnrolment();
+    public ActionForward prepareThesisSubmissionByEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Enrolment enrolment = getDomainObject(request, "enrolmentId");
 	if (enrolment == null) {
 	    request.setAttribute("noEnrolment", true);
 	    return mapping.findForward("thesis-notFound");
 	}
 
 	Thesis thesis = enrolment.getThesis();
+	return prepareThesisSubmission(mapping, request, response, thesis);
+    }
+
+    public ActionForward prepareThesisSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+	return prepareThesisSubmission(mapping, request, response, thesis);
+    }
+
+    private ActionForward prepareThesisSubmission(ActionMapping mapping, HttpServletRequest request,
+	    HttpServletResponse response, Thesis thesis) throws Exception {
 	if (thesis == null || thesis.isDraft() || thesis.isSubmitted()) {
 	    request.setAttribute("noThesis", true);
-	    request.setAttribute("proposal", enrolment.getDissertationProposal());
-
 	    return mapping.findForward("thesis-notFound");
 	}
 
@@ -124,14 +142,7 @@ public class ThesisSubmissionDA extends FenixDispatchAction {
     }
 
     public ActionForward editASCII(ActionMapping mapping, HttpServletRequest request, String forward) throws Exception {
-	Student student = getStudent(request);
-
-	Enrolment enrolment = student.getDissertationEnrolment();
-	if (enrolment == null) {
-	    return mapping.findForward("thesis-notFound");
-	}
-
-	Thesis thesis = enrolment.getThesis();
+	Thesis thesis = getThesis(request);
 	if (thesis == null) {
 	    return mapping.findForward("thesis-notFound");
 	}
