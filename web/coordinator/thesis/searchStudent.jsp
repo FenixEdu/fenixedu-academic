@@ -4,7 +4,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<html:xhtml/>
+
+<%@page import="java.util.TreeSet"%>
+<%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
 
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
@@ -63,13 +66,84 @@
 			<strong><bean:message key="label.attention"/>:</strong><br/>
 		    <bean:message key="label.coordinator.thesis.propose.shortcut"/>
 	    </p>
-	    <bean:define id="studentId" name="bean" property="student.externalId"/>
-	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
-	        <html:submit>
-	            <bean:message key="button.coordinator.thesis.proposal.create"/>
-	        </html:submit>
-	    </fr:form>
-    </div>
+	</div>
+
+		<bean:define id="student" type="net.sourceforge.fenixedu.domain.student.Student" name="bean" property="student"/>
+		<% 
+			final TreeSet<Enrolment> enrolments = student.getDissertationEnrolments(null);
+			request.setAttribute("enrolments", enrolments);
+		%>
+
+<logic:empty name="enrolments">
+	<em><bean:message key="label.student.thesis.notFound"/></em>
+</logic:empty>
+<logic:notEmpty name="enrolments">
+<table class="tstyle2 thlight thcenter tdcenter mtop050">
+	<tr>
+		<th>
+			<bean:message key="label.executionYear"/>
+		</th>
+		<th>
+			<bean:message key="label.semester" bundle="STUDENT_RESOURCES"/>
+		</th>
+		<th>
+			<bean:message key="label.degree.name"/>
+		</th>
+		<th>
+			<bean:message key="label.state" bundle="STUDENT_RESOURCES"/>
+		</th>
+		<th>
+		</th>
+	</tr>
+	<logic:iterate id="enrolment" type="net.sourceforge.fenixedu.domain.Enrolment" name="enrolments">
+		<tr>
+			<td>
+				<bean:write name="enrolment" property="executionYear.year"/>
+			</td>
+			<td>
+				<bean:write name="enrolment" property="executionPeriod.semester"/>
+			</td>
+			<td>
+				<bean:write name="enrolment" property="curricularCourse.degreeCurricularPlan.degree.presentationName"/>
+			</td>
+				<%
+					final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(enrolment.getThesis());
+				%>
+			<td>
+				<%
+					final String key = ThesisPresentationState.class.getSimpleName() + "." + thesisPresentationState.name();
+				%>
+				<bean:message bundle="ENUMERATION_RESOURCES" key="<%= key %>"/>
+			</td>
+			<td>
+				<% if (thesisPresentationState == ThesisPresentationState.UNEXISTING) { %>
+	    			<bean:define id="url">/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=<bean:write name="enrolment" property="degreeCurricularPlanOfStudent.externalId"/>&amp;executionYearId=<bean:write name="enrolment" property="executionYear.idInternal"/>&amp;studentID=<bean:write name="enrolment" property="student.externalId"/></bean:define>
+					<html:link page="<%= url %>" titleKey="title.student.thesis.submission"
+							paramId="enrolmentOID" paramName="enrolment" paramProperty="externalId">
+						<bean:message key="button.coordinator.thesis.proposal.create"/>
+					</html:link>
+				<% } %>
+			</td>
+		</tr>
+	</logic:iterate>
+</table>
+</logic:notEmpty>
+
+<br/>
+<div class="color888" style="text-indent: 25px">
+<%
+	for (final ThesisPresentationState thesisPresentationState : ThesisPresentationState.values()) {
+		final String key = ThesisPresentationState.class.getSimpleName() + "." + thesisPresentationState.name();
+		final String keySimple = key + ".simple";
+%>
+	<p class="mvert0">
+		<bean:message bundle="ENUMERATION_RESOURCES" key="<%= key %>"/>
+	</p>
+<%
+	}
+%>
+</div>
+
 </logic:present>
 
 <logic:present name="hasThesis">
