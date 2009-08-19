@@ -160,8 +160,7 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	    path.add(current);
 	    Registration source;
 	    if (current.hasSourceRegistration()
-		    && (!(source = current.getSourceRegistration()).isBolonha() || source
-			    .hasState(RegistrationStateType.TRANSITED))) {
+		    && (!(source = current.getSourceRegistration()).isBolonha() || isValidSourceLink(source))) {
 		path.addAll(getFullRegistrationPath(source));
 	    } else if ((source = findSourceRegistrationByEquivalencePlan(current)) != null) {
 		path.addAll(getFullRegistrationPath(source));
@@ -171,6 +170,14 @@ public abstract class GepReportFile extends GepReportFile_Base {
 	} else {
 	    return Collections.singletonList(current);
 	}
+    }
+
+    protected static boolean isValidSourceLink(Registration source) {
+	return source.getActiveStateType().equals(RegistrationStateType.TRANSITED)
+		|| source.getActiveStateType().equals(RegistrationStateType.FLUNKED)
+		|| source.getActiveStateType().equals(RegistrationStateType.INTERNAL_ABANDON)
+		|| source.getActiveStateType().equals(RegistrationStateType.EXTERNAL_ABANDON)
+		|| source.getActiveStateType().equals(RegistrationStateType.INTERRUPTED);
     }
 
     private static Registration findSourceRegistrationByEquivalencePlan(Registration targetRegistration) {
