@@ -4,10 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -37,15 +34,6 @@ public class FlunkedState extends FlunkedState_Base {
     @Override
     public RegistrationStateType getStateType() {
 	return RegistrationStateType.FLUNKED;
-    }
-
-    @Override
-    public void delete() {
-	final Person person = AccessControl.getPerson();
-	if (person != null && person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
-	    throw new DomainException("error.cannot.delete.flunked.registrationState");
-	}
-	super.delete();
     }
 
 }
