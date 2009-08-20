@@ -228,8 +228,18 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     private void createInternalAbandonStateInPreviousRegistration() {
 	if (getPrecedentDegreeInformation().isInternal()) {
 	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
+
 	    if (!information.getRegistration().isInternalAbandon()) {
-		RegistrationStateCreator.createState(information.getRegistration(), AccessControl.getPerson(), new DateTime(),
+
+		final DateTime now = new DateTime();
+		final ExecutionYear executionYear = ExecutionYear.readByDateTime(now);
+
+		if (information.getRegistration().hasAnyEnrolmentsIn(executionYear)) {
+		    throw new DomainException("error.DegreeChangeIndividualCandidacy.cannot.create.abandon.state.due.enrolments",
+			    information.getRegistration().getDegreeCurricularPlanName(), executionYear.getQualifiedName());
+		}
+
+		RegistrationStateCreator.createState(information.getRegistration(), AccessControl.getPerson(), now,
 			RegistrationStateType.INTERNAL_ABANDON);
 	    }
 	}
