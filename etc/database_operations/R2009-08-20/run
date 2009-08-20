@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change the table of tutorship logs" changeTutorshipLogOptionDegree.sql
