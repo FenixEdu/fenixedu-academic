@@ -1396,6 +1396,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    for (final GroupProposal groupProposal : groupProposals) {
 		row.setCell(groupProposal.getFinalDegreeWorkProposal().getProposalNumber().toString());
 	    }
+	    for (int i = groupProposals.size(); i++ < scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup().intValue(); row.setCell(""))
+		;	    
 	    if (group.getProposalAttributed() != null) {
 		row.setCell(group.getProposalAttributed().getProposalNumber().toString());
 	    } else if (group.getProposalAttributedByTeacher() != null) {
