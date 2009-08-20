@@ -123,10 +123,19 @@
 	<slot name="relativesSupport" key="label.teacher.tutor.edit.expects.with.help.from.relatives"/>
 	<slot name="countsWithSupport" key="label.teacher.tutor.edit.expects.with.help" />
 	<slot name="difficultiesOrSpecialLimitations" key="label.teacher.tutor.edit.difficulties.or.special.limitations" />
-	<slot name="optionDegree" key="label.teacher.tutor.edit.number.of.option.for.degree" />
-	<slot name="howManyReunions" key="label.teacher.tutor.edit.how.many.reunions" />
-	<slot name="annotations" key="label.teacher.tutor.edit.annotations" />
+	<slot name="optionNumberDegree" key="label.teacher.tutor.edit.number.of.option.for.degree"/>
+	<slot name="howManyReunions" key="label.teacher.tutor.edit.how.many.reunions">
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+			<property name="lowerBound" value="0"/>
+			<property name="upperBound" value="2000"/>
+			<property name="message" value="label.coordinator.thesis.evaluation.grade.range"/>
+		</validator>
+	</slot>
 	<slot name="spaceToValidateStudentsRegistration" key="label.teacher.tutor.edit.space.to.validate.students.registration" />
+	<slot name="annotations" key="label.teacher.tutor.edit.annotations" layout="longText">
+		<property name="columns" value="50" />
+		<property name="rows" value="8" />
+	</slot>
 </schema>
 
 <schema name="teacher.tutorshipHistory.resume" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorTutorshipsHistoryBean">

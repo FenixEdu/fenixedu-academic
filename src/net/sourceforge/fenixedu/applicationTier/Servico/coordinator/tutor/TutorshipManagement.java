@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Option;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -74,8 +75,37 @@ public abstract class TutorshipManagement extends FenixService {
 	scp.addTutorships(tutorship);
 
 	TutorshipLog tutorshipLog = new TutorshipLog();
-	if (scp.getRegistration() != null && scp.getRegistration().getStudentCandidacy() != null) {
-	    tutorshipLog.setOptionDegree(scp.getRegistration().getStudentCandidacy().getPlacingOption());
+	if (scp.getRegistration() != null && scp.getRegistration().getStudentCandidacy() != null
+		&& scp.getRegistration().getStudentCandidacy().getPlacingOption() != null) {
+	    switch (scp.getRegistration().getStudentCandidacy().getPlacingOption()) {
+	    case 1: {
+		tutorshipLog.setOptionNumberDegree(Option.ONE);
+		break;
+	    }
+	    case 2: {
+		tutorshipLog.setOptionNumberDegree(Option.TWO);
+		break;
+	    }
+	    case 3: {
+		tutorshipLog.setOptionNumberDegree(Option.THREE);
+		break;
+	    }
+	    case 4: {
+		tutorshipLog.setOptionNumberDegree(Option.FOUR);
+		break;
+	    }
+	    case 5: {
+		tutorshipLog.setOptionNumberDegree(Option.FIVE);
+		break;
+	    }
+	    case 6: {
+		tutorshipLog.setOptionNumberDegree(Option.SIX);
+		break;
+	    }
+	    default: {
+		tutorshipLog.setOptionNumberDegree(null);
+	    }
+	    }
 	}
 	tutorship.setTutorshipLog(tutorshipLog);
     }

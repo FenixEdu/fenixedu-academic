@@ -48,6 +48,7 @@
 	    	    <fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 	        	<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		    </fr:layout>
+		    <fr:destination name="invalid"/>
 		</fr:edit>
 	</logic:notEmpty>
 	<logic:empty name="student"><bean:message key="error.tutor.noStudent" /></logic:empty>
