@@ -235,6 +235,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    process.editCandidacyHabilitations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
+	    process.getCandidacy().editObservations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    process.editCandidacyInformation((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    return process;
 	}

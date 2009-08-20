@@ -271,6 +271,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
+	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
 	    return process.editCandidacyInformation((SecondCycleIndividualCandidacyProcessBean) object);
 	}
     }
