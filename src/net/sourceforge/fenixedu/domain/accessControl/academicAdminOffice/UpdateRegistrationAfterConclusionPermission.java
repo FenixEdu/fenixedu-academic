@@ -20,13 +20,21 @@ public class UpdateRegistrationAfterConclusionPermission extends UpdateRegistrat
     @Override
     public boolean isAppliable(final DomainObject obj) {
 	if (obj instanceof Registration) {
+
 	    final Registration registration = (Registration) obj;
 	    return !registration.getDegree().isEmpty() && registration.isRegistrationConclusionProcessed();
+
 	} else if (obj instanceof StudentCurricularPlan) {
-	    return ((StudentCurricularPlan) obj).isConclusionProcessed();
+
+	    final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) obj;
+	    return !studentCurricularPlan.isEmptyDegree() && studentCurricularPlan.isConclusionProcessed();
+
 	} else if (obj instanceof CycleCurriculumGroup) {
+
 	    return ((CycleCurriculumGroup) obj).isConclusionProcessed();
+
 	} else {
+
 	    return false;
 	}
     }
