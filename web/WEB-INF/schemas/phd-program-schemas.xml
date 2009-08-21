@@ -124,7 +124,7 @@
     </slot>
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -186,7 +186,7 @@
 	</slot>
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -251,7 +251,7 @@
 <schema name="PhdProgramCandidacyProcessBean.editCandidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" bundle="APPLICATION_RESOURCES">
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="districtSubdivisionOfResidence" layout="autoComplete">
@@ -339,7 +339,7 @@
 	</slot>
 	<slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="schoolLevel" layout="menu-select">
@@ -466,7 +466,7 @@
 	<slot name="endDate" />
 	<slot name="country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 </schema>
@@ -628,7 +628,7 @@
 	</slot>
     <slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
 	<slot name="phone">
@@ -991,7 +991,7 @@
 	<slot name="refereeCountry" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
+		<property name="sortBy" value="localizedName=asc" />
 	</slot>
 	<slot name="email" read-only="true" />
 </schema>
