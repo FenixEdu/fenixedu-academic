@@ -2584,9 +2584,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		curriculumLine.setCurriculumGroup(destination);
 	    }
 
-	    if (!curriculumLine.hasCreatedBy()) {
-		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
-	    }
+	    // if curriculum line is moved then change created by
+	    curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : curriculumLine
+		    .getCreatedBy());
 	}
 
 	runRules &= isBolonhaDegree();
@@ -2621,9 +2621,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 		curriculumLine.setCurriculumGroup(destination);
 	    }
-	    if (!curriculumLine.hasCreatedBy()) {
-		curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : null);
-	    }
+
+	    // if curriculum line is moved then change created by
+	    curriculumLine.setCreatedBy(responsiblePerson != null ? responsiblePerson.getIstUsername() : curriculumLine
+		    .getCreatedBy());
 	}
     }
 
