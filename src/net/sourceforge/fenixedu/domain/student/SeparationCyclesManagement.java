@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
@@ -336,9 +337,10 @@ public class SeparationCyclesManagement {
 		return;
 	    }
 	    final Substitution substitution = createSubstitution(enrolment, parent);
-	    createNewOptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
+	    createNewOptionalDismissal(substitution, parent, enrolment, optional.getOptionalCurricularCourse(), optional
+		    .getEctsCredits());
 	} else {
-	    createNewDismissal(createSubstitution(enrolment, parent), parent, enrolment.getCurricularCourse());
+	    createNewDismissal(createSubstitution(enrolment, parent), parent, enrolment);
 	}
     }
 
@@ -350,10 +352,11 @@ public class SeparationCyclesManagement {
 	return substitution;
     }
 
-    private Dismissal createNewDismissal(final Credits credits, final CurriculumGroup parent,
-	    final CurricularCourse curricularCourse) {
+    private Dismissal createNewDismissal(final Credits credits, final CurriculumGroup parent, final CurriculumLine curriculumLine) {
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse)) {
+	final CurricularCourse curricularCourse = curriculumLine.getCurricularCourse();
+
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !createByAdminOffice(curriculumLine)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -366,13 +369,13 @@ public class SeparationCyclesManagement {
     }
 
     private OptionalDismissal createNewOptionalDismissal(final Credits credits, final CurriculumGroup parent,
-	    final OptionalCurricularCourse curricularCourse, final Double ectsCredits) {
+	    final CurriculumLine curriculumLine, final OptionalCurricularCourse curricularCourse, final Double ectsCredits) {
 
 	if (ectsCredits == null || ectsCredits.doubleValue() == 0) {
 	    throw new DomainException("error.OptionalDismissal.invalid.credits");
 	}
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse)) {
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !createByAdminOffice(curriculumLine)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -383,6 +386,11 @@ public class SeparationCyclesManagement {
 	dismissal.setEctsCredits(ectsCredits);
 
 	return dismissal;
+    }
+
+    private boolean createByAdminOffice(final CurriculumLine line) {
+	return line.hasCreatedBy()
+		&& Person.readPersonByUsername(line.getCreatedBy()).hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
     }
 
     private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {
@@ -434,11 +442,11 @@ public class SeparationCyclesManagement {
 	if (dismissal.hasCurricularCourse()) {
 	    if (dismissal instanceof OptionalDismissal) {
 		final OptionalDismissal optionalDismissal = (OptionalDismissal) dismissal;
-		createNewOptionalDismissal(newCredits, parent,
-			(OptionalCurricularCourse) optionalDismissal.getCurricularCourse(), optionalDismissal.getEctsCredits());
+		createNewOptionalDismissal(newCredits, parent, dismissal, (OptionalCurricularCourse) optionalDismissal
+			.getCurricularCourse(), optionalDismissal.getEctsCredits());
 
 	    } else {
-		createNewDismissal(newCredits, parent, dismissal.getCurricularCourse());
+		createNewDismissal(newCredits, parent, dismissal);
 	    }
 	} else if (dismissal.isCreditsDismissal()) {
 	    final CreditsDismissal creditsDismissal = (CreditsDismissal) dismissal;
