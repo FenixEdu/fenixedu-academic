@@ -224,6 +224,10 @@
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
 	</definition>
+	
+	<definition name="df.page.manage-persons-with-role" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/viewPersonsWithRole_bd.jsp" />
+	</definition>
 
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
 	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.manager.masterPage" >
