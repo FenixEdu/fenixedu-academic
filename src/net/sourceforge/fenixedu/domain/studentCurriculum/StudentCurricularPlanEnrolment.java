@@ -87,32 +87,44 @@ abstract public class StudentCurricularPlanEnrolment {
 	}
     }
 
-    private void assertAcademicAdminOfficePreConditions() {
+    protected void assertAcademicAdminOfficePreConditions() {
 
-	if (isEnrolmentWithoutRules()) {
-	    if (!StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(getStudentCurricularPlan())) {
-		throw new DomainException("error.permissions.cannot.enrol.without.rules");
-	    }
+	checkEnrolmentWithoutRules();
+
+	if (updateRegistrationAfterConclusionProcessPermissionEvaluated()) {
+	    return;
 	}
-
+	
+	if (!getRegistration().hasActiveLastState(getExecutionSemester())) {
+	    throw new DomainException("error.StudentCurricularPlan.registration.is.not.active.for.semester",
+		    getExecutionSemester().getQualifiedName());
+	}
+    }
+    
+    protected boolean updateRegistrationAfterConclusionProcessPermissionEvaluated() {
 	final AdministrativeOfficePermission registrationPermission = getUpdateRegistrationAfterConclusionProcessPermission();
 	if (registrationPermission != null) {
 
 	    if (checkPermission(registrationPermission)) {
-		return;
+		return true;
 	    }
 
 	    if (registrationPermission.isAppliable(getStudentCurricularPlan())) {
 		if (!registrationPermission.isMember(getResponsiblePerson())) {
 		    throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
 		}
-		return;
+		return true;
 	    }
 	}
+	
+	return false;
+    }
 
-	if (!getRegistration().hasActiveLastState(getExecutionSemester())) {
-	    throw new DomainException("error.StudentCurricularPlan.registration.is.not.active.for.semester",
-		    getExecutionSemester().getQualifiedName());
+    protected void checkEnrolmentWithoutRules() {
+	if (isEnrolmentWithoutRules()) {
+	    if (!StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(getStudentCurricularPlan())) {
+		throw new DomainException("error.permissions.cannot.enrol.without.rules");
+	    }
 	}
     }
 

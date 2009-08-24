@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager extends StudentCurricularPlanEnrolment {
 
@@ -25,11 +26,22 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
     @Override
     protected void assertEnrolmentPreConditions() {
-	if (!isResponsiblePersonManager() && !getRegistration().isRegistered(getExecutionSemester())) {
+	if (!isResponsiblePersonManager()
+		&& !getRegistration().hasStateType(getExecutionYear(), RegistrationStateType.REGISTERED)) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.registration.inactive");
 	}
 
 	super.assertEnrolmentPreConditions();
+    }
+
+    @Override
+    protected void assertAcademicAdminOfficePreConditions() {
+
+	checkEnrolmentWithoutRules();
+
+	if (updateRegistrationAfterConclusionProcessPermissionEvaluated()) {
+	    return;
+	}
     }
 
     @Override
