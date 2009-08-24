@@ -103,13 +103,21 @@ public abstract class File extends File_Base {
     }
 
     public void delete() {
+	disconnect();
+	deleteDomainObject();
+    }
+
+    protected void disconnect() {
 	if (hasLocalContent()) {
 	    getLocalContent().delete();
 	} else {
-	    new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
+	    createDeleteFileRequest();
 	}
 	removeRootDomainObject();
-	deleteDomainObject();
+    }
+
+    protected void createDeleteFileRequest() {
+	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
