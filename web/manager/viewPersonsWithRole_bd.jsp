@@ -2,6 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <h2><bean:message bundle="MANAGER_RESOURCES" key="title.manage.roles"/></h2>
 <br />
@@ -34,24 +35,16 @@
 </logic:present>
 
 <logic:present name="persons" scope="request">
-	<table>
-		<tr>
-			<th class="listClasses-header">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.name"/>
-			</th>
-			<th class="listClasses-header">
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.username"/>
-			</th>
-		</tr>
-		<logic:iterate id="person" name="persons" scope="request">
-			<tr>
-				<td class="listClasses">
-					<bean:write name="person" property="name"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="person" property="username"/>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
+	<fr:view name="persons" schema="PersonNameAndUsername">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="sortBy" value="name"/>
+			<fr:property name="linkFormat(remove)" value='<%= "/viewPersonsWithRole.do?method=removePersonFromRole&amp;personUsername=${username}&amp;roleID=" + request.getAttribute("roleID")%>' />
+			<fr:property name="key(remove)" value="label.remove"/>
+			<fr:property name="bundle(remove)" value="APPLICATION_RESOURCES" />
+			<fr:property name="contextRelative(remove)" value="true"/>
+			<fr:property name="confirmationKey(remove)" value="label.manager.delete.role.confirmation.message"/>
+			<fr:property name="confirmationBundle(remove)" value="APPLICATION_RESOURCES"/>
+		</fr:layout>
+	</fr:view>
 </logic:present>

@@ -637,6 +637,11 @@
 	<slot name="username"/>		
 </schema>
 
+<schema name="PersonNameAndUsername" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">			
+	<slot name="name" key="label.name"/>
+	<slot name="username" key="label.username"/>		
+</schema>
+
 <schema name="student.bolonhaEnrolment.choose.executionPeriod" type="net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean">
 	<slot name="executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass"
