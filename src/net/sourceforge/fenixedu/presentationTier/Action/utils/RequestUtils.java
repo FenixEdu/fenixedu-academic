@@ -26,12 +26,16 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.PendingRequest;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
@@ -120,51 +124,29 @@ public class RequestUtils {
      *             when it's not possible to send the redirect to the client
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	final String uri = request.getRequestURI();
-
-	final HttpSession httpSession = request.getSession(true);
-	httpSession.setAttribute("ORIGINAL_REQUEST", uri);
-
-	httpSession.setAttribute("ORIGINAL_URI", uri);
-
-	final String relativeURI = uri.substring(APP_CONTEXT_LENGTH);
-	final int indexOfSlash = relativeURI.indexOf('/');
-	final String module = (indexOfSlash >= 0) ? relativeURI.substring(0, indexOfSlash) : "";
-
-	httpSession.setAttribute("ORIGINAL_MODULE", module);
-
-	final Map<String, Object> parameterMap = new HashMap<String, Object>();
-	for (final Entry<String, Object> entry : ((Map<String, Object>) request.getParameterMap()).entrySet()) {
-	    parameterMap.put(entry.getKey(), entry.getValue());
-	}
-	httpSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
-
-	final Map<String, Object> attributeMap = new HashMap<String, Object>();
-	final Enumeration enumeration = request.getAttributeNames();
-	while (enumeration.hasMoreElements()) {
-	    final String attributeName = (String) enumeration.nextElement();
-	    final Object attribute = request.getAttribute(attributeName);
-
-	    if (shouldBeAdded(attribute)) {
-		attributeMap.put(attributeName, attribute);
+	request.getSession(true);
+	PendingRequest pendingRequest = storeRequest(request);
+	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),pendingRequest));
+    }
+    
+    private static String generateRedirectLink(String url, PendingRequest pendingRequest) {
+	String param = "pendingRequest=" +  pendingRequest.getExternalId();
+	if (url.contains("?")){
+	    if (url.contains("&")){
+		return url + "&" + param;
+	    }else if (url.charAt(url.length() - 1) != '?'){
+		return url + "&" + param;
+	    }else{
+		return url + param;
 	    }
+	}else{
+	    return url + "?" + param;
 	}
-	httpSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
-
-	response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
     }
 
-    private static boolean shouldBeAdded(Object attribute) {
-
-	if (attribute instanceof Collection) {
-	    Iterator iterator = ((Collection) attribute).iterator();
-	    while (iterator.hasNext()) {
-		if (!(iterator.next() instanceof Serializable)) {
-		    return false;
-		}
-	    }
-	}
-	return attribute instanceof Serializable;
+    @Service
+    public static PendingRequest storeRequest(HttpServletRequest request) {
+	return new PendingRequest(request);
     }
 
     public static boolean isPrivateURI(HttpServletRequest request) {

@@ -13,6 +13,7 @@
 				type="org.apache.struts.validator.DynaValidatorForm" 
             	dynamic="true">
             <form-property name="username" type="java.lang.String" />
+            <form-property name="pendingRequest" type="java.lang.String" />
             <form-property name="password" type="java.lang.String" />
         </form-bean>
       <form-bean name="authenticationExpiredForm" 

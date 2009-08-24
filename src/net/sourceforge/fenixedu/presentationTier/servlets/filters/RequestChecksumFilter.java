@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -66,5 +69,9 @@ public class RequestChecksumFilter extends pt.ist.fenixWebFramework.servlets.fil
     private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
 	return (FilterFunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
     }
+    
+    protected void redirectByTampering(HttpServletRequest request, final HttpServletResponse response) throws IOException {
+	RequestUtils.sendLoginRedirect(request, response);
+    }
+    }
 
-}

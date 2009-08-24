@@ -31,7 +31,8 @@
 					<tr>
 						<td>
 							<bean:define id="redirectURL" name="REDIRECT_URL" type="java.lang.String"/>
-							<form method="get" action="<%= redirectURL %>">
+							<bean:define id="redirectMethod" name="ORIGINAL_METHOD" type="java.lang.String"/>
+							<form method="<%= redirectMethod %>" action="<%= redirectURL %>">
 								<logic:present name="ORIGINAL_PARAMETER_MAP">
 									<% Set<Entry> entries = ((Map) request.getAttribute("ORIGINAL_PARAMETER_MAP")).entrySet(); %>
 									<% for (Iterator<Entry> iterator = entries.iterator(); iterator.hasNext(); ) {
@@ -61,7 +62,7 @@
 								</logic:iterate>
  --%>
 
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
+								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button">
 									<bean:message key="label.button.yes" bundle="GLOBAL_RESOURCES"/>
 								</html:submit>
 							</form>

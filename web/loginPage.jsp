@@ -41,6 +41,7 @@
 							<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" />
 						</td>
 					</tr>
+					<html:hidden property="pendingRequest" value="<%= request.getParameter("pendingRequest") %>"/>
 					<tr>
 						<td colspan="2">
 							<span class="error"><!-- Error messages go here --><html:errors property="password" /></span>

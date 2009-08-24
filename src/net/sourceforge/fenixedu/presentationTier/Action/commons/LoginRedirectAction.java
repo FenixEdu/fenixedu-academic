@@ -1,8 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sourceforge.fenixedu.domain.PendingRequest;
+import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -13,27 +21,20 @@ public class LoginRedirectAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
+	PendingRequest pendingRequest = PendingRequest.fromExternalId(request.getParameter("pendingRequest"));
 
-	final HttpSession session = request.getSession(false);
+	request.setAttribute("REDIRECT_URL", pendingRequest.getUrl());
 
-	final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
-	if (originalURI != null) {
-	    final int seperatorIndex = originalURI.indexOf('?');
-	    final int endIndex = (seperatorIndex > 0) ? seperatorIndex : originalURI.length();
-	    request.setAttribute("REDIRECT_URL", originalURI.substring(0, endIndex));
+	if (pendingRequest.getPost()) {
+	    request.setAttribute("ORIGINAL_METHOD", "post");
+	} else {
+	    request.setAttribute("ORIGINAL_METHOD", "get");
 	}
 
-	session.removeAttribute("ORIGINAL_URI");
-	transferFromSessionToRequest(request, session, "ORIGINAL_PARAMETER_MAP");
-	transferFromSessionToRequest(request, session, "ORIGINAL_ATTRIBUTE_MAP");
-
+	request.setAttribute("ORIGINAL_PARAMETER_MAP", pendingRequest.getRequestsParams());
+	pendingRequest.delete();
+	request.setAttribute("ORIGINAL_ATTRIBUTE_MAP", null);
 	return mapping.findForward("show-redirect-page");
-    }
 
-    private void transferFromSessionToRequest(final HttpServletRequest request, final HttpSession session, final String key) {
-	final Object value = session.getAttribute(key);
-	session.removeAttribute(key);
-	request.setAttribute(key, value);
     }
-
 }

@@ -6685,6 +6685,17 @@ class phd.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyEx
 
 /* End of Phd Module */
 
+class PendingRequest extends DomainObject{
+	DateTime generationDate;
+	String url;
+	Boolean post;
+}
+
+class PendingRequestParameter extends DomainObject{
+	String parameterKey;
+	String parameterValue;
+}
+
 
 /*
  * Relations definitions
@@ -16350,6 +16361,27 @@ relation GrantOwnerEquivalentRootDomainObject {
 relation CoordinatorStudentInquiriesCourseResult {
 	Coordinator playsRole coordinatorComment;
 	inquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
+		multiplicity *;
+	}
+}
+
+relation PendingRequestRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	PendingRequest playsRole pendingRequest {
+		multiplicity *;
+	}
+}
+
+relation PendingRequestParameterRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	PendingRequestParameter playsRole pendingRequestParameter {
+		multiplicity *;
+	}
+}
+
+relation PendingRequestParams {
+	PendingRequest playsRole pendingRequest;
+	PendingRequestParameter playsRole pendingRequestParameter {
 		multiplicity *;
 	}
 }

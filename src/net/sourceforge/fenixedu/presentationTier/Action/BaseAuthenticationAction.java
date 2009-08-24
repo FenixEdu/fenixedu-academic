@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -46,9 +48,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    final HttpSession session = request.getSession(false);
 
 	    UserView.setUser(userView);
-
-	    if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
-		return handleSessionRestoreAndGetForward(request, userView, session);
+	    String pendingRequest = request.getParameter("pendingRequest"); 
+	    if (pendingRequest!= null && pendingRequest != "") {
+		return handleSessionRestoreAndGetForward(request, form, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
@@ -82,18 +84,18 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
-	 if (userView.hasRoleType(RoleType.TEACHER)) {
+	if (userView.hasRoleType(RoleType.TEACHER)) {
 	    return userView.getPerson().getTeacher().hasTeachingInquiriesToAnswer();
 	}
 	return false;
     }
-    
+
     private boolean isCoordinatorAndHasReportsToRespond(IUserView userView) {
-	 if (userView.hasRoleType(RoleType.COORDINATOR)) {
+	if (userView.hasRoleType(RoleType.COORDINATOR)) {
 	    return userView.getPerson().hasCoordinationExecutionDegreeReportsToAnswer();
 	}
 	return false;
-   }    
+    }
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
@@ -141,12 +143,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToTeachingInquiriesQuestion.do?method=showQuestion");
     }
-    
+
     private ActionForward handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(HttpServletRequest request,
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
-    }    
+    }
 
     private ActionForward checkExpirationDate(ActionMapping mapping, HttpServletRequest request, IUserView userView,
 	    ActionForward actionForward) {
@@ -165,26 +167,17 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	}
     }
 
-    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, IUserView userView,
+    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, ActionForm form, IUserView userView,
 	    final HttpSession session) {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setContextRelative(false);
 	actionForward.setRedirect(true);
-
-	final String originalURI = (String) session.getAttribute("ORIGINAL_URI");
-
+	createNewSession(request, session, userView);
 	// Set request attributes
-	final Map<String, Object> attributeMap = (Map<String, Object>) session.getAttribute("ORIGINAL_ATTRIBUTE_MAP");
-	final Map<String, Object> parameterMap = (Map<String, Object>) session.getAttribute("ORIGINAL_PARAMETER_MAP");
 
-	actionForward.setPath("/redirect.do");
-
-	final HttpSession newSession = createNewSession(request, session, userView);
-
-	newSession.setAttribute("ORIGINAL_URI", originalURI);
-	newSession.setAttribute("ORIGINAL_PARAMETER_MAP", parameterMap);
-	newSession.setAttribute("ORIGINAL_ATTRIBUTE_MAP", attributeMap);
-
+	final DynaActionForm authenticationForm = (DynaActionForm) form;
+	final String pendingRequest = (String) authenticationForm.get("pendingRequest");
+	actionForward.setPath("/redirect.do?pendingRequest=" + pendingRequest);
 	return actionForward;
     }
 
