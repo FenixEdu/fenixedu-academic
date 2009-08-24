@@ -13,14 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
+import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ExecutionDegree.ThesisCreationPeriodFactoryExecutor;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -44,6 +47,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -180,7 +184,44 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	    }
 	}
 	request.setAttribute("executionDegrees", executionDegrees);
+	request.setAttribute("usernameBean", new VariantBean());
 	return mapping.findForward("list-scientific-comission");
+    }
+
+    public ActionForward removeScientificCommission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ScientificCommission scientificCommission = rootDomainObject.readScientificCommissionByOID(Integer.valueOf(request
+		.getParameter("commissionID")));
+	removeScientificCommissionFromExecutionDegree(scientificCommission, scientificCommission.getExecutionDegree());
+	return listScientificComission(mapping, actionForm, request, response);
+    }
+
+    @Service
+    public void removeScientificCommissionFromExecutionDegree(ScientificCommission scientificCommission,
+	    ExecutionDegree executionDegree) {
+	scientificCommission.delete();
+    }
+
+    public ActionForward addScientificCommission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	VariantBean bean = (VariantBean) getRenderedObject("usernameChoice");
+	if (bean != null) {
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(request
+		    .getParameter("executionDegreeID")));
+	    Employee employee = Employee.readByNumber(bean.getInteger());
+	    if (employee == null || executionDegree.isPersonInScientificCommission(employee.getPerson())) {
+		addActionMessage("addError", request, "error.scientificComission.employee");
+	    } else {
+		addScientificCommissionFromExecutionDegree(executionDegree, employee.getPerson());
+		RenderUtils.invalidateViewState("usernameChoice");
+	    }
+	}
+	return listScientificComission(mapping, actionForm, request, response);
+    }
+
+    @Service
+    public void addScientificCommissionFromExecutionDegree(ExecutionDegree executionDegree, Person person) {
+	new ScientificCommission(executionDegree, person);
     }
 
     private ThesisContextBean getContextBean(HttpServletRequest request) {
