@@ -13,7 +13,7 @@
 <div class="infoop6">
 
 <p class="mtop05">
-As inscrições em unidades curriculares e a reserva de turnos para o 2º semestre de 2008/2009 decorrerão online através do sistema Fénix a partir do dia <span class="error0"><strong>21 de Fevereiro de 2008 pelas 15:00</strong> e <strong>até</strong> ao dia <strong>27 de Fevereiro de 2008</strong></span>. 
+As inscrições em unidades curriculares e a reserva de turnos para o 1º semestre de 2009/2010 decorrerão online através do sistema Fénix a partir do dia <span class="error0"><strong>3 de Setembro de 2009 pelas 17:00</strong> e <strong>até</strong> ao dia <strong>8 de Setembro de 2009</strong></span>. 
 </p>
 
 <p class="mtop05">
@@ -32,37 +32,37 @@ Se existir(em) equivalência(s) que não se encontre(m) registada(s) no seu curríc
 
 <p class="mtop05">
 <strong>3. Número máximo de inscrições</strong><br/> 
-Um aluno não poderá inscrever-se em cada semestre a um conjunto de unidades curriculares que correspondam a mais de 40,5 créditos ECTS. Para este efeito, considera-se que o número de créditos ECTS de uma unidade curricular em repetência de inscrição é ponderado em 75%.
-
+Um aluno não poderá inscrever-se em cada semestre a um conjunto de unidades curriculares que correspondam a mais de 40,5 créditos ECTS. Para este efeito, considera-se que o número de créditos ECTS de uma unidade curricular em repetência de inscrição é ponderado <strong>de forma igual ao de uma unidade curricular em 1ª inscrição</strong>.
+<br/><br/>
 No caso de inscrição na unidade curricular de Dissertação, as normas específicas de cada curso, a definir pela coordenação de curso, deverão prever qual o número mínimo de créditos ECTS aprovados necessários para a inscrição.
 </p>
 
 <p class="mtop05">
-<strong>4. Inscrição simultânea em 1º e 2º ciclo</strong><br/> 
-No caso de cursos não integrados e de acordo com o DL 74/2006 de 24 de Março o acesso ao 2o ciclo está condicionado à titularidade de um curso de 1o ciclo. Contudo é permitida a frequência de unidades curriculares de ciclos subsequentes. Neste sentido, no ano lectivo de 2008/2009 será permitido aos alunos de cursos de 1ociclo a frequência de unidades curriculares de 2o ciclo, com excepção da unidade curricular de Dissertação, dentro das seguintes condições:
+<strong>4. Inscrição de alunos do 1º ciclo em unidades curriculares de 2º ciclo</strong><br/> 
+No caso de cursos não integrados e de acordo com o DL 74/2006 de 24 de Março o acesso ao 2º ciclo está condicionado à titularidade de um curso de 1o ciclo. Contudo é permitida a frequência de unidades curriculares de ciclos subsequentes.<br/>Neste sentido, no ano lectivo de 2009/2010 será permitido aos alunos de cursos de 1º ciclo a frequência de unidades curriculares de 2º ciclo, com excepção da unidade curricular de Dissertação, dentro das seguintes condições:
 </p>
 <p class="indent1">     
-1 - Existência de coerência científica entre o curso de 1o ciclo frequentado e o curso de 2o ciclo cujas unidades curriculares se pretende frequentar;
+1 - Existência de coerência científica entre o curso de 1º ciclo frequentado e o curso de 2º ciclo cujas unidades curriculares se pretende frequentar;
 </p>
 <p class="indent1"> 
-2 - Aprovação em mais de 120 ECTS do curso de 1o ciclo;
+2 - Aprovação em mais de 120 ECTS do curso de 1º ciclo;
 </p>
 <p class="indent1"> 
-3 - Inscrição em todas as unidades curriculares do curso de 1o ciclo necessárias para a conclusão do mesmo e que estejam em funcionamento nesse semestre;
+3 - Inscrição em todas as unidades curriculares do curso de 1º ciclo necessárias para a conclusão do mesmo e que estejam em funcionamento nesse semestre;
 </p>
 <p class="indent1"> 
-4 - A soma do número de créditos já aprovados em unidades curriculares de 2o ciclo com o número de créditos de 2o ciclo em que se inscreve, ECTS 2ociclo, terá que verificar a seguinte desigualdade: ECTS 2ociclo &lt;= 1.4 x ECTS 1ociclo - 168, onde ECTS 1ociclo corresponde à soma do número de créditos ECTS de unidades curriculares do 1o ciclo concluídas.
+4 - A soma do número de créditos já aprovados em unidades curriculares de 2º ciclo com o número de créditos de 2º ciclo em que se inscreve, ECTS 2ociclo, terá que verificar a seguinte desigualdade: ECTS 2ociclo &lt;= 1.4 x ECTS 1ociclo - 168, onde ECTS 1ociclo corresponde à soma do número de créditos ECTS de unidades curriculares do 1º ciclo concluídas.
 </p>
 <p class="indent1"> 
 5 - Respeito das restantes regras e limites de inscrição.
 </p>
 <p class="indent1"> 
-6 - A inscrição na unidade curricular de Dissertação está vedada a alunos do 1o ciclo, apenas podendo ser efectuada por alunos do 2o ciclo. 
+6 - A inscrição na unidade curricular de Dissertação está vedada a alunos do 1º ciclo, apenas podendo ser efectuada por alunos do 2º ciclo. 
 </p>
 
 <p class="mtop05">
 <strong>5. Inscrição em Melhoria de Nota</strong><br/>
-Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <html:link href="http://www.ist.utl.pt/files/ensino/reg_1e2ciclo_20082009.pdf">regulamento</html:link> 
+Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <html:link href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</html:link> 
 </p>
 
 <p class="mtop05">
@@ -75,8 +75,12 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 </p>
 
 <p class="mtop05">
+<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <html:link href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</html:link>.
+</p>
+
+<p class="mtop05">
 <bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
-<strong>8.</strong> Para apoio ao processo de inscrições: 
+<strong>9.</strong> Para apoio ao processo de inscrições: 
 <html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
 	<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
 </html:link>
