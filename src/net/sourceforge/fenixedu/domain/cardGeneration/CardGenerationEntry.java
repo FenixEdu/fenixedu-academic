@@ -388,12 +388,30 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return cl1.equals(cl2);
     }
 
-    private static String makeComparableLine(final String line) {
+    public static String makeComparableLine(final String line) {
+	String comparableLine = line.substring(0, 262);
 	final StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(line.substring(0, 21));
-	stringBuilder.append(line.substring(26, 30));
-	stringBuilder.append(line.substring(32, 262));
+	stringBuilder.append(comparableLine.substring(0, 21));
+	stringBuilder.append(comparableLine.substring(26, 30));
+	stringBuilder.append(comparableLine.substring(32, 262));
 	return stringBuilder.toString();
+    }
+
+    public String getNormalizedLine() {
+	return getLine().replaceAll("\\.", " ");
+    }
+
+    public void incrementVersionNumber() {
+	final String line = this.getLine();
+	final StringBuilder stringBuilder = new StringBuilder();
+	stringBuilder.append(line.substring(0, 30));
+	stringBuilder.append("01");
+	stringBuilder.append(line.substring(32));
+	this.setLine(stringBuilder.toString());
+    }
+
+    public String getComparableLine() {
+	return makeComparableLine(this.getNormalizedLine());
     }
 
 }

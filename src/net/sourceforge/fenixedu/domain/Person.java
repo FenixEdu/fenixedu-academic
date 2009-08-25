@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneInd
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
+import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
@@ -3304,5 +3305,23 @@ public class Person extends Person_Base {
 	}
 
 	return result;
+    }
+
+    public Boolean hasCardGenerationEntryMatchingLine(String line) {
+	for (final CardGenerationEntry cardGenerationEntry : this.getCardGenerationEntriesSet()) {
+	    if (cardGenerationEntry.matches(line)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public Boolean hasCardGenerationEntryLine(String line) {
+	for (final CardGenerationEntry cardGenerationEntry : this.getCardGenerationEntriesSet()) {
+	    final Category category = cardGenerationEntry.getCategory();
+	    return category == Category.CODE_73 || category == Category.CODE_83 || category == Category.CODE_96
+		    || cardGenerationEntry.getNormalizedLine().substring(0, 262).equals(line.substring(0, 262));
+	}
+	return false;
     }
 }

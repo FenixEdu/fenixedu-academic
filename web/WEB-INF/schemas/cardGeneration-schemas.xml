@@ -37,3 +37,52 @@
 <schema name="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.edit" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch">
 	<slot name="description"/>
 </schema>
+
+<schema name="importIdentificationCardData" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ImportIdentificationCardDataDA$ImportIdentificationCardDataBean" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="selectedExecutionYear" key="label.executionYear" 
+			validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="loadCardGenerationBatches"/>			
+	</slot>
+	<slot name="selectedCardGenerationBatch" key="label.cardGenerationBatch"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.ImportIdentificationCardDataDA$CardGenerationBatchProvider" />
+		<property name="format" value="${description}" />
+	</slot>
+	<slot name="sourceData" key="label.file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="fileName"/>
+		<property name="fileSizeSlot" value="fileSize"/>
+	</slot>
+</schema>
+
+<schema name="import.identification.card.data.unmatched.entries.show" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch$ReportEntry" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="key" key="label.identification.id" bundle="CARD_GENERATION_RESOURCES"/>
+	<slot name="formattedNumbers" key="label.line.numbers"/>
+</schema>
+
+<schema name="import.identification.card.data.duplicated.persons.by.id.show" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch$ReportEntry" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="key" key="label.identification.id"/>
+	<slot name="duplicatedPersons" key="label.duplicated.persons" layout="tabular-list">
+		<property name="subSchema" value="person.name.id.dateOfBirth"/>
+		<property name="subLayout" value="values"/>
+	</slot>
+</schema>
+
+<schema name="import.identification.card.data.duplicated.persons.by.name.show" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch$ReportEntry" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="key" key="label.name"/>
+	<slot name="duplicatedPersons" key="label.duplicated.persons" layout="tabular-list">
+		<property name="subSchema" value="person.name.id.dateOfBirth"/>
+		<property name="subLayout" value="values"/>
+	</slot>
+</schema>
+
+<schema name="import.identification.card.data.matched.persons" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch$ReportEntry" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="key" key="label.name"/>
+	<slot name="duplicatedPersons" key="label.matchedPerson" layout="tabular-list">
+		<property name="subSchema" value="person.name.id.dateOfBirth"/>
+		<property name="subLayout" value="values"/>
+	</slot>
+	<slot name="created" key="label.card.entry.created"/>
+</schema>
