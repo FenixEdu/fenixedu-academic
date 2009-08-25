@@ -79,7 +79,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 	    final EnrolmentPeriod nextEnrollmentPeriod) {
 	if (nextEnrollmentPeriod != null) {
 	    addActionMessage(request, message, nextEnrollmentPeriod.getStartDateDateTime().toString(
-		    DateFormatUtil.DEFAULT_DATE_FORMAT), nextEnrollmentPeriod.getEndDateDateTime().toString(
+		    "dd/MM/yyyy HH:mm"), nextEnrollmentPeriod.getEndDateDateTime().toString(
 		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	} else {
 	    addActionMessage(request, "message.out.curricular.course.enrolment.period.default");
