@@ -48,7 +48,7 @@
 		</li>
 		<li>
 			<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
-			<html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
+			<html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" styleClass="externallink" target="_blank">
 				<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
 			</html:link>
 		</li>
@@ -113,7 +113,10 @@
 
 
 
-<p class="mtop15"><em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.idInternal"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em></p>
+<p class="mtop15">
+<em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.idInternal"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em> <br/>
+<em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>.</em>
+</p>
 
 
 <p class="mtop2 mbottom0"><em><bean:message bundle="APPLICATION_RESOURCES"  key="label.legend"/>:</em></p>
