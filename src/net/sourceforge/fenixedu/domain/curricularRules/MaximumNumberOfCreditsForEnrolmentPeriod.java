@@ -17,7 +17,15 @@ public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCre
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
     static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2d;
-    static final private double ACCUMULATED_FACTOR = 0.75;
+
+    /*
+     * Previous value was 0.75d until 2008/2009. These constants should be rule
+     * attributes, and to change this we should have a new rule. When
+     * refactoring rule pay attention to these values. Be aware of
+     * getAccumulatedEcts and getMaximumNumberOfCredits static methods, it can
+     * not be used in this way
+     */
+    static final private double ACCUMULATED_FACTOR = 1.0d;
 
     public MaximumNumberOfCreditsForEnrolmentPeriod(final DegreeModule degreeModuleToApplyRule, final ExecutionSemester begin,
 	    final ExecutionSemester end) {
