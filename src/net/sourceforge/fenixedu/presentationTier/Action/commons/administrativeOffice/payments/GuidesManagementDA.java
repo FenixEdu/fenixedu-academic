@@ -15,7 +15,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+    	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
+	@Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
 public abstract class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
     public ActionForward preparePrintGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

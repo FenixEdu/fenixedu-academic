@@ -33,7 +33,16 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+	@Forward(name = "showReceipts", path = "/academicAdminOffice/payments/receipts/showReceipts.jsp"),
+	@Forward(name = "showReceipt", path = "/academicAdminOffice/payments/receipts/showReceipt.jsp"),
+	@Forward(name = "showPaymentsWithoutReceipt", path = "/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp"),
+	@Forward(name = "confirmCreateReceipt", path = "/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"),
+	@Forward(name = "showOperations", path = "/payments.do?method=showOperations"),
+	@Forward(name = "editReceipt", path = "/academicAdminOffice/payments/receipts/editReceipt.jsp") })
 public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
     public static class EditReceiptBean implements Serializable {

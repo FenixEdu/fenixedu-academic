@@ -31,7 +31,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+	@Forward(name = "showDegreeModulesToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
+	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
+	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp") })
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
 
     protected ActionForward prepareShowDegreeModulesToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,

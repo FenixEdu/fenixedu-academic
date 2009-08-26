@@ -33,7 +33,17 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+    	@Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
+	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/showEvents.jsp"),
+	@Forward(name = "showEventsWithPayments", path = "/academicAdminOffice/payments/showEventsWithPayments.jsp"),
+	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/showPaymentsForEvent.jsp"),
+	@Forward(name = "preparePayment", path = "/academicAdminOffice/payments/preparePayment.jsp"),
+	@Forward(name = "preparePrintGuide", path = "/guides.do?method=preparePrintGuide"),
+	@Forward(name = "showReceipt", path = "/receipts.do?method=prepareShowReceipt") })
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
     protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request, Person person) {

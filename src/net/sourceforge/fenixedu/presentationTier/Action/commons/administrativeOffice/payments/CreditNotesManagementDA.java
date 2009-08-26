@@ -26,7 +26,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+	@Forward(name = "list", path = "/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"),
+	@Forward(name = "create", path = "/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"),
+	@Forward(name = "show", path = "/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"),
+	@Forward(name = "prepareShowReceipt", path = "/receipts.do?method=prepareShowReceipt") })
 public abstract class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
 
     public static class CreditNotesActionForm extends FenixActionForm {

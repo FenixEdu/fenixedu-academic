@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateOtherPartyPayment;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateOtherPartyPaymentBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,7 +14,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
+@Forwards( {
+	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/otherPartyPayment/showEventsForOtherPartyPayment.jsp"),
+	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/otherPartyPayment/showOtherPartyPaymentsForEvent.jsp"),
+	@Forward(name = "prepareCreate", path = "/academicAdminOffice/payments/otherPartyPayment/prepareCreateOtherPartyPayment.jsp"),
+	@Forward(name = "confirmCreate", path = "/academicAdminOffice/payments/otherPartyPayment/confirmCreateOtherPartyPayment.jsp"),
+	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/otherPartyPayment/showGuideForOtherPartyPayment.jsp"),
+	@Forward(name = "printGuide", path = "/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp", useTile = false),
+	@Forward(name = "showOperations", path = "/payments.do?method=showOperations") })
 public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDispatchAction {
 
     public ActionForward showEventsForOtherPartyPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -60,8 +69,7 @@ public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDi
 	final CreateOtherPartyPaymentBean createOtherPartyPaymentBean = getCreateOtherPartyBeanFromViewState("confirmCreateOtherPartyPayment");
 
 	try {
-	    CreateOtherPartyPayment.run(getUserView(request).getPerson(),
-		    createOtherPartyPaymentBean);
+	    CreateOtherPartyPayment.run(getUserView(request).getPerson(), createOtherPartyPaymentBean);
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 

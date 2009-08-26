@@ -43,7 +43,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/registration", module = "academicAdminOffice")
 @Forwards( {
-	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 	@Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),
 	@Forward(name = "chooseCycleForRegistrationConclusion", path = "/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"),
 	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"),
@@ -52,9 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp"),
 	@Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp"),
 	@Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp"),
-	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp")
-
-})
+	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp") })
 public class RegistrationDA extends StudentRegistrationDA {
 
     public ActionForward prepareViewRegistrationCurriculum(ActionMapping mapping, ActionForm actionForm,

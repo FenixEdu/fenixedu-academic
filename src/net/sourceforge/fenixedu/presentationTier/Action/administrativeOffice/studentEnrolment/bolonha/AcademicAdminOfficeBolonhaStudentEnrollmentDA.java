@@ -19,11 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/bolonhaStudentEnrollment", module = "academicAdminOffice", formBean = "bolonhaStudentEnrollmentForm")
-@Forwards( {
-	@Forward(name = "showDegreeModulesToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
-	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
-	@Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules"),
-	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp") })
+@Forwards( { @Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules") })
 public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolonhaStudentEnrollmentDA {
 
     @Override

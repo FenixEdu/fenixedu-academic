@@ -10,6 +10,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
+@Forwards( { @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public abstract class StudentRegistrationDA extends FenixDispatchAction {
 
     protected Registration getAndSetRegistration(final HttpServletRequest request) {
