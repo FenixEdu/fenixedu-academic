@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -8,7 +12,9 @@ import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 public class BolonhaDegreeTypesProvider implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	return DegreeType.NOT_EMPTY_BOLONHA_VALUES;
+	final List<DegreeType> notEmptyBolonhaValues = new ArrayList<DegreeType>(DegreeType.NOT_EMPTY_BOLONHA_VALUES);
+	Collections.sort(notEmptyBolonhaValues);
+	return notEmptyBolonhaValues;
     }
 
     public Converter getConverter() {
