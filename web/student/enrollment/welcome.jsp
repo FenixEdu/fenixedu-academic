@@ -86,6 +86,10 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 </html:link>
 </p>
 
+<p class="mtop05">
+<strong>10.</strong> <bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>
+</p>
+
 </div>
 
 <html:form action="/studentEnrollmentManagement.do?method=prepare">
