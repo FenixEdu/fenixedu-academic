@@ -6408,6 +6408,7 @@ class reports.EctsLabelDegreeReportFile extends reports.GepReportFile {}
 class reports.EctsLabelCurricularCourseReportFile extends reports.GepReportFile {}
 class reports.StatusAndApprovalReportFile extends reports.GepReportFile {}
 class reports.EtiReportFile extends reports.GepReportFile {}
+class reports.CourseLoadAndResponsiblesReportFile extends reports.GepReportFile {}
 class reports.RegistrationReportFile extends reports.GepReportFile {}
 class reports.FlunkedReportFile extends reports.GepReportFile {}
 class reports.TeachersByShiftReportFile extends reports.GepReportFile {}

@@ -84,6 +84,7 @@
 	<bean:define id="urlEctsLabelForCurricularCourses" type="java.lang.String">/reportsByDegreeType.do?method=downloadEctsLabelForCurricularCourses&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlStatusAndAproval" type="java.lang.String">/reportsByDegreeType.do?method=downloadStatusAndAproval&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlEti" type="java.lang.String">/reportsByDegreeType.do?method=downloadEti&amp;<bean:write name="args" filter="false"/></bean:define>
+	<bean:define id="urlCourseLoadAndResponsibles" type="java.lang.String">/reportsByDegreeType.do?method=downloadCourseLoadAndResponsibles&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlRegistrations" type="java.lang.String">/reportsByDegreeType.do?method=downloadRegistrations&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlFlunked" type="java.lang.String">/reportsByDegreeType.do?method=downloadFlunked&amp;<bean:write name="args" filter="false"/></bean:define>
 	<bean:define id="urlTeachersByShift" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersByShift&amp;<bean:write name="args" filter="false"/></bean:define>
@@ -200,6 +201,27 @@
 						</html:link>
 					</td>
 				</tr>
+			    <tr>
+			       <td style="width: 350px;">
+			           <bean:message key="label.report.course.load.and.responsibles" bundle="GEP_RESOURCES"/>
+			       </td>
+			       <td>
+			           <bean:define id="urlCourseLoadAndResponsiblesCsv" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=csv</bean:define>
+			           <html:link page="<%= urlCourseLoadAndResponsiblesCsv %>">
+			               <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			           </html:link>
+			           |
+			           <bean:define id="urlCourseLoadAndResponsiblesXls" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=xls</bean:define>
+			           <html:link page="<%= urlCourseLoadAndResponsiblesXls %>">
+			               <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			           </html:link>
+			       </td>
+			       <td>
+			           <html:link page="<%= viewReports + "&type=19" %>">
+			               <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" />
+			           </html:link>
+			       </td>
+			    </tr>
 		<!-- 		<tr>
 					<td>
 						<bean:message key="label.report.registrations" bundle="GEP_RESOURCES"/>

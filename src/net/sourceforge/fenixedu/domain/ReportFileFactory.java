@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.reports.CourseLoadAndResponsiblesReportFile;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
@@ -122,6 +123,16 @@ public class ReportFileFactory {
 	etiReportFile.setDegreeType(degreeType);
 	etiReportFile.setExecutionYear(executionYear);
 	return etiReportFile;
+    }
+
+    @Service
+    public static GepReportFile createCourseLoadAndResponsiblesReportFile(String type, DegreeType degreeType,
+	    ExecutionYear executionYear) {
+	final CourseLoadAndResponsiblesReportFile courseLoadAndResponsiblesReportFile = new CourseLoadAndResponsiblesReportFile();
+	courseLoadAndResponsiblesReportFile.setType(type);
+	courseLoadAndResponsiblesReportFile.setDegreeType(degreeType);
+	courseLoadAndResponsiblesReportFile.setExecutionYear(executionYear);
+	return courseLoadAndResponsiblesReportFile;
     }
 
     @Service

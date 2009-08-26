@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.ReportFileFactory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.reports.CourseLoadAndResponsiblesReportFile;
 import net.sourceforge.fenixedu.domain.reports.CourseLoadReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsProposalsReportFile;
 import net.sourceforge.fenixedu.domain.reports.DissertationsWithExternalAffiliationsReportFile;
@@ -182,6 +183,19 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final String format = getFormat(request);
 
 	prepareNewJobResponse(request, ReportFileFactory.createEtiReportFile(format, degreeType, executionYear));
+
+	return mapping.findForward("selectDegreeType");
+    }
+
+    @SuppressWarnings("unused")
+    public ActionForward downloadCourseLoadAndResponsibles(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createCourseLoadAndResponsiblesReportFile(format, degreeType,
+		executionYear));
 
 	return mapping.findForward("selectDegreeType");
     }
@@ -383,6 +397,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return TeachersListReportFile.class;
 	case 18:
 	    return TeachersListFromGiafReportFile.class;
+	case 19:
+	    return CourseLoadAndResponsiblesReportFile.class;
 	default:
 	    return null;
 	}
