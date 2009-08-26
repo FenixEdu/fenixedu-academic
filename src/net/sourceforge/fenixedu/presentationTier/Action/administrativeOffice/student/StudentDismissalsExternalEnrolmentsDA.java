@@ -17,13 +17,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
 @Forwards( {
 	@Forward(name = "manageDismissals", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-	// Complex tiles definition; cannot refactor header (yet?)
-	@Forward(name = "chooseExternalUnit", path = "student.externalEnrolment.chooseExternalUnit"),
-	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
-	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
-	@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
-
-})
+	@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolmentsDA {
 
     @Override
