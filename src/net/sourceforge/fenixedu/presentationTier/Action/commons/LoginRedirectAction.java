@@ -1,16 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
