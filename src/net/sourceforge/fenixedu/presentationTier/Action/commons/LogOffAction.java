@@ -46,6 +46,7 @@ public class LogOffAction extends Action {
 		result = mapping.findForward("showBlankPage");
 	    } else {
 		result = getCasLogoutActionForward(casConfig);
+		killSession(request);
 	    }
 	} else {
 	    killSession(request);
