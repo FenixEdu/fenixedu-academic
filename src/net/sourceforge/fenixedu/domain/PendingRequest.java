@@ -18,6 +18,7 @@ public class PendingRequest extends PendingRequest_Base {
 
     public PendingRequest(HttpServletRequest request) {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
 	setGenerationDate(new DateTime());
 	if (request.getMethod().equalsIgnoreCase("GET")){
 	    setPost(false);
