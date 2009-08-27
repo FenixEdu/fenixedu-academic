@@ -175,8 +175,14 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	createNewSession(request, session, userView);
 	// Set request attributes
 
-	final DynaActionForm authenticationForm = (DynaActionForm) form;
-	final String pendingRequest = (String) authenticationForm.get("pendingRequest");
+	String pendingRequest = request.getParameter("pendingRequest");
+	if (pendingRequest == null) {
+	    pendingRequest = (String) request.getAttribute("pendingRequest");
+	    if (pendingRequest == null) {
+		final DynaActionForm authenticationForm = (DynaActionForm) form;
+		pendingRequest = (String) authenticationForm.get("pendingRequest");
+	    }
+	}
 	actionForward.setPath("/redirect.do?pendingRequest=" + pendingRequest);
 	return actionForward;
     }
