@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -58,7 +59,7 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 	spreadsheet.setHeader("Vínculo");
 	spreadsheet.setHeader("Data início contrato");
 	spreadsheet.setHeader("Data conclusão contrato");
-	spreadsheet.setHeader("Data início do primeiro contrato");
+	spreadsheet.setHeader("Nº de anos na instituição");
     }
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
@@ -157,27 +158,17 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		    row.setCell("");
 		}
 
-		// Coluna "Data início do primeiro contrato"
-		teacherProfessionalSituation = getFirstSituationFromOneTeacher(teacher);
-		if (teacherProfessionalSituation != null && teacherProfessionalSituation.getBeginDateYearMonthDay() != null) {
-		    row.setCell(writeDate(teacherProfessionalSituation.getBeginDateYearMonthDay()));
-		} else {
-		    row.setCell("");
+		// Coluna "Nº de anos na instituição"
+		Period yearsInHouse = Period.ZERO;
+		for (TeacherProfessionalSituation situation : teacher.getLegalRegimens()) {
+		    yearsInHouse = yearsInHouse.plus(new Period(situation.getBeginDateYearMonthDay(), (situation
+			    .getEndDateYearMonthDay() == null ? new YearMonthDay() : situation.getEndDateYearMonthDay())));
 		}
+		row.setCell(yearsInHouse.getYears());
 	    }
 	}
 
 	spreadsheet.exportToXLSSheet(new File("Docentes do IST " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
-    }
-
-    private TeacherProfessionalSituation getFirstSituationFromOneTeacher(Teacher teacher) {
-	TeacherProfessionalSituation teacherProfessionalSituation = null;
-	for (TeacherProfessionalSituation tps : teacher.getLegalRegimens()) {
-	    if (teacherProfessionalSituation == null || teacherProfessionalSituation.getBeginDate().after(tps.getBeginDate())) {
-		teacherProfessionalSituation = tps;
-	    }
-	}
-	return teacherProfessionalSituation;
     }
 
     private TeacherProfessionalSituation getLastSituationFromOneTeacherAndExecutionYear(Teacher teacher,

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -61,7 +62,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	spreadsheet.setHeader("Vínculo");
 	spreadsheet.setHeader("Data início contrato");
 	spreadsheet.setHeader("Data conclusão contrato");
-	spreadsheet.setHeader("Data início do primeiro contrato");
+	spreadsheet.setHeader("Nº de anos na instituição");
     }
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
@@ -180,27 +181,17 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 		    row.setCell("");
 		}
 
-		// Coluna "Data início do primeiro contrato"
-		situation = getFirstSituationFromOneTeacher(teacher);
-		if (situation != null && situation.getBeginDate() != null) {
-		    row.setCell(writeDate(situation.getBeginDate()));
-		} else {
-		    row.setCell("");
+		// Coluna "Nº de anos na instituição"
+		Period yearsInHouse = Period.ZERO;
+		for (EmployeeContractSituation current : teacher.getEmployee().getEmployeeContractSituations()) {
+		    yearsInHouse = yearsInHouse.plus(new Period(current.getBeginDate(),
+			    (current.getEndDate() == null ? new LocalDate() : current.getEndDate())));
 		}
+		row.setCell(yearsInHouse.getYears());
 	    }
 	}
 
 	spreadsheet.exportToXLSSheet(new File("Docentes do IST " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
-    }
-
-    private EmployeeContractSituation getFirstSituationFromOneTeacher(Teacher teacher) {
-	EmployeeContractSituation situation = null;
-	for (EmployeeContractSituation ecs : teacher.getEmployee().getEmployeeContractSituations()) {
-	    if (situation == null || situation.getBeginDate().isAfter(ecs.getBeginDate())) {
-		situation = ecs;
-	    }
-	}
-	return situation;
     }
 
     private EmployeeProfessionalRelation getLastRelationFromOneTeacherAndExecutionYear(Teacher teacher,
