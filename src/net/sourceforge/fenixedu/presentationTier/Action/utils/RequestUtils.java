@@ -129,7 +129,7 @@ public class RequestUtils {
 	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),pendingRequest));
     }
     
-    private static String generateRedirectLink(String url, PendingRequest pendingRequest) {
+    public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
 	String param = "pendingRequest=" +  pendingRequest.getExternalId();
 	if (url.contains("?")){
 	    if (url.contains("&")){
