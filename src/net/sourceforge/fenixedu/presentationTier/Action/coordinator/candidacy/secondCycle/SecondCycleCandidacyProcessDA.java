@@ -12,8 +12,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -21,8 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -173,22 +169,6 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return null;
     }
 
-    public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("send-to-coordinator");
-    }
-
-    public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "SendToCoordinator");
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return prepareExecuteSendToCoordinator(mapping, actionForm, request, response);
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
     public ActionForward prepareExecutePrintCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 
@@ -200,71 +180,6 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	writer.flush();
 	response.flushBuffer();
 	return null;
-    }
-
-    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final SecondCycleCandidacyProcess process = getProcess(request);
-	request.setAttribute("secondCycleIndividualCandidaciesByDegree", process
-		.getValidSecondCycleIndividualCandidaciesByDegree());
-	return mapping.findForward("introduce-candidacy-results");
-    }
-
-    public ActionForward prepareExecuteIntroduceCandidacyResultsForDegree(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final SecondCycleCandidacyProcess process = getProcess(request);
-	final List<SecondCycleIndividualCandidacyResultBean> beans = new ArrayList<SecondCycleIndividualCandidacyResultBean>();
-	for (final SecondCycleIndividualCandidacyProcess candidacyProcess : process
-		.getValidSecondCycleIndividualCandidacies(getAndSetDegree(request))) {
-	    beans.add(new SecondCycleIndividualCandidacyResultBean(candidacyProcess));
-	}
-	request.setAttribute("secondCycleIndividualCandidacyResultBeans", beans);
-	return mapping.findForward("introduce-candidacy-results-for-degree");
-    }
-
-    private Degree getAndSetDegree(final HttpServletRequest request) {
-	final Degree degree = rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeId"));
-	request.setAttribute("degree", degree);
-	return degree;
-    }
-
-    public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	getAndSetDegree(request);
-	request.setAttribute("secondCycleIndividualCandidacyResultBeans",
-		getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	return mapping.findForward("introduce-candidacy-results-for-degree");
-    }
-
-    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    executeActivity(getProcess(request), "IntroduceCandidacyResults",
-		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return executeIntroduceCandidacyResultsInvalid(mapping, actionForm, request, response);
-	}
-
-	return prepareExecuteIntroduceCandidacyResults(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("send-to-scientificCouncil");
-    }
-
-    public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "SendToScientificCouncil");
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return prepareExecuteSendToScientificCouncil(mapping, actionForm, request, response);
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
     private void writeReport(final SecondCycleCandidacyProcess process, final ServletOutputStream writer) throws IOException {

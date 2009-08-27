@@ -230,6 +230,21 @@
 					<bean:message key="link.coordinator.second.cycle.applications"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:message key="link.coordinator.degree.applications.for.graduated"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/caseHandlingDegreeChangeCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:message key="link.coordinator.degree.change.application"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/caseHandlingDegreeTransferCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+					<bean:message key="link.coordinator.degree.transfer.appication"/>
+				</html:link>
+			</li>
 			
 			<li class="navheader">
 				<bean:message key="label.coordinator.degreeSite.students"/>
