@@ -303,7 +303,7 @@
 <schema name="IndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyDate" key="label.candidacy.date" />
 	<slot name="personalDetails.name" key="label.name" />
-	<slot name="personalDetails.name" key="label.name" />
+	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="candidacyState" key="label.candidacy.process.state" />
 	<slot name="processChecked" key="label.candidacy.process.checked" />
