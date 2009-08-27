@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -31,6 +32,7 @@ import org.joda.time.Days;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -49,7 +51,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    UserView.setUser(userView);
 	    String pendingRequest = request.getParameter("pendingRequest"); 
-	    if (pendingRequest != null && pendingRequest != "") {
+	    if (pendingRequest != null && pendingRequest != "" && !pendingRequest.equals("null") && DomainObject.fromExternalId(pendingRequest) != null) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);

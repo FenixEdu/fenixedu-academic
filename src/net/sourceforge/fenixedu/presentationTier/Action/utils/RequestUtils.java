@@ -134,7 +134,7 @@ public class RequestUtils {
     }
 
     public static String generateRedirectLink(String url, String externalId) {
-	if (externalId != null && externalId.length() > 0 && !externalId.equals("null")) {
+	if (externalId == null || externalId.length() == 0 || externalId.equals("null")) {
 	    return url;
 	}
 	String param = "pendingRequest=" +  externalId;
