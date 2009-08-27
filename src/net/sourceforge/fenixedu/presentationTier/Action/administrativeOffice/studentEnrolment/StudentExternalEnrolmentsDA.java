@@ -41,8 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards( {
 	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"),
 	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"),
-	// Complex tiles definition; cannot refactor header (yet?)
-	@Forward(name = "chooseExternalUnit", path = "student.externalEnrolment.chooseExternalUnit"),
+	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", extend = "header.treeRenderer"),
 	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
 	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
 	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })

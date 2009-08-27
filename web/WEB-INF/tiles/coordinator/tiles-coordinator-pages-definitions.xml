@@ -357,35 +357,9 @@
 	<!-- End: Equivalence Management -->
 
 	<!-- Phd Module -->
-
-	<definition name="phd.manageProcesses" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/coordinator/manageProcesses.jsp"/>
-	</definition>
 	
-	<definition name="phd.viewProcess" extends="definition.coordinator.two-column">
+	<definition name="phd.navLocal" extends="definition.coordinator.two-column">
 		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/coordinator/viewProcess.jsp"/>
-	</definition>
-
-	<definition name="phd.viewAlertMessages" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/coordinator/viewAlertMessages.jsp"/>
-	</definition>
-
-	<definition name="phd.viewProcessAlertMessages" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/coordinator/viewProcessAlertMessages.jsp"/>
-	</definition>
-	
-	<definition name="phd.manageCandidacyReview" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/candidacy/coordinator/manageCandidacyReview.jsp"/>
-	</definition>
-	
-	<definition name="phd.manageCandidacyDocuments" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-		<put name="body" value="/phd/candidacy/coordinator/manageCandidacyDocuments.jsp"/>
 	</definition>
 	
 	<!-- End of Phd Module -->    
