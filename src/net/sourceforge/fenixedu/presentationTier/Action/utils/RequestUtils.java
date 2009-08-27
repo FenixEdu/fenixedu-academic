@@ -130,7 +130,11 @@ public class RequestUtils {
     }
     
     public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
-	String param = "pendingRequest=" +  pendingRequest.getExternalId();
+	return generateRedirectLink(url, pendingRequest.getExternalId());
+    }
+
+    public static String generateRedirectLink(String url, String externalId) {
+	String param = "pendingRequest=" +  externalId;
 	if (url.contains("?")){
 	    if (url.contains("&")){
 		return url + "&" + param;

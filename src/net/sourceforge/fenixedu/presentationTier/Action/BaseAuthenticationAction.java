@@ -49,7 +49,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    UserView.setUser(userView);
 	    String pendingRequest = request.getParameter("pendingRequest"); 
-	    if (pendingRequest!= null && pendingRequest != "") {
+	    if (pendingRequest != null && pendingRequest != "") {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
