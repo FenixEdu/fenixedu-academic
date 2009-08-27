@@ -43,7 +43,11 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
 
 	if (userView == null) {
 	    final String casTicket = (String) request.getParameter("ticket");
-	    final String requestURL = request.getRequestURL().toString();
+	    String requestURL = request.getRequestURL().toString();
+	    final String pendingRequest = request.getParameter("pendingRequest");
+	    if (pendingRequest != null) {
+		requestURL = requestURL + "?pendingRequest=" + pendingRequest;
+	    }
 	    CASReceipt receipt;
 	    try {
 		receipt = Authenticate.getCASReceipt(request.getServerName(), casTicket, requestURL);
