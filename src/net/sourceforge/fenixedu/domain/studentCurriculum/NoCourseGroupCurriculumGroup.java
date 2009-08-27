@@ -42,7 +42,7 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 	}
     }
 
-    public static NoCourseGroupCurriculumGroup createNewNoCourseGroupCurriculumGroup(
+    public static NoCourseGroupCurriculumGroup create(
 	    final NoCourseGroupCurriculumGroupType groupType, final RootCurriculumGroup curriculumGroup) {
 	switch (groupType) {
 	case PROPAEDEUTICS:

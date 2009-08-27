@@ -41,15 +41,18 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	    ExecutionSemester executionSemester, CycleType cycleType) {
 	this();
 	init(studentCurricularPlan, rootCourseGroup, executionSemester, cycleType);
+	createStandaloneCurriculumGroupIfNecessary();
     }
 
     private void init(StudentCurricularPlan studentCurricularPlan, RootCourseGroup courseGroup,
 	    ExecutionSemester executionSemester, CycleType cycleType) {
+
 	checkParameters(studentCurricularPlan, courseGroup, executionSemester);
 	checkInitConstraints(studentCurricularPlan, courseGroup);
 
 	setParentStudentCurricularPlan(studentCurricularPlan);
 	setDegreeModule(courseGroup);
+
 	addChildCurriculumGroups(courseGroup, executionSemester, cycleType);
     }
 
@@ -64,6 +67,7 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
     public RootCurriculumGroup(StudentCurricularPlan studentCurricularPlan, RootCourseGroup rootCourseGroup, CycleType cycleType) {
 	this();
 	init(studentCurricularPlan, rootCourseGroup, cycleType);
+	createStandaloneCurriculumGroupIfNecessary();
     }
 
     private void init(final StudentCurricularPlan studentCurricularPlan, final RootCourseGroup rootCourseGroup,
@@ -148,13 +152,22 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return getParentStudentCurricularPlan();
     }
 
+    public boolean hasStudentCurricularPlan() {
+	return hasParentStudentCurricularPlan();
+    }
+
     private void createExtraCurriculumGroup() {
-	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR,
-		this);
+	NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR, this);
     }
 
     private void createPropaedeuticsCurriculumGroup() {
-	NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS, this);
+	NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.PROPAEDEUTICS, this);
+    }
+
+    private void createStandaloneCurriculumGroupIfNecessary() {
+	if (hasStudentCurricularPlan() && getStudentCurricularPlan().isEmptyDegree()) {
+	    NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, this);
+	}
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup(CycleType cycleType) {

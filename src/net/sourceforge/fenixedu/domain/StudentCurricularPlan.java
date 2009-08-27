@@ -2133,7 +2133,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	if (noCourseGroupCurriculumGroup != null) {
 	    throw new DomainException("error.studentCurricularPlan.already.has.noCourseGroupCurriculumGroup.with.same.groupType");
 	}
-	return NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, getRoot());
+	return NoCourseGroupCurriculumGroup.create(groupType, getRoot());
     }
 
     public ExtraCurriculumGroup createExtraCurriculumGroup() {
