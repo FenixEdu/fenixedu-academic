@@ -38,7 +38,12 @@ No caso de inscrição na unidade curricular de Dissertação, as normas específicas
 </p>
 
 <p class="mtop05">
-<strong>4. Inscrição de alunos do 1º ciclo em unidades curriculares de 2º ciclo</strong><br/> 
+<strong>4. Precedências</strong><br/>
+Não é possível a inscrição em qualquer unidade curricular se não estiver garantida a inscrição em todas as unidades curriculares, em funcionamento, correspondentes a semestres curriculares anteriores. Poderão existir, para além desta regra geral de inscrição, regras específicas de precedência para cada curso ou grupo de unidades curriculares.
+</p>
+
+<p class="mtop05">
+<strong>5. Inscrição de alunos do 1º ciclo em unidades curriculares de 2º ciclo</strong><br/> 
 No caso de cursos não integrados e de acordo com o DL 74/2006 de 24 de Março o acesso ao 2º ciclo está condicionado à titularidade de um curso de 1o ciclo. Contudo é permitida a frequência de unidades curriculares de ciclos subsequentes.<br/>Neste sentido, no ano lectivo de 2009/2010 será permitido aos alunos de cursos de 1º ciclo a frequência de unidades curriculares de 2º ciclo, com excepção da unidade curricular de Dissertação, dentro das seguintes condições:
 </p>
 <p class="indent1">     
@@ -61,33 +66,33 @@ No caso de cursos não integrados e de acordo com o DL 74/2006 de 24 de Março o a
 </p>
 
 <p class="mtop05">
-<strong>5. Inscrição em Melhoria de Nota</strong><br/>
+<strong>6. Inscrição em Melhoria de Nota</strong><br/>
 Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <html:link href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</html:link> 
 </p>
 
 <p class="mtop05">
-<strong>6. Estudantes em regime de tempo parcial</strong><br/>
+<strong>7. Estudantes em regime de tempo parcial</strong><br/>
 Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do IST em regime de tempo integral.
 </p>
 
 <p class="mtop05">
-<strong>7.</strong> Relembramos que durante o período de inscrições pode acrescentar/alterar/corrigir a sua inscrição novamente no sistema.
+<strong>8.</strong> Relembramos que durante o período de inscrições pode acrescentar/alterar/corrigir a sua inscrição novamente no sistema.
 </p>
 
 <p class="mtop05">
-<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <html:link href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</html:link>.
+<strong>9.</strong> Para qualquer esclarecimento adicional deverá consultar o <html:link href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamento de 1º e 2º Ciclo 2009/2010</html:link>.
 </p>
 
 <p class="mtop05">
 <bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
-<strong>9.</strong> Para apoio ao processo de inscrições: 
+<strong>10.</strong> Para apoio ao processo de inscrições: 
 <html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
 	<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
 </html:link>
 </p>
 
 <p class="mtop05">
-<strong>10.</strong> <bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>
+<strong>11.</strong> <bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>
 </p>
 
 </div>
