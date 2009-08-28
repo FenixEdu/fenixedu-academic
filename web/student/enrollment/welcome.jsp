@@ -95,6 +95,37 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 <strong>11.</strong> <bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>
 </p>
 
+<p class="mtop05">
+<strong>12. Cursos sem inscrições online</strong><br/>
+Por indicação do Conselho de Gestão os seguintes cursos não vão ter inscrições online:
+</p>
+
+<p class="indent1">
+<strong>- </strong>Licenciatura Bolonha em Química
+</p>
+
+<p class="indent1">
+<strong>- </strong>Mestrado Bolonha em Química
+</p>
+
+<p class="indent1">
+<strong>- </strong>Licenciatura Bolonha em Ciências de Engenharia - Engenharia do Território
+</p>
+
+<p class="indent1">
+<strong>- </strong>Mestrado Bolonha em Engenharia do Território
+</p>
+
+<p class="indent1">
+<strong>- </strong>Mestrado Bolonha em Matemática e Aplicações 
+</p>
+<p class="indent1">
+<strong>- </strong>Mestrado Bolonha em Bioengenharia e Nanossistemas 
+</p>
+<p class="indent1">
+<strong>- </strong>Mestrado Bolonha em Biotecnologia
+</p>
+
 </div>
 
 <html:form action="/studentEnrollmentManagement.do?method=prepare">
