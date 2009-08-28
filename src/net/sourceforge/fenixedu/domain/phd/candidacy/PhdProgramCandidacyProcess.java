@@ -178,7 +178,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
+	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
 		    bean.getRemarks());
 	    return process;
 	}
@@ -188,7 +188,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     static public class RatifyCandidacy extends PhdActivity {
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if (!process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -252,7 +252,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
 	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)
-		    || process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+		    || process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
 
 		return;
 	    }
@@ -294,7 +294,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if (!process.isInState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL)) {
+	    if (!process.isInState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -505,7 +505,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess());
 	}
 
-	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_CIENTIFIC_COUNCIL, responsible);
+	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL, responsible);
 
     }
 

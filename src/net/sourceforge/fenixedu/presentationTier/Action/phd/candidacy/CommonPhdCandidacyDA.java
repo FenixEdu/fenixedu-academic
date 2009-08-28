@@ -52,7 +52,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
 
 	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
-	stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION);
+	stateBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
 
 	request.setAttribute("documentToUpload", bean);
 	request.setAttribute("stateBean", stateBean);

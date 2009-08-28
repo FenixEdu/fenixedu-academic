@@ -39,4 +39,9 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	}
     }
 
+    @Override
+    protected void disconnect() {
+	removeProcess();
+	super.disconnect();
+    }
 }

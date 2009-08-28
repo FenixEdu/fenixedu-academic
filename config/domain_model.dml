@@ -177,11 +177,12 @@ enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState       
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType                                            	  as PhdIndividualProgramDocumentType;
 enum net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState                                                  as PhdProgramCandidacyProcessState;
-enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
+enum net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType								  as PublicPresentationSeminarProcessStateType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.ApplicantOverallPromise												  as ApplicantOverallPromise;
 enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	  as PhdStudyPlanEntryType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 
 /*
  * Value types that need special externalization
@@ -6524,6 +6525,10 @@ class phd.PhdProcessState extends DomainObject {
 	class phd.PhdCandidacyProcessState extends phd.PhdProcessState {
 		PhdProgramCandidacyProcessState type;
 	}
+	
+	class phd.seminar.PublicPresentationSeminarState extends phd.PhdProcessState {
+		PublicPresentationSeminarProcessStateType type;
+	}
 
 class phd.PhdIndividualProgramProcess extends caseHandling.Process {
 	String thesisTitle;
@@ -6550,6 +6555,27 @@ class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
 	PhdIndividualProgramDocumentType documentType;	
 	String remarks;
 }
+
+class phd.seminar.PublicPresentationSeminarProcess extends caseHandling.Process {
+	LocalDate presentationDate;
+}
+
+class phd.seminar.SeminarCommissionElement extends DomainObject {
+	DateTime creationDate;
+}
+
+	class phd.seminar.InternalSeminarCommissionElement extends phd.seminar.SeminarCommissionElement {
+	}
+	
+	class phd.seminar.ExternalSeminarCommissionElement extends phd.seminar.SeminarCommissionElement {
+		String name;
+		String qualification;
+		String category;
+		String institution;
+		String address;
+		String phone;
+		String email;
+	}
 
 class phd.PhdProgramServiceAgreementTemplate extends accounting.ServiceAgreementTemplate {
 }
@@ -6893,6 +6919,13 @@ relation PhdProgramCandidacyProcessPhdProcessState {
 	}
 }
 
+relation PublicPresentationSeminarPhdProcessState {
+	phd.seminar.PublicPresentationSeminarProcess playsRole process;
+	phd.seminar.PublicPresentationSeminarState playsRole states {
+		multiplicity *;
+	}
+}
+
 relation PhdCandidacyRefereeLetterRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	phd.candidacy.PhdCandidacyRefereeLetter playsRole phdCandidacyRefereeLetters {
@@ -7045,6 +7078,31 @@ relation PhdNotificationPhdProgramCandidacyProcess {
 	}
 }
 
+relation PhdIndividualProgramProcessPublicPresentationSeminarProcess {
+	phd.PhdIndividualProgramProcess playsRole individualProgramProcess;
+	phd.seminar.PublicPresentationSeminarProcess playsRole seminarProcess;
+}
+
+relation RootDomainObjectSeminarCommissionElement {
+	RootDomainObject playsRole rootDomainObject;
+	phd.seminar.SeminarCommissionElement playsRole seminarCommissionElements {
+		multiplicity *;
+	}
+}
+
+relation PublicPresentationSeminarProcessSeminarCommissionElement {
+	phd.seminar.PublicPresentationSeminarProcess playsRole process;
+	phd.seminar.SeminarCommissionElement playsRole seminarCommissionElements {
+		multiplicity *;
+	}
+}
+
+relation PersonInternalSeminarCommissionElement {
+	Person playsRole person;
+	phd.seminar.InternalSeminarCommissionElement playsRole internalSeminarCommissionElements {
+		multiplicity *;
+	}
+} 
 
 /* End of Phd Module */
 

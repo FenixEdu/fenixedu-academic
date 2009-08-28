@@ -37,4 +37,11 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	    throw new DomainException("error.PhdProgramProcessState.equals.previous.state");
 	}
     }
+
+    @Override
+    protected void disconnect() {
+	removeProcess();
+	super.disconnect();
+    }
+
 }

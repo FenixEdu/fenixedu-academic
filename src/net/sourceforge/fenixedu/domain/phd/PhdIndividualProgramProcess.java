@@ -484,7 +484,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 
 	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
-		    && candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_CIENTIFIC_COUNCIL_RATIFICATION)) {
+		    && candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
 		return;
 	    }
 

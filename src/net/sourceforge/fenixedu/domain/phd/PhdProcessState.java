@@ -28,4 +28,13 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 	setRemarks(remarks);
     }
 
+    public void delete() {
+	disconnect();
+	deleteDomainObject();
+    }
+
+    protected void disconnect() {
+	removePerson();
+	removeRootDomainObject();
+    }
 }
