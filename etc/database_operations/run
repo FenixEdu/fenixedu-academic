@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Update phd process state type values" updatePhdProcessStateType.sql
 execute "Create public presentation seminar tables" createPublicPresentationSeminarTables.sql
+execute "Update missing person in payment code table" updatePersonInPaymentCodeTable.sql
