@@ -25,15 +25,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator")
-@Forwards( {
+@Forwards(extend = "phd.navLocal", value = {
 
-@Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp", extend = "phd.navLocal"),
+	@Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp"),
 
-@Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp", extend = "phd.navLocal"),
+	@Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp"),
 
-@Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp", extend = "phd.navLocal"),
+	@Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp"),
 
-@Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp", extend = "phd.navLocal")
+	@Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {

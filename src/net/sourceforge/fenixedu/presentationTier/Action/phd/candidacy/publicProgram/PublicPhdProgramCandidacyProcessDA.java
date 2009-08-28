@@ -69,45 +69,45 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "publico")
-@Forwards( {
+@Forwards(extend = "definition.candidacy.process", value = {
 
-	@Forward(name = "createCandidacyIdentification", path = "/phd/candidacy/publicProgram/createCandidacyIdentification.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createCandidacyIdentification", path = "/phd/candidacy/publicProgram/createCandidacyIdentification.jsp"),
 
-	@Forward(name = "createCandidacyIdentificationSuccess", path = "/phd/candidacy/publicProgram/createCandidacyIdentificationSuccess.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createCandidacyIdentificationSuccess", path = "/phd/candidacy/publicProgram/createCandidacyIdentificationSuccess.jsp"),
 
-	@Forward(name = "candidacyIdentificationRecovery", path = "/phd/candidacy/publicProgram/candidacyIdentificationRecovery.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "candidacyIdentificationRecovery", path = "/phd/candidacy/publicProgram/candidacyIdentificationRecovery.jsp"),
 
-	@Forward(name = "createCandidacyStepOne", path = "/phd/candidacy/publicProgram/createCandidacyStepOne.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createCandidacyStepOne", path = "/phd/candidacy/publicProgram/createCandidacyStepOne.jsp"),
 
-	@Forward(name = "createCandidacyStepTwo", path = "/phd/candidacy/publicProgram/createCandidacyStepTwo.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createCandidacyStepTwo", path = "/phd/candidacy/publicProgram/createCandidacyStepTwo.jsp"),
 
-	@Forward(name = "createCandidacyStepThree", path = "/phd/candidacy/publicProgram/createCandidacyStepThree.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createCandidacyStepThree", path = "/phd/candidacy/publicProgram/createCandidacyStepThree.jsp"),
 
-	@Forward(name = "showCandidacySuccess", path = "/phd/candidacy/publicProgram/candidacySubmited.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "showCandidacySuccess", path = "/phd/candidacy/publicProgram/candidacySubmited.jsp"),
 
-	@Forward(name = "viewCandidacy", path = "/phd/candidacy/publicProgram/viewCandidacy.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "viewCandidacy", path = "/phd/candidacy/publicProgram/viewCandidacy.jsp"),
 
-	@Forward(name = "editPersonalInformation", path = "/phd/candidacy/publicProgram/editPersonalInformation.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "editPersonalInformation", path = "/phd/candidacy/publicProgram/editPersonalInformation.jsp"),
 
-	@Forward(name = "uploadCandidacyDocuments", path = "/phd/candidacy/publicProgram/uploadCandidacyDocuments.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "uploadCandidacyDocuments", path = "/phd/candidacy/publicProgram/uploadCandidacyDocuments.jsp"),
 
-	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/candidacy/publicProgram/editPhdIndividualProgramProcessInformation.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/candidacy/publicProgram/editPhdIndividualProgramProcessInformation.jsp"),
 
-	@Forward(name = "editCandidacyGuidings", path = "/phd/candidacy/publicProgram/editCandidacyGuidings.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "editCandidacyGuidings", path = "/phd/candidacy/publicProgram/editCandidacyGuidings.jsp"),
 
-	@Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/editQualifications.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/editQualifications.jsp"),
 
-	@Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/createRefereeLetter.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/createRefereeLetter.jsp"),
 
-	@Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/createRefereeLetterSuccess.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/createRefereeLetterSuccess.jsp"),
 
-	@Forward(name = "editCandidacyReferees", path = "/phd/candidacy/publicProgram/editCandidacyReferees.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "editCandidacyReferees", path = "/phd/candidacy/publicProgram/editCandidacyReferees.jsp"),
 
-	@Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/uploadPhoto.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/uploadPhoto.jsp"),
 
-	@Forward(name = "out.of.candidacy.period", path = "/phd/candidacy/publicProgram/outOfCandidacyPeriod.jsp", extend = "definition.candidacy.process"),
+	@Forward(name = "out.of.candidacy.period", path = "/phd/candidacy/publicProgram/outOfCandidacyPeriod.jsp"),
 
-	@Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/validateCandidacy.jsp", extend = "definition.candidacy.process")
+	@Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/validateCandidacy.jsp")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
