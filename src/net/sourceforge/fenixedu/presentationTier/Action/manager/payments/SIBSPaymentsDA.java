@@ -185,7 +185,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 		try {
 		    processCode(detailLine, person.getIdInternal(), result);
 		} catch (Exception e) {
-		    result.addMessage("error.processException", detailLine.getCode());
+		    result.addMessage("error.manager.SIBS.processException", detailLine.getCode(), e.getMessage());
 		}
 	    }
 
