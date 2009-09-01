@@ -31,7 +31,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
     @Override
     public String getJobName() {
-	return "Listagem de responsáveis e cargas horárias de unidades curriculares";
+	return "Listagem de informação sobre disciplinas";
     }
 
     @Override
@@ -41,20 +41,25 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
     @Override
     protected String getPrefix() {
-	return "carga_horaria_e_responsáveis";
+	return "info_disciplinas";
     }
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("Tipo Curso");
 	spreadsheet.setHeader("Nome Curso");
+	spreadsheet.setHeader("Sigla Curso");
 	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("Semestre");
+	spreadsheet.setHeader("Código Disciplina Competência");
+	spreadsheet.setHeader("Código Disciplina de Execução");
 	spreadsheet.setHeader("Ano Curricular");
+	spreadsheet.setHeader("Ano Lectivo");
+	spreadsheet.setHeader("Semestre Lectivo");
 	spreadsheet.setHeader("Grupo");
 	spreadsheet.setHeader("Responsaveis");
 	spreadsheet.setHeader("Departamento");
 	spreadsheet.setHeader("Area Cientifica");
+	spreadsheet.setHeader("Créditos ECTS");
 	spreadsheet.setHeader("Carga Horaria Total");
 	spreadsheet.setHeader("Carga Horaria de Contacto");
 	spreadsheet.setHeader("Carga Trabalho Autonomo");
@@ -107,32 +112,37 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	final String scientificArea = findScientificAres(curricularCourse);
 	final CompetenceCourseLoad competenceCourseLoad = findCompetenceCourseLoad(curricularCourse, executionPeriod);
 
-	row.setCell(0, degree.getDegreeType().getLocalizedName());
-	row.setCell(1, degree.getNome());
-	row.setCell(2, curricularCourse.getName());
+	row.setCell(degree.getDegreeType().getLocalizedName());
+	row.setCell(degree.getNome());
+	row.setCell(degree.getSigla());
+	row.setCell(curricularCourse.getName());
+	row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getIdInternal() : null);
+	row.setCell(executionCourse.getIdInternal());
+	row.setCell(executionCourse.getExecutionYear().getName());
+	row.setCell(degreeModuleScope.getCurricularYear().toString());
 	if (curricularCourse.isAnual()) {
-	    row.setCell(3, " ");
+	    row.setCell(" ");
 	} else {
-	    row.setCell(3, degreeModuleScope.getCurricularSemester().toString());
+	    row.setCell(degreeModuleScope.getCurricularSemester().toString());
 	}
-	row.setCell(4, degreeModuleScope.getCurricularYear().toString());
-	row.setCell(5, group);
-	row.setCell(6, responsibleTeachers);
-	row.setCell(7, department);
-	row.setCell(8, scientificArea);
+	row.setCell(group);
+	row.setCell(responsibleTeachers);
+	row.setCell(department);
+	row.setCell(scientificArea);
+	row.setCell(printDouble(curricularCourse.getEctsCredits(executionPeriod)));
 
-	row.setCell(9, findTotalCourseLoad(competenceCourseLoad, executionCourse, null).toString());
-	row.setCell(10, findCourseLoadContact(competenceCourseLoad, executionCourse, null).toString());
-	row.setCell(11, findAutonomousCourseLoad(competenceCourseLoad).toString());
-	row.setCell(12, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TEORICA).toString());
-	row.setCell(13, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.PRATICA).toString());
-	row.setCell(14, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TEORICO_PRATICA).toString());
-	row.setCell(15, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.LABORATORIAL).toString());
-	row.setCell(16, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.SEMINARY).toString());
-	row.setCell(17, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.PROBLEMS).toString());
-	row.setCell(18, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.FIELD_WORK).toString());
-	row.setCell(19, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TRAINING_PERIOD).toString());
-	row.setCell(20, findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION).toString());
+	row.setCell(printBigDecimal(findTotalCourseLoad(competenceCourseLoad, executionCourse, null)));
+	row.setCell(printBigDecimal(findCourseLoadContact(competenceCourseLoad, executionCourse, null)));
+	row.setCell(printBigDecimal(findAutonomousCourseLoad(competenceCourseLoad)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TEORICA)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.PRATICA)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TEORICO_PRATICA)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.LABORATORIAL)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.SEMINARY)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.PROBLEMS)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.FIELD_WORK)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TRAINING_PERIOD)));
+	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION)));
     }
 
     private CompetenceCourseLoad findCompetenceCourseLoad(final CurricularCourse curricularCourse,
@@ -293,5 +303,13 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	    }
 	}
 	return total;
+    }
+
+    private String printDouble(Double value) {
+	return value == null ? "" : value.toString().replace('.', ',');
+    }
+
+    private String printBigDecimal(BigDecimal value) {
+	return value == null ? "" : value.toPlainString().replace('.', ',');
     }
 }
