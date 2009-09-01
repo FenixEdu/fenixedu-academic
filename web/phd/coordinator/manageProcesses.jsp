@@ -29,7 +29,7 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<jsp:include page="/phd/coordinator/alertMessagesNotifier.jsp?global=true" />
+<jsp:include page="/phd/alertMessagesNotifier.jsp?global=true" />
 
 <%--  ### End Of Context Information  ### --%>
 

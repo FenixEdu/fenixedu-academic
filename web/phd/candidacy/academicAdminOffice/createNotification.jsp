@@ -33,7 +33,7 @@
   <tr style="vertical-align: top;">
     <td style="width: 55%">
     	<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
+		<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>

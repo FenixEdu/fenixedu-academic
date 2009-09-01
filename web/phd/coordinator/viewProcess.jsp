@@ -35,14 +35,14 @@
 <jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
-<jsp:include page="/phd/academicAdminOffice/alertMessagesNotifier.jsp?global=false" />
+<jsp:include page="/phd/alertMessagesNotifier.jsp?global=false" />
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
 <strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
 <table>
   <tr>
     <td>
-		<fr:view schema="Coordinator.PhdIndividualProgramProcess.view" name="process">
+		<fr:view schema="PhdIndividualProgramProcess.view" name="process">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop10" />
 			</fr:layout>

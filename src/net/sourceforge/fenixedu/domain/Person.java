@@ -3324,4 +3324,9 @@ public class Person extends Person_Base {
 	}
 	return false;
     }
+
+    public boolean isPhdStudent() {
+	return hasAnyPhdIndividualProgramProcesses();
+    }
+
 }

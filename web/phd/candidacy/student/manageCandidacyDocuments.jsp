@@ -1,14 +1,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+
+<logic:present role="STUDENT">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
-<h2><bean:message key="label.phd.ratifyCandidacy" bundle="PHD_RESOURCES" /></h2>
+<em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
+<h2><bean:message key="label.phd.candidacy.academicAdminOffice.manageCandidacyDocuments" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
 
@@ -33,7 +35,7 @@
   <tr style="vertical-align: top;">
     <td style="width: 55%">
     	<strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="process" property="individualProgramProcess">
+		<fr:view schema="PhdIndividualProgramProcess.view.simple" name="process" property="individualProgramProcess">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>
@@ -41,7 +43,7 @@
 	</td>
     <td>
 	    <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
-		<fr:view schema="PhdProgramCandidacyProcess.view" name="process">
+		<fr:view schema="PhdProgramCandidacyProcess.view.simple" name="process">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>
@@ -50,20 +52,20 @@
   </tr>
 </table>
 
-
 <%--  ### End Of Context Information  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
 <br/>
 
 <%--  ### Documents  ### --%>
-<strong><bean:message  key="label.phd.candidacy.review.documents" bundle="PHD_RESOURCES"/></strong>
-<br/>
-<logic:empty name="process" property="candidacyReviewDocuments">
+<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
+<logic:empty name="process" property="documents">
+	<br/>
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
-<logic:notEmpty name="process" property="candidacyReviewDocuments">
-	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
+
+<logic:notEmpty name="process" property="documents">	
+	<fr:view schema="PhdProgramCandidacyProcessDocument.view" name="process" property="documents">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
@@ -71,9 +73,17 @@
 			<fr:property name="key(view)" value="label.view"/>
 			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 			<fr:property name="order(view)" value="0" />
-			<fr:property name="module(view)" value="" />
 			<fr:property name="hasContext(view)" value="true" />
+			<fr:property name="contextRelative(view)" value="false" />
 			
+			<%-- 	
+			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
+			<fr:property name="key(delete)" value="label.delete"/>
+			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
+			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />
+			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+			<fr:property name="order(delete)" value="1" />
+			--%>
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
 	</fr:view>
@@ -81,31 +91,5 @@
 
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
-
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<fr:form action="<%= "/phdProgramCandidacyProcess.do?method=ratifyCandidacy&processId=" + processId.toString() %>" encoding="multipart/form-data">
-  	
-	<fr:edit id="ratifyCandidacyBean"
-	name="ratifyCandidacyBean"
-	schema="RatifyCandidacyBean.edit">
-
-	<fr:layout name="layout">
-		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=prepareRatifyCandidacyInvalid" />
-	</fr:layout>
-</fr:edit>
-	
-<%--  ### Buttons (e.g. Submit)  ### --%>
-<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-<%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</fr:form>
-
-<br/><br/>
-
-
-<%--  ### End of Operation Area  ### --%>
-
 
 </logic:present>

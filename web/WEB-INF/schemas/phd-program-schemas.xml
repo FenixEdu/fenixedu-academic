@@ -29,10 +29,6 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
-	<slot name="whenCreated" />
-	<slot name="createdBy" />
-	<slot name="whenUpdated" />
-	<slot name="updatedBy" />
 </schema>
 
 <schema name="PhdIndividualProgramProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
@@ -43,7 +39,7 @@
 	<slot name="activeState"/>
 </schema>
 
-<schema name="Coordinator.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+<schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="processNumber" />
 	<slot name="person.name">
 		<property name="classes" value="bold"/>
@@ -57,6 +53,10 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
+	<slot name="whenCreated" />
+	<slot name="createdBy" />
+	<slot name="whenUpdated" />
+	<slot name="updatedBy" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
