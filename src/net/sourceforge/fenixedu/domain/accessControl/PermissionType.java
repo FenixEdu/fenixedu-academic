@@ -67,11 +67,16 @@ public enum PermissionType {
 	    };
 	}
     },
-    
+
     MOVE_CURRICULUM_LINES_WITHOUT_RULES() {
 	@Override
 	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
-	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
+	    return new HashSet<AdministrativeOfficeType>() {
+		{
+		    add(AdministrativeOfficeType.DEGREE);
+		    add(AdministrativeOfficeType.MASTER_DEGREE);
+		}
+	    };
 	}
     },
 
