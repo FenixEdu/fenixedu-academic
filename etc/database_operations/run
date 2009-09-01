@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Payment Checked Column to Individual Candidacy Process table"  addToIndividualCandidacyProcessPaymentCheckedColumn.sql

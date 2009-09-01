@@ -40,6 +40,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	activities.add(new EditDocuments());
 	activities.add(new ChangeProcessCheckedState());
 	activities.add(new RevokeDocumentFile());
+	activities.add(new ChangePaymentCheckedState());
 
     }
 
@@ -469,6 +470,23 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
+	    return process;
+	}
+    }
+
+    static private class ChangePaymentCheckedState extends Activity<DegreeTransferIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
 	    return process;
 	}
     }

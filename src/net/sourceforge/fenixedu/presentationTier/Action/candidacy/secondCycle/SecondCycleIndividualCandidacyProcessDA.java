@@ -48,7 +48,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
 	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
 	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
-	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp") })
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
+	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -308,4 +309,11 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	return mapping.findForward("change-process-checked-state");
     }
 
+    public ActionForward prepareExecuteChangePaymentCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("change-payment-checked-state");
+    }
 }

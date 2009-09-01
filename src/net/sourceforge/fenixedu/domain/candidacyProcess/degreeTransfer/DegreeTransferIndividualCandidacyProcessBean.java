@@ -41,6 +41,9 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	setPrecedentDegreeInformation(precedentDegreeInformation);
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
+	setProcessChecked(process.getProcessChecked());
+	setPaymentChecked(process.getPaymentChecked());
+
     }
 
     @Override

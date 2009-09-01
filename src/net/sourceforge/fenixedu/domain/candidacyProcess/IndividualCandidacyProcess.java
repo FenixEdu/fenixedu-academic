@@ -267,13 +267,13 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return null;
     }
 
-    public static IndividualCandidacyProcess findIndividualCandidacyProcessByCode(
-	    Class<? extends IndividualCandidacyProcess> individualCandidacyProcessClass, final String processCode) {
+    public static <T extends IndividualCandidacyProcess> T findIndividualCandidacyProcessByCode(
+	    Class<T> individualCandidacyProcessClass, final String processCode) {
 	Set<IndividualCandidacyProcess> candidacies = RootDomainObject.readAllDomainObjects(individualCandidacyProcessClass);
 
 	for (IndividualCandidacyProcess process : candidacies) {
 	    if (processCode.equals(process.getProcessCode()))
-		return process;
+		return (T) process;
 	}
 
 	return null;

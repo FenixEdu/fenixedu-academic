@@ -51,6 +51,9 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
 	setIstStudentNumber(process.getCandidacy().getFormerStudentNumber());
+	setProcessChecked(process.getProcessChecked());
+	setPaymentChecked(process.getPaymentChecked());
+
     }
 
     public SecondCycleCandidacyProcess getCandidacyProcess() {

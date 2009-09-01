@@ -585,6 +585,19 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    public ActionForward executeChangePaymentCheckedState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "ChangePaymentCheckedState", getIndividualCandidacyProcessBean());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("change-payment-checked-state");
+	}
+
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
     protected void copyPrecedentBeanToCandidacyInformationBean(CandidacyPrecedentDegreeInformationBean precedentBean,
 	    CandidacyInformationBean informationBean) {
 	informationBean.setInstitutionName(precedentBean.getInstitutionName());

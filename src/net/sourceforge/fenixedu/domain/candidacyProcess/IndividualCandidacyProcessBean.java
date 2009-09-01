@@ -57,6 +57,8 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     protected Boolean utlStudent;
 
+    private Boolean paymentChecked;
+
     public IndividualCandidacyProcessBean() {
 	setFormationConcludedBeanList(new ArrayList<FormationBean>());
 	setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
@@ -319,5 +321,13 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public void setUtlStudent(Boolean utlStudent) {
 	this.utlStudent = utlStudent;
+    }
+
+    public Boolean getPaymentChecked() {
+	return this.paymentChecked;
+    }
+
+    public void setPaymentChecked(Boolean value) {
+	this.paymentChecked = value;
     }
 }

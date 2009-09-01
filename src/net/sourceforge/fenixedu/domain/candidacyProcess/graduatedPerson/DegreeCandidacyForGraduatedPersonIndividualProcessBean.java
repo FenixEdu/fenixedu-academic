@@ -35,6 +35,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
+	setProcessChecked(process.getProcessChecked());
+	setPaymentChecked(process.getPaymentChecked());
     }
 
     @Override
