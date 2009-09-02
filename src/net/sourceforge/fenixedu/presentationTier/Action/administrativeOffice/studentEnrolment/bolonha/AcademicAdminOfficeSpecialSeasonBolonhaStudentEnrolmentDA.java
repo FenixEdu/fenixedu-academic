@@ -52,7 +52,8 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
 
-    private void addDebtsWarningMessages(final Student student, final HttpServletRequest request) {
+    @Override
+    protected void addDebtsWarningMessages(final Student student, final HttpServletRequest request) {
 
 	if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student)) {
 	    addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");

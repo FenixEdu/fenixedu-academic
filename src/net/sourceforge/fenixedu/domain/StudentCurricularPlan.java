@@ -1776,11 +1776,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return false;
     }
 
-    final public boolean hasAnyNotPayedGratuityEventsForPreviousYears() {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    /*
+     * Check payed gratuity events until given execution year (exclusive) 
+     */
+    final public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
 
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
-	    if (gratuityEvent.getExecutionYear() != currentExecutionYear && gratuityEvent.isInDebt()) {
+	    if (gratuityEvent.getExecutionYear().isBefore(limitExecutionYear) && gratuityEvent.isInDebt()) {
 		return true;
 	    }
 	}

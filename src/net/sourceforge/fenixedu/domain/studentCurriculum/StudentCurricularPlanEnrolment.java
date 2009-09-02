@@ -72,9 +72,7 @@ abstract public class StudentCurricularPlanEnrolment {
 	    return;
 	}
 
-	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
-	}
+	checkDebts();
 
 	if (isResponsiblePersonAcademicAdminOffice()) {
 	    assertAcademicAdminOfficePreConditions();
@@ -87,6 +85,12 @@ abstract public class StudentCurricularPlanEnrolment {
 	}
     }
 
+    protected void checkDebts() {
+	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+	}
+    }
+
     protected void assertAcademicAdminOfficePreConditions() {
 
 	checkEnrolmentWithoutRules();
@@ -94,13 +98,13 @@ abstract public class StudentCurricularPlanEnrolment {
 	if (updateRegistrationAfterConclusionProcessPermissionEvaluated()) {
 	    return;
 	}
-	
+
 	if (!getRegistration().hasActiveLastState(getExecutionSemester())) {
 	    throw new DomainException("error.StudentCurricularPlan.registration.is.not.active.for.semester",
 		    getExecutionSemester().getQualifiedName());
 	}
     }
-    
+
     protected boolean updateRegistrationAfterConclusionProcessPermissionEvaluated() {
 	final AdministrativeOfficePermission registrationPermission = getUpdateRegistrationAfterConclusionProcessPermission();
 	if (registrationPermission != null) {
@@ -116,7 +120,7 @@ abstract public class StudentCurricularPlanEnrolment {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }
 

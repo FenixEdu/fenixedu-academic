@@ -925,9 +925,9 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    private boolean isAnyTuitionInDebt() {
+    private boolean isAnyTuitionInDebt(final ExecutionYear executionYear) {
 	for (final Registration registration : super.getRegistrations()) {
-	    if (!registration.getPayedTuition()) {
+	    if (registration.hasAnyNotPayedGratuityEventsForPreviousYears(executionYear)) {
 		return true;
 	    }
 	}
@@ -936,16 +936,17 @@ public class Student extends Student_Base {
     }
 
     public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt() {
-	return isAnyTuitionInDebt() || isAnyAdministrativeOfficeFeeAndInsuranceInDebt();
+	return isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(ExecutionYear.readCurrentExecutionYear());
     }
 
-    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebt() {
-	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+    public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
+	return isAnyTuitionInDebt(executionYear) || isAnyAdministrativeOfficeFeeAndInsuranceInDebt(executionYear);
+    }
 
+    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
 	for (final Event event : getPerson().getEvents()) {
 	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent
-		    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() != currentExecutionYear
-		    && event.isOpen()) {
+		    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() != executionYear && event.isOpen()) {
 		return true;
 	    }
 	}

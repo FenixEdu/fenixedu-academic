@@ -35,6 +35,13 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
 
     @Override
+    protected void checkDebts() {
+	if (getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(getExecutionYear())) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
+	}
+    }
+
+    @Override
     protected void assertAcademicAdminOfficePreConditions() {
 
 	checkEnrolmentWithoutRules();

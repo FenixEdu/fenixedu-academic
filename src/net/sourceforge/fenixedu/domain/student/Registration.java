@@ -2978,9 +2978,9 @@ public class Registration extends Registration_Base {
 	return false;
     }
 
-    private boolean hasAnyNotPayedGratuityEventsForPreviousYears() {
+    public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
 	for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    if (studentCurricularPlan.hasAnyNotPayedGratuityEventsForPreviousYears()) {
+	    if (studentCurricularPlan.hasAnyNotPayedGratuityEventsForPreviousYears(limitExecutionYear)) {
 		return true;
 	    }
 	}
@@ -3188,7 +3188,7 @@ public class Registration extends Registration_Base {
     }
 
     final public Boolean getPayedTuition() {
-	return !hasAnyNotPayedGratuityEventsForPreviousYears();
+	return !hasAnyNotPayedGratuityEventsForPreviousYears(ExecutionYear.readCurrentExecutionYear());
     }
 
     @Deprecated

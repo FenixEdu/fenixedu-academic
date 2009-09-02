@@ -32,6 +32,8 @@ public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends Aca
 	request.setAttribute("bolonhaStudentEnrollmentBean", new ImprovementBolonhaStudentEnrolmentBean(studentCurricularPlan,
 		executionSemester));
 
+	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), request);
+
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
 
