@@ -35,28 +35,32 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     }
 
     public StandaloneEnrolmentGratuityPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    BigDecimal ectsForYear) {
+	    BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
 	this();
-	init(startDate, endDate, serviceAgreementTemplate, ectsForYear);
+	init(startDate, endDate, serviceAgreementTemplate, ectsForYear, gratuityFactor, ectsFactor);
     }
 
     private void init(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
-	    BigDecimal ectsForYear) {
+	    BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
 
 	super.init(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, EventType.STANDALONE_ENROLMENT_GRATUITY, startDate, endDate,
 		serviceAgreementTemplate);
 
-	checkParameters(ectsForYear);
+	checkParameters(ectsForYear, gratuityFactor, ectsFactor);
 
 	super.setEctsForYear(ectsForYear);
+	super.setGratuityFactor(gratuityFactor);
+	super.setEctsFactor(ectsFactor);
 
     }
 
-    private void checkParameters(BigDecimal ectsForYear) {
-	if (ectsForYear == null) {
-	    throw new DomainException(
-		    "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsForYear.cannot.be.null");
-	}
+    private void checkParameters(BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
+
+	check(ectsForYear, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsForYear.cannot.be.null");
+
+	check(gratuityFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.gratuity.cannot.be.null");
+
+	check(ectsFactor, "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsFactor.cannot.be.null");
 
     }
 
@@ -82,7 +86,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
     /**
      * <pre>
-     * Formula for students in empty degrees: 0.5 x TotalGratuity x (1 + EnroledEcts / TotalEctsForYear)
+     * Formula for students in empty degrees: GratuityFactor x TotalGratuity x (EctsFactor + EnroledEcts / TotalEctsForYear)
      * Formula for students enroled in normal degrees: TotalGratuity x (EnroledEcts / TotalEctsForYear)
      * </pre>
      * 
@@ -101,8 +105,8 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
 	final BigDecimal creditsProporcion = enroledEcts.divide(getEctsForYear());
 
-	if (gratuityEvent.getDegree().isEmpty()) {
-	    return degreeGratuityAmount.multiply(new BigDecimal("0.5")).multiply(BigDecimal.ONE.add(creditsProporcion));
+	if (gratuityEvent.getDegree().isEmpty() || gratuityEvent.getDegree().isDEA()) {
+	    return degreeGratuityAmount.multiply(getGratuityFactor()).multiply(getEctsFactor().add(creditsProporcion));
 	} else {
 	    return degreeGratuityAmount.multiply(creditsProporcion);
 	}
@@ -172,12 +176,34 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 
     @Override
     public String getFormulaDescription() {
-	return MessageFormat.format(super.getFormulaDescription(), getEctsForYear());
+	return MessageFormat.format(super.getFormulaDescription(), getGratuityFactor().toPlainString(), getEctsFactor()
+		.toPlainString(), getEctsForYear().toPlainString());
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear) {
+    public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear, final BigDecimal gratuityFactor,
+	    final BigDecimal ectsFactor) {
 	deactivate();
-	return new StandaloneEnrolmentGratuityPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), ectsForYear);
+	return new StandaloneEnrolmentGratuityPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), ectsForYear,
+		gratuityFactor, ectsFactor);
     }
+
+    @Override
+    public void setEctsForYear(BigDecimal ectsForYear) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsForYear");
+    }
+
+    @Override
+    public void setGratuityFactor(BigDecimal gratuityFactor) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.gratuityFactor");
+    }
+
+    @Override
+    public void setEctsFactor(BigDecimal ectsFactor) {
+	throw new DomainException(
+		"error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.cannot.modify.ectsFactor");
+    }
+
 }

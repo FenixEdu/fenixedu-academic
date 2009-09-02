@@ -567,7 +567,15 @@
 		<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<setter signature="edit(ectsForYear)"/>
+	<slot name="gratuityFactor">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<slot name="ectsFactor">
+		<property name="size" value="10"/>
+		<property name="maxLength" value="10"/>
+	</slot>
+	<setter signature="edit(ectsForYear,gratuityFactor,ectsFactor)"/>
 </schema>
 
 <schema name="StandaloneEnrolmentGratuityPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
@@ -682,9 +690,11 @@
 
 <schema name="CreateStandaloneEnrolmentGratuityPRBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean"
 	bundle="APPLICATION_RESOURCES">
-	<slot name="startDate" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean.startDate"/>
-	<slot name="ectsForYear" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean.ectsForYear"/>
-	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean.degreeCurricularPlans">
+	<slot name="startDate" />
+	<slot name="ectsForYear" />
+	<slot name="gratuityFactor" />
+	<slot name="ectsFactor" />
+	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.GraduationDegreeCurricularPlansProvider" />
 		<property name="format" value="${presentationName}" />
 		<property name="eachSchema" value="DegreeCurricularPlan.view"/>

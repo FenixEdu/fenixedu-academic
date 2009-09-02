@@ -44,7 +44,8 @@ public class PostingRulesManager {
 		final ServiceAgreementTemplate serviceAgreementTemplate = degreeCurricularPlan.getServiceAgreementTemplate();
 		deactivateExistingPostingRule(EventType.STANDALONE_ENROLMENT_GRATUITY, bean.getStartDate(),
 			serviceAgreementTemplate);
-		new StandaloneEnrolmentGratuityPR(bean.getStartDate(), null, serviceAgreementTemplate, bean.getEctsForYear());
+		new StandaloneEnrolmentGratuityPR(bean.getStartDate(), null, serviceAgreementTemplate, bean.getEctsForYear(),
+			bean.getGratuityFactor(), bean.getEctsFactor());
 	    }
 	} else {
 	    throw new RuntimeException("Unexpected rule type for gratuity posting rule");

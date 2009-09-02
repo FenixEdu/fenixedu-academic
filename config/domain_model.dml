@@ -2064,6 +2064,8 @@ class DomainObject {
 			
 			class accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR extends accounting.postingRules.GenericSingleEntryTypePR {
 				BigDecimal ectsForYear;
+				BigDecimal gratuityFactor;
+				BigDecimal ectsFactor;
 			}
 			
 			class accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends accounting.postingRules.GenericSingleEntryTypePR {

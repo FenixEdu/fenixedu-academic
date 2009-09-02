@@ -24,7 +24,7 @@
 		</ul>
 	</logic:messagesPresent>
 
-
+	<strong><bean:message  key="label.StandaloneEnrolmentGratuityPR.generic.formula" bundle="APPLICATION_RESOURCES"/></strong>
 
 	<fr:edit id="createPostingRuleBean" name="createPostingRuleBean"
 		schema="CreateStandaloneEnrolmentGratuityPRBean.edit"
