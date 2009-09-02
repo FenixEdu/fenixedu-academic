@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -22,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
@@ -76,11 +79,21 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 			}
 
-			if ((registration.isActive() || registration.isConcluded())
+			LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
+			for (RegistrationState state : registration.getRegistrationStates()) {
+			    if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateMidnight())) {
+				states.add(state);
+			    }
+			}
+			Collections.sort(states, RegistrationState.DATE_COMPARATOR);
+			RegistrationStateType lastState = states.isEmpty() ? RegistrationStateType.REGISTERED : states.getLast()
+				.getStateType();
+
+			if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
 			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, true,
 				    registrationConclusionBean.getConclusionDate());
-			} else if ((registration.isActive() || registration.isConcluded())
+			} else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
 			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null);
 			}
