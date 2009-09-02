@@ -120,10 +120,7 @@ Por indicação do Conselho de Gestão os seguintes cursos não vão ter inscrições o
 <strong>- </strong>Mestrado Bolonha em Matemática e Aplicações 
 </p>
 <p class="indent1">
-<strong>- </strong>Mestrado Bolonha em Bioengenharia e Nanossistemas 
-</p>
-<p class="indent1">
-<strong>- </strong>Mestrado Bolonha em Biotecnologia
+<strong>- </strong>Mestrado Bolonha em Urbanismo e Ordenamento do Território 
 </p>
 
 </div>
