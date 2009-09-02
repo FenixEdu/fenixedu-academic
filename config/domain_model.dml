@@ -1676,6 +1676,7 @@ class DomainObject {
 		DateTime eventStateDate;
 		EventType eventType;
 		DateTime whenOccured;
+		String createdBy;
 		LocalDate whenSentLetter;
 	}
 

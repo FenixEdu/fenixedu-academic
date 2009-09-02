@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -33,8 +34,11 @@ public abstract class Event extends Event_Base {
 
     protected Event() {
 	super();
+
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenOccured(new DateTime());
+	super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getIstUsername() : null);
+
 	changeState(EventState.OPEN, new DateTime());
     }
 
@@ -192,6 +196,11 @@ public abstract class Event extends Event_Base {
     @Override
     public void setWhenOccured(DateTime whenOccured) {
 	throw new DomainException("error.accounting.Event.cannot.modify.occuredDateTime");
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+	throw new DomainException("error.accounting.Event.cannot.modify.createdBy");
     }
 
     @Override
