@@ -6720,6 +6720,7 @@ class PendingRequest extends DomainObject{
 }
 
 class PendingRequestParameter extends DomainObject{
+	Boolean attribute;
 	String parameterKey;
 	String parameterValue;
 }

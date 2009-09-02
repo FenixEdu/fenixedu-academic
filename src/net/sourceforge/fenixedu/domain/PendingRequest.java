@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.smartcardio.ATR;
 
 import org.joda.time.DateTime;
 
@@ -26,25 +25,29 @@ public class PendingRequest extends PendingRequest_Base {
 	    setPost(true);
 	}
 	setUrl(request.getContextPath() + request.getServletPath());
+	
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
 	    addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key)));
 	}
 	
-	/*final Map<String, Object> attributeMap = new HashMap<String, Object>();
-	final Enumeration enumeration = request.getAttributeNames();
-	while (enumeration.hasMoreElements()) {
-	    final String attributeName = (String) enumeration.nextElement();
-	    final String attribute = (String) request.getAttribute(attributeName);
-
-	    if (shouldBeAdded(attribute)) {
-		addPendingRequestParameter(new PendingRequestParameter(attributeName, attribute));
+	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements() ;){
+	    String key = e.nextElement();
+	    Object object = request.getAttribute(key);
+	    if (object.getClass().isArray()){
+		for(Object value : java.util.Arrays.asList(object)){
+		    PendingRequestParameter pendingRequestParameter = new PendingRequestParameter(key, (String) value);
+		    pendingRequestParameter.setAttribute(true);
+		    addPendingRequestParameter(pendingRequestParameter);
+		}
+	    }else{
+		addPendingRequestParameter(new PendingRequestParameter(key, (String) object));
 	    }
-	}*/
-	
+	    
+	}
 
     }
-    
+
     private boolean shouldBeAdded(Object attribute) {
 
 	if (attribute instanceof Collection) {
@@ -57,18 +60,10 @@ public class PendingRequest extends PendingRequest_Base {
 	}
 	return attribute instanceof Serializable;
     }
-    
-    public Map<String, Object> getRequestsParams() {
-	Map<String,Object> map = new HashMap<String, Object>();
-	for (PendingRequestParameter parameter : getPendingRequestParameter()){
-	    map.put(parameter.getParameterKey(), parameter.getParameterValue());
-	}
-	return map;
-    }
-    
+
     @Service
     public void delete() {
-	for (PendingRequestParameter pendingRequestParameter : getPendingRequestParameter()){
+	for (PendingRequestParameter pendingRequestParameter : getPendingRequestParameter()) {
 	    pendingRequestParameter.delete();
 	}
 	removeRootDomainObject();

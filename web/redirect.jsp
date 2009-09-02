@@ -30,37 +30,15 @@
 				<table>
 					<tr>
 						<td>
-							<bean:define id="redirectURL" name="REDIRECT_URL" type="java.lang.String"/>
-							<bean:define id="redirectMethod" name="ORIGINAL_METHOD" type="java.lang.String"/>
+							<bean:define id="redirectURL" name="url" type="java.lang.String"/>
+							<bean:define id="redirectMethod" name="method" type="java.lang.String"/>
 							<form method="<%= redirectMethod %>" action="<%= redirectURL %>">
-								<logic:present name="ORIGINAL_PARAMETER_MAP">
-									<% Set<Entry> entries = ((Map) request.getAttribute("ORIGINAL_PARAMETER_MAP")).entrySet(); %>
-									<% for (Iterator<Entry> iterator = entries.iterator(); iterator.hasNext(); ) {
-									    	Entry entry = iterator.next();
-											String key = (String) entry.getKey();
-											Object value = (Object) entry.getValue();
-											if(value.getClass().isArray()) {
-												Object[] vars = (Object[]) value;
-												for (Object v : vars) {
-												%>
-													<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= v.toString() %>"/>
-												<%
-												}
-											} else {
-									%>
-										<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value.toString() %>"/>
-									<% 		}
-										}
-									%>
-								</logic:present>
-
-<%-- 
-								<logic:iterate id="entry" name="ORIGINAL_ATTRIBUTE_MAP">
-									<bean:define id="key" name="entry" property="key" type="java.lang.String"/>
-									<bean:define id="value" name="entry" property="value"/>
-									<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value.toString() %>"/>
-								</logic:iterate>
- --%>
+							
+							<logic:iterate id="param" name="body_param_list">
+								<bean:define id="key" name="param" property="parameterKe" />
+								<bean:define id="value" name="param" property="parameterValue" />
+								<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value %>"/>
+							</logic:iterate>
 
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button">
 									<bean:message key="label.button.yes" bundle="GLOBAL_RESOURCES"/>

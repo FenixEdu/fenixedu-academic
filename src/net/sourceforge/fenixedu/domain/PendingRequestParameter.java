@@ -7,6 +7,7 @@ public class PendingRequestParameter extends PendingRequestParameter_Base {
         setRootDomainObject(RootDomainObject.getInstance());
         setParameterKey(key);
         setParameterValue(value);
+        setAttribute(false);
     }
 
     public void delete() {
