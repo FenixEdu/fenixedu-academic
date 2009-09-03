@@ -32,7 +32,7 @@
 						<td>
 							<bean:define id="redirectURL" name="url" type="java.lang.String"/>
 							<bean:define id="redirectMethod" name="method" type="java.lang.String"/>
-							<form method="<%= redirectMethod %>" action="<%= redirectURL %>">
+							<form method="post" action="<%= redirectURL %>">
 							
 							<logic:iterate id="param" name="body_param_list">
 								<bean:define id="key" name="param" property="parameterKey" />
