@@ -185,6 +185,30 @@
 				<bean:message key="label.viewProcesses" bundle="PHD_RESOURCES" />
 			</html:link>
 		</li>
-
+		
+		<li class="navheader">
+			<bean:message key="title.applications" bundle="CANDIDATE_RESOURCES" />
+		</li>
+		<li>
+			<html:link page="/caseHandlingDegreeChangeCandidacyProcess.do?method=intro">
+				<bean:message key="title.application.name.degreeChange" bundle="CANDIDATE_RESOURCES" />
+			</html:link>		
+		</li>
+		<li>
+			<html:link page="/caseHandlingDegreeTransferCandidacyProcess.do?method=intro">
+				<bean:message key="title.application.name.degreeTransfer" bundle="CANDIDATE_RESOURCES" />
+			</html:link>		
+		</li>
+		<li>
+			<html:link page="/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro">
+				<bean:message key="title.application.name.degreeCandidacyForGraduatedPerson" bundle="CANDIDATE_RESOURCES" />
+			</html:link>		
+		</li>
+		<li>
+			<html:link page="/caseHandlingSecondCycleCandidacyProcess.do?method=intro">
+				<bean:message key="title.application.name.secondCycle" bundle="CANDIDATE_RESOURCES" />
+			</html:link>		
+		</li>
+		
 	</ul> 
 </logic:present>

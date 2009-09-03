@@ -1848,3 +1848,20 @@
 <schema name="PublicIndividualCandidacyProcess.sibs.payment.details.view" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode" bundle="CANDIDATE_RESOURCES" >
 	<slot name="code" key="label.sibs.reference"/>
 </schema>
+
+
+<schema name="ChooseDegreeBean.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="degree" layout="menu-select-postback" key="label.degree.name" >
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeChangeIndividualCandidacyDegreesProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="degreeType, name"/>
+    </slot>
+</schema>
+
+<schema name="SecondCycleChooseDegreeBean.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="degree" layout="menu-select-postback" key="label.degree.name" >
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleIndividualCandidacyDegreesProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="degreeType, name"/>
+    </slot>
+</schema>

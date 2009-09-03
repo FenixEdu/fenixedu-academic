@@ -402,4 +402,25 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return result;
     }
 
+    public static class ChooseDegreeBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private DomainReference<Degree> degree;
+
+	public ChooseDegreeBean() {
+
+	}
+
+	public Degree getDegree() {
+	    return this.degree != null ? this.degree.getObject() : null;
+	}
+
+	public void setDegree(Degree degree) {
+	    this.degree = degree != null ? new DomainReference<Degree>(degree) : null;
+	}
+    }
+
 }
