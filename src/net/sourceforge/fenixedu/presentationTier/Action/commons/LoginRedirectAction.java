@@ -33,7 +33,7 @@ public class LoginRedirectAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 	final PendingRequest pendingRequest = PendingRequest.fromExternalId(request.getParameter("pendingRequest"));
-	final String url = pendingRequest.getUrl();
+	String url = pendingRequest.getUrl();
 
 	final List<PendingRequestParameter> attributes = new ArrayList<PendingRequestParameter>();
 	for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()){
