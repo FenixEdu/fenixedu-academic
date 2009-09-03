@@ -23,11 +23,13 @@ public class PendingRequest extends PendingRequest_Base {
 	final String queryString = request.getQueryString();
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
-	    final int paramIndex = queryString.indexOf(key);
-	    final int nextChar = paramIndex + key.length();
-	    final boolean isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
-			&& (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
-	    addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key), !isParam));
+	    if (key != null) {
+		final int paramIndex = queryString.indexOf(key);
+		final int nextChar = paramIndex + key.length();
+		final boolean isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
+				&& (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
+		addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key), !isParam));
+	    }
 	}
 
 	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();) {
