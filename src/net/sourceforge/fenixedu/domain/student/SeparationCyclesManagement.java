@@ -620,7 +620,8 @@ public class SeparationCyclesManagement {
     }
 
     private void createAdministrativeOfficeFeeAndInsurance(final StudentCurricularPlan newStudentCurricularPlan) {
-	if (!newStudentCurricularPlan.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(getExecutionYear())) {
+	if (!newStudentCurricularPlan.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(getExecutionYear())
+		&& newStudentCurricularPlan.hasEnrolments(getExecutionYear())) {
 	    new AccountingEventsManager().createAdministrativeOfficeFeeAndInsuranceEvent(newStudentCurricularPlan,
 		    getExecutionYear(), false);
 	}
