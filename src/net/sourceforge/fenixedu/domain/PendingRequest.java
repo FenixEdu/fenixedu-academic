@@ -23,7 +23,6 @@ public class PendingRequest extends PendingRequest_Base {
 	final String queryString = request.getQueryString();
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
-	    System.out.println("Param: " + key);
 	    final int paramIndex = queryString.indexOf(key);
 	    final int nextChar = paramIndex + key.length();
 	    final boolean isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
@@ -33,7 +32,6 @@ public class PendingRequest extends PendingRequest_Base {
 
 	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();) {
 	    String key = e.nextElement();
-	    System.out.println("Attribute: " + key);
 	    Object object = request.getAttribute(key);
 	    if (object.getClass().isArray()) {
 		for (Object value : java.util.Arrays.asList(object)) {
