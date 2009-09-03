@@ -19,31 +19,34 @@ public class PendingRequest extends PendingRequest_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGenerationDate(new DateTime());
-	if (request.getMethod().equalsIgnoreCase("GET")){
+	if (request.getMethod().equalsIgnoreCase("GET")) {
 	    setPost(false);
-	}else{
+	} else {
 	    setPost(true);
 	}
 	setUrl(request.getContextPath() + request.getServletPath());
-	
+
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
 	    addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key)));
 	}
-	
-	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements() ;){
+
+	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();) {
 	    String key = e.nextElement();
 	    Object object = request.getAttribute(key);
-	    if (object.getClass().isArray()){
-		for(Object value : java.util.Arrays.asList(object)){
+	    if (object.getClass().isArray()) {
+		for (Object value : java.util.Arrays.asList(object)) {
 		    PendingRequestParameter pendingRequestParameter = new PendingRequestParameter(key, (String) value);
 		    pendingRequestParameter.setAttribute(true);
 		    addPendingRequestParameter(pendingRequestParameter);
 		}
-	    }else{
+	    } else if (object instanceof String) {
 		addPendingRequestParameter(new PendingRequestParameter(key, (String) object));
+	    } else {
+		 // Not sure how to procede here...
+		
 	    }
-	    
+
 	}
 
     }
