@@ -32,29 +32,21 @@ public class LoginRedirectAction extends Action {
     
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	PendingRequest pendingRequest = PendingRequest.fromExternalId(request.getParameter("pendingRequest"));
+	final PendingRequest pendingRequest = PendingRequest.fromExternalId(request.getParameter("pendingRequest"));
+	final String url = pendingRequest.getUrl();
 
-	
-	String url = pendingRequest.getUrl();
-	if (pendingRequest.getPost()) {
-	    List<PendingRequestParameter> list = new ArrayList<PendingRequestParameter>();
-	    for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()){
-		if (pendingRequestParameter.getAttribute()){
-		    list.add(pendingRequestParameter);
-		}else{
-		    url = addToUrl(url, pendingRequestParameter.getParameterKey(), pendingRequestParameter.getParameterValue());
-		}
+	final List<PendingRequestParameter> attributes = new ArrayList<PendingRequestParameter>();
+	for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()){
+	    if (pendingRequestParameter.getAttribute()){
+		attributes.add(pendingRequestParameter);
+	    }else{
+		url = addToUrl(url, pendingRequestParameter.getParameterKey(), pendingRequestParameter.getParameterValue());
 	    }
-	    request.setAttribute("method", "post");
-	    request.setAttribute("url", url);
-	    request.setAttribute("body_param_list", list);
-	    
-	} else {
-	    request.setAttribute("method", "get");
-	    request.setAttribute("url", url);
-	    request.setAttribute("body_param_list", pendingRequest.getPendingRequestParameter());
 	}
+	request.setAttribute("url", url);
+	request.setAttribute("body_param_list", attributes);
 
+	request.setAttribute("method", pendingRequest.getPost() ? "post" : "get");
 	
 	pendingRequest.delete();
 	return mapping.findForward("show-redirect-page");

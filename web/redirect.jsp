@@ -35,7 +35,7 @@
 							<form method="<%= redirectMethod %>" action="<%= redirectURL %>">
 							
 							<logic:iterate id="param" name="body_param_list">
-								<bean:define id="key" name="param" property="parameterKe" />
+								<bean:define id="key" name="param" property="parameterKey" />
 								<bean:define id="value" name="param" property="parameterValue" />
 								<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= value %>"/>
 							</logic:iterate>
