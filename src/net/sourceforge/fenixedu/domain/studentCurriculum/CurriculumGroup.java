@@ -850,7 +850,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    if (curriculumModule.isConcluded(getApprovedCurriculumLinesLastExecutionYear()).isValid()
 		    && curriculumModule.hasAnyApprovedCurriculumLines()) {
 		final YearMonthDay curriculumModuleConclusionDate = curriculumModule.calculateConclusionDate();
-		if (result == null || curriculumModuleConclusionDate.isAfter(result)) {
+		if (curriculumModuleConclusionDate != null && (result == null || curriculumModuleConclusionDate.isAfter(result))) {
 		    result = curriculumModuleConclusionDate;
 		}
 	    }
