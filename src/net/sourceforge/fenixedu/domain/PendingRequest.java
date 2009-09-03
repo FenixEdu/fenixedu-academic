@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +26,7 @@ public class PendingRequest extends PendingRequest_Base {
 
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
-	    addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key)));
+	    addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key), false));
 	}
 
 	for (Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();) {
@@ -36,12 +34,11 @@ public class PendingRequest extends PendingRequest_Base {
 	    Object object = request.getAttribute(key);
 	    if (object.getClass().isArray()) {
 		for (Object value : java.util.Arrays.asList(object)) {
-		    PendingRequestParameter pendingRequestParameter = new PendingRequestParameter(key, (String) value);
-		    pendingRequestParameter.setAttribute(true);
+		    PendingRequestParameter pendingRequestParameter = new PendingRequestParameter(key, (String) value, true);
 		    addPendingRequestParameter(pendingRequestParameter);
 		}
 	    } else if (object instanceof String) {
-		addPendingRequestParameter(new PendingRequestParameter(key, (String) object));
+		addPendingRequestParameter(new PendingRequestParameter(key, (String) object, true));
 	    } else {
 		 // Not sure how to procede here...
 		
