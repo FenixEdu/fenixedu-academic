@@ -52,11 +52,13 @@
 
 		<fr:form id="supportForm" action="/exceptionHandlingAction.do?method=processSupportRequest" >
 
-			<fr:edit id="requestBean" name="requestBean" visible="false" />
 			<html:hidden property="userAgent" value="<%= request.getHeader("User-Agent") %>" />
 	
 			<bean:define id="schema" value="support.request.form" />
 
+<logic:present name="requestBean">
+<logic:notEmpty name="requestBean">
+			<fr:edit id="requestBean" name="requestBean" visible="false" />
 			<logic:notPresent name="exceptionInfo">
 				<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
 					<fr:layout name="tabular">
@@ -88,7 +90,9 @@
 					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
 			</logic:present>
-	
+</logic:notEmpty>
+</logic:present>
+
 			<p>
 				<html:submit>
 					<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
