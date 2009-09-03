@@ -90,14 +90,14 @@
 					<fr:destination name="invalid" path="/exceptionHandlingAction.do?method=supportFormFieldValidation" />
 				</fr:edit>
 			</logic:present>
-</logic:notEmpty>
-</logic:present>
-
 			<p>
 				<html:submit>
 					<bean:message key="label.submit.support.form" bundle="APPLICATION_RESOURCES" />
 				</html:submit>
 			</p>
+</logic:notEmpty>
+</logic:present>
+
 
 	
 		</fr:form>
