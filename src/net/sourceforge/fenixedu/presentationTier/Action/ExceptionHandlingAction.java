@@ -138,7 +138,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     protected final ActionForward prepareSendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
 
-	if (requestBean.getRequestContext() == null) {
+	if (requestBean != null && requestBean.getRequestContext() == null) {
 	    if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
 		requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
 			.getSelectedTopLevelContainer());
