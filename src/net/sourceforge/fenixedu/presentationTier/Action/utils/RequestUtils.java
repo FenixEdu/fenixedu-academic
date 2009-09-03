@@ -125,12 +125,12 @@ public class RequestUtils {
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	request.getSession(true);
-	PendingRequest pendingRequest = storeRequest(request);
+	PendingRequest pendingRequest = null; //storeRequest(request);
 	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),pendingRequest));
     }
     
     public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
-	return generateRedirectLink(url, pendingRequest.getExternalId());
+	return generateRedirectLink(url, pendingRequest == null ? null : pendingRequest.getExternalId());
     }
 
     public static String generateRedirectLink(String url, String externalId) {
