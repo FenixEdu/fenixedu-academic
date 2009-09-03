@@ -22,7 +22,7 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
     @Override
     public boolean isMember(Person person) {
 	
-        return (person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships());
+        return person != null && (person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships());
     }
 
     @Override
