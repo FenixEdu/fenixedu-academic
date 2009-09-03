@@ -24,10 +24,15 @@ public class PendingRequest extends PendingRequest_Base {
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
 	    if (key != null) {
-		final int paramIndex = queryString.indexOf(key);
-		final int nextChar = paramIndex + key.length();
-		final boolean isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
-				&& (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
+		final boolean isParam;
+		if (queryString == null) {
+		    isParam = false;
+		} else {
+		    final int paramIndex = queryString.indexOf(key);
+		    final int nextChar = paramIndex + key.length();
+		    isParam = paramIndex >= 0 && queryString.length() > nextChar && queryString.charAt(nextChar) == '='
+			&& (paramIndex == 0 || queryString.charAt(paramIndex - 1) == '&');
+		}
 		addPendingRequestParameter(new PendingRequestParameter(key, request.getParameter(key), !isParam));
 	    }
 	}
