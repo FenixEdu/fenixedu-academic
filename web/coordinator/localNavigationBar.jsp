@@ -15,12 +15,26 @@
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
-		<%--
+		<%-- 
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
 				<bean:message  key="label.coordinator.phdProcesses"/>
 			</html:link>
 		</li>
-		 --%>
+		--%>
+		
+		<%-- BIG HACK :) - temporary --%>
+		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" 
+				property="person.istUsername" value="ist12760">
+
+			<li class="navheader">
+				<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />
+			</li>
+			<li>
+				<html:link page="/candidacies/phdProgramCandidacyProcess.do?method=listProcesses">
+					<bean:message key="label.viewProcesses" bundle="PHD_RESOURCES" />
+				</html:link>
+			</li>
+		</logic:equal>
 	</ul>
 </logic:present>
