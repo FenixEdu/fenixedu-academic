@@ -125,7 +125,7 @@ public class RequestUtils {
      */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	request.getSession(true);
-	PendingRequest pendingRequest = null; //storeRequest(request);
+	PendingRequest pendingRequest = storeRequest(request);
 	response.sendRedirect(generateRedirectLink(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()),pendingRequest));
     }
     

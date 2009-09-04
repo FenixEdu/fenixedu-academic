@@ -101,21 +101,21 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 	request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContext);
 
-//	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
-//	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
-//		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
-//		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
-//
-//	errorLogger.start();
-//
+	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
+	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
+		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
+		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
+
+	errorLogger.start();
+
 	SupportRequestBean requestBean = exceptionInfo.getRequestBean();
-//
-//	try {
-//	    errorLogger.join();
-//	    requestBean.setErrorLog(errorLogger.getErrorLog());
-//	} catch (InterruptedException e) {
-//	    e.printStackTrace();
-//	}
+
+	try {
+	    errorLogger.join();
+	    requestBean.setErrorLog(errorLogger.getErrorLog());
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
+	}
 
 	request.setAttribute("requestBean", requestBean);
 	request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
