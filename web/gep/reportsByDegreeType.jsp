@@ -458,7 +458,6 @@
 			</html:link>
 		</td>
 	</tr>
-	<logic:present role="MANAGER">
 	<tr>
 		<td style="width: 350px;">
 			<bean:message key="label.report.teachersList.from.aplica" bundle="GEP_RESOURCES"/>
@@ -501,7 +500,6 @@
 			</html:link>
 		</td>
 	</tr>
-	</logic:present>
 </table>
 
 </logic:present>
