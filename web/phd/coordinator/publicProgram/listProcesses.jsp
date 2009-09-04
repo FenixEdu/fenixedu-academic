@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="SCIENTIFIC_COUNCIL">
+<logic:present role="COORDINATOR">
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES" /></h2>
@@ -48,7 +48,7 @@
     	    <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "email=asc" : request.getParameter("sortBy") %>"/>
 			<fr:property name="ascendingImage" value="/images/upArrow.gif"/>
         	<fr:property name="descendingImage" value="/images/downArrow.gif"/>
-			<fr:property name="sortableSlots" value="email, name, candidate, validated" />
+			<fr:property name="sortableSlots" value="email, name, phdFocusArea, candidate, validated" />
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

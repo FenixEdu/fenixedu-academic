@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.phd.scientificCouncil.publicProgram;
+package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "scientificCouncil")
-@Forwards( {
+@Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
+@Forwards(extend = "phd.navLocal", value = {
 
-@Forward(name = "listProcesses", path = "/phd/scientificCouncil/listProcesses.jsp"),
+@Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
 
-@Forward(name = "viewProcess", path = "/phd/scientificCouncil/viewProcess.jsp"),
+@Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
 
-@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/scientificCouncil/viewCandidacyRefereeLetter.jsp")
+@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -129,6 +129,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	private String email;
 	private String name;
+	private String phdFocusArea;
 	private boolean candidate;
 	private boolean validated;
 
@@ -140,6 +141,9 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	    setEmail(hashCode.getEmail());
 	    setName(hashCode.hasCandidacyProcess() ? hashCode.getPerson().getName() : null);
+	    setPhdFocusArea(hashCode.hasCandidacyProcess()
+		    && hashCode.getIndividualProgramProcess().getPhdProgramFocusArea() != null ? hashCode
+		    .getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent() : null);
 	    setCandidate(hashCode.hasCandidacyProcess());
 	    setValidated(hashCode.hasCandidacyProcess() ? hashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()
 		    : false);
@@ -167,6 +171,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	public void setName(String name) {
 	    this.name = name;
+	}
+
+	public String getPhdFocusArea() {
+	    return phdFocusArea;
+	}
+
+	public void setPhdFocusArea(String phdFocusArea) {
+	    this.phdFocusArea = phdFocusArea;
 	}
 
 	public boolean isCandidate() {

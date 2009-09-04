@@ -68,11 +68,6 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 		getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(), getFormattedBody());
     }
 
-    public void delete() {
-	disconnect();
-
-    }
-
     @Override
     protected void generateMessage() {
 

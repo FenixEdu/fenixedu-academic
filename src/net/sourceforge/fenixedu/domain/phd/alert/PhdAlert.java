@@ -130,6 +130,10 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	super.setProcess(null);
 	removeRootDomainObjectForActivePhdAlerts();
 	removeRootDomainObject();
+    }
+    
+    public void delete() {
+	disconnect();
 	super.deleteDomainObject();
     }
 

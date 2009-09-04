@@ -1173,6 +1173,7 @@
 <schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.scientificCouncil.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
 	<slot name="email" />
 	<slot name="name" layout="null-as-label" />
+	<slot name="phdFocusArea" layout="null-as-label" />
 	<slot name="candidate" />
 	<slot name="validated" />
 </schema>
