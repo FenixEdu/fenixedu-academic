@@ -36,3 +36,9 @@
 		</logic:notEmpty>
 	</p>
 </logic:present>
+
+<logic:present name="bean" property="executionPeriod">
+	<html:link action="curriculumLineLogs.do?method=viewCurriculumLineLogStatistics" paramId="executionSemesterId" paramName="bean" paramProperty="executionPeriod.externalId">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.view.curriculumLineLogs.statistics"/>
+	</html:link>
+</logic:present>
