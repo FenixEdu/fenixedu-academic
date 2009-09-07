@@ -105,10 +105,6 @@ Por indicação do Conselho de Gestão os seguintes cursos não vão ter inscrições o
 </p>
 
 <p class="indent1">
-<strong>- </strong>Mestrado Bolonha em Química
-</p>
-
-<p class="indent1">
 <strong>- </strong>Licenciatura Bolonha em Ciências de Engenharia - Engenharia do Território
 </p>
 
