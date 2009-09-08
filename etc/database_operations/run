@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Executing Updates" updates.sql
+

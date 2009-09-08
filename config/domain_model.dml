@@ -2591,6 +2591,8 @@ class DomainObject {
 			SchoolLevelType spouseSchoolLevel;
 			ProfessionType spouseProfessionType;
 			ProfessionalSituationConditionType spouseProfessionalCondition;
+			
+			Boolean firstTimeCandidacy;
 		}
 
 			class candidacy.DFACandidacy extends candidacy.StudentCandidacy {
