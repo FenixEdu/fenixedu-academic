@@ -185,6 +185,12 @@
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
 </schema>
 
+<schema name="EquivalencePlanRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountPerUnit" />
+</schema>
+
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
@@ -340,6 +346,13 @@
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
 </schema>
 
+<schema name="EquivalencePlanRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerUnit" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<setter signature="edit(amountPerUnit)"/>
+</schema>
+
 <schema name="ExtraCurricularEnrolmentCertificateRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
@@ -454,6 +467,11 @@
 
 <schema name="StandaloneEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR" 
 		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="EquivalencePlanRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR" 
+		extends="PostingRule.view-student" bundle="APPLICATION_RESOURCES">
+	<slot name="amountPerUnit" />
 </schema>
 
 <schema name="PhotocopyRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.PhotocopyRequestPR"

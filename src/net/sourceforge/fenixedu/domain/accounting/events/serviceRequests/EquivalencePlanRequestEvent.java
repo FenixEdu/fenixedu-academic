@@ -46,4 +46,8 @@ public class EquivalencePlanRequestEvent extends EquivalencePlanRequestEvent_Bas
 	return labelFormatter;
     }
 
+    public Integer getNumberOfEquivalences() {
+	return getAcademicServiceRequest().getNumberOfEquivalences();
+    }
+
 }

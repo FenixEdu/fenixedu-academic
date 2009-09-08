@@ -2069,6 +2069,10 @@ class DomainObject {
 				BigDecimal ectsFactor;
 			}
 			
+			class accounting.postingRules.serviceRequests.EquivalencePlanRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
+				Money amountPerUnit;
+			}
+			
 			class accounting.postingRules.PastAdministrativeOfficeFeeAndInsurancePR extends accounting.postingRules.GenericSingleEntryTypePR {
 			}
 			
@@ -4699,6 +4703,7 @@ class DomainObject {
 			}
 			
 			class serviceRequests.EquivalencePlanRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+				Integer numberOfEquivalences;
 			}
 			
 			class serviceRequests.EquivalencePlanRevisionRequest extends serviceRequests.RegistrationAcademicServiceRequest {

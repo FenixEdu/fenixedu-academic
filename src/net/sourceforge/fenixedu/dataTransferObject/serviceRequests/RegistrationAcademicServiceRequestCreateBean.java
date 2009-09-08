@@ -17,6 +17,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends AcademicServic
     private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
     private String subject;
     private String purpose;
+    private Integer numberOfEquivalences;
 
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
 	super(registration);
@@ -77,6 +78,14 @@ public class RegistrationAcademicServiceRequestCreateBean extends AcademicServic
 
     final public void setPurpose(String purpose) {
 	this.purpose = purpose;
+    }
+
+    public Integer getNumberOfEquivalences() {
+	return numberOfEquivalences;
+    }
+
+    public void setNumberOfEquivalences(Integer numberOfEquivalences) {
+	this.numberOfEquivalences = numberOfEquivalences;
     }
 
 }
