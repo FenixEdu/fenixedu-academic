@@ -61,7 +61,7 @@ public class ChangeStudentsShift {
 	final String messagePrefix = MessageFormat.format(bundle.getString("changeStudentsShift.email.body"), oldShift.getNome());
 
 	final String messagePosfix = newShift == null ? bundle.getString("changeStudentsShift.email.body.notNewShift") : MessageFormat
-		.format(bundle.getString("changeStudentsShift.email.body..newShift"), oldShift.getNome());
+		.format(bundle.getString("changeStudentsShift.email.body.newShift"), oldShift.getNome());
 
 	final String message = messagePrefix + messagePosfix;
 
