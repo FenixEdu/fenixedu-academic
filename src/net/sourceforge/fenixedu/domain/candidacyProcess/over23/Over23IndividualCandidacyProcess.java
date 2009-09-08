@@ -480,6 +480,11 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override

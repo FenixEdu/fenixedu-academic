@@ -122,7 +122,7 @@
 				<fr:property name="linkFormat(viewProcess)" value='<%= "/caseHandling" + childProcessName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=${idInternal}"%>' />
 				<fr:property name="key(viewProcess)" value="label.candidacy.show.candidate"/>
 				<fr:property name="bundle(viewProcess)" value="APPLICATION_RESOURCES"/>
-				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />
+<%--  				<fr:property name="visibleIfNot(viewProcess)" value="candidacyCancelled" />--%>
 							
 				<fr:property name="sortParameter" value="sortBy"/>
 	            <fr:property name="sortUrl" value='<%= "/caseHandling" + processName.toString() + ".do?method=intro&amp;processId=" + processId.toString() + "&amp;executionIntervalId=" + executionIntervalId.toString() %>'/>

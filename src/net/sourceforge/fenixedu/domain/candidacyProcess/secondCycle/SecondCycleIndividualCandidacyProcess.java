@@ -504,6 +504,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override
@@ -521,6 +526,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override

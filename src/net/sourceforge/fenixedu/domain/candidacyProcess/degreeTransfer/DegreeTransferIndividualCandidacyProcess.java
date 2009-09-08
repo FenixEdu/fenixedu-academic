@@ -464,6 +464,11 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override
@@ -481,6 +486,11 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override

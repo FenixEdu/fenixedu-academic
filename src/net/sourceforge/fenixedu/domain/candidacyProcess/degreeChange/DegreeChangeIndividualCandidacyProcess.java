@@ -465,6 +465,11 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override
@@ -482,6 +487,11 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
 	}
 
 	@Override
