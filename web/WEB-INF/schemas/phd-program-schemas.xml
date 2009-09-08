@@ -1170,7 +1170,7 @@
 	<slot name="whenStartedStudies" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.scientificCouncil.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
+<schema name="PublicPhdCandidacyBean.view" type="net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.publicProgram.PublicPhdProgramCandidacyProcessDA$PublicPhdCandidacyBean" bundle="PHD_RESOURCES">
 	<slot name="email" />
 	<slot name="name" layout="null-as-label" />
 	<slot name="phdFocusArea" layout="null-as-label" />
