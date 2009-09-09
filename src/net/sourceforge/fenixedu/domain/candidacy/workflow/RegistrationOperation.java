@@ -45,7 +45,8 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private void assignMeasurementTestShift(Registration registration) {
-	final MeasurementTest test = MeasurementTest.readBy(getExecutionYear(), registration.getCampus());
+	final MeasurementTest test = MeasurementTest.readBy(getStudentCandidacy().getEntryPhase(), getExecutionYear(),
+		registration.getCampus());
 
 	if (test != null) {
 	    test.assignToRoom(registration);
