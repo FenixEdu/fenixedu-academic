@@ -71,9 +71,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
@@ -414,12 +412,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    person = Person.readPersonByIstUsername(id);
 	} else {
 	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
-	    person = teacher.getPerson();
+	    person = teacher == null ? null : teacher.getPerson();
 	}
-	try {
-	    Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
-	} catch (FenixServiceException e) {
-	    throw new FenixActionException(e);
+	if (person != null) {
+	    try {
+		Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
+	    } catch (FenixServiceException e) {
+		throw new FenixActionException(e);
+	    }
+	} else {
+	    final ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("error", new ActionError("label.invalid.teacher.number"));
+	    saveErrors(request, actionErrors);
 	}
 	return viewTeachersByProfessorship(mapping, form, request, response);
     }
