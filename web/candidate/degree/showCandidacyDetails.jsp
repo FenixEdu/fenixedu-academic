@@ -54,7 +54,10 @@
 			<logic:equal name="operationType" value="PRINT_REGISTRATION_DECLARATION"> 
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
-			
+			<logic:equal name="operationType" value="PRINT_UNDER_23_TRANSPORTS_DECLARATION">
+				<bean:define id="requiresNewWindow" value="true" />
+			</logic:equal>
+
 			<logic:present name="requiresNewWindow">
 				<li>
 					<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">

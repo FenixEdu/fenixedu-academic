@@ -12,6 +12,8 @@ public enum CandidacyOperationType {
 
     PRINT_SYSTEM_ACCESS_DATA,
 
+    PRINT_UNDER_23_TRANSPORTS_DECLARATION,
+
     CANCEL;
 
     public String getName() {

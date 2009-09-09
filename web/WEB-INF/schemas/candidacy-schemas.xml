@@ -189,6 +189,7 @@
             <property name="regexp" value="\d{2}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
 	</slot>
     <slot name="conclusionYear">
@@ -198,6 +199,7 @@
             <property name="regexp" value="\d{4}"/>
             <property name="message" value="error.conclusionYear.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
 	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -403,6 +405,7 @@
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
 	</slot>
     <slot name="conclusionYear">
@@ -412,6 +415,7 @@
             <property name="regexp" value="(\d{4}|)"/>
             <property name="message" value="error.conclusionYear.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
 	<slot name="institutionUnitName" layout="autoComplete" >
@@ -725,6 +729,7 @@
             <property name="regexp" value="\d{2}"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
 	</slot>
     <slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -738,6 +743,7 @@
             <property name="regexp" value="\d{4}"/>
             <property name="message" value="error.conclusionYear.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
    	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

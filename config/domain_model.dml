@@ -4698,7 +4698,10 @@ class DomainObject {
 					String subject;
 					String purpose;
 				}
-			
+				
+				class serviceRequests.Under23TransportsDeclarationRequest extends serviceRequests.documentRequests.DocumentRequest {
+				}
+
 			class serviceRequests.StudentReingressionRequest extends serviceRequests.RegistrationAcademicServiceRequest {
 			}
 			

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import static net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType.DEGREE;
+import static net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType.MASTER_DEGREE;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -9,41 +12,43 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public enum DocumentRequestType {
 
-    SCHOOL_REGISTRATION_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    SCHOOL_REGISTRATION_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
 
-    ENROLMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    ENROLMENT_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
 
-    APPROVEMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    APPROVEMENT_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
 
-    DEGREE_FINALIZATION_CERTIFICATE(true, false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    DEGREE_FINALIZATION_CERTIFICATE(true, false, true, DEGREE, MASTER_DEGREE),
 
-    EXAM_DATE_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
+    EXAM_DATE_CERTIFICATE(true, false, DEGREE),
 
-    SCHOOL_REGISTRATION_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    SCHOOL_REGISTRATION_DECLARATION(false, true, DEGREE, MASTER_DEGREE),
 
-    ENROLMENT_DECLARATION(false, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    ENROLMENT_DECLARATION(false, true, DEGREE, MASTER_DEGREE),
 
-    IRS_DECLARATION(true, true, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    IRS_DECLARATION(true, true, DEGREE, MASTER_DEGREE),
 
-    GENERIC_DECLARATION(false, true, AdministrativeOfficeType.DEGREE),
+    GENERIC_DECLARATION(false, true, DEGREE),
 
-    DIPLOMA_REQUEST(false, false, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE),
+    DIPLOMA_REQUEST(false, false, DEGREE, MASTER_DEGREE),
 
-    PAST_DIPLOMA_REQUEST(true, false, false, true /*, AdministrativeOfficeType.DEGREE, AdministrativeOfficeType.MASTER_DEGREE*/),
+    PAST_DIPLOMA_REQUEST(true, false, false, true /* , DEGREE, MASTER_DEGREE */),
 
     PHOTOCOPY(false, false),
 
-    COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
+    COURSE_LOAD(true, false, DEGREE),
 
-    EXTERNAL_COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
+    EXTERNAL_COURSE_LOAD(true, false, DEGREE),
 
-    PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
+    PROGRAM_CERTIFICATE(true, false, DEGREE),
 
-    EXTERNAL_PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
+    EXTERNAL_PROGRAM_CERTIFICATE(true, false, DEGREE),
 
-    EXTRA_CURRICULAR_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
+    EXTRA_CURRICULAR_CERTIFICATE(true, false, DEGREE),
 
-    STANDALONE_ENROLMENT_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE);
+    UNDER_23_TRANSPORTS_REQUEST(false, false, DEGREE),
+
+    STANDALONE_ENROLMENT_CERTIFICATE(true, false, DEGREE);
 
     private boolean hasAdditionalInformation;
 

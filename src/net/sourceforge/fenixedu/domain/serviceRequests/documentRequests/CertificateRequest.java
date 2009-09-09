@@ -49,16 +49,16 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 
 	case EXTERNAL_PROGRAM_CERTIFICATE:
 	    return new ExternalProgramCertificateRequest(bean);
-	
+
 	case EXTRA_CURRICULAR_CERTIFICATE:
 	    return new ExtraCurricularCertificateRequest(bean);
-	    
-	case STANDALONE_ENROLMENT_CERTIFICATE:    
-	    return new StandaloneEnrolmentCertificateRequest(bean);
-	}
-	    
 
-	return null;
+	case STANDALONE_ENROLMENT_CERTIFICATE:
+	    return new StandaloneEnrolmentCertificateRequest(bean);
+
+	}
+
+	throw new DomainException("error.CertificateRequest.unexpected.document.type");
     }
 
     @Override

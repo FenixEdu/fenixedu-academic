@@ -75,6 +75,7 @@
       	    <forward name="printSchedule" path="/../commons/student/timeTable/classTimeTable.jsp" />
        	    <forward name="printRegistrationDeclaration" path="/degree/printRegistrationDeclaration.jsp" />
        	    <forward name="printSystemAccessData" path="/degree/printSystemAccessData.jsp" />
+       	    <forward name="printUnder23TransportsDeclation" path="/degree/printUnder23TransportsDeclaration.jsp" />
       	</action>
 	
     </action-mappings>

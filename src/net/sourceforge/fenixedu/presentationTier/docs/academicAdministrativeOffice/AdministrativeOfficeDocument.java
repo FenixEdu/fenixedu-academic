@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -111,6 +112,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	    case STANDALONE_ENROLMENT_CERTIFICATE:
 		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(
 			(StandaloneEnrolmentCertificateRequest) documentRequest));
+
+	    case UNDER_23_TRANSPORTS_REQUEST:
+		return Collections.singletonList(new Under23TransportsDeclarationDocument(
+			(Under23TransportsDeclarationRequest) documentRequest));
 	    default:
 		return Collections.singletonList(new AdministrativeOfficeDocument(documentRequest));
 	    }

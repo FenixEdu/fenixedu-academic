@@ -704,10 +704,24 @@
 <schema name="RegistrationAcademicServiceRequestCreateBean.EQUIVALENCE_PLAN"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+<!--	
+	<slot name="numberOfEquivalences">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="^[1-9]+[0-9]*"/>
+            <property name="message" value="error.equivalence.plan.number.of.equivalences"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+        </validator>
+	</slot>
+-->
 </schema>
 
 <schema name="EquivalencePlanRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest"
 		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+<!--
+	<slot name="numberOfEquivalences" />
+ -->
 </schema>
 
 <schema name="RegistrationAcademicServiceRequestCreateBean.REVISION_EQUIVALENCE_PLAN"
@@ -823,7 +837,6 @@
 	<slot name="description" />
 </schema>
 
-
 <schema name="ExamDateCertificateExamSelectionEntryBean.view" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionEntryBean"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="enrolment.curricularCourse.name" read-only="true" />
@@ -833,4 +846,10 @@
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="DegreeModuleScope.view-description" />
 	</slot>
+</schema>
+
+<schema name="Under23TransportsDeclarationRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest" extends="DocumentRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<remove name="documentPurposeType" />
+	<remove name="otherDocumentPurposeTypeDescription" />
+	<remove name="numberOfPages" />
 </schema>

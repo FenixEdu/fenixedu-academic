@@ -55,6 +55,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     public ActionForward doOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+	
 	final CandidacyOperation operation = (CandidacyOperation) getCandidacy(request).getActiveCandidacySituation()
 		.getOperationByTypeAndPerson(getOperationType(request), getLoggedPerson(request));
 	request.setAttribute("operation", operation);
@@ -135,17 +136,23 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
 		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
 		request.setAttribute("infoLessons", infoLessons);
-
 		return mapping.findForward("printSchedule");
+		
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_REGISTRATION_DECLARATION) {
 		request.setAttribute("registration", getCandidacy(request).getRegistration());
 		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-
 		return mapping.findForward("printRegistrationDeclaration");
+		
+	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_UNDER_23_TRANSPORTS_DECLARATION) {
+		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
+		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+		return mapping.findForward("printUnder23TransportsDeclation");
+		
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
 		request.setAttribute("person", userView.getPerson());
-
 		return mapping.findForward("printSystemAccessData");
+		
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
 		request.setAttribute("aditionalInformation", getResources(request).getMessage(
 			"label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
