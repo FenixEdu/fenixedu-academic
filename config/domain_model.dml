@@ -6738,11 +6738,90 @@ class PendingRequestParameter extends DomainObject{
 	String parameterValue;
 }
 
+class candidacy.MeasurementTest extends DomainObject {
+	
+}
+
+class candidacy.MeasurementTestShift extends DomainObject {
+	String name;
+}
+
+class candidacy.MeasurementTestRoom extends DomainObject {
+	String name;
+	Integer capacity;
+}
+
 
 /*
  * Relations definitions
  * 
  */
+
+relation RootDomainObjectMeasurementTest {
+	RootDomainObject playsRole rootDomainObject;
+	candidacy.MeasurementTest playsRole measurementTests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMeasurementTestShift {
+	RootDomainObject playsRole rootDomainObject;
+	candidacy.MeasurementTestShift playsRole measurementTestShifts {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectMeasurementTestRoom {
+	RootDomainObject playsRole rootDomainObject;
+	candidacy.MeasurementTestRoom playsRole measurementTestRooms {
+		multiplicity *;
+	}
+}
+
+relation RegistrationMeasurementTestRoom {
+	candidacy.MeasurementTestRoom playsRole measurementTestRoom;
+	student.Registration playsRole registrations {
+		multiplicity *;
+	}
+}
+
+relation MeasurementTestShiftMeasurementTestRoom {
+	candidacy.MeasurementTestShift playsRole shift;
+	
+	candidacy.MeasurementTestRoom playsRole rooms {
+		multiplicity *;
+	}
+}
+
+relation MeasurementTestShiftMeasurementTest {
+	candidacy.MeasurementTest playsRole test;
+	
+	candidacy.MeasurementTestShift playsRole shifts {
+		multiplicity *;
+	}
+}
+
+relation MeasurementTestExecutionYear {
+	ExecutionYear playsRole executionYear;
+	
+	candidacy.MeasurementTest playsRole measurementTests {
+		multiplicity *;
+	}
+}
+
+relation MeasurementTestCampus {
+	space.Campus playsRole campus;
+	
+	candidacy.MeasurementTest playsRole measurementTests {
+		multiplicity *;
+	}
+}
+
+
+
+
+
+
 
  
 /* Phd Module */

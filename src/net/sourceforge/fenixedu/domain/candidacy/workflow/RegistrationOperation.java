@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.MeasurementTest;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -23,6 +24,11 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.YearMonthDay;
 
 public class RegistrationOperation extends CandidacyOperation {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     public RegistrationOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
 	super(roleTypes, candidacy);
@@ -34,7 +40,16 @@ public class RegistrationOperation extends CandidacyOperation {
 	final Registration registration = createRegistration();
 	enrolStudentInCurricularCourses(executionDegree, registration);
 	associateShiftsFor(registration);
+	assignMeasurementTestShift(registration);
 	changePersonRoles();
+    }
+
+    private void assignMeasurementTestShift(Registration registration) {
+	final MeasurementTest test = MeasurementTest.readBy(getExecutionYear(), registration.getCampus());
+
+	if (test != null) {
+	    test.assignToRoom(registration);
+	}
     }
 
     private void changePersonRoles() {

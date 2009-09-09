@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Executing Updates" updates.sql
+execute "Fixing DGES degree codes" FixDgesDegreeCodes.sql IST
+
+
