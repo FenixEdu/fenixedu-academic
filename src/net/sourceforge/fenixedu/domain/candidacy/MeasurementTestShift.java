@@ -68,7 +68,12 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
     }
 
     public SortedSet<MeasurementTestRoom> getSortedRooms() {
-	return new TreeSet<MeasurementTestRoom>(MeasurementTestRoom.COMPARATOR_BY_NAME);
+	final SortedSet<MeasurementTestRoom> result = new TreeSet<MeasurementTestRoom>(
+		MeasurementTestRoom.COMPARATOR_BY_ROOM_ORDER);
+
+	result.addAll(getRooms());
+
+	return result;
     }
 
     public MeasurementTestRoom getRoomByName(String name) {

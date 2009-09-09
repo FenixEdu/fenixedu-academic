@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.EntryPhase;
 
 public class MeasurementTest extends MeasurementTest_Base {
 
@@ -18,12 +19,14 @@ public class MeasurementTest extends MeasurementTest_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MeasurementTest(ExecutionYear executionYear, Campus campus) {
+    public MeasurementTest(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
 	this();
 
+	check(entryPhase, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.entryPhase.cannot.be.null");
 	check(executionYear, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.executionYear.cannot.be.null");
 	check(campus, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.campus.cannot.be.null");
 
+	setEntryPhase(entryPhase);
 	setExecutionYear(executionYear);
 	setCampus(campus);
     }
@@ -32,16 +35,21 @@ public class MeasurementTest extends MeasurementTest_Base {
 	for (final MeasurementTestShift shift : getSortedShifts()) {
 	    if (shift.hasAvailableRoom()) {
 		shift.getAvailableRoom().addRegistrations(registration);
+
+		return;
 	    }
 	}
 
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTest.unable.to.find.empty.room.for.registration");
+	throw new DomainException("error.candidacy.MeasurementTest.unable.to.find.empty.room.for.registration");
 
     }
 
     private SortedSet<MeasurementTestShift> getSortedShifts() {
-	return new TreeSet<MeasurementTestShift>(MeasurementTestShift.COMPARATOR_BY_NAME);
+	final SortedSet<MeasurementTestShift> result = new TreeSet<MeasurementTestShift>(MeasurementTestShift.COMPARATOR_BY_NAME);
+
+	result.addAll(getShifts());
+
+	return result;
     }
 
     public Set<Registration> getAssignedRegistrations() {
@@ -56,9 +64,9 @@ public class MeasurementTest extends MeasurementTest_Base {
 	return result;
     }
 
-    public static MeasurementTest readBy(ExecutionYear executionYear, Campus campus) {
+    public static MeasurementTest readBy(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
 	for (final MeasurementTest test : RootDomainObject.getInstance().getMeasurementTests()) {
-	    if (test.isFor(executionYear, campus)) {
+	    if (test.isFor(entryPhase, executionYear, campus)) {
 		return test;
 	    }
 	}
@@ -66,8 +74,8 @@ public class MeasurementTest extends MeasurementTest_Base {
 	return null;
     }
 
-    private boolean isFor(ExecutionYear executionYear, Campus campus) {
-	return getExecutionYear() == executionYear && getCampus() == campus;
+    private boolean isFor(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
+	return getEntryPhase().equals(entryPhase) && getExecutionYear() == executionYear && getCampus() == campus;
     }
 
     public MeasurementTestShift getShiftByName(String name) {

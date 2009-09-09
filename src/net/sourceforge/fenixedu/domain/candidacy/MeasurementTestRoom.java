@@ -26,11 +26,9 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
 	});
     }
 
-    public static Comparator<MeasurementTestRoom> COMPARATOR_BY_NAME = new Comparator<MeasurementTestRoom>() {
+    public static Comparator<MeasurementTestRoom> COMPARATOR_BY_ROOM_ORDER = new Comparator<MeasurementTestRoom>() {
 	public int compare(MeasurementTestRoom leftMeasurementTestRoom, MeasurementTestRoom rightMeasurementTestRoom) {
-	    int comparationResult = leftMeasurementTestRoom.getName().compareTo(rightMeasurementTestRoom.getName());
-	    return (comparationResult == 0) ? leftMeasurementTestRoom.getIdInternal().compareTo(
-		    rightMeasurementTestRoom.getIdInternal()) : comparationResult;
+	    return leftMeasurementTestRoom.getRoomOrder().compareTo(rightMeasurementTestRoom.getRoomOrder());
 	}
     };
 
@@ -47,6 +45,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
 	check(name, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.name.cannot.be.null");
 	check(capacity, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom.capacity.cannot.be.null");
 
+	setRoomOrder(shift.getRoomsCount() + 1);
 	setShift(shift);
 	setName(name);
 	setCapacity(capacity);

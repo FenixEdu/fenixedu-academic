@@ -6739,6 +6739,7 @@ class PendingRequestParameter extends DomainObject{
 }
 
 class candidacy.MeasurementTest extends DomainObject {
+	EntryPhase entryPhase;
 	
 }
 
@@ -6749,6 +6750,7 @@ class candidacy.MeasurementTestShift extends DomainObject {
 class candidacy.MeasurementTestRoom extends DomainObject {
 	String name;
 	Integer capacity;
+	Integer roomOrder;
 }
 
 

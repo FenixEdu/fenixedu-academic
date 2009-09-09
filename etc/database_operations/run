@@ -45,5 +45,6 @@ function executeWithTempFile() {
 
 execute "Executing Updates" updates.sql
 execute "Fixing DGES degree codes" FixDgesDegreeCodes.sql IST
+execute "Changing Measurement test tables" ChangeMeasurementTestTables.sql
 
 
