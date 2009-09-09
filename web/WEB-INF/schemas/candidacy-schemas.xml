@@ -521,6 +521,7 @@
             <property name="regexp" value="(\d{9})?"/>
             <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES" />
         </validator>
     </slot>
     <slot name="professionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
