@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +103,19 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     }
 
-    public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    final HttpServletResponse httpServletResponse) throws Exception {
+    private Calendar getCalendar (String method,Registration registration, DateTime validity, HttpServletRequest request) 
+    	throws DocumentException{
+	if (method == "syncClasses"){
+	    return getClassCalendar(registration, validity, request);
+	}else if (method == "syncExams"){
+	    return getExamsCalendar(registration, validity, request);
+	}else{
+	    throw new DocumentException("unexpected.syncing.method");
+	}
+    }
+    
+    private void sync(HttpServletRequest request, final HttpServletResponse httpServletResponse,String method)
+	    throws DocumentException, Exception {
 	String userId = request.getParameter("user");
 	String payload = request.getParameter("payload");
 	String regId = request.getParameter("registrationID");
@@ -111,67 +123,51 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	if (userId == null || payload == null || regId == null) {
 	    throw new DocumentException("error.expecting.parameter.not.found");
 	}
+	
 	User user = User.readUserByUserUId(userId);
 	Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
 
 	if (user.getPrivateKeyValidity() != null) {
-	    if (payload.equals(ICalStudentTimeTable.calculatePayload("syncClasses", registration, user))) {
+	    if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {
 		if (user.getPrivateKeyValidity().isBeforeNow()) {
-		    throw new DocumentException("private.key.validity.expired");
+		    returnError(httpServletResponse, "private.key.validity.expired");
 		} else {
 		    if (user.getPerson().hasRole(RoleType.STUDENT)) {
-			encodeAndTransmitResponse(httpServletResponse, getClassCalendar(registration, user
+			encodeAndTransmitResponse(httpServletResponse, getCalendar(method, registration, user
 				.getPrivateKeyValidity(), request));
 		    } else {
-			throw new DocumentException("user.is.not.student");
+			returnError(httpServletResponse, "user.is.not.student");	
 		    }
 		}
 	    } else {
-		throw new DocumentException("payload.checksum.doesnt.match");
+		returnError(httpServletResponse, "payload.checksum.doesnt.match");
 	    }
 	} else {
-	    throw new DocumentException("key.not.found");
+	    returnError(httpServletResponse, "key.not.found");
 	}
-	return null;
     }
 
     public ActionForward syncExams(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    final HttpServletResponse httpServletResponse) throws Exception {
-	String userId = request.getParameter("user");
-	String payload = request.getParameter("payload");
-	String regId = request.getParameter("registrationID");
-
-	if (userId == null || payload == null || regId == null) {
-	    throw new DocumentException("error.expecting.parameter.not.found");
-	}
-
-	User user = User.readUserByUserUId(userId);
-	Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
-
-	if (user.getPrivateKeyValidity() != null) {
-	    if (payload.equals(ICalStudentTimeTable.calculatePayload("syncExams", registration, user))) {
-		if (user.getPrivateKeyValidity().isBeforeNow()) {
-		    throw new DocumentException("private.key.validity.expired");
-		} else {
-		    if (user.getPerson().hasRole(RoleType.STUDENT)) {
-			encodeAndTransmitResponse(httpServletResponse, getExamsCalendar(registration, user
-				.getPrivateKeyValidity(), request));
-		    } else {
-			throw new DocumentException("user.is.not.student");
-		    }
-		}
-	    } else {
-		throw new DocumentException("payload.checksum.doesnt.match");
-	    }
-	} else {
-	    throw new DocumentException("key.not.found");
-	}
+	 sync(request,httpServletResponse,"syncExams");
+	 return null;
+    }
+    
+    public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    final HttpServletResponse httpServletResponse) throws Exception {
+	sync(request, httpServletResponse,"syncClasses");
 	return null;
+    }
+    
+    @SuppressWarnings("deprecation")
+    private void returnError(HttpServletResponse httpServletResponse,String error) throws IOException{
+	httpServletResponse.setStatus(500,error);
+	httpServletResponse.getWriter().write("");
     }
 
     private void encodeAndTransmitResponse(HttpServletResponse httpServletResponse, Calendar calendar) throws Exception {
 	httpServletResponse.setHeader("Content-Type", "text/calendar; charset=utf-8");
-
+	
 	final OutputStream outputStream = httpServletResponse.getOutputStream();
 	outputStream.write(calendar.toString().getBytes("UTF-8"));
 	outputStream.close();
