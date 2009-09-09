@@ -5,7 +5,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <ul class="treemenu">
-	<li><a href="/html/destaques/">Destaques</a></li>
 	<li><a href="/html/instituto/">Instituto</a></li>
 	<li><a href="/html/estrutura/">Estrutura</a></li>
   	<li class="treenode"><a href="">Ensino</a>
@@ -19,7 +18,5 @@
 		</ul>
 	</li>
 	<li><a href="/html/id/">I &amp; D</a></li>
-	<li><a href="/html/sociedade/">Liga&ccedil;&atilde;o &agrave; Sociedade </a></li>
 	<li><a href="/html/viverist/">Viver no IST</a></li>
-	<li><html:link page="<%= "/prepareConsultRoomsNew.do?method=prepare" %>" >Recursos</html:link></li>
 </ul>
