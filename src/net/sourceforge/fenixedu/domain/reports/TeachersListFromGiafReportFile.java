@@ -110,9 +110,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 		// Coluna "Nome ou área do grau"
 		Qualification qualification = getBetterQualificationOfPersonByExecutionYear(person, executionYear);
 		if (qualification != null) {
-		    row.setCell(qualification.getDegree());
+		    row.setCell(qualification.getType().getLocalizedName());
 		    row.setCell(qualification.getSchool());
-		    row.setCell(qualification.getSpecializationArea());
+		    row.setCell(qualification.getDegree());
 		} else {
 		    row.setCell("");
 		    row.setCell("");
