@@ -72,6 +72,12 @@ public class PersistentProjectUser {
 	return result;
     }
 
+    public List<IRubric> getInstitucionalProjectByCCIDs(Integer ccCode, Boolean it) throws ExcepcaoPersistencia {
+	List<Integer> ccCodes = new ArrayList<Integer>();
+	ccCodes.add(ccCode);
+	return getInstitucionalProjectByCCIDs(ccCodes, it);
+    }
+
     public List<IRubric> getInstitucionalProjectByCCIDs(List<Integer> ccCodes, Boolean it) throws ExcepcaoPersistencia {
 	List<IRubric> result = new ArrayList<IRubric>();
 
