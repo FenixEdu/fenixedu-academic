@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,24 +46,8 @@ public class PendingRequest extends PendingRequest_Base {
 		addPendingRequestParameter(new PendingRequestParameter(key, (String) object, true));
 	    } else {
 		 // Not sure how to procede here...
-		
-	    }
-
-	}
-
-    }
-
-    private boolean shouldBeAdded(Object attribute) {
-
-	if (attribute instanceof Collection) {
-	    Iterator iterator = ((Collection) attribute).iterator();
-	    while (iterator.hasNext()) {
-		if (!(iterator.next() instanceof Serializable)) {
-		    return false;
-		}
 	    }
 	}
-	return attribute instanceof Serializable;
     }
 
     @Service

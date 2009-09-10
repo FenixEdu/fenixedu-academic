@@ -168,7 +168,6 @@ public class RequestUtils {
 		&& (uri.indexOf("showErrorPage.do") == -1) && (uri.indexOf("showErrorPageRegistered.do") == -1)
 		&& (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("manager/manageCache.do") == -1)
 		&& (uri.indexOf("checkPasswordKerberos.do") == -1) && (uri.indexOf("siteMap.do") == -1)
-		&& (uri.indexOf("changeLocaleTo.do") == -1) && (uri.indexOf("cms/forwardEmailAction.do") == -1) && (uri
-		.indexOf("isAlive.do") == -1));
+		&& (uri.indexOf("cms/forwardEmailAction.do") == -1) && (uri.indexOf("isAlive.do") == -1));
     }
 }

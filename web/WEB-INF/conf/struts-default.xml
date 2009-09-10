@@ -84,14 +84,6 @@
         <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"/>
         <action path="/userDoesNotExistOrIsInactive" forward="/userDoesNotExistOrIsInactive.jsp"/>
 
-	    <action path="/changeLocaleTo"
-	    		name="changeLocaleForm"
-	    		validate="false"
-	    		scope="request"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChangeLocale">
-		    <forward name="something" path="/lalaland"/>
-	    </action>
-
 	    <action path="/siteMap"
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.SiteMapAction">
 		    <forward name="site-map" path="/siteMap.jsp"/>

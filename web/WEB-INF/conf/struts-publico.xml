@@ -255,14 +255,6 @@
 	    <action path="/notAuthorized" forward="df.notAuthorized"/>
 	    <!-- page fronting actions -->
 
-	    <action path="/changeLocaleTo"
-	    		name="changeLocaleForm"
-	    		validate="false"
-	    		scope="request"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChangeLocale">
-		    <forward name="something" path="/lalaland"/>
-	    </action>
-
 	<action path="/index"
 			name="pagedIndexForm"
 			input="/index.do?method=prepare&amp;page=0"

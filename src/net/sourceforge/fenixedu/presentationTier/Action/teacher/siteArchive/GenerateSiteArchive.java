@@ -113,7 +113,6 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 	List<Rule> globalRules = new ArrayList<Rule>();
 	globalRules.add(new ResourceRule(contextPath + "/CSS/(.*)", "CSS/$1"));
 	globalRules.add(new ResourceRule(contextPath + "/images/(.*)", "images/$1"));
-	globalRules.add(new SimpleTransformRule(contextPath + "/publico/changeLocaleTo.do", "#"));
 	globalRules.add(new SimpleTransformRule(
 		contextPath + "/publico/showCourseSite.do\\?.*?method=showCurricularCourseSite.*", "#"));
 	globalRules.add(new SimpleTransformRule(contextPath

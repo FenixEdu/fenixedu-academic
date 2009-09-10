@@ -340,12 +340,6 @@
 			<forward name="ListPublications" path="/resultPublications/listPublications.do"/>
 		</action>
 	
-		<action path="/changeLocaleTo"
-	    		name="changeLocaleForm"
-	    		validate="false"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.research.ChangeLocale">
-	    </action>
-	
 	   	<action path="/showJournals"
 	        	 parameter="method"
 	        	 type="net.sourceforge.fenixedu.presentationTier.Action.research.ScientificJournalsManagement">

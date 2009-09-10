@@ -1,42 +1,60 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<html:xhtml/>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="pt.ist.fenixWebFramework.servlets.filters.RequestReconstructor"%>
+
+<%@page import="pt.utl.ist.fenix.tools.util.Pair"%><html:xhtml/>
 
 <div id="version">
-	<html:form action="/changeLocaleTo.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.windowLocation" property="windowLocation" value=""/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newLanguage" property="newLanguage" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("language") %>"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newCountry" property="newCountry" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("location") %>"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.newVariant" property="newVariant" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("variant") %>"/>
+<!-- BLOCK_HAS_CONTEXT -->
+<table>
+	<tr>
+		<td>
+			<%
+				final RequestReconstructor requestReconstructor = (RequestReconstructor) request.getAttribute("requestReconstructor");
+			%>
+			<!-- HAS_CONTEXT --><form method="post" action="<%= requestReconstructor.getUrlSwitch("pt_PT") %>">
+			<%
+				for (Pair entry : requestReconstructor.getAttributes()) {
+    				String key = (String) entry.getKey();
+    				String value = (String) entry.getValue();
+    				%>
+		    			<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= (String) value %>"/>
+    				<%
+				}
+			%>
 
-		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-			<input type="image"
-					src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-					title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-					value="PT"
-					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.windowLocation.value=window.location;this.form.submit();"/>
-			<input class="activeflag"
-					type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-					title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-					value="EN" 
-					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.windowLocation.value=window.location;this.form.submit();"/>
-		</logic:notEqual>
-					
-		<logic:notEqual name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">			
-			<input class="activeflag"
-					type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
-					alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-					title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
-					value="PT"
-					onclick="this.form.newLanguage.value='pt';this.form.newCountry.value='PT';this.form.windowLocation.value=window.location;this.form.submit();"/>
-			<input type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
-					alt="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-					title="<bean:message key="language.en" bundle="IMAGE_RESOURCES" />"
-					value="EN" 
-					onclick="this.form.newLanguage.value='en';this.form.newCountry.value='EN';this.form.windowLocation.value=window.location;this.form.submit();"/>
-		</logic:notEqual>
-	</html:form>
+				<input 
+						type="image" src="<%= request.getContextPath() %>/images/flags/pt.gif"
+						alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+						title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+						value="PT"
+						onclick="this.form.submit();"/>
+			</form>
+		</td>
+		<td>
+			<!-- HAS_CONTEXT --><form method="post" action="<%= requestReconstructor.getUrlSwitch("en_EN") %>">
+			<%
+				for (Pair entry : requestReconstructor.getAttributes()) {
+    				String key = (String) entry.getKey();
+    				String value = (String) entry.getValue();
+    				%>
+		    			<input alt="<%= key %>" type="hidden" name="<%= key %>" value="<%= (String) value %>"/>
+    				<%
+				}
+			%>
+
+				<input 
+						type="image" src="<%= request.getContextPath() %>/images/flags/en.gif"
+						alt="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+						title="<bean:message key="language.pt" bundle="IMAGE_RESOURCES" />"
+						value="EN"
+						onclick="this.form.submit();"/>
+			</form>
+		</td>
+	</tr>
+</table>
+<!-- END_BLOCK_HAS_CONTEXT -->
 </div>
