@@ -43,12 +43,14 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MeasurementTestShift(String name, MeasurementTest test) {
+    public MeasurementTestShift(String name, String date, MeasurementTest test) {
 	this();
 
 	check(name, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.name.cannot.be.null");
+	check(date, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.date.cannot.be.null");
 	check(test, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.test.cannot.be.null");
 
+	setDate(date);
 	setName(name);
 	setTest(test);
     }
