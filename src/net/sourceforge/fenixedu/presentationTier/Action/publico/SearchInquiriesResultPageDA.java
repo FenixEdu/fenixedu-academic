@@ -131,7 +131,7 @@ public class SearchInquiriesResultPageDA extends FenixDispatchAction {
 	    }
 	}
 	Collections.sort((List<ExecutionSemester>) executionSemesters, new ReverseComparator(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	return executionSemesters;
     }
 

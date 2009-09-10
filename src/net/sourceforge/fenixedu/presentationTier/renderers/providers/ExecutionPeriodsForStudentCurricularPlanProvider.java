@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - ï¿½ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 
@@ -41,7 +41,7 @@ public class ExecutionPeriodsForStudentCurricularPlanProvider implements DataPro
 	    }
 	}
 
-	Collections.sort(result, new ReverseComparator(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+	Collections.sort(result, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	return result;
     }

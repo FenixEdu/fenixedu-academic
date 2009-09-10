@@ -1194,7 +1194,7 @@ public class Registration extends Registration_Base {
 
     final public SortedSet<ExecutionSemester> getSortedEnrolmentsExecutionPeriods() {
 	final SortedSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 	result.addAll(getEnrolmentsExecutionPeriods());
 
 	return result;

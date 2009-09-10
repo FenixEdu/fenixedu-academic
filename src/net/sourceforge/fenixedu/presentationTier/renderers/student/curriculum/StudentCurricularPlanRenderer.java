@@ -437,7 +437,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	    if (isToShowEnrolments()) {
 		final Set<ExecutionSemester> enrolmentExecutionPeriods = new TreeSet<ExecutionSemester>(
-			ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+			ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 		enrolmentExecutionPeriods.addAll(this.studentCurricularPlan.getEnrolmentsExecutionPeriods());
 
 		for (final ExecutionSemester enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {

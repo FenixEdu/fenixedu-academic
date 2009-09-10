@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.StudentReingressionRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,8 +22,13 @@ import org.joda.time.DateTime;
 
 public class StudentReingressionRequest extends StudentReingressionRequest_Base {
 
-    static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(RegistrationStateType.FLUNKED,
-	    RegistrationStateType.EXTERNAL_ABANDON);
+    static final public List<RegistrationStateType> ALLOWED_TYPES = Arrays.asList(
+
+    RegistrationStateType.FLUNKED,
+
+    RegistrationStateType.INTERRUPTED,
+
+    RegistrationStateType.EXTERNAL_ABANDON);
 
     protected StudentReingressionRequest() {
 	super();
@@ -98,9 +103,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    final DateTime requestDate) {
 
 	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
-	    final EnrolmentPeriod enrolmentPeriod = degreeCurricularPlan
-		    .getEnrolmentPeriodInCurricularCoursesBy(executionSemester);
-	    if (enrolmentPeriod != null && enrolmentPeriod.containsDate(requestDate)) {
+	    final ReingressionPeriod period = degreeCurricularPlan.getReingressionPeriod(executionSemester);
+	    if (period != null && period.containsDate(requestDate)) {
 		return true;
 	    }
 	}

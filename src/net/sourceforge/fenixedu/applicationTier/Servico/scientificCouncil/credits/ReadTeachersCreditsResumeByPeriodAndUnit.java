@@ -84,7 +84,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 	    ExecutionSemester untilExecutionPeriod) {
 
 	SortedSet<ExecutionSemester> executionPeriodsBetween = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 
 	ExecutionSemester tempExecutionPeriod = fromExecutionPeriod;
 	while (tempExecutionPeriod != untilExecutionPeriod) {
@@ -98,7 +98,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
     public static class TeacherCreditsReportDTO {
 
 	Map<ExecutionSemester, Double> creditsByExecutionPeriod = new TreeMap<ExecutionSemester, Double>(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 
 	Teacher teacher;
 

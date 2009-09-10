@@ -16,7 +16,7 @@ public class ExecutionSemestersForInstallmentCreationProvider implements DataPro
 
 	if (installmentBean.getPaymentPlanBean().getExecutionYear() != null) {
 	    final SortedSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		    ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		    ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 	    result.addAll(installmentBean.getPaymentPlanBean().getExecutionYear().getExecutionPeriods());
 	    return result;
 	}

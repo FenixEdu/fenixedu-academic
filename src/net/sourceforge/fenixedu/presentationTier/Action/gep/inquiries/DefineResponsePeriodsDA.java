@@ -42,7 +42,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(rootDomainObject
 		.getExecutionPeriodsSet());
 	Collections.sort(executionSemesters, new ReverseComparator(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	ExecutionSemester selectedExecutionPeriod = null;
 	final List<LabelValueBean> executionPeriodLVBs = new ArrayList<LabelValueBean>();

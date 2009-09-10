@@ -41,7 +41,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota
+ * @author Joï¿½o Mota
  * @author jpvl
  * 
  */
@@ -51,7 +51,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    new Locale("pt"));
     private transient OccupationPeriod lessonsPeriod;
 
-    public static final Comparator<ExecutionSemester> EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
+    public static final Comparator<ExecutionSemester> COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
 
 	@Override
 	public int compare(final ExecutionSemester o1, final ExecutionSemester o2) {
@@ -168,7 +168,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	if (object == null) {
 	    return 1;
 	}
-	return EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR.compare(this, object);
+	return COMPARATOR_BY_SEMESTER_AND_YEAR.compare(this, object);
     }
 
     @Override

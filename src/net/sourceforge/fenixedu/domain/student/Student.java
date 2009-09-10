@@ -549,7 +549,7 @@ public class Student extends Student_Base {
 
     public Set<ExecutionSemester> getEnroledExecutionPeriods() {
 	Set<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 	for (Registration registration : getRegistrations()) {
 	    result.addAll(registration.getEnrolmentsExecutionPeriods());
 	}

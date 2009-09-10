@@ -782,6 +782,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return null;
     }
 
+    public ReingressionPeriod getReingressionPeriod(final ExecutionSemester executionSemester) {
+	for (final EnrolmentPeriod period : getEnrolmentPeriods()) {
+	    if (period instanceof ReingressionPeriod && period.isFor(executionSemester)) {
+		return (ReingressionPeriod) period;
+	    }
+	}
+	return null;
+    }
+
     public boolean hasEnrolmentPeriodInCurricularCourses(final ExecutionSemester executionSemester) {
 	return getEnrolmentPeriodInCurricularCoursesBy(executionSemester) != null;
     }

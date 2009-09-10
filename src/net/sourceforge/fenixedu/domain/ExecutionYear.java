@@ -37,7 +37,7 @@ import dml.runtime.RelationAdapter;
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota ciapl Dominio
+ * @author Joï¿½o Mota ciapl Dominio
  * 
  */
 public class ExecutionYear extends ExecutionYear_Base implements Comparable<ExecutionYear> {
@@ -162,11 +162,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public ExecutionSemester getFirstExecutionPeriod() {
-	return Collections.min(this.getExecutionPeriods(), ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	return Collections.min(this.getExecutionPeriods(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public ExecutionSemester getLastExecutionPeriod() {
-	return Collections.max(this.getExecutionPeriods(), ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR);
+	return Collections.max(this.getExecutionPeriods(), ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
     }
 
     public List<ExecutionSemester> readNotClosedPublicExecutionPeriods() {

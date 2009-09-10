@@ -1,30 +1,30 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateEnrolmentPeriods;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues;
-
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadEnrolmentPeriods;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateEnrolmentPeriods;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,16 +35,25 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
+    static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(
+	    EnrolmentPeriodInCurricularCourses.class,
+
+	    EnrolmentPeriodInClasses.class,
+
+	    EnrolmentPeriodInImprovementOfApprovedEnrolment.class,
+
+	    EnrolmentPeriodInCurricularCoursesSpecialSeason.class,
+
+	    ReingressionPeriod.class);
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	final IUserView userView = getUserView(request);
-	final DynaActionForm actionForm = (DynaActionForm) form;
 
-	setInfoExecutionPeriods(request, userView);
+	setExecutionSemesters(request);
 
-	final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
+	final String executionPeriodIDString = ((DynaActionForm) form).getString("executionPeriodID");
 	if (isValidObjectID(executionPeriodIDString)) {
-	    setInfoEnrolmentPeriods(request, userView, executionPeriodIDString);
+	    setEnrolmentPeriods(request, getExecutionSemester(executionPeriodIDString));
 	}
 
 	return mapping.findForward("showEnrolementPeriods");
@@ -52,7 +61,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final IUserView userView = getUserView(request);
+
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
@@ -70,7 +79,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final IUserView userView = getUserView(request);
+
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
@@ -84,40 +93,61 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
 	final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
 
-	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
-		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString));
+	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString, getDate(
+		startDateString, startTimeString), getDate(endDateString, endTimeString));
 
 	return prepare(mapping, form, request, response);
     }
 
-    private void setInfoEnrolmentPeriods(final HttpServletRequest request, final IUserView userView,
-	    final String executionPeriodIDString) throws FenixFilterException, FenixServiceException {
-
-	final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) ReadEnrolmentPeriods.run(Integer
-		.valueOf(executionPeriodIDString));
-	sortInfoEnrolmentPeriods(infoEnrolmentPeriods);
-	request.setAttribute("infoEnrolmentPeriods", infoEnrolmentPeriods);
+    private void setEnrolmentPeriods(final HttpServletRequest request, final ExecutionSemester executionSemester) {
+	final List<EnrolmentPeriod> enrolmentPeriods = filterEnrolmentPeriods(executionSemester);
+	sortEnrolmentPeriods(enrolmentPeriods, executionSemester);
+	request.setAttribute("enrolmentPeriods", enrolmentPeriods);
     }
 
-    private void setInfoExecutionPeriods(final HttpServletRequest request, final IUserView userView) throws FenixFilterException,
-	    FenixServiceException {
-	final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ReadExecutionPeriods.run();
-	sortInfoExecutionPeriods(infoExecutionPeriods);
-	request.setAttribute("infoExecutionPeriods", infoExecutionPeriods);
+    private List<EnrolmentPeriod> filterEnrolmentPeriods(ExecutionSemester executionSemester) {
+	final List<EnrolmentPeriod> enrolmentPeriods = new ArrayList<EnrolmentPeriod>();
+
+	for (final EnrolmentPeriod period : executionSemester.getEnrolmentPeriod()) {
+	    if (VALID_ENROLMENT_PERIODS.contains(period.getClass())) {
+		enrolmentPeriods.add(period);
+	    }
+	}
+	return enrolmentPeriods;
     }
 
-    private void sortInfoExecutionPeriods(final List<InfoExecutionPeriod> infoExecutionPeriods) {
+    private ExecutionSemester getExecutionSemester(final String executionPeriodIDString) {
+	return rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodIDString));
+    }
+
+    private void setExecutionSemesters(final HttpServletRequest request) {
+	final List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>(rootDomainObject
+		.getExecutionPeriods());
+	Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	request.setAttribute("executionSemesters", executionSemesters);
+    }
+
+    private void sortEnrolmentPeriods(final List<EnrolmentPeriod> enrolmentPeriods, final ExecutionSemester executionSemester) {
 	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-	comparatorChain.addComparator(new BeanComparator("semester"));
-	Collections.sort(infoExecutionPeriods, comparatorChain);
-    }
 
-    private void sortInfoEnrolmentPeriods(final List<InfoEnrolmentPeriod> infoEnrolmentPeriods) {
-	final ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso"));
-	comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
-	Collections.sort(infoEnrolmentPeriods, comparatorChain);
+	comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
+	    @Override
+	    public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
+		return o1.getDegreeCurricularPlan().getDegreeType().compareTo(o2.getDegreeCurricularPlan().getDegreeType());
+	    }
+	});
+
+	comparatorChain.addComparator(new Comparator<EnrolmentPeriod>() {
+	    @Override
+	    public int compare(EnrolmentPeriod o1, EnrolmentPeriod o2) {
+		return o1.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()).compareTo(
+			o2.getDegreeCurricularPlan().getDegree().getNameFor(executionSemester.getAcademicInterval()));
+	    }
+	});
+	
+	comparatorChain.addComparator(EnrolmentPeriod.COMPARATOR_BY_ID);
+
+	Collections.sort(enrolmentPeriods, comparatorChain);
     }
 
     private boolean isValidObjectID(final String objectIDString) {

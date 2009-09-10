@@ -862,7 +862,9 @@ class DomainObject {
 
 		class RegistrationPeriodInDegreeCurricularPlan extends EnrolmentPeriod {
 		}
-
+		
+		class ReingressionPeriod extends EnrolmentPeriod {
+		}
 
 	class EquivalencePlan extends DomainObject {
 	}

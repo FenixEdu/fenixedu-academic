@@ -68,7 +68,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
 	List<ExecutionSemester> notClosedExecutionPeriods = ExecutionSemester.readNotClosedExecutionPeriods();
 	Collections.sort(notClosedExecutionPeriods, new ReverseComparator(
-		ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	List<LabelValueBean> periods = new ArrayList<LabelValueBean>();
 	for (ExecutionSemester period : notClosedExecutionPeriods) {
 	    periods.add(new LabelValueBean(period.getExecutionYear().getYear() + " - " + period.getName(), period.getIdInternal()

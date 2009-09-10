@@ -1,13 +1,23 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.joda.time.DateTime;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
+
+    static public Comparator<PhdProgramFocusArea> COMPARATOR_BY_NAME = new Comparator<PhdProgramFocusArea>() {
+	@Override
+	public int compare(PhdProgramFocusArea o1, PhdProgramFocusArea o2) {
+	    int result = o1.getName().compareTo(o2.getName());
+	    return (result != 0) ? result : COMPARATOR_BY_ID.compare(o1, o2);
+	}
+    };
 
     private PhdProgramFocusArea() {
 	super();

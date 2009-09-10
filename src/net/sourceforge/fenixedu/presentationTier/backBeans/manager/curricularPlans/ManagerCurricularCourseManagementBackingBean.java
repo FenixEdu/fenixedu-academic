@@ -264,7 +264,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     private List<SelectItem> readPreBolonhaExecutionPeriodItems() {
 	final List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriods());
-	Collections.sort(semesters, new ReverseComparator(ExecutionSemester.EXECUTION_PERIOD_COMPARATOR_BY_SEMESTER_AND_YEAR));
+	Collections.sort(semesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	for (final ExecutionSemester semester : semesters) {
