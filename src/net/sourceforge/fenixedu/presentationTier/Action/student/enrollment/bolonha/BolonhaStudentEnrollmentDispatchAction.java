@@ -45,7 +45,7 @@ public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStude
 		&& studentCurricularPlan.getRegistration().hasRegisteredActiveState()) {
 
 	    if (!degreeCurricularPlan.hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(executionSemester)) {
-		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.specialSeason",
+		addOutOfPeriodMessage(request, "message.out.curricular.course.enrolment.period.flunked.students",
 			degreeCurricularPlan.getNextEnrolmentPeriodInCurricularCoursesSpecialSeason());
 		return mapping.findForward("enrollmentCannotProceed");
 	    }
