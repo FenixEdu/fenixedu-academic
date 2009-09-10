@@ -305,6 +305,25 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	return null;
     }
 
+    @Override
+    protected List<Object> getCandidacyHeader() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+	final List<Object> result = new ArrayList<Object>();
+
+	result.add(bundle.getString("label.spreadsheet.processCode"));
+	result.add(bundle.getString("label.spreadsheet.name"));
+	result.add(bundle.getString("label.spreadsheet.identificationType"));
+	result.add(bundle.getString("label.spreadsheet.identificationNumber"));
+	result.add(bundle.getString("label.spreadsheet.nationality"));
+	result.add(bundle.getString("label.spreadsheet.precedent.institution"));
+	result.add(bundle.getString("label.spreadsheet.actual.degree.designation"));
+	result.add(bundle.getString("label.spreadsheet.selected.degree"));
+	result.add(bundle.getString("label.spreadsheet.state"));
+	result.add(bundle.getString("label.spreadsheet.verified"));
+
+	return result;
+    }
+
     protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess) {
 	DegreeTransferIndividualCandidacyProcess degreeTransferIndividualCandidacyProcess = (DegreeTransferIndividualCandidacyProcess) individualCandidacyProcess;
@@ -318,8 +337,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
 	row.setCell(degreeTransferIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
 		.getContent());
-	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation()
-		.getDegreeAndInstitutionName());
+	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getInstitution().getName());
 	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
 	row.setCell(degreeTransferIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));

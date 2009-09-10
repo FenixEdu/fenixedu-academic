@@ -382,7 +382,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     protected abstract Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess);
 
-    private List<Object> getCandidacyHeader() {
+    protected List<Object> getCandidacyHeader() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
 	final List<Object> result = new ArrayList<Object>();
 

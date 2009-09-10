@@ -30,6 +30,8 @@ import org.apache.poi.hssf.util.Region;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -292,6 +294,27 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 12, 3, (short) 12));
     }
 
+    @Override
+    protected List<Object> getCandidacyHeader() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+	final List<Object> result = new ArrayList<Object>();
+
+	result.add(bundle.getString("label.spreadsheet.processCode"));
+	result.add(bundle.getString("label.spreadsheet.name"));
+	result.add(bundle.getString("label.spreadsheet.identificationType"));
+	result.add(bundle.getString("label.spreadsheet.identificationNumber"));
+	result.add(bundle.getString("label.spreadsheet.nationality"));
+	result.add(bundle.getString("label.spreadsheet.precedent.institution"));
+	result.add(bundle.getString("label.spreadsheet.actual.degree.designation"));
+	result.add(bundle.getString("label.spreadsheet.selected.degree"));
+	result.add(bundle.getString("label.spreadsheet.state"));
+	result.add(bundle.getString("label.spreadsheet.verified"));
+
+	return result;
+    }
+
+    private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+
     protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess) {
 	DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess = (DegreeChangeIndividualCandidacyProcess) individualCandidacyProcess;
@@ -306,9 +329,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	row
 		.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
 			.getContent());
-	row
-		.setCell(degreeChangeIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation()
-			.getDegreeAndInstitutionName());
+	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getInstitution().getName());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
