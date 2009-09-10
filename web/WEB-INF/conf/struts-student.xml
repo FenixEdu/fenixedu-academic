@@ -332,11 +332,15 @@
 	<!-- page fronting actions -->
 	    <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
         	path="/index">
-        	<forward name="Success" path="df.page.main"/>
+        	<forward name="Success" path="/showStudentPortal.do?method=prepare"/>
         </action>
 
-	
-
+		<action type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowStudentPortalDA"
+			path="/showStudentPortal"
+			parameter="method"
+        	scope="request">
+			<forward name="studentPortal" path="df.page.main"/>
+		</action>
 
       <!-- SHIFT ENROLMENT -->
       <action name="selectShiftEnrolmentForm"

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
 <p>
@@ -25,3 +26,54 @@
 	</ul>
 	<br />
 </logic:messagesPresent>
+
+<logic:notEmpty name="genericDegreeWarnings">
+	<div class="warning1 mvert15">
+		<p class="mvert05"><b><bean:message key="group.enrolment" bundle="STUDENT_RESOURCES"/></b></p>
+		<logic:iterate id="genericDegreeWarning" name="genericDegreeWarnings">
+			<p class="mvert05"><bean:write name="genericDegreeWarning"/>.</p>
+		</logic:iterate>
+	</div>
+</logic:notEmpty>
+
+<logic:notEmpty name="studentPortalBeans">
+	<logic:iterate id="studentPortalBean" name="studentPortalBeans">
+		<h3 class="mtop15 mbottom05">
+			<bean:write name="studentPortalBean" property="degree.presentationName"/> - <bean:write name="executionSemester"/>
+			<app:contentLink name="studentPortalBean" property="degree.site" target="_blank">
+				<span style="font-size: 12px; font-weight: normal;"><bean:message key="link.appearance" bundle="STUDENT_RESOURCES"/></span>
+			</app:contentLink>
+		</h3>
+		<table class="tstyle2 thleft thlight mtop05">
+			<logic:iterate id="executionCoursesAnnouncement" name="studentPortalBean" property="executionCoursesAnnouncements">
+				<tr>
+					<td>
+						<p class="mvert0">
+							<bean:define id="executionCourseID" name="executionCoursesAnnouncement" property="executionCourse.idInternal"/>
+							<html:link page='<%= "../../publico/executionCourse.do?method=firstPage&amp;executionCourseID=" + executionCourseID %>' target="_blank">
+								<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
+							</html:link>
+						</p>
+						<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
+							<ul class="color777 mbottom0">
+								<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
+									<li>
+										<bean:write name="evaluationAnnouncement" property="evaluationType"/>
+										 "<bean:write name="evaluationAnnouncement" property="identification"/>" - 
+										<bean:write name="evaluationAnnouncement" property="enrolment"/>.
+										<bean:write name="evaluationAnnouncement" property="realization"/>.
+										<logic:equal name="evaluationAnnouncement" property="registered" value="true">
+											<span class="warning0">
+												<bean:message key="label.enroled" bundle="STUDENT_RESOURCES"/>
+											</span>
+										</logic:equal>
+									</li>
+								</logic:iterate>
+							</ul>
+						</logic:notEmpty>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
+	</logic:iterate>
+</logic:notEmpty>
