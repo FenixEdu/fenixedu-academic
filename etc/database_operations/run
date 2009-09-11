@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Correct dges degree codes" FixDgesDegreeCodes.sql IST
