@@ -1451,18 +1451,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Override
-    @Deprecated
-    public String getCode() {
-	return getMinistryCode();
-    }
-
-    @Override
-    @Deprecated
-    public void setCode(final String ministryCode) {
-	setMinistryCode(ministryCode);
-    }
-
-    @Override
     public String getMinistryCode() {
 	final String ministryCode = super.getMinistryCode();
 	if (!StringUtils.isEmpty(ministryCode)) {
