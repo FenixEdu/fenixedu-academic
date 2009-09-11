@@ -316,6 +316,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	    getPrecedentDegreeInformation().fill(bean);
 	}
 
+	for (final IndividualCandidacyDocumentFile document : getDocuments()) {
+	    bean.addDocumentFile(document);
+	}
+	
 	return bean;
     }
 
