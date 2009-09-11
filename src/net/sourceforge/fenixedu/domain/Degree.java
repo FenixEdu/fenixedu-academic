@@ -815,12 +815,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public static List<Degree> readAllByDegreeCode(final String degreeCode) {
 	final List<Degree> result = new ArrayList<Degree>();
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.getCode() != null && degree.getCode().equals(degreeCode)) {
+	    if (degree.hasMinistryCode() && degree.getMinistryCode().equals(degreeCode)) {
 		result.add(degree);
 	    }
 	}
 
 	return result;
+    }
+
+    private boolean hasMinistryCode() {
+	return getMinistryCode() != null;
     }
 
     public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
@@ -1460,11 +1464,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     @Override
     public String getMinistryCode() {
-	final String code = super.getCode();
-	if (!StringUtils.isEmpty(code)) {
-	    return code;
-	}
-
 	final String ministryCode = super.getMinistryCode();
 	if (!StringUtils.isEmpty(ministryCode)) {
 	    return ministryCode;
@@ -1475,9 +1474,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     @Override
     public void setMinistryCode(final String ministryCode) {
-	final String value = ministryCode == null || ministryCode.length() == 0 ? null : ministryCode;
-	super.setMinistryCode(value);
-	super.setCode(value);
+	super.setMinistryCode(ministryCode == null || ministryCode.length() == 0 ? null : ministryCode);
     }
 
     @Override

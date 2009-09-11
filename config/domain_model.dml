@@ -692,7 +692,6 @@ class DomainObject {
 	}
 
 	class Degree extends DomainObject {
-		String code;
 		Double ectsCredits;
 		GradeScale gradeScale;
 		String nameEn;

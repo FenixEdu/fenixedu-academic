@@ -46,3 +46,4 @@ function executeWithTempFile() {
 
 
 execute "Adding date column to Measurement Test shift" AlterTableMeasurementTestShift.sql
+execute "Correct dges degree codes" FixDgesDegreeCodes.sql
