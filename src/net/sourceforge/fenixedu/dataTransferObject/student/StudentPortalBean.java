@@ -9,9 +9,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Project;
@@ -45,7 +42,11 @@ public class StudentPortalBean implements Serializable {
 
 	    public EvaluationAnnouncement(Project project) {
 		setEvaluationType(project.getEvaluationType().toString());
-		setIdentification(project.getGrouping().getName());
+		if (project.getGrouping() != null) {
+		    setIdentification(project.getGrouping().getName());
+		} else {
+		    setIdentification("");
+		}
 		setRealization(project.getBegin(), project.getEnd());
 		setEnrolment(project);
 		setRegistered(isStudentEnrolled(project));
@@ -63,6 +64,9 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    private boolean isStudentEnrolled(Project project) {
+		if (project.getGrouping() == null) {
+		    return false;
+		}
 		for (final Attends attend : project.getGrouping().getAttendsSet()) {
 		    if (attend.getEnrolment() != null && attend.getEnrolment().getStudent() == getStudent()) {
 			return true;
@@ -126,10 +130,14 @@ public class StudentPortalBean implements Serializable {
 
 	    public void setEnrolment(Project project) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
-			+ YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentBeginDayDate()).toString() + " "
-			+ resource.getString("message.out.until") + " "
-			+ YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentEndDayDate()).toString();
+		if (project.getGrouping() != null) {
+		    this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
+			    + YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentBeginDayDate()).toString() + " "
+			    + resource.getString("message.out.until") + " "
+			    + YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentEndDayDate()).toString();
+		} else {
+		    this.enrolment = " " + resource.getString("message.out.enrolment.period.default");
+		}
 	    }
 
 	    public void setRegistered(Boolean registered) {
