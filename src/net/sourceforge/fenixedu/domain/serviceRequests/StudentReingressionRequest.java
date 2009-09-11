@@ -73,6 +73,10 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (alreadyHasRequest(registration, executionYear)) {
 	    throw new DomainException("error.StudentReingressionRequest.already.has.request.to.same.executionYear");
 	}
+	
+	if (registration.getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(executionYear)) {
+	    throw new DomainException("error.StudentReingressionRequest.student.has.debts");
+	}
     }
 
     private boolean alreadyHasRequest(final Registration registration, final ExecutionYear executionYear) {
