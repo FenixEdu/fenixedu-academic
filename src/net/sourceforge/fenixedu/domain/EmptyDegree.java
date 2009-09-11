@@ -99,16 +99,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public void setCode(String code) {
-	throw new DomainException("EmptyDegree.not.available");
-    }
-
-    @Override
-    public String getCode() {
-	return StringUtils.EMPTY;
-    }
-
-    @Override
     public void setSigla(final String sigla) {
 	throw new DomainException("EmptyDegree.not.available");
     }
