@@ -548,8 +548,7 @@ public class Student extends Student_Base {
     }
 
     public Set<ExecutionSemester> getEnroledExecutionPeriods() {
-	Set<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
+	Set<ExecutionSemester> result = new TreeSet<ExecutionSemester>(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
 	for (Registration registration : getRegistrations()) {
 	    result.addAll(registration.getEnrolmentsExecutionPeriods());
 	}
@@ -939,14 +938,25 @@ public class Student extends Student_Base {
 	return isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(ExecutionYear.readCurrentExecutionYear());
     }
 
+    /**
+     * Check if there is any debt until given execution year (exclusive)
+     * 
+     * @param executionYear
+     */
     public boolean isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
-	return isAnyTuitionInDebt(executionYear) || isAnyAdministrativeOfficeFeeAndInsuranceInDebt(executionYear);
+	return isAnyTuitionInDebt(executionYear) || isAnyAdministrativeOfficeFeeAndInsuranceInDebtUntil(executionYear);
     }
 
-    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebt(final ExecutionYear executionYear) {
+    /**
+     * Check if there is any debt until given execution year (exclusive)
+     * 
+     * @param executionYear
+     */
+    private boolean isAnyAdministrativeOfficeFeeAndInsuranceInDebtUntil(final ExecutionYear executionYear) {
 	for (final Event event : getPerson().getEvents()) {
 	    if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent
-		    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear() != executionYear && event.isOpen()) {
+		    && ((AdministrativeOfficeFeeAndInsuranceEvent) event).getExecutionYear().isBefore(executionYear)
+		    && event.isOpen()) {
 		return true;
 	    }
 	}

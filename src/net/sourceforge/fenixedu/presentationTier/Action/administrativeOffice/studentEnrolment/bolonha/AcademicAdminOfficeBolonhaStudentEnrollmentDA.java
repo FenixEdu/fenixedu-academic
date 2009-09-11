@@ -34,12 +34,13 @@ public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolon
 	    HttpServletResponse response, StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
 
 	request.setAttribute("action", getAction());
-	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), request);
+	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
 	return super.prepareShowDegreeModulesToEnrol(mapping, form, request, response, studentCurricularPlan, executionSemester);
     }
 
-    protected void addDebtsWarningMessages(final Student student, final HttpServletRequest request) {
+    protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
+	    final HttpServletRequest request) {
 	if (student.isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt()) {
 	    addActionMessage("warning", request, "label.student.events.in.debt.warning");
 	}

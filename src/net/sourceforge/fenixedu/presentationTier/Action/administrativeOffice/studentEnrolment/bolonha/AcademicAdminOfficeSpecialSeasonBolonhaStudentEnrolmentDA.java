@@ -9,9 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonCodeBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -47,25 +49,34 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(studentCurricularPlan,
 		executionSemester));
 
-	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), request);
+	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
 
     @Override
-    protected void addDebtsWarningMessages(final Student student, final HttpServletRequest request) {
+    protected void addDebtsWarningMessages(final Student student, final ExecutionSemester executionSemester,
+	    final HttpServletRequest request) {
 
-	if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student)) {
+	if (hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(student, executionSemester.getExecutionYear())) {
 	    addActionMessage("warning", request, "registration.has.not.payed.insurance.fees");
 	}
 
-	if (hasAnyGratuityDebt(student)) {
+	if (hasAnyGratuityDebt(student, executionSemester.getExecutionYear())) {
 	    addActionMessage("warning", request, "registration.has.not.payed.gratuities");
 	}
     }
 
-    private boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student) {
+    private boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
 	for (final Event event : student.getPerson().getEvents()) {
+
+	    if (event instanceof AnnualEvent) {
+		final AnnualEvent annualEvent = (AnnualEvent) event;
+		if (annualEvent.getExecutionYear().isAfter(executionYear)) {
+		    continue;
+		}
+	    }
+
 	    if ((event instanceof AdministrativeOfficeFeeAndInsuranceEvent || event instanceof InsuranceEvent) && event.isOpen()) {
 		return true;
 	    }
@@ -74,11 +85,11 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
 	return false;
     }
 
-    private boolean hasAnyGratuityDebt(final Student student) {
+    private boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
 	for (final Registration registration : student.getRegistrations()) {
 	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
 		for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
-		    if (gratuityEvent.isInDebt()) {
+		    if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
 			return true;
 		    }
 		}
