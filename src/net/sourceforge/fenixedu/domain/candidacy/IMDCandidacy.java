@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.FillPersonalDataOperation;
+import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintMeasurementTestDateOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintRegistrationDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintScheduleOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataOperation;
@@ -60,6 +61,7 @@ public class IMDCandidacy extends IMDCandidacy_Base {
 	    operations.add(new PrintRegistrationDeclarationOperation(Collections.singleton(RoleType.STUDENT), this));
 	    operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT), this));
 	    operations.add(new PrintUnder23TransportsDeclarationOperation(RoleType.STUDENT, this));
+	    operations.add(new PrintMeasurementTestDateOperation(RoleType.STUDENT, this));
 	    break;
 	}
 	return operations;

@@ -1,6 +1,7 @@
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml />
+
+<%@page import="net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType"%><html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -38,6 +39,7 @@
 	<bean:write name="operations" property="empty" />
 </bean:define>
 
+<bean:define id="candidacyID" name="candidacy" property="idInternal" />
 <logic:notEmpty name="operations">
 	<bean:define id="emptyOperations" value="true" />
 	<ul>
@@ -46,7 +48,6 @@
 		
 			<bean:define id="emptyOperations" value="false" />
 			<bean:define id="operationType" name="operation" property="type.name" />
-			<bean:define id="candidacyID" name="candidacy" property="idInternal" />
 
 			<logic:equal name="operationType" value="PRINT_SCHEDULE">
 				<bean:define id="requiresNewWindow" value="true" />
@@ -88,6 +89,16 @@
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />
+	<logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
+		<ul>
+			<li>
+				<bean:message  key="message.print.measurement.test.date.warning" bundle="CANDIDATE_RESOURCES"/>
+			 	<b><html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE + "&amp;candidacyID=" + candidacyID%>" target="_blank">
+					<bean:message key="label.print" bundle="CANDIDATE_RESOURCES"/>
+				</html:link></b>
+			</li>
+		</ul> 
+	</logic:notEmpty>
 	<div class="infoop2 mtop2" style="padding: 0.5em 1em;">
 		<p class="mvert025"><strong><bean:message key="label.attention"/></strong>:</p>
 		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/>:</span></p>
