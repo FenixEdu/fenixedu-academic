@@ -6746,7 +6746,7 @@ class candidacy.MeasurementTest extends DomainObject {
 
 class candidacy.MeasurementTestShift extends DomainObject {
 	String name;
-	String date;
+	DateTime date;
 }
 
 class candidacy.MeasurementTestRoom extends DomainObject {

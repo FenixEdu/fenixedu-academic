@@ -5,7 +5,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
-<%@page import="org.joda.time.LocalDate"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+<%@page import="org.joda.time.LocalDate"%>
+<%@page import="net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom"%>
+<%@page import="java.util.Locale"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.Registration"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <html:xhtml/>
 
@@ -34,15 +37,18 @@ cadeira de Cálculo Diferencial e Integral I ou Matemática I.
 </p>
 
 <p>
-A prova realizar-se-á no dia <bean:write name="registration" property="measurementTestRoom.shift.date"/> 23 de Setembro,  pelo que, neste dia,  serão suspensas as aulas do 1º ano no período da tarde. 
+
+
+A prova realizar-se-á no dia <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("dd 'de' MMMM", Language.getLocale())  %>,  pelo que, neste dia,  serão suspensas as aulas do 1º ano no período da tarde. 
 </p>
 
 <p>
-A realização da sua prova de aferição terá lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde deverá comparecer  às <bean:write name="registration" property="measurementTestRoom.shift.date"/> horas munido de BI ou cartão de cidadão.
+A realização da sua prova de aferição terá lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde deverá comparecer  às <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("HH:mm", Language.getLocale())  %> horas munido de BI ou cartão de cidadão.
 </p>
 
+<br/>
 <p>
-P'lo Conselho de Gestão
+P'lo Conselho de Gestão<br/>
 Palmira Ferreira da Silva
 </p>
 

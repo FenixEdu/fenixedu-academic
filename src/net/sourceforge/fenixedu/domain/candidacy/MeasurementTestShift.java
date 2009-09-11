@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import dml.runtime.RelationAdapter;
@@ -43,7 +45,7 @@ public class MeasurementTestShift extends MeasurementTestShift_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public MeasurementTestShift(String name, String date, MeasurementTest test) {
+    public MeasurementTestShift(String name, DateTime date, MeasurementTest test) {
 	this();
 
 	check(name, "error.net.sourceforge.fenixedu.domain.candidacy.MeasurementTestShift.name.cannot.be.null");
