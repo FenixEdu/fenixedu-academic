@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
@@ -18,6 +22,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class CandidacyInformationBean implements Serializable {
@@ -92,6 +97,8 @@ public class CandidacyInformationBean implements Serializable {
     private Double entryGrade;
 
     private Integer placingOption;
+
+    private Collection<DomainReference<File>> documentFiles = new ArrayList<DomainReference<File>>();
 
     public CandidacyInformationBean(Registration registration) {
 	setRegistration(registration);
@@ -479,4 +486,28 @@ public class CandidacyInformationBean implements Serializable {
     public void updateRegistrationInformation() {
 	getRegistration().editCandidacyInformation(this);
     }
+
+    public void addDocumentFile(final File file) {
+	documentFiles.add(new DomainReference<File>(file));
+    }
+
+    public Collection<File> getDocumentFiles() {
+	final Collection<File> result = new ArrayList<File>();
+	for (final DomainReference<File> file : documentFiles) {
+	    result.add(file.getObject());
+	}
+	return result;
+    }
+    
+    public String getFormattedValues() {
+	Formatter result = new Formatter();
+
+	final Student student = getRegistration().getStudent();
+	result.format("Student Number: %d\n", student.getNumber());
+	result.format("Name: %s\n", student.getPerson().getName());
+	result.format("Degree: %s\n", getRegistration().getDegree().getPresentationName());
+
+	return result.toString();
+    }
+    
 }
