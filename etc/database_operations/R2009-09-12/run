@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing date column type on MeasurementTestShift" AlterTableMeasurementTestShift.sql
