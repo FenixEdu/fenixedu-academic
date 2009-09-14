@@ -32,7 +32,7 @@ public class UpdatePersonInformationFromCitizenCard extends FenixService {
 	}
 
 	try {
-	    person.edit(personDTO);
+	    person.editFromBean(personDTO);
 	} catch (ParseException e) {
 	    throw new DomainException("UpdatePersonInformationFromCitizenCard.error.dateParseError", e);
 	}

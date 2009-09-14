@@ -391,7 +391,7 @@ public class Person extends Person_Base {
 	return this;
     }
 
-    public void edit(PersonInformationFromUniqueCardDTO personDTO) throws ParseException {
+    public void editFromBean(PersonInformationFromUniqueCardDTO personDTO) throws ParseException {
 	final String dateFormat = "dd MM yyyy";
 
 	if (!StringUtils.isEmpty(personDTO.getName())) {
