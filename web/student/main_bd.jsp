@@ -49,10 +49,9 @@
 				<tr>
 					<td>
 						<p class="mvert0">
-							<bean:define id="executionCourseID" name="executionCoursesAnnouncement" property="executionCourse.idInternal"/>
-							<html:link page='<%= "../../publico/executionCourse.do?method=firstPage&amp;executionCourseID=" + executionCourseID %>' target="_blank">
+							<app:contentLink name="executionCoursesAnnouncement" property="executionCourse.site" target="_blank">
 								<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
-							</html:link>
+							</app:contentLink>
 						</p>
 						<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
 							<ul class="color777 mbottom0">
