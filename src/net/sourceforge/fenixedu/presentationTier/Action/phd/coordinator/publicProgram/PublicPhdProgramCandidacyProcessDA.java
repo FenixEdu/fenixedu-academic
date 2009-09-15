@@ -57,9 +57,11 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 		statistics.plusTotalRequests();
 		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
 
-		if (!phdHashCode.hasCandidacyProcess()) {
+		if (phdHashCode.hasCandidacyProcess()) {
 		    statistics.plusTotalCandidates();
-		} else if (phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
+		}
+
+		if (phdHashCode.hasCandidacyProcess() && phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
 		    statistics.plusTotalValidated();
 		}
 
