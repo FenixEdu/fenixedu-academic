@@ -33,7 +33,8 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 		return address;
 	    }
 	}
-	return data != null ? new PhysicalAddress(party, type, isDefault, data) : null;
+	
+	return new PhysicalAddress(party, type, isDefault, data);
     }
 
     protected PhysicalAddress() {
