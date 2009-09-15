@@ -78,13 +78,13 @@ width: 1%;
 <body>
 
 
-<div id="image"><img src="<%= request.getContextPath() %>/images/blazon01.gif"/></div>
-<h1>PRESIDÊNCIA DO CONSELHO DE MINISTROS E MINISTÉRIOS DAS FINANÇAS E DA<br/> ADMINISTRAÇÃO PÚBLICA, DAS OBRAS PÚBLICAS, TRANSPORTES E COMUNICAÇÕES E<br/> DA CIÊNCIA, TECNOLOGIA E ENSINO SUPERIOR</h1>
+<div id="image" style="text-align: center;"><img src="<%= request.getContextPath() %>/images/blazon01.gif"/></div>
+<h1 style="text-align: center;">PRESIDÊNCIA DO CONSELHO DE MINISTROS E MINISTÉRIOS DAS FINANÇAS E DA<br/> ADMINISTRAÇÃO PÚBLICA, DAS OBRAS PÚBLICAS, TRANSPORTES E COMUNICAÇÕES E<br/> DA CIÊNCIA, TECNOLOGIA E ENSINO SUPERIOR</h1>
 
 <div id="content">
 	
-	<h2>PASSE SUB23@SUPERIOR.TP</h2>
-	<h2>DECLARAÇÃO de INSCRIÇÃO</h2>
+	<h2 style="text-align: center;">PASSE SUB23@SUPERIOR.TP</h2>
+	<h2 style="text-align: center;">DECLARAÇÃO de INSCRIÇÃO</h2>
 	
 	<p style="margin-top: 20px;">Para efeitos de acesso ao passe sub23@superior.tp declara-se que o aluno</p>
 	

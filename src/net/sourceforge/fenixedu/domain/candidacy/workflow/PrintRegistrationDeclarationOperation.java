@@ -31,7 +31,7 @@ public class PrintRegistrationDeclarationOperation extends CandidacyOperation {
 
     @Override
     public boolean isVisible() {
-	return true;
+	return false;
     }
 
     @Override

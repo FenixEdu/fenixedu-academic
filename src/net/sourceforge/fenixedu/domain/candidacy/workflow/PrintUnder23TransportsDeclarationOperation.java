@@ -40,7 +40,7 @@ public class PrintUnder23TransportsDeclarationOperation extends CandidacyOperati
 
     @Override
     public boolean isVisible() {
-	return true;
+	return false;
     }
 
     @Override

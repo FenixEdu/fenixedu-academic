@@ -16,6 +16,8 @@ public enum CandidacyOperationType {
 
     PRINT_MEASUREMENT_TEST_DATE,
 
+    PRINT_ALL_DOCUMENTS,
+
     CANCEL;
 
     public String getName() {

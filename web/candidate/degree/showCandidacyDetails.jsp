@@ -58,9 +58,15 @@
 			<logic:equal name="operationType" value="PRINT_UNDER_23_TRANSPORTS_DECLARATION">
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
+			<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+				<bean:define id="requiresNewWindow" value="true" />
+			</logic:equal>
 
 			<logic:present name="requiresNewWindow">
 				<li>
+					<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+						<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
+					</logic:equal>
 					<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
 						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 					</html:link>
@@ -68,6 +74,9 @@
 			</logic:present>
 			<logic:notPresent name="requiresNewWindow">
 				<li>
+					<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+						<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
+					</logic:equal>
 					<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
 						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 					</html:link>
@@ -89,16 +98,6 @@
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />
-	<logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
-		<ul>
-			<li>
-				<bean:message  key="message.print.measurement.test.date.warning" bundle="CANDIDATE_RESOURCES"/>
-			 	<b><html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE + "&amp;candidacyID=" + candidacyID%>" target="_blank">
-					<bean:message key="label.print" bundle="CANDIDATE_RESOURCES"/>
-				</html:link></b>
-			</li>
-		</ul> 
-	</logic:notEmpty>
 	<div class="infoop2 mtop2" style="padding: 0.5em 1em;">
 		<p class="mvert025"><strong><bean:message key="label.attention"/></strong>:</p>
 		<p class="mvert025"><span><bean:message key="label.candidacy.institutional.email.creation.warning" arg0="<%=istUsername.toString()%>"/>:</span></p>

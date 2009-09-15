@@ -148,11 +148,23 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
 		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
 		return mapping.findForward("printUnder23TransportsDeclation");
-		
+
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE) {
 		request.setAttribute("registration", getCandidacy(request).getRegistration());
 		return mapping.findForward("printMeasurementTestDate");
-		
+
+	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_ALL_DOCUMENTS) {
+		request.setAttribute("candidacy", getCandidacy(request));
+		request.setAttribute("registration", getCandidacy(request).getRegistration());
+		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
+		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+
+		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+		request.setAttribute("infoLessons", infoLessons);
+
+		return mapping.findForward("printAllDocuments");
+
 	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
 		request.setAttribute("person", userView.getPerson());
 		return mapping.findForward("printSystemAccessData");
@@ -215,5 +227,20 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	return bundleMappings;
     }
+
+//    public ActionForward printAllDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+//	    HttpServletResponse response) throws FenixServiceException {
+//
+//	request.setAttribute("candidacy", getCandidacy(request));
+//	request.setAttribute("registration", getCandidacy(request).getRegistration());
+//	request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+//	request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
+//	request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+//
+//	final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+//	request.setAttribute("infoLessons", infoLessons);
+//
+//	return mapping.findForward("printAllDocuments");
+//    }
 
 }
