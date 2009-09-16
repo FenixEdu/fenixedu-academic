@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.AddCan
 import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.RemoveCandidateYearDelegateElections;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.elections.VoteYearDelegateElections;
 import net.sourceforge.fenixedu.dataTransferObject.student.elections.StudentVoteBean;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -185,17 +184,10 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
      */
 
     private YearDelegateElection getYearDelegateElectionForStudent(Student student) {
-	YearDelegateElection yearDelegateElection = null;
-
 	final Registration registration = student.getLastActiveRegistration();
-
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	if (registration != null) {
-	    final int curricularYear = registration.getCurricularYear(currentExecutionYear);
-	    yearDelegateElection = registration.getDegree().getYearDelegateElectionWithLastCandidacyPeriod(currentExecutionYear,
-		    CurricularYear.readByYear(curricularYear));
-
-	    return yearDelegateElection;
+	    return registration.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
 	}
 	return null;
     }

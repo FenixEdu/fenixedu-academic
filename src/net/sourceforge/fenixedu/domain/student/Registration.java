@@ -65,6 +65,8 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -3757,5 +3759,16 @@ public class Registration extends Registration_Base {
     public Boolean hasIndividualCandidacyFor(final ExecutionYear executionYear) {
 	return hasIndividualCandidacy()
 		&& getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
+    }
+
+    public YearDelegateElection getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
+	for (DelegateElection delegateElection : getStudent().getDelegateElections()) {
+	    if (delegateElection instanceof YearDelegateElection) {
+		if (delegateElection.getExecutionYear().equals(executionYear) && delegateElection.getDegree().equals(getDegree())) {
+		    return (YearDelegateElection) delegateElection;
+		}
+	    }
+	}
+	return null;
     }
 }

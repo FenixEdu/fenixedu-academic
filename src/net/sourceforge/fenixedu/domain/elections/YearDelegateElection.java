@@ -141,12 +141,26 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	for (DegreeCurricularPlan dcp : degree.getActiveDegreeCurricularPlans()) {
 	    for (StudentCurricularPlan scp : dcp.getActiveStudentCurricularPlans()) {
 		if (scp.getRegistration().getCurricularYear(executionYear) == curricularYear.getYear()) {
-		    election.addStudents(scp.getRegistration().getStudent());
+		    if (!hasDelegateElection(election, scp)) {
+			election.addStudents(scp.getRegistration().getStudent());
+		    }
 		}
 	    }
 	}
 
 	return election;
+    }
+
+    private static boolean hasDelegateElection(YearDelegateElection election, StudentCurricularPlan scp) {
+	for (DelegateElection delegateElection : scp.getRegistration().getStudent().getDelegateElections()) {
+	    if (delegateElection instanceof YearDelegateElection) {
+		if (delegateElection.getDegree().equals(election.getDegree())
+			&& delegateElection.getExecutionYear().equals(election.getExecutionYear())) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     @Override
