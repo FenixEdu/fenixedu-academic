@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -21,6 +23,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EntryPhase;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -319,7 +322,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	for (final IndividualCandidacyDocumentFile document : getDocuments()) {
 	    bean.addDocumentFile(document);
 	}
-	
+
 	return bean;
     }
 
@@ -493,4 +496,52 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
     }
 
+    public void exportValues(final StringBuilder result) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources");
+
+	Formatter formatter = new Formatter(result);
+
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.candidacy"), getCandidacyExecutionInterval()
+		.getName());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.state"), getState().getLocalizedName());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.whenCreated"), getWhenCreated().toString(
+		"yyy-MM-dd"));
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.candidacyDate"), getCandidacyDate().toString());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.responsible"), StringUtils
+		.isEmpty(getResponsible()) ? StringUtils.EMPTY : getResponsible());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.notes"),
+		StringUtils.isEmpty(getNotes()) ? StringUtils.EMPTY : getNotes());
+	// formatter.format("%s: %d\n",
+	// bundle.getString("label.IndividualCandidacy.numberOfCandidaciesToHigherSchool"),
+	// getNumberOfCandidaciesToHigherSchool() != null ?
+	// getNumberOfCandidaciesToHigherSchool() : 0);
+	// formatter.format("%s: %d\n",
+	// bundle.getString("label.IndividualCandidacy.numberOfFlunksOnHighSchool"),
+	// getNumberOfFlunksOnHighSchool() != null ?
+	// getNumberOfFlunksOnHighSchool() : 0);
+	// formatter.format("%s: %s\n",
+	// bundle.getString("label.IndividualCandidacy.highSchoolType"),
+	// getHighSchoolType() != null ?
+	// enumBundle.getString("AcademicalInstitutionType." +
+	// getHighSchoolType().getName())
+	// : StringUtils.EMPTY);
+	// formatter.format("%s: %s\n",
+	// bundle.getString("label.IndividualCandidacy.professionType"),
+	// getProfessionType() != null ? enumBundle.getString("ProfessionType."
+	// + getProfessionType().getName())
+	// : StringUtils.EMPTY);
+	// formatter.format("%s: %s\n",
+	// bundle.getString("label.IndividualCandidacy.professionalCondition"),
+	// getProfessionalCondition() != null ?
+	// enumBundle.getString("ProfessionalSituationConditionType."
+	// + getProfessionalCondition().getName()) : StringUtils.EMPTY);
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.observations"), StringUtils
+		.isEmpty(getObservations()) ? StringUtils.EMPTY : getObservations());
+
+	for (final Formation formation : getFormations()) {
+	    formation.exportValues(result);
+	}
+
+    }
 }

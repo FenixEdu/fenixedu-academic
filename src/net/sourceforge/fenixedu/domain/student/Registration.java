@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
@@ -3760,7 +3761,7 @@ public class Registration extends Registration_Base {
 	return hasIndividualCandidacy()
 		&& getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
     }
-
+    
     public YearDelegateElection getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
 	for (DelegateElection delegateElection : getStudent().getDelegateElections()) {
 	    if (delegateElection instanceof YearDelegateElection) {
@@ -3770,5 +3771,16 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
+    }    
+    
+    public void exportValues(StringBuilder result) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+	
+	Formatter formatter = new Formatter(result);
+	final Student student = getStudent();
+	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression().getFullDescription());
+	formatter.format("%s: %d\n", bundle.getString("label.studentNumber"), student.getNumber());
+	formatter.format("%s: %s\n", bundle.getString("label.Student.Person.name"), student.getPerson().getName());
+	formatter.format("%s: %s\n", bundle.getString("label.degree"), getDegree().getPresentationName());
     }
 }

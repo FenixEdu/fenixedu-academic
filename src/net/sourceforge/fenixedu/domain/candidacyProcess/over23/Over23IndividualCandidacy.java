@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -212,5 +215,19 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval());
 	return registration;
+    }
+    
+    @Override
+    public void exportValues(StringBuilder result) {
+	super.exportValues(result);
+
+	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources");
+	Formatter formatter = new Formatter(result);
+	formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.read"), StringUtils
+		.isEmpty(getLanguagesRead()) ? StringUtils.EMPTY : getLanguagesRead());
+	formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.write"), StringUtils
+		.isEmpty(getLanguagesWrite()) ? StringUtils.EMPTY : getLanguagesWrite());
+	formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.speak"), StringUtils
+		.isEmpty(getLanguagesSpeak()) ? StringUtils.EMPTY : getLanguagesSpeak());
     }
 }

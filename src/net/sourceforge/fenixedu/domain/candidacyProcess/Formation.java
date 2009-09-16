@@ -1,23 +1,26 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.Formatter;
+import java.util.ResourceBundle;
+
 import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class Formation extends Formation_Base {
-    
-    public  Formation() {
-        super();
+
+    public Formation() {
+	super();
     }
-    
+
     public Formation(IndividualCandidacy individualCandidacy, FormationBean bean) {
 	this();
-	
+
 	edit(bean);
 	this.setIndividualCandidacy(individualCandidacy);
     }
-    
+
     public void edit(FormationBean bean) {
 	this.setBeginYear(bean.getFormationBeginYear());
 	this.setBranch(null);
@@ -44,7 +47,7 @@ public class Formation extends Formation_Base {
 	this.setConclusionGrade(bean.getConclusionGrade());
 	this.setConclusionExecutionYear(bean.getConclusionExecutionYear());
     }
-    
+
     private Unit getOrCreateInstitution(final FormationBean bean) {
 	if (StringUtils.isEmpty(bean.getInstitutionName()) && bean.getInstitutionUnit() != null) {
 	    return bean.getInstitutionUnit();
@@ -57,5 +60,17 @@ public class Formation extends Formation_Base {
 	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
 	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
     }
-    
+
+    public void exportValues(StringBuilder result) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
+	Formatter formatter = new Formatter(result);
+	formatter.format("\n%s:\n", bundle.getString("title.other.academic.titles"));
+	formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.program.name"), getDesignation());
+	formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.institution"), getInstitution().getName());
+	formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.conclusion.date"), StringUtils
+		.isEmpty(getYear()) ? StringUtils.EMPTY : getYear());
+	formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.conclusion.grade"), StringUtils
+		.isEmpty(getConclusionGrade()) ? StringUtils.EMPTY : getConclusionGrade());
+    }
+
 }

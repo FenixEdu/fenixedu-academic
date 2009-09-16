@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
+import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -10,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -18,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegr
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -221,5 +226,43 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
     void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
 	this.setFormerStudentNumber(bean.getIstStudentNumber());
+    }
+
+    @Override
+    public void exportValues(StringBuilder result) {
+	super.exportValues(result);
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources");
+
+	Formatter formatter = new Formatter(result);
+
+	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
+	CandidacyPrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess()
+		.getCandidacyPrecedentDegreeInformation();
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
+		precedentDegreeInformation.getDegreeDesignation());
+	formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
+		precedentDegreeInformation.getInstitution().getName());
+	formatter.format("%s: %s\n", bundle.getString("label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
+	formatter.format("\n");
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.professionalStatus"), StringUtils
+		.isEmpty(getProfessionalStatus()) ? StringUtils.EMPTY : getProfessionalStatus());
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.otherEducation"), StringUtils
+		.isEmpty(getOtherEducation()) ? StringUtils.EMPTY : getOtherEducation());
+	formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.professionalExperience"),
+		getProfessionalExperience() != null ? getProfessionalExperience() : 0);
+	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),
+		getAffinity() != null ? getAffinity() : BigDecimal.ZERO);
+	formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.degreeNature"),
+		getDegreeNature() != null ? getDegreeNature() : 0);
+	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.candidacyGrade"),
+		getCandidacyGrade() != null ? getCandidacyGrade() : BigDecimal.ZERO);
+	formatter
+		.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.interviewGrade"), getInterviewGrade());
+	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.seriesCandidacyGrade"),
+		getSeriesCandidacyGrade() != null ? getSeriesCandidacyGrade() : BigDecimal.ZERO);
+
     }
 }
