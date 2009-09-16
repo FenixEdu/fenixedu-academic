@@ -52,8 +52,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	spreadsheet.setHeader("Nome Disciplina");
 	spreadsheet.setHeader("Código Disciplina Competência");
 	spreadsheet.setHeader("Código Disciplina de Execução");
-	spreadsheet.setHeader("Ano Curricular");
 	spreadsheet.setHeader("Ano Lectivo");
+	spreadsheet.setHeader("Ano Curricular");
 	spreadsheet.setHeader("Semestre Lectivo");
 	spreadsheet.setHeader("Grupo");
 	spreadsheet.setHeader("Responsaveis");
