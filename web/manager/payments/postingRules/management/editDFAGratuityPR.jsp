@@ -35,7 +35,7 @@
 		<fr:destination name="invalid"
 			path="<%="/postingRules.do?method=prepareEditDFAGratuityPRInvalid&postingRuleId=" + postingRuleId + "&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
 		<fr:destination name="cancel"
-			path="<%="/postingRules.do?method=showPostingRulesForDFADegreeCurricularPlan&degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
+			path="<%="/postingRules.do?method=showPostGraduationDegreeCurricularPlanPostingRules&degreeCurricularPlanId=" + degreeCurricularPlanId %>" />
 	</fr:edit>
 
 </logic:present>
