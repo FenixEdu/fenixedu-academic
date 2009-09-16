@@ -119,57 +119,6 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	return rootDomainObject.readDegreeCurricularPlanByOID(getIntegerFromRequest(request, "degreeCurricularPlanId"));
     }
 
-    public ActionForward prepareCreateDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-
-	request.setAttribute("createDFAGratuityPostingRuleBean", new CreateDFAGratuityPostingRuleBean(degreeCurricularPlan
-		.getServiceAgreementTemplate()));
-
-	return mapping.findForward("createDFAGratuityPR");
-    }
-
-    public ActionForward prepareCreateDFAGratuityPRTypeChosen(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("createDFAGratuityPostingRuleBean",
-		(CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBeanTypeChosen"));
-
-	return mapping.findForward("createDFAGratuityPR");
-    }
-
-    public ActionForward prepareCreateDFAGratuityPRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("createDFAGratuityPostingRuleBean", getCreateDFAGratuityPostingRuleBeanFromRequest());
-
-	return mapping.findForward("createDFAGratuityPR");
-    }
-
-    public ActionForward createDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    PostingRulesManager.createDFAGratuityPostingRule(getCreateDFAGratuityPostingRuleBeanFromRequest());
-	} catch (DomainException ex) {
-	    addActionMessage(request, ex.getKey(), ex.getArgs());
-
-	    request.setAttribute("createDFAGratuityPostingRuleBean", getCreateDFAGratuityPostingRuleBeanFromRequest());
-
-	    return mapping.findForward("createDFAGratuityPR");
-	}
-
-	request.setAttribute("degreeCurricularPlanId", getCreateDFAGratuityPostingRuleBeanFromRequest().getDegreeCurricularPlan()
-		.getIdInternal());
-
-	return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
-    }
-
-    private CreateDFAGratuityPostingRuleBean getCreateDFAGratuityPostingRuleBeanFromRequest() {
-	return (CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBean");
-    }
-
     public ActionForward prepareEditDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -556,6 +505,59 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
 
 	return showGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreateDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	request.setAttribute("createDFAGratuityPostingRuleBean", new CreateDFAGratuityPostingRuleBean(degreeCurricularPlan
+		.getServiceAgreementTemplate()));
+
+	return mapping.findForward("createDFAGratuityPR");
+    }
+
+    public ActionForward prepareCreateDFAGratuityPRTypeChosen(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createDFAGratuityPostingRuleBean",
+		(CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBean.chooseType"));
+
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createDFAGratuityPR");
+    }
+
+    public ActionForward prepareCreateDFAGratuityPRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createDFAGratuityPostingRuleBean", getCreateDFAGratuityPostingRuleBeanFromRequest());
+
+	return mapping.findForward("createDFAGratuityPR");
+    }
+
+    public ActionForward createDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    PostingRulesManager.createDFAGratuityPostingRule(getCreateDFAGratuityPostingRuleBeanFromRequest());
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+
+	    request.setAttribute("createDFAGratuityPostingRuleBean", getCreateDFAGratuityPostingRuleBeanFromRequest());
+
+	    return mapping.findForward("createDFAGratuityPR");
+	}
+
+	request.setAttribute("degreeCurricularPlanId", getCreateDFAGratuityPostingRuleBeanFromRequest().getDegreeCurricularPlan()
+		.getIdInternal());
+
+	return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+    }
+
+    private CreateDFAGratuityPostingRuleBean getCreateDFAGratuityPostingRuleBeanFromRequest() {
+	return (CreateDFAGratuityPostingRuleBean) getObjectFromViewState("createDFAGratuityPostingRuleBean");
     }
 
 }
