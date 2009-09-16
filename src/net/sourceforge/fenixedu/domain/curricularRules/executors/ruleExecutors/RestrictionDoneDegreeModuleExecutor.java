@@ -43,7 +43,7 @@ public class RestrictionDoneDegreeModuleExecutor extends CurricularRuleExecutor 
 	 * current semester then Enrolment must be impossible
 	 */
 	if (isEnroled(enrolmentContext, rule.getDegreeModuleToApplyRule())) {
-	    return RuleResult.createTrue(EnrolmentResultType.IMPOSSIBLE, sourceDegreeModuleToEvaluate.getDegreeModule());
+	    return createImpossibleRuleResult(rule, sourceDegreeModuleToEvaluate);
 	}
 
 	return createFalseRuleResult(rule, sourceDegreeModuleToEvaluate);
