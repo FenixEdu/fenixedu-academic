@@ -78,7 +78,9 @@ public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {
     }
 
     public void delete() {
-	getFile().delete();
+	if (hasFile()) {
+	    getFile().delete();
+	}
 	removeRefereeCountry();
 	removeCandidacyReferee();
 	removePhdProgramCandidacyProcess();
