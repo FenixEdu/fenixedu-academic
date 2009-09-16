@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -10,10 +9,13 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -32,24 +34,29 @@ public class StudentPortalBean implements Serializable {
 	    private String enrolment;
 	    private Boolean registered;
 
-	    public EvaluationAnnouncement(WrittenEvaluation writtenEvaluation) {
-		setEvaluationType(writtenEvaluation.getEvaluationType().toString());
-		setIdentification(writtenEvaluation.getName());
-		setRealization(writtenEvaluation.getBeginningDateTime().toDate());
-		setEnrolment(writtenEvaluation);
-		setRegistered(isStudentEnrolled(writtenEvaluation));
+	    public EvaluationAnnouncement(WrittenTest writtenTest) {
+		setEvaluationType(writtenTest.getEvaluationType().toString());
+		setIdentification(writtenTest.getDescription());
+		setRealization(writtenTest);
+		setEnrolment(writtenTest);
+		setRegistered(isStudentEnrolled(writtenTest));
 	    }
 
-	    public EvaluationAnnouncement(Project project) {
-		setEvaluationType(project.getEvaluationType().toString());
-		if (project.getGrouping() != null) {
-		    setIdentification(project.getGrouping().getName());
-		} else {
-		    setIdentification("");
-		}
-		setRealization(project.getBegin(), project.getEnd());
-		setEnrolment(project);
-		setRegistered(isStudentEnrolled(project));
+	    public EvaluationAnnouncement(Exam exam) {
+		setEvaluationType(exam.getEvaluationType().toString());
+		setIdentification(exam.getName());
+		setRealization(exam);
+		setEnrolment(exam);
+		setRegistered(isStudentEnrolled(exam));
+	    }
+
+	    public EvaluationAnnouncement(Grouping grouping) {
+		ResourceBundle resource = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+		setEvaluationType(resource.getString("label.grouping"));
+		setIdentification(grouping.getName());
+		setRealization(grouping);
+		setEnrolment(grouping);
+		setRegistered(isStudentEnrolled(grouping));
 	    }
 
 	    private boolean isStudentEnrolled(WrittenEvaluation writtenEvaluation) {
@@ -63,13 +70,12 @@ public class StudentPortalBean implements Serializable {
 		return false;
 	    }
 
-	    private boolean isStudentEnrolled(Project project) {
-		if (project.getGrouping() == null) {
-		    return false;
-		}
-		for (final Attends attend : project.getGrouping().getAttendsSet()) {
-		    if (attend.getEnrolment() != null && attend.getEnrolment().getStudent() == getStudent()) {
-			return true;
+	    private boolean isStudentEnrolled(Grouping grouping) {
+		for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+		    for (Attends attends : studentGroup.getAttends()) {
+			if (attends.getAluno().getStudent() == getStudent()) {
+			    return true;
+			}
 		    }
 		}
 		return false;
@@ -103,22 +109,19 @@ public class StudentPortalBean implements Serializable {
 		this.identification = identification;
 	    }
 
-	    public void setRealization(Date writtenEvaluationDate) {
+	    public void setRealization(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		this.realization = resource.getString("message.out.realization.date") + " "
-			+ YearMonthDay.fromDateFields(writtenEvaluationDate).toString();
+			+ YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString();
 	    }
 
-	    public void setRealization(Date projectBeginDate, Date projectEndDate) {
-		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		this.realization = resource.getString("message.out.realization.period") + " "
-			+ YearMonthDay.fromDateFields(projectBeginDate).toString() + " "
-			+ resource.getString("message.out.until") + " " + YearMonthDay.fromDateFields(projectEndDate).toString();
+	    public void setRealization(Grouping grouping) {
+		this.realization = "";
 	    }
 
 	    public void setEnrolment(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		if (writtenEvaluation.getWrittenEvaluationEnrolmentsCount() != 0) {
+		if (writtenEvaluation.hasAnyWrittenEvaluationEnrolments()) {
 		    this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
 			    + writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
 			    + resource.getString("message.out.until") + " "
@@ -128,16 +131,12 @@ public class StudentPortalBean implements Serializable {
 		}
 	    }
 
-	    public void setEnrolment(Project project) {
+	    public void setEnrolment(Grouping grouping) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		if (project.getGrouping() != null) {
-		    this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
-			    + YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentBeginDayDate()).toString() + " "
-			    + resource.getString("message.out.until") + " "
-			    + YearMonthDay.fromDateFields(project.getGrouping().getEnrolmentEndDayDate()).toString();
-		} else {
-		    this.enrolment = " " + resource.getString("message.out.enrolment.period.default");
-		}
+		this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
+			+ YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
+			+ resource.getString("message.out.until") + " "
+			+ YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
 	    }
 
 	    public void setRegistered(Boolean registered) {
@@ -152,15 +151,14 @@ public class StudentPortalBean implements Serializable {
 	    setExecutionCourse(executionCourse);
 	    setEvaluationAnnouncements(new ArrayList<EvaluationAnnouncement>());
 	    for (Evaluation evaluation : executionCourse.getOrderedAssociatedEvaluations()) {
-		EvaluationAnnouncement evaluationAnnouncement;
-		if (evaluation.getEvaluationType() == EvaluationType.TEST_TYPE
-			|| evaluation.getEvaluationType() == EvaluationType.EXAM_TYPE) {
-		    evaluationAnnouncement = new EvaluationAnnouncement((WrittenEvaluation) evaluation);
-		    addEvaluationAnnouncement(evaluationAnnouncement);
-		} else if (evaluation.getEvaluationType() == EvaluationType.PROJECT_TYPE) {
-		    evaluationAnnouncement = new EvaluationAnnouncement((Project) evaluation);
-		    addEvaluationAnnouncement(evaluationAnnouncement);
+		if (evaluation.getEvaluationType() == EvaluationType.TEST_TYPE) {
+		    addEvaluationAnnouncement(new EvaluationAnnouncement((WrittenTest) evaluation));
+		} else if (evaluation.getEvaluationType() == EvaluationType.EXAM_TYPE) {
+		    addEvaluationAnnouncement(new EvaluationAnnouncement((Exam) evaluation));
 		}
+	    }
+	    for (Grouping grouping : executionCourse.getGroupings()) {
+		addEvaluationAnnouncement(new EvaluationAnnouncement(grouping));
 	    }
 	}
 
