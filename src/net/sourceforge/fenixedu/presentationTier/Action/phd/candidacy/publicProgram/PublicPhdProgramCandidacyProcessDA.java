@@ -126,7 +126,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     "viewCandidacy",
 
-    "backToViewCandidacy");
+    "backToViewCandidacy",
+    
+    "prepareCreateRefereeLetter",
+    
+    "createRefereeLetterInvalid",
+    
+    "createRefereeLetter"
+    );
 
     static private final int MINIMUM_HABILITATIONS_AND_CERTIFICATES = 2;
     static private final int MINIMUM_CANDIDACY_REFEREES = 3;
@@ -164,7 +171,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     private boolean isOutOfCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
-	return !getPhdCandidacyPeriod(hashCode).contains(new DateTime());
+	final PhdCandidacyPeriod period = getPhdCandidacyPeriod(hashCode);
+	return period == null || !period.contains(new DateTime());
     }
 
     private PhdCandidacyPeriod getPhdCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
