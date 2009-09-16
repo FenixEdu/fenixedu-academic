@@ -28,11 +28,16 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApprovementInfoForEquivalenceProcess {
 
-    static final private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+    static final private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language
+	    .getLocale());
+
+    static final private ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
+	    .getLocale());
 
     static final protected String[] identifiers = { "*", "#", "+", "**", "***" };
 
@@ -53,20 +58,21 @@ public class ApprovementInfoForEquivalenceProcess {
 	} else {
 	    final ICurriculum curriculum = registration.getCurriculum();
 	    filterEntries(entries, curriculum);
-	    reportEntries(res, entries, ids);
+	    reportEntries(res, entries, ids, registration);
 	}
 
 	entries.clear();
 	entries.addAll(getExtraCurricularEntriesToReport(registration));
 	if (!entries.isEmpty()) {
-	    reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan().getExtraCurriculumGroup());
+	    reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan().getExtraCurriculumGroup(),
+		    registration);
 	}
 
 	entries.clear();
 	entries.addAll(getPropaedeuticEntriesToReport(registration));
 	if (!entries.isEmpty()) {
 	    reportRemainingEntries(res, entries, ids, registration.getLastStudentCurricularPlan()
-		    .getPropaedeuticCurriculumGroup());
+		    .getPropaedeuticCurriculumGroup(), registration);
 	}
 
 	res.append(getRemainingCreditsInfo(registration.getCurriculum()));
@@ -88,7 +94,7 @@ public class ApprovementInfoForEquivalenceProcess {
 
 	    unit.append(academicUnitId.getValue());
 	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.one"));
-	    unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
+	    unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()));
 	    result.append(unit.toString());
 	    result.append(LINE_BREAK);
 	}
@@ -113,7 +119,7 @@ public class ApprovementInfoForEquivalenceProcess {
     }
 
     static private void reportEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
-	    final Map<Unit, String> academicUnitIdentifiers) {
+	    final Map<Unit, String> academicUnitIdentifiers, final Registration registration) {
 	ExecutionYear lastReportedExecutionYear = null;
 	for (final ICurriculumEntry entry : entries) {
 	    final ExecutionYear executionYear = entry.getExecutionYear();
@@ -126,7 +132,7 @@ public class ApprovementInfoForEquivalenceProcess {
 		// result.append(LINE_BREAK);
 	    }
 
-	    reportEntry(result, entry, academicUnitIdentifiers, executionYear);
+	    reportEntry(result, entry, academicUnitIdentifiers, executionYear, registration);
 	}
     }
 
@@ -152,7 +158,7 @@ public class ApprovementInfoForEquivalenceProcess {
 		    }
 
 		    result.append(getMLSTextContent(cycle.getName())).append(":").append(LINE_BREAK);
-		    reportEntries(result, entries, academicUnitIdentifiers);
+		    reportEntries(result, entries, academicUnitIdentifiers, registration);
 		}
 
 		entries.clear();
@@ -179,18 +185,19 @@ public class ApprovementInfoForEquivalenceProcess {
     }
 
     static private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
-	    final Map<Unit, String> academicUnitIdentifiers, final NoCourseGroupCurriculumGroup group) {
+	    final Map<Unit, String> academicUnitIdentifiers, final NoCourseGroupCurriculumGroup group,
+	    final Registration registration) {
 	result.append(LINE_BREAK).append(getMLSTextContent(group.getName())).append(":").append(LINE_BREAK);
 
 	for (final ICurriculumEntry entry : entries) {
-	    reportEntry(result, entry, academicUnitIdentifiers, entry.getExecutionYear());
+	    reportEntry(result, entry, academicUnitIdentifiers, entry.getExecutionYear(), registration);
 	}
     }
 
     static private void reportEntry(final StringBuilder result, final ICurriculumEntry entry,
-	    final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
-	result.append(getCurriculumEntryName(academicUnitIdentifiers, entry))
-		.append(getCreditsAndGradeInfo(entry, executionYear)).append(LINE_BREAK);
+	    final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear, final Registration registration) {
+	result.append(getCurriculumEntryName(academicUnitIdentifiers, entry)).append(
+		getCreditsAndGradeInfo(entry, executionYear, registration)).append(LINE_BREAK);
     }
 
     static protected String getCurriculumEntryName(final Map<Unit, String> academicUnitIdentifiers, final ICurriculumEntry entry) {
@@ -199,7 +206,7 @@ public class ApprovementInfoForEquivalenceProcess {
 	if (entry instanceof ExternalEnrolment) {
 	    result.append(getAcademicUnitIdentifier(academicUnitIdentifiers, ((ExternalEnrolment) entry).getAcademicUnit()));
 	}
-	result.append(getPresentationNameFor(entry).toUpperCase());
+	result.append(getPresentationNameFor(entry));
 
 	return result.toString();
     }
@@ -225,12 +232,14 @@ public class ApprovementInfoForEquivalenceProcess {
 	return getMLSTextContent(result);
     }
 
-    final static String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear) {
+    final static String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear,
+	    final Registration registration) {
 	final StringBuilder result = new StringBuilder();
 
-	getCreditsInfo(result, entry);
+	result.append(SINGLE_SPACE);
+	getCreditsInfo(result, entry, registration);
 	result.append(entry.getGradeValue());
-	result.append("(" + entry.getGradeValue() + ")");
+	result.append("(" + enumBundle.getString(entry.getGradeValue()) + ")");
 
 	result.append(SINGLE_SPACE);
 	final String in = getResourceBundle().getString("label.in");
@@ -242,8 +251,12 @@ public class ApprovementInfoForEquivalenceProcess {
 	return result.toString();
     }
 
-    static protected void getCreditsInfo(final StringBuilder result, final ICurriculumEntry entry) {
-	result.append(entry.getEctsCreditsForCurriculum()).append(", ");
+    static protected void getCreditsInfo(final StringBuilder result, final ICurriculumEntry entry, final Registration registration) {
+	result.append(entry.getEctsCreditsForCurriculum()).append(getCreditsDescription(registration)).append(", ");
+    }
+
+    static private String getCreditsDescription(final Registration registration) {
+	return registration.getDegreeType().getCreditsDescription();
     }
 
     static private Collection<ICurriculumEntry> getExtraCurricularEntriesToReport(final Registration registration) {
@@ -303,7 +316,7 @@ public class ApprovementInfoForEquivalenceProcess {
 	    return StringUtils.EMPTY;
 	}
 	final String content = mls.hasContent() && !StringUtils.isEmpty(mls.getContent()) ? mls.getContent() : mls.getContent();
-	return convert(content);
+	return content == null ? StringUtils.EMPTY : convert(content);
     }
 
     static private String convert(final String content) {
