@@ -8,7 +8,7 @@
 
 <logic:present role="RESEARCHER">	
 	<div style="float: right;">
-		 <jsp:include page="../../../i18n.jsp"/>
+		 <jsp:include page="../i18n_complete.jsp"/>
 	</div>
 	<script type="text/javascript">
 	hideButtons();
