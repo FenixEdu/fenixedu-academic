@@ -26,8 +26,11 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
 
-	for (Attends attends : getStudentGroup().getAttends()) {
-	    elements.add(attends.getRegistration().getPerson());
+	final StudentGroup studentGroup = getStudentGroup();
+	if (studentGroup != null) {
+	    for (Attends attends : getStudentGroup().getAttends()) {
+		elements.add(attends.getRegistration().getPerson());
+	    }
 	}
 
 	return super.freezeSet(elements);
