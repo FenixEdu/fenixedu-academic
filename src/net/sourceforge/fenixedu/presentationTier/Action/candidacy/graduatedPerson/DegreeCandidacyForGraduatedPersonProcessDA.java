@@ -82,6 +82,27 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	setChooseDegreeBean(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
+    private void setChooseDegreeBean(HttpServletRequest request) {
+	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
+
+	if (chooseDegreeBean == null) {
+	    chooseDegreeBean = new ChooseDegreeBean();
+	}
+
+	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
+    }
+
+    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+	return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
+    }
+
+    @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	if (!hasExecutionInterval(request)) {
 	    final List<ExecutionInterval> executionIntervals = ExecutionInterval
@@ -277,6 +298,22 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	row.setCell(candidateBundle.getString(degreeCandidacyForGraduatedPersonProcess.getProcessChecked() != null
 		&& degreeCandidacyForGraduatedPersonProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
 	return spreadsheet;
+    }
+
+    @Override
+    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+	List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+	List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses = new ArrayList<IndividualCandidacyProcess>();
+	Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+
+	for (IndividualCandidacyProcess child : processes) {
+	    if ((selectedDegree == null)
+		    || ((DegreeCandidacyForGraduatedPersonIndividualProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		selectedDegreesIndividualCandidacyProcesses.add(child);
+	    }
+	}
+
+	return selectedDegreesIndividualCandidacyProcesses;
     }
 
 }

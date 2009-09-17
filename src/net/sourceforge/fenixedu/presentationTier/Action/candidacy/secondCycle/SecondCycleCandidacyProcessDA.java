@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
@@ -80,6 +81,27 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     @Override
     protected SecondCycleCandidacyProcess getProcess(HttpServletRequest request) {
 	return (SecondCycleCandidacyProcess) super.getProcess(request);
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	setChooseDegreeBean(request);
+	return super.execute(mapping, actionForm, request, response);
+    }
+
+    private void setChooseDegreeBean(HttpServletRequest request) {
+	ChooseDegreeBean chooseDegreeBean = (ChooseDegreeBean) getObjectFromViewState("choose.degree.bean");
+
+	if (chooseDegreeBean == null) {
+	    chooseDegreeBean = new ChooseDegreeBean();
+	}
+
+	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
+    }
+
+    private ChooseDegreeBean getChooseDegreeBean(HttpServletRequest request) {
+	return (ChooseDegreeBean) request.getAttribute("chooseDegreeBean");
     }
 
     @Override
@@ -373,4 +395,21 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
 	return spreadsheet;
     }
+
+    @Override
+    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+	List<IndividualCandidacyProcess> processes = process.getChildProcesses();
+	List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses = new ArrayList<IndividualCandidacyProcess>();
+	Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+
+	for (IndividualCandidacyProcess child : processes) {
+	    if ((selectedDegree == null)
+		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		selectedDegreesIndividualCandidacyProcesses.add(child);
+	    }
+	}
+
+	return selectedDegreesIndividualCandidacyProcesses;
+    }
+
 }

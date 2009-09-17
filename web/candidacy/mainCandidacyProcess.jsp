@@ -68,6 +68,11 @@
 				<fr:layout name="radio-postback"/>
 			</fr:edit>
 			</p>
+			
+			<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="ChooseDegreeBean.selectDegree" >
+				<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
+			</fr:edit>			
+			
 		</html:form>
 		<br/>
 	</logic:greaterThan>
