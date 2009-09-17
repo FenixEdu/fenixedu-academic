@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import pt.ist.fenixWebFramework.services.Service;
-
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -18,11 +15,19 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.EMail;
 
 /**
@@ -44,15 +49,20 @@ public class UnEnrollStudentInGroup extends FenixService {
     public static Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
 
 	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
-
-	final List<String> emails = new ArrayList<String>();
-	for (final Attends attends : studentGroup.getAttends()) {
-	    emails.add(attends.getRegistration().getPerson().getEmail());
-	}
-
 	if (studentGroup == null) {
 	    throw new InvalidSituationServiceException();
 	}
+
+	final List<String> emails = new ArrayList<String>();
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final Attends attends : studentGroup.getAttends()) {
+	    final Person person = attends.getRegistration().getPerson();
+	    people.add(person);
+	}
+	final FixedSetGroup fixedSetGroup = new FixedSetGroup(people);
+	final Recipient recipient = new Recipient("", fixedSetGroup);
+	final Collection<Recipient> recipients = new ArrayList<Recipient>();
+	recipients.add(recipient);
 
 	Registration registration = Registration.readByUsername(userName);
 
@@ -84,10 +94,14 @@ public class UnEnrollStudentInGroup extends FenixService {
 	    }
 	    executionCourseNames.append(executionCourse.getNome());
 	}
-	EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"), messages
-		.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(), messages.getMessage(
-		"message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup.getGroupNumber()
-			.toString(), attend.getExecutionCourse().getNome()));
+
+	final String message = messages.getMessage("message.body.grouping.change.unenrolment",
+		registration.getNumber().toString(), studentGroup.getGroupNumber().toString(),
+		attend.getExecutionCourse().getNome());
+
+	SystemSender systemSender = rootDomainObject.getSystemSender();
+	new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, messages
+		.getMessage("message.subject.grouping.change"), message, "");
 
 	return Boolean.TRUE;
     }
