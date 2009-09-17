@@ -73,7 +73,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	if (alreadyHasRequest(registration, executionYear)) {
 	    throw new DomainException("error.StudentReingressionRequest.already.has.request.to.same.executionYear");
 	}
-	
+
 	if (registration.getStudent().isAnyGratuityOrAdministrativeOfficeFeeAndInsuranceInDebt(executionYear)) {
 	    throw new DomainException("error.StudentReingressionRequest.student.has.debts");
 	}
@@ -99,8 +99,7 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
 	    final DateTime requestDate) {
 	final DegreeCurricularPlan degreeCurricularPlan = registration.getLastDegreeCurricularPlan();
-	return !degreeCurricularPlan.isBolonhaDegree()
-		|| hasOpenEnrolmentPeriod(degreeCurricularPlan, executionYear, requestDate);
+	return hasOpenEnrolmentPeriod(degreeCurricularPlan, executionYear, requestDate);
     }
 
     private boolean hasOpenEnrolmentPeriod(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionYear executionYear,
