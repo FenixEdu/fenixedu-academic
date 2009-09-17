@@ -3,31 +3,28 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class PrintAllDocumentsOperation extends CandidacyOperation {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+    static private final long serialVersionUID = 1L;
 
     public PrintAllDocumentsOperation(Set<RoleType> roleTypes, Candidacy candidacy) {
 	super(roleTypes, candidacy);
     }
-    
+
     public PrintAllDocumentsOperation(final RoleType roleType, final Candidacy candidacy) {
 	this(Collections.singleton(roleType), candidacy);
     }
 
-
     @Override
     protected void internalExecute() {
 	// TODO Auto-generated method stub
-
     }
 
     @Override
@@ -41,8 +38,13 @@ public class PrintAllDocumentsOperation extends CandidacyOperation {
     }
 
     @Override
+    public StudentCandidacy getCandidacy() {
+	return (StudentCandidacy) super.getCandidacy();
+    }
+
+    @Override
     public boolean isVisible() {
-	return true;
+	return getCandidacy().getExecutionYear().equals(ExecutionYear.readCurrentExecutionYear());
     }
 
     @Override
