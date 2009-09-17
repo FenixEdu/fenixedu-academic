@@ -464,8 +464,14 @@ public abstract class Event extends Event_Base {
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
-	return totalAmountToPay != null && totalAmountToPay.isPositive() ? totalAmountToPay
-		.subtract(getPayedAmount(whenRegistered)) : Money.ZERO;
+
+	if (totalAmountToPay == null) {
+	    return Money.ZERO;
+	}
+
+	final Money remainingAmount = totalAmountToPay.subtract(getPayedAmount(whenRegistered));
+
+	return remainingAmount.isPositive() ? remainingAmount : Money.ZERO;
 
     }
 
