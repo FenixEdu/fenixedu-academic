@@ -187,6 +187,7 @@ public class ManageThesisDA extends FenixDispatchAction {
 			if (proposal != null) {
 			    request.setAttribute("hasAssignment", true);
 			    request.setAttribute("proposal", proposal);
+			    request.setAttribute("proposalEnrolment", enrolment);
 			    return mapping.findForward("search-student");
 			} else {
 			    request.setAttribute("proposeStartProcess", true);

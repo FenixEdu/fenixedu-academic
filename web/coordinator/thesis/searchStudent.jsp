@@ -46,18 +46,24 @@
 		</fr:layout>
 	</fr:view>
 
-	<div class="warning0" style="padding: 1em;">
-		<p class="mtop0 mbottom1">
-			<bean:message key="label.coordinator.proposal.assigned"/>
-	    </p>
+	<logic:notPresent name="proposalEnrolment">
+		<em><bean:message key="label.student.thesis.notFound"/></em>
+	</logic:notPresent>
+	<logic:present name="proposalEnrolment">
+		<div class="warning0" style="padding: 1em;">
+			<p class="mtop0 mbottom1">
+				<bean:message key="label.coordinator.proposal.assigned"/>
+		    </p>
 
-	    <bean:define id="studentId" name="bean" property="student.externalId"/>
-	    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s", dcpId, executionYearId, studentId) %>">
-	        <html:submit>
-	            <bean:message key="button.coordinator.thesis.proposal.create"/>
-	        </html:submit>
-	    </fr:form>
-    </div>
+		    <bean:define id="studentId" name="bean" property="student.externalId"/>
+		    <bean:define id="enrolmentId" name="proposalEnrolment" property="externalId"/>
+		    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s&amp;enrolmentOID=%s", dcpId, executionYearId, studentId, enrolmentId) %>">
+	    	    <html:submit>
+	        	    <bean:message key="button.coordinator.thesis.proposal.create"/>
+	        	</html:submit>
+		    </fr:form>
+    	</div>
+    </logic:present>
 </logic:present>
 
 <logic:present name="proposeStartProcess">
