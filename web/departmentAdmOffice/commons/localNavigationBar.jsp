@@ -182,12 +182,13 @@
 	<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
 		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
 		<bean:define id="unitID" name="unit" property="idInternal"/>
+		<bean:define id="unitExternalId" name="unit" property="externalId"/>
 		
 		<ul>	
 		<li class="navheader"><fr:view name="unit" property="acronym"/></li>
 			<ul>
 				<li>
-					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + unitID %>">
+					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitExternalId=" + unitExternalId %>">
 						<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 					 </html:link>
 				 </li>	
@@ -208,10 +209,11 @@
 					<logic:equal name="subUnit" property="scientificAreaUnit"  value="true">
 						<logic:equal name="subUnit" property="currentUserMemberOfScientificArea" value="true">
 							<bean:define id="subUnitID" name="subUnit" property="idInternal"/>
+							<bean:define id="subUnitExternalId" name="subUnit" property="externalId"/>
 							<li class="navheader"><fr:view name="subUnit" property="name"/></li>
 									<ul>
 										<li>
-											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitId=" + subUnitID %>">
+											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&unitExternalId=" + subUnitExternalId %>">
 												<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 											 </html:link>
 										 </li>	
