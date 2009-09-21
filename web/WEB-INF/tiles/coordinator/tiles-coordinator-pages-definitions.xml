@@ -355,12 +355,4 @@
 	</definition>
 	
 	<!-- End: Equivalence Management -->
-
-	<!-- Phd Module -->
-	
-	<definition name="phd.navLocal" extends="definition.coordinator.two-column">
-		<put name="navLocal" value="/coordinator/localNavigationBar.jsp" />
-	</definition>
-	
-	<!-- End of Phd Module -->    
 </tiles-definitions>

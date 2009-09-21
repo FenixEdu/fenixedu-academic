@@ -36,12 +36,13 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
 @Forwards( {
 	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"),
 	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"),
-	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", extend = "header.treeRenderer"),
+	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
 	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
 	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
 	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })

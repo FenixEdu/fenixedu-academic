@@ -4,13 +4,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdC
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "coordinator")
-@Forwards(extend = "phd.navLocal", value = {
+@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-	@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/coordinator/manageCandidacyDocuments.jsp"),
+@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/coordinator/manageCandidacyDocuments.jsp"),
 
-	@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/coordinator/manageCandidacyReview.jsp")
+@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/coordinator/manageCandidacyReview.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {

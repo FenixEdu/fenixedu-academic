@@ -8,9 +8,6 @@
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
-    <definition name="header.treeRenderer" extends="academicAdminOffice.masterPage">
-		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
-    </definition>
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/manageRegistrationState.jsp"></put>
     </definition>

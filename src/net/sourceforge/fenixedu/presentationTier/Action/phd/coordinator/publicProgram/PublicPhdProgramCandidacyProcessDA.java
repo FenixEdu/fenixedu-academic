@@ -22,9 +22,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
-@Forwards(extend = "phd.navLocal", value = {
+@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
 @Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
 
