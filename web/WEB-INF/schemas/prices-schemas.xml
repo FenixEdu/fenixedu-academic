@@ -185,6 +185,12 @@
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
 </schema>
 
+<schema name="DegreeFinalizationCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
+
 <schema name="EquivalencePlanRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -346,6 +352,12 @@
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
 </schema>
 
+<schema name="DegreeFinalizationCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage)"/>
+</schema>
+
 <schema name="EquivalencePlanRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EquivalencePlanRequestPR"
 	bundle="APPLICATION_RESOURCES">
@@ -466,6 +478,10 @@
 </schema>
 
 <schema name="StandaloneEnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.StandaloneEnrolmentCertificateRequestPR" 
+		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR" 
 		extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 

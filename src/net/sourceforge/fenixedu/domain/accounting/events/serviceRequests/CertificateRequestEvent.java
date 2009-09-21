@@ -42,28 +42,14 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 	return labelFormatter;
     }
 
-    private void fillDescription(final LabelFormatter labelFormatter) {
+    protected void fillDescription(final LabelFormatter labelFormatter) {
 	labelFormatter.appendLabel(" (");
-	addCycleDescriptionIfRequired(labelFormatter);
 	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
 	labelFormatter.appendLabel(")");
-    }
-
-    private void addCycleDescriptionIfRequired(LabelFormatter labelFormatter) {
-	// FIXME: Hack because there are no subclasses for certificate request
-	// events
-	if (getAcademicServiceRequest() instanceof DegreeFinalizationCertificateRequest) {
-	    final DegreeFinalizationCertificateRequest request = (DegreeFinalizationCertificateRequest) getAcademicServiceRequest();
-	    if (request.getRequestedCycle() != null) {
-		labelFormatter.appendLabel(request.getRequestedCycle().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES)
-			.appendLabel(" ").appendLabel("label.of", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ");
-	    }
-	}
-
     }
 
     final public Integer getNumberOfUnits() {

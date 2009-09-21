@@ -183,6 +183,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	 
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
+enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType 			  as DegreeFinalizationCertificateRequestJustificationType;
 
 /*
  * Value types that need special externalization
@@ -1747,6 +1748,9 @@ class DomainObject {
 					class accounting.events.serviceRequests.PastCertificateRequestEvent extends accounting.events.serviceRequests.CertificateRequestEvent {
 						Money pastAmount;
 					}
+					
+					class accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent extends accounting.events.serviceRequests.CertificateRequestEvent {
+					}
 
 				class accounting.events.serviceRequests.DeclarationRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
 				}
@@ -1865,6 +1869,10 @@ class DomainObject {
 		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
 		}
 		
+		class accounting.events.DegreeFinalizationCertificateRequestExemption extends accounting.Exemption {
+			Money value;
+		}
+
 	class accounting.Discount extends DomainObject {
 		DateTime whenCreated;
 		String username;
@@ -2015,6 +2023,9 @@ class DomainObject {
 					}
 					
 					class accounting.postingRules.serviceRequests.ExtraCurricularEnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
+					}
+					
+					class accounting.postingRules.serviceRequests.DegreeFinalizationCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
 					}
 
 			class accounting.postingRules.FixedAmountPR extends accounting.postingRules.GenericSingleEntryTypePR {
@@ -2222,6 +2233,10 @@ class DomainObject {
 				YearMonthDay dispatchDate;
 			}
 			
+		class accounting.events.DegreeFinalizationCertificateRequestExemptionJustification extends accounting.events.ExemptionJustification {
+			DegreeFinalizationCertificateRequestJustificationType justificationType;
+			LocalDate dispatchDate;
+		}
 
 	class administrativeOffice.AdministrativeOffice extends DomainObject {
 		AdministrativeOfficeType administrativeOfficeType;

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.Crea
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.CreateInstallmentPenaltyExemption;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AdministrativeOfficeFeeAndInsuranceExemptionBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.DegreeFinalizationCertificateRequestExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.gratuityExemption.CreateGratuityExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
@@ -24,10 +25,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.phd.PhdRegistrationFee;
@@ -50,13 +53,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
 	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
 	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp"),
+	@Forward(name = "showForDegreeFinalizationCertificateRequestEvent", path = "/academicAdminOffice/payments/exemptions/showForDegreeFinalizationCertificateRequestEvent.jsp"),
 	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp"),
 	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
 	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp"),
 	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
 	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp"),
-	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp")
+	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp"),
+	@Forward(name = "createDegreeFinalizationCertificateRequestExemption", path = "/academicAdminOffice/payments/exemptions/createDegreeFinalizationCertificateRequestExemption.jsp")
 
 })
 public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePaymentsManagementDispatchAction {
@@ -222,6 +227,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    return mapping.findForward("showForSecondCycleIndividualCandidacyEvent");
 	} else if (event instanceof PhdRegistrationFee) {
 	    return mapping.findForward("showForPhdRegistrationFee");
+	} else if (event instanceof DegreeFinalizationCertificateRequestEvent) {
+	    return mapping.findForward("showForDegreeFinalizationCertificateRequestEvent");
 	} else {
 	    throw new UnsupportedOperationException();
 	}
@@ -334,6 +341,39 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	    return prepareCreateSecondCycleIndividualCandidacyExemptionInvalid(mapping, form, request, response);
+	}
+
+	return showExemptions(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreateDegreeFinalizationCertificateRequestExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute("exemptionBean", new DegreeFinalizationCertificateRequestExemptionBean(
+		(DegreeFinalizationCertificateRequestEvent) getEvent(request)));
+	return mapping.findForward("createDegreeFinalizationCertificateRequestExemption");
+    }
+
+    public ActionForward prepareCreateDegreeFinalizationCertificateRequestExemptionInvalid(ActionMapping mapping,
+	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("exemptionBean", getRenderedObject("exemptionBean"));
+	return mapping.findForward("createDegreeFinalizationCertificateRequestExemption");
+    }
+
+    public ActionForward createDegreeFinalizationCertificateRequestExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    final DegreeFinalizationCertificateRequestExemptionBean bean = (DegreeFinalizationCertificateRequestExemptionBean) getRenderedObject("exemptionBean");
+	    DegreeFinalizationCertificateRequestExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean
+		    .getValue(), bean.getJustificationType(), bean.getReason());
+
+	} catch (DomainExceptionWithLabelFormatter ex) {
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    return prepareCreateDegreeFinalizationCertificateRequestExemptionInvalid(mapping, form, request, response);
+
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getKey(), ex.getArgs());
+	    return prepareCreateDegreeFinalizationCertificateRequestExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);

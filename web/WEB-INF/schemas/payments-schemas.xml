@@ -305,6 +305,20 @@
 	</slot>
 </schema>
 
+<schema name="DegreeFinalizationCertificateRequestExemption.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.DegreeFinalizationCertificateRequestExemptionBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.DegreeFinalizationCertificateRequestJustificationTypeProvider" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="reason" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="rows" value="4" />
+		<property name="columns" value="40" />
+	</slot>
+</schema>
+
 <schema name="InstallmentPenaltyExemption.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" 
 		bundle="APPLICATION_RESOURCES">
@@ -338,6 +352,14 @@
 		type="net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption" 
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
+</schema>
+
+<schema name="DegreeFinalizationCertificateRequestExemption.view"
+		type="net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
+	<slot name="value" />
+	<slot name="reason" />
 </schema>
 
 <schema name="GratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption" bundle="APPLICATION_RESOURCES">

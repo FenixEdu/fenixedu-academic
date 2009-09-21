@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DegreeFinalizationCertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -307,4 +308,8 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	internalRevertToProcessingState();
     }
 
+    @Override
+    protected void createCertificateRequestEvent() {
+	new DegreeFinalizationCertificateRequestEvent(getAdministrativeOffice(), getRegistration().getPerson(), this);
+    }
 }
