@@ -121,7 +121,8 @@ public class StudentPortalBean implements Serializable {
 
 	    public void setEnrolment(WrittenEvaluation writtenEvaluation) {
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
-		if (writtenEvaluation.hasAnyWrittenEvaluationEnrolments()) {
+		if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
+			&& writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
 		    this.enrolment = resource.getString("message.out.enrolment.period.normal") + " "
 			    + writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay().toString() + " "
 			    + resource.getString("message.out.until") + " "
