@@ -614,6 +614,12 @@ class DomainObject {
 		String arg;
 	}
 
+	class cardGeneration.CardGenerationRegister extends DomainObject {
+		LocalDate emission;
+		Boolean withAccountInformation;
+		String linePrefix;
+	}
+
 	class CompetenceCourse extends DomainObject {
 		String code;
 		YearMonthDay creationDateYearMonthDay;
@@ -15266,6 +15272,13 @@ relation RootDomainObjectCardGenerationEntry {
         }
 }
 
+relation RootDomainObjectCardGenerationRegister {
+        RootDomainObject playsRole rootDomainObject;
+        cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
+                multiplicity *;
+        }
+}
+
 relation RootDomainObjectCardGenerationProblem {
         RootDomainObject playsRole rootDomainObject;
         cardGeneration.CardGenerationProblem playsRole cardGenerationProblem {
@@ -15297,6 +15310,13 @@ relation CardGenerationBatchCardGenerationProblem {
 relation PersonCardGenerationEntry {
         Person playsRole person;
         cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
+		multiplicity *;
+	}
+}
+
+relation PersonCardGenerationRegister {
+        Person playsRole person;
+        cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
 		multiplicity *;
 	}
 }
