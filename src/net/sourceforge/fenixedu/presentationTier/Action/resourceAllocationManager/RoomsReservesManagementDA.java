@@ -1,20 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,14 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.DeleteGenericEvent;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.RequestState;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -38,9 +33,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
@@ -221,6 +218,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	try {
 	    ClosePunctualRoomsOccupationRequest.run(roomsReserveRequest, getLoggedPerson(request));
+	    sendCloseRequestMessage(roomsReserveRequest);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}
@@ -237,6 +235,22 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	    saveMessages(request, domainException);
 	}
 	return seeSpecifiedRoomsReserveRequest(mapping, form, request, response);
+    }
+
+    private void sendCloseRequestMessage(PunctualRoomsOccupationRequest roomsReserveRequest) {
+	MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+	sendMessage(roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(), messages
+		.getMessage("message.room.reservation"), messages.getMessage("message.room.reservation.solved") + "\n"
+		+ messages.getMessage("message.room.reservation.request") + roomsReserveRequest.getSubject() + "\n"
+		+ messages.getMessage("message.room.reservation.description") + roomsReserveRequest.getDescription());
+    }
+
+    @Service
+    private void sendMessage(String email, String subject, String body) {
+	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+	if (email != null) {
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body, email);
+	}
     }
 
     // Private Methods
