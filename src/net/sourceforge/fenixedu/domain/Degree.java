@@ -95,8 +95,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
+	this(name, nameEn, code, degreeType, gradeScale, ExecutionYear.readCurrentExecutionYear());
+    }
+
+    public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
+	    ExecutionYear executionYear) {
 	this();
-	commonFieldsChange(name, nameEn, code, gradeScale, ExecutionYear.readCurrentExecutionYear());
+	commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
 
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
