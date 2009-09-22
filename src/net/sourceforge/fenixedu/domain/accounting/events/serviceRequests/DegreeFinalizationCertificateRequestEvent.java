@@ -36,6 +36,7 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
 	labelFormatter.appendLabel(")");
+	labelFormatter.appendLabel(" - ").appendLabel(getAcademicServiceRequest().getServiceRequestNumberYear());
     }
 
     private void addCycleDescriptionIfRequired(LabelFormatter labelFormatter) {
