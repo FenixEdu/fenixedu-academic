@@ -40,7 +40,7 @@
 	<br/>
 	<br/>
 
-	<logic:present role="MANAGER">
+	<h3><bean:message key="label.card.generation.entry"/>:</h3>
 		<fr:view name="person" property="cardGenerationEntries" schema="card.generation.person.card.list">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
@@ -53,30 +53,29 @@
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
 				<fr:property name="order(view)" value="1" />
 
-				<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
-				<fr:property name="key(delete)" value="label.delete" />
-				<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />
-				<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
-				<fr:property name="order(delete)" value="2" />
+				<logic:present role="MANAGER">
+					<fr:property name="link(delete)" value="/manageCardGeneration.do?method=deletePersonCard"/>
+					<fr:property name="key(delete)" value="label.delete" />
+					<fr:property name="param(delete)" value="OID/cardGenerationEntryId" />
+					<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
+					<fr:property name="order(delete)" value="2" />
+				</logic:present>
 			</fr:layout>
 		</fr:view>
-	</logic:present>
 
-	<logic:notPresent role="MANAGER">
-		<fr:view name="person" property="cardGenerationEntries" schema="card.generation.person.card.list">
+	<h3><bean:message key="label.card.generation.emission"/>:</h3>
+	<logic:empty name="person" property="cardGenerationRegister">
+		<bean:message key="label.message.no.card.registers" bundle="CARD_GENERATION_RESOURCES" />
+	</logic:empty>
+	<logic:notEmpty name="person" property="cardGenerationRegister">
+		<fr:view name="person" property="cardGenerationRegister" schema="card.generation.register.card.list">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thtop mtop05"/>
 				<fr:property name="rowClasses" value=",bgcolorfafafa"/>
 				<fr:property name="columnClasses" value="acenter,acenter,,acenter,acenter,acenter,acenter"/>
-
-				<fr:property name="link(view)" value="/searchPeople.do?method=viewPersonCard"/>
-				<fr:property name="key(view)" value="label.view" />
-				<fr:property name="param(view)" value="idInternal/cardGenerationEntryId" />
-				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES" />
-				<fr:property name="order(view)" value="1" />
 			</fr:layout>
 		</fr:view>
-	</logic:notPresent>
+	</logic:notEmpty>
 
 
 	<logic:present name="cardGenerationEntry">

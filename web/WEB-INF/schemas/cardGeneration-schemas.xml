@@ -86,3 +86,10 @@
 	</slot>
 	<slot name="created" key="label.card.entry.created"/>
 </schema>
+
+
+<schema name="card.generation.register.card.list" type="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationRegister" bundle="CARD_GENERATION_RESOURCES">
+	<slot name="emission" key="label.emission.date"/>
+	<slot name="withAccountInformation" key="label.withAccountInformation"/>
+	<slot name="linePrefix" key="label.linePrefix"/>
+</schema>

@@ -39,10 +39,12 @@
 				<bean:message bundle="CARD_GENERATION_RESOURCES" name="cardGenerationProblem" property="descriptionKey" arg0="<%= arg %>"/>
 			</td>
 			<td>
-				<bean:define id="urlDeleteProblem" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="idInternal"/></bean:define>
-				<html:link page="<%= urlDeleteProblem %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-					<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.problem.delete"/>
-				</html:link>
+				<logic:present role="MANAGER">
+					<bean:define id="urlDeleteProblem" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationProblem&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="idInternal"/></bean:define>
+					<html:link page="<%= urlDeleteProblem %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+						<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.problem.delete"/>
+					</html:link>
+				</logic:present>
 			</td>
 		</tr>
 	</logic:iterate>
@@ -58,10 +60,12 @@
 			<br/>
 			<pre><%= line.substring(131) %></pre>
 	<% } %>
-	<bean:define id="urlDeleteEntry" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationEntry&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="idInternal"/>&amp;cardGenerationEntryID=<bean:write name="cardGenerationEntry" property="idInternal"/></bean:define>
-	<html:link page="<%= urlDeleteEntry %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-		<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.entry.delete"/>
-	</html:link>
+	<logic:present role="MANAGER">
+		<bean:define id="urlDeleteEntry" type="java.lang.String">/manageCardGeneration.do?method=deleteCardGenerationEntry&amp;cardGenerationProblemID=<bean:write name="cardGenerationProblem" property="idInternal"/>&amp;cardGenerationEntryID=<bean:write name="cardGenerationEntry" property="idInternal"/></bean:define>
+		<html:link page="<%= urlDeleteEntry %>" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.entry.delete"/>
+		</html:link>
+	</logic:present>
 	<br/>
 </logic:iterate>
 
