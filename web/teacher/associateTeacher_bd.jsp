@@ -9,7 +9,7 @@
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <table>			
 	<tr>
-		<td class="formTD"><bean:message key="label.teacherNumber" />
+		<td class="formTD"><bean:message key="text.username" />
 		</td>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber"  property="teacherNumber"  />
 		</td>
