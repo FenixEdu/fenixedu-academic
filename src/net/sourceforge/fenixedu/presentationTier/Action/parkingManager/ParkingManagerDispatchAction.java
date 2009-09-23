@@ -381,6 +381,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		&& person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 	    return person.getTeacher().getTeacherNumber();
 	}
+
+	if (person.getEmployee() != null && person.getResearcher() != null) {
+	    return person.getEmployee().getEmployeeNumber();
+	}
 	return null;
     }
 
