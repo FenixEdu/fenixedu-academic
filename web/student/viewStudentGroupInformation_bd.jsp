@@ -7,7 +7,7 @@
 <%@ page import="java.util.Map" %>
 
 <logic:present name="infoSiteStudentGroup">
-z
+
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
 	<bean:define id="infoAttends" name="infoStudentGroup" property="infoAttends"/>

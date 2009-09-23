@@ -57,7 +57,11 @@
 			<li><html:link page="/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=2" titleKey="link.title.writtenTests.enrolment" ><bean:message key="link.writtenTests.enrolment"/></html:link></li>
 		</ul>
 	</li>
-	<li><html:link page="/listAllSeminaries.do" titleKey="link.title.seminaries.enrolment" ><bean:message key="link.seminaries.enrolment"/></html:link>	<a href="<bean:message key="link.seminaries.rules"/>" title="<bean:message key="link.title.seminaries.rules"/>" target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li> 
+	<li><html:link page="/listAllSeminaries.do" titleKey="link.title.seminaries.enrolment" ><bean:message key="link.seminaries.enrolment"/></html:link>
+		<ul>
+			<li><a href="<bean:message key="link.seminaries.rules"/>" title="<bean:message key="link.title.seminaries.rules"/>" target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li>
+		</ul>
+	</li>
 	<li class="navheader"><bean:message key="link.student.seniorTitle"/></li>
 	<li><html:link page="/seniorInformation.do?method=prepare&amp;page=0" ><bean:message key="link.senior.info"/></html:link></li>			  	
 	<li><html:link page="/finalDegreeWorkCandidacy.do?method=dissertations&amp;page=0"><bean:message key="link.student.finalWorkTitle"/></html:link>
