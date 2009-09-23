@@ -113,6 +113,7 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	    searchBean = new SearchPhdIndividualProgramProcessBean();
 	    searchBean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    searchBean.setFilterPhdPrograms(false);
+	    searchBean.setFilterPhdProcesses(false);
 	}
 
 	request.setAttribute("searchProcessBean", searchBean);

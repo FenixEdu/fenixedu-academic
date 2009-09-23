@@ -97,4 +97,9 @@ public class InternalGuiding extends InternalGuiding_Base {
     void edit(String category, String address, String phone) {
 	// nothing to be done
     }
+
+    @Override
+    public boolean isFor(Person person) {
+	return getPerson() == person;
+    }
 }

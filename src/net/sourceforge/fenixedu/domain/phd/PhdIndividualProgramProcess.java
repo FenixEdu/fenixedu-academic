@@ -795,13 +795,24 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		final PhdIndividualProgramProcess phdIndividualProgramProcess = (PhdIndividualProgramProcess) each;
 		if (matchesPhdPrograms(searchBean, phdIndividualProgramProcess)
 			&& matchesExecutionYear(searchBean, phdIndividualProgramProcess)
-			&& matchesProcessState(searchBean, phdIndividualProgramProcess)) {
+			&& matchesProcessState(searchBean, phdIndividualProgramProcess)
+			&& matchesProcesses(searchBean, phdIndividualProgramProcess)) {
 		    result.add(phdIndividualProgramProcess);
 		}
 	    }
 	}
 
 	return result;
+    }
+
+    private static boolean matchesProcesses(SearchPhdIndividualProgramProcessBean searchBean,
+	    PhdIndividualProgramProcess phdIndividualProgramProcess) {
+
+	if (!searchBean.getFilterPhdProcesses()) {
+	    return true;
+	}
+
+	return searchBean.getProcesses().contains(phdIndividualProgramProcess);
     }
 
     private static boolean matchesPhdPrograms(SearchPhdIndividualProgramProcessBean searchBean,

@@ -27,12 +27,24 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     private Boolean filterPhdPrograms = Boolean.TRUE;
 
+    private List<DomainReference<PhdIndividualProgramProcess>> processes;
+
+    private Boolean filterPhdProcesses = Boolean.TRUE;
+
     public Boolean getFilterPhdPrograms() {
 	return filterPhdPrograms;
     }
 
     public void setFilterPhdPrograms(Boolean filterPhdPrograms) {
 	this.filterPhdPrograms = filterPhdPrograms;
+    }
+
+    public Boolean getFilterPhdProcesses() {
+	return filterPhdProcesses;
+    }
+
+    public void setFilterPhdProcesses(Boolean filterPhdProcesses) {
+	this.filterPhdProcesses = filterPhdProcesses;
     }
 
     public List<PhdProgram> getPhdPrograms() {
@@ -87,6 +99,24 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public void setStudentNumber(Integer studentNumber) {
 	this.studentNumber = studentNumber;
+    }
+
+    public List<PhdIndividualProgramProcess> getProcesses() {
+	final List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
+	for (final DomainReference<PhdIndividualProgramProcess> each : this.processes) {
+	    result.add(each.getObject());
+	}
+
+	return result;
+    }
+
+    public void setProcesses(List<PhdIndividualProgramProcess> processes) {
+	final List<DomainReference<PhdIndividualProgramProcess>> result = new ArrayList<DomainReference<PhdIndividualProgramProcess>>();
+	for (final PhdIndividualProgramProcess each : processes) {
+	    result.add(new DomainReference<PhdIndividualProgramProcess>(each));
+	}
+
+	this.processes = result;
     }
 
 }

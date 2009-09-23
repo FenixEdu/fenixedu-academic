@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
 
 <ul>
-
+	
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/showProfessorships.do?method=list" %>">
 		<bean:message key="link.manage.executionCourse" />
@@ -95,6 +95,7 @@
 	</html:link>
   </li>
  --%>
+ 
 
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/roomsReserveManagement.do?method=viewReserves" %>">
@@ -119,4 +120,11 @@
 		        	<bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
 		        </html:link>
 	        </li>
+	        
+	        
+<%-- 	        
+    <li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
+	<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
+	<li><html:link page="/phdIndividualProgramProcess.do?method=viewAlertMessages"><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES"/></html:link></li>
+ --%>
 </ul>

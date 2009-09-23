@@ -87,7 +87,13 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     public static class UploadDocuments extends PhdActivity {
 
 	@Override
-	protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView arg1) {
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (process.getActiveState() != PhdProgramCandidacyProcessState.PRE_CANDIDATE) {
+		if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		    throw new PreConditionNotValidException();
+		}
+	    }
+
 	}
 
 	@SuppressWarnings("unchecked")

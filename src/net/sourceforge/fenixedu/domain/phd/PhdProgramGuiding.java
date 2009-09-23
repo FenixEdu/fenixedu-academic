@@ -48,4 +48,8 @@ abstract public class PhdProgramGuiding extends PhdProgramGuiding_Base {
 	return new ExternalGuiding(name, qualification, workLocation, email);
     }
 
+    public boolean isFor(Person person) {
+	return false;
+    }
+
 }
