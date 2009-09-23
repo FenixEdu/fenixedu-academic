@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.tutor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -100,14 +99,10 @@ public class StudentsPerformanceInfoBean implements Serializable {
 
     public List<Tutorship> getTutorships() {
 	Teacher teacher = getPerson().getTeacher();
-	if (teacher.hasAnyTutorships()) {
-	    if (teacher.getNumberOfActiveTutorships() != 0) {
-		return Collections.unmodifiableList(getPerson().getTeacher().getActiveTutorships());
-	    } else {
-		return Collections.unmodifiableList(getPerson().getTeacher().getPastTutorships());
-	    }
-	} else
-	    return new ArrayList<Tutorship>();
+	List<Tutorship> result = new ArrayList<Tutorship>();
+	result.addAll(teacher.getActiveTutorships());
+	result.addAll(teacher.getPastTutorships());
+	return result;
     }
 
     private void initActiveTutorships() {
