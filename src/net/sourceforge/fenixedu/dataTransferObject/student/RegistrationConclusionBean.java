@@ -213,29 +213,28 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public boolean getCanBeConclusionProcessed() {
 	return (!isConclusionProcessed() || (isConclusionProcessed() && getRegistration().canRepeatConclusionProcess(
 		AccessControl.getPerson())))
-		&& isConcluded()
-		&& (getRegistration().getWasTransition() || groupStructureIsValid())
-		&& getCurriculumModulesWithNoConlusionDate().isEmpty();
+		&& isConcluded();
     }
 
     public boolean getCanRepeatConclusionProcess() {
 	return getRegistration().canRepeatConclusionProcess(AccessControl.getPerson());
     }
 
-    private boolean groupStructureIsValid() {
-	final Collection<CurriculumGroup> groups = getCurriculumGroupsNotVerifyingStructure();
-	if (groups.isEmpty()) {
-	    return true;
-	} else {
-	    for (final CurriculumGroup group : groups) {
-		if (group.hasInsufficientCredits()) {
-		    return false;
-		}
-	    }
-
-	    return true;
-	}
-    }
+    // private boolean groupStructureIsValid() {
+    // final Collection<CurriculumGroup> groups =
+    // getCurriculumGroupsNotVerifyingStructure();
+    // if (groups.isEmpty()) {
+    // return true;
+    // } else {
+    // for (final CurriculumGroup group : groups) {
+    // if (group.hasInsufficientCredits()) {
+    // return false;
+    // }
+    // }
+    //
+    // return true;
+    // }
+    // }
 
     public boolean isByCycle() {
 	return hasCycleCurriculumGroup();
