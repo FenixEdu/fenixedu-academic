@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,8 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 @Forwards( { @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
 public class SIBSPaymentsDA extends FenixDispatchAction {
 
-    static private final String[] SUPPORTED_FILE_EXTENSIONS = new String[] { "INP", "ZIP" };
+    static private final String PAYMENT_FILE_EXTENSION = "INP";
+    static private final String ZIP_FILE_EXTENSION = "ZIP";
 
     static public class UploadBean implements Serializable {
 	private static final long serialVersionUID = 3625314688141697558L;
@@ -105,7 +107,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	if (bean == null) {
 	    return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
 	}
-	if (bean.getFilename().toUpperCase().endsWith(SUPPORTED_FILE_EXTENSIONS[1])) {
+	if (StringUtils.endsWithIgnoreCase(bean.getFilename(), ZIP_FILE_EXTENSION)) {
 	    File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
 	    File unzipDir = null;
 	    try {
@@ -115,7 +117,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 		    return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
 		}
 	    } catch (Exception e) {
-		addActionMessage("error", request, "error.manager.SIBS.zipException", e.getMessage());
+		addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
 		return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
 	    } finally {
 		zipFile.delete();
@@ -124,18 +126,18 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	    recursiveZipProcess(unzipDir, result);
 	    result.addMessage("label.manager.SIBS.allDone");
 
-	} else if (bean.getFilename().toUpperCase().endsWith(SUPPORTED_FILE_EXTENSIONS[0])) {
+	} else if (StringUtils.endsWithIgnoreCase(bean.getFilename(), PAYMENT_FILE_EXTENSION)) {
 	    File file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream(), bean.getFilename());
 	    ProcessResult result = new ProcessResult(request);
 	    result.addMessage("label.manager.SIBS.processingFile", file.getName());
 	    try {
 		processFile(file, result);
 	    } catch (FileNotFoundException e) {
-		addActionMessage("error", request, "error.manager.SIBS.zipException", e.getMessage());
+		addActionMessage("error", request, "error.manager.SIBS.zipException", getMessage(e));
 	    } catch (IOException e) {
-		addActionMessage("error", request, "error.manager.SIBS.IOException", e.getMessage());
+		addActionMessage("error", request, "error.manager.SIBS.IOException", getMessage(e));
 	    } catch (Exception e) {
-		addActionMessage("error", request, "error.manager.SIBS.fileException", e.getMessage());
+		addActionMessage("error", request, "error.manager.SIBS.fileException", getMessage(e));
 	    } finally {
 		file.delete();
 	    }
@@ -145,12 +147,18 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
     }
 
+    private static String getMessage(Exception ex) {
+	return (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
+    }
+
     private void recursiveZipProcess(File unzipDir, ProcessResult result) {
-	for (File file : unzipDir.listFiles()) {
+	File[] filesInZip = unzipDir.listFiles();
+	Arrays.sort(filesInZip);
+	for (File file : filesInZip) {
 	    if (file.isDirectory()) {
 		recursiveZipProcess(file, result);
 	    } else {
-		if (!file.getName().toUpperCase().endsWith(SUPPORTED_FILE_EXTENSIONS[0])) {
+		if (!StringUtils.endsWithIgnoreCase(file.getName(), PAYMENT_FILE_EXTENSION)) {
 		    file.delete();
 		    continue;
 		}
@@ -158,11 +166,11 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 		try {
 		    processFile(file, result);
 		} catch (FileNotFoundException e) {
-		    result.addMessage("error.manager.SIBS.zipException", e.getMessage());
+		    result.addMessage("error.manager.SIBS.zipException", getMessage(e));
 		} catch (IOException e) {
-		    result.addMessage("error.manager.SIBS.IOException", e.getMessage());
+		    result.addMessage("error.manager.SIBS.IOException", getMessage(e));
 		} catch (Exception e) {
-		    result.addMessage("error.manager.SIBS.fileException", e.getMessage());
+		    result.addMessage("error.manager.SIBS.fileException", getMessage(e));
 		} finally {
 		    file.delete();
 		}
@@ -185,7 +193,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 		try {
 		    processCode(detailLine, person.getIdInternal(), result);
 		} catch (Exception e) {
-		    result.addMessage("error.manager.SIBS.processException", detailLine.getCode(), e.getMessage());
+		    result.addMessage("error.manager.SIBS.processException", detailLine.getCode(), getMessage(e));
 		}
 	    }
 
@@ -197,7 +205,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 		    try {
 			createSibsFileReport(sibsFile, result);
 		    } catch (Exception ex) {
-			result.addMessage("error.manager.SIBS.reportException", ex.getMessage());
+			result.addMessage("error.manager.SIBS.reportException", getMessage(ex));
 		    }
 		}
 	    } else {
