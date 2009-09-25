@@ -105,4 +105,19 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 	return references;
     }
 
+    
+    public static <T> List<T> filter(Collection<T> collection, pt.utl.ist.fenix.tools.predicates.Predicate<T> predicate) {
+
+	final List<T> result = new ArrayList<T>();
+
+	for (final T each : collection) {
+	    if (predicate.eval(each)) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+
+    }
+
 }

@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.JobBean;
@@ -36,7 +38,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessD
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.student.Student;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
@@ -773,75 +774,16 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().getCandidacyHashCode();
     }
 
-    static public Set<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
-	final Set<PhdIndividualProgramProcess> result = new HashSet<PhdIndividualProgramProcess>();
-	final Set<Process> processesToSearch = new HashSet<Process>();
+    static public List<PhdIndividualProgramProcess> search(SearchPhdIndividualProgramProcessBean searchBean) {
 
-	if (!StringUtils.isEmpty(searchBean.getProcessNumber())) {
-
-	    for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
-		    .getPhdIndividualProcessNumbers()) {
-		if (phdIndividualProgramProcessNumber.getFullProcessNumber().equals(searchBean.getProcessNumber())) {
-		    processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
-		}
-	    }
-
-	} else {
-	    processesToSearch.addAll(RootDomainObject.getInstance().getProcesses());
+	final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
+	for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
+		.getPhdIndividualProcessNumbers()) {
+	    processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
 	}
 
-	for (final Process each : processesToSearch) {
-	    if (each instanceof PhdIndividualProgramProcess) {
-		final PhdIndividualProgramProcess phdIndividualProgramProcess = (PhdIndividualProgramProcess) each;
-		if (matchesPhdPrograms(searchBean, phdIndividualProgramProcess)
-			&& matchesExecutionYear(searchBean, phdIndividualProgramProcess)
-			&& matchesProcessState(searchBean, phdIndividualProgramProcess)
-			&& matchesProcesses(searchBean, phdIndividualProgramProcess)) {
-		    result.add(phdIndividualProgramProcess);
-		}
-	    }
-	}
+	return CollectionUtils.filter(processesToSearch, searchBean.getPredicates());
 
-	return result;
-    }
-
-    private static boolean matchesProcesses(SearchPhdIndividualProgramProcessBean searchBean,
-	    PhdIndividualProgramProcess phdIndividualProgramProcess) {
-
-	if (!searchBean.getFilterPhdProcesses()) {
-	    return true;
-	}
-
-	return searchBean.getProcesses().contains(phdIndividualProgramProcess);
-    }
-
-    private static boolean matchesPhdPrograms(SearchPhdIndividualProgramProcessBean searchBean,
-	    PhdIndividualProgramProcess phdIndividualProgramProcess) {
-
-	if (!searchBean.getFilterPhdPrograms()) {
-	    return true;
-	}
-
-	if (phdIndividualProgramProcess.hasPhdProgram()) {
-	    return searchBean.getPhdPrograms().contains(phdIndividualProgramProcess.getPhdProgram());
-	} else if (phdIndividualProgramProcess.hasPhdProgramFocusArea()) {
-	    return !CollectionUtils.intersection(searchBean.getPhdPrograms(),
-		    phdIndividualProgramProcess.getPhdProgramFocusArea().getPhdPrograms()).isEmpty();
-	} else {
-	    return false;
-	}
-    }
-
-    static private boolean matchesProcessState(SearchPhdIndividualProgramProcessBean searchBean,
-	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-	return searchBean.getProcessState() == null
-		|| searchBean.getProcessState() == phdIndividualProgramProcess.getActiveState();
-    }
-
-    static private boolean matchesExecutionYear(SearchPhdIndividualProgramProcessBean searchBean,
-	    final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-	return searchBean.getExecutionYear() == null
-		|| searchBean.getExecutionYear() == phdIndividualProgramProcess.getExecutionYear();
     }
 
     public Set<PhdAlert> getActiveAlerts() {
@@ -934,6 +876,31 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	 * 
 	 * (used final to get compilation error when creating entity)
 	 */
+	return false;
+    }
+
+    public boolean isCoordinatorForPhdProgram(Person person) {
+	final ExecutionDegree executionDegree = getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan()
+		.getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
+
+	if (executionDegree != null) {
+	    for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		if (coordinator.getPerson() == person) {
+		    return true;
+		}
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean isGuiderOrAssistentGuider(Person person) {
+	for (final PhdProgramGuiding guiding : getGuidings()) {
+	    if (guiding.isFor(person)) {
+		return true;
+	    }
+	}
+
 	return false;
     }
 }

@@ -110,6 +110,8 @@
 		</fr:layout>
 	</fr:edit>
 	
+	<fr:edit id="stateBean" name="stateBean" visible="false" />
+	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadCandidacyReview';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
 </fr:form>
 

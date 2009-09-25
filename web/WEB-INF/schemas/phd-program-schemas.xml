@@ -504,7 +504,10 @@
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="processState" />
+	<slot name="candidacyProcessState" />
 	<slot name="processNumber" />
+	<slot name="studentNumber" />
+	<slot name="name" />
 </schema>
 
 

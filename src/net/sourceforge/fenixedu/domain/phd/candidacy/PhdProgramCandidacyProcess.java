@@ -184,8 +184,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
-		    bean.getRemarks());
+	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
+		    userView.getPerson(), bean.getRemarks());
 	    return process;
 	}
 
@@ -257,8 +257,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)
-		    || process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
+	    if ((process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION) || process
+		    .isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION))
+		    && (isMasterDegreeAdministrativeOfficeEmployee(userView) || process.getIndividualProgramProcess()
+			    .isCoordinatorForPhdProgram(userView.getPerson()))) {
 
 		return;
 	    }

@@ -3,17 +3,13 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 import java.util.Collections;
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -119,28 +115,11 @@ public class PhdProgramCandidacyProcessDocument extends PhdProgramCandidacyProce
     @Override
     public boolean isPersonAllowedToAccess(Person person) {
 	if (person != null) {
-	    if (getPhdCandidacyProcess().getPerson() == person || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	    if (getPhdCandidacyProcess().getPerson() == person || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		    || getPhdCandidacyProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
+		    || getPhdCandidacyProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)) {
 		return true;
 	    }
-
-	    final ExecutionDegree executionDegree = getPhdCandidacyProcess().getIndividualProgramProcess().getPhdProgram()
-		    .getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
-			    ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
-
-	    if (executionDegree != null) {
-		for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-		    if (coordinator.getPerson() == person) {
-			return true;
-		    }
-		}
-	    }
-
-	    for (final PhdProgramGuiding guiding : getPhdCandidacyProcess().getIndividualProgramProcess().getGuidings()) {
-		if (guiding.isFor(person)) {
-		    return true;
-		}
-	    }
-
 	}
 
 	return false;
