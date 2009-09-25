@@ -10,7 +10,7 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
-   		<property name="config" value="intermediate" />
+   		<property name="config" value="advanced" />
    	</slot>	
 </schema>
 <schema name="EditLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
@@ -25,7 +25,7 @@
    		<property name="safe" value="true" />
    		<property name="columns" value="70"/>
    		<property name="rows" value="15"/>
-   		<property name="config" value="intermediate" />
+   		<property name="config" value="advanced" />
    	</slot>	
 </schema>
 <schema name="ViewLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
