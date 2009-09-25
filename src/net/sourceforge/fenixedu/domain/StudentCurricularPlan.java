@@ -837,9 +837,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		CurriculumLine.COMPARATOR_BY_APPROVEMENT_DATE_AND_ID);
 
 	if (hasRoot()) {
-	    for (final CurriculumGroup group : getRoot().getChildCurriculumGroups()) {
-		if (!group.isNoCourseGroupCurriculumGroup()) {
-		    group.addApprovedCurriculumLines(curriculumLines);
+	    for (final CurriculumModule module : getRoot().getCurriculumModules()) {
+		if (!module.isNoCourseGroupCurriculumGroup()) {
+		    module.addApprovedCurriculumLines(curriculumLines);
 		}
 	    }
 	} else {
@@ -1777,7 +1777,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     /*
-     * Check payed gratuity events until given execution year (exclusive) 
+     * Check payed gratuity events until given execution year (exclusive)
      */
     final public boolean hasAnyNotPayedGratuityEventsForPreviousYears(final ExecutionYear limitExecutionYear) {
 
