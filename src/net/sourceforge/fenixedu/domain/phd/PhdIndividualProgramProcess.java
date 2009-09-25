@@ -95,6 +95,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ValidatedByCandidate());
 
 	activities.add(new AddStudyPlan());
+	activities.add(new EditStudyPlan());
 	activities.add(new AddStudyPlanEntry());
 	activities.add(new DeleteStudyPlanEntry());
 	activities.add(new DeleteStudyPlan());
@@ -479,13 +480,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    final PhdProgramCandidacyProcess candidacyProcess = process.getCandidacyProcess();
-	    if (candidacyProcess.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-		return;
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
 	    }
 
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
-		    && candidacyProcess.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
+	    final PhdProgramCandidacyProcess candidacyProcess = process.getCandidacyProcess();
+
+	    if (candidacyProcess.hasState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
 		return;
 	    }
 
@@ -496,10 +498,25 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 
-	    final PhdStudyPlanBean bean = (PhdStudyPlanBean) object;
+	    new PhdStudyPlan((PhdStudyPlanBean) object);
+	    return process;
+	}
 
-	    new PhdStudyPlan(bean.getProcess(), bean.getDegree());
+    }
 
+    static public class EditStudyPlan extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    process.getStudyPlan().edit((PhdStudyPlanBean) object);
 	    return process;
 	}
 

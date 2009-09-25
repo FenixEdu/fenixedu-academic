@@ -53,10 +53,18 @@
 	<slot name="executionYear" layout="format">
 		<property name="format" value="${year}" />
 	</slot>
+	<slot name="studyPlan" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="PhdStudyPlan.description" />
+	</slot>
 	<slot name="whenCreated" />
 	<slot name="createdBy" />
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
+</schema>
+
+<schema name="PhdStudyPlan.description" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
+	<slot name="description" />
 </schema>
 
 <schema name="PhdProgramCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
@@ -1065,7 +1073,15 @@
 	
 </schema>
 
-<schema name="PhdStudyPlanBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES">	
+<schema name="PhdStudyPlanBean.edit.exempted" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES">	
+	<slot name="exempted" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
+		<property name="classes" value="nobullet liinline"/>
+		<property name="destination" value="exempted" />
+	</slot>
+</schema>
+
+<schema name="PhdStudyPlanBean.edit" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean" bundle="PHD_RESOURCES"
+	extends="PhdStudyPlanBean.edit.exempted">	
 	<slot name="degree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.DegreesProviderForStudyPlan" />
 		<property name="format" value="${presentationName}" />
@@ -1077,7 +1093,15 @@
 </schema>
 
 <schema name="PhdStudyPlan.view" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlan" bundle="PHD_RESOURCES">
-	<slot name="degree.presentationName" />	
+	<slot name="exempted" />
+	<slot name="degree" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="Degree.name" />
+	</slot>
+</schema>
+
+<schema name="Degree.name" type="net.sourceforge.fenixedu.domain.Degree" bundle="PHD_RESOURCES">
+	<slot name="presentationName" />
 </schema>
 
 <schema name="PhdStudyPlanEntryBean.edit.internal" type="net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean" bundle="PHD_RESOURCES">

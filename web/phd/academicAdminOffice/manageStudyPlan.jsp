@@ -94,54 +94,59 @@
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		</fr:layout>
 	</fr:view>
+	<html:link action="/phdIndividualProgramProcess.do?method=prepareEditStudyPlan" paramId="processId" paramName="process" paramProperty="externalId"> 
+		<bean:message bundle="PHD_RESOURCES" key="label.edit"/>
+	</html:link>, 
 	<bean:define id="confirmationMessage"><bean:message  key="label.confirmation.delete.message" bundle="PHD_RESOURCES"/></bean:define>
 	<html:link action="/phdIndividualProgramProcess.do?method=deleteStudyPlan" paramId="processId" paramName="process" paramProperty="externalId" onclick="<%= "return confirm('" + confirmationMessage.toString() + "')" %>"> 
 		<bean:message bundle="PHD_RESOURCES" key="label.delete"/>
 	</html:link>
 	
-	<br/><br/>
-	<strong><bean:message  key="label.phd.normalCourses" bundle="PHD_RESOURCES"/></strong><br/>
-	<bean:define id="studyPlan" name="process" property="studyPlan" />
-	<logic:empty name="studyPlan" property="normalEntries">
-		<bean:message  key="label.phd.noCourses" bundle="PHD_RESOURCES"/>
-	</logic:empty>
-	<logic:notEmpty name="studyPlan" property="normalEntries">
-		<fr:view schema="PhdStudyPlanEntry.view" name="studyPlan" property="normalEntries">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-				<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteStudyPlanEntry&studyPlanEntryId=${externalId}&processId=${studyPlan.process.externalId}"/>
-				<fr:property name="key(delete)" value="label.delete"/>
-				<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-				<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
-				<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>	
-	<br/><br/>
-	<strong><bean:message  key="label.phd.propaedeuticsCourses" bundle="PHD_RESOURCES"/></strong><br/>
-	<logic:empty name="studyPlan" property="propaedeuticEntries">
-		<bean:message  key="label.phd.noCourses" bundle="PHD_RESOURCES"/>
-	</logic:empty>
-	<logic:notEmpty name="studyPlan" property="propaedeuticEntries">
-		<fr:view schema="PhdStudyPlanEntry.view" name="studyPlan" property="propaedeuticEntries">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight mtop15" />
-				<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteStudyPlanEntry&studyPlanEntryId=${externalId}&processId=${studyPlan.process.externalId}"/>
-				<fr:property name="key(delete)" value="label.delete"/>
-				<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-				<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
-				<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-	
-	
-	<br/><br/>
-	<p>
-		<html:link action="/phdIndividualProgramProcess.do?method=prepareCreateStudyPlanEntry" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="PHD_RESOURCES" key="label.phd.createStudyPlanEntry"/>
-		</html:link>
-	</p>
+	<logic:equal name="process" property="studyPlan.exempted" value="false">
+		<br/><br/>
+		<strong><bean:message  key="label.phd.normalCourses" bundle="PHD_RESOURCES"/></strong><br/>
+		<bean:define id="studyPlan" name="process" property="studyPlan" />
+		<logic:empty name="studyPlan" property="normalEntries">
+			<bean:message  key="label.phd.noCourses" bundle="PHD_RESOURCES"/>
+		</logic:empty>
+		<logic:notEmpty name="studyPlan" property="normalEntries">
+			<fr:view schema="PhdStudyPlanEntry.view" name="studyPlan" property="normalEntries">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteStudyPlanEntry&studyPlanEntryId=${externalId}&processId=${studyPlan.process.externalId}"/>
+					<fr:property name="key(delete)" value="label.delete"/>
+					<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
+					<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
+					<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>	
+		<br/><br/>
+		<strong><bean:message  key="label.phd.propaedeuticsCourses" bundle="PHD_RESOURCES"/></strong><br/>
+		<logic:empty name="studyPlan" property="propaedeuticEntries">
+			<bean:message  key="label.phd.noCourses" bundle="PHD_RESOURCES"/>
+		</logic:empty>
+		<logic:notEmpty name="studyPlan" property="propaedeuticEntries">
+			<fr:view schema="PhdStudyPlanEntry.view" name="studyPlan" property="propaedeuticEntries">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight mtop15" />
+					<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteStudyPlanEntry&studyPlanEntryId=${externalId}&processId=${studyPlan.process.externalId}"/>
+					<fr:property name="key(delete)" value="label.delete"/>
+					<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
+					<fr:property name="confirmationKey(delete)" value="label.confirmation.delete.message" />
+					<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+		
+		
+		<br/><br/>
+		<p>
+			<html:link action="/phdIndividualProgramProcess.do?method=prepareCreateStudyPlanEntry" paramId="processId" paramName="process" paramProperty="externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.createStudyPlanEntry"/>
+			</html:link>
+		</p>
+	</logic:equal>
 	
 </logic:notEmpty>
 

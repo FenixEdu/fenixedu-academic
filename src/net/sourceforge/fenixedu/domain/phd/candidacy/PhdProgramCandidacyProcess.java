@@ -489,6 +489,19 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getActiveState().equals(state);
     }
 
+    public boolean hasState(PhdProgramCandidacyProcessState type) {
+	final List<PhdCandidacyProcessState> states = new ArrayList<PhdCandidacyProcessState>(getStates());
+	Collections.sort(states, PhdCandidacyProcessState.COMPARATOR_BY_DATE);
+
+	for (final PhdCandidacyProcessState state : states) {
+	    if (state.getType() == type) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
 	if (!each.getType().isMultipleDocumentsAllowed()) {
 	    removeDocumentsByType(each.getType());

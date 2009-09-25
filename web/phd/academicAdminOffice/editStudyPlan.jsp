@@ -44,13 +44,13 @@
 <fr:edit id="studyPlanBean"
 	name="studyPlanBean"
 	schema="<%= schemaName %>"
-	action="<%= "/phdIndividualProgramProcess.do?method=createStudyPlan&processId=" + processId.toString() %>">
+	action="<%= "/phdIndividualProgramProcess.do?method=editStudyPlan&processId=" + processId.toString() %>">
 
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareCreateStudyPlanInvalid&processId=" + processId.toString() %>" />
-		<fr:destination name="exempted" path="<%="/phdIndividualProgramProcess.do?method=prepareCreateStudyPlanPostback&processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%="/phdIndividualProgramProcess.do?method=prepareEditStudyPlanInvalid&processId=" + processId.toString() %>" />
+		<fr:destination name="exempted" path="<%="/phdIndividualProgramProcess.do?method=prepareEditStudyPlanPostback&processId=" + processId.toString() %>" />
 		<fr:destination name="cancel" path="<%="/phdIndividualProgramProcess.do?method=manageStudyPlan&processId=" + processId.toString() %>" />
 	</fr:layout>
 </fr:edit>

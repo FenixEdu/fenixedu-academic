@@ -6708,6 +6708,7 @@ class phd.alert.PhdAlertMessage extends DomainObject {
 class phd.PhdStudyPlan extends DomainObject {
 	DateTime whenCreated;
 	String createdBy;
+	Boolean exempted;
 }
 
 class phd.PhdStudyPlanEntry extends DomainObject {

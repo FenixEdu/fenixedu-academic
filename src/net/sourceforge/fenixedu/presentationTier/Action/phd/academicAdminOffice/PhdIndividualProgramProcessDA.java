@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStu
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
@@ -81,6 +82,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "manageStudyPlan", path = "/phd/academicAdminOffice/manageStudyPlan.jsp"),
 
 	@Forward(name = "createStudyPlan", path = "/phd/academicAdminOffice/createStudyPlan.jsp"),
+
+	@Forward(name = "editStudyPlan", path = "/phd/academicAdminOffice/editStudyPlan.jsp"),
 
 	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp"),
 
@@ -561,18 +564,26 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 	return mapping.findForward("manageStudyPlan");
     }
 
-    public ActionForward prepareCreateStudyPlanInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
-
-	return mapping.findForward("createStudyPlan");
-    }
-
     public ActionForward prepareCreateStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	request.setAttribute("studyPlanBean", new PhdStudyPlanBean(getProcess(request)));
+
+	return mapping.findForward("createStudyPlan");
+    }
+
+    public ActionForward prepareCreateStudyPlanInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
+	return mapping.findForward("createStudyPlan");
+    }
+
+    public ActionForward prepareCreateStudyPlanPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
+	RenderUtils.invalidateViewState("studyPlanBean");
 
 	return mapping.findForward("createStudyPlan");
     }
@@ -582,6 +593,36 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
 
 	return executeActivity(AddStudyPlan.class, getRenderedObject("studyPlanBean"), request, mapping, "createStudyPlan",
 		"manageStudyPlan", "message.study.plan.created.with.success");
+    }
+
+    public ActionForward prepareEditStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", new PhdStudyPlanBean(getProcess(request).getStudyPlan()));
+	return mapping.findForward("editStudyPlan");
+    }
+
+    public ActionForward prepareEditStudyPlanInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
+	return mapping.findForward("editStudyPlan");
+    }
+
+    public ActionForward prepareEditStudyPlanPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("studyPlanBean", getRenderedObject("studyPlanBean"));
+	RenderUtils.invalidateViewState("studyPlanBean");
+
+	return mapping.findForward("editStudyPlan");
+    }
+
+    public ActionForward editStudyPlan(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	return executeActivity(EditStudyPlan.class, getRenderedObject("studyPlanBean"), request, mapping, "editStudyPlan",
+		"manageStudyPlan", "message.study.plan.edited.with.success");
     }
 
     public ActionForward prepareCreateStudyPlanEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,

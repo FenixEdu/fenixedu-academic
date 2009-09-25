@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import dml.runtime.RelationAdapter;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
@@ -43,22 +45,35 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	}
     }
 
-    public PhdStudyPlan(PhdIndividualProgramProcess process, Degree degree) {
+    public PhdStudyPlan(final PhdStudyPlanBean bean) {
 	this();
 
-	init(process, degree);
+	init(bean.getProcess(), bean.getDegree(), bean.isExempted());
     }
 
-    private void init(PhdIndividualProgramProcess process, Degree degree) {
+    private void init(PhdIndividualProgramProcess process, Degree degree, boolean exempted) {
+
 	check(process, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.process.cannot.be.null");
-	check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
-
-	if (!degree.isEmpty() && !degree.isDEA()) {
-	    throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
-	}
-
 	super.setProcess(process);
-	super.setDegree(degree);
+
+	init(degree, exempted);
+    }
+
+    private void init(Degree degree, boolean exempted) {
+	super.setExempted(exempted);
+
+	if (!exempted) {
+	    if (!degree.isEmpty() && !degree.isDEA()) {
+		throw new DomainException("error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.must.be.of.type.DEA");
+	    }
+
+	    check(degree, "error.net.sourceforge.fenixedu.domain.phd.PhdStudyPlan.degree.cannot.be.null");
+	    super.setDegree(degree);
+	}
+    }
+
+    void edit(final PhdStudyPlanBean bean) {
+	init(bean.getDegree(), bean.isExempted());
     }
 
     @Override
@@ -126,6 +141,11 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     public void createEntries(PhdStudyPlanEntryBean bean) {
+
+	if (getExempted().booleanValue()) {
+	    throw new DomainException("error.PhdStudyPlanEntry.cannot.add.entries.in.exempted.plan");
+	}
+
 	if (bean.getInternalEntry().booleanValue()) {
 	    for (final CompetenceCourse each : bean.getCompetenceCourses()) {
 		new InternalPhdStudyPlanEntry(bean.getEntryType(), bean.getStudyPlan(), each);
@@ -151,5 +171,14 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public boolean isToEnrolInCurricularCourses() {
 	return hasAnyEntries();
+    }
+
+    public String getDescription() {
+	if (getExempted().booleanValue()) {
+	    return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+		    "label.PhdStudyPlan.description.exempted");
+	} else {
+	    return getDegree().getPresentationName(getProcess().getExecutionYear());
+	}
     }
 }

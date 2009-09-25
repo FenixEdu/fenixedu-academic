@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add new column to phd study plan" alterTablePhdStudyPlan.sql
