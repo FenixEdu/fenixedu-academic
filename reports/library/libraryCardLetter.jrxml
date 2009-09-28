@@ -67,7 +67,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="218"
+						y="207"
 						width="491"
 						height="27"
 						key="staticText-1"/>
@@ -84,7 +84,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="249"
+						y="238"
 						width="491"
 						height="66"
 						key="staticText-2"/>
@@ -101,7 +101,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="29"
-						y="315"
+						y="304"
 						width="491"
 						height="149"
 						key="textField-1"/>
@@ -114,7 +114,7 @@
 				<staticText>
 					<reportElement
 						x="41"
-						y="540"
+						y="521"
 						width="183"
 						height="22"
 						key="staticText-4"/>
@@ -131,7 +131,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="95"
-						y="573"
+						y="549"
 						width="62"
 						height="18"
 						key="textField"/>
@@ -148,7 +148,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="599"
+						y="575"
 						width="200"
 						height="68"
 						key="staticText-5"/>
@@ -165,7 +165,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="464"
+						y="453"
 						width="491"
 						height="51"
 						key="staticText-6"/>
@@ -182,7 +182,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="693"
+						y="662"
 						width="213"
 						height="20"
 						key="staticText-7"/>
@@ -199,7 +199,7 @@
 				<staticText>
 					<reportElement
 						x="29"
-						y="724"
+						y="693"
 						width="99"
 						height="20"
 						key="staticText-8"/>
