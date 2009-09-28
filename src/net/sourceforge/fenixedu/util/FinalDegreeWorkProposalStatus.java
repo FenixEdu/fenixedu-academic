@@ -55,12 +55,14 @@ public class FinalDegreeWorkProposalStatus extends FenixUtil {
     }
 
     public String getKey() {
+
 	if (status.intValue() == APPROVED) {
 	    return APPROVED_STRING;
 	}
 	if (status.intValue() == PUBLISHED) {
 	    return PUBLISHED_STRING;
 	}
+
 	return null;
     }
 

@@ -92,10 +92,12 @@ public class InfoExecutionDegree extends InfoObject {
 	this.qualifiedName = qualifiedName;
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj != null && getExecutionDegree() == ((InfoExecutionDegree) obj).getExecutionDegree();
     }
 
+    @Override
     public String toString() {
 	return getExecutionDegree().toString();
     }
@@ -152,6 +154,10 @@ public class InfoExecutionDegree extends InfoObject {
 
     public static InfoExecutionDegree newInfoFromDomain(ExecutionDegree executionDegree) {
 	return executionDegree == null ? null : new InfoExecutionDegree(executionDegree);
+    }
+
+    public String getExternalId() {
+	return getExecutionDegree().getExternalId();
     }
 
     @Override

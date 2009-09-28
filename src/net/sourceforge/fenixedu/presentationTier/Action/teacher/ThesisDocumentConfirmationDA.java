@@ -39,6 +39,7 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	public ThesisPresentationWrapper(final Thesis thesis) {
 	    this.thesis = thesis;
 	    this.thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+	    ;
 	}
 
 	public Thesis getThesis() {
@@ -133,6 +134,7 @@ public class ThesisDocumentConfirmationDA extends FenixDispatchAction {
 	request.setAttribute("thesis", thesis);
 
 	final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+	;
 	request.setAttribute("thesisPresentationState", thesisPresentationState);
 
 	return mapping.findForward("viewThesis");

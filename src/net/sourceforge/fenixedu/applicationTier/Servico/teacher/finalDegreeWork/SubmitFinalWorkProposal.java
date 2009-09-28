@@ -41,6 +41,7 @@ public class SubmitFinalWorkProposal extends FenixService {
 	    scheduleing.setCurrentProposalNumber(proposalNumber + 1);
 	}
 
+	infoProposal.setProposalOID(proposal.getExternalId());
 	proposal.setCompanionName(infoProposal.getCompanionName());
 	proposal.setCompanionMail(infoProposal.getCompanionMail());
 	proposal.setCompanionPhone(infoProposal.getCompanionPhone());

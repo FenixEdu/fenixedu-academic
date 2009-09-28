@@ -1,21 +1,17 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import java.util.List;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class ChangeStatusOfFinalDegreeWorkProposals extends FenixService {
+public class ChangeStatusOfFinalDegreeWorkProposals {
 
-    public void run(Integer executionDegreeOID, List<Integer> selectedProposalOIDs, FinalDegreeWorkProposalStatus status)
-	    throws FenixServiceException {
-	if (executionDegreeOID != null && selectedProposalOIDs != null) {
-	    for (Integer selectedProposalOID : selectedProposalOIDs) {
-		Proposal proposal = rootDomainObject.readProposalByOID(selectedProposalOID);
-		proposal.setStatus(status);
-	    }
+    @Service
+    public static void run(Set<Proposal> proposals, FinalDegreeWorkProposalStatus status) {
+	for (Proposal proposal : proposals) {
+	    proposal.setStatus(status);
 	}
     }
 

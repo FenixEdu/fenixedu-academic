@@ -50,7 +50,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public Alumni readByStudentNumber(Integer studentNumber) {
-	return Student.readStudentByNumber(studentNumber).getAlumni();
+        return Student.readStudentByNumber(studentNumber).getAlumni();
     }
 
     public Boolean hasDocumentIdNumber(String documentIdNumber) {
@@ -147,8 +147,8 @@ public class Alumni extends Alumni_Base {
 
     public Boolean canChangePersonalAddress() {
 
-	// TODO: testar se o alumni nao tem relação actual com o IST
-	// (não é docente, nao é aluno, nao é funcionario, ...)
+	// TODO: testar se o alumni nao tem relaï¿½ï¿½o actual com o IST
+	// (nï¿½o ï¿½ docente, nao ï¿½ aluno, nao ï¿½ funcionario, ...)
 
 	Person p = getStudent().getPerson();
 	if (p.hasRole(RoleType.EMPLOYEE)) {

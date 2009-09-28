@@ -72,7 +72,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
@@ -3335,28 +3334,17 @@ public class Registration extends Registration_Base {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
 	    final Proposal proposalAttributedByCoordinator = group.getProposalAttributed();
-	    if (proposalAttributedByCoordinator != null
-		    && isProposalForExecutionYear(proposalAttributedByCoordinator, executionYear)) {
+	    if (proposalAttributedByCoordinator != null && proposalAttributedByCoordinator.isForExecutionYear(executionYear)) {
 		return proposalAttributedByCoordinator;
 	    }
 	    final Proposal proposalAttributedByTeacher = group.getProposalAttributedByTeacher();
-	    if (proposalAttributedByTeacher != null && isProposalForExecutionYear(proposalAttributedByTeacher, executionYear)) {
+	    if (proposalAttributedByTeacher != null && proposalAttributedByTeacher.isForExecutionYear(executionYear)) {
 		if (proposalAttributedByTeacher.isProposalConfirmedByTeacherAndStudents(group)) {
 		    return proposalAttributedByTeacher;
 		}
 	    }
 	}
 	return null;
-    }
-
-    private boolean isProposalForExecutionYear(final Proposal proposal, final ExecutionYear executionYear) {
-	final Scheduleing scheduleing = proposal.getScheduleing();
-	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear() == executionYear) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     final public boolean isAvailableDegreeTypeForInquiries() {

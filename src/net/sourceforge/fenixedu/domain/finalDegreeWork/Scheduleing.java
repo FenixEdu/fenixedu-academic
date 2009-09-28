@@ -19,13 +19,16 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class Scheduleing extends Scheduleing_Base {
 
     public Scheduleing() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setAllowSimultaneousCoorientationAndCompanion(Boolean.FALSE);
-	setAttributionByTeachers(Boolean.FALSE);
+	setAllowSimultaneousCoorientationAndCompanion(false);
+	setAttributionByTeachers(false);
+	setCurrentProposalNumber(1);
     }
 
     public Date getEndOfProposalPeriod() {
@@ -207,4 +210,21 @@ public class Scheduleing extends Scheduleing_Base {
 	return getExecutionDegrees().get(0).getExecutionYear();
     }
 
+    public Set<FinalDegreeWorkGroup> getAssociatedFinalDegreeWorkGroups() {
+	final Set<FinalDegreeWorkGroup> groups = new HashSet<FinalDegreeWorkGroup>();
+	for (ExecutionDegree executionDegree : getExecutionDegrees()) {
+	    groups.addAll(executionDegree.getAssociatedFinalDegreeWorkGroups());
+	}
+	return groups;
+    }
+
+    @Service
+    public static Scheduleing newInstance(ExecutionDegree executionDegree) {
+	if (!executionDegree.hasScheduling()) {
+	    final Scheduleing scheduling = new Scheduleing();
+	    executionDegree.setScheduling(scheduling);
+	    return scheduling;
+	}
+	return null;
+    }
 }

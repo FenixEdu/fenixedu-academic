@@ -9,7 +9,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -35,31 +34,30 @@ import pt.utl.ist.berserk.ServiceResponse;
  */
 public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter extends Filtro {
 
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	final IUserView userView = getRemoteUser(request);
 	final Object[] arguments = getServiceCallArguments(request);
 	if (arguments == null || arguments.length < 1 || arguments[0] == null) {
 	    throw new NotAuthorizedFilterException();
 	}
-	final Integer idInternal = (arguments[0] instanceof Integer) ? (Integer) arguments[0] : ((InfoObject) arguments[0])
-		.getIdInternal();
+	final ExecutionDegree executionDegree = (ExecutionDegree) arguments[0];
 
-	if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, idInternal)) {
+	if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
 	    throw new NotAuthorizedFilterException();
 	}
 
-	if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, idInternal)))
+	if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
 		|| (userView == null) || (userView.getRoleTypes() == null)) {
 	    throw new NotAuthorizedFilterException();
 	}
 
     }
 
-    public static boolean verifyCondition(IUserView id, Integer objectId) {
+    public static boolean verifyCondition(IUserView id, ExecutionDegree executionDegree) {
 	if (id != null) {
 	    final Person person = id.getPerson();
 	    if (person != null) {
-		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(objectId);
 		if (person.hasRole(RoleType.COORDINATOR)) {
 		    for (final Coordinator coordinator : person.getCoordinators()) {
 			if (executionDegree == coordinator.getExecutionDegree()) {
@@ -68,8 +66,9 @@ public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFil
 		    }
 		    for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
 			if (executionDegree == scientificCommission.getExecutionDegree()
-				|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree().getDegreeCurricularPlan()
-					&& executionDegree.getExecutionYear() == scientificCommission.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
+				|| (executionDegree.getDegreeCurricularPlan() == scientificCommission.getExecutionDegree()
+					.getDegreeCurricularPlan() && executionDegree.getExecutionYear() == scientificCommission
+					.getExecutionDegree().getExecutionYear().getPreviousExecutionYear())) {
 			    return true;
 			}
 		    }

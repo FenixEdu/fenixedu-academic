@@ -66,11 +66,14 @@ public class InfoProposalEditor extends InfoObject {
 
     private FinalDegreeWorkProposalStatus status;
 
+    private String proposalOID;
+
     /* Construtores */
     public InfoProposalEditor() {
 	super();
     }
 
+    @Override
     public String toString() {
 	String result = "[Proposal";
 	result += ", idInternal=" + getIdInternal();
@@ -270,6 +273,14 @@ public class InfoProposalEditor extends InfoObject {
 
     public void setStatus(FinalDegreeWorkProposalStatus status) {
 	this.status = status;
+    }
+
+    public String getProposalOID() {
+	return proposalOID;
+    }
+
+    public void setProposalOID(String proposalOID) {
+	this.proposalOID = proposalOID;
     }
 
 }

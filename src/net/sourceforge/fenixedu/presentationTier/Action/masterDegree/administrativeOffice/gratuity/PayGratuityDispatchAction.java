@@ -1,15 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadInsuranceValueByExecutionYearID;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuide;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -23,6 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationById;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.ReadInsuranceValueByExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.CreateGuide;
+import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan.ReadPosGradStudentCurricularPlans;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -33,6 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -76,7 +72,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 	if (insuranceExecutionYearId != null) {
 	    payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
-	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request
+		    .setAttribute(PresentationConstants.PAGE_TITLE,
+			    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	return mapping.findForward("chooseContributor");
@@ -107,9 +105,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    Integer executionYearID = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
 		    .getInfoExecutionYear().getIdInternal();
 
-
 	    try {
-		infoInsuranceTransaction = (InfoInsuranceTransaction) ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(), executionYearID);
+		infoInsuranceTransaction = ReadInsuranceTransactionByStudentIDAndExecutionYearID.run(infoStudent.getIdInternal(),
+			executionYearID);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
@@ -132,7 +130,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
 	    request.setAttribute(PresentationConstants.INSURANCE_VALUE, infoInsuranceValue);
-	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request
+		    .setAttribute(PresentationConstants.PAGE_TITLE,
+			    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	// Read Contributor
@@ -196,7 +196,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 		request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 		request.setAttribute(PresentationConstants.STUDENT, infoStudent);
 		request.setAttribute(PresentationConstants.GRATUITY_SITUATION, infoGratuitySituation);
-		request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payGratuity");
+		request.setAttribute(PresentationConstants.PAGE_TITLE,
+			"link.masterDegree.administrativeOffice.gratuity.payGratuity");
 		return mapping.findForward("confirmPayment");
 
 	    } else if (adHocValue.doubleValue() > 0) {
@@ -221,7 +222,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    List studentCurricularPlans = null;
 
 	    try {
-		studentCurricularPlans = (List) ReadPosGradStudentCurricularPlans.run(infoStudent.getIdInternal());
+		studentCurricularPlans = ReadPosGradStudentCurricularPlans.run(infoStudent.getIdInternal());
 
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
@@ -236,8 +237,9 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 		List executionDegreesList = null;
 		try {
-		    executionDegreesList = (List) ReadExecutionDegreesByDegreeCurricularPlan.run(infoStudentCurricularPlan
-			    .getInfoDegreeCurricularPlan().getIdInternal());
+		    DegreeCurricularPlan degreeCurricularPlan = infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+			    .getDegreeCurricularPlan();
+		    executionDegreesList = (List) ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlan);
 
 		} catch (FenixServiceException e) {
 		    throw new FenixActionException(e);
@@ -275,7 +277,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
 	try {
-	    infoGuide = (InfoGuide) CreateGuide.run(infoGuide, "", null, "", GuideState.NON_PAYED, "");
+	    infoGuide = CreateGuide.run(infoGuide, "", null, "", GuideState.NON_PAYED, "");
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -324,7 +326,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	InfoGratuitySituation infoGratuitySituation = null;
 
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(gratuitySituationId);
+	    infoGratuitySituation = ReadGratuitySituationById.run(gratuitySituationId);
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);
@@ -371,7 +373,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	InfoInsuranceValue infoInsuranceValue = null;
 
 	try {
-	    infoInsuranceValue = (InfoInsuranceValue) ReadInsuranceValueByExecutionYearID.run(insuranceExecutionYearId);
+	    infoInsuranceValue = ReadInsuranceValueByExecutionYearID.run(insuranceExecutionYearId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

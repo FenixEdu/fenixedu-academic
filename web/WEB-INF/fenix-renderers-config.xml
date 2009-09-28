@@ -258,7 +258,9 @@ Documentation:
 
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description
           of the enum value. The key used for seaching is the enum name. -->
-    <renderer type="java.lang.Enum" class="pt.ist.fenixWebFramework.renderers.EnumRenderer"/>
+    <renderer type="java.lang.Enum" class="pt.ist.fenixWebFramework.renderers.EnumRenderer">
+    	<property name="nullLabel" value=""/>
+    </renderer>
     
 	<renderer type="java.util.EnumSet" class="pt.ist.fenixWebFramework.renderers.EnumSetRenderer"/>    
     
@@ -449,7 +451,9 @@ Documentation:
 
     <!--@ The default layout for a list really creates an html list were each object is presented in a list item. -->
     <renderer type="java.util.List" class="pt.ist.fenixWebFramework.renderers.ListRenderer"/>
-    <renderer type="java.util.Collection" layout="list" class="pt.ist.fenixWebFramework.renderers.ListRenderer"/>
+    <renderer type="java.util.Collection" layout="list" class="pt.ist.fenixWebFramework.renderers.ListRenderer">
+    	<property name="nullLabel" value="-"/>
+    </renderer>
 
     <renderer type="java.util.Collection" layout="list-personFunctions" class="pt.ist.fenixWebFramework.renderers.ListRenderer">
     	<property name="eachLayout" value="values"/>
@@ -681,6 +685,12 @@ Documentation:
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
+	</renderer>
+	
+	<renderer mode="input" type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="hour" value="true"/>
+		<property name="minute" value="true"/>
+		<property name="second" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a LocalDate automatically includes the hour, minute, and second in the partial -->

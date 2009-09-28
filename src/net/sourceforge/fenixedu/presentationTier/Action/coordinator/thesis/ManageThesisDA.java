@@ -237,10 +237,19 @@ public class ManageThesisDA extends FenixDispatchAction {
 	return searchStudent(mapping, actionForm, request, response);
     }
 
+    public ThesisPresentationState getFilter(HttpServletRequest request) {
+	String filter = request.getParameter("filter");
+	if (filter != null) {
+	    return ThesisPresentationState.valueOf(filter);
+	}
+	return null;
+    }
+
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	ThesisContextBean bean = getContextBean(request);
+	ThesisPresentationState filter = getFilter(request);
 
 	List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
 	for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
@@ -250,7 +259,13 @@ public class ManageThesisDA extends FenixDispatchAction {
 		if (studentCurricularPlan.getDegreeCurricularPlan() != degreeCurricularPlan) {
 		    continue;
 		}
-
+		final Thesis thesis = enrolment.getThesis();
+		if (filter != null) {
+		    final ThesisPresentationState state = ThesisPresentationState.getThesisPresentationState(thesis);
+		    if (!state.equals(filter)) {
+			continue;
+		    }
+		}
 		result.add(new StudentThesisInfo(enrolment));
 	    }
 	}

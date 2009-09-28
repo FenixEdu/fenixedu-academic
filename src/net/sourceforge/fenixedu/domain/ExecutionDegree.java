@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -1013,6 +1014,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 	return null;
+    }
+
+    public Set<Proposal> getProposals() {
+	Set<Proposal> proposals;
+	if (hasScheduling()) {
+	    return getScheduling().getProposalsSet();
+	}
+	return Collections.EMPTY_SET;
     }
 
 }

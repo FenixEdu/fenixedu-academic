@@ -194,52 +194,6 @@
 			<form-property name="executionDegreeID" type="java.lang.String"/>
 		</form-bean>
 
-		<form-bean name="finalDegreeWorkScheduleing" 
-				   type="org.apache.struts.validator.DynaValidatorForm" 
-				   dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="executionDegreeOID" type="java.lang.String"/>
-			<form-property name="startOfProposalPeriodDate" type="java.lang.String"/>
-			<form-property name="startOfProposalPeriodHour" type="java.lang.String"/>
-			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
-			<form-property name="endOfProposalPeriodHour" type="java.lang.String"/>
-			<form-property name="selectedProposals" type="java.lang.String[]"/>
-			<form-property name="selectedGroupProposal" type="java.lang.String"/>
-			<form-property name="attributedByTeacher" type="java.lang.String[]"/>
-			<form-property name="attributions" type="java.lang.String[]"/>
-			<form-property name="otherExecutionDegreeID" type="java.lang.String"/>
-			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
-			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
-		</form-bean>
-
-		<form-bean name="finalDegreeWorkCandidacyPeriod" 
-				   type="org.apache.struts.validator.DynaValidatorForm" 
-				   dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="executionDegreeOID" type="java.lang.String"/>
-			<form-property name="startOfCandidacyPeriodDate" type="java.lang.String"/>
-			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
-			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
-			<form-property name="endOfCandidacyPeriodHour" type="java.lang.String"/>
-		</form-bean>
-
-		<form-bean name="finalDegreeWorkCandidacyRequirements" 
-				   type="org.apache.struts.validator.DynaValidatorForm" 
-				   dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="executionDegreeOID" type="java.lang.String"/>
-			<form-property name="minimumNumberOfCompletedCourses" type="java.lang.String"/>
-			<form-property name="maximumCurricularYearToCountCompletedCourses" type="java.lang.String"/>
-			<form-property name="minimumCompletedCurricularYear" type="java.lang.String"/>
-			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
-			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
-			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
-			<form-property name="minimumCompletedCreditsFirstCycle" type="java.lang.String"/>
-			<form-property name="minimumCompletedCreditsSecondCycle" type="java.lang.String"/>
-			<form-property name="attributionByTeachers" type="java.lang.Boolean"/>
-			<form-property name="allowSimultaneousCoorientationAndCompanion" type="java.lang.Boolean"/>
-		</form-bean>
-
 		<!-- SUBMIT FINAL WORK PROPOSAL -->
 		<form-bean name="finalDegreeWorkProposal"
 				   type="org.apache.struts.validator.DynaValidatorForm" 
@@ -277,7 +231,7 @@
 			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
 			<form-property name="status" type="java.lang.String" />
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String" initial="0"/>
 		</form-bean>
 
 		<!-- STUDENTS GRATUITY LIST -->		
@@ -867,9 +821,6 @@
 	<!-- Final Degree Work Manipulation -->
 	<action path="/manageFinalDegreeWork"
 			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
-			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
-			name="finalDegreeWorkScheduleing"
-			attribute="finalDegreeWorkScheduleing"
 			parameter="method"
 			scope="request"
 			validate="true"
@@ -887,21 +838,17 @@
 		<forward name="error" path="/indexCoordinator.jsp"/>
 		<forward name="show-choose-execution-degree-page" path="df.page.showFinalDegreeChooseExecutionDegree"/>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
+		<forward name="show-final-degree-work-info" path="show-final-degree-work-info"/>
+		<forward name="show-proposals" path="show-proposals" />
+		<forward name="show-proposal" path="show-proposal" />
+		<forward name="edit-proposal" path="edit-proposal" />
+		<forward name="show-candidates" path="show-candidates" />
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 		<forward name="prepare-show-final-degree-work-proposal" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
 		<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=prepare&amp;page=0"/>
-	</action>
-
-	<action path="/setFinalDegreeWorkCandidacyPeriod"
-			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
-			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
-			name="finalDegreeWorkCandidacyPeriod"
-			attribute="finalDegreeWorkCandidacyPeriod"
-			parameter="method"
-			scope="request"
-			validate="true"
-			>
-		<forward name="Sucess" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		<forward name="edit-final-degree-periods" path="edit-final-degree-periods"/>
+		<forward name="edit-final-degree-requirements" path="edit-final-degree-requirements"/>
+		<forward name="detailed-proposal-list" path="detailed-proposal-list"/>
 	</action>
 
 	<action path="/setFinalDegreeWorkCandidacyRequirements"
@@ -924,7 +871,7 @@
 	    	scope="request" 
 	    	validate="true">
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
-		<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=showProposal&amp;page=0"/>
 		<forward name="detailed-proposal-list" path="detailed-proposal-list"/>
 	</action>
 

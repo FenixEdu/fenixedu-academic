@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -10,6 +15,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -18,9 +24,93 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseG
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalStatusType;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.WithCandidatesFilter;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
+import org.apache.commons.collections.Predicate;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 public class Proposal extends Proposal_Base {
+
+    public final static Comparator<Proposal> COMPARATOR_BY_PROPOSAL_NUMBER = new Comparator<Proposal>() {
+
+	@Override
+	public int compare(Proposal arg0, Proposal arg1) {
+	    return arg0.getProposalNumber().compareTo(arg1.getProposalNumber());
+	}
+
+    };
+
+    public static class StatusPredicate implements Predicate {
+	private final ProposalStatusType status;
+
+	public StatusPredicate(ProposalStatusType status) {
+	    this.status = status;
+	}
+
+	@Override
+	public boolean evaluate(Object object) {
+	    if (object instanceof Proposal) {
+		Proposal proposal = (Proposal) object;
+		return proposal.getProposalStatus().equals(this.status);
+	    }
+	    return false;
+	}
+    }
+
+    public static class CandidacyAttributionPredicate implements Predicate {
+	private final Set<CandidacyAttributionType> attributionTypes;
+
+	public CandidacyAttributionPredicate(Set<CandidacyAttributionType> types) {
+	    attributionTypes = types;
+	}
+
+	@Override
+	public boolean evaluate(Object object) {
+	    if (object instanceof Proposal) {
+		if (attributionTypes == null || attributionTypes.isEmpty()) {
+		    return true;
+		}
+		final CandidacyAttributionType status = ((Proposal) object).getAttributionStatus();
+		if (status == null) {
+		    return false;
+		}
+		for (CandidacyAttributionType type : attributionTypes) {
+		    if (type.equals(status)) {
+			return true;
+		    }
+		}
+	    }
+	    return false;
+	}
+    }
+
+    public static class HasCandidatesPredicate implements Predicate {
+	private final WithCandidatesFilter withCandidates;
+
+	public HasCandidatesPredicate(WithCandidatesFilter withCandidatesFilter) {
+	    this.withCandidates = withCandidatesFilter;
+	}
+
+	@Override
+	public boolean evaluate(Object object) {
+	    if (object instanceof Proposal) {
+		Proposal proposal = (Proposal) object;
+		switch (withCandidates) {
+		case ALL:
+		    return true;
+		case WITH_CANDIDATES:
+		    return proposal.getNumberOfCandidates() > 0;
+		case WITHOUT_CANDIDATES:
+		    return proposal.getNumberOfCandidates() == 0;
+
+		}
+	    }
+	    return false;
+	}
+    }
 
     public Proposal() {
 	super();
@@ -44,6 +134,16 @@ public class Proposal extends Proposal_Base {
 
     public boolean isProposalConfirmedByTeacherAndStudents(final FinalDegreeWorkGroup group) {
 	return getGroupAttributedByTeacher() == group && group.isConfirmedByStudents(this);
+    }
+
+    public boolean isForExecutionYear(final ExecutionYear executionYear) {
+	final Scheduleing scheduleing = getScheduleing();
+	for (final ExecutionDegree executionDegree : scheduleing.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear() == executionYear) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public boolean canBeReadBy(final IUserView userView) {
@@ -112,4 +212,85 @@ public class Proposal extends Proposal_Base {
 	return false;
     }
 
+    public int getNumberOfCandidates() {
+	return getGroupProposalsCount();
+    }
+
+    public List<Person> getOrientators() {
+	List<Person> persons = new ArrayList<Person>();
+	persons.add(getOrientator());
+	persons.add(getCoorientator());
+	return persons;
+    }
+
+    public CandidacyAttributionType getAttributionStatus() {
+	if (hasGroupAttributed()) {
+	    return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;
+	}
+	if (hasGroupAttributedByTeacher()) {
+	    FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
+	    for (GroupStudent groupStudent : group.getGroupStudents()) {
+		if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
+		    return CandidacyAttributionType.ATTRIBUTED_NOT_CONFIRMED;
+		}
+	    }
+	    return CandidacyAttributionType.ATTRIBUTED;
+	}
+	return CandidacyAttributionType.NOT_ATTRIBUTED;
+    }
+
+    public List<GroupStudent> getAttributionGroup() {
+	if (hasGroupAttributed()) {
+	    return getGroupAttributed().getGroupStudents();
+	}
+	if (hasGroupAttributedByTeacher()) {
+	    FinalDegreeWorkGroup group = getGroupAttributedByTeacher();
+	    for (GroupStudent groupStudent : group.getGroupStudents()) {
+		if (groupStudent.getFinalDegreeWorkProposalConfirmation() != this) {
+		    return Collections.emptyList();
+		}
+	    }
+	    return group.getGroupStudents();
+	}
+	return Collections.emptyList();
+    }
+
+    public String getAttributionStatusLabel() {
+	String key = getAttributionStatus().getClass().getSimpleName() + "." + getAttributionStatus();
+	return RenderUtils.getResourceString("ENUMERATION_RESOURCES", key);
+    }
+
+    public boolean getForPublish() {
+	return getForApproval() || getStatus().equals(FinalDegreeWorkProposalStatus.APPROVED_STATUS);
+    }
+
+    public boolean getForApproval() {
+	return getStatus() == null;
+    }
+
+    public ProposalStatusType getProposalStatus() {
+	FinalDegreeWorkProposalStatus status = getStatus();
+	if (status == null) {
+	    return ProposalStatusType.FOR_APPROVAL;
+	}
+	if (FinalDegreeWorkProposalStatus.APPROVED_STATUS.equals(status)) {
+	    return ProposalStatusType.APPROVED;
+	}
+	if (FinalDegreeWorkProposalStatus.PUBLISHED_STATUS.equals(status)) {
+	    return ProposalStatusType.PUBLISHED;
+	}
+	return null;
+    }
+
+    public String getPresentationName() {
+	return String.format("%s - %s", getProposalNumber(), getTitle());
+    }
+
+    public Set<FinalDegreeWorkGroup> getCandidacies() {
+	final Set<FinalDegreeWorkGroup> candidacies = new HashSet<FinalDegreeWorkGroup>();
+	for (GroupProposal groupProposal : getGroupProposals()) {
+	    candidacies.add(groupProposal.getFinalDegreeDegreeWorkGroup());
+	}
+	return candidacies;
+    }
 }

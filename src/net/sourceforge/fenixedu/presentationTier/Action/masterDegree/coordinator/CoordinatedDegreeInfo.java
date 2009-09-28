@@ -6,7 +6,7 @@
  * Autores : -Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
  * (jccm@rnl.ist.utl.pt)
  * 
- * modified by Fernanda Quitério
+ * modified by Fernanda Quitï¿½rio
  *  
  */
 
@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -94,6 +95,13 @@ public class CoordinatedDegreeInfo extends FenixAction {
 			.valueOf(infoMasterDegreeCandidates.size()));
 	    }
 	}
+
+	final String executionDegreePlanOID = newFindExecutionDegreeID(request);
+	if (executionDegreePlanOID != null) {
+	    request.setAttribute("executionDegreeOID", executionDegreePlanOID);
+	    ExecutionDegree executionDegree = DomainObject.fromExternalId(executionDegreePlanOID);
+	    request.setAttribute("executionDegree", executionDegree);
+	}
     }
 
     /* uses external ids */
@@ -103,6 +111,14 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	    degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 	}
 	return degreeCurricularPlanID;
+    }
+
+    private static String newFindExecutionDegreeID(HttpServletRequest request) {
+	String executionDegreePlanOID = request.getParameter("executionDegreeOID");
+	if (executionDegreePlanOID == null) {
+	    executionDegreePlanOID = (String) request.getAttribute("executionDegreeOID");
+	}
+	return executionDegreePlanOID;
     }
 
 }

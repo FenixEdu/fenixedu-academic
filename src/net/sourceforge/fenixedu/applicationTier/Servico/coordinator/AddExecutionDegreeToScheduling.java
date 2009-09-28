@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 
 public class AddExecutionDegreeToScheduling extends FenixService {
 
-    private class SchedulingContainsProposalsException extends FenixServiceException {
+    public class SchedulingContainsProposalsException extends FenixServiceException {
     }
 
     public void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree)

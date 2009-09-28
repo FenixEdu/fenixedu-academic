@@ -2,17 +2,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class PublishAprovedFinalDegreeWorkProposals extends FenixService {
-
-    public void run(Integer executionDegreeOID) throws FenixServiceException {
-	if (executionDegreeOID != null) {
-	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+public class PublishAprovedFinalDegreeWorkProposals {
+    @Service
+    public static void run(ExecutionDegree executionDegree) throws FenixServiceException {
+	if (executionDegree != null) {
 	    Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();
 
 	    if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty()) {

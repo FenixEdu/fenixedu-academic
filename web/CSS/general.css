@@ -240,7 +240,7 @@ table.thleft th { text-align: left; }
 table.thright th { text-align: right; }
 table.thcenter th { text-align: center; }
 .thdnone tr th { display: none !important; }
-.tdleft td { text-align: left !important; }
+.tdleft td { text-align: left; }
 .tdright td { text-align: right; } /* take table from all, to work with tr ? */
 .tdcenter td { text-align: center; }
 
@@ -260,11 +260,10 @@ padding: 4px 1px;
 table.tdpright2 td {
 padding-right: 4em;
 }
-/*
-table.cellpadding3 tr th, table.cellpadding3 tr td {
-padding: 3px;
+table.tdnopadding td {
+padding: 0;
 }
-*/
+
 
 /* nostyle */
 .tstylenone th, .tstylenone td {
@@ -1244,7 +1243,7 @@ background: #fff;
 
 .inobullet ul { list-style: none; padding-left: 0; }
 .inobullet ul li { list-style: none; }
-
+.inomargin ul { margin: 0; padding: 0; }
 
 
 

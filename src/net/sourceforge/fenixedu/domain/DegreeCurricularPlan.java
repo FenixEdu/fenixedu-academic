@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -1549,8 +1550,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    years.add(year);
 	}
 
-	for (ExecutionYear y : years) {
-	    for (CurricularCourse curricularCourse : getCurricularCourses(y)) {
+	for (ExecutionYear executionYear : years) {
+	    for (CurricularCourse curricularCourse : getCurricularCourses(executionYear)) {
 		if (curricularCourse.isDissertation()) {
 		    result.add(curricularCourse);
 		}
@@ -1558,6 +1559,31 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	return result;
+    }
+
+    public Set<Thesis> getThesis(ExecutionYear executionYear) {
+	final Set<Thesis> thesis = new HashSet<Thesis>();
+	for (CurricularCourse curricularCourse : getDissertationCurricularCourses(executionYear)) {
+	    for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
+		StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+
+		if (studentCurricularPlan.getDegreeCurricularPlan() != this) {
+		    continue;
+		}
+		thesis.addAll(enrolment.getTheses());
+	    }
+	}
+	return thesis;
+    }
+
+    public Set<Enrolment> getDissertationEnrolments(ExecutionYear executionYear) {
+	final Set<Enrolment> enrolments = new HashSet<Enrolment>();
+	for (CurricularCourse curricularCourse : getDissertationCurricularCourses(executionYear)) {
+	    for (Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionYear(executionYear)) {
+		enrolments.add(enrolment);
+	    }
+	}
+	return enrolments;
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses() {

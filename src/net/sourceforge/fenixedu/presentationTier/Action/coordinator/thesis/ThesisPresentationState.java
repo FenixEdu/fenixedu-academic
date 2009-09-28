@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public enum ThesisPresentationState {
     UNEXISTING, DRAFT, SUBMITTED, REJECTED, APPROVED, DOCUMENTS_SUBMITTED, DOCUMENTS_CONFIRMED, CONFIRMED, EVALUATED_1ST, // Indicates
@@ -100,4 +101,17 @@ public enum ThesisPresentationState {
 	return this == UNKNOWN;
     }
 
+    public String getBundleLabel() {
+	return this.getClass().getSimpleName() + "." + name() + ".label";
+    }
+
+    public String getBundleSimpleLabel() {
+	return this.getClass().getSimpleName() + "." + name() + ".simple";
+    }
+
+    public String getLabel() {
+	final String simpleLabel = RenderUtils.getResourceString("ENUMERATION_RESOURCES", getBundleSimpleLabel());
+	final String label = RenderUtils.getResourceString(getBundleLabel());
+	return String.format("%s - %s", simpleLabel, label);
+    }
 }

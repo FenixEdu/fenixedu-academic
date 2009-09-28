@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -66,10 +65,12 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 	    throw new FenixActionException(e);
 	}
 	Collections.sort(curricularCourses, new BeanComparator("name"));
-
+	Object[] args = { degreeCurricularPlanId };
 	List executionDegrees = null;
 	try {
-	    executionDegrees = ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
+	    // executionDegrees =
+	    // ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlanId);
+	    executionDegrees = (List) ServiceUtils.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

@@ -25,12 +25,12 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
 
     @Override
     public String getJobName() {
-	return "Listagem de dissertações com afiliações externas";
+	return "Listagem de dissertaï¿½ï¿½es com afiliaï¿½ï¿½es externas";
     }
 
     @Override
     protected String getPrefix() {
-	return "dissertações com afiliações externas";
+	return "dissertaï¿½ï¿½es com afiliaï¿½ï¿½es externas";
     }
 
     @Override
@@ -58,6 +58,7 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
 	    if (executionPeriod.getExecutionYear() == executionYear) {
 		final ThesisPresentationState thesisPresentationState = ThesisPresentationState
 			.getThesisPresentationState(thesis);
+		;
 
 		final Degree degree = enrolment.getStudentCurricularPlan().getDegree();
 		final DegreeType degreeType = degree.getDegreeType();

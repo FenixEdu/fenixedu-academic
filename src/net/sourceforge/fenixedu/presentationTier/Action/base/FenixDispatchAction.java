@@ -447,4 +447,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
     }
 
+    public <T> T keepInRequest(HttpServletRequest request, String name) {
+	T fromRequest = (T) getFromRequest(request, name);
+	request.setAttribute(name, fromRequest);
+	return fromRequest;
+    }
+
 }

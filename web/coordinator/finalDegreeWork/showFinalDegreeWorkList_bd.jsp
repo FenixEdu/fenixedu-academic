@@ -317,7 +317,6 @@
 	</html:link>
 </p>
 
-
 <html:form action="/finalDegreeWorkProposal">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createNewFinalDegreeWorkProposal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>

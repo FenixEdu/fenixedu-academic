@@ -195,9 +195,25 @@
 	<definition name="df.page.showFinalDegreeWorkList" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
 	</definition>
+	<definition name="show-final-degree-work-info" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp" />
+	</definition>
+	<definition name="show-proposals" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/showProposals.jsp" />
+	</definition>
+	<definition name="show-proposal" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/showProposal.jsp" />
+	</definition>
+	<definition name="edit-proposal" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/editProposal.jsp" />
+	</definition>
+	<definition name="show-candidates" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/showCandidates.jsp" />
+	</definition>
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
 	</definition>
+	
 	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
 	</definition>
@@ -213,6 +229,16 @@
 	<definition name="df.page.manageFinalDegreeWorks" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/finalDegreeWork/manageFinalDegreeWorks.jsp" />
 	</definition>
+	
+	<definition name="edit-final-degree-periods" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp" />
+	</definition>
+	
+	<definition name="edit-final-degree-requirements" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp" />
+	</definition>
+	
+	
 
 	<!--  ================================= EVALUATIONS ========================= -->
 	

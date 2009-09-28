@@ -9,8 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class AttributeFinalDegreeWork extends FenixService {
 
     @Service
-    public static void run(Integer selectedGroupProposal) {
-	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposal);
+    public static void run(GroupProposal groupProposal) {
 	if (groupProposal != null) {
 	    Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
 	    proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());

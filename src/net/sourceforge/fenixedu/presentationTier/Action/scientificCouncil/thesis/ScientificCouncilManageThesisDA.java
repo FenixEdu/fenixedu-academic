@@ -563,7 +563,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 	spreadsheet.setHeader("Numero Presidente");
 	spreadsheet.setHeader("Nome Presidente");
 	spreadsheet.setHeader("Affiliacao Presidente");
-	spreadsheet.setHeader("Nota Dissertação");
+	spreadsheet.setHeader("Nota Dissertaï¿½ï¿½o");
 
 	for (final Thesis thesis : rootDomainObject.getThesesSet()) {
 	    final Enrolment enrolment = thesis.getEnrolment();
