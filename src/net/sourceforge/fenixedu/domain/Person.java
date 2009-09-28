@@ -1911,6 +1911,14 @@ public class Person extends Person_Base {
 	return getPayments(AcademicEvent.class);
     }
 
+    public Money getTotalPaymentsAmountWithAdjustment() {
+	Money total = new Money(0);
+	for (final Entry entry : getPayments(AcademicEvent.class)) {
+	    total = total.add(entry.getAmountWithAdjustment());
+	}
+	return total;
+    }
+
     public Set<? extends Event> getEventsByEventTypes(final EventType... eventTypes) {
 	return getEventsByEventTypes(Arrays.asList(eventTypes));
     }

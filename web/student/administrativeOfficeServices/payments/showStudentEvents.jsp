@@ -34,17 +34,23 @@
 	</p>
 </logic:empty>
 
-	
+
 <p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.payedEvents2" /></strong></p>
 <logic:notEmpty name="payedEntries">
 	<fr:view name="payedEntries" schema="entry.view-for-student">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle1 thlight mtop025" />
-			<fr:property name="columnClasses" value=",,aright" />
-			<fr:property name="sortBy" value="whenRegistered=asc"/>
+		<fr:layout name="tabular-sortable">
+			<fr:property name="classes" value="tstyle1 thlight mtop025 width100 mbottom0" />
+			<fr:property name="columnClasses" value=",acenter,aright" />
+
+			<fr:property name="sortParameter" value="sortBy"/>
+	        <fr:property name="sortUrl" value="/payments.do?method=showEvents" />
+    	    <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "whenRegistered=asc" : request.getParameter("sortBy") %>"/>
+			<fr:property name="sortableSlots" value="whenRegistered, amountWithAdjustment" />
 		</fr:layout>
 	</fr:view>
-	<br/>
+	<table class="tstyle1 tgluetop mtop0 width100 aright">
+		<tr><td><span style="padding-right: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.Total" /></span> <bean:write name="totalPayed"/></td></tr>
+	</table>
 </logic:notEmpty>
 
 <logic:empty name="payedEntries">

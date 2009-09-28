@@ -24,6 +24,7 @@ public class StudentPaymentsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("person", person);
 	request.setAttribute("notPayedEvents", calculateNotPayedEvents(person));
 	request.setAttribute("payedEntries", person.getPayments());
+	request.setAttribute("totalPayed", person.getTotalPaymentsAmountWithAdjustment());
 
 	return mapping.findForward("showEvents");
     }
