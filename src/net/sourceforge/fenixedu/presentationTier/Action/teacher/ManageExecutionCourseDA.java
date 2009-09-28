@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -221,7 +222,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
-	if (evaluationMethod == null) {
+	MultiLanguageString evaluationElements = evaluationMethod.getEvaluationElements();
+	if (evaluationMethod == null || evaluationElements == null || evaluationElements.isEmpty()
+		|| StringUtils.isEmpty(evaluationElements.getContent())) {
 	    final MultiLanguageString evaluationMethodMls = new MultiLanguageString();
 	    final Set<CompetenceCourse> competenceCourses = executionCourse.getCompetenceCourses();
 	    if (!competenceCourses.isEmpty()) {
@@ -231,15 +234,9 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 		evaluationMethodMls.setContent(Language.pt, pt == null ? "" : pt);
 		evaluationMethodMls.setContent(Language.en, en == null ? "" : en);
 	    }
-	    final Object args[] = { executionCourse, new MultiLanguageString() };
+	    final Object args[] = { executionCourse, evaluationMethodMls };
 	    executeService("EditEvaluation", args);
 	    evaluationMethod = executionCourse.getEvaluationMethod();
-	}
-	final MultiLanguageString multiLanguageString = evaluationMethod.getEvaluationElements();
-	if (multiLanguageString != null) {
-	    final DynaActionForm dynaActionForm = (DynaActionForm) form;
-	    dynaActionForm.set("evaluationMethod", multiLanguageString.getContent(Language.pt));
-	    dynaActionForm.set("evaluationMethodEn", multiLanguageString.getContent(Language.en));
 	}
 	return mapping.findForward("edit-evaluationMethod");
     }
