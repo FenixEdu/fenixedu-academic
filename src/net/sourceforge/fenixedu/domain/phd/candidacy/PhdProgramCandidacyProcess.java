@@ -184,6 +184,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
+
+	    if (process.getCandidacyReviewDocuments().isEmpty()) {
+		throw new DomainException(
+			"error.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy.candidacy.review.document.is.required");
+	    }
+
 	    process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
 		    userView.getPerson(), bean.getRemarks());
 	    return process;
@@ -246,6 +252,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+
+	    if (!process.getIndividualProgramProcess().hasPhdProgram()) {
+		throw new DomainException(
+			"error.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview.invalid.phd.program");
+	    }
+
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
 	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(), bean
 		    .getRemarks());
@@ -257,12 +269,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	    if ((process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION) || process
-		    .isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION))
-		    && (isMasterDegreeAdministrativeOfficeEmployee(userView) || process.getIndividualProgramProcess()
-			    .isCoordinatorForPhdProgram(userView.getPerson()))) {
+	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		if ((isMasterDegreeAdministrativeOfficeEmployee(userView) || process.getIndividualProgramProcess()
+			.isCoordinatorForPhdProgram(userView.getPerson()))) {
+		    return;
+		}
+	    }
 
-		return;
+	    if (process.isInState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION)) {
+		if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		    return;
+		}
 	    }
 
 	    throw new PreConditionNotValidException();
@@ -277,6 +294,32 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    process.addDocument(each, userView != null ? userView.getPerson() : null);
 		}
 	    }
+
+	    return process;
+	}
+    }
+
+    static public class DeleteCandidacyReview extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
+		if ((isMasterDegreeAdministrativeOfficeEmployee(userView) || process.getIndividualProgramProcess()
+			.isCoordinatorForPhdProgram(userView.getPerson()))) {
+		    return;
+		}
+	    }
+
+	    throw new PreConditionNotValidException(
+		    "error.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview.cannot.delete.review.after.sending.for.ratification");
+
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    PhdProgramCandidacyProcessDocument document = (PhdProgramCandidacyProcessDocument) object;
+
+	    document.delete();
 
 	    return process;
 	}
@@ -329,6 +372,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	activities.add(new RequestCandidacyReview());
 	activities.add(new UploadCandidacyReview());
+	activities.add(new DeleteCandidacyReview());
 	activities.add(new RejectCandidacyProcess());
 
 	activities.add(new RequestRatifyCandidacy());

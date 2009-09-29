@@ -285,24 +285,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 		"manageCandidacyDocuments", "message.document.deleted.successfuly");
     }
 
-    public ActionForward deleteCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	try {
-	    ExecuteProcessActivity.run(getProcess(request), DeleteDocument.class, getDocument(request));
-	    addSuccessMessage(request, "message.document.uploaded.with.success");
-
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getArgs());
-	}
-
-	return manageCandidacyReview(mapping, actionForm, request, response);
-    }
-
-    private PhdProgramCandidacyProcessDocument getDocument(HttpServletRequest request) {
-	return getDomainObject(request, "documentId");
-    }
-
     public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 

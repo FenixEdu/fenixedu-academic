@@ -2,7 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<html:xhtml/>
+<%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
+
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
 <logic:present role="COORDINATOR">
 
@@ -64,8 +67,8 @@
 
 <%--  ### Documents  ### --%>
 
+<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 <logic:notEmpty name="process" property="candidacyReviewDocuments">
-	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 	
 	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
 		<fr:layout name="tabular">
@@ -90,52 +93,70 @@
 	</fr:view>
 	<br/>
 </logic:notEmpty>
+<logic:empty name="process" property="candidacyReviewDocuments">
+	<br/>
+	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
+</logic:empty>
+
+<br/><br/>
+
 <%--  ### End Of Documents  ### --%>
 
-<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
-<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
-  	<input type="hidden" name="method" value="" />
-  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
-  	
-  	<strong><bean:message  key="label.phd.candidacy.candidacy.review.document" bundle="PHD_RESOURCES"/></strong>
-	<fr:edit id="documentToUpload"
-		name="documentToUpload"
-		schema="PhdCandidacyDocumentUploadBean.review.document"
-		action="/phdProgramCandidacyProcess.do?method=uploadCandidacyReview">
-	
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-			<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadCandidacyReviewInvalid" />
-		</fr:layout>
-	</fr:edit>
-	
-	<fr:edit id="stateBean" name="stateBean" visible="false" />
-	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadCandidacyReview';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
-</fr:form>
+<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= PhdProgramCandidacyProcess.RequestRatifyCandidacy.class %>">
 
-	<br />
-	<br />
-	<br />
-	<br />
+	<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
+	<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
+	  	<input type="hidden" name="method" value="" />
+	  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
+	  	
+	  	<strong><bean:message  key="label.phd.candidacy.candidacy.review.document" bundle="PHD_RESOURCES"/></strong>
+		<fr:edit id="documentToUpload"
+			name="documentToUpload"
+			schema="PhdCandidacyDocumentUploadBean.review.document"
+			action="/phdProgramCandidacyProcess.do?method=uploadCandidacyReview">
+		
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+				<fr:destination name="invalid" path="/phdProgramCandidacyProcess.do?method=uploadCandidacyReviewInvalid" />
+			</fr:layout>
+		</fr:edit>
+		
+		<fr:edit id="stateBean" name="stateBean" visible="false" />
+		
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadCandidacyReview';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
+	</fr:form>
+	
+		<br />
+		<br />
+		<br />
+		<br />
+	
+	
+	
+	<fr:form action="/phdProgramCandidacyProcess.do">
+		<input type="hidden" name="method" value="requestRatifyCandidacy" />
+	  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
+	  	<fr:edit id="documentToUpload" name="documentToUpload" visible="false" />
+	
+		<strong><bean:message key="label.phd.request.ratify.candidacy.question" bundle="PHD_RESOURCES" /></strong>
+		<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+		</fr:edit>
+		<p>
+	
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
+			
+			<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= PhdProgramCandidacyProcess.RejectCandidacyProcess.class %>">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacyProcess';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
+			</phd:activityAvailable>
+		</p>
+	</fr:form>
 
-<fr:form action="/phdProgramCandidacyProcess.do">
-	<input type="hidden" name="method" value="requestRatifyCandidacy" />
-  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
-
-	<strong><bean:message key="label.phd.request.ratify.candidacy.question" bundle="PHD_RESOURCES" /></strong>
-	<fr:edit id="stateBean" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
-			<fr:property name="columnClasses" value=",,tdclear tderror1" />
-		</fr:layout>
-	</fr:edit>
-	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacyProcess';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
-	</p>
-</fr:form>
+</phd:activityAvailable>
 
 <br/><br/>
 

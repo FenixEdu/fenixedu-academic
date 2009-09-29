@@ -82,13 +82,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageCandidacyDocuments"/>
 				</html:link>
 			</li>
-			<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= UploadCandidacyReview.class %>">
-				<li style="display: inline;">
-					<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
-						<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.manageCandidacyReview"/>
-					</html:link>
-				</li>
-			</phd:activityAvailable>
+			<li style="display: inline;">
+				<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.manageCandidacyReview"/>
+				</html:link>
+			</li>
 		</ul>
     </td>
   </tr>
