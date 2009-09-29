@@ -6131,14 +6131,17 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			class DepartmentSite extends UnitSite {
 			}
 
-			class TutorSite extends UnitSite {
+			class SpecificUnitSite extends UnitSite {
+			}
+			 
+			class TutorSite extends SpecificUnitSite {
 			}
 			
-			class AssemblySite extends UnitSite {
+			class AssemblySite extends SpecificUnitSite {
 			
 			}
 			 
-			class StudentsSite extends UnitSite {
+			class StudentsSite extends SpecificUnitSite {
 			}
 			
 			class ManagementCouncilSite extends UnitSite {
