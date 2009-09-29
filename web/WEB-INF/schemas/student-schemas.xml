@@ -180,6 +180,10 @@
 <schema name="Student.editPersonalDataAuthorizationChoiceForCurrentExecutionYear" type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
 	<slot name="personalDataAuthorizationForCurrentExecutionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
+<schema name="StudentDataByExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
+	<slot name="executionYear.year" label="label.executionYear.year" />
+	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
+</schema>
 
 <schema name="student.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
     <slot name="title"/>

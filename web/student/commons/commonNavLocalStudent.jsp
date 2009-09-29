@@ -24,6 +24,7 @@
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
 	<li><html:link page="/viewTutorInfo.do?method=prepare" titleKey="link.title.tutorInfo"><bean:message key="link.student.tutorInfo"/></html:link></li>
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>
+	<li><html:link page="/studentDataByExecutionYear.do?method=show" titleKey="label.studentDataByExecutionYear"><bean:message key="label.studentDataByExecutionYear.short"/></html:link></li>
 	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.residencePaymentEvents">
 		<li><html:link page="/viewResidencePayments.do?method=listEvents" titleKey="link.title.residencePayments"><bean:message key="link.title.residencePayments"/></html:link></li>
 	</logic:notEmpty>

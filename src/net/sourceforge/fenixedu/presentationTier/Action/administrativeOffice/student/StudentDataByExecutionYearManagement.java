@@ -45,7 +45,7 @@ public class StudentDataByExecutionYearManagement extends FenixDispatchAction {
 	return result;
     }
 
-    private Student getStudent(final HttpServletRequest request) {
+    public Student getStudent(final HttpServletRequest request) {
 	return rootDomainObject.readStudentByOID(getIntegerFromRequest(request, "studentId"));
     }
 
