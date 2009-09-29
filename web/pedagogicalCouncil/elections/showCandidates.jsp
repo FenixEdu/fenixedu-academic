@@ -88,15 +88,8 @@
 			<logic:iterate id="candidate" name="candidatesWithPhotos">	
 			<tr>			
 				<td class="personInfo_photo">
-		          	<logic:notEqual name="candidate" property="person.photoPubliclyAvailable" value="true">
-		          		<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
-						<div><img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/></div>
-		          	</logic:notEqual>
-		
-		          	<logic:equal name="candidate" property="person.photoPubliclyAvailable" value="true">
-		      			<bean:define id="homepageID" name="candidate" property="person.homepage.idInternal"/>
-		      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
-		   			</logic:equal>
+	      			<bean:define id="homepageID" name="candidate" property="person.homepage.idInternal"/>
+	      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
 				</td>			
 							
 				<td> <bean:write name="candidate" property="person.name" /> (<bean:write name="candidate" property="number" />)</td>

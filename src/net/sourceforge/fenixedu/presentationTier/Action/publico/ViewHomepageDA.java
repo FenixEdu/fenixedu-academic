@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.io.DataOutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -286,26 +284,12 @@ public class ViewHomepageDA extends SiteVisualizationDA {
 
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	return RetrievePersonalPhotoAction.retrieveByUUID(mapping, form, request, response);
+	return new RetrievePersonalPhotoAction().retrieveByUUID(mapping, form, request, response);
     }
 
     public ActionForward retrievePhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	final Homepage homepage = getHomepage(request);
-	if (homepage != null && homepage.getShowPhoto() != null && homepage.getShowPhoto().booleanValue()) {
-	    final Person person = homepage.getPerson();
-	    final Photograph personalPhoto = person.getPersonalPhoto();
-
-	    if (personalPhoto != null) {
-		response.setContentType(personalPhoto.getContentType().getMimeType());
-		DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-		dos.write(personalPhoto.getContents());
-		dos.close();
-	    }
-	}
-
-	return null;
+	return new RetrievePersonalPhotoAction().retrievePublic(request, response, getHomepage(request).getPerson());
     }
 
     public ActionForward showPublications(ActionMapping mapping, ActionForm form, HttpServletRequest request,

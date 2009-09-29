@@ -32,13 +32,8 @@
 	<logic:iterate id="teacherInquiry" name="studentInquiry" property="teachersInquiries">
 			<tr>
 				<td class="acenter">
-					<c:if test="${teacherInquiry.key.photoAvailable}">
-						<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
-						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>					
-					</c:if>
-					<c:if test="${!teacherInquiry.key.photoAvailable}">
-						<html:img align="middle" src="<%= request.getContextPath() +"/images/photo_placer01_pt.gif"%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-					</c:if>										
+					<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
+					<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>					
 				</td>
 				<td>				
 					<bean:write name="teacherInquiry" property="key.name"/>

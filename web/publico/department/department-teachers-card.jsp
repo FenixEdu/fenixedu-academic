@@ -10,15 +10,8 @@
 <table class="personInfo mbottom1">
 	<tr>
 		<td class="personInfo_photo">
-          	<logic:notEqual name="teacher" property="person.photoPubliclyAvailable" value="true">
-          		<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
-				<div><img src="<%= request.getContextPath() %>/images/photo_placer01_<%= language == null ? "pt" : String.valueOf(language) %>.gif"/></div>
-          	</logic:notEqual>
-
-          	<logic:equal name="teacher" property="person.photoPubliclyAvailable" value="true">
-      			<bean:define id="homepageID" name="teacher" property="person.homepage.idInternal"/>
-      			<div><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
-   			</logic:equal>
+   			<bean:define id="homepageID" name="teacher" property="person.homepage.idInternal"/>
+   			<div><html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
 		</td>
 		<td class="personInfo_info">
 			<p class="mtop05 mbottom05" style="font-size: 1.1em;">

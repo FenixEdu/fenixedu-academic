@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,13 @@ import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -26,19 +29,35 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
-    public static ActionForward retrieve(final HttpServletRequest request, final HttpServletResponse response, final Person person) {
+    public ActionForward retrieve(final HttpServletRequest request, final HttpServletResponse response, final Person person) {
 	if (person != null) {
 	    final Photograph personalPhoto = person.getPersonalPhoto();
 	    if (personalPhoto != null) {
 		if (person.isPhotoAvailableToCurrentUser()) {
 		    writePhoto(response, personalPhoto);
+		    return null;
 		}
 	    }
 	}
+	writeUnavailablePhoto(response);
 	return null;
     }
 
-    public static ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward retrievePublic(final HttpServletRequest request, final HttpServletResponse response, final Person person) {
+	if (person != null) {
+	    final Photograph personalPhoto = person.getPersonalPhoto();
+	    if (personalPhoto != null) {
+		if (person.isPhotoPubliclyAvailable()) {
+		    writePhoto(response, personalPhoto);
+		    return null;
+		}
+	    }
+	}
+	writeUnavailablePhoto(response);
+	return null;
+    }
+
+    public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final String uuid = request.getParameter("uuid");
 	final User user = User.readUserByUserUId(uuid);
@@ -51,7 +70,9 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
 	if (personalPhoto != null) {
 	    writePhoto(response, personalPhoto);
+	    return null;
 	}
+	writeUnavailablePhoto(response);
 	return null;
     }
 
@@ -68,11 +89,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	Photograph photo = rootDomainObject.readPhotographByOID(photoID);
 	if (photo != null) {
 	    writePhoto(response, photo);
+	    return null;
 	}
+	writeUnavailablePhoto(response);
 	return null;
     }
 
-    protected static void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
+    protected void writePhoto(final HttpServletResponse response, final Photograph personalPhoto) {
 	try {
 	    response.setContentType(personalPhoto.getContentType().getMimeType());
 	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
@@ -82,4 +105,14 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	}
     }
 
+    protected void writeUnavailablePhoto(HttpServletResponse response) {
+	try {
+	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+	    final String path = getServlet().getServletContext().getRealPath(
+		    "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+	    dos.write(FileUtils.readFileToByteArray(new File(path)));
+	    dos.close();
+	} catch (IOException e) {
+	}
+    }
 }

@@ -31,16 +31,10 @@
 		<tbody>
 			<tr>
 				<td>
-                    <logic:notEmpty name="person" property="personalPhotoEvenIfPending">
-					    <html:img align="middle"
-						src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
-						altKey="personPhoto" bundle="IMAGE_RESOURCES"
-						style="border: 1px solid #aaa; padding: 3px;" />
-                    </logic:notEmpty>						
-					<logic:empty name="person" property="personalPhotoEvenIfPending">
-	                    <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
-	                    <img src="<%=request.getContextPath()%>/images/photo_placer01_<%=language == null ? "pt" : String.valueOf(language)%>.gif"/>
-	                </logic:empty>
+				    <html:img align="middle"
+					src="<%=request.getContextPath() + "/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto"%>"
+					altKey="personPhoto" bundle="IMAGE_RESOURCES"
+					style="border: 1px solid #aaa; padding: 3px;" />
 			    </td>
 				<td>
                     <div style="padding: 0 2em;">
