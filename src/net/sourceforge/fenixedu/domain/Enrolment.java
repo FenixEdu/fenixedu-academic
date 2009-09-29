@@ -30,9 +30,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
+import net.sourceforge.fenixedu.domain.studentCurriculum.EnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
+import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -100,6 +104,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
 
+    @Override
     public boolean isOptional() {
 	return false;
     }
@@ -761,6 +766,40 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getGrade().getValue();
     }
 
+    @Override
+    public Grade getEctsGrade() {
+	Grade grade = getGrade();
+	if (getEnrolmentWrappersCount() > 0) {
+	    Set<Dismissal> dismissals = new HashSet<Dismissal>();
+	    for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
+		for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+		    dismissals.add(dismissal);
+		}
+	    }
+	    Dismissal dismissal = dismissals.iterator().next();
+	    if (dismissals.size() == 1) {
+		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
+		    return getCurricularCourse().convertGradeToEcts(this, grade);
+		} else {
+		    CurricularCourse curricularCourse = dismissal.getCurricularCourse();
+		    // FIXME: some optional dismissals not correctly marked as
+		    // OptionalDismissals, so we need this next test.
+		    if (curricularCourse.isOptionalCurricularCourse()) {
+			return getCurricularCourse().convertGradeToEcts(this, grade);
+		    }
+		    return curricularCourse.convertGradeToEcts(dismissal, grade);
+		}
+	    } else {
+		// if more than one exists we can't base the conversion on the
+		// origin, so step up to the degree, on a context based on one
+		// of the sources.
+		return getStudentCurricularPlan().getDegree().convertGradeToEcts(dismissal, grade);
+	    }
+	} else {
+	    return getCurricularCourse().convertGradeToEcts(this, grade);
+	}
+    }
+
     final public Integer getFinalGrade() {
 	return getGrade().getIntegerValue();
     }
@@ -1098,13 +1137,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return getCurricularCourse().getType() == CurricularCourseType.NORMAL_COURSE && !isExtraCurricular() && !isOptional();
     }
 
+    @Override
     final public String getEnrolmentTypeName() {
 	if (isExtraCurricular()) {
 	    return "EXTRA_CURRICULAR_ENROLMENT";
 	} else if (isOptional()) {
 	    return "ENROLMENT_IN_OPTIONAL_DEGREE_MODULE";
 	} else {
-	    return getCurricularCourse().getType().name();
+	    return "COMPULSORY_ENROLMENT";
 	}
     }
 
@@ -1539,6 +1579,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     }
 
+    @Override
     public boolean isAnual() {
 	final CurricularCourse curricularCourse = getCurricularCourse();
 	return curricularCourse != null && curricularCourse.isAnual();

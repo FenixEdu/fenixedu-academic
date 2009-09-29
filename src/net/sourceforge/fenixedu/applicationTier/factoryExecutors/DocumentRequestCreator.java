@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -36,6 +37,9 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
 
 	} else if (getChosenDocumentRequestType().isPastDiploma()) {
 	    return CreatePastDiplomaRequest.create(this);
+
+	} else if (getChosenDocumentRequestType().isDiplomaSupplement()) {
+	    return new DiplomaSupplementRequest(this);
 
 	} else if (getChosenDocumentRequestType() == DocumentRequestType.UNDER_23_TRANSPORTS_REQUEST) {
 	    return new Under23TransportsDeclarationRequest(this);

@@ -85,6 +85,14 @@
 	</fr:layout>
 </fr:view>
 
+<!-- Extra Curricular Activities -->
+<h3 class="mbottom025"><bean:message key="label.extraCurricularActivities" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mvert05">
+    <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+    <html:link action="/studentExtraCurricularActivities.do?method=prepare" paramName="student" paramProperty="externalId" paramId="studentId">
+        <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extraCurricularActivities.manage" />
+    </html:link>
+</p>
 
 <!-- Payments -->
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>

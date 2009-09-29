@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -30,6 +31,11 @@ public class SimpleStudentCurriculum extends StudentCurriculumBase {
 	addCredits(result, studentCurricularPlan);
 
 	return result;
+    }
+
+    @Override
+    public Set<ICurriculumEntry> getCurricularYearEntries() {
+	return getCurricularYearEntries();
     }
 
     @Override

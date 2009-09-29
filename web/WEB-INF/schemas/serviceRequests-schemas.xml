@@ -121,6 +121,14 @@
 <schema name="DiplomaRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest"  extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
+<schema name="DiplomaSupplementRequest.view"
+    type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest"
+    extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="requestedCycle" key="label.cycleType" />
+    <slot name="givenNames" key="label.givenNames" />
+    <slot name="familyNames" key="label.familyNames" />
+</schema>
+
 <schema name="DegreeFinalizationCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />	
@@ -583,6 +591,26 @@
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
 	</slot>
 </schema>
+
+<schema
+	name="DocumentRequestCreateBean.DIPLOMA_SUPPLEMENT_REQUEST.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="givenNames" key="label.givenNames"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+    <slot name="familyNames" key="label.familyNames"
+        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema
+    name="DocumentRequestCreateBean.DIPLOMA_SUPPLEMENT_REQUEST.AdditionalInformation.view"
+    type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
+    bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="requestedCycle" key="label.cycleType" />
+    <slot name="givenNames" key="label.givenNames" />
+    <slot name="familyNames" key="label.familyNames" />
+</schema>
+
 
 <schema name="Enrolment.view-curricular-course-name-only" 
 	type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">

@@ -47,10 +47,11 @@
 	<parameter name="weeksOfStudyPerYear" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="programmeRequirements" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="gradeDistribution" isForPrompting="false" class="net.sourceforge.fenixedu.domain.GradeDistribution"/>
+	<parameter name="classificationSystem" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverage" isForPrompting="false" class="java.lang.Integer"/>
 	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="finalAverageDistribution" isForPrompting="false" class="net.sourceforge.fenixedu.domain.GradeDistribution.Distribution"/>
+	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
+	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
@@ -60,6 +61,8 @@
 
 	<field name="executionYear" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="duration" class="java.lang.String"/>
 	<field name="ectsCreditsForCurriculum" class="java.math.BigDecimal"/>
 	<field name="gradeValue" class="java.lang.String"/>
 	<field name="academicUnitId" class="java.lang.String"/>
@@ -376,12 +379,12 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.four")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="12"
 						y="41"
-						width="433"
-						height="13"
+						width="432"
+						height="44"
 						key="textField-57"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -396,8 +399,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="42"
-						y="59"
+						x="45"
+						y="91"
 						width="52"
 						height="20"
 						key="textField-59"
@@ -414,8 +417,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="42"
-						y="78"
+						x="45"
+						y="110"
 						width="52"
 						height="21"
 						key="textField-68"
@@ -433,8 +436,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="42"
-						y="99"
+						x="45"
+						y="131"
 						width="52"
 						height="20"
 						key="textField-74"
@@ -451,8 +454,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="94"
-						y="59"
+						x="97"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-75"
@@ -469,8 +472,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="122"
-						y="59"
+						x="125"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-76"
@@ -487,8 +490,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="150"
-						y="59"
+						x="153"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-77"
@@ -505,8 +508,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="178"
-						y="59"
+						x="181"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-78"
@@ -523,8 +526,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="206"
-						y="59"
+						x="209"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-79"
@@ -541,8 +544,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="234"
-						y="59"
+						x="237"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-80"
@@ -559,8 +562,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="262"
-						y="59"
+						x="265"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-81"
@@ -577,8 +580,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="59"
+						x="293"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-82"
@@ -595,8 +598,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="318"
-						y="59"
+						x="321"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-83"
@@ -613,8 +616,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="346"
-						y="59"
+						x="349"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-84"
@@ -631,8 +634,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="374"
-						y="59"
+						x="377"
+						y="91"
 						width="28"
 						height="20"
 						key="textField-85"
@@ -649,8 +652,8 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="94"
-						y="79"
+						x="97"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-86"
@@ -663,12 +666,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("10").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(10)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="122"
-						y="79"
+						x="125"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-87"
@@ -681,12 +684,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("11").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(11)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="150"
-						y="79"
+						x="153"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-88"
@@ -699,12 +702,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("12").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(12)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="178"
-						y="79"
+						x="181"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-89"
@@ -717,12 +720,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("13").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(13)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="206"
-						y="79"
+						x="209"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-90"
@@ -735,12 +738,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("14").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(14)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="234"
-						y="79"
+						x="237"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-91"
@@ -753,12 +756,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("15").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(15)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="262"
-						y="79"
+						x="265"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-92"
@@ -771,12 +774,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("16").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(16)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="79"
+						x="293"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-93"
@@ -789,12 +792,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("17").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(17)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="318"
-						y="79"
+						x="321"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-94"
@@ -807,12 +810,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("18").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(18)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="346"
-						y="79"
+						x="349"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-95"
@@ -825,12 +828,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("19").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(19)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="374"
-						y="79"
+						x="377"
+						y="111"
 						width="28"
 						height="20"
 						key="textField-96"
@@ -843,12 +846,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{gradeDistribution}.getDistribution("20").getPercentage()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$P{ectsGradePercentagesTable}.getPercentage(20)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="94"
-						y="99"
+						x="97"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-97"
@@ -861,12 +864,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("10").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(10)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="122"
-						y="99"
+						x="125"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-98"
@@ -879,12 +882,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("11").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(11)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="150"
-						y="99"
+						x="153"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-99"
@@ -897,12 +900,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("12").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(12)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="178"
-						y="99"
+						x="181"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-100"
@@ -915,12 +918,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("13").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(13)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="206"
-						y="99"
+						x="209"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-101"
@@ -933,12 +936,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("14").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(14)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="234"
-						y="99"
+						x="237"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-102"
@@ -951,12 +954,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("15").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(15)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="262"
-						y="99"
+						x="265"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-103"
@@ -969,12 +972,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("16").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(16)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="290"
-						y="99"
+						x="293"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-104"
@@ -987,12 +990,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("17").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(17)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="318"
-						y="99"
+						x="321"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-105"
@@ -1005,12 +1008,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("18").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(18)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="346"
-						y="99"
+						x="349"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-106"
@@ -1023,12 +1026,12 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("19").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(19)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="374"
-						y="99"
+						x="377"
+						y="131"
 						width="28"
 						height="20"
 						key="textField-107"
@@ -1041,13 +1044,13 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{gradeDistribution}.getDistribution("20").getScale()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert(20)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="12"
-						y="142"
-						width="433"
+						x="13"
+						y="172"
+						width="432"
 						height="13"
 						key="textField-108"
 						positionType="Float"/>
@@ -1064,7 +1067,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
-						y="128"
+						y="156"
 						width="444"
 						height="13"
 						key="textField-109"
@@ -1081,9 +1084,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="12"
-						y="156"
-						width="433"
+						x="13"
+						y="187"
+						width="432"
 						height="13"
 						key="textField-110"
 						positionType="Float"/>
@@ -1095,7 +1098,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{finalAverageDistribution}.getScale() + " (ECTS)"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ectsGradeConversionTable}.convert($P{finalAverage}) + "  (ECTS)"]]></textFieldExpression>
 				</textField>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -1185,7 +1188,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Extra-curricular"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{type}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -1202,7 +1205,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font fontName="SansSerif" pdfFontName="Times-Roman" size="7"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Semestral"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{duration}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

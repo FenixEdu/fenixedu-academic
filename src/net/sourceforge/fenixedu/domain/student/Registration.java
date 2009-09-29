@@ -82,6 +82,7 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -3004,6 +3005,18 @@ public class Registration extends Registration_Base {
 	    }
 	}
 
+	return null;
+    }
+
+    final public DiplomaSupplementRequest getDiplomaSupplementRequest(final CycleType cycleType) {
+	for (DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isDiplomaSupplement() && !documentRequest.finishedUnsuccessfully()) {
+		DiplomaSupplementRequest supplement = (DiplomaSupplementRequest) documentRequest;
+		if (cycleType == supplement.getRequestedCycle()) {
+		    return supplement;
+		}
+	    }
+	}
 	return null;
     }
 

@@ -243,6 +243,22 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReference
     internalizeWith net.sourceforge.fenixedu.domain.degreeStructure.Externalization.internalizeBibliographicReferences();
 }
 
+valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable as EctsComparabilityTable {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith fromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages as EctsComparabilityPercentages {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith fromString();
+}
+
 valueType net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction as ProtocolAction {
     externalizeWith {
         String toString();
@@ -483,6 +499,14 @@ valueType net.sourceforge.fenixedu.util.tests.TestType as TestType {
     }
 }
 
+valueType org.joda.time.Interval as Interval {
+    externalizeWith {
+        String net.sourceforge.fenixedu.util.date.SerializationTool.intervalSerialize();
+    }
+
+    internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.intervalDeserialize();
+}
+
 valueType org.joda.time.Duration as Duration {
     externalizeWith {
         Long getMillis();
@@ -712,6 +736,12 @@ class DomainObject {
 	
 		class EmptyDegree extends Degree;
 		
+	class DegreeOfficialPublication extends DomainObject {
+	   LocalDate publication (REQUIRED);
+	   String dgesReference;
+	   String universityReference;
+	   String officialReference (REQUIRED);
+	}
 
 	class DegreeCurricularPlan extends DomainObject {
 		String anotation;
@@ -2861,6 +2891,35 @@ class DomainObject {
 		Double tutorialOrientationHours;
 	}
 
+	class degreeStructure.EctsConversionTable extends DomainObject {
+		EctsComparabilityTable ectsTable;
+        AcademicInterval year;
+	}
+
+	class degreeStructure.EctsCompetenceCourseConversionTable extends degreeStructure.EctsConversionTable {
+	}
+
+	class degreeStructure.EctsCurricularYearConversionTable extends degreeStructure.EctsConversionTable {
+	}
+
+    class degreeStructure.EctsDegreeByCurricularYearConversionTable extends degreeStructure.EctsCurricularYearConversionTable {
+    }
+
+    class degreeStructure.EctsInstitutionByCurricularYearConversionTable extends degreeStructure.EctsCurricularYearConversionTable {
+        CycleType cycle;
+    }
+
+    class degreeStructure.EctsGraduationGradeConversionTable extends degreeStructure.EctsConversionTable {
+        EctsComparabilityPercentages percentages;
+        CycleType cycle;
+    }
+
+    class degreeStructure.EctsDegreeGraduationGradeConversionTable extends degreeStructure.EctsGraduationGradeConversionTable {
+    }
+
+	class degreeStructure.EctsCycleGraduationGradeConversionTable extends degreeStructure.EctsGraduationGradeConversionTable {
+	}
+
 	class degreeStructure.Context extends DomainObject {
 		Integer childOrder;
 	}
@@ -4715,6 +4774,12 @@ class DomainObject {
 				class serviceRequests.documentRequests.DiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
 					CycleType requestedCycle;
 				}
+
+                class serviceRequests.documentRequests.DiplomaSupplementRequest extends serviceRequests.documentRequests.DocumentRequest {
+                    CycleType requestedCycle (REQUIRED);
+                    String givenNames (REQUIRED);
+                    String familyNames (REQUIRED);
+                }
 			
 				class serviceRequests.documentRequests.PhotocopyRequest extends serviceRequests.documentRequests.DocumentRequest {
 					String subject;
@@ -4814,6 +4879,14 @@ class DomainObject {
 		String curriculum (REQUIRED);
 		String notes;
 	}
+
+    class student.curriculum.ExtraCurricularActivity extends DomainObject {
+        Interval activityInterval (REQUIRED);
+    }
+
+    class student.curriculum.ExtraCurricularActivityType extends DomainObject {
+        MultiLanguageString name;
+    }
 
 	class student.ExternalRegistrationData extends DomainObject {
 		String coordinatorName;
@@ -5026,6 +5099,7 @@ class DomainObject {
 		Double ectsCredits (REQUIRED);
 		YearMonthDay evaluationDate;
 		Grade grade (REQUIRED);
+		degreeStructure.RegimeType regime;
 	}
 
 	class support.FAQEntry extends DomainObject {
@@ -7987,6 +8061,60 @@ relation CompetenceCourseInformationCompetenceCourse {
 relation CompetenceCourseInformationCompetenceCourseLoad {
 	degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;
 	degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
+		multiplicity *;
+	}
+}
+
+relation CompetenceCourseEctsCompetenceCourseConversionTable {
+	CompetenceCourse playsRole competenceCourse {
+		multiplicity 1;
+	}
+	degreeStructure.EctsCompetenceCourseConversionTable playsRole ectsConversionTables {
+		multiplicity *;
+	}
+}
+
+relation CurricularYearEctsCurricularYearConversionTable {
+    CurricularYear playsRole curricularYear {
+    	multiplicity 1;
+    }
+    degreeStructure.EctsCurricularYearConversionTable playsRole ectsConversionTables {
+        multiplicity *;
+    }
+}
+
+relation DegreeEctsDegreeByCurricularYearConversionTable {
+	Degree playsRole degree {
+    	multiplicity 1;
+	}
+	degreeStructure.EctsDegreeByCurricularYearConversionTable playsRole ectsCourseConversionTables {
+		multiplicity *;
+	}
+}
+
+relation SchoolEctsInstitutionByCurricularYearConversionTable {
+	organizationalStructure.Unit playsRole school {
+	   	multiplicity 1;
+	}
+	degreeStructure.EctsInstitutionByCurricularYearConversionTable playsRole ectsCourseConversionTables {
+		multiplicity *;
+	}
+}
+
+relation DegreeEctsDegreeGraduationGradeConversionTable {
+    Degree playsRole degree {
+    	multiplicity 1;
+    }
+    degreeStructure.EctsDegreeGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
+        multiplicity *;
+    }
+}
+
+relation SchoolEctsCycleGraduationGradeConversionTable {
+	organizationalStructure.Unit playsRole school {
+    	multiplicity 1;
+	}
+	degreeStructure.EctsCycleGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
 		multiplicity *;
 	}
 }
@@ -16558,6 +16686,47 @@ relation CoordinatorStudentInquiriesCourseResult {
 	}
 }
 
+relation CurricularActivitiesRootDomainObject {
+    RootDomainObject playsRole rootDomainObject {
+    	multiplicity 1;
+    }
+    student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
+        multiplicity *;
+    }
+}
+
+relation StudentExtraCurricularActivities {
+    student.Student playsRole student;
+    student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
+        multiplicity *;
+    }
+}
+
+relation ExtraCurricularActivityFeaturedInPrintedDiploma {
+    serviceRequests.documentRequests.DiplomaSupplementRequest playsRole featuredDiploma;
+    student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
+        multiplicity *;
+    }
+}
+
+relation ExtraCurricularActivityTypeRoot {
+    student.curriculum.ExtraCurricularActivityType playsRole extraCurricularActivityType {
+        multiplicity *;
+    }
+    RootDomainObject playsRole rootDomainObject {
+       	multiplicity 1;
+    }
+}
+
+relation ExtraCurricularActivityType {
+    student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
+        multiplicity *;
+    }
+    student.curriculum.ExtraCurricularActivityType playsRole type {
+       	multiplicity 1;
+    }
+}
+
 relation PendingRequestRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	PendingRequest playsRole pendingRequest {
@@ -16577,4 +16746,13 @@ relation PendingRequestParams {
 	PendingRequestParameter playsRole pendingRequestParameter {
 		multiplicity *;
 	}
+}
+
+relation DegreeOfficialPublication {
+    Degree playsRole degree {
+        multiplicity 1;
+    }
+    DegreeOfficialPublication playsRole officialPublication {
+        multiplicity *;
+    }
 }

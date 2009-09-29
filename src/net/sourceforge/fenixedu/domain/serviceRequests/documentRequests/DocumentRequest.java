@@ -49,6 +49,10 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return getDocumentRequestType().isDiploma();
     }
 
+    final public boolean isDiplomaSupplement() {
+	return getDocumentRequestType().isDiplomaSupplement();
+    }
+
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	super.internalChangeState(academicServiceRequestBean);

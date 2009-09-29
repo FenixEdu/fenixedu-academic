@@ -343,6 +343,49 @@ public enum GradeScale {
 	    return value.equals(NA) || value.equals(RE) || value.equals(APT);
 	}
 
+    },
+
+    TYPEECTS(false) {
+
+	@Override
+	public boolean belongsTo(String value) {
+	    return value.equals("A") || value.equals("B") || value.equals("C") || value.equals("D") || value.equals("E")
+		    || value.equals("F") || value.equals(NA);
+	}
+
+	@Override
+	protected boolean checkFinal(Grade grade) {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
+
+	@Override
+	protected boolean checkNotFinal(Grade grade) {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
+
+	@Override
+	protected boolean isApproved(Grade grade) {
+	    return !(isNotEvaluated(grade) || isNotApproved(grade));
+	}
+
+	@Override
+	protected boolean isNotApproved(Grade grade) {
+	    return grade.getValue().equals("F");
+	}
+
+	@Override
+	protected boolean isNotEvaluated(Grade grade) {
+	    return grade.getValue().equals(NA);
+	}
+
+	@Override
+	protected String qualify(Grade grade) {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
     };
 
     private boolean isPublic;

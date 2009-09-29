@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -13,13 +14,16 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -60,6 +64,10 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     private Integer year;
 
     private CycleType requestedCycle;
+
+    private String givenNames;
+
+    private String familyNames;
 
     private MobilityProgram mobilityProgram;
 
@@ -255,6 +263,36 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 	this.requestedCycle = cycleType;
     }
 
+    @Override
+    protected void setRegistration(Registration registration) {
+	super.setRegistration(registration);
+	String[] parts = PersonNamePart.getNameParts(registration.getStudent().getPerson().getPersonName().getName());
+	int split = parts.length > 3 ? 2 : 1;
+	setGivenNames(StringFormatter.prettyPrint(StringUtils.join(Arrays.copyOfRange(parts, 0, split), " ")));
+	setFamilyNames(StringFormatter.prettyPrint(StringUtils.join(Arrays.copyOfRange(parts, split, parts.length), " ")));
+    }
+
+    public void validateNames() {
+	if (!getRegistration().getStudent().getPerson().getName().equals(getGivenNames() + " " + getFamilyNames()))
+	    throw new DomainException("error.serviceRequests.diplomaRequest.name.split.not.matching.fullname");
+    }
+
+    public String getGivenNames() {
+	return givenNames;
+    }
+
+    public void setGivenNames(String givenNames) {
+	this.givenNames = givenNames;
+    }
+
+    public String getFamilyNames() {
+	return familyNames;
+    }
+
+    public void setFamilyNames(String familyNames) {
+	this.familyNames = familyNames;
+    }
+
     final public boolean getHasAdditionalInformation() {
 	return getChosenDocumentRequestType() == null ? false : getChosenDocumentRequestType().getHasAdditionalInformation();
     }
@@ -388,8 +426,9 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 	return getBranchCurriculumGroup().getName().getContent();
     }
 
-    public boolean getIsDiploma() {
-	return (chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isPastDiploma());
+    public boolean getHasPurposeNeed() {
+	return !(chosenDocumentRequestType.isDiploma() || chosenDocumentRequestType.isPastDiploma() || chosenDocumentRequestType
+		.isDiplomaSupplement());
     }
 
     public void setPastPaymentAmount(Money paymentAmount) {

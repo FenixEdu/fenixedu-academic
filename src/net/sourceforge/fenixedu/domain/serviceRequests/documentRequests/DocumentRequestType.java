@@ -32,6 +32,8 @@ public enum DocumentRequestType {
 
     DIPLOMA_REQUEST(false, false, DEGREE, MASTER_DEGREE),
 
+    DIPLOMA_SUPPLEMENT_REQUEST(true, false /* , DEGREE, MASTER_DEGREE */),
+
     PAST_DIPLOMA_REQUEST(true, false, false, true /* , DEGREE, MASTER_DEGREE */),
 
     PHOTOCOPY(false, false),
@@ -110,6 +112,10 @@ public enum DocumentRequestType {
 	return DECLARATIONS.contains(this);
     }
 
+    public boolean isDiplomaSupplement() {
+	return this == DIPLOMA_SUPPLEMENT_REQUEST;
+    }
+
     public boolean isDiploma() {
 	return this == DIPLOMA_REQUEST;
     }
@@ -123,7 +129,8 @@ public enum DocumentRequestType {
     }
 
     final public boolean getHasCycleTypeDependency(final DegreeType degreeType) {
-	return degreeType.isComposite() && (this == DEGREE_FINALIZATION_CERTIFICATE || this == DIPLOMA_REQUEST);
+	return degreeType.isComposite()
+		&& (this == DEGREE_FINALIZATION_CERTIFICATE || this == DIPLOMA_REQUEST || this == DIPLOMA_SUPPLEMENT_REQUEST);
     }
 
     public boolean isAllowedToQuickDeliver() {

@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
-
 public interface IEnrolment extends ICurriculumEntry {
 
     static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
@@ -33,6 +30,12 @@ public interface IEnrolment extends ICurriculumEntry {
     String getDescription();
 
     Double getEctsCredits();
+
+    Grade getEctsGrade();
+
+    boolean isAnual();
+
+    String getEnrolmentTypeName();
 
     Double getWeigth();
 

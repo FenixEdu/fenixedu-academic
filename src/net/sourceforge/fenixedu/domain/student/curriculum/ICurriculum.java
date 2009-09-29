@@ -2,12 +2,15 @@ package net.sourceforge.fenixedu.domain.student.curriculum;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 public interface ICurriculum {
 
     abstract public Collection<ICurriculumEntry> getCurriculumEntries();
+
+    abstract public Set<ICurriculumEntry> getCurricularYearEntries();
 
     abstract public BigDecimal getSumPiCi();
 

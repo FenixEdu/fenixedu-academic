@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -296,9 +297,20 @@ public class DegreeUnit extends DegreeUnit_Base {
 	    }
 	}
     }
-    
+
     @Override
     public UnitSite getSite() {
 	return getDegree().getSite();
+    }
+
+    public SchoolUnit getSchoolUnit() {
+	Unit current = this;
+	while (current != null) {
+	    if (current.getType().equals(PartyTypeEnum.SCHOOL))
+		return (SchoolUnit) current;
+	    Collection<Unit> parentUnits = current.getParentUnits(AccountabilityTypeEnum.ACADEMIC_STRUCTURE);
+	    current = parentUnits.size() > 0 ? parentUnits.iterator().next() : null;
+	}
+	return null;
     }
 }

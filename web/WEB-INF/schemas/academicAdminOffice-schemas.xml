@@ -732,6 +732,52 @@
 	</slot>
 </schema>
 
+<schema name="student.extraCurricularActivities" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity">
+	<slot name="type.name" key="label.extraCurricularActivity.type" />
+	<slot name="start" layout="year-month" key="label.extraCurricularActivity.start" />
+	<slot name="end" layout="year-month" key="label.extraCurricularActivity.end" />
+</schema>
+
+<schema name="student.extraCurricularActivities.import.status"
+	bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ImportData$ExtraCurricularActivityImportStatus">
+	<slot name="activity.student.number" key="label.extraCurricularActivity.studentNumber" />
+	<slot name="activity.student.person.name" key="label.extraCurricularActivity.studentName" />
+	<slot name="activity.type.name" key="label.extraCurricularActivity.type" />
+	<slot name="activity.start" key="label.extraCurricularActivity.start" />
+	<slot name="activity.end" key="label.extraCurricularActivity.end" />
+	<slot name="status" key="label.extraCurricularActivity.status" />
+</schema>
+
+<schema name="student.createExtraCurricularActivity" bundle="ACADEMIC_OFFICE_RESOURCES"
+	type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivity"
+	constructor="student, type, start, end">
+	<slot name="student" hidden="true" />
+	<slot name="type" key="label.extraCurricularActivity.type" layout="menu-select"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${name}" />
+        <property name="choiceType" value="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType" />
+	</slot>
+	<slot name="start" key="label.extraCurricularActivity.start"
+		layout="year-month"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="end" key="label.extraCurricularActivity.end" layout="year-month"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="student.extraCurricularActivity.import"
+	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ImportData$ExtraCurricularActivityFile"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="type" key="label.extraCurricularActivity.type"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="fileInputStream" key="label.extraCurricularActivity.file"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="fileNameSlot" value="filename" />
+		<property name="fileContentTypeSlot" value="contentType" />
+	</slot>
+</schema>
+
 <schema name="studentCurricularPlan.create" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.applicationTier.factoryExecutors.StudentCurricularPlanFactoryExecutor$StudentCurricularPlanCreator" >
 	<slot name="cycleType" key="label.cycle" layout="menu-select" bundle="ACADEMIC_OFFICE_RESOURCES">	

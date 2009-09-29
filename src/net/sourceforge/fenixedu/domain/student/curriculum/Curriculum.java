@@ -25,13 +25,13 @@ public class Curriculum implements Serializable, ICurriculum {
 
     private Boolean bolonhaDegree;
 
-    private ExecutionYear executionYear;
+    private final ExecutionYear executionYear;
 
-    private Set<ICurriculumEntry> averageEnrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
+    private final Set<ICurriculumEntry> averageEnrolmentRelatedEntries = new HashSet<ICurriculumEntry>();
 
-    private Set<ICurriculumEntry> averageDismissalRelatedEntries = new HashSet<ICurriculumEntry>();
+    private final Set<ICurriculumEntry> averageDismissalRelatedEntries = new HashSet<ICurriculumEntry>();
 
-    private Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
+    private final Set<ICurriculumEntry> curricularYearEntries = new HashSet<ICurriculumEntry>();
 
     private BigDecimal sumPiCi;
 
@@ -200,6 +200,7 @@ public class Curriculum implements Serializable, ICurriculum {
 	return averageDismissalRelatedEntries;
     }
 
+    @Override
     public Set<ICurriculumEntry> getCurricularYearEntries() {
 	return curricularYearEntries;
     }

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.studentCurriculum;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -9,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -186,6 +189,31 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getGrade().getValue();
     }
 
+    @Override
+    public Grade getEctsGrade() {
+	Grade grade = getGrade();
+	Set<Dismissal> dismissals = new HashSet<Dismissal>();
+	for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
+	    for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+		dismissals.add(dismissal);
+	    }
+	}
+	if (dismissals.isEmpty()) {
+	    // If this happens you must be asking for ects grades in enrolments
+	    // not liked to the student's curricular plan.
+	    throw new DomainException("error.Enrolment.is.not.origin.in.any.equivalence");
+	} else if (dismissals.size() == 1) {
+	    Dismissal dismissal = dismissals.iterator().next();
+	    if (dismissal.getCurricularCourse() != null)
+		return dismissal.getCurricularCourse().convertGradeToEcts(dismissal, grade);
+	    else
+		return dismissal.getRegistration().getDegree().convertGradeToEcts(dismissal, grade);
+	} else {
+	    Dismissal dismissal = dismissals.iterator().next();
+	    return dismissal.getRegistration().getDegree().convertGradeToEcts(dismissal, grade);
+	}
+    }
+
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getEctsCredits());
     }
@@ -219,4 +247,13 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(RegistrationStateType.MOBILITY);
     }
 
+    @Override
+    public boolean isAnual() {
+	return getRegime() != null ? getRegime() == RegimeType.ANUAL : false;
+    }
+
+    @Override
+    public String getEnrolmentTypeName() {
+	return "COMPULSORY_ENROLMENT";
+    }
 }

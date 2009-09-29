@@ -29,9 +29,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLo
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -80,19 +78,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	    case IRS_DECLARATION:
 		return Collections.singletonList(new IRSDeclaration(documentRequest));
 	    case DIPLOMA_REQUEST:
-		final Diploma diploma = new Diploma(documentRequest);
-		if (false) {
-		    final List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
-
-		    result.add(diploma);
-		    for (final Locale locale : DiplomaSupplement.suportedLocales) {
-			result.add(new DiplomaSupplement(documentRequest, locale));
-		    }
-
-		    return result;
-		} else {
-		    return Collections.singletonList(diploma);
+		return Collections.singletonList(new Diploma(documentRequest));
+	    case DIPLOMA_SUPPLEMENT_REQUEST:
+		List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
+		for (Locale locale : DiplomaSupplement.suportedLocales) {
+		    result.add(new DiplomaSupplement(documentRequest, locale));
 		}
+		return result;
 	    case EXAM_DATE_CERTIFICATE:
 		return Collections.singletonList(new ExamDateCertificate(documentRequest));
 	    case COURSE_LOAD:
@@ -107,11 +99,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return Collections.singletonList(new ExternalProgramCertificateRequestDocument(
 			(ExternalProgramCertificateRequest) documentRequest));
 	    case EXTRA_CURRICULAR_CERTIFICATE:
-		return Collections.singletonList(new ExtraCurricularCertificateRequestDocument(
-			(ExtraCurricularCertificateRequest) documentRequest));
+		return Collections.singletonList(new ExtraCurricularCertificateRequestDocument(documentRequest));
 	    case STANDALONE_ENROLMENT_CERTIFICATE:
-		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(
-			(StandaloneEnrolmentCertificateRequest) documentRequest));
+		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(documentRequest));
 
 	    case UNDER_23_TRANSPORTS_REQUEST:
 		return Collections.singletonList(new Under23TransportsDeclarationDocument(

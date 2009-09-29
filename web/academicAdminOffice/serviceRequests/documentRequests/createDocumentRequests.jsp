@@ -122,14 +122,14 @@
 			</logic:equal>
 	
 			<!-- Purposes -->
-			<logic:notEqual name="documentRequestCreateBean" property="isDiploma" value="true">
+			<logic:equal name="documentRequestCreateBean" property="hasPurposeNeed" value="true">
 				<fr:edit id="purposesEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.purposes" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
 						<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
 					</fr:layout>
 				</fr:edit>
-			</logic:notEqual>
+			</logic:equal>
 	
 			<!-- Can be free processed? -->
 			<logic:equal name="documentRequestCreateBean" property="chosenDocumentRequestType.canBeFreeProcessed" value="true">

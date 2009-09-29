@@ -79,6 +79,10 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 	return getCurriculumGroup().isExtraCurriculum();
     }
 
+    public boolean isOptional() {
+	return false;
+    }
+
     public boolean isStandalone() {
 	return getCurriculumGroup().isStandalone();
     }

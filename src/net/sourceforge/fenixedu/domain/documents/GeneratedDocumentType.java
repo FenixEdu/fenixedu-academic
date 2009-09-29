@@ -32,6 +32,8 @@ public enum GeneratedDocumentType {
 
     DIPLOMA_REQUEST,
 
+    DIPLOMA_SUPPLEMENT_REQUEST,
+
     COURSE_LOAD,
 
     EXTERNAL_COURSE_LOAD,
@@ -39,19 +41,19 @@ public enum GeneratedDocumentType {
     PROGRAM_CERTIFICATE,
 
     EXTERNAL_PROGRAM_CERTIFICATE,
-    
+
     EXTRA_CURRICULAR_CERTIFICATE,
-    
+
     UNDER_23_TRANSPORTS_REQUEST,
-    
+
     STANDALONE_ENROLMENT_CERTIFICATE,
-    
+
     LIBRARY_MISSING_CARDS,
 
     LIBRARY_MISSING_LETTERS,
 
     LIBRARY_MISSING_LETTERS_STUDENTS,
-    
+
     QUEUE_JOB;
 
     public static GeneratedDocumentType determineType(DocumentRequestType documentRequestType) {

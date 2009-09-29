@@ -52,6 +52,7 @@ public class OptionalDismissal extends OptionalDismissal_Base {
 	return builder;
     }
 
+    @Override
     public boolean isSimilar(Dismissal dismissal) {
 	return dismissal instanceof OptionalDismissal && super.isSimilar(dismissal)
 		&& hasSameEctsCredits((OptionalDismissal) dismissal);
@@ -65,5 +66,10 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     protected void createCurriculumLineLog(final EnrolmentAction action) {
 	new OptionalDismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getEctsCredits(),
 		getExecutionPeriod(), getCurrentUser());
+    }
+
+    @Override
+    public boolean isOptional() {
+	return true;
     }
 }

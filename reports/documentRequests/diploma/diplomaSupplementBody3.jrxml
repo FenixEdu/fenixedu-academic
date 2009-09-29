@@ -48,8 +48,9 @@
 	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
 	<parameter name="accessToHigherLevelOfEducation" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="professionalExits" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="professionalStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="aditionalInfoSources" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="extraCurricularActivities" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="body" >
@@ -160,7 +161,7 @@
 					<textElement textAlignment="Justified" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<info>"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{extraCurricularActivities}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -196,7 +197,7 @@
 					<textElement textAlignment="Justified" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{professionalExits}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{professionalStatus}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -232,7 +233,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{aditionalInfoSources}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.six.two.body")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -308,9 +309,9 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="9"
+						x="93"
 						y="253"
-						width="435"
+						width="351"
 						height="13"
 						key="textField-47"
 						positionType="Float"/>
@@ -326,9 +327,9 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="9"
-						y="268"
-						width="234"
+						x="113"
+						y="266"
+						width="332"
 						height="13"
 						key="textField-48"
 						positionType="Float"/>
@@ -337,7 +338,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Center" lineSpacing="Single">
+					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityPrincipalName}]]></textFieldExpression>
