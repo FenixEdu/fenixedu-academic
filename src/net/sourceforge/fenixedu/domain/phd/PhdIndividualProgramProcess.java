@@ -920,4 +920,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	return false;
     }
+
+    public boolean isRegistrationAvailable() {
+	return hasRegistration();
+    }
 }

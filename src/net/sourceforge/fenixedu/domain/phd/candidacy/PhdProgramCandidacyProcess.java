@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.LocalDate;
 
@@ -633,7 +632,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    getCandidacy().setExecutionDegree(executionDegree);
 	}
 
-	getCandidacy().setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	getCandidacy().setIngression(Ingression.CIA3C); // TODO: check
     }
 
@@ -649,6 +647,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	registration.setHomologationDate(getWhenRatified());
 	registration.setStudiesStartDate(bean.getWhenStartedStudies());
+	registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
     }
 
     private void assertDebts(final ExecutionYear executionYear) {

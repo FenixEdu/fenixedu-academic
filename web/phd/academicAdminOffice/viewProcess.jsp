@@ -118,7 +118,7 @@
 
 <logic:equal name="process" property="activeState" value="WORK_DEVELOPMENT">
 	<strong><bean:message  key="label.phd.student.information" bundle="PHD_RESOURCES"/></strong>
-	<fr:view schema="PhdIndividualProgramProcess.view.student" name="process" property="student">
+	<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view.registration" name="process">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop10" />
 		</fr:layout>
