@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Killing Rogue Objects AKA data fix" killRogueBoard.sql IST
