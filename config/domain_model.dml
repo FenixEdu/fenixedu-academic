@@ -6144,6 +6144,9 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 			class StudentsSite extends SpecificUnitSite {
 			}
 			
+			class EdamSite extends SpecificUnitSite {
+			}
+			
 			class ManagementCouncilSite extends UnitSite {
 			}
 			

@@ -24,6 +24,7 @@ public abstract class AbstractPathProcessor {
 	strategies.put("net.sourceforge.fenixedu.domain.thesis.ThesisSite", new ThesisSiteProcessor());
 	strategies.put("net.sourceforge.fenixedu.domain.AssemblySite", new AssemblySiteProcess());
 	strategies.put("net.sourceforge.fenixedu.domain.ManagementCouncilSite", new ManagementCouncilSiteProcessor());
+	strategies.put("net.sourceforge.fenixedu.domain.EdamSite", new EdamPathProcessor());
 	strategies.put(DEFAULT, new DefaultPathProcessor());
     }
 

@@ -1363,6 +1363,7 @@
 				<forward name="viewSection-StudentsSite" path="basicUnit-section"/>
 				<forward name="viewSection-AssemblySite" path="basicUnit-section"/>
 				<forward name="viewSection-ManagementCouncilSite" path="basicUnit-section"/>
+				<forward name="viewSection-EdamSite" path="basicUnit-section"/>
 				
 				<forward name="viewItem-Homepage" path="view-homepage-item"/>
 				<forward name="viewItem-DegreeSite" path="degree-item"/>
@@ -1377,6 +1378,7 @@
 				<forward name="viewItem-StudentsSite" path="basicUnit-item"/>
 				<forward name="viewItem-AssemblySite" path="basicUnit-item"/>
 				<forward name="viewItem-ManagementCouncilSite" path="basicUnit-item"/>
+				<forward name="viewItem-EdamSite" path="basicUnit-item"/>
 				
 				<forward name="site-section-deny-Homepage" path="homepage-section-deny"/>
 				<forward name="site-section-deny-DegreeSite" path="degree-section-deny"/>
@@ -1391,6 +1393,7 @@
 				<forward name="site-section-deny-StudentsSite" path="basicUnit-section-deny"/>
 				<forward name="site-section-deny-AssemblySite" path="basicUnit-section-deny"/>
 				<forward name="site-section-deny-ManagementCouncilSite" path="basicUnit-section-deny"/>
+				<forward name="site-section-deny-EdamSite" path="basicUnit-section-deny"/>
 				
 				<forward name="site-section-adviseLogin-Homepage" path="homepage-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-DegreeSite" path="degree-section-adviseLogin"/>
@@ -1405,6 +1408,7 @@
 				<forward name="site-section-adviseLogin-StudentsSite" path="basicUnit-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-AssemblySite" path="basicUnit-section-adviseLogin"/>
 				<forward name="site-section-adviseLogin-ManagementCouncilSite" path="basicUnit-section-adviseLogin"/>
+				<forward name="site-section-adviseLogin-EdamSite" path="basicUnit-section-adviseLogin"/>
 				
 		</action>
 
