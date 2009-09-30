@@ -773,31 +773,36 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean canRequestUnlimitedCard(Student student) {
-	List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
-	degreeTypes.add(DegreeType.DEGREE);
-	degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
-	degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
-	degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-
-	for (DegreeType degreeType : degreeTypes) {
-	    Registration registration = getRegistrationByDegreeType(student, degreeType);
-	    if (registration != null && registration.isInFinalDegreeYear()) {
-		return degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ? Boolean.TRUE
-			: isFirstTimeEnrolledInCurrentYear(registration);
-	    }
-	}
+	// List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
+	// degreeTypes.add(DegreeType.DEGREE);
+	// degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
+	// degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
+	// degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	//
+	// for (DegreeType degreeType : degreeTypes) {
+	// Registration registration = getRegistrationByDegreeType(student,
+	// degreeType);
+	// if (registration != null && registration.isInFinalDegreeYear()) {
+	// return
+	// degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) ?
+	// Boolean.TRUE
+	// : isFirstTimeEnrolledInCurrentYear(registration);
+	// }
+	// }
 	return false;
 	// DEGREE=Licenciatura (5 anos) - 5º ano
 	// MASTER_DEGREE=Mestrado = 2ciclo - não tem
 	// BOLONHA_DEGREE=Licenciatura Bolonha - não podem
 	// BOLONHA_MASTER_DEGREE=Mestrado Bolonha - só no 5+ ano 1º vez
-	// BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado
+	// BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado (ultimo ano 1ª
+	// vez)
 	// BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Formação Avançada = cota
-	// pos grad
+	// pos grad (sempre)
 
-	// BOLONHA_PHD_PROGRAM=Programa Doutoral - não estão no fénix
+	// BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA=Diploma de Estudos Avançados
+	// -não estão todos no fénix por isso têm de se candidatar em papel
 	// BOLONHA_SPECIALIZATION_DEGREE=Curso de Especialização - não estão no
-	// fénix
+	// fénix -este tipo não é usado
 
     }
 
