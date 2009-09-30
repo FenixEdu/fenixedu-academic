@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Killing Rogue Objects AKA data fix" killRogueBoard.sql IST
+execute "Diploma Supplement Changes" diplomaSupplementChanges.sql
