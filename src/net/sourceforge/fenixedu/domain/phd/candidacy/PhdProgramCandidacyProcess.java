@@ -673,7 +673,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private boolean hasCurricularStudyPlan() {
 	return getIndividualProgramProcess().hasStudyPlan()
-		&& getIndividualProgramProcess().getStudyPlan().isToEnrolInCurricularCourses();
+		&& !getIndividualProgramProcess().getStudyPlan().getExempted().booleanValue();
     }
 
     private DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
