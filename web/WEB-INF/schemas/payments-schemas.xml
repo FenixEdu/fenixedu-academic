@@ -186,6 +186,13 @@
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
 </schema>
 
+<schema name="AccountingEvent.view.by.manager" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
+	<slot name="cancelJustification" key="label.net.sourceforge.fenixedu.domain.accounting.Event.cancelJustification" layout="null-as-label">
+		<property name="label" value="-"/>
+	</slot>
+</schema>
+
 <schema name="AccountingEvent.view-with-amountToPay" type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="APPLICATION_RESOURCES" extends="AccountingEvent.view">
 	<slot name="amountToPay" key="label.net.sourceforge.fenixedu.domain.accounting.Event.amountToPay" />
 </schema>
@@ -580,4 +587,10 @@
 		<property name="sortBy" value="description" />
 	</slot>
 	<setter signature="changeGratuityPaymentPlan(gratuityPaymentPlan)" />
+</schema>
+
+<schema name="AccountingTransaction.view" type="net.sourceforge.fenixedu.domain.accounting.AccountingTransaction" bundle="APPLICATION_RESOURCES">
+	<slot name="transactionDetail.whenProcessed" key="label.whenProcessed" />
+	<slot name="transactionDetail.whenRegistered" key="label.whenRegistered" />
+	<slot name="transactionDetail.comments" key="label.comments"/>
 </schema>

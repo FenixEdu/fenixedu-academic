@@ -24,11 +24,11 @@
 	</logic:empty>
 
 	<logic:notEmpty name="person" property="events">
-		<fr:view name="person" property="events" schema="AccountingEvent.view">
+		<fr:view name="person" property="events" schema="AccountingEvent.view.by.manager">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop05" />
 				<fr:property name="columnClasses"
-					value=",,,aright,aright,aright,acenter" />
+					value=",acenter,,aright,aright,aright,acenter" />
 				
 				<fr:property name="linkFormat(detail)" value="/payments.do?method=showPaymentsForEvent&amp;eventId=${idInternal}" />
 				<fr:property name="key(detail)" value="label.details" />

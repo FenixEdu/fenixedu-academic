@@ -61,6 +61,67 @@
 
 	</logic:notEmpty>
 	
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.accounting.manager.transactions" bundle="APPLICATION_RESOURCES" /></strong></p>
+	<logic:empty name="event" property="adjustedTransactions">
+		<bean:message key="message.accounting.manager.associoted.transactions.empty" bundle="APPLICATION_RESOURCES"/>
+	</logic:empty>
+	
+	<logic:notEmpty name="event" property="adjustedTransactions">
+		<bean:define id="adjustedTransactions" name="event" property="adjustedTransactions" />
+		<logic:iterate id="transaction" name="adjustedTransactions">
+		<table class="tstyle4 thlight mtop05">
+			<thead>
+				<th><bean:message key="label.accounting.manager.transaction.processed" bundle="APPLICATION_RESOURCES" /></th>
+				<th><bean:message key="label.accounting.manager.transaction.registered" bundle="APPLICATION_RESOURCES" /></th>
+				<th><bean:message key="label.accounting.manager.transaction.comments" bundle="APPLICATION_RESOURCES"/></th>
+				<th><bean:message key="label.accounting.manager.transaction.credit" bundle="APPLICATION_RESOURCES" /></th>
+			</thead>
+			<tbody>
+				<tr>
+				<td><fr:view name="transaction" property="transactionDetail.whenProcessed" /></td>
+				<td><fr:view name="transaction" property="transactionDetail.whenRegistered" /></td>
+				<td><bean:write name="transaction" property="transactionDetail.comments" /></td>
+				<td>
+					<bean:write name="transaction" property="toAccount.party.partyName.content" />(<bean:write name="transaction" property="toAccountEntry.originalAmount" /> &euro;)
+				</td>
+				</tr>
+				<tr>
+				<td colspan="4">
+				<logic:empty name="transaction" property="adjustmentTransactions" >
+					<bean:message key="message.accounting.manager.adjustment.transactions.empty" />
+				</logic:empty>
+				
+				<logic:notEmpty name="transaction" property="adjustmentTransactions" > 
+					<p><bean:message key="message.accounting.manager.associated.adjusting.transactions" bundle="APPLICATION_RESOURCES" /></p>
+					<table class="tstyle4 thlight mtop05">
+						<thead>
+							<th><bean:message key="label.accounting.manager.transaction.processed" bundle="APPLICATION_RESOURCES" /></th>
+							<th><bean:message key="label.accounting.manager.transaction.registered" bundle="APPLICATION_RESOURCES" /></th>
+							<th><bean:message key="label.accounting.manager.transaction.comments" bundle="APPLICATION_RESOURCES"/></th>
+							<th><bean:message key="label.accounting.manager.transaction.credit" bundle="APPLICATION_RESOURCES" /></th>
+						</thead>
+						<logic:iterate id="adjustingTransaction" name="transaction" property="adjustmentTransactions">
+						<tbody>
+							<tr>
+							<td><fr:view name="adjustingTransaction" property="transactionDetail.whenProcessed" /></td>
+							<td><fr:view name="adjustingTransaction" property="transactionDetail.whenRegistered" /></td>
+							<td><bean:write name="adjustingTransaction" property="transactionDetail.comments" /></td>
+							<td>
+								<bean:write name="adjustingTransaction" property="toAccountEntry.originalAmount" /> &euro;
+							</td>
+							</tr>
+						</tbody>
+						</logic:iterate>
+					</table>										
+				</logic:notEmpty>
+				</td>
+				</tr>				
+			</tbody>
+		</table>
+		</logic:iterate>
+
+	</logic:notEmpty>
+	
 	<br/><br/>
 
 	<bean:define id="personId" name="event" property="person.idInternal" />
