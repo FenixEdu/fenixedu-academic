@@ -84,7 +84,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	if (isRoot()) {
 	    result.append(selfName);
 	} else {
-	    List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionPeriod(executionSemester);
+	    List<Context> parentContextsByExecutionPeriod = getParentContextsByExecutionSemester(executionSemester);
 	    if (parentContextsByExecutionPeriod.isEmpty()) {
 		// if not existing, just return all (as previous implementation
 		// of method
@@ -256,7 +256,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return executionYear == null || curricularRule.isValid(executionYear);
     }
 
-    public List<Context> getParentContextsByExecutionYear(ExecutionYear executionYear) {
+    public List<Context> getParentContextsByExecutionYear(final ExecutionYear executionYear) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : getParentContextsSet()) {
 	    if (executionYear == null || context.isValid(executionYear)) {
@@ -266,7 +266,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	return result;
     }
 
-    public List<Context> getParentContextsByExecutionPeriod(final ExecutionSemester executionSemester) {
+    public List<Context> getParentContextsByExecutionSemester(final ExecutionSemester executionSemester) {
 	final List<Context> result = new ArrayList<Context>();
 	for (final Context context : getParentContextsSet()) {
 	    if (executionSemester == null || context.isValid(executionSemester)) {
@@ -344,7 +344,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 
     public boolean hasOnlyOneParentCourseGroup(final ExecutionSemester executionSemester) {
 	DegreeModule degreeModule = null;
-	for (final Context context : getParentContextsByExecutionPeriod(executionSemester)) {
+	for (final Context context : getParentContextsByExecutionSemester(executionSemester)) {
 	    if (degreeModule == null) {
 		degreeModule = context.getParentCourseGroup();
 

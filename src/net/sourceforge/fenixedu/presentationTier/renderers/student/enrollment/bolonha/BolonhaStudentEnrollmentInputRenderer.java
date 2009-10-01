@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,16 +11,21 @@ import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.St
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
@@ -286,7 +293,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    generateGroups(blockContainer, studentCurriculumGroupBean, studentCurricularPlan, executionSemester, depth);
 
 	    if (studentCurriculumGroupBean.isRoot()) {
-		generateCycleCourseGroupsToEnrol(blockContainer, studentCurricularPlan, depth);
+		generateCycleCourseGroupsToEnrol(blockContainer, executionSemester, studentCurricularPlan, depth);
 	    }
 	}
 
@@ -646,11 +653,17 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer, IDegreeModuleToEvaluate degreeModuleToEnrol,
 		StudentCurricularPlan studentCurricularPlan, int depth) {
+
 	    final CourseGroup courseGroup = (CourseGroup) degreeModuleToEnrol.getContext().getChildDegreeModule();
 	    if (courseGroup.isCycleCourseGroup()) {
 		return;
 	    }
 
+	    generateCourseGroupToEnroll(blockContainer, degreeModuleToEnrol, depth);
+	}
+
+	private void generateCourseGroupToEnroll(HtmlBlockContainer blockContainer, IDegreeModuleToEvaluate degreeModuleToEnrol,
+		int depth) {
 	    final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 
 	    HtmlTableRow htmlTableRow = groupTable.createRow();
@@ -673,16 +686,52 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	}
 
 	private void generateCycleCourseGroupsToEnrol(final HtmlBlockContainer container,
-		final StudentCurricularPlan studentCurricularPlan, int depth) {
+		final ExecutionSemester executionSemester, final StudentCurricularPlan studentCurricularPlan, int depth) {
 
 	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()
 		    && studentCurricularPlan.getDegreeType().hasExactlyOneCycleType()) {
 		return;
 	    }
 
+	    if (isAcademicAdminOfficeEmployee()) {
+		for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
+		    generateCourseGroupToEnroll(container, buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType,
+			    executionSemester), depth + getWidthDecreasePerLevel());
+
+		}
+	    }
 	    for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
 		generateCycleCourseGroupToEnrol(container, cycleType, depth + getWidthDecreasePerLevel());
 	    }
+	}
+
+	private IDegreeModuleToEvaluate buildDegreeModuleToEnrolForCycle(StudentCurricularPlan scp, CycleType cycleType,
+		ExecutionSemester semester) {
+	    final CycleCourseGroup cycleCourseGroup = scp.getCycleCourseGroup(cycleType);
+	    final Context context = cycleCourseGroup.getParentContextsByExecutionSemester(semester).get(0);
+	    return new DegreeModuleToEnrol(scp.getRoot(), context, semester);
+	}
+
+	private List<CycleType> getAllCycleTypesToEnrolPreviousToFirstExistingCycle(final StudentCurricularPlan scp) {
+	    final List<CycleType> result = new ArrayList<CycleType>();
+
+	    List<CycleType> supportedCyclesToEnrol = new ArrayList<CycleType>(scp.getDegreeType().getSupportedCyclesToEnrol());
+	    Collections.sort(supportedCyclesToEnrol, CycleType.COMPARATOR_BY_LESS_WEIGHT);
+
+	    for (final CycleType cycleType : supportedCyclesToEnrol) {
+		if (scp.hasCycleCurriculumGroup(cycleType)) {
+		    break;
+		} else {
+		    result.add(cycleType);
+		}
+	    }
+
+	    return result;
+	}
+
+	private boolean isAcademicAdminOfficeEmployee() {
+	    final Person person = AccessControl.getPerson();
+	    return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) && person.isAdministrativeOfficeEmployee();
 	}
 
 	private void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {

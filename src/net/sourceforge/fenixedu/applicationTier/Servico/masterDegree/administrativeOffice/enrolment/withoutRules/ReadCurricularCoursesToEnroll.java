@@ -84,7 +84,7 @@ public class ReadCurricularCoursesToEnroll extends FenixService {
 	    List<CurricularCourse> possibleStudentCurricularCoursesToEnrol, ExecutionSemester executionSemester) {
 	final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
-	    if (!curricularCourse.getParentContextsByExecutionPeriod(executionSemester).isEmpty()) {
+	    if (!curricularCourse.getParentContextsByExecutionSemester(executionSemester).isEmpty()) {
 		result.add(curricularCourse);
 	    }
 	}
@@ -98,7 +98,7 @@ public class ReadCurricularCoursesToEnroll extends FenixService {
 
 	for (final CurricularCourse curricularCourse : possibleStudentCurricularCoursesToEnrol) {
 
-	    List<Context> contexts = curricularCourse.getParentContextsByExecutionPeriod(executionSemester);
+	    List<Context> contexts = curricularCourse.getParentContextsByExecutionSemester(executionSemester);
 	    for (Context context : contexts) {
 		Integer year = context.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR);
 		Integer semester = context.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER);
