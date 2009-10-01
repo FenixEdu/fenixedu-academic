@@ -88,8 +88,10 @@
 			<logic:iterate id="candidate" name="candidatesWithPhotos">	
 			<tr>			
 				<td class="personInfo_photo">
-	      			<bean:define id="homepageID" name="candidate" property="person.homepage.idInternal"/>
-	      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
+				    <logic:present name="candidate" property="person.homepage">
+		      			<bean:define id="homepageID" name="candidate" property="person.homepage.idInternal"/>
+		      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
+	      			</logic:present>
 				</td>			
 							
 				<td> <bean:write name="candidate" property="person.name" /> (<bean:write name="candidate" property="number" />)</td>
