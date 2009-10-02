@@ -52,11 +52,10 @@ public class YearDelegate extends YearDelegate_Base {
 				ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 		final Collection<ExecutionCourse> answeredInquiriesExecutionCourses = getAnsweredInquiriesExecutionCourses(executionSemester);
 		for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-			if (executionCourse.getAvailableForInquiries()
-					&& !answeredInquiriesExecutionCourses
-							.contains(executionCourse)) {
-				result.add(executionCourse);
-			}
+			if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()
+		    && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
+		result.add(executionCourse);
+	    }
 		}
 		return result;
 
