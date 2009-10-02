@@ -40,7 +40,7 @@
 	<logic:iterate id="studentPortalBean" name="studentPortalBeans">
 		<h3 class="mtop15 mbottom05">
 			<bean:write name="studentPortalBean" property="degree.presentationName"/> - <bean:write name="executionSemester"/>
-			<logic:notEmpty name="studentPortalBean" property="degree.">
+			<logic:notEmpty name="studentPortalBean" property="degree.site">
 			<app:contentLink name="studentPortalBean" property="degree.site" target="_blank">
 				<span style="font-size: 12px; font-weight: normal;"><bean:message key="link.appearance" bundle="STUDENT_RESOURCES"/></span>
 			</app:contentLink>
