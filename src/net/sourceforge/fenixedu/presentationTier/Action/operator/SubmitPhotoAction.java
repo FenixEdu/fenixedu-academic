@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
-
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -19,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StorePersonalPhoto;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -74,9 +72,8 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 	}
 
 	// process image
-	ByteArrayInputStream inputStream = new ByteArrayInputStream(formFile.getFileData());
-	BufferedImage image = ImageIO.read(inputStream);
-	ByteArrayOutputStream outputStream = processImage(image, contentType);
+
+	ByteArrayOutputStream outputStream = processImage(formFile.getFileData(), contentType);
 
 	try {
 
@@ -93,12 +90,20 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 	return mapping.findForward("chooseFile");
     }
 
-    private ByteArrayOutputStream processImage(BufferedImage photoImage, ContentType contentType) throws IOException {
-
+    private ByteArrayOutputStream processImage(byte[] content, ContentType contentType) throws IOException {
+	ByteArrayInputStream inputStream = new ByteArrayInputStream(content);
+	BufferedImage photoImage = ImageIO.read(inputStream);
+	
 	// calculate resize factor
 	double resizeFactor = Math.min((double) outputPhotoWidth / photoImage.getWidth(), (double) outputPhotoHeight
 		/ photoImage.getHeight());
 
+	if (resizeFactor == 1) {
+	    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	    outputStream.write(content);
+	    return outputStream;
+	}
+	
 	// resize image
 	AffineTransform tx = new AffineTransform();
 	tx.scale(resizeFactor, resizeFactor);
@@ -119,5 +124,6 @@ public class SubmitPhotoAction extends FenixDispatchAction {
 	writer.write(null, new IIOImage(photoImage, null, null), param);
 
 	return outputStream;
+	
     }
 }

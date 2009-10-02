@@ -166,6 +166,10 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	double resizeFactor = Math.min((double) COMPRESSED_PHOTO_WIDTH / image.getWidth(), (double) COMPRESSED_PHOTO_HEIGHT
 		/ image.getHeight());
 
+	if (resizeFactor == 1) {
+	    return new ByteArray(content);
+	}
+	
 	// resize image
 	AffineTransform tx = new AffineTransform();
 	tx.scale(resizeFactor, resizeFactor);

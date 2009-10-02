@@ -118,23 +118,28 @@ public class PhotographUploadBean implements Serializable {
 	double resizeFactor = Math.min((double) OUTPUT_PHOTO_WIDTH / image.getWidth(), (double) OUTPUT_PHOTO_HEIGHT
 		/ image.getHeight());
 
-	// resize image
-	AffineTransform tx = new AffineTransform();
-	tx.scale(resizeFactor, resizeFactor);
-	AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-	image = op.filter(image, null);
+	if (resizeFactor == 1) {
+	    compressedContents = rawContents;
+	} else {
+	    // resize image
+	    AffineTransform tx = new AffineTransform();
+	    tx.scale(resizeFactor, resizeFactor);
+	    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+	    image = op.filter(image, null);
 
-	// set compression
-	ImageWriter writer = ImageIO.getImageWritersByMIMEType(ContentType.getContentType(contentType).getMimeType()).next();
-	ImageWriteParam param = writer.getDefaultWriteParam();
-	if (contentType.equals(ContentType.JPG)) {
-	    param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-	    param.setCompressionQuality(1);
+	    // set compression
+	    ImageWriter writer = ImageIO.getImageWritersByMIMEType(ContentType.getContentType(contentType).getMimeType()).next();
+	    ImageWriteParam param = writer.getDefaultWriteParam();
+	    if (contentType.equals(ContentType.JPG)) {
+		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		param.setCompressionQuality(1);
+	    }
+
+	    // write to stream
+	    writer.setOutput(ImageIO.createImageOutputStream(outputStream));
+	    writer.write(null, new IIOImage(image, null, null), param);
+	    compressedContents = outputStream.toByteArray();
 	}
-
-	// write to stream
-	writer.setOutput(ImageIO.createImageOutputStream(outputStream));
-	writer.write(null, new IIOImage(image, null, null), param);
-	compressedContents = outputStream.toByteArray();
+	    
     }
 }
