@@ -296,18 +296,17 @@
                     <bean:message key="link.coordinator.thesis.viewStudent" />
               </html:link>
             </li>
+	        <li>
+	    	  <html:link page="<%= "/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
+		      	<bean:message key="label.coordinator.thesis"/>
+	          </html:link>
+	        </li>
             <li>
               <html:link page="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
                     <bean:message key="link.coordinator.thesis.list" />
               </html:link>
             </li>
         </logic:present>
-
-	        <li>
-	    	  <html:link page="<%= "/manageFinalDegreeWork.do?method=showChooseExecutionDegreeForm&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
-		      	<bean:message key="link.coordinator.managefinalDegreeWorks" />
-	          </html:link>
-	        </li>
 
 	        <li>
 		        <html:link target="_blank" href='<%= request.getContextPath() + "/publico/viewFinalDegreeWorkProposals.do" %>'>

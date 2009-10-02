@@ -134,51 +134,60 @@
 <schema name="thesis.bean.proposals.summary" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsSummaryBean">
 	<slot name="totalProposalsCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${totalProposalsKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${totalProposalsKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="forApprovalProposalsCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${forApprovalProposalsKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${forApprovalProposalsKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="approvedProposalsCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${approvedProposalsKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${approvedProposalsKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="publishedProposalsCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${publishedProposalsKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showProposals&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${publishedProposalsKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 </schema>
 
 <schema name="thesis.bean.candidacies.summary" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.CandidaciesSummaryBean">
 	<slot name="totalCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${totalCandidaciesKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${totalCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="attributedByCoordinatorCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedByCoordinatorCandidaciesKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedByCoordinatorCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="attributedNotConfirmedCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedNotConfirmedCandidaciesKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedNotConfirmedCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="attributedCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedCandidaciesKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${attributedCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 	<slot name="notAttributedCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
 		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${notAttributedCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
+		<property name="contextRelative" value="true" />
 	</slot>
 </schema>
 

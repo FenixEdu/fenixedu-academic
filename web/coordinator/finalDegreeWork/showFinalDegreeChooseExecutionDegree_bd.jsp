@@ -6,7 +6,7 @@
 
 <bean:define id="degreeCurricularPlanOID" name="degreeCurricularPlanID"/>
 
-<h2><bean:message key="link.coordinator.managefinalDegreeWorks"/></h2>
+<h2><bean:message key="label.coordinator.thesis"/></h2>
 
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -17,8 +17,7 @@
 	<bean:message key="choose.execution.year.for.final.degree.work.managment"/>
 </p>
 <p class="infoop2">
-	Se desejar criar o processo de candidaturas a dissertações utilize a opção criar no ano correspondente.
-	<br> <b>Para iniciar o processo de candidaturas a dissertações juntamente com outro curso contacte o CIIST.</b> 
+	<bean:message key="choose.execution.year.for.final.degree.work.managment.create.info"/>
 </p>
 <ul class="mtop05">
 	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees">
