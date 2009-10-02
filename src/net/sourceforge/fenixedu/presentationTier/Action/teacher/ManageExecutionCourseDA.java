@@ -222,7 +222,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 	EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
-	MultiLanguageString evaluationElements = evaluationMethod.getEvaluationElements();
+	MultiLanguageString evaluationElements = evaluationMethod == null ? null : evaluationMethod.getEvaluationElements();
 	if (evaluationMethod == null || evaluationElements == null || evaluationElements.isEmpty()
 		|| StringUtils.isEmpty(evaluationElements.getContent())) {
 	    final MultiLanguageString evaluationMethodMls = new MultiLanguageString();
