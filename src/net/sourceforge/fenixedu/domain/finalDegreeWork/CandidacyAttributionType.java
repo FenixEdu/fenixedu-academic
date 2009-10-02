@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public enum CandidacyAttributionType {
     // order is important (it is used to return the most relevant element)
@@ -14,8 +14,7 @@ public enum CandidacyAttributionType {
     }
 
     public String getDescription() {
-	return RenderUtils.getResourceString("APPLICATION_RESOURCES", this.getClass().getSimpleName() + "." + this + "."
-		+ "description");
+	return BundleUtil.getResourceString("resources.ApplicationResources", this.getClass().getSimpleName() + "." + this + "." + "description");
     }
 
     public String getDescription(int count) {
@@ -23,6 +22,6 @@ public enum CandidacyAttributionType {
     }
 
     public String getSimpleLabel() {
-	return RenderUtils.getResourceString("ENUMERATION_RESOURCES", this.getClass().getSimpleName() + "." + this);
+	return BundleUtil.getResourceString("resources.EnumerationResources", this.getClass().getSimpleName() + "." + this);
     }
 }

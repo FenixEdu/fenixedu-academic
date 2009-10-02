@@ -342,22 +342,20 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	Integer degreeCurricularPlanID = null;
 	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	    request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
 	}
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
+	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
+	final ExecutionDegree executionDegree = DomainObject.fromExternalId(executionDegreeOID);
 	request.setAttribute("executionDegreeOID", executionDegreeOID);
-	final ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
-		executionDegreeOID);
 	request.setAttribute("executionDegree", executionDegree);
 
 	// Load proposals for execution degree
 	List finalDegreeWorkProposalHeaders = null;
 	try {
 	    finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
-		    "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", new Object[] { executionDegreeOID });
+		    "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", new Object[] { executionDegree });
 
 	    if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
 		Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
@@ -388,7 +386,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
 	// Load proposal submission period
 	try {
-	    InfoScheduleing infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(executionDegreeOID);
+	    InfoScheduleing infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(executionDegree);
 
 	    if (infoScheduleing != null) {
 		SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -938,8 +936,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	String companyAdress = (String) finalWorkForm.get("companyAdress");
 	String companyName = (String) finalWorkForm.get("companyName");
 
-	final Integer executionDegreeOIDString = Integer.valueOf(finalWorkForm.getString("executionDegreeOID"));
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOIDString);
+	final ExecutionDegree executionDegree = getDomainObject(request, "executionDegreeOID");
 	final Scheduleing scheduleing = executionDegree.getScheduling();
 
 	if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("") && companionPhone.equals("")

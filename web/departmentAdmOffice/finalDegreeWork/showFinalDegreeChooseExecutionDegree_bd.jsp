@@ -5,15 +5,22 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h2><bean:message key="link.manage.final.degree.works"/></h2>
-<br />
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<bean:message key="choose.execution.year.for.final.degree.work.managment"/>
-<br />
+<p>
+	<span class="error"><!-- Error messages go here --><html:errors /></span>
+</p>
+
+
+<p class="mtop2 mbottom05">
+	<bean:message key="choose.execution.year.for.final.degree.work.managment"/>
+</p>
+<p class="infoop2">
+	<bean:message key="choose.execution.year.for.final.degree.work.managment.create.info"/>
+</p>
 <table>
 	<logic:iterate id="executionDegree" name="executionDegrees">
-		<bean:define id="executionDegreeOID" name="executionDegree" property="idInternal"/>
-		<bean:define id="degreeCurricularPlan" name="executionDegree" property="degreeCurricularPlan"/>
-		<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlan" property="idInternal"/>
+		<bean:define id="executionDegreeOID" name="executionDegree" property="externalId" />
+		<bean:define id="degreeCurricularPlan" name="executionDegree" property="degreeCurricularPlan"/>	
+		<bean:define id="degreeCurricularPlanOID" name="degreeCurricularPlan" property="externalId"/>
 		<tr>
 			<td class="listClasses">
 				<bean:write name="degreeCurricularPlan" property="degree.presentationName"/>
@@ -22,14 +29,26 @@
 				<bean:write name="degreeCurricularPlan" property="name"/>
 			</td>
 			<td class="listClasses">
-				<html:link action="<%= "/manageFinalDegreeWork.do?method=prepare&amp;degreeCurricularPlanID="
-						+ degreeCurricularPlanID.toString()
-						+ "&amp;executionDegreeOID="
-						+ executionDegreeOID.toString()
-						%>">
+				<logic:empty name="executionDegree" property="scheduling">
 					<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
-				</html:link>
+					<html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfoWithNewScheduling&amp;degreeCurricularPlanID="
+					    + degreeCurricularPlanOID
+						+ "&amp;executionDegreeOID="
+						+ executionDegreeOID
+						%>">(criar)
+					</html:link>
+				</logic:empty>
+				<logic:notEmpty name="executionDegree" property="scheduling">
+					<html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&amp;degreeCurricularPlanID="
+							+ degreeCurricularPlanOID
+							+ "&amp;executionDegreeOID="
+							+ executionDegreeOID
+							%>">
+						<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
+					</html:link>
+				</logic:notEmpty>
 			</td>
 		</tr>
 	</logic:iterate>
 </table>
+

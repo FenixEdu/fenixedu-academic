@@ -203,6 +203,31 @@
 		<put name="body" value="/coordinator/notAuthorizedSimple.jsp" />
 	</definition>	
 
+	<definition name="show-final-degree-work-info" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp" />
+	</definition>
+	<definition name="edit-final-degree-periods" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp" />
+	</definition>
+	<definition name="edit-final-degree-requirements" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp" />
+	</definition>
+	<definition name="detailed-proposal-list" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/detailedProposalList_bd.jsp" />
+	</definition>
+	<definition name="show-proposals" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/showProposals.jsp" />
+	</definition>
+	<definition name="show-proposal" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/showProposal.jsp" />
+	</definition>
+	<definition name="show-candidates" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/coordinator/finalDegreeWork/showCandidates.jsp" />
+	</definition>
+    <definition name="thesis-list" extends="departmentAdmOffice.masterPage">
+        <put name="body" value="/coordinator/thesis/listThesis.jsp"/>
+    </definition>
+
 
 <!-- Teacher Service Distribution -->	
 	<definition name="df.page.teacherServiceDistribution.showTSDProcessMainOptions" extends="departmentAdmOffice.masterPage"> 

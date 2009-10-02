@@ -16,12 +16,9 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadFinalDegreeWorkProposalSubmisionPeriod extends FenixService {
 
     @Service
-    public static InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
+    public static InfoScheduleing run(final ExecutionDegree executionDegree) throws FenixServiceException {
 
 	InfoScheduleing infoScheduleing = null;
-
-	if (executionDegreeOID != null) {
-	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 
 	    if (executionDegree != null) {
 		Scheduleing scheduleing = executionDegree.getScheduling();
@@ -48,7 +45,6 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod extends FenixService {
 		    infoScheduleing.setMinimumCompletedCreditsSecondCycle(scheduleing.getMinimumCompletedCreditsSecondCycle());
 		}
 	    }
-	}
 
 	return infoScheduleing;
     }

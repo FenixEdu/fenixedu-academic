@@ -4,29 +4,80 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
-<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-<bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 
-<h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" type="String" scope="request" />
+<bean:define id="executionDegreeOID" name="executionDegreeOID" type="String" scope="request" />
+
+
+
+<style>
+input.teacherNameDisplay {
+background: none;
+border: none;
+color: #000;
+}
+</style>
+
+
+<h2>
+	<bean:message key="title.final.degree.work.administration"/>
+</h2>	
+
+<h3>
+	<bean:message key="message.final.degree.work.administration"/>
+	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
+</h3>	
+
+<p><html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
+
+<logic:present name="executionDegree" property="scheduling">
+<logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
+<div class="infoop2">
+	<p>
+		<strong>
+			<bean:message key="message.final.degree.work.other.execution.degrees"/>
+		</strong>
+	</p>
+	<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
+		<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
+			<p class="mvvert05">
+				<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
+			</p>
+		</logic:notEqual>
+	</logic:iterate>
+</div>
+</logic:notEqual>
+</logic:present>
+
+
 <span class="error"><!-- Error messages go here -->
-	<html:errors/><br />
+<html:errors/>
 </span>
 
+
 <html:form action="/finalDegreeWorkProposal">
+	
+	<%
+	    boolean showCoordinator = false; 
+	    boolean showCompanion = false;
+	    String proposalOID = (String) request.getAttribute("proposalOID");
+	%>
+	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="submit"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="proposal.idInternal"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.orientatorOID" property="orientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.coorientatorOID" property="coorientatorOID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.alteredField" property="alteredField"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" property="degreeCurricularPlanID" value="<%= degreeCurricularPlanID  %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" property="executionDegreeOID" value="<%= executionDegreeOID %>"/>
+	<logic:present name="proposalOID">
+		<html:hidden bundle="HTMLALT_RESOURCES" property="proposalOID" value="<%= proposalOID %>"/>
+	</logic:present>
 
-	<%
-	    boolean showCoordinator = false; 
-	    boolean showCompanion = false;
-	%>
+	
 	<logic:empty name="finalDegreeWorkProposal" property="companionName">
 		<logic:empty name="finalDegreeWorkProposal" property="companionMail">
 			<logic:empty name="finalDegreeWorkProposal" property="companionPhone">
@@ -46,14 +97,14 @@
 		%>
 	</logic:empty>
 	<%
-		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance().readExecutionDegreeByOID((Integer) request.getAttribute("executionDegreeOID"));
-		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
-		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
-			showCoordinator = true;
-			showCompanion = true;
-		}
-		request.setAttribute("showCoordinator", showCoordinator);
-		request.setAttribute("showCompanion", showCompanion);
+	final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.DomainObject.fromExternalId((String)request.getAttribute("executionDegreeOID"));
+	final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
+	if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
+		showCoordinator = true;
+		showCompanion = true;
+	}
+	request.setAttribute("showCoordinator", showCoordinator);
+	request.setAttribute("showCompanion", showCompanion);
 	%>
 
 	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
@@ -65,30 +116,17 @@
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString() %>'
-						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
-						/>
-				</logic:present>
-				<logic:notPresent name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" maxlength="6" size="6"
-						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
-				</logic:notPresent>
-					<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message key="button.submit"/>
-					</html:submit>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" size="6"/>
+				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='orientator';document.forms[0].submit();"/>
+				
+				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 			<td width="1%"/>
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%">
-				<logic:present name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"
-						value='<%= ((Person) pageContext.findAttribute("orientator")).getName().toString() %>'/>
-				</logic:present>
-				<logic:notPresent name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55"/>
-				</logic:notPresent>
+			<td width="66%" id='respName'>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
 			</td>
 		</tr>
 	</table>
@@ -100,31 +138,16 @@
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6"
-						value='<%= ((Person) pageContext.findAttribute("coorientator")).getEmployee().getEmployeeNumber().toString() %>'
-						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
-						/>
-				</logic:present>
-				<logic:notPresent name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" maxlength="6" size="6" 
-						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
-					/>
-				</logic:notPresent>
-					<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-						<bean:message key="button.submit"/>
-					</html:submit>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6"/>
+				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='coorientator';document.forms[0].submit();"/>
+				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+					<bean:message key="button.submit"/>
+				</html:submit>
 			</td>
 			<td width="1%"/>
 			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%">
-				<logic:present name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"
-						value='<%= ((Person) pageContext.findAttribute("coorientator")).getName().toString() %>'/>
-				</logic:present>
-				<logic:notPresent name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55"/>
-				</logic:notPresent>
+			<td width="66%" id='coRespName'>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
 			</td>
 		</tr>
 	</table>
@@ -139,9 +162,9 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionName" property="companionName" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"  />						
-				<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+					<html:submit styleId="javascriptButtonID3" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -149,9 +172,9 @@
 			<td>		
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionMail" property="companionMail" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
-				<html:submit styleId="javascriptButtonID4" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+					<html:submit styleId="javascriptButtonID4" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -159,9 +182,9 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionPhone" property="companionPhone" size="10" maxlength="9" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>						
-				<html:submit styleId="javascriptButtonID5" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+					<html:submit styleId="javascriptButtonID5" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>	
 		<tr>
@@ -169,9 +192,9 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyName" property="companyName" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
-				<html:submit styleId="javascriptButtonID6" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+					<html:submit styleId="javascriptButtonID6" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -179,9 +202,9 @@
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyAdress" property="companyAdress" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
-				<html:submit styleId="javascriptButtonID7" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
+					<html:submit styleId="javascriptButtonID7" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+						<bean:message key="button.submit"/>
+					</html:submit>
 			</td>
 		</tr>
 	</table>
@@ -211,48 +234,6 @@
 	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
 
-<!--
-	<br/><hr/>
-	<br/><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br/><br/>
-	<table>
-		<logic:iterate id="branch" name="branches">
-			<tr>
-				<td>
-					<bean:write name="branch" property="name"/>				
-				</td>
-				<td>
-					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.branchList" property="branchList">
-						<bean:write name="branch" property="idInternal"/>
-					</html:multibox>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
--->
-
-<!--
-	<br/><hr/><br/>
-	<table cellspacing="2">
-		<tr>
-			<th><bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
-			<td>
-				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumNumberOfGroupElements" size="3" maxlength="2" property="minimumNumberOfGroupElements"/>
-			</td>		
-			<td>
-				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfGroupElements" size="3" maxlength="2" property="maximumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr height="10"></tr>
-		<tr>
-			<th><bean:message key="label.teacher.finalWork.degreeType"/>:</th>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="" property="degreeType"/><bean:message key="label.both"/></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>"/></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
-		</tr>
-	</table>
--->
 	<br/><hr/><br/>
 	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
 	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br/><br/>
@@ -268,5 +249,5 @@
 					  collection="finalDegreeWorkProposalStatusList" />
 	</html:select><br/>
 
-	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
 </html:form>

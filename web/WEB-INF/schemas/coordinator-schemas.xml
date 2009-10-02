@@ -185,7 +185,7 @@
 	</slot>
 	<slot name="notAttributedCandidaciesCount" layout="link">
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${notAttributedCandidaciesKey}"/>
+		<property name="linkFormat" value="/manageFinalDegreeWork.do?method=showCandidates&amp;degreeCurricularPlanID=${degreeCurricularPlan.externalId}&amp;executionDegreeOID=${executionDegree.externalId}&amp;filter=${notAttributedCandidaciesKey}"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="contextRelative" value="true" />
 	</slot>
