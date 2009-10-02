@@ -48,9 +48,9 @@ public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCour
 
     @Override
     public boolean isMember(Person person) {
-	if (person != null && person.hasTeacher() && hasExecutionCourse()) {
+	if (person != null && hasExecutionCourse()) {
 	    for (final Professorship professorship : getProfessorships()) {
-		if (professorship.getTeacher() == person.getTeacher()) {
+		if (professorship.getPerson() == person) {
 		    return true;
 		}
 	    }
