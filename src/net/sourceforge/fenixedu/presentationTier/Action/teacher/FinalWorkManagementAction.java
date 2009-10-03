@@ -319,7 +319,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	InfoScheduleing infoScheduleing = null;
 	try {
 
-	    infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(Integer.valueOf(degreeId));
+	    infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(infoExecutionDegree.getExecutionDegree());
 	    if (infoScheduleing == null
 		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
 		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
