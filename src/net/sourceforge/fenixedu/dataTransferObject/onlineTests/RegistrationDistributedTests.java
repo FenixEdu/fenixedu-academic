@@ -3,18 +3,16 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class RegistrationDistributedTests extends InfoObject {
 
-    private DomainListReference<DistributedTest> distributedTestsToDo;
+    private List<DistributedTest> distributedTestsToDo;
 
-    private DomainListReference<DistributedTest> distributedTestsDone;
+    private List<DistributedTest> distributedTestsDone;
 
-    private DomainReference<Registration> registration;
+    private Registration registration;
 
     public RegistrationDistributedTests(Registration registration, List<DistributedTest> distributedTestsToDo,
 	    List<DistributedTest> distributedTestsDone) {
@@ -28,7 +26,7 @@ public class RegistrationDistributedTests extends InfoObject {
     }
 
     public void setDistributedTestsToDo(List<DistributedTest> distributedTests) {
-	this.distributedTestsToDo = new DomainListReference<DistributedTest>(distributedTests);
+	this.distributedTestsToDo = distributedTests;
     }
 
     public List<DistributedTest> getDistributedTestsDone() {
@@ -36,15 +34,15 @@ public class RegistrationDistributedTests extends InfoObject {
     }
 
     public void setDistributedTestsDone(List<DistributedTest> distributedTests) {
-	this.distributedTestsDone = new DomainListReference<DistributedTest>(distributedTests);
+	this.distributedTestsDone = distributedTests;
     }
 
     public Registration getRegistration() {
-	return registration == null ? null : registration.getObject();
+	return registration;
     }
 
     public void setRegistration(Registration registration) {
-	this.registration = new DomainReference<Registration>(registration);
+	this.registration = registration;
     }
 
 }

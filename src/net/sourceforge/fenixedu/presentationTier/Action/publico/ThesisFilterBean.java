@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 
@@ -14,30 +13,30 @@ public class ThesisFilterBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Department> department;
-    private DomainReference<ExecutionYear> year;
-    private DomainListReference<Degree> options;
+    private Department department;
+    private ExecutionYear year;
+    private Collection<Degree> options;
 
     private ThesisState state;
 
-    private DomainReference<Degree> degree;
+    private Degree degree;
 
     public ThesisFilterBean() {
 	super();
 
-	this.department = new DomainReference<Department>(null);
-	this.year = new DomainReference<ExecutionYear>(null);
-	this.degree = new DomainReference<Degree>(null);
+	this.department = null;
+	this.year = null;
+	this.degree = null;
 
-	this.options = new DomainListReference<Degree>();
+	this.options = new ArrayList<Degree>();
     }
 
     public Department getDepartment() {
-	return department.getObject();
+	return department;
     }
 
     public void setDepartment(Department department) {
-	this.department = new DomainReference<Department>(department);
+	this.department = department;
     }
 
     public Collection<Degree> getDegreeOptions() {
@@ -45,15 +44,15 @@ public class ThesisFilterBean implements Serializable {
     }
 
     public void setDegreeOptions(Collection<Degree> degrees) {
-	this.options = new DomainListReference<Degree>(degrees);
+	this.options = degrees;
     }
 
     public Degree getDegree() {
-	return degree.getObject();
+	return degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     public ThesisState getState() {
@@ -65,11 +64,11 @@ public class ThesisFilterBean implements Serializable {
     }
 
     public ExecutionYear getYear() {
-	return year.getObject();
+	return year;
     }
 
     public void setYear(ExecutionYear year) {
-	this.year = new DomainReference<ExecutionYear>(year);
+	this.year = year;
     }
 
 }

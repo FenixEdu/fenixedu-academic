@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,21 +15,21 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 public class CurricularCourseStudentsByExecutionPeriodGroup extends LeafGroup {
     private static final long serialVersionUID = 1L;
 
-    private final DomainReference<CurricularCourse> curricularCourseReference;
+    private final CurricularCourse curricularCourseReference;
 
-    private final DomainReference<ExecutionSemester> executionPeriodReference;
+    private final ExecutionSemester executionPeriodReference;
 
     public CurricularCourseStudentsByExecutionPeriodGroup(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
-	this.curricularCourseReference = new DomainReference<CurricularCourse>(curricularCourse);
-	this.executionPeriodReference = new DomainReference<ExecutionSemester>(executionSemester);
+	this.curricularCourseReference = curricularCourse;
+	this.executionPeriodReference = executionSemester;
     }
 
     public CurricularCourse getCurricularCourse() {
-	return this.curricularCourseReference.getObject();
+	return this.curricularCourseReference;
     }
 
     public ExecutionSemester getExecutionPeriod() {
-	return this.executionPeriodReference.getObject();
+	return this.executionPeriodReference;
     }
 
     @Override

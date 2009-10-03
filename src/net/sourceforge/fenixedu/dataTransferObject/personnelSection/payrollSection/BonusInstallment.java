@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
-import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
@@ -28,7 +27,7 @@ public class BonusInstallment implements Serializable {
 
     private Integer installment;
 
-    private DomainListReference<EmployeeBonusInstallment> bonusInstallmentList;
+    private List<EmployeeBonusInstallment> bonusInstallmentList;
 
     public BonusInstallment() {
     }
@@ -54,7 +53,7 @@ public class BonusInstallment implements Serializable {
     }
 
     public void setBonusInstallmentList(List<EmployeeBonusInstallment> bonusInstallmentList) {
-	this.bonusInstallmentList = new DomainListReference<EmployeeBonusInstallment>(bonusInstallmentList);
+	this.bonusInstallmentList = bonusInstallmentList;
     }
 
     public void updateList() {

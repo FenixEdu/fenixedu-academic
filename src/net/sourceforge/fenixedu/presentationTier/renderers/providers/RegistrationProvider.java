@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.RegistrationsBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

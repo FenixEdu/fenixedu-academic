@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Anulation;
@@ -71,11 +69,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     private LocalDate date;
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
     private JustificationType justificationType;
 
-    private DomainReference<JustificationMotive> justificationMotive;
+    private JustificationMotive justificationMotive;
 
     private WorkWeek aplicableWeekDays;
 
@@ -89,7 +87,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     private String notes;
 
-    private DomainReference<Employee> modifiedBy;
+    private Employee modifiedBy;
 
     private String year;
 
@@ -287,7 +285,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     public static class EmployeeJustificationFactoryEditor extends EmployeeJustificationFactory {
-	private DomainReference<Justification> justification;
+	private Justification justification;
 
 	public EmployeeJustificationFactoryEditor(Justification justification, YearMonth yearMonth) {
 	    setYearMonth(yearMonth);
@@ -519,18 +517,18 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Justification getJustification() {
-	    return justification == null ? null : justification.getObject();
+	    return justification;
 	}
 
 	public void setJustification(Justification justification) {
 	    if (justification != null) {
-		this.justification = new DomainReference<Justification>(justification);
+		this.justification = justification;
 	    }
 	}
     }
 
     public static class EmployeeAnulateJustificationFactory extends EmployeeJustificationFactory {
-	private DomainReference<Justification> justification;
+	private Justification justification;
 
 	public EmployeeAnulateJustificationFactory(Justification justification, YearMonth yearMonth, Employee employee) {
 	    setJustification(justification);
@@ -560,18 +558,18 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public Justification getJustification() {
-	    return justification == null ? null : justification.getObject();
+	    return justification;
 	}
 
 	public void setJustification(Justification justification) {
 	    if (justification != null) {
-		this.justification = new DomainReference<Justification>(justification);
+		this.justification = justification;
 	    }
 	}
     }
 
     public static class SeveralEmployeeJustificationFactoryCreator extends EmployeeJustificationFactory {
-	private DomainListReference<AssiduousnessStatus> assiduousnessStatus;
+	private List<AssiduousnessStatus> assiduousnessStatus;
 
 	public SeveralEmployeeJustificationFactoryCreator() {
 	    setCorrectionType(CorrectionType.JUSTIFICATION);
@@ -856,7 +854,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	}
 
 	public void setAssiduousnessStatus(List<AssiduousnessStatus> assiduousnessStatus) {
-	    this.assiduousnessStatus = new DomainListReference<AssiduousnessStatus>(assiduousnessStatus);
+	    this.assiduousnessStatus = assiduousnessStatus;
 	}
 
     }
@@ -1095,12 +1093,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     public JustificationMotive getJustificationMotive() {
-	return justificationMotive == null ? null : justificationMotive.getObject();
+	return justificationMotive;
     }
 
     public void setJustificationMotive(JustificationMotive justificationMotive) {
 	if (justificationMotive != null) {
-	    this.justificationMotive = new DomainReference<JustificationMotive>(justificationMotive);
+	    this.justificationMotive = justificationMotive;
 	}
     }
 
@@ -1121,22 +1119,22 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     public Employee getEmployee() {
-	return employee == null ? null : employee.getObject();
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
 	if (employee != null) {
-	    this.employee = new DomainReference<Employee>(employee);
+	    this.employee = employee;
 	}
     }
 
     public Employee getModifiedBy() {
-	return modifiedBy == null ? null : modifiedBy.getObject();
+	return modifiedBy;
     }
 
     public void setModifiedBy(Employee modifiedBy) {
 	if (modifiedBy != null) {
-	    this.modifiedBy = new DomainReference<Employee>(modifiedBy);
+	    this.modifiedBy = modifiedBy;
 	}
     }
 

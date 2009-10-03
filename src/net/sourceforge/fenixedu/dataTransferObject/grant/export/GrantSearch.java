@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
@@ -43,9 +41,9 @@ public class GrantSearch implements Serializable {
 
     private String responsibleName;
 
-    private DomainReference<Teacher> responsible;
+    private Teacher responsible;
 
-    private DomainListReference<GrantContractRegime> search;
+    private List<GrantContractRegime> search;
 
     private ActivityChoice activityChoice;
 
@@ -76,7 +74,7 @@ public class GrantSearch implements Serializable {
 	LocalDate today = new LocalDate();
 	setBeginDate(new LocalDate(today.getYear(), today.getMonthOfYear(), 1));
 	setEndDate(new LocalDate(today.getYear(), today.getMonthOfYear(), today.dayOfMonth().getMaximumValue()));
-	search = new DomainListReference<GrantContractRegime>();
+	search = new ArrayList<GrantContractRegime>();
 	setSubsidyCostCenterOrProjectChoice(CostCenterOrProjectChoice.ANY);
 	setInsuranceCostCenterOrProjectChoice(CostCenterOrProjectChoice.ANY);
 	setActivityChoice(ActivityChoice.ACTIVITY);
@@ -101,11 +99,11 @@ public class GrantSearch implements Serializable {
     }
 
     public Teacher getResponsible() {
-	return responsible == null ? null : responsible.getObject();
+	return responsible;
     }
 
     public void setResponsible(Teacher responsible) {
-	this.responsible = new DomainReference<Teacher>(responsible);
+	this.responsible = responsible;
     }
 
     public String getResponsibleName() {
@@ -183,7 +181,7 @@ public class GrantSearch implements Serializable {
 	comparatorChain.addComparator(new BeanComparator("grantContract.grantOwner.number"));
 	comparatorChain.addComparator(new BeanComparator("grantContract.contractNumber"));
 	Collections.sort(result, comparatorChain);
-	search = new DomainListReference<GrantContractRegime>(result);
+	search = new ArrayList<GrantContractRegime>(result);
     }
 
     private boolean satisfiedInsuranceCostCenter(GrantContractRegime grantContractRegime) {

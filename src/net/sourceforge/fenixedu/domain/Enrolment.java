@@ -1150,15 +1150,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     final public static class DeleteEnrolmentExecutor implements FactoryExecutor {
 
-	private final DomainReference<Enrolment> enrolment;
+	private final Enrolment enrolment;
 
 	public DeleteEnrolmentExecutor(Enrolment enrolment) {
 	    super();
-	    this.enrolment = new DomainReference<Enrolment>(enrolment);
+	    this.enrolment = enrolment;
 	}
 
 	public Object execute() {
-	    enrolment.getObject().delete();
+	    enrolment.delete();
 	    return null;
 	}
 

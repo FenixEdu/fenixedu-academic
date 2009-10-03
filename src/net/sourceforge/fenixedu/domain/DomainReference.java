@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixframework.pstm.Transaction;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * A <code>DomainReference</code> allows a serializable object to refer to a
@@ -58,11 +58,11 @@ public class DomainReference<T extends DomainObject> implements Serializable {
 	return this.className == null;
     }
 
-    public Integer getOid() {
+    private Integer getOid() {
 	return this.oid;
     }
 
-    protected String getClassName() {
+    private String getClassName() {
 	return this.className;
     }
 
@@ -91,7 +91,7 @@ public class DomainReference<T extends DomainObject> implements Serializable {
 	    return null;
 	}
 
-	this.object = (T) Transaction.getDomainObject(getClassName(), getOid());
+	this.object = (T) AbstractDomainObject.fromClassAndID(getType(), getOid());
 
 	return this.object;
     }

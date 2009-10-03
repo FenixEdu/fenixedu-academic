@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * fenix-head Dominio
@@ -15,14 +14,14 @@ import net.sourceforge.fenixedu.domain.DomainReference;
  */
 public class InfoCoordinator extends InfoObject {
 
-    private final DomainReference<Coordinator> coordinatorDomainReference;
+    private final Coordinator coordinator;
 
     public Coordinator getCoordinator() {
-	return coordinatorDomainReference == null ? null : coordinatorDomainReference.getObject();
+	return coordinator;
     }
 
     public InfoCoordinator(final Coordinator coordinator) {
-	coordinatorDomainReference = new DomainReference<Coordinator>(coordinator);
+	this.coordinator = coordinator;
     }
 
     public InfoExecutionDegree getInfoExecutionDegree() {

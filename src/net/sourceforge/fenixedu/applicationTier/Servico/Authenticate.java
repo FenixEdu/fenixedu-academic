@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -96,7 +95,7 @@ public class Authenticate extends FenixService implements Serializable {
 
     protected class UserView implements IUserView {
 
-	final private DomainReference<Person> personRef;
+	final private Person person;
 
 	final private Collection<RoleType> roleTypes;
 
@@ -109,7 +108,7 @@ public class Authenticate extends FenixService implements Serializable {
 	private final DateTime userCreationDateTime = new DateTime();
 
 	private UserView(final Person person, final Set allowedRoles) {
-	    this.personRef = new DomainReference<Person>((Person) person);
+	    this.person = person;
 
 	    final Collection<Role> roles = getInfoRoles(person, allowedRoles);
 	    if (roles != null) {
@@ -133,7 +132,7 @@ public class Authenticate extends FenixService implements Serializable {
 	}
 
 	public Person getPerson() {
-	    return personRef.getObject();
+	    return person;
 	}
 
 	public String getUtilizador() {
@@ -163,12 +162,12 @@ public class Authenticate extends FenixService implements Serializable {
 	    }
 
 	    UserView other = (UserView) obj;
-	    return this.personRef.equals(other.personRef) && this.roleTypes.equals(other.roleTypes);
+	    return (this.person == other.person) && this.roleTypes.equals(other.roleTypes);
 	}
 
 	@Override
 	public int hashCode() {
-	    return this.personRef.hashCode() + this.roleTypes.hashCode();
+	    return this.person.hashCode() + this.roleTypes.hashCode();
 	}
 
 	public String getPrivateConstantForDigestCalculation() {

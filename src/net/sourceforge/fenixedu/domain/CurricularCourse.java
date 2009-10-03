@@ -556,7 +556,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public static class CurriculumFactory implements Serializable {
-	private DomainReference<CurricularCourse> curricularCourseDomainReference;
+	private CurricularCourse curricularCourse;
 
 	private String program;
 
@@ -633,11 +633,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 	}
 
 	public CurricularCourse getCurricularCourse() {
-	    return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
+	    return curricularCourse;
 	}
 
 	public void setCurricularCourse(final CurricularCourse curricularCourse) {
-	    curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+	    this.curricularCourse = curricularCourse;
 	}
 
 	public String getObjectives() {
@@ -671,7 +671,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public static class CurriculumFactoryEditCurriculum extends CurriculumFactory implements FactoryExecutor {
-	private DomainReference<Curriculum> curriculum;
+	private Curriculum curriculum;
 
 	public CurriculumFactoryEditCurriculum(CurricularCourse curricularCourse) {
 	    super(curricularCourse);
@@ -681,15 +681,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	public CurriculumFactoryEditCurriculum(Curriculum curriculum) {
 	    super(curriculum.getCurricularCourse());
-	    this.curriculum = new DomainReference<Curriculum>(curriculum);
+	    this.curriculum = curriculum;
 	}
 
 	public Curriculum getCurriculum() {
-	    return curriculum == null ? null : curriculum.getObject();
+	    return curriculum;
 	}
 
 	public void setCurriculum(Curriculum curriculum) {
-	    this.curriculum = new DomainReference<Curriculum>(curriculum);
+	    this.curriculum = curriculum;
 	    populateCurriculum(this, curriculum);
 	}
 

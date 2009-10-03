@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -16,21 +15,21 @@ public class PersonFunctionsBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private DomainReference<Person> person;
-    private DomainReference<Unit> unit;
-    private DomainListReference<Function> functions;
+    private Person person;
+    private Unit unit;
+    private List<Function> functions;
 
     public PersonFunctionsBean(Person person, Unit unit) {
 	super();
 
-	this.person = new DomainReference<Person>(person);
-	this.unit = new DomainReference<Unit>(unit);
+	this.person = person;
+	this.unit = unit;
 
 	initFunctions(person);
     }
 
     private void initFunctions(Person person) {
-	this.functions = new DomainListReference<Function>();
+	this.functions = new ArrayList<Function>();
 	for (PersonFunction pf : person.getAllActivePersonFunctions(getUnit())) {
 	    this.functions.add(pf.getFunction());
 	}
@@ -39,11 +38,11 @@ public class PersonFunctionsBean implements Serializable {
     }
 
     public Person getPerson() {
-	return this.person.getObject();
+	return this.person;
     }
 
     public Unit getUnit() {
-	return this.unit.getObject();
+	return this.unit;
     }
 
     public List<Function> getFunctions() {
@@ -51,7 +50,7 @@ public class PersonFunctionsBean implements Serializable {
     }
 
     public void setFunctions(List<Function> functions) {
-	this.functions = new DomainListReference<Function>(functions);
+	this.functions = functions;
     }
 
     private static Comparator<Function> FUNCTION_COMPARATOR = new Comparator<Function>() {

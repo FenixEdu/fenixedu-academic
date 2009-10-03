@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.assiduousnessStructure;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -25,13 +24,13 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AssiduousnessPersonFunctionFactory implements Serializable, FactoryExecutor {
 
-    private DomainReference<Person> responsible;
+    private Person responsible;
 
-    private DomainReference<Party> party;
+    private Party party;
 
     private boolean byPersons = false;
 
-    private DomainListReference<Employee> employeesList;
+    private List<Employee> employeesList;
 
     private YearMonthDay beginDate;
 
@@ -56,7 +55,7 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
     }
 
     public Party getParty() {
-	return party != null ? party.getObject() : null;
+	return party;
     }
 
     public boolean getIsPartyAnUnit() {
@@ -64,26 +63,26 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
     }
 
     public void setParty(Party party) {
-	this.party = party != null ? new DomainReference<Party>(party) : null;
+	this.party = party;
     }
 
     public Person getResponsible() {
-	return responsible != null ? responsible.getObject() : null;
+	return responsible;
     }
 
     public void setResponsible(Person responsible) {
-	this.responsible = responsible != null ? new DomainReference<Person>(responsible) : null;
+	this.responsible = responsible;
     }
 
     public List<Employee> getEmployeesList() {
 	if (this.employeesList == null) {
-	    this.employeesList = new DomainListReference<Employee>();
+	    this.employeesList = new ArrayList<Employee>();
 	}
 	return employeesList;
     }
 
     public void setEmployeesList(List<Employee> employeesList) {
-	this.employeesList = new DomainListReference<Employee>(employeesList);
+	this.employeesList = employeesList;
     }
 
     public YearMonthDay getBeginDate() {

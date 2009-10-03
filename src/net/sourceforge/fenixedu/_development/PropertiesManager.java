@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import pt.ist.fenixWebFramework.Config;
 import pt.ist.fenixWebFramework.Config.CasConfig;
 
@@ -75,6 +77,8 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 		dbUsername = getProperty("db.user");
 		dbPassword = getProperty("db.pass");
 		appName = getProperty("app.name");
+                rootClass = RootDomainObject.class;
+                collectDataAccessPatterns = false;
 		appContext = getProperty("app.context");
 		filterRequestWithDigest = getBooleanProperty("filter.request.with.digest");
 		tamperingRedirect = getProperty("login.page");

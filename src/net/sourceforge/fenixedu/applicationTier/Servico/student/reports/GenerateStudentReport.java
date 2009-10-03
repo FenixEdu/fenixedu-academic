@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -26,7 +25,7 @@ public class GenerateStudentReport implements Serializable {
 
     public static class StudentReportPredicate implements Serializable {
 
-	private DomainReference<ExecutionYear> executionYearDomainReference;
+	private ExecutionYear executionYear;
 
 	private DegreeType degreeType;
 
@@ -39,11 +38,11 @@ public class GenerateStudentReport implements Serializable {
 	}
 
 	public ExecutionYear getExecutionYear() {
-	    return executionYearDomainReference != null ? executionYearDomainReference.getObject() : null;
+	    return executionYear;
 	}
 
 	public void setExecutionYear(final ExecutionYear executionYear) {
-	    executionYearDomainReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	    this.executionYear = executionYear;
 	}
 
 	public DegreeType getDegreeType() {

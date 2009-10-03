@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -16,16 +15,16 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoBranch extends InfoObject {
 
-    private final DomainReference<Branch> branchDomainReference;
+    private final Branch branch;
 
     public Branch getBranch() {
-	return branchDomainReference == null ? null : branchDomainReference.getObject();
+	return branch;
     }
 
     private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoBranch(final Branch branch) {
-	branchDomainReference = new DomainReference<Branch>(branch);
+	this.branch = branch;
     }
 
     public String toString() {

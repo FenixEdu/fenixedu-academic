@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -23,19 +21,19 @@ public class AssiduousnessStructureSearch implements Serializable {
 
     private String responsibleName;
 
-    private DomainReference<Person> responsible;
+    private Person responsible;
 
     private Boolean searchPerson;
 
-    private DomainReference<Employee> employee;
+    private Employee employee;
 
     private String employeeName;
 
-    private DomainReference<UnitName> unit;
+    private UnitName unit;
 
     private String unitName;
 
-    private DomainListReference<PersonFunction> personFunctionList;
+    private List<PersonFunction> personFunctionList;
 
     public AssiduousnessStructureSearch(AssiduousnessPersonFunctionFactory assiduousnessPersonFunctionFactory) {
 	setResponsible(assiduousnessPersonFunctionFactory.getResponsible());
@@ -58,19 +56,19 @@ public class AssiduousnessStructureSearch implements Serializable {
     }
 
     public Employee getEmployee() {
-	return employee != null ? employee.getObject() : null;
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
-	this.employee = employee != null ? new DomainReference<Employee>(employee) : null;
+	this.employee = employee;
     }
 
     public Person getResponsible() {
-	return responsible != null ? responsible.getObject() : null;
+	return responsible;
     }
 
     public void setResponsible(Person responsible) {
-	this.responsible = responsible != null ? new DomainReference<Person>(responsible) : null;
+	this.responsible = responsible;
     }
 
     public Boolean getSearchPerson() {
@@ -82,11 +80,11 @@ public class AssiduousnessStructureSearch implements Serializable {
     }
 
     public UnitName getUnit() {
-	return unit != null ? unit.getObject() : null;
+	return unit;
     }
 
     public void setUnit(UnitName unit) {
-	this.unit = unit != null ? new DomainReference<UnitName>(unit) : null;
+	this.unit = unit;
     }
 
     public String getResponsibleName() {
@@ -115,13 +113,13 @@ public class AssiduousnessStructureSearch implements Serializable {
 
     public List<PersonFunction> getPersonFunctionList() {
 	if (this.personFunctionList == null) {
-	    this.personFunctionList = new DomainListReference<PersonFunction>();
+	    this.personFunctionList = new ArrayList<PersonFunction>();
 	}
 	return personFunctionList;
     }
 
-    public void setPersonFunctionList(DomainListReference<PersonFunction> personFunctionList) {
-	this.personFunctionList = new DomainListReference<PersonFunction>(personFunctionList);
+    public void setPersonFunctionList(List<PersonFunction> personFunctionList) {
+	this.personFunctionList = personFunctionList;
     }
 
     public boolean getHasEmployeeInSearch() {

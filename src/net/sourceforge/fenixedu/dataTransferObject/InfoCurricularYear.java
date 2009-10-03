@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author dcs-rjao
@@ -11,14 +10,14 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class InfoCurricularYear extends InfoObject {
 
-    private final DomainReference<CurricularYear> curricularYearDomainReference;
+    private final CurricularYear curricularYear;
 
     public InfoCurricularYear(final CurricularYear curricularYear) {
-	curricularYearDomainReference = new DomainReference<CurricularYear>(curricularYear);
+	this.curricularYear = curricularYear;
     }
 
     public CurricularYear getCurricularYear() {
-	return curricularYearDomainReference == null ? null : curricularYearDomainReference.getObject();
+	return curricularYear;
     }
 
     public boolean equals(Object obj) {

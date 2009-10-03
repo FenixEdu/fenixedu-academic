@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
@@ -14,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
  */
 public class ExecutionCourseSiteView extends SiteView {
 
-    private DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private ExecutionCourse executionCourse;
 
     /**
      * @param commonComponent
@@ -57,11 +56,11 @@ public class ExecutionCourseSiteView extends SiteView {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+	return executionCourse;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {
-	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
     }
 
 }

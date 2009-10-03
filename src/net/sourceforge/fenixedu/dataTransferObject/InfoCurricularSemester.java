@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author dcs-rjao
@@ -15,15 +14,14 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class InfoCurricularSemester extends InfoObject {
 
-    private final DomainReference<CurricularSemester> curricularSemesterDomainReference;
+    private final CurricularSemester curricularSemester;
 
     public InfoCurricularSemester(final CurricularSemester curricularSemester) {
-	curricularSemesterDomainReference = new DomainReference<CurricularSemester>(curricularSemester);
-	;
+	this.curricularSemester = curricularSemester;
     }
 
     public CurricularSemester getCurricularSemester() {
-	return curricularSemesterDomainReference == null ? null : curricularSemesterDomainReference.getObject();
+	return curricularSemester;
     }
 
     public boolean equals(Object obj) {

@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -22,7 +21,7 @@ public class DelegatesGroup extends LeafGroup {
 
     private static final long serialVersionUID = 1L;
 
-    private final DomainReference<Degree> degree;
+    private final Degree degree;
 
     private final FunctionType functionType;
 
@@ -33,7 +32,7 @@ public class DelegatesGroup extends LeafGroup {
 
     public DelegatesGroup(Degree degree) {
 	this.functionType = null;
-	this.degree = new DomainReference<Degree>(degree);
+	this.degree = degree;
     }
 
     @Override
@@ -84,7 +83,7 @@ public class DelegatesGroup extends LeafGroup {
     }
 
     public Degree getDegree() {
-	return (degree != null ? degree.getObject() : null);
+	return degree;
     }
 
     public boolean hasDegree() {

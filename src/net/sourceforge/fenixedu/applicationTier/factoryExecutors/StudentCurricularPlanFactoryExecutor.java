@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -26,15 +25,15 @@ public class StudentCurricularPlanFactoryExecutor {
     @SuppressWarnings("serial")
     public static class StudentCurricularPlanCreator implements FactoryExecutor, Serializable {
 
-	private DomainReference<Registration> registration;
+	private Registration registration;
 
-	private DomainReference<DegreeCurricularPlan> degreeCurricularPlan;
+	private DegreeCurricularPlan degreeCurricularPlan;
 
 	private CycleType cycleType;
 
 	public StudentCurricularPlanCreator(Registration registration) {
 	    super();
-	    this.registration = new DomainReference<Registration>(registration);
+	    this.registration = registration;
 	}
 
 	public Object execute() {
@@ -48,20 +47,19 @@ public class StudentCurricularPlanFactoryExecutor {
 	}
 
 	public DegreeCurricularPlan getDegreeCurricularPlan() {
-	    return this.degreeCurricularPlan != null ? this.degreeCurricularPlan.getObject() : null;
+	    return this.degreeCurricularPlan;
 	}
 
 	public Registration getRegistration() {
-	    return this.registration != null ? this.registration.getObject() : null;
+	    return this.registration;
 	}
 
 	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
-	    this.degreeCurricularPlan = degreeCurricularPlan != null ? new DomainReference<DegreeCurricularPlan>(
-		    degreeCurricularPlan) : null;
+	    this.degreeCurricularPlan = degreeCurricularPlan;
 	}
 
 	public void setRegistration(Registration registration) {
-	    this.registration = registration != null ? new DomainReference<Registration>(registration) : null;
+	    this.registration = registration;
 	}
 
 	public Degree getDegree() {

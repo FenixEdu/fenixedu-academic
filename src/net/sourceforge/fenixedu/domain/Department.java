@@ -242,23 +242,23 @@ public class Department extends Department_Base {
 
     public static class DepartmentDegreeBean implements FactoryExecutor, Serializable {
 
-	private DomainReference<Department> departmentReference;
-	private DomainReference<Degree> degreeReference;
+	private Department department;
+	private Degree degree;
 
 	public Department getDepartment() {
-	    return departmentReference == null ? null : departmentReference.getObject();
+	    return department;
 	}
 
 	public void setDepartment(final Department department) {
-	    departmentReference = department == null ? null : new DomainReference<Department>(department);
+	    this.department = department;
 	}
 
 	public Degree getDegree() {
-	    return degreeReference == null ? null : degreeReference.getObject();
+	    return degree;
 	}
 
 	public void setDegree(final Degree degree) {
-	    degreeReference = degree == null ? null : new DomainReference<Degree>(degree);
+	    this.degree = degree;
 	}
 
 	public Object execute() {

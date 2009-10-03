@@ -5,49 +5,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 public class PageContainerBean implements Serializable {
 
-    private transient List<? extends DomainObject> objects;
-    private DomainListReference<DomainObject> pageObjects;
-    private DomainReference<DomainObject> selected;
+    private transient List<DomainObject> objects;
+    private List<DomainObject> pageObjects;
+    private DomainObject selected;
     private Integer numberOfPages;
 
     private Integer page = 1;
 
-    public List<? extends DomainObject> getObjects() {
+    public List<DomainObject> getObjects() {
 	return objects;
     }
 
-    public void setObjects(List<? extends DomainObject> objects) {
+    public void setObjects(List<DomainObject> objects) {
 	this.objects = objects;
 	setPageObjects(null);
     }
 
-    public List<DomainObject> getPageObjects() {
-	if (this.pageObjects != null) {
-	    List<DomainObject> result = new ArrayList<DomainObject>();
-	    for (DomainObject domainObject : this.pageObjects) {
-		result.add(domainObject);
-	    }
-	    return result;
-	} else {
-	    return null;
-	}
+    protected List<DomainObject> getPageObjects() {
+        return this.pageObjects;
     }
 
-    public void setPageObjects(List<? extends DomainObject> pageObjects) {
-	if (pageObjects != null) {
-	    this.pageObjects = new DomainListReference<DomainObject>();
-	    for (DomainObject object : pageObjects) {
-		this.pageObjects.add(object);
-	    }
-	} else {
-	    this.pageObjects = null;
-	}
+    protected void setPageObjects(List<DomainObject> pageObjects) {
+        this.pageObjects = pageObjects;
     }
 
     public Integer getPage() {
@@ -59,22 +42,24 @@ public class PageContainerBean implements Serializable {
     }
 
     public DomainObject getSelected() {
-	return (this.selected != null) ? this.selected.getObject() : null;
+	return this.selected;
     }
 
     public void setSelected(DomainObject selected) {
-	this.selected = (selected != null) ? new DomainReference<DomainObject>(selected) : null;
+	this.selected = selected;
     }
 
     public List<DomainObject> getPageByPageSize(int pageSize) {
-	if (getPageObjects() != null) {
-	    return getPageObjects();
+        List<DomainObject> pageObjects = getPageObjects();
+	if (pageObjects != null) {
+	    return pageObjects;
 	} else {
-	    if (getObjects() != null && !getObjects().isEmpty()) {
+            List<DomainObject> objects = getObjects();
+	    if (objects != null && !objects.isEmpty()) {
 		validatePageNumber(pageSize);
 		int from = (getPage() - 1) * pageSize;
-		int to = getObjects().size() > getPage() * pageSize ? getPage() * pageSize : getObjects().size();
-		List<DomainObject> subList = new ArrayList<DomainObject>(getObjects().subList(from, to));
+		int to = getObjects().size() > getPage() * pageSize ? getPage() * pageSize : objects.size();
+		List<DomainObject> subList = objects.subList(from, to);
 		setPageObjects(subList);
 		return subList;
 	    } else {
@@ -110,7 +95,7 @@ public class PageContainerBean implements Serializable {
 	return getPage() > 1;
     }
 
-    public List<? extends DomainObject> getAllObjects() {
+    public List<DomainObject> getAllObjects() {
 	if (getPageObjects() != null) {
 	    return getPageObjects();
 	} else {

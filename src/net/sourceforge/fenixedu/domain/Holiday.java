@@ -44,15 +44,15 @@ public class Holiday extends Holiday_Base {
     }
 
     public static class HolidayFactoryCreator extends HolidayFactory {
-	private DomainReference<Locality> localityReference;
+	private Locality localityReference;
 
 	public Locality getLocality() {
-	    return localityReference == null ? null : localityReference.getObject();
+	    return localityReference;
 	}
 
 	public void setLocality(Locality locality) {
 	    if (locality != null) {
-		this.localityReference = new DomainReference<Locality>(locality);
+		this.localityReference = locality;
 	    }
 	}
 

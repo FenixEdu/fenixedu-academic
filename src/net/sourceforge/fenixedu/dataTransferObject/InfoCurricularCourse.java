@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -33,7 +32,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 	}
     };
 
-    private final DomainReference<CurricularCourse> curricularCourseDomainReference;
+    private final CurricularCourse curricularCourse;
 
     private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
@@ -46,11 +45,11 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private String chosen;
 
     public InfoCurricularCourse(final CurricularCourse curricularCourse) {
-	curricularCourseDomainReference = new DomainReference<CurricularCourse>(curricularCourse);
+	this.curricularCourse = curricularCourse;
     }
 
     public CurricularCourse getCurricularCourse() {
-	return curricularCourseDomainReference == null ? null : curricularCourseDomainReference.getObject();
+	return curricularCourse;
     }
 
     public Boolean getBasic() {

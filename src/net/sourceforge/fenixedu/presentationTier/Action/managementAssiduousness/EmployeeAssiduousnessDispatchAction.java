@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustifi
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryCreator;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.EmployeeJustificationFactoryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.SeveralEmployeeJustificationFactoryCreator;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
@@ -292,7 +293,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     }
 
     private void setWorkSchedules(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
-	List<WorkScheduleType> workScheduleList = new ArrayList<WorkScheduleType>();
+	List<DomainObject> workScheduleList = new ArrayList<DomainObject>();
 	for (WorkScheduleType workScheduleType : rootDomainObject.getWorkScheduleTypes()) {
 	    if (workScheduleType.isValidWorkScheduleType()) {
 		workScheduleList.add(workScheduleType);

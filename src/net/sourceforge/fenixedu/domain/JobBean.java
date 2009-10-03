@@ -8,8 +8,8 @@ public class JobBean implements Serializable {
 
     static private final long serialVersionUID = 5885003369040710968L;
 
-    private DomainReference<BusinessArea> parentBusinessArea;
-    private DomainReference<BusinessArea> childBusinessArea;
+    private BusinessArea parentBusinessArea;
+    private BusinessArea childBusinessArea;
 
     private String city;
     private String employerName;
@@ -18,17 +18,17 @@ public class JobBean implements Serializable {
     private LocalDate beginDate;
     private LocalDate endDate;
 
-    private DomainReference<Country> country;
+    private Country country;
 
     public JobBean() {
     }
 
     public BusinessArea getParentBusinessArea() {
-	return (this.parentBusinessArea != null) ? this.parentBusinessArea.getObject() : null;
+	return this.parentBusinessArea;
     }
 
     public void setParentBusinessArea(BusinessArea parentBusinessArea) {
-	this.parentBusinessArea = (parentBusinessArea != null) ? new DomainReference<BusinessArea>(parentBusinessArea) : null;
+	this.parentBusinessArea = parentBusinessArea;
     }
 
     public boolean hasParentBusinessArea() {
@@ -36,11 +36,11 @@ public class JobBean implements Serializable {
     }
 
     public BusinessArea getChildBusinessArea() {
-	return (this.childBusinessArea != null) ? this.childBusinessArea.getObject() : null;
+	return this.childBusinessArea;
     }
 
     public void setChildBusinessArea(BusinessArea childBusinessArea) {
-	this.childBusinessArea = (childBusinessArea != null) ? new DomainReference<BusinessArea>(childBusinessArea) : null;
+	this.childBusinessArea = childBusinessArea;
     }
 
     public String getCity() {
@@ -84,11 +84,11 @@ public class JobBean implements Serializable {
     }
 
     public Country getCountry() {
-	return (this.country != null) ? this.country.getObject() : null;
+	return this.country;
     }
 
     public void setCountry(Country country) {
-	this.country = (country != null) ? new DomainReference<Country>(country) : null;
+	this.country = country;
     }
 
 }

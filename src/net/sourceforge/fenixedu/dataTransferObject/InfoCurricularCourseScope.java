@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
@@ -75,16 +74,16 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     };
 
-    private final DomainReference<CurricularCourseScope> curricularCourseScopeDomainReference;
+    private final CurricularCourseScope curricularCourseScope;
 
     private boolean showEnVersion = (Language.getUserLanguage() == Language.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
-	curricularCourseScopeDomainReference = new DomainReference<CurricularCourseScope>(curricularCourseScope);
+	this.curricularCourseScope = curricularCourseScope;
     }
 
     public CurricularCourseScope getCurricularCourseScope() {
-	return curricularCourseScopeDomainReference == null ? null : curricularCourseScopeDomainReference.getObject();
+	return curricularCourseScope;
     }
 
     public boolean equals(Object obj) {

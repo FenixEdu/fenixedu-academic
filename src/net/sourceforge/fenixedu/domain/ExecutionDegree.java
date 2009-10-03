@@ -908,9 +908,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     public static class ThesisCreationPeriodFactoryExecutor implements FactoryExecutor, HasExecutionYear, Serializable {
 
-	private DomainReference<ExecutionYear> executionYear;
+	private ExecutionYear executionYear;
 
-	private DomainReference<ExecutionDegree> executionDegree;
+	private ExecutionDegree executionDegree;
 
 	private YearMonthDay beginThesisCreationPeriod;
 
@@ -937,19 +937,19 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	}
 
 	public ExecutionYear getExecutionYear() {
-	    return executionYear == null ? null : executionYear.getObject();
+	    return executionYear;
 	}
 
 	public void setExecutionYear(final ExecutionYear executionYear) {
-	    this.executionYear = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
+	    this.executionYear = executionYear;
 	}
 
 	public ExecutionDegree getExecutionDegree() {
-	    return executionDegree == null ? null : executionDegree.getObject();
+	    return executionDegree;
 	}
 
 	public void setExecutionDegree(final ExecutionDegree executionDegree) {
-	    this.executionDegree = executionDegree == null ? null : new DomainReference<ExecutionDegree>(executionDegree);
+	    this.executionDegree = executionDegree;
 	}
 
 	public YearMonthDay getBeginThesisCreationPeriod() {

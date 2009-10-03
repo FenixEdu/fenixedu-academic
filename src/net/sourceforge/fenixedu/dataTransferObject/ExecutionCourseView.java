@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
@@ -27,10 +26,10 @@ public class ExecutionCourseView {
 
     };
 
-    private final DomainReference<ExecutionCourse> executionCourseDomainReference;
+    private final ExecutionCourse executionCourse;
 
     public ExecutionCourseView(final ExecutionCourse executionCourse) {
-	executionCourseDomainReference = new DomainReference<ExecutionCourse>(executionCourse);
+	this.executionCourse = executionCourse;
     }
 
     private Integer curricularYear;
@@ -64,7 +63,7 @@ public class ExecutionCourseView {
     }
 
     public ExecutionCourse getExecutionCourse() {
-	return executionCourseDomainReference == null ? null : executionCourseDomainReference.getObject();
+	return executionCourse;
     }
 
     public String getExecutionCourseName() {

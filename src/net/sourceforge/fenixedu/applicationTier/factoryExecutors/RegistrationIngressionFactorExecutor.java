@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
@@ -16,7 +15,7 @@ public class RegistrationIngressionFactorExecutor {
     @SuppressWarnings("serial")
     public static class RegistrationIngressionEditor extends IngressionInformationBean implements FactoryExecutor, Serializable {
 
-	private DomainReference<Registration> registration;
+	private Registration registration;
 
 	public RegistrationIngressionEditor(Registration registration) {
 	    super();
@@ -39,7 +38,7 @@ public class RegistrationIngressionFactorExecutor {
 	}
 
 	public Registration getRegistration() {
-	    return (this.registration != null) ? this.registration.getObject() : null;
+	    return this.registration;
 	}
 
 	public boolean hasRegistration() {
@@ -47,7 +46,7 @@ public class RegistrationIngressionFactorExecutor {
 	}
 
 	public void setRegistration(Registration registration) {
-	    this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
+	    this.registration = registration;
 	}
     }
 }

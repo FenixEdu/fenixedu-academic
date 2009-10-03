@@ -7,21 +7,20 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainReference;
 
 /**
  * @author tfc130
  */
 public class InfoCountry extends InfoObject {
 
-    private final DomainReference<Country> countryDomainReference;
+    private final Country country;
 
     public InfoCountry(final Country country) {
-	countryDomainReference = new DomainReference<Country>(country);
+	this.country = country;
     }
 
     public Country getCountry() {
-	return countryDomainReference == null ? null : countryDomainReference.getObject();
+	return country;
     }
 
     public boolean equals(Object obj) {

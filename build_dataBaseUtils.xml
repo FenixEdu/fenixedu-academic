@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="generate-fenix-sql" name="DataBase Utils">
+<project basedir="." name="DataBase Utils">
 
     <property environment="env"/>
 	<property name="encoding" value="ISO-8859-15"/>
@@ -42,23 +42,6 @@
     	<ant antfile="build_codeGenerator.xml" target="compile"/>
     </target>
 
-    <target name="generate-fenix-sql"
-    		description="Generate sql schema for fenix database."
-    		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.SQLGenerator" fork="true">
-			<arg value="etc/fenix.sql"/>
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-                <fileset dir="${build.home.webinf.lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-			</classpath>
-		</java>
-    </target>
 
     <target name="SQLCleaner"
     		description="Generate sql cleanup instructions for ACK_OPT_LOCK and useless stuff in indirection tables."

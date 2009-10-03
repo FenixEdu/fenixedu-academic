@@ -4,6 +4,7 @@
 
   <!-- the name of the class that should be used to generate code from the DML -->
   <property name="fenix.framework.codeGenerator" value="pt.ist.fenixframework.pstm.dml.FenixCodeGenerator"/>
+  <!-- property name="fenix.framework.codeGenerator" value="pt.ist.fenixframework.pstm.dml.FenixCodeGeneratorWithDap"/ -->
 
   <macrodef name="dml-compile"
             description="Generates the domain model from a source DML Language file">

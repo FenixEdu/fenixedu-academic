@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
@@ -14,14 +13,14 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
  */
 public class InfoClass extends InfoObject {
 
-    private final DomainReference<SchoolClass> schoolClassDomainReference;
+    private final SchoolClass schoolClass;
 
     public SchoolClass getSchoolClass() {
-	return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
+	return schoolClass;
     }
 
     public InfoClass(final SchoolClass schoolClass) {
-	schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
+	this.schoolClass = schoolClass;
     }
 
     public String getNome() {

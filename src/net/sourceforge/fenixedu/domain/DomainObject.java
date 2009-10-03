@@ -109,16 +109,4 @@ public abstract class DomainObject extends DomainObject_Base {
 	    throw new DomainException(message, args);
 	}
     }
-
-    public final String getExternalId() {
-	return String.valueOf(getOID());
-    }
-
-    public static <T extends DomainObject> T fromExternalId(String extId) {
-	if (extId == null) {
-	    return null;
-	} else {
-	    return (T) Transaction.getObjectForOID(Long.parseLong(extId));
-	}
-    }
 }

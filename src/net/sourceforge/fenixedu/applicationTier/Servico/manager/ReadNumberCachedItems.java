@@ -19,7 +19,9 @@ public class ReadNumberCachedItems extends FenixService {
     public static Integer run() throws FenixServiceException {
 	Integer numberCachedObjects = null;
 
-	numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
+        // this is no longer available
+	//numberCachedObjects = Transaction.getCache().getNumberOfCachedItems();
+	numberCachedObjects = 0;
 
 	return numberCachedObjects;
     }

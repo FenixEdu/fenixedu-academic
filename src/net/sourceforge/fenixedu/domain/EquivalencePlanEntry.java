@@ -36,15 +36,15 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     public static class EquivalencePlanEntryCreator implements FactoryExecutor, Serializable {
 
-	private DomainReference<EquivalencePlan> equivalencePlan;
+	private EquivalencePlan equivalencePlan;
 
-	private Set<DomainReference<DegreeModule>> originDegreeModules = new HashSet<DomainReference<DegreeModule>>();
+	private Set<DegreeModule> originDegreeModules = new HashSet<DegreeModule>();
 
-	private Set<DomainReference<DegreeModule>> destinationDegreeModules = new HashSet<DomainReference<DegreeModule>>();
+	private Set<DegreeModule> destinationDegreeModules = new HashSet<DegreeModule>();
 
-	private DomainReference<DegreeModule> originDegreeModuleToAdd;
+	private DegreeModule originDegreeModuleToAdd;
 
-	private DomainReference<DegreeModule> destinationDegreeModuleToAdd;
+	private DegreeModule destinationDegreeModuleToAdd;
 
 	private LogicOperator originLogicOperator = LogicOperator.AND;
 
@@ -54,7 +54,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
 	private Double ectsCredits;
 
-	private DomainReference<CourseGroup> destinationDegreeModulesPreviousCourseGroup;
+	private CourseGroup destinationDegreeModulesPreviousCourseGroup;
 
 	public EquivalencePlanEntryCreator(final EquivalencePlan equivalencePlan) {
 	    setEquivalencePlan(equivalencePlan);
@@ -76,54 +76,54 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	}
 
 	public EquivalencePlan getEquivalencePlan() {
-	    return equivalencePlan == null ? null : equivalencePlan.getObject();
+	    return equivalencePlan;
 	}
 
 	public void setEquivalencePlan(EquivalencePlan equivalencePlan) {
-	    this.equivalencePlan = equivalencePlan == null ? null : new DomainReference<EquivalencePlan>(equivalencePlan);
+	    this.equivalencePlan = equivalencePlan;
 	}
 
 	public Set<DegreeModule> getOriginDegreeModules() {
 	    final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
-	    for (final DomainReference<DegreeModule> degreeModuke : this.originDegreeModules) {
-		degreeModules.add(degreeModuke.getObject());
+	    for (final DegreeModule degreeModule : this.originDegreeModules) {
+		degreeModules.add(degreeModule);
 	    }
 	    return degreeModules;
 	}
 
 	public Set<DegreeModule> getDestinationDegreeModules() {
 	    final Set<DegreeModule> degreeModules = new TreeSet<DegreeModule>(DegreeModule.COMPARATOR_BY_NAME);
-	    for (final DomainReference<DegreeModule> degreeModule : this.destinationDegreeModules) {
-		degreeModules.add(degreeModule.getObject());
+	    for (final DegreeModule degreeModule : this.destinationDegreeModules) {
+		degreeModules.add(degreeModule);
 	    }
 	    return degreeModules;
 	}
 
 	public DegreeModule getOriginDegreeModuleToAdd() {
-	    return originDegreeModuleToAdd == null ? null : originDegreeModuleToAdd.getObject();
+	    return originDegreeModuleToAdd;
 	}
 
 	public void setOriginDegreeModuleToAdd(DegreeModule degreeModule) {
-	    this.originDegreeModuleToAdd = degreeModule == null ? null : new DomainReference<DegreeModule>(degreeModule);
+	    this.originDegreeModuleToAdd = degreeModule;
 	}
 
 	public DegreeModule getDestinationDegreeModuleToAdd() {
-	    return destinationDegreeModuleToAdd == null ? null : destinationDegreeModuleToAdd.getObject();
+	    return destinationDegreeModuleToAdd;
 	}
 
 	public void setDestinationDegreeModuleToAdd(DegreeModule degreeModule) {
-	    this.destinationDegreeModuleToAdd = degreeModule == null ? null : new DomainReference<DegreeModule>(degreeModule);
+	    this.destinationDegreeModuleToAdd = degreeModule;
 	}
 
 	public void addOrigin(DegreeModule degreeModule) {
 	    if (degreeModule != null) {
-		originDegreeModules.add(new DomainReference<DegreeModule>(degreeModule));
+		originDegreeModules.add(degreeModule);
 	    }
 	}
 
 	public void addDestination(DegreeModule degreeModule) {
 	    if (degreeModule != null) {
-		destinationDegreeModules.add(new DomainReference<DegreeModule>(degreeModule));
+		destinationDegreeModules.add(degreeModule);
 	    }
 	}
 
@@ -160,13 +160,11 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	}
 
 	public void setDestinationDegreeModulesPreviousCourseGroup(final CourseGroup previousCourseGroup) {
-	    this.destinationDegreeModulesPreviousCourseGroup = (previousCourseGroup != null) ? new DomainReference<CourseGroup>(
-		    previousCourseGroup) : null;
+	    this.destinationDegreeModulesPreviousCourseGroup = previousCourseGroup;
 	}
 
 	public CourseGroup getDestinationDegreeModulesPreviousCourseGroup() {
-	    return (this.destinationDegreeModulesPreviousCourseGroup != null) ? this.destinationDegreeModulesPreviousCourseGroup
-		    .getObject() : null;
+	    return this.destinationDegreeModulesPreviousCourseGroup;
 	}
 
     }

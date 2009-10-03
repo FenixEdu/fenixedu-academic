@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
-import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -147,13 +146,13 @@ public class Protocol extends Protocol_Base {
 	}
     }
 
-    private void setUnits(DomainListReference<Unit> units) {
+    private void setUnits(List<Unit> units) {
 	if (units != null) {
 	    getUnits().addAll(units);
 	}
     }
 
-    private void setPartnerUnits(DomainListReference<Unit> partnerUnits) {
+    private void setPartnerUnits(List<Unit> partnerUnits) {
 	if (partnerUnits != null) {
 	    getPartners().addAll(partnerUnits);
 	}

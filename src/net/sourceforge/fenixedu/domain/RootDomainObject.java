@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
 
 public class RootDomainObject extends RootDomainObject_Base {
 
-    private static RootDomainObject instance = null;
+    private volatile static RootDomainObject instance = null;
 
     private interface DomainObjectReader {
 	public DomainObject readDomainObjectByOID();
@@ -14,7 +15,7 @@ public class RootDomainObject extends RootDomainObject_Base {
 	if (instance == null) {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    instance = (RootDomainObject) Transaction.getDomainObject(RootDomainObject.class.getName(), 1);
+		    instance = FenixFramework.getRoot();
 		    instance.initAccessClosures();
 		}
 	    });
@@ -39,6 +40,4 @@ public class RootDomainObject extends RootDomainObject_Base {
     protected RootDomainObject getRootDomainObject() {
 	return this;
     }
-
-
 }

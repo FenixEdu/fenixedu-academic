@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -15,15 +14,15 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 public class AllEmployeesByCampus extends Group {
 
-    private final DomainReference<Campus> campus;
+    private final Campus campus;
 
     public AllEmployeesByCampus(Campus campus) {
 	super();
-	this.campus = new DomainReference<Campus>(campus);
+	this.campus = campus;
     }
 
     public Campus getCampus() {
-	return campus.getObject();
+	return campus;
     }
 
     @Override

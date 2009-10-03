@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
@@ -14,14 +13,14 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
  */
 public class ClassView {
 
-    private final DomainReference<SchoolClass> schoolClassDomainReference;
+    private final SchoolClass schoolClass;
 
     public ClassView(final SchoolClass schoolClass) {
-	schoolClassDomainReference = new DomainReference<SchoolClass>(schoolClass);
+	this.schoolClass = schoolClass;
     }
 
     public SchoolClass getSchoolClass() {
-	return schoolClassDomainReference == null ? null : schoolClassDomainReference.getObject();
+	return schoolClass;
     }
 
     public String getClassName() {

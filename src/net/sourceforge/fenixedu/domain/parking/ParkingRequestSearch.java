@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -22,7 +21,7 @@ public class ParkingRequestSearch implements Serializable {
 
     private String carPlateNumber;
 
-    private DomainListReference<ParkingRequest> searchResult;
+    private List<ParkingRequest> searchResult;
 
     public PartyClassification getPartyClassification() {
 	return partyClassification;
@@ -120,6 +119,6 @@ public class ParkingRequestSearch implements Serializable {
     }
 
     public void setSearchResult(List<ParkingRequest> result) {
-	this.searchResult = new DomainListReference<ParkingRequest>(result);
+	this.searchResult = result;
     }
 }

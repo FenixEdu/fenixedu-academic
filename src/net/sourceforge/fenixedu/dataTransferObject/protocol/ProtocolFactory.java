@@ -7,8 +7,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -36,7 +34,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private EditProtocolAction editProtocolAction;
 
-    private DomainReference<Protocol> protocol;
+    private Protocol protocol;
 
     private String protocolNumber;
 
@@ -66,49 +64,49 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private Boolean functionByPerson;
 
-    private DomainReference<Teacher> responsible;
+    private Teacher responsible;
 
-    private DomainReference<Function> responsibleFunction;
+    private Function responsibleFunction;
 
-    private DomainReference<PersonName> partnerResponsible;
+    private PersonName partnerResponsible;
 
     private String responsibleName;
 
     private String responsibleFunctionName;
 
-    private DomainReference<UnitName> unitObject;
+    private UnitName unitObject;
 
     private String unitName;
 
-    private DomainReference<Person> responsibleToAdd;
+    private Person responsibleToAdd;
 
-    private DomainReference<Person> responsibleToRemove;
+    private Person responsibleToRemove;
 
-    private DomainReference<Function> responsibleFunctionToRemove;
+    private Function responsibleFunctionToRemove;
 
-    private DomainReference<Unit> unitToAdd;
+    private Unit unitToAdd;
 
-    private DomainReference<Unit> unitToRemove;
+    private Unit unitToRemove;
 
     private List<ProtocolActionType> actionTypes;
 
-    private DomainListReference<Person> responsibles;
+    private List<Person> responsibles;
 
-    private DomainListReference<Function> responsibleFunctions;
+    private List<Function> responsibleFunctions;
 
-    private DomainReference<Unit> responsibleFunctionUnit;
+    private Unit responsibleFunctionUnit;
 
-    private DomainListReference<Person> partnerResponsibles;
+    private List<Person> partnerResponsibles;
 
-    private DomainListReference<Unit> partnerUnits;
+    private List<Unit> partnerUnits;
 
-    private DomainListReference<Unit> units;
+    private List<Unit> units;
 
-    private DomainListReference<ProtocolFile> protocolFiles;
+    private List<ProtocolFile> protocolFiles;
 
-    private DomainReference<ProtocolFile> fileToDelete;
+    private ProtocolFile fileToDelete;
 
-    private DomainListReference<ProtocolHistory> protocolHistories;
+    private List<ProtocolHistory> protocolHistories;
 
     private transient InputStream inputStream;
 
@@ -118,7 +116,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private List<ProtocolFileBean> fileBeans;
 
-    private DomainReference<Country> country;
+    private Country country;
 
     public ProtocolFactory(Protocol protocol) {
 	setProtocol(protocol);
@@ -146,25 +144,25 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private void setPartnersList(List<Unit> partners) {
 	if (partners != null) {
-	    setPartnerUnits(new DomainListReference<Unit>(partners));
+	    setPartnerUnits(partners);
 	}
     }
 
     private void setUnitsList(List<Unit> units) {
 	if (units != null) {
-	    setUnits(new DomainListReference<Unit>(units));
+	    setUnits(units);
 	}
     }
 
     private void setPartnerResponsiblesList(List<Person> partnerResponsibles) {
 	if (partnerResponsibles != null) {
-	    setPartnerResponsibles(new DomainListReference<Person>(partnerResponsibles));
+	    setPartnerResponsibles(partnerResponsibles);
 	}
     }
 
     private void setResponsiblesList(List<Person> responsibles) {
 	if (responsibles != null) {
-	    setResponsibles(new DomainListReference<Person>(responsibles));
+	    setResponsibles(responsibles);
 	}
     }
 
@@ -237,32 +235,32 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setPartnerResponsibles(List<Person> partnerResponsibles) {
-	this.partnerResponsibles = new DomainListReference<Person>(partnerResponsibles);
+	this.partnerResponsibles = partnerResponsibles;
     }
 
-    public DomainListReference<Unit> getPartnerUnits() {
+    public List<Unit> getPartnerUnits() {
 	return partnerUnits;
     }
 
-    public void setPartnerUnits(DomainListReference<Unit> partnerUnits) {
+    public void setPartnerUnits(List<Unit> partnerUnits) {
 	this.partnerUnits = partnerUnits;
     }
 
     public Unit getResponsibleFunctionUnit() {
-	return responsibleFunctionUnit == null ? null : responsibleFunctionUnit.getObject();
+	return responsibleFunctionUnit;
     }
 
     public void setResponsibleFunctionUnit(Unit responsibleFunctionUnit) {
-	this.responsibleFunctionUnit = new DomainReference<Unit>(responsibleFunctionUnit);
+	this.responsibleFunctionUnit = responsibleFunctionUnit;
     }
 
     public Protocol getProtocol() {
-	return protocol != null ? protocol.getObject() : null;
+	return protocol;
     }
 
     public void setProtocol(Protocol protocol) {
 	if (protocol != null) {
-	    this.protocol = new DomainReference<Protocol>(protocol);
+	    this.protocol = protocol;
 	} else {
 	    this.protocol = null;
 	}
@@ -297,7 +295,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibles(List<Person> responsibles) {
-	this.responsibles = new DomainListReference<Person>(responsibles);
+	this.responsibles = responsibles;
     }
 
     public List<Function> getResponsibleFunctions() {
@@ -305,7 +303,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setResponsibleFunctions(List<Function> responsibleFunctions) {
-	this.responsibleFunctions = new DomainListReference<Function>(responsibleFunctions);
+	this.responsibleFunctions = responsibleFunctions;
     }
 
     public String getScientificAreas() {
@@ -324,11 +322,11 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	this.signedDate = signedDate;
     }
 
-    public DomainListReference<Unit> getUnits() {
+    public List<Unit> getUnits() {
 	return units;
     }
 
-    public void setUnits(DomainListReference<Unit> units) {
+    public void setUnits(List<Unit> units) {
 	this.units = units;
     }
 
@@ -364,11 +362,11 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	this.otherActionTypes = otherActionTypes;
     }
 
-    public DomainListReference<ProtocolFile> getProtocolFiles() {
+    public List<ProtocolFile> getProtocolFiles() {
 	return protocolFiles;
     }
 
-    public void setProtocolFiles(DomainListReference<ProtocolFile> protocolFiles) {
+    public void setProtocolFiles(List<ProtocolFile> protocolFiles) {
 	this.protocolFiles = protocolFiles;
     }
 
@@ -389,35 +387,35 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public PersonName getPartnerResponsible() {
-	return partnerResponsible != null ? partnerResponsible.getObject() : null;
+	return partnerResponsible;
     }
 
     public void setPartnerResponsible(PersonName responsible) {
-	this.partnerResponsible = (responsible != null) ? new DomainReference<PersonName>(responsible) : null;
+	this.partnerResponsible = responsible;
     }
 
     public Teacher getResponsible() {
-	return responsible != null ? responsible.getObject() : null;
+	return responsible;
     }
 
     public void setResponsible(Teacher responsible) {
-	this.responsible = (responsible != null) ? new DomainReference<Teacher>(responsible) : null;
+	this.responsible = responsible;
     }
 
     public Function getResponsibleFunction() {
-	return responsibleFunction != null ? responsibleFunction.getObject() : null;
+	return responsibleFunction;
     }
 
     public void setResponsibleFunction(Function responsibleFunction) {
-	this.responsibleFunction = (responsibleFunction != null) ? new DomainReference<Function>(responsibleFunction) : null;
+	this.responsibleFunction = responsibleFunction;
     }
 
     public UnitName getUnitObject() {
-	return unitObject != null ? unitObject.getObject() : null;
+	return unitObject;
     }
 
     public void setUnitObject(UnitName unitObject) {
-	this.unitObject = unitObject != null ? new DomainReference<UnitName>(unitObject) : null;
+	this.unitObject = unitObject;
     }
 
     public Boolean getInternalUnit() {
@@ -446,7 +444,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public boolean addISTResponsible() {
 	if (getResponsibles() == null) {
-	    setResponsibles(new DomainListReference<Person>());
+	    setResponsibles(new ArrayList<Person>());
 	}
 	if (getResponsibles().contains(getResponsible().getPerson())) {
 	    return false;
@@ -457,7 +455,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public boolean addISTResponsibleFunction() {
 	if (getResponsibleFunctions() == null) {
-	    setResponsibleFunctions(new DomainListReference<Function>());
+	    setResponsibleFunctions(new ArrayList<Function>());
 	}
 	if (getResponsibleFunctions().contains(getResponsibleFunction())) {
 	    return false;
@@ -468,7 +466,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public boolean addPartnerResponsible() {
 	if (getPartnerResponsibles() == null) {
-	    setPartnerResponsibles(new DomainListReference<Person>());
+	    setPartnerResponsibles(new ArrayList<Person>());
 	}
 	if (getPartnerResponsibles().contains(getPartnerResponsible().getPerson())) {
 	    return false;
@@ -479,14 +477,14 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void addPartnerResponsible(Person responsible) {
 	if (getPartnerResponsibles() == null) {
-	    setPartnerResponsibles(new DomainListReference<Person>());
+	    setPartnerResponsibles(new ArrayList<Person>());
 	}
 	getPartnerResponsibles().add(responsible);
     }
 
     public boolean addISTUnit() {
 	if (getUnits() == null) {
-	    setUnits(new DomainListReference<Unit>());
+	    setUnits(new ArrayList<Unit>());
 	}
 	if (getUnits().contains(getUnitObject().getUnit())) {
 	    return false;
@@ -497,7 +495,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public boolean addPartnerUnit() {
 	if (getPartnerUnits() == null) {
-	    setPartnerUnits(new DomainListReference<Unit>());
+	    setPartnerUnits(new ArrayList<Unit>());
 	}
 	if (getPartnerUnits().contains(getUnitObject().getUnit())) {
 	    return false;
@@ -508,14 +506,14 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     public void addISTUnit(Unit unit) {
 	if (getUnits() == null) {
-	    setUnits(new DomainListReference<Unit>());
+	    setUnits(new ArrayList<Unit>());
 	}
 	getUnits().add(unit);
     }
 
     public void addPartnerUnit(Unit unit) {
 	if (getPartnerUnits() == null) {
-	    setPartnerUnits(new DomainListReference<Unit>());
+	    setPartnerUnits(new ArrayList<Unit>());
 	}
 	getPartnerUnits().add(unit);
     }
@@ -554,52 +552,51 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public Person getResponsibleToAdd() {
-	return responsibleToAdd != null ? responsibleToAdd.getObject() : null;
+	return responsibleToAdd;
     }
 
     public void setResponsibleToAdd(Person responsibleToAdd) {
-	this.responsibleToAdd = responsibleToAdd != null ? new DomainReference<Person>(responsibleToAdd) : null;
+	this.responsibleToAdd = responsibleToAdd;
     }
 
     public Person getResponsibleToRemove() {
-	return responsibleToRemove != null ? responsibleToRemove.getObject() : null;
+	return responsibleToRemove;
     }
 
     public void setResponsibleToRemove(Person responsibleToRemove) {
-	this.responsibleToRemove = responsibleToRemove != null ? new DomainReference<Person>(responsibleToRemove) : null;
+	this.responsibleToRemove = responsibleToRemove;
     }
 
     public Function getResponsibleFunctionToRemove() {
-	return responsibleFunctionToRemove != null ? responsibleFunctionToRemove.getObject() : null;
+	return responsibleFunctionToRemove;
     }
 
     public void setResponsibleFunctionToRemove(Function responsibleFunctionToRemove) {
-	this.responsibleFunctionToRemove = responsibleFunctionToRemove != null ? new DomainReference<Function>(
-		responsibleFunctionToRemove) : null;
+	this.responsibleFunctionToRemove = responsibleFunctionToRemove;
     }
 
     public Unit getUnitToAdd() {
-	return unitToAdd != null ? unitToAdd.getObject() : null;
+	return unitToAdd;
     }
 
     public void setUnitToAdd(Unit unitToAdd) {
-	this.unitToAdd = unitToAdd != null ? new DomainReference<Unit>(unitToAdd) : null;
+	this.unitToAdd = unitToAdd;
     }
 
     public Unit getUnitToRemove() {
-	return unitToRemove != null ? unitToRemove.getObject() : null;
+	return unitToRemove;
     }
 
     public void setUnitToRemove(Unit unitToRemove) {
-	this.unitToRemove = unitToRemove != null ? new DomainReference<Unit>(unitToRemove) : null;
+	this.unitToRemove = unitToRemove;
     }
 
     public ProtocolFile getFileToDelete() {
-	return fileToDelete != null ? fileToDelete.getObject() : null;
+	return fileToDelete;
     }
 
     public void setFileToDelete(ProtocolFile fileToDelete) {
-	this.fileToDelete = fileToDelete != null ? new DomainReference<ProtocolFile>(fileToDelete) : null;
+	this.fileToDelete = fileToDelete;
     }
 
     public String getFileName() {
@@ -635,11 +632,11 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public Country getCountry() {
-	return country != null ? country.getObject() : null;
+	return country;
     }
 
     public void setCountry(Country country) {
-	this.country = country != null ? new DomainReference<Country>(country) : null;
+	this.country = country;
     }
 
     public List<ProtocolHistory> getProtocolHistories() {
@@ -647,7 +644,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public void setProtocolHistories(List<ProtocolHistory> protocolHistories) {
-	this.protocolHistories = new DomainListReference<ProtocolHistory>(protocolHistories);
+	this.protocolHistories = protocolHistories;
     }
 
     public Boolean getIstResponsibleIsPerson() {

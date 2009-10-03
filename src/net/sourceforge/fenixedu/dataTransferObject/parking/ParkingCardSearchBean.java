@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.parking;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainListReference;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
@@ -18,13 +18,13 @@ import org.joda.time.YearMonthDay;
 
 public class ParkingCardSearchBean implements Serializable {
 
-    private DomainReference<ParkingGroup> parkingGroup;
+    private ParkingGroup parkingGroup;
 
-    private DomainReference<ParkingGroup> newParkingGroup;
+    private ParkingGroup newParkingGroup;
 
-    private DomainListReference<ParkingParty> searchedParkingParties = new DomainListReference<ParkingParty>();
+    private List<ParkingParty> searchedParkingParties = new ArrayList<ParkingParty>();
 
-    private DomainListReference<ParkingParty> selectedParkingParties = new DomainListReference<ParkingParty>();;
+    private List<ParkingParty> selectedParkingParties = new ArrayList<ParkingParty>();;
 
     private YearMonthDay actualEndDate;
 
@@ -154,19 +154,19 @@ public class ParkingCardSearchBean implements Serializable {
     }
 
     public ParkingGroup getParkingGroup() {
-	return parkingGroup != null ? parkingGroup.getObject() : null;
+	return parkingGroup;
     }
 
     public void setParkingGroup(ParkingGroup parkingGroup) {
-	this.parkingGroup = parkingGroup != null ? new DomainReference<ParkingGroup>(parkingGroup) : null;
+	this.parkingGroup = parkingGroup;
     }
 
     public ParkingGroup getNewParkingGroup() {
-	return newParkingGroup != null ? newParkingGroup.getObject() : null;
+	return newParkingGroup;
     }
 
     public void setNewParkingGroup(ParkingGroup newParkingGroup) {
-	this.newParkingGroup = newParkingGroup != null ? new DomainReference<ParkingGroup>(newParkingGroup) : null;
+	this.newParkingGroup = newParkingGroup;
     }
 
     public YearMonthDay getActualEndDate() {
@@ -185,11 +185,11 @@ public class ParkingCardSearchBean implements Serializable {
 	this.renewalEndDate = renewalEndDate;
     }
 
-    public DomainListReference<ParkingParty> getSearchedParkingParties() {
+    public List<ParkingParty> getSearchedParkingParties() {
 	return searchedParkingParties;
     }
 
-    public void setSearchedParkingParties(DomainListReference<ParkingParty> searchedParkingParties) {
+    public void setSearchedParkingParties(List<ParkingParty> searchedParkingParties) {
 	this.searchedParkingParties = searchedParkingParties;
     }
 
@@ -227,11 +227,11 @@ public class ParkingCardSearchBean implements Serializable {
 	this.parkingCardUserState = parkingCardUserState;
     }
 
-    public DomainListReference<ParkingParty> getSelectedParkingParties() {
+    public List<ParkingParty> getSelectedParkingParties() {
 	return selectedParkingParties;
     }
 
-    public void setSelectedParkingParties(DomainListReference<ParkingParty> selectedParkingParties) {
+    public void setSelectedParkingParties(List<ParkingParty> selectedParkingParties) {
 	this.selectedParkingParties = selectedParkingParties;
     }
 
