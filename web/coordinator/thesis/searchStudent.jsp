@@ -57,11 +57,17 @@
 
 		    <bean:define id="studentId" name="bean" property="student.externalId"/>
 		    <bean:define id="enrolmentId" name="proposalEnrolment" property="externalId"/>
+		    <bean:define id="executionYear" name="proposalEnrolment" property="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
+			<bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+
+	<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
+
 		    <fr:form action="<%= String.format("/manageThesis.do?method=prepareCreateProposal&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;studentID=%s&amp;enrolmentOID=%s", dcpId, executionYearId, studentId, enrolmentId) %>">
 	    	    <html:submit>
 	        	    <bean:message key="button.coordinator.thesis.proposal.create"/>
 	        	</html:submit>
 		    </fr:form>
+	<% } %>
     	</div>
     </logic:present>
 </logic:present>
