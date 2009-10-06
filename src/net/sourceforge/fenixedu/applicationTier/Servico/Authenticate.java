@@ -289,8 +289,8 @@ public class Authenticate extends FenixService implements Serializable {
     }
 
     private void setLoginHostNameAndDateTime(final String remoteHost, Person person) {
-	final User user = person.getUser();
-	RegisterUserLoginThread.runThread(user, remoteHost);
+//	final User user = person.getUser();
+//	RegisterUserLoginThread.runThread(user, remoteHost);
     }
 
     public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL)
