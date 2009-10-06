@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.department;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.UnitSite;
@@ -45,7 +48,7 @@ public class DepartmentShowThesesDA extends PublicShowThesesDA {
 	Department department = getDepartment(request);
 
 	bean.setDepartment(department);
-	bean.setDegreeOptions(department.getDegrees());
+	bean.setDegreeOptions(new ArrayList<Degree>(department.getDegrees()));
 
 	return bean;
     }
