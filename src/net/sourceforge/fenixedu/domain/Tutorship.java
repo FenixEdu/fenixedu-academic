@@ -62,6 +62,9 @@ public class Tutorship extends Tutorship_Base {
     public void delete() {
 	removeStudentCurricularPlan();
 	removeTeacher();
+	if (hasTutorshipLog()) {
+	    getTutorshipLog().delete();
+	}
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

@@ -6,4 +6,10 @@ public class TutorshipLog extends TutorshipLog_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
+
+    public void delete() {
+	removeTutorship();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }
