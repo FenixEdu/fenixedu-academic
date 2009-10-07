@@ -899,8 +899,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	String degreeId = (String) finalWorkForm.get("degree");
 	finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
-	Integer degreeCurricularPlanID = Integer.valueOf(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
-	request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	/*
+	 * Just put the degreeCurricularPlanID in request as it is
+	 */
+	// Integer degreeCurricularPlanID =
+	// Integer.valueOf(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+	// request.setAttribute("degreeCurricularPlanID",
+	// degreeCurricularPlanID);
+	request.setAttribute("degreeCurricularPlanID", request.getParameter("degreeCurricularPlanID"));
 
 	InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView, Integer
 		.valueOf(degreeId));
