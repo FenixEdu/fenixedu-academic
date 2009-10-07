@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SubmitHomepage;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.person.GetHomepage;
-
 import java.net.MalformedURLException;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,13 +11,14 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.person.GetHomepage;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SubmitHomepage;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -76,7 +73,6 @@ public class ManageHomepageDA extends SiteManagementDA {
 	personAttendsSortedByExecutionCourseName.addAll(person.getCurrentAttends());
 
 	request.setAttribute("personAttends", personAttendsSortedByExecutionCourseName);
-	request.setAttribute("hasPhoto", person.getPersonalPhoto() != null);
 
 	return mapping.findForward("show-homepage-options");
     }
@@ -119,13 +115,12 @@ public class ManageHomepageDA extends SiteManagementDA {
 	}
 	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
 
-	SubmitHomepage.run(getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit),
-		Boolean.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage),
-		Boolean.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans),
-		Boolean.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString,
-		Boolean.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications),
-		Boolean.valueOf(showPatents), Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations),
-		Boolean.valueOf(showPrizes));
+	SubmitHomepage.run(getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit), Boolean
+		.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage), Boolean
+		.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans), Boolean
+		.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString, Boolean
+		.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications), Boolean.valueOf(showPatents),
+		Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations), Boolean.valueOf(showPrizes));
 
 	return options(mapping, actionForm, request, response);
     }
@@ -133,7 +128,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     @Override
     protected Homepage getSite(HttpServletRequest request) {
 	try {
-	    return (Homepage) GetHomepage.run(getUserView(request).getPerson(), true);
+	    return GetHomepage.run(getUserView(request).getPerson(), true);
 	} catch (Exception e) {
 	    throw new RuntimeException(e);
 	}

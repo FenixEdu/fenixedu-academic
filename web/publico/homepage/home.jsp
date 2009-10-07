@@ -19,22 +19,13 @@
 
 	<table class="invisible thleft">
 		<!-- photo -->
-		<logic:equal name="homepage" property="showPhoto" value="true">
         <tr>
             <th></th>
             <td>
-                <logic:notEmpty name="homepage" property="person.personalPhoto">
-            			<bean:define id="homepageID" name="homepage" property="idInternal"/>
-            			<html:img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-                </logic:notEmpty>
-<%--
-                <logic:empty name="homepage" property="person.personalPhoto">
-                    <html:img src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg" %>" style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-                </logic:empty>
---%>                
+				<bean:define id="personId" name="homepage" property="person.externalId" type="java.lang.String" />
+				<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + personId %>"  style="padding: 1em 0;" altKey="personPhoto" bundle="IMAGE_RESOURCES" /></div>
             </td>
         </tr>
-		</logic:equal>
 
 		<!-- units -->
 		<logic:equal name="homepage" property="showUnit" value="true">

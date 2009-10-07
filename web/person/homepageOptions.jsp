@@ -269,14 +269,7 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showPhoto" property="showPhoto" value="true"/>
 			</td>
 			<td>
-                <logic:equal name="hasPhoto" value="true">
-                    <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-                </logic:equal>
-<%--
-                <logic:equal name="hasPhoto" value="false">
-                    <html:img align="middle" src="<%= request.getContextPath() +"/images/photoPlaceHolder.jpg" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
-                </logic:equal>
---%>
+	            <html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveOwnPhoto" %>" altKey="personPhoto" bundle="IMAGE_RESOURCES" />
 			</td>
 		</tr>
 

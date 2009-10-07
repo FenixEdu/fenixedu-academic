@@ -60,17 +60,15 @@
 	</logic:equal>
 
 
-	<logic:equal name="alumniData" property="person.availablePhoto" value="true">
-		<tr>
-			<th>
-				<bean:message key="label.photo" bundle="ALUMNI_RESOURCES" />:
-			</th>
-			<td>
-				<bean:define id="personId" name="alumniData" property="person.idInternal" />
-				<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
-			</td>
-		</tr>
-	</logic:equal>
+	<tr>
+		<th>
+			<bean:message key="label.photo" bundle="ALUMNI_RESOURCES" />:
+		</th>
+		<td>
+			<bean:define id="personId" name="alumniData" property="person.idInternal" />
+			<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode=" + personId.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES"/>
+		</td>
+	</tr>
 
 
 	<fr:view name="alumniData" property="person.webAddresses">

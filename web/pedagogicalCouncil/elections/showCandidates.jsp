@@ -89,8 +89,8 @@
 			<tr>			
 				<td class="personInfo_photo">
 				    <logic:present name="candidate" property="person.homepage">
-		      			<bean:define id="homepageID" name="candidate" property="person.homepage.idInternal"/>
-		      			<div><img src="<%= request.getContextPath() +"/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=" + homepageID.toString() %>"/></div>
+					    <bean:define id="personId" name="candidate" property="person.externalId" type="java.lang.String" />
+					    <div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + personId %>"/></div>
 	      			</logic:present>
 				</td>			
 							

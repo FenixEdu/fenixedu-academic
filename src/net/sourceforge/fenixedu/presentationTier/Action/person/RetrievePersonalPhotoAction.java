@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -28,40 +29,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * 
  */
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
-
-    public ActionForward retrieve(final HttpServletRequest request, final HttpServletResponse response, final Person person) {
-	if (person != null) {
-	    final Photograph personalPhoto = person.getPersonalPhoto();
-	    if (personalPhoto != null) {
-		if (person.isPhotoAvailableToCurrentUser()) {
-		    writePhoto(response, personalPhoto);
-		    return null;
-		}
-	    }
-	}
-	writeUnavailablePhoto(response);
-	return null;
-    }
-
-    public ActionForward retrievePublic(final HttpServletRequest request, final HttpServletResponse response, final Person person) {
-	if (person != null) {
-	    final Photograph personalPhoto = person.getPersonalPhoto();
-	    if (personalPhoto != null) {
-		if (person.isPhotoPubliclyAvailable()) {
-		    writePhoto(response, personalPhoto);
-		    return null;
-		}
-	    }
-	}
-	writeUnavailablePhoto(response);
-	return null;
-    }
-
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final String uuid = request.getParameter("uuid");
 	final User user = User.readUserByUserUId(uuid);
-	return user == null ? null : retrieve(request, response, user.getPerson());
+	return user == null ? null : retrievePhotograph(request, response, user.getPerson());
     }
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -80,7 +52,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final Integer personID = new Integer(request.getParameter("personCode"));
 	final Person person = (Person) rootDomainObject.readPartyByOID(personID);
-	return retrieve(request, response, person);
+	return retrievePhotograph(request, response, person);
     }
 
     public ActionForward retrievePendingByID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -90,6 +62,21 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 	if (photo != null) {
 	    writePhoto(response, photo);
 	    return null;
+	}
+	writeUnavailablePhoto(response);
+	return null;
+    }
+
+    protected ActionForward retrievePhotograph(final HttpServletRequest request, final HttpServletResponse response,
+	    final Person person) {
+	if (person != null) {
+	    final Photograph personalPhoto = person.getPersonalPhoto();
+	    if (personalPhoto != null) {
+		if (person.isPhotoAvailableToCurrentUser()) {
+		    writePhoto(response, personalPhoto);
+		    return null;
+		}
+	    }
 	}
 	writeUnavailablePhoto(response);
 	return null;
@@ -108,12 +95,10 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     protected void writeUnavailablePhoto(HttpServletResponse response) {
 	try {
 	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    if (getServlet().getServletContext() != null) {
-		final String path = getServlet().getServletContext().getRealPath(
-			"/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
-		dos.write(FileUtils.readFileToByteArray(new File(path)));
-		dos.close();
-	    }
+	    final String path = getServlet().getServletContext().getRealPath(
+		    "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+	    dos.write(FileUtils.readFileToByteArray(new File(path)));
+	    dos.close();
 	} catch (IOException e) {
 	}
     }
