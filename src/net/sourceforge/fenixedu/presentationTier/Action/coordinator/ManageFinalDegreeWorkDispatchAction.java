@@ -320,6 +320,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	final Proposal proposal = Proposal.fromExternalId(proposalOID);
 	request.setAttribute("proposal", proposal);
 	request.setAttribute("candidacies", proposal.getCandidacies());
+	request.setAttribute("candidaciesCount", proposal.getCandidacies().size());
+	request.setAttribute("method", "");
 	return mapping.findForward("show-proposal");
     }
 
@@ -1136,13 +1138,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     private void setProposalsHeaders(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Proposta");
 	spreadsheet.setHeader("Estado da Proposta");
-	spreadsheet.setHeader("Tï¿½tilo");
+	spreadsheet.setHeader("Título");
 	spreadsheet.setHeader("Utilizador IST Orientador");
 	spreadsheet.setHeader("Nome Orientador");
 	spreadsheet.setHeader("Utilizador IST Coorientador");
 	spreadsheet.setHeader("Nome Coorientador");
-	spreadsheet.setHeader("Percentagem Crï¿½ditos Orientador");
-	spreadsheet.setHeader("Percentagem Crï¿½ditos Coorientador");
+	spreadsheet.setHeader("Percentagem Créditos Orientador");
+	spreadsheet.setHeader("Percentagem Créditos Coorientador");
 	spreadsheet.setHeader("Nome do Acompanhante");
 	spreadsheet.setHeader("Email do Acompanhante");
 	spreadsheet.setHeader("Telefone do Acompanhante");
@@ -1150,28 +1152,28 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Morada da empresa");
 	spreadsheet.setHeader("Enquadramento");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Descriï¿½ï¿½o");
+	spreadsheet.setHeader("Descrição");
 	spreadsheet.setHeader("Requisitos");
 	spreadsheet.setHeader("Resultado esperado");
 	spreadsheet.setHeader("URL");
-	spreadsheet.setHeader("ï¿½rea de Especializaï¿½ï¿½o");
-	spreadsheet.setHeader("Nï¿½mero mï¿½nimo de elementos do grupo");
-	spreadsheet.setHeader("Nï¿½mero mï¿½ximo de elementos do grupo");
-	spreadsheet.setHeader("Adequaï¿½ï¿½o a Dissertaï¿½ï¿½o");
-	spreadsheet.setHeader("Observaï¿½ï¿½es");
-	spreadsheet.setHeader("Localizaï¿½ï¿½o da realizaï¿½ï¿½o do TFC");
+	spreadsheet.setHeader("Área de Especialização");
+	spreadsheet.setHeader("Número mínimo de elementos do grupo");
+	spreadsheet.setHeader("Número máximo de elementos do grupo");
+	spreadsheet.setHeader("Adequação a Dissertação");
+	spreadsheet.setHeader("Observações");
+	spreadsheet.setHeader("Localização da realização do TFC");
     }
 
     private void setGroupsHeaders(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Nï¿½mero");
+	spreadsheet.setHeader("Número");
 	spreadsheet.setHeader("Estado da Proposta");
-	spreadsheet.setHeader("Tï¿½tilo");
+	spreadsheet.setHeader("Título");
 	spreadsheet.setHeader("Utilizador IST Orientador");
 	spreadsheet.setHeader("Nome Orientador");
 	spreadsheet.setHeader("Utilizador IST Coorientador");
 	spreadsheet.setHeader("Nome Coorientador");
-	spreadsheet.setHeader("Percentagem Crï¿½ditos Orientador");
-	spreadsheet.setHeader("Percentagem Crï¿½ditos Coorientador");
+	spreadsheet.setHeader("Percentagem Créditos Orientador");
+	spreadsheet.setHeader("Percentagem Créditos Coorientador");
 	spreadsheet.setHeader("Nome do Acompanhante");
 	spreadsheet.setHeader("Email do Acompanhante");
 	spreadsheet.setHeader("Telefone do Acompanhante");
@@ -1179,16 +1181,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	spreadsheet.setHeader("Morada da empresa");
 	spreadsheet.setHeader("Enquadramento");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Descriï¿½ï¿½o");
+	spreadsheet.setHeader("Descrição");
 	spreadsheet.setHeader("Requisitos");
 	spreadsheet.setHeader("Resultado esperado");
 	spreadsheet.setHeader("URL");
-	spreadsheet.setHeader("ï¿½rea de Especializaï¿½ï¿½o");
-	spreadsheet.setHeader("Nï¿½mero mï¿½nimo de elementos do grupo");
-	spreadsheet.setHeader("Nï¿½mero mï¿½ximo de elementos do grupo");
-	spreadsheet.setHeader("Adequaï¿½ï¿½o a Dissertaï¿½ï¿½o");
-	spreadsheet.setHeader("Observaï¿½ï¿½es");
-	spreadsheet.setHeader("Localizaï¿½ï¿½o da realizaï¿½ï¿½o do TFC");
+	spreadsheet.setHeader("Área de Especialização");
+	spreadsheet.setHeader("Número mínimo de elementos do grupo");
+	spreadsheet.setHeader("Número máximo de elementos do grupo");
+	spreadsheet.setHeader("Adequação a Dissertação");
+	spreadsheet.setHeader("Observações");
+	spreadsheet.setHeader("Localização da realização do TFC");
     }
 
     private static final MessageResources applicationResources = MessageResources
@@ -1295,7 +1297,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	}
 
 	for (int i = 0; i < maxNumberStudentsPerGroup; i++) {
-	    spreadsheet.setHeader("Nï¿½mero aluno " + (i + 1));
+	    spreadsheet.setHeader("Número aluno " + (i + 1));
 	    spreadsheet.setHeader("Nome aluno " + (i + 1));
 	}
     }
