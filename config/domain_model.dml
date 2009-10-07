@@ -6833,6 +6833,7 @@ class PendingRequest extends DomainObject{
 	DateTime generationDate;
 	String url;
 	Boolean post;
+	String buildVersion;
 }
 
 class PendingRequestParameter extends DomainObject{
