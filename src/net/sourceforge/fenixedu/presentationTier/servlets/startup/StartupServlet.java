@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -11,12 +12,14 @@ import javax.servlet.http.HttpServlet;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.content.CreateMetaDomainObectTypes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
@@ -25,6 +28,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.pstm.Transaction;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * 17/Fev/2003
@@ -41,6 +45,13 @@ public class StartupServlet extends HttpServlet {
 	String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
 	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
+	try{
+	    final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
+	    PendingRequest.buildVersion = FileUtils.readFile(inputStream);
+	}catch(java.io.IOException e){
+	    throw new ServletException("Unable to load build version file");
+	}
+	     
 	FenixService.init(RootDomainObject.getInstance());
 
 	try {

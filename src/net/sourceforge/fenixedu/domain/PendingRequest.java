@@ -10,13 +10,15 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PendingRequest extends PendingRequest_Base {
 
+    public static String buildVersion;
+    
     public PendingRequest(HttpServletRequest request) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGenerationDate(new DateTime());
 	setPost(!request.getMethod().equalsIgnoreCase("GET"));
 	setUrl(request.getContextPath() + request.getServletPath());
-
+	setBuildVersion(buildVersion);
 	final String queryString = request.getQueryString();
 	for (Object object : request.getParameterMap().keySet()) {
 	    String key = (String) object;
