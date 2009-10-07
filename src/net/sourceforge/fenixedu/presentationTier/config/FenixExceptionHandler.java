@@ -94,28 +94,28 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	ExceptionInformation exceptionInfo = ExceptionInformation.buildExceptionInfo(request, ex);
 	String requestContext = exceptionInfo.getRequestContext();
-	String sessionContext = exceptionInfo.getSessionContext();
-	String stackTrace = exceptionInfo.getStackTrace();
+//	String sessionContext = exceptionInfo.getSessionContext();
+//	String stackTrace = exceptionInfo.getStackTrace();
 
 	request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
 	request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 	request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContext);
 
-	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
-	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
-		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
-		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
+//	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
+//	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
+//		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
+//		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
 
-	errorLogger.start();
+//	errorLogger.start();
 
 	SupportRequestBean requestBean = exceptionInfo.getRequestBean();
 
-	try {
-	    errorLogger.join();
-	    requestBean.setErrorLog(errorLogger.getErrorLog());
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
+//	try {
+//	    errorLogger.join();
+//	    requestBean.setErrorLog(errorLogger.getErrorLog());
+//	} catch (InterruptedException e) {
+//	    e.printStackTrace();
+//	}
 
 	request.setAttribute("requestBean", requestBean);
 	request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
