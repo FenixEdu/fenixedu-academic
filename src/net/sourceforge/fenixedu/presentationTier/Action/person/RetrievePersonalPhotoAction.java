@@ -108,10 +108,12 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     protected void writeUnavailablePhoto(HttpServletResponse response) {
 	try {
 	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-	    final String path = getServlet().getServletContext().getRealPath(
-		    "/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
-	    dos.write(FileUtils.readFileToByteArray(new File(path)));
-	    dos.close();
+	    if (getServlet().getServletContext() != null) {
+		final String path = getServlet().getServletContext().getRealPath(
+			"/images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+		dos.write(FileUtils.readFileToByteArray(new File(path)));
+		dos.close();
+	    }
 	} catch (IOException e) {
 	}
     }
