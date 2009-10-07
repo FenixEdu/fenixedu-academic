@@ -384,6 +384,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		getBoard().delete();
 	    }
 
+	    for (; !getMetadatas().isEmpty(); getMetadatas().get(0).delete())
+		;
+	    for (; !getTestGroups().isEmpty(); getTestGroups().get(0).delete())
+		;
+	    for (; !getExportGroupings().isEmpty(); getExportGroupings().get(0).delete())
+		;
+	    for (; !getGroupingSenderExecutionCourse().isEmpty(); getGroupingSenderExecutionCourse().get(0).delete())
+		;
 	    for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete())
 		;
 	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete())
@@ -424,9 +432,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean canBeDeleted() {
 
-	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyAssociatedSummaries()
-		|| !getGroupings().isEmpty() || hasAnyAssociatedBibliographicReferences() || !hasOnlyFinalEvaluations()
-		|| hasEvaluationMethod() || !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
+	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyStudentInquiriesCourseResults()
+		|| hasAnyYearDelegateCourseInquiries() || hasAnyAssociatedSummaries() || !getGroupings().isEmpty()
+		|| hasAnyAssociatedBibliographicReferences() || !hasOnlyFinalEvaluations() || hasEvaluationMethod()
+		|| !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
 		|| (hasSite() && !getSite().isDeletable()) || (hasBoard() && !getBoard().isDeletable())) {
 	    throw new DomainException("error.execution.course.cant.delete");
 	}
