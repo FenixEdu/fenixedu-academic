@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CreateRoomsPunctualScheduling;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditRoomsPunctualScheduling;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.MarkPunctualRoomsOccupationCommentsAsRead;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.OpenPunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
@@ -78,7 +79,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 	Person loggedPerson = getLoggedPerson(request);
 	PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 	if (roomsReserveRequest.getOwner() != null && roomsReserveRequest.getOwner().equals(loggedPerson)) {
-	    executeService("MarkPunctualRoomsOccupationCommentsAsRead", new Object[] { roomsReserveRequest, false });
+	    MarkPunctualRoomsOccupationCommentsAsRead.run(roomsReserveRequest, false);
 	}
 	request.setAttribute("roomsReserveBean", new RoomsReserveBean(loggedPerson, roomsReserveRequest));
 	return mapping.findForward("seeSpecifiedRoomsReserveRequest");
