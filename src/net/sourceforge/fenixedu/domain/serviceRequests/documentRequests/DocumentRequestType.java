@@ -34,7 +34,7 @@ public enum DocumentRequestType {
 
     DIPLOMA_SUPPLEMENT_REQUEST(true, false /* , DEGREE, MASTER_DEGREE */),
 
-    PAST_DIPLOMA_REQUEST(true, false, false, true /* , DEGREE, MASTER_DEGREE */),
+    PAST_DIPLOMA_REQUEST(true, false, false, true, DEGREE/* , MASTER_DEGREE */),
 
     PHOTOCOPY(false, false),
 
