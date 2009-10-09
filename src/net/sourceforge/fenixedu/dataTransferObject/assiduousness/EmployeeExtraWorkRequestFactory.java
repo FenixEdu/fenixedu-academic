@@ -84,9 +84,9 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     public static final double nightExtraWorkPercentage = 0.25;
 
-    public static final double firstHourPercentage = 1.25;
+    public static final double firstHourPercentage = 1.50;// 1.25;
 
-    public static final double secondHourPercentage = 1.50;
+    public static final double secondHourPercentage = 1.75;// 1.50;
 
     public static final double nightFirstHourPercentage = 1.60;
 
