@@ -408,6 +408,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    removeFinalEvaluations();
 	    getAssociatedCurricularCourses().clear();
 	    getNonAffiliatedTeachers().clear();
+	    removeVigilantGroup();
 	    removeExecutionPeriod();
 	    removeRootDomainObject();
 	    super.deleteDomainObject();

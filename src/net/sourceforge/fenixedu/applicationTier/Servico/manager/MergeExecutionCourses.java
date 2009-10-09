@@ -118,12 +118,19 @@ public class MergeExecutionCourses extends FenixService {
 	copyBoard(executionCourseFrom, executionCourseTo);
 	copyInquiries(executionCourseFrom, executionCourseTo);
 	copyDistributedTestStuff(executionCourseFrom, executionCourseTo);
+	copyVigilantGroups(executionCourseFrom, executionCourseTo);
 
 	executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
 	executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
 
 	executionCourseFrom.delete();
+    }
+
+    private void copyVigilantGroups(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+	if (!executionCourseTo.hasVigilantGroup()) {
+	    executionCourseTo.setVigilantGroup(executionCourseFrom.getVigilantGroup());
+	}
     }
 
     private void copyDistributedTestStuff(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
