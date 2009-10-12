@@ -13,12 +13,13 @@ public class Delegate extends Delegate_Base {
     }
 
     public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
-	return getDelegateFunction().belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
-		executionYear.getEndDateYearMonthDay());
+	return hasDelegateFunction()
+		&& getDelegateFunction().belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+			executionYear.getEndDateYearMonthDay());
     }
 
     public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
-	return getDelegateFunction().getBeginDate() != null
+	return hasDelegateFunction() && getDelegateFunction().getBeginDate() != null
 		&& executionYear.containsDate(getDelegateFunction().getBeginDate().toDateTimeAtMidnight());
     }
 
