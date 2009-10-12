@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
@@ -1541,6 +1542,24 @@ public class Student extends Student_Base {
 
     public boolean getActiveAlumni() {
 	return hasAlumni();
+    }
+
+    public Attends getAttends(final ExecutionCourse executionCourse) {
+	Attends result = null;
+
+	for (final Registration registration : getRegistrationsSet()) {
+	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
+		if (attends.isFor(executionCourse)) {
+		    if (result != null) {
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
+				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+		    }
+		    result = attends;
+		}
+	    }
+	}
+
+	return result;
     }
 
     public boolean hasAttends(final ExecutionCourse executionCourse) {

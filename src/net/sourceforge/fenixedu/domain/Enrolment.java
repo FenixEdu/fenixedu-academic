@@ -558,12 +558,16 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    });
 
-	    if (attend != null) {
-		attend.setEnrolment(this);
-	    } else {
-		attend = new Attends(registration, currentExecutionCourse);
-		attend.setEnrolment(this);
+	    if (attend == null) {
+		attend = getStudent().getAttends(currentExecutionCourse);
+		
+		if (attend != null) {
+		    attend.setRegistration(registration);
+		} else {
+		    attend = new Attends(registration, currentExecutionCourse);
+		}
 	    }
+	    attend.setEnrolment(this);
 	}
     }
 
