@@ -2015,7 +2015,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	attendsBean.setEnrolmentsNumberMap(enrolmentNumberMap);
     }
 
-    private void addAttendsToEnrolmentNumberMap(final Attends attends, Map<Integer, Integer> enrolmentNumberMap) {
+    public void addAttendsToEnrolmentNumberMap(final Attends attends, Map<Integer, Integer> enrolmentNumberMap) {
 	Integer enrolmentsNumber;
 	if (attends.getEnrolment() == null) {
 	    enrolmentsNumber = 0;

@@ -254,8 +254,42 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
 
 	return String.format("%s : %s \n%s : %s \n%s : %s \n%s", getApplicationResourcesString("label.selectStudents"),
 		attendTypeValues, getApplicationResourcesString("label.attends.courses"), degreeNameValues,
-		getApplicationResourcesString("label.selectShift"), shiftsValues,
-		workingStudentsValues);
+		getApplicationResourcesString("label.selectShift"), shiftsValues, workingStudentsValues);
 
+    }
+
+    public String getSearchElementsAsParameters() {
+	String parameters = "";
+
+	parameters += "&amp;executionCourse=" + getExecutionCourse().getIdInternal();
+	if (viewPhoto) {
+	    parameters += "&amp;viewPhoto=true";
+	}
+	if (getAttendsStates() != null) {
+	    parameters += "&amp;attendsStates=";
+	    for (StudentAttendsStateType attendsStateType : getAttendsStates()) {
+		parameters += attendsStateType.toString() + ":";
+	    }
+	}
+	if (getWorkingStudentTypes() != null) {
+	    parameters += "&amp;workingStudentTypes=";
+	    for (WorkingStudentSelectionType workingStudentType : getWorkingStudentTypes()) {
+		parameters += workingStudentType.toString() + ":";
+	    }
+	}
+	if (getDegreeCurricularPlans() != null) {
+	    parameters += "&amp;degreeCurricularPlans=";
+	    for (DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
+		parameters += degreeCurricularPlan.getIdInternal() + ":";
+	    }
+	}
+	if (getShifts() != null) {
+	    parameters += "&amp;shifts=";
+	    for (Shift shift : getShifts()) {
+		parameters += shift.getIdInternal() + ":";
+	    }
+	}
+
+	return parameters;
     }
 }

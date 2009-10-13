@@ -2,6 +2,7 @@ d .<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 <html:xhtml/>
 
 
@@ -13,7 +14,7 @@ d .<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 		<bean:message key="message.students.explanation"/>
 	</div>
 	
-	<fr:form action="/searchECAttends.do?method=search">
+	<fr:form action="<%="/searchECAttends.do?method=search&amp;objectCode=" + request.getParameter("objectCode") %>">
 		<%  if (request.getAttribute("degreeCurricularPlanID") != null) { %>
 			    <html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<%  } %>
@@ -36,8 +37,13 @@ d .<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 			<fr:edit name="searchBean" id="downloadViewState" visible="false"/>
 			<a href="javascript:document.getElementById('downloadStudentListForm').submit()"><bean:message key="link.getExcelSpreadSheet"/></a>
 		</fr:form>
-	
-		<fr:view name="searchBean">
+
+		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
+		<cp:collectionPages
+			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			pageNumberAttributeName="pageNumber"
+			numberOfPagesAttributeName="numberOfPages"/>
+		<fr:view name="attendsPagesBean">
 			<fr:layout name="execution-course-attends-spreadsheet">
 				<fr:property name="attendsListTableClasses" value="tstyle4 tdcenter"/>
 				<fr:property name="summaryClasses" value="tstyle1 tdcenter mtop05"/>
