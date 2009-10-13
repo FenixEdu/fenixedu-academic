@@ -757,6 +757,12 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeNotFound",
 			columns[executionDegreeHeaderIndex]);
 	    }
+	    
+	    if(executionDegree.getExecutionYear() != executionCourse.getExecutionYear()){
+		throw new DomainException("error.StudentInquiriesCourseResult.executionDegreeAndCourseYearDoesntMatch",
+			executionDegree.getExecutionYear().getName(), executionDegree.getPresentationName(), executionCourse
+				.getExecutionYear().getName(), executionCourse.getNome());
+	    }
 
 	    StudentInquiriesCourseResult studentInquiriesCourseResult = executionCourse
 		    .getStudentInquiriesCourseResult(executionDegree);
@@ -781,6 +787,15 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     }
 
+    public void delete() {
+	if (hasCoordinatorComment()) {
+	    throw new DomainException("error.StudentInquiriesCourseResult.cannotDelete.hasCoordinatorComment");
+	}
+	removeExecutionCourse();
+	removeExecutionDegree();
+	removeRootDomainObject();
+    }
+    
     @Override
     public void setCourseResultsCoordinatorComment(String courseResultsCoordinatorComment) {
 	super.setCourseResultsCoordinatorComment(courseResultsCoordinatorComment);
