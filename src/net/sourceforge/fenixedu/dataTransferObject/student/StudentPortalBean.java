@@ -32,6 +32,7 @@ public class StudentPortalBean implements Serializable {
 	    private String identification;
 	    private String realization;
 	    private String enrolment;
+	    private String room;
 	    private Boolean registered;
 
 	    public EvaluationAnnouncement(WrittenTest writtenTest) {
@@ -40,6 +41,7 @@ public class StudentPortalBean implements Serializable {
 		setRealization(writtenTest);
 		setEnrolment(writtenTest);
 		setRegistered(isStudentEnrolled(writtenTest));
+		setRoom(writtenTest);
 	    }
 
 	    public EvaluationAnnouncement(Exam exam) {
@@ -48,6 +50,7 @@ public class StudentPortalBean implements Serializable {
 		setRealization(exam);
 		setEnrolment(exam);
 		setRegistered(isStudentEnrolled(exam));
+		setRoom(exam);
 	    }
 
 	    public EvaluationAnnouncement(Grouping grouping) {
@@ -97,6 +100,10 @@ public class StudentPortalBean implements Serializable {
 		return enrolment;
 	    }
 
+	    public String getRoom() {
+		return room;
+	    }
+
 	    public Boolean getRegistered() {
 		return registered;
 	    }
@@ -138,6 +145,15 @@ public class StudentPortalBean implements Serializable {
 			+ YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
 			+ resource.getString("message.out.until") + " "
 			+ YearMonthDay.fromDateFields(grouping.getEnrolmentEndDayDate()).toString();
+	    }
+
+	    public void setRoom(WrittenEvaluation writtenEvaluation) {
+		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+		if (writtenEvaluation.getAssociatedRooms().isEmpty() == false) {
+		    this.room = resource.getString("message.out.room") + ": " + writtenEvaluation.getAssociatedRoomsAsString();
+		} else {
+		    this.room = resource.getString("message.out.without.room");
+		}
 	    }
 
 	    public void setRegistered(Boolean registered) {

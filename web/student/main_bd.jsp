@@ -63,6 +63,7 @@
 										 "<bean:write name="evaluationAnnouncement" property="identification"/>" - 
 										<bean:write name="evaluationAnnouncement" property="enrolment"/>
 										<bean:write name="evaluationAnnouncement" property="realization"/>
+										<bean:write name="evaluationAnnouncement" property="room"/>
 										<logic:equal name="evaluationAnnouncement" property="registered" value="true">
 											<span class="warning0">
 												<bean:message key="label.enroled" bundle="STUDENT_RESOURCES"/>
