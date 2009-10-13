@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 <html:xhtml/>
 
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
@@ -27,7 +28,11 @@
 			</span>
 		</p>
 	</logic:empty>
-	<fr:view name="sender" property="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
+	<cp:collectionPages
+	url="<%="/messaging/emails.do?method=viewSentEmails" + "&amp;senderId=" + request.getAttribute("senderId")%>" 
+	pageNumberAttributeName="pageNumber"
+	numberOfPagesAttributeName="numberOfPages"/>
+	<fr:view name="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>

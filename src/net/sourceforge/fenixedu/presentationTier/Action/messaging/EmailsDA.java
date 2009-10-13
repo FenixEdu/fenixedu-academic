@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.util.email.MessageDeleteService;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,6 +26,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/emails", module = "messaging")
 @Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
@@ -98,6 +100,15 @@ public class EmailsDA extends FenixDispatchAction {
 
     public ActionForward viewSentEmails(final ActionMapping mapping, final HttpServletRequest request, final Integer senderId) {
 	final Sender sender = rootDomainObject.readSenderByOID(senderId);
+	final CollectionPager<Message> pager = new CollectionPager<Message>(sender.getMessagesSet(), 50);
+	request.setAttribute("numberOfPages", 10);
+
+	final String pageParameter = request.getParameter("pageNumber");
+	final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
+
+	request.setAttribute("messages", pager.getPage(page));
+	request.setAttribute("senderId", senderId);
+	request.setAttribute("pageNumber", page);
 	return viewSentEmails(mapping, request, sender);
     }
 

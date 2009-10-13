@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -14,6 +17,20 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 
 public class Message extends Message_Base {
+
+    static final public Comparator<Message> COMPARATOR_BY_CREATED_DATE_OLDER_FIRST = new Comparator<Message>() {
+	public int compare(Message o1, Message o2) {
+	    return o1.getCreated().compareTo(o2.getCreated());
+	}
+    };
+
+    static final public Comparator<Message> COMPARATOR_BY_CREATED_DATE_OLDER_LAST = new Comparator<Message>() {
+	public int compare(Message o1, Message o2) {
+	    return o2.getCreated().compareTo(o1.getCreated());
+	}
+    };
+
+    public static final int NUMBER_OF_SENT_EMAILS_TO_STAY = 500;
 
     public Message() {
 	super();
@@ -147,5 +164,22 @@ public class Message extends Message_Base {
 		getBody());
 	removeRootDomainObjectFromPendingRelation();
 	setSent(new DateTime());
+	deleteOldMessages(sender);
+
+    }
+
+    private void deleteOldMessages(final Sender sender) {
+	ArrayList<Message> sort = new ArrayList<Message>();
+	sort.addAll(sender.getMessages());
+	Collections.sort(sort, Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST);
+	int sentCounter = 0;
+	for (Message message : sort) {
+	    if (message.getSent() != null) {
+		++sentCounter;
+	    }
+	    if ((sentCounter > Message.NUMBER_OF_SENT_EMAILS_TO_STAY) && (message.getSent() != null)) {
+		message.delete();
+	    }
+	}
     }
 }
