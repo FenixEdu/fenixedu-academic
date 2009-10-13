@@ -1410,6 +1410,36 @@
 	<slot name="activeEnrolments" key="label.activeEnrolments" />
 </schema>
 
+<schema name="DegreeByExecutionYearBean.edit"
+	type="net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" key="label.executionYear" 
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="choiceType"
+			value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+	<slot name="degreeType" key="label.degreeType"
+		layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeTypesForEmployeeAcademicOfficeProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degree.DegreeType" />
+		<property name="destination" value="postBack"/>
+		<property name="eachLayout" value="this-does-not-exist" />
+	</slot>
+	<slot name="degree" key="label.degree"
+		layout="menu-select-postback">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Degree" />
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="postBack"/>
+	</slot>
+</schema>
+
 <schema name="diploma.list.searchBySituation.chooseDegree"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchDiplomasBySituationParametersBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="searchBegin" key="label.search.begin" layout="picker" >

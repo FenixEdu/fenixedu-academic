@@ -45,6 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - �ngela Almeida (argelina@ist.utl.pt)
@@ -53,8 +54,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  */
 
 @Mapping(path = "/studentsListByCurricularCourse", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "chooseCurricularCourse", path = "/academicAdminOffice/lists/chooseCurricularCourses.jsp"),
+@Forwards( { @Forward(name = "chooseCurricularCourse", path = "/academicAdminOffice/lists/chooseCurricularCourses.jsp"),
 	@Forward(name = "studentByCurricularCourse", path = "/academicAdminOffice/lists/studentsByCurricularCourses.jsp") })
 public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
@@ -137,8 +137,9 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	try {
 	    String filename;
 
-	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear) + "_"
-		    + executionYear.getYear();
+	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear).getContent(
+		    Language.getLanguage()).replace(' ', '_')
+		    + "_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");

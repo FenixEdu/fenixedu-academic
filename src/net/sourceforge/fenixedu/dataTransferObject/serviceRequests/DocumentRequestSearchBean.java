@@ -1,32 +1,24 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
-import java.io.Serializable;
-
-import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class DocumentRequestSearchBean implements Serializable {
+public class DocumentRequestSearchBean extends AcademicServiceRequestSearchBean {
 
     private DocumentRequestType chosenDocumentRequestType;
 
-    private AcademicServiceRequestSituationType academicServiceRequestSituationType;
-
-    private Boolean urgentRequest;
-
-    private DomainReference<Registration> registration;
+    private Registration registration;
 
     public DocumentRequestSearchBean() {
 
     }
 
     public Registration getRegistration() {
-	return (this.registration == null) ? null : this.registration.getObject();
+	return registration;
     }
 
     public void setRegistration(Registration registration) {
-	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
+	this.registration = registration;
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -35,22 +27,6 @@ public class DocumentRequestSearchBean implements Serializable {
 
     public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
 	this.chosenDocumentRequestType = chosenDocumentRequestType;
-    }
-
-    public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
-	return academicServiceRequestSituationType;
-    }
-
-    public void setAcademicServiceRequestSituationType(AcademicServiceRequestSituationType academicServiceRequestSituationType) {
-	this.academicServiceRequestSituationType = academicServiceRequestSituationType;
-    }
-
-    public Boolean getUrgentRequest() {
-	return urgentRequest;
-    }
-
-    public void setUrgentRequest(Boolean urgentRequest) {
-	this.urgentRequest = urgentRequest;
     }
 
 }

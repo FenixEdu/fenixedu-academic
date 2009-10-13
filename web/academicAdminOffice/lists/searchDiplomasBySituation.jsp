@@ -14,7 +14,7 @@
 	</p>
 </html:messages>
 
-<fr:form action="<%= "/diplomasListBySituation.do" %>">
+<fr:form id="searchForm" action="/diplomasListBySituation.do">
 	<html:hidden property="method" value="searchBySituation"/>
 	<html:hidden property="extendedInfo" value="false"/>
 		<fr:edit name="searchParametersBean" schema="diploma.list.searchBySituation.chooseDegree" id="chooseSituation">
@@ -43,12 +43,16 @@
 		</fr:view>
 		<logic:greaterThan name="diplomasListSize" value="0">
 			<p class="mtop15 mbottom15">
-				<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.extendedInfo.value='false';this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>
-				<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				<a href="javascript:var form = document.getElementById('searchForm');form.extendedInfo.value='false';form.method.value='exportInfoToExcel';form.submit();">
+					<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+					<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</a>
 			</p>
 			<p class="mtop15 mbottom15">
-				<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.extendedInfo.value='true';this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>
-				<bean:message key="link.lists.xlsFileToDownload.extended.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				<a href="javascript:var form = document.getElementById('searchForm');form.extendedInfo.value='true';form.method.value='exportInfoToExcel';form.submit();">
+					<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+					<bean:message key="link.lists.xlsFileToDownload.extended.info" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+				</a>
 			</p>
 		</logic:greaterThan>
 	</logic:present>

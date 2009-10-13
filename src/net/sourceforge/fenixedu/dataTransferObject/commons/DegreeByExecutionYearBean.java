@@ -6,36 +6,46 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public class DegreeByExecutionYearBean implements Serializable, Comparable<DegreeByExecutionYearBean> {
 
-    private DomainReference<Degree> degree;
-    private DomainReference<ExecutionYear> executionYear;
+    private Degree degree;
+    private DegreeType degreeType;
+    private ExecutionYear executionYear;
 
     public DegreeByExecutionYearBean() {
     }
 
     public DegreeByExecutionYearBean(final Degree degree, final ExecutionYear executionYear) {
 	setDegree(degree);
+	setDegreeType(degree.getDegreeType());
 	setExecutionYear(executionYear);
     }
 
     public Degree getDegree() {
-	return (this.degree != null) ? this.degree.getObject() : null;
+	return degree;
     }
 
     public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	this.degree = degree;
+    }
+
+    public DegreeType getDegreeType() {
+	return degreeType;
+    }
+
+    public void setDegreeType(DegreeType degreeType) {
+	this.degreeType = degreeType;
     }
 
     public ExecutionYear getExecutionYear() {
-	return (this.executionYear != null) ? this.executionYear.getObject() : null;
+	return executionYear;
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
+	this.executionYear = executionYear;
     }
 
     public String getDegreeName() {
@@ -61,7 +71,12 @@ public class DegreeByExecutionYearBean implements Serializable, Comparable<Degre
 
     @Override
     public int hashCode() {
-	return getDegree().hashCode();
+	Degree degree = getDegree();
+	if (degree != null) {
+	    return getDegree().hashCode();
+	} else {
+	    return 0;
+	}
     }
 
     public List<DegreeCurricularPlan> getDegreeCurricularPlans() {

@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -86,9 +87,11 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 
 		ExecutionYear executionYear = searchBean.getExecutionYear();
 		if (searchBean.getDegree() == null) {
-		    filename = executionYear.getNextYearsYearString();
+		    filename = executionYear.getYear();
 		} else {
-		    filename = searchBean.getDegree().getNameFor(executionYear) + "_" + executionYear.getNextYearsYearString();
+		    filename = searchBean.getDegree().getNameFor(executionYear).getContent(Language.getLanguage()).replace(' ',
+			    '_')
+			    + "_" + executionYear.getYear();
 		}
 
 		response.setContentType("application/vnd.ms-excel");

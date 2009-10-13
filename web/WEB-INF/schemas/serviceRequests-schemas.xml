@@ -688,6 +688,16 @@
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"/>
 </schema>
 
+<schema name="AcademicServiceRequestSearchBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="academicServiceRequestType"  key="label.requestType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestTypeProvider" />
+	</slot>
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestSituationTypeProvider" />
+	</slot>
+	<slot name="urgentRequest" key="label.only.urgent"/>
+</schema>
+
 <schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="registration.number" layout="link">
@@ -695,6 +705,15 @@
         <property name="contextRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>
+</schema>
+
+<schema name="RegistrationAcademicServiceRequestList.view" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="campus.name" key="campus"/>
+	<slot name="serviceRequestNumber" key="label.serviceRequestNumber"/>
+	<slot name="requestDate" key="label.requestDate"/>
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
+	<slot name="student.number" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber"/>
+	<slot name="student.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration"

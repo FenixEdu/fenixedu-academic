@@ -11,7 +11,7 @@
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 	</p>
 </html:messages>
-<fr:form action='<%= "/studentsListByCurricularCourse.do" %>'>
+<fr:form id="searchForm" action="/studentsListByCurricularCourse.do">
 
 <html:hidden property="method" value="searchByCurricularCourse"/>
 <bean:define id="searchBean" name="searchBean"/>
@@ -52,8 +52,10 @@
 	
 	<logic:greaterThan name="enrolmentListSize" value="0">
 		<p class="mtop15 mbottom15">
-			<html:image border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES" onclick="this.form.method.value='exportInfoToExcel';this.form.submit();return true;"></html:image>	
+			<a href="javascript:var form = document.getElementById('searchForm');form.method.value='exportInfoToExcel';form.submit();">
+			<html:image border="0" src='<%= request.getContextPath() + "/images/excel.gif"%>' altKey="excel" bundle="IMAGE_RESOURCES"></html:image>	
 			<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>	
+			</a>
 		</p>
 	</logic:greaterThan>
 	

@@ -100,18 +100,22 @@
 				
 				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(processing)" value="processing"/>
+				<fr:property name="bundle(processing)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(processing)" value="newRequest"/>
 
 				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(concluded)" value="conclude"/>
+				<fr:property name="bundle(concluded)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(concluded)" value="processing"/>
 
 				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(delivered)" value="deliver"/>
+				<fr:property name="bundle(delivered)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(delivered)" value="concluded"/>
 
 				<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
 				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="bundle(payments)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
@@ -146,18 +150,22 @@
 
 				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(processing)" value="processing"/>
+				<fr:property name="bundle(processing)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(processing)" value="newRequest"/>
 
 				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(concluded)" value="conclude"/>
+				<fr:property name="bundle(concluded)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(concluded)" value="processing"/>
 
 				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
 				<fr:property name="key(delivered)" value="deliver"/>
+				<fr:property name="bundle(delivered)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIf(delivered)" value="concluded"/>
 
 				<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
 				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="bundle(payments)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
@@ -166,7 +174,5 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
-	
-	</p>
 	
 </logic:present>

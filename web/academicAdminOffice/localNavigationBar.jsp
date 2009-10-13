@@ -28,18 +28,9 @@
 --%>
 
 		<li class="navheader"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-		<%
-			String serviceRequestYear = request.getParameter("serviceRequestYear");
-		    if (serviceRequestYear == null) {
-				serviceRequestYear = (String) request.getAttribute("serviceRequestYear");
-				if (serviceRequestYear == null) {
-					serviceRequestYear = String.valueOf(new LocalDate().getYear());
-				}
-		    }
-		%>
-		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=NEW"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
-		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=PROCESSING"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
-		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=CONCLUDED"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></html:link></li>
+		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
+		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=PROCESSING"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
+		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=CONCLUDED"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></html:link></li>
 
 		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
@@ -67,6 +58,7 @@
 		<li class="navheader"><bean:message key="label.lists" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/studentsListByDegree.do?method=prepareByDegree"><bean:message key="link.studentsListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 		<li><html:link page="/studentsListByCurricularCourse.do?method=prepareByCurricularCourse"><bean:message key="link.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+		<li><html:link page="/requestListByDegree.do?method=prepareSearch"><bean:message key="lists.serviceRequestsByDegree"/></html:link></li>
 		<li><html:link page="/diplomasListBySituation.do?method=prepareBySituation"><bean:message key="link.diplomasListBySituation" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
 	</ul>
 

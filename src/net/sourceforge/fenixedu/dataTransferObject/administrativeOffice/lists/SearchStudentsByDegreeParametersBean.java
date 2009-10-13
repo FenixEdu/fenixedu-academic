@@ -1,13 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -18,13 +14,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
  * 
  */
 @SuppressWarnings("serial")
-public class SearchStudentsByDegreeParametersBean implements Serializable {
-
-    private DomainReference<Degree> degree;
-
-    private DomainReference<ExecutionYear> executionYear;
-
-    private DegreeType degreeType;
+public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearBean {
 
     private List<RegistrationAgreement> registrationAgreements = new ArrayList<RegistrationAgreement>();
 
@@ -33,30 +23,6 @@ public class SearchStudentsByDegreeParametersBean implements Serializable {
     private List<StudentStatuteType> studentStatuteTypes = new ArrayList<StudentStatuteType>();
 
     private boolean activeEnrolments = false;
-
-    public Degree getDegree() {
-	return (this.degree == null) ? null : this.degree.getObject();
-    }
-
-    public void setDegree(Degree degree) {
-	this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
-    }
-
-    public ExecutionYear getExecutionYear() {
-	return (executionYear == null) ? null : this.executionYear.getObject();
-    }
-
-    public void setExecutionYear(ExecutionYear executionYear) {
-	this.executionYear = (executionYear != null) ? new DomainReference<ExecutionYear>(executionYear) : null;
-    }
-
-    public DegreeType getDegreeType() {
-	return degreeType;
-    }
-
-    public void setDegreeType(DegreeType degreeType) {
-	this.degreeType = degreeType;
-    }
 
     public List<RegistrationAgreement> getRegistrationAgreements() {
 	return registrationAgreements;

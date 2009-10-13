@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.lists;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,9 +16,9 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 public class DegreesForExecutionYear implements DataProvider {
 
     public Object provide(Object source, Object currentValue) {
-	
+
 	final SortedSet<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-	final SearchStudentsByDegreeParametersBean chooseDegreeBean = (SearchStudentsByDegreeParametersBean) source;
+	final DegreeByExecutionYearBean chooseDegreeBean = (DegreeByExecutionYearBean) source;
 
 	for (final Degree degree : AccessControl.getPerson().getEmployee().getAdministrativeOffice().getAdministratedDegrees()) {
 	    if (matchesExecutionYear(degree, chooseDegreeBean.getExecutionYear())
