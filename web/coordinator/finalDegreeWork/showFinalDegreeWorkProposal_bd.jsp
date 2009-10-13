@@ -32,20 +32,18 @@ color: #000;
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
-<div class="infoop2">
-	<p>
-		<strong>
-			<bean:message key="message.final.degree.work.other.execution.degrees"/>
-		</strong>
-	</p>
-	<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
-		<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
-			<p class="mvvert05">
-				<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
-			</p>
-		</logic:notEqual>
-	</logic:iterate>
-</div>
+	<div class="infoop2">
+		<p>
+			<strong><bean:message key="message.final.degree.work.other.execution.degrees"/></strong>
+		</p>
+			<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
+				<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
+					<p class="mvvert05">
+						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
+					</p>
+				</logic:notEqual>
+			</logic:iterate>
+	</div>
 </logic:notEqual>
 </logic:present>
 
@@ -107,15 +105,15 @@ color: #000;
 	request.setAttribute("showCompanion", showCompanion);
 	%>
 
-	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
-	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/>
-	<hr/><br/>
+	<p class="mtop2 mbottom05"><bean:message key="label.teacher.finalWork.title"/>:</p>
+	<p><html:text bundle="HTMLALT_RESOURCES" altKey="text.title" property="title" size="85"/></p>
 
-	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
+
+	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.responsable"/></b></p>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
-			<td width="10%">
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
+			<td style="width: 120px;">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" size="6"/>
 				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='orientator';document.forms[0].submit();"/>
 				
@@ -123,42 +121,41 @@ color: #000;
 					<bean:message key="button.submit"/>
 				</html:submit>
 			</td>
-			<td width="1%"/>
-			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%" id='respName'>
+			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
+			<td id='respName'>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherName" property="responsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
 			</td>
 		</tr>
 	</table>
-	<br/><br/>
+
 
 	<logic:equal name="showCoordinator" value="true">
-	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.coResponsable"/></b></p>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
-			<td width="10%">
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
+			<td style="width: 120px;">
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6"/>
 				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='coorientator';document.forms[0].submit();"/>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>
 				</html:submit>
 			</td>
-			<td width="1%"/>
-			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
-			<td width="66%" id='coRespName'>
+			<td><bean:message key="label.teacher.finalWork.name"/>:</td>
+			<td id='coRespName'>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherName" property="coResponsableTeacherName" size="55" styleClass="teacherNameDisplay" disabled="false"/>
 			</td>
 		</tr>
 	</table>
-	<br/><br/>
 	</logic:equal>
 
+
+
 	<logic:equal name="showCompanion" value="true">
-	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.companion"/></b></p>
 	<table width="100%">
 		<tr>
-			<th width="9%"><bean:message key="label.teacher.finalWork.name"/>:</th>
+			<td style="width: 140px;"><bean:message key="label.teacher.finalWork.name"/>:</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionName" property="companionName" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"  />						
@@ -168,7 +165,7 @@ color: #000;
 			</td>
 		</tr>
 		<tr>
-			<th width="9%"><bean:message key="label.teacher.finalWork.mail"/>:</th>
+			<td><bean:message key="label.teacher.finalWork.mail"/>:</td>
 			<td>		
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionMail" property="companionMail" size="70" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
@@ -178,7 +175,7 @@ color: #000;
 			</td>
 		</tr>
 		<tr>
-			<th width="9%"><bean:message key="label.teacher.finalWork.phone"/>:</th>
+			<td><bean:message key="label.teacher.finalWork.phone"/>:</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companionPhone" property="companionPhone" size="10" maxlength="9" 
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>						
@@ -188,7 +185,7 @@ color: #000;
 			</td>
 		</tr>	
 		<tr>
-			<th with="9%"><bean:message key="label.teacher.finalWork.companyName"/>:</th>
+			<td><bean:message key="label.teacher.finalWork.companyName"/>:</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyName" property="companyName" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
@@ -198,7 +195,7 @@ color: #000;
 			</td>
 		</tr>
 		<tr>
-			<th with="9%"><bean:message key="label.teacher.finalWork.companyAdress"/>:</th>
+			<td><bean:message key="label.teacher.finalWork.companyAdress"/>:</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyAdress" property="companyAdress" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
@@ -208,46 +205,49 @@ color: #000;
 			</td>
 		</tr>
 	</table>
-	<br/><br/>
 	</logic:equal>
-				
-	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
-	<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
-	<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
-	<br/><hr/>
 
-	<b><bean:message key="label.teacher.finalWork.framing"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
-	<br/><br/>
-	<b><bean:message key="label.teacher.finalWork.objectives"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.objectives" property="objectives" rows="4" cols="80"/>
-	<br/><br/>
-	<b><bean:message key="label.teacher.finalWork.description"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.description" property="description" rows="8" cols="80"/>
-	<br/><br/>
-	<b><bean:message key="label.teacher.finalWork.requirements"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.requirements" property="requirements" rows="8" cols="80"/>
-	<br/><br/>
-	<b><bean:message key="label.teacher.finalWork.deliverable"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.deliverable" property="deliverable" rows="4" cols="80"/>
-	<br/><br/>
-	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
-	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
+	<p class="mvert2">
+		<bean:message key="label.teacher.finalWork.credits"/>:
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleCreditsPercentage" property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
+		<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsibleCreditsPercentage" property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
+	</p>
 
-	<br/><hr/><br/>
-	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
-	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br/><br/>
-	<b><bean:message key="label.teacher.finalWork.location"/>:</b>
-	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/><br/>
+	<p class="mtop2 mbottom05"><bean:message key="label.teacher.finalWork.framing"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.framing" property="framing" rows="4" cols="80"/>
 
-	<br/><hr/><br/>
-	<b><bean:message key="finalDegreeWorkProposal.status"/>:</b>
-	<br/><html:select bundle="HTMLALT_RESOURCES" altKey="select.status" property="status" size="1">
-		<html:option value=""/>
-		<html:options property="value" 
-     				  labelProperty="label" 
-					  collection="finalDegreeWorkProposalStatusList" />
-	</html:select><br/>
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.objectives"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.objectives" property="objectives" rows="4" cols="80"/>
 
-	<br/><br/><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.description"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.description" property="description" rows="8" cols="80"/>
+
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.requirements"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.requirements" property="requirements" rows="8" cols="80"/>
+
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.deliverable"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.deliverable" property="deliverable" rows="4" cols="80"/>
+
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.url"/>:</p>
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
+
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.observations"/>:</p>
+	<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/>
+	
+	<p class="mtop15 mbottom05"><bean:message key="label.teacher.finalWork.location"/>:</p>
+	<html:text bundle="HTMLALT_RESOURCES" altKey="text.location" property="location" size="81"/>
+	
+	<p class="mtop2 mbottom05">
+		<bean:message key="finalDegreeWorkProposal.status"/>:
+		<html:select bundle="HTMLALT_RESOURCES" altKey="select.status" property="status" size="1">
+			<html:option value=""/>
+			<html:options property="value" labelProperty="label" collection="finalDegreeWorkProposalStatusList" />
+		</html:select>
+	</p>
+	
+	<p class="mtop2">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.submit"/></html:submit>
+	</p>
+	
+	
 </html:form>

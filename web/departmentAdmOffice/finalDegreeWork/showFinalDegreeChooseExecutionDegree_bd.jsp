@@ -5,17 +5,20 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h2><bean:message key="link.manage.final.degree.works"/></h2>
+
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
-
-<p class="mtop2 mbottom05">
+<p class="mtop1 mbottom05">
 	<bean:message key="choose.execution.year.for.final.degree.work.managment"/>
 </p>
-<p class="infoop2">
-	<bean:message key="choose.execution.year.for.final.degree.work.managment.create.info"/>
-</p>
+
+<div class="infoop2">
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part1"/></p>
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part2"/></p>
+</div>
+
 <table>
 	<logic:iterate id="executionDegree" name="executionDegrees">
 		<bean:define id="executionDegreeOID" name="executionDegree" property="externalId" />

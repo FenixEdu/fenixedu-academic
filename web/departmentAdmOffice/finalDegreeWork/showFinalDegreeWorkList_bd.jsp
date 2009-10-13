@@ -76,10 +76,10 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /><br /><br /></span>
 <logic:present name="sucessfulSetOfDegreeProposalPeriod">
-	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
+	<span class="success0"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
 </logic:present>
 <logic:present name="sucessfulSetOfDegreeCandidacyPeriod">
-	<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
+	<span class="success0"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
 </logic:present>
 
 <table width="90%">
@@ -193,7 +193,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
-		<span class="sucessfulOperarion"><bean:write name="msg"/></span><br/>
+		<span class="success0"><bean:write name="msg"/></span><br/>
 	</html:messages>
 
 	<strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong>

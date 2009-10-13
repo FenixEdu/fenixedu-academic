@@ -18,32 +18,30 @@
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
-	<p>
-		<strong>
-			<bean:message key="message.final.degree.work.other.execution.degrees"/>
-		</strong>
-	</p>
-
-	<table>
-		<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
-			<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
-				<tr>
-					<td>
+	<div class="infoop2">
+		<p>
+			<strong><bean:message key="message.final.degree.work.other.execution.degrees"/></strong>
+		</p>
+			<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
+				<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
+					<p class="mvvert05">
 						<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
-					</td>
-				</tr>
-			</logic:notEqual>
-		</logic:iterate>
-	</table>
+					</p>
+				</logic:notEqual>
+			</logic:iterate>
+	</div>
 </logic:notEqual>
 </logic:present>
 
+<%--
 <div class="infoop2">
 	<p>Info msg</p>
 </div>
-<ul>
-	<li><html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="button.back"/></html:link></li>
-</ul>
+--%>
+
+<p>
+	<html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="button.back"/></html:link>
+</p>
 
 <div id="wrap">
 			<fr:form action="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">

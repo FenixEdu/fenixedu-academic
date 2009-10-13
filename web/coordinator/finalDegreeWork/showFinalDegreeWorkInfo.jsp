@@ -21,40 +21,23 @@
 </ul>
 
 <logic:present name="executionDegree" property="scheduling">
-<logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
-<div class="infoop2">
-	<p>
-		<strong>
-			<bean:message key="message.final.degree.work.other.execution.degrees"/>
-		</strong>
-	</p>
-		<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
-			<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
-				<p class="mvvert05">
-					<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
-				</p>
-			</logic:notEqual>
-		</logic:iterate>
-</div>
-</logic:notEqual>
+	<logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
+		<div class="infoop2">
+			<p>
+				<strong><bean:message key="message.final.degree.work.other.execution.degrees"/></strong>
+			</p>
+				<logic:iterate id="currentExecutionDegree" name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName">
+					<logic:notEqual name="currentExecutionDegree" property="externalId" value="<%= executionDegreeOID %>">
+						<p class="mvvert05">
+							<bean:write name="currentExecutionDegree" property="degreeCurricularPlan.presentationName"/>
+						</p>
+					</logic:notEqual>
+				</logic:iterate>
+		</div>
+	</logic:notEqual>
 </logic:present>
 
-<!--<table class="tstyle5 mvert05">-->
-<!--	<tr>-->
-<!---->
-<!--		<td>Ano lectivo:</td>-->
-<!--		<td>-->
-<!--			<select>-->
-<!--				<option>2009/2010</option>-->
-<!--				<option>2008/2009</option>-->
-<!--				<option>2007/2008</option>-->
-<!--			</select>-->
-<!---->
-<!--		</td>-->
-<!--	</tr>-->
-<!--</table>-->
-<!--			-->
-<!--<h3 class="">MEIC-A 2006 (2008/2009)</h3>-->
+
 
 
 			

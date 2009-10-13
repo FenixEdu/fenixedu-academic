@@ -81,12 +81,12 @@
 
 <logic:present name="sucessfulSetOfDegreeProposalPeriod">
 	<p>
-		<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
+		<span class="success0"><bean:message key="finalDegreeWorkProposal.setProposalPeriod.sucess"/><br /><br /></span>
 	</p>
 </logic:present>
 <logic:present name="sucessfulSetOfDegreeCandidacyPeriod">
 	<p>
-		<span class="sucessfulOperarion"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
+		<span class="success0"><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.sucess"/><br /><br /></span>
 	</p>
 </logic:present>
 
@@ -201,7 +201,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= executionDegreeOID.toString() %>"/>
 
 	<html:messages id="msg" message="true">
-		<p><span class="sucessfulOperarion"><bean:write name="msg"/></span></p>
+		<p><span class="success0"><bean:write name="msg"/></span></p>
 	</html:messages>
 
 	<p class="mtop2 mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/>:</strong></p>

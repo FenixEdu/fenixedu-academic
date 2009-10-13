@@ -13,13 +13,17 @@
 </p>
 
 
-<p class="mtop2 mbottom05">
+<p class="mtop1 mbottom05">
 	<bean:message key="choose.execution.year.for.final.degree.work.managment"/>
 </p>
-<p class="infoop2">
-	<bean:message key="choose.execution.year.for.final.degree.work.managment.create.info"/>
-</p>
-<ul class="mtop05">
+
+<div class="infoop2">
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part1"/></p>
+	<p><bean:message key="choose.execution.year.for.final.degree.work.managment.create.info.part2"/></p>
+</div>
+
+
+<ul class="mtop15">
 	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees">
 		<bean:define id="executionDegreeOID" name="infoExecutionDegree" property="externalId" />
 		<li>
@@ -29,7 +33,7 @@
 				    + degreeCurricularPlanOID
 					+ "&amp;executionDegreeOID="
 					+ executionDegreeOID
-					%>">(criar)
+					%>">(Criar)
 				</html:link>
 			</logic:empty>
 			<logic:notEmpty name="infoExecutionDegree" property="executionDegree.scheduling">
