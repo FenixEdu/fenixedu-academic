@@ -11,10 +11,19 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ImprovementBolonhaStudentEnrolmentBean extends BolonhaStudentEnrollmentBean {
 
+    static private final long serialVersionUID = 3655858704185977193L;
+
     public ImprovementBolonhaStudentEnrolmentBean(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
-	super(studentCurricularPlan, executionSemester, new ImprovementStudentCurriculumGroupBean(
-		studentCurricularPlan.getRoot(), executionSemester), CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
+	super(studentCurricularPlan, executionSemester, createBean(studentCurricularPlan, executionSemester),
+		CurricularRuleLevel.IMPROVEMENT_ENROLMENT);
+    }
+
+    private static ImprovementStudentCurriculumGroupBean createBean(StudentCurricularPlan scp, ExecutionSemester semester) {
+	if (scp.isEmptyDegree()) {
+	    return new EmptyDegreeImprovementStudentCurriculumGroupBean(scp.getRoot(), semester);
+	}
+	return new ImprovementStudentCurriculumGroupBean(scp.getRoot(), semester);
     }
 
     @Override

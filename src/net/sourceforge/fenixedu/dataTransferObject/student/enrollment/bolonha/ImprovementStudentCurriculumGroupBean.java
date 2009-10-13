@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class ImprovementStudentCurriculumGroupBean extends StudentCurriculumGroupBean {
 
+    static private final long serialVersionUID = 1L;
+
     public ImprovementStudentCurriculumGroupBean(final CurriculumGroup curriculumGroup, final ExecutionSemester executionSemester) {
 	super(curriculumGroup, executionSemester, null);
     }
