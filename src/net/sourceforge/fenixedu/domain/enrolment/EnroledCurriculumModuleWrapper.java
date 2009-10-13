@@ -46,18 +46,20 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 	    if (!getCurriculumModule().isRoot()) {
 		findContext();
 	    }
-
 	}
 	return (context != null) ? context.getObject() : null;
     }
 
     private void findContext() {
 	Context result = null;
+
 	final CurriculumGroup parent = getCurriculumModule().getCurriculumGroup();
-	for (final Context context : parent.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
-	    if (context.getChildDegreeModule() == getDegreeModule()) {
-		if (result == null || context.getCurricularYear().intValue() < result.getCurricularYear().intValue()) {
-		    result = context;
+	if (parent.hasDegreeModule()) {
+	    for (final Context context : parent.getDegreeModule().getValidChildContexts(getExecutionPeriod())) {
+		if (context.getChildDegreeModule() == getDegreeModule()) {
+		    if (result == null || context.getCurricularYear().intValue() < result.getCurricularYear().intValue()) {
+			result = context;
+		    }
 		}
 	    }
 	}
