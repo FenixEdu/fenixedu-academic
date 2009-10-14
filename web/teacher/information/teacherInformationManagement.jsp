@@ -120,11 +120,13 @@
 		<br />
 		<p class="infoop mtop15"><span class="emphasis-box">2</span>
 		<bean:message key="message.teacherInformation.teachingCareer" /></p>
+			<%-- 
 		<div class="gen-button">
 			<html:link page="<%= "/readCareers.do?careerType=" + net.sourceforge.fenixedu.domain.CareerType.TEACHING.toString() + "&amp;page=0" %>">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
+		--%>
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeachingCareers">
 			<table class="tstyle4" width="100%" style="margin-top:10px">	
 				<tr>
@@ -156,11 +158,13 @@
 		<br />
 		<p class="infoop mtop15"><span class="emphasis-box">3</span>
 		<bean:message key="message.teacherInformation.professionalCareer" /></p>
+		<%-- 
 		<div class="gen-button">
 			<html:link page="<%= "/readCareers.do?careerType=" + net.sourceforge.fenixedu.domain.CareerType.PROFESSIONAL.toString() + "&amp;page=0" %>">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
+		--%>
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
 			<table class="tstyle4" width="100%"  style="margin-top:10px">	
 				<tr>
@@ -193,11 +197,13 @@
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
+		<%-- 
 		<div class="gen-button">
 			<html:link page="/readExternalActivities.do">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
+		--%>
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoExternalActivities">
 			<br/>
 			<table class="tstyle4" width="100%">	
@@ -246,12 +252,14 @@
 		--%>
 		<!-- END DELETE  -->
 		<!-- DIDATIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
-
+		<%-- 
 		<div class="gen-button">
 			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Didatic">
 				<bean:message key="label.teacherInformation.manage"/>
 			</html:link>
 		</div>
+		--%>
+		
 		<logic:notEmpty name="didaticResults">
 			<table class="tstyle4" 
 >	
@@ -300,12 +308,13 @@
 		--%>
 		<!-- END DELETE  -->
 		<!-- CIENTIFIC PUBLICATIONS (Sergio Patricio & Luis Santos)-->
-		 
+		 <%-- 
 		<div class="gen-button">
 			<html:link page="/resultTeacherManagement.do?method=readTeacherResults&amp;typeResult=Cientific">
 				<bean:message key="label.teacherInformation.manage"/>
 			</html:link>
 		</div>
+		--%>
 		<logic:notEmpty name="cientificResults">
 			<table class="tstyle4" width="100%"  style="margin-top:10px">	
 				<logic:iterate id="cientificResult" name="cientificResults">
@@ -524,6 +533,7 @@
 			</logic:empty>		
 		</table>
 
+		<%-- 
 		<p class="mtop2">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.confirm" styleClass="inputbutton" property="confirm">
 				<bean:message key="button.confirm"/>
@@ -532,6 +542,6 @@
 				<bean:message key="label.clear"/>
 			</html:reset>
 		</p>
-		
+		--%>
 	</html:form>
 </logic:present>
