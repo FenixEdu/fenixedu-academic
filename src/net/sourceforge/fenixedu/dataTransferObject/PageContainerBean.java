@@ -26,11 +26,11 @@ public class PageContainerBean implements Serializable {
     }
 
     protected List<DomainObject> getPageObjects() {
-        return this.pageObjects;
+	return this.pageObjects;
     }
 
     protected void setPageObjects(List<DomainObject> pageObjects) {
-        this.pageObjects = pageObjects;
+	this.pageObjects = pageObjects;
     }
 
     public Integer getPage() {
@@ -50,16 +50,16 @@ public class PageContainerBean implements Serializable {
     }
 
     public List<DomainObject> getPageByPageSize(int pageSize) {
-        List<DomainObject> pageObjects = getPageObjects();
+	List<DomainObject> pageObjects = getPageObjects();
 	if (pageObjects != null) {
 	    return pageObjects;
 	} else {
-            List<DomainObject> objects = getObjects();
+	    List<DomainObject> objects = getObjects();
 	    if (objects != null && !objects.isEmpty()) {
 		validatePageNumber(pageSize);
 		int from = (getPage() - 1) * pageSize;
 		int to = getObjects().size() > getPage() * pageSize ? getPage() * pageSize : objects.size();
-		List<DomainObject> subList = objects.subList(from, to);
+		List<DomainObject> subList = new ArrayList<DomainObject>(objects.subList(from, to));
 		setPageObjects(subList);
 		return subList;
 	    } else {
