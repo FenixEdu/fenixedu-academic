@@ -38,9 +38,9 @@
 
 <table class="tstyle1 thlight thleft tdcenter">
     <tr class="top">
-        <th class="aright">Organização da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo.</span></a></th>
-        <th class="aright">Avaliação da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%.</span></a></th>
-        <th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Passível de Auditoria se 2 grupos com resultados a melhorar.</span></a></th>
+        <th class="aright">Organização da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais de 25% alunos (no mínimo de 10 respostas) classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questões do grupo. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+        <th class="aright">Avaliação da UC <a href="#" class="help">[?] <span>Resultados a melhorar se mais 25% alunos (no mínimo de 10 respostas) classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+        <th class="aright">Passível de Auditoria <a href="#" class="help">[?] <span>Se os grupos da organização e avaliação da UC apresentarem ambos resultados a melhorar e, pelo menos, metade do corpo docnete (pares docente/tipo de aulas) apresentar resultados a melhorar no mínimo de dois grupos - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
     </tr>
     <tr>
         <td><bean:message key="<%= "label.colored." + courseResult.getStudentInquiriesCourseResult().getUnsatisfactoryResultsCUOrganization().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
@@ -54,10 +54,10 @@
         <tr>        
             <th class="nowrap"><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
             <th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
-            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAssiduity" bundle="INQUIRIES_RESOURCES"/></th>
-            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPresencialLearning" bundle="INQUIRIES_RESOURCES"/></th>
-            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPedagogicalCapacity" bundle="INQUIRIES_RESOURCES"/></th>
-            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsStudentInteraction" bundle="INQUIRIES_RESOURCES"/></th>
+            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAssiduity" bundle="INQUIRIES_RESOURCES"/> <a href="#" class="help">[?] <span>Resultados a melhorar se mais de 25% classifica como abaixo ou igual a 3 (De vez em quando) - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPresencialLearning" bundle="INQUIRIES_RESOURCES"/> <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade às aulas, no mínimo de 10), mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsPedagogicalCapacity" bundle="INQUIRIES_RESOURCES"/> <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade às aulas, no mínimo de 10), mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsStudentInteraction" bundle="INQUIRIES_RESOURCES"/> <a href="#" class="help">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade às aulas, no mínimo de 10), mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questões do grupo. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
             <c:if test="${!isToImproove}">
                 <th><bean:message key="label.teachingInquiries.unsatisfactoryResultsAuditable" bundle="INQUIRIES_RESOURCES"/></th>
             </c:if>
@@ -80,27 +80,15 @@
 
 <p class="separator2 mtop25"><b><bean:message key="title.teachingInquiries.excellentResults" bundle="INQUIRIES_RESOURCES"/></b></p>
 
-<table class="tstyle1 thlight thleft tdcenter">
-    <tr class="top">
-        <th class="aright">Organização da UC</th>
-        <th class="aright">Avaliação da UC</th>
-    </tr>
-    <tr>
-        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${courseResult.studentInquiriesCourseResult.valuesMap['ResExcelent_OrganizacaoUC']}" /></td>
-        <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${courseResult.studentInquiriesCourseResult.valuesMap['ResExcelent_AvaliacaoUC']}" /></td>
-        
-    </tr>
-</table>
-
 <logic:notEmpty name="courseResult" property="studentInquiriesTeachingResults">
     <table class="tstyle1 thlight tdcenter">
         <tr>        
             <th class="nowrap"><bean:message key="label.teacher" bundle="INQUIRIES_RESOURCES"/></th>
             <th><bean:message key="label.typeOfClass" bundle="INQUIRIES_RESOURCES"/></th>
-            <th class="aright">Assiduidade dos alunos <a href="#" class="help">[?] <span>Resultados excelentes se mais se 95% dos alunos classifica como acima ou igual a 3 (de vez em quando).</span></a></th>
-            <th class="aright">Proveito da aprendizagem presencial <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo (excepto a questão da assiduidade) e a média de respostas nos outros grupos (Capacidade Pedagógica e Interacção com os alunos) superior a 7 (Concordo).</span></a></th>
-            <th class="aright">Capacidade pedagógica <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Interacção com os alunos) superior a 7 (Concordo).</span></a></th>
-            <th class="aright">Interacção com os alunos <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 95% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Capacidade pedagógica) superior a 7 (Concordo).</span></a></th>
+            <th class="aright">Assiduidade dos alunos <a href="#" class="help">[?] <span>Resultados excelentes se mais de 75% classifica como acima ou igual a 3 (De vez em quando) - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th class="aright">Proveito da aprendizagem presencial <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade às aulas, no mínimo de 10), mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo (excepto a questão da assiduidade) e a média de respostas nos outros grupos (Capacidade Pedagógica e Interacção com os alunos) superior a 7 (Concordo). - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th class="aright">Capacidade pedagógica <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Interacção com os alunos) superior a 7 (Concordo). - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+            <th class="aright">Interacção com os alunos <a href="#" class="help">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questões do grupo e a média de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a questão da assiduidade dos alunos) e Capacidade pedagógica) superior a 7 (Concordo). - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
         </tr>
         </tr>
         <logic:iterate id="teachingResult" name="courseResult" property="studentInquiriesTeachingResults" type="net.sourceforge.fenixedu.domain.inquiries.StudentInquiriesTeachingResult">
