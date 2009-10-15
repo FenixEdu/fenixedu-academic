@@ -8,20 +8,12 @@
 
 <style>
 
+/* CSS Iframe QUC */
 * { margin: 0; padding: 0; }
-
-
-#button_results span {
-background: none;
-background: url(<%= request.getContextPath() %>/images/inq_button_left.gif) no-repeat center left;
-padding: 5px 0 8px 12px; 
-margin: 0;
-}
- 
 #button_results a {
 background: none;
-background: url(<%= request.getContextPath() %>/images/inq_button_right.gif) no-repeat center right;
-padding: 8px 12px 8px 0;
+background: url(<%= request.getContextPath() %>/images/inq_button.gif) no-repeat center left;
+padding: 8px 18px 8px 18px;
 margin: 0;
 font-family: "Lucida Sans", Arial, sans-serif;
 font-size: 11px;
@@ -34,10 +26,6 @@ color: #fff;
 text-decoration: underline;
 }
 
-
-p#button_results[id] a {
-padding: 7px 12px 8px 0 !important;
-}
 #button_results {
 padding-bottom: 7px;
 }
