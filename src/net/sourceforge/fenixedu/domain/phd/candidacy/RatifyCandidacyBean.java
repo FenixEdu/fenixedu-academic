@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 
 import org.joda.time.LocalDate;
 
@@ -16,7 +17,7 @@ public class RatifyCandidacyBean implements Serializable {
 
     private LocalDate whenRatified;
 
-    private PhdCandidacyDocumentUploadBean ratificationFile;
+    private PhdProgramDocumentUploadBean ratificationFile;
 
     private DomainReference<PhdProgramCandidacyProcess> process;
 
@@ -24,7 +25,7 @@ public class RatifyCandidacyBean implements Serializable {
 
 	setProcess(process);
 
-	this.ratificationFile = new PhdCandidacyDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION);
+	this.ratificationFile = new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION);
 
     }
 
@@ -44,11 +45,11 @@ public class RatifyCandidacyBean implements Serializable {
 	this.whenRatified = whenRatified;
     }
 
-    public PhdCandidacyDocumentUploadBean getRatificationFile() {
+    public PhdProgramDocumentUploadBean getRatificationFile() {
 	return ratificationFile;
     }
 
-    public void setRatificationFile(PhdCandidacyDocumentUploadBean ratificationFile) {
+    public void setRatificationFile(PhdProgramDocumentUploadBean ratificationFile) {
 	this.ratificationFile = ratificationFile;
     }
 

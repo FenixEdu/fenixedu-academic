@@ -5,7 +5,13 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%><html:xhtml/>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.UploadReport"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadComissionDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.DownloadReportDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%><html:xhtml/>
 
 <logic:present role="TEACHER">
 
@@ -49,19 +55,60 @@
 		</fr:view>
 	</td>
     <td style="vertical-align: top; padding-top: 1em;">
+    	<bean:define id="process" name="process" />
     	<ul class="operations">
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.alertMessages"/>
 				</html:link>
 			</li>
+			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicPresentationSeminarComission.class %>">
+			<li>
+				<html:link action="/phdIndividualProgramProcess.do?method=prepareRequestPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.request.public.presentation.seminar.comission"/>
+				</html:link>
+			</li>
+			</phd:activityAvailable>
 		</ul>
     </td>
   </tr>
 </table>
 
+<%-- CAT --%>
 <br/>
+<logic:notEmpty name="process" property="seminarProcess">
+	<strong><bean:message  key="label.phd.publicPresentationSeminarProcess" bundle="PHD_RESOURCES"/></strong>
+	<fr:view schema="PublicPresentationSeminarProcess.view.simple" name="process" property="seminarProcess">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight mtop10" />
+		</fr:layout>
+	</fr:view>
+	<bean:define id="seminarProcess" name="process" property="seminarProcess" />
+	<ul class="operations">
+		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.UploadReport.class %>">
+		<li style="display: inline;">
+			<html:link action="/publicPresentationSeminarProcess.do?method=prepareUploadReport" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
+				<bean:message bundle="PHD_RESOURCES" key="label.phd.upload.public.presentation.seminar.report"/>
+			</html:link>
+		</li>
+		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadComissionDocument.class %>">
+		<li style="display: inline;">
+			<bean:define id="comissionDocumentUrl" name="seminarProcess" property="comissionDocument.downloadUrl" />
+			<a href="<%= comissionDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.comission.document" bundle="PHD_RESOURCES"/></a>
+		</li>
+		</phd:activityAvailable>
+		<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= DownloadReportDocument.class %>">
+		<li style="display: inline;">
+			<bean:define id="reportDocumentUrl" name="seminarProcess" property="reportDocument.downloadUrl" />
+			<a href="<%= reportDocumentUrl.toString() %>"><bean:message  key="label.phd.public.presentation.seminar.report.document" bundle="PHD_RESOURCES"/></a>
+		</li>
+		</phd:activityAvailable>
+	</ul>
+</logic:notEmpty>
 
+<%-- Candidacy --%>
+<br/>
 <strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <table>
   <tr>

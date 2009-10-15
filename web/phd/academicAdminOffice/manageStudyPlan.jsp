@@ -1,6 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -60,7 +59,7 @@
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty> 
 <logic:notEmpty name="process" property="studyPlanRelevantDocuments">
-	<fr:view schema="PhdProgramCandidacyProcessDocument.view.without.type" name="process" property="studyPlanRelevantDocuments">
+	<fr:view schema="PhdProgramProcessDocument.view.without.type" name="process" property="studyPlanRelevantDocuments">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			

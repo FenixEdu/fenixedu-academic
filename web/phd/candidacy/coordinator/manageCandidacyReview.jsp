@@ -70,7 +70,7 @@
 <strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 <logic:notEmpty name="process" property="candidacyReviewDocuments">
 	
-	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
+	<fr:view schema="PhdProgramProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
@@ -81,7 +81,7 @@
 			<fr:property name="module(view)" value="" />
 			<fr:property name="hasContext(view)" value="true" />
 				
-			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteCandidacyReview&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
+			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteCandidacyReview&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>
 			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
 			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />

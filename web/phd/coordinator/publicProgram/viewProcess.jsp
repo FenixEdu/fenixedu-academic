@@ -144,7 +144,7 @@
 	<%--  ### Documents ### --%>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
 	<logic:notEmpty name="individualProgramProcess" property="candidacyProcessDocuments">
-		<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
+		<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight thcenter"/>
 

@@ -63,7 +63,7 @@
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
 <logic:notEmpty name="process" property="candidacyReviewDocuments">
-	<fr:view schema="PhdProgramCandidacyProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
+	<fr:view schema="PhdProgramProcessDocument.review.document" name="process" property="candidacyReviewDocuments">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			

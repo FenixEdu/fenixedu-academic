@@ -40,9 +40,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndiv
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -89,7 +91,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 	@Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp"),
 
-	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp")
+	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp"),
+
+	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends PhdProcessDA {
@@ -768,5 +772,38 @@ public class PhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Photo Upload
+
+    // Request Public Presentation Seminar Comission
+
+    public ActionForward prepareRequestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("requestPublicPresentationSeminarComissionBean", new PublicPresentationSeminarProcessBean());
+
+	return mapping.findForward("requestPublicPresentationSeminarComission");
+
+    }
+
+    public ActionForward prepareRequestPublicPresentationSeminarComissionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("requestPublicPresentationSeminarComission",
+		getRenderedObject("requestPublicPresentationComissionBean"));
+
+	return mapping.findForward("requestPublicPresentationSeminarComission");
+    }
+
+    public ActionForward requestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) getRenderedObject("requestPublicPresentationSeminarComissionBean");
+
+	request.setAttribute("requestPublicPresentationSeminarComissionBean", bean);
+
+	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
+		"requestPublicPresentationSeminarComission", "viewProcess");
+    }
+
+    // End of Request Public Presentation Seminar Comission
 
 }

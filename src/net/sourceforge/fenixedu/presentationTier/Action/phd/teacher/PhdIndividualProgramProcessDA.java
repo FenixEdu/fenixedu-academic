@@ -24,7 +24,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "viewAlertMessages", path = "/phd/teacher/viewAlertMessages.jsp"),
 
-@Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp")
+@Forward(name = "viewProcessAlertMessages", path = "/phd/teacher/viewProcessAlertMessages.jsp"),
+
+@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/teacher/requestPublicPresentationSeminarComission.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {

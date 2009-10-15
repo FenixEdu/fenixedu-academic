@@ -29,6 +29,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.PhdRegistrationFee;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
@@ -98,9 +100,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    final List<PhdCandidacyDocumentUploadBean> documents = (List<PhdCandidacyDocumentUploadBean>) object;
+	    final List<PhdProgramDocumentUploadBean> documents = (List<PhdProgramDocumentUploadBean>) object;
 
-	    for (final PhdCandidacyDocumentUploadBean each : documents) {
+	    for (final PhdProgramDocumentUploadBean each : documents) {
 		if (each.hasAnyInformation()) {
 		    process.addDocument(each, userView != null ? userView.getPerson() : null);
 		}
@@ -122,7 +124,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    ((PhdProgramCandidacyProcessDocument) object).delete();
+	    ((PhdProgramProcessDocument) object).delete();
 
 	    return process;
 	}
@@ -288,7 +290,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@SuppressWarnings("unchecked")
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 
-	    for (final PhdCandidacyDocumentUploadBean each : (List<PhdCandidacyDocumentUploadBean>) object) {
+	    for (final PhdProgramDocumentUploadBean each : (List<PhdProgramDocumentUploadBean>) object) {
 		if (each.hasAnyInformation()) {
 		    process.addDocument(each, userView != null ? userView.getPerson() : null);
 		}
@@ -302,9 +304,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		return;
+	    }
+
 	    if (process.isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-		if ((isMasterDegreeAdministrativeOfficeEmployee(userView) || process.getIndividualProgramProcess()
-			.isCoordinatorForPhdProgram(userView.getPerson()))) {
+		if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
 		    return;
 		}
 	    }
@@ -316,7 +321,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
-	    PhdProgramCandidacyProcessDocument document = (PhdProgramCandidacyProcessDocument) object;
+	    PhdProgramProcessDocument document = (PhdProgramProcessDocument) object;
 
 	    document.delete();
 
@@ -354,11 +359,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    return process.registrationFormalization((RegistrationFormalizationBean) object, userView.getPerson());
 	}
 
-    }
-
-    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -461,9 +461,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().getPerson();
     }
 
-    public List<PhdProgramCandidacyProcessDocument> getCandidacyReviewDocuments() {
-	final List<PhdProgramCandidacyProcessDocument> documents = new ArrayList<PhdProgramCandidacyProcessDocument>();
-	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+    public List<PhdProgramProcessDocument> getCandidacyReviewDocuments() {
+	final List<PhdProgramProcessDocument> documents = new ArrayList<PhdProgramProcessDocument>();
+	for (final PhdProgramProcessDocument document : getDocuments()) {
 	    if (document.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
 		documents.add(document);
 	    }
@@ -472,7 +472,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public boolean hasAnyDocuments(final PhdIndividualProgramDocumentType type) {
-	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+	for (final PhdProgramProcessDocument document : getDocuments()) {
 	    if (document.hasType(type)) {
 		return true;
 	    }
@@ -482,7 +482,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public int getDocumentsCount(final PhdIndividualProgramDocumentType type) {
 	int total = 0;
-	for (final PhdProgramCandidacyProcessDocument document : getDocuments()) {
+	for (final PhdProgramProcessDocument document : getDocuments()) {
 	    if (document.hasType(type)) {
 		total++;
 	    }
@@ -494,10 +494,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getValidatedByCandidate() != null && getValidatedByCandidate().booleanValue();
     }
 
-    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanRelevantDocuments() {
-	final Set<PhdProgramCandidacyProcessDocument> result = new HashSet<PhdProgramCandidacyProcessDocument>();
+    public Set<PhdProgramProcessDocument> getStudyPlanRelevantDocuments() {
+	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
-	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
+	for (final PhdProgramProcessDocument each : getDocuments()) {
 	    if (each.hasType(PhdIndividualProgramDocumentType.STUDY_PLAN)
 		    || each.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
 		result.add(each);
@@ -545,15 +545,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return false;
     }
 
-    public void addDocument(PhdCandidacyDocumentUploadBean each, Person responsible) {
-	if (!each.getType().isMultipleDocumentsAllowed()) {
-	    removeDocumentsByType(each.getType());
-	}
-
-	new PhdProgramCandidacyProcessDocument(this, each.getType(), each.getRemarks(), each.getFileContent(),
-		each.getFilename(), responsible);
-    }
-
     public void ratify(RatifyCandidacyBean bean, Person responsible) {
 
 	check(bean.getWhenRatified(), "error.phd.candidacy.PhdProgramCandidacyProcess.when.ratified.cannot.be.null");
@@ -571,14 +562,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL, responsible);
 
-    }
-
-    public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
-	for (final PhdProgramCandidacyProcessDocument each : getDocuments()) {
-	    if (each.getDocumentType() == type) {
-		each.delete();
-	    }
-	}
     }
 
     private PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
@@ -684,4 +667,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().getPhdProgram();
     }
 
+    public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
+	return filterLatestDocumentVersions(getDocuments());
+    }
 }

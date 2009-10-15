@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
@@ -44,7 +45,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPerso
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean.PhdProgramGuidingType;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
@@ -539,19 +539,19 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("createCandidacyStepThree");
     }
 
-    private PhdCandidacyDocumentUploadBean createDocumentBean(final PhdIndividualProgramDocumentType type) {
-	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
+    private PhdProgramDocumentUploadBean createDocumentBean(final PhdIndividualProgramDocumentType type) {
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
 	bean.setType(type);
 	return bean;
     }
 
-    private List<PhdCandidacyDocumentUploadBean> createHabilitationCertificateDocuments(final PhdProgramCandidacyProcessBean bean) {
-	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(bean
+    private List<PhdProgramDocumentUploadBean> createHabilitationCertificateDocuments(final PhdProgramCandidacyProcessBean bean) {
+	final List<PhdProgramDocumentUploadBean> result = new ArrayList<PhdProgramDocumentUploadBean>(bean
 		.getQualifications().size());
 	if (bean.hasAnyQualification()) {
 	    bean.sortQualificationsByAttendedEnd();
 	    for (final QualificationBean qualification : bean.getQualifications()) {
-		final PhdCandidacyDocumentUploadBean uploadBean = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
+		final PhdProgramDocumentUploadBean uploadBean = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
 		uploadBean.setRemarks(qualification.getType().getLocalizedName());
 		result.add(uploadBean);
 	    }
@@ -559,8 +559,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return result;
     }
 
-    private List<PhdCandidacyDocumentUploadBean> createPhdGuidingLetters(final PhdProgramCandidacyProcessBean bean) {
-	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>(bean.getGuidings()
+    private List<PhdProgramDocumentUploadBean> createPhdGuidingLetters(final PhdProgramCandidacyProcessBean bean) {
+	final List<PhdProgramDocumentUploadBean> result = new ArrayList<PhdProgramDocumentUploadBean>(bean.getGuidings()
 		.size());
 	if (bean.hasAnyGuiding()) {
 	    for (int i = 0; i < bean.getGuidings().size(); i++) {
@@ -814,7 +814,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	final PhdCandidacyDocumentUploadBean document = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
+	final PhdProgramDocumentUploadBean document = createDocumentBean(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT);
 	bean.addHabilitationCertificateDocument(document);
 
 	request.setAttribute("candidacyBean", bean);
@@ -931,7 +931,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	request.setAttribute("candidacyProcessDocuments", bean.getCandidacyHashCode().getIndividualProgramProcess()
 		.getCandidacyProcessDocuments());
 
-	final PhdCandidacyDocumentUploadBean uploadBean = new PhdCandidacyDocumentUploadBean();
+	final PhdProgramDocumentUploadBean uploadBean = new PhdProgramDocumentUploadBean();
 	uploadBean.setIndividualProgramProcess(bean.getCandidacyHashCode().getIndividualProgramProcess());
 	request.setAttribute("documentByType", uploadBean);
 
@@ -967,7 +967,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    return uploadDocumentsInvalid(mapping, form, request, response);
 	}
 
-	final PhdCandidacyDocumentUploadBean uploadBean = (PhdCandidacyDocumentUploadBean) getRenderedObject("documentByType");
+	final PhdProgramDocumentUploadBean uploadBean = (PhdProgramDocumentUploadBean) getRenderedObject("documentByType");
 
 	if (!uploadBean.hasAnyInformation()) {
 	    addErrorMessage(request, "message.no.documents.to.upload");

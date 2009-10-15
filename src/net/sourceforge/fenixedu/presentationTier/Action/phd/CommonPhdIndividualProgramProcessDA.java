@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.InternalGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -100,4 +102,37 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     }
 
     // End of Alerts Management
+
+    // Request Public Presentation Seminar Comission
+
+    public ActionForward prepareRequestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("requestPublicPresentationSeminarComissionBean", new PublicPresentationSeminarProcessBean());
+
+	return mapping.findForward("requestPublicPresentationSeminarComission");
+
+    }
+
+    public ActionForward prepareRequestPublicPresentationSeminarComissionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("requestPublicPresentationSeminarComission",
+		getRenderedObject("requestPublicPresentationComissionBean"));
+
+	return mapping.findForward("requestPublicPresentationSeminarComission");
+    }
+
+    public ActionForward requestPublicPresentationSeminarComission(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) getRenderedObject("requestPublicPresentationSeminarComissionBean");
+
+	request.setAttribute("requestPublicPresentationSeminarComissionBean", bean);
+
+	return executeActivity(RequestPublicPresentationSeminarComission.class, bean, request, mapping,
+		"requestPublicPresentationSeminarComission", "viewProcess");
+    }
+
+    // End of Request Public Presentation Seminar Comission
 }

@@ -1,6 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>

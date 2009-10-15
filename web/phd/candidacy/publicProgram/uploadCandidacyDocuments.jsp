@@ -93,7 +93,7 @@
 
 <br/>
 
-<fr:view name="candidacyProcessDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
+<fr:view name="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thcenter"/>
 	</fr:layout>

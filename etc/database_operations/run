@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Renaming class PhdProgramCandidacyProcessDocument to PhdProgramProcessDocument" updateDomainClassInfo.sql
+execute "Changing table file" alterTableFile.sql

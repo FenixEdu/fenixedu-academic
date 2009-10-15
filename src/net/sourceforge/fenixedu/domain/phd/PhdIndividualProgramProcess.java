@@ -34,8 +34,8 @@ import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValida
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.LocalDate;
@@ -57,11 +57,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
-    }
-
-    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
     }
 
     static private List<Activity> activities = new ArrayList<Activity>();
@@ -101,6 +96,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new DeleteStudyPlan());
 
 	activities.add(new EditQualificationExams());
+
+	activities.add(new RequestPublicPresentationSeminarComission());
     }
 
     @StartActivity
@@ -602,6 +599,33 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     }
 
+    static public class RequestPublicPresentationSeminarComission extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView) && !process.isGuider(userView.getPerson())) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+		Object object) {
+
+	    final PublicPresentationSeminarProcess publicPresentationSeminarProcess = Process.createNewProcess(userView,
+		    PublicPresentationSeminarProcess.class, object);
+
+	    publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
+
+	    return individualProcess;
+	}
+
+    }
+
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -775,7 +799,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
-    public List<PhdProgramCandidacyProcessDocument> getCandidacyProcessDocuments() {
+    public List<PhdProgramProcessDocument> getCandidacyProcessDocuments() {
 	return getCandidacyProcess().getDocuments();
     }
 
@@ -843,7 +867,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCandidacyProcess().isValidatedByCandidate();
     }
 
-    public Set<PhdProgramCandidacyProcessDocument> getStudyPlanRelevantDocuments() {
+    public Set<PhdProgramProcessDocument> getStudyPlanRelevantDocuments() {
 	return getCandidacyProcess().getStudyPlanRelevantDocuments();
     }
 
@@ -912,7 +936,21 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isGuiderOrAssistentGuider(Person person) {
+	return isGuider(person) || isAssistantGuider(person);
+    }
+
+    public boolean isGuider(Person person) {
 	for (final PhdProgramGuiding guiding : getGuidings()) {
+	    if (guiding.isFor(person)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean isAssistantGuider(Person person) {
+	for (final PhdProgramGuiding guiding : getAssistantguidings()) {
 	    if (guiding.isFor(person)) {
 		return true;
 	    }
@@ -923,5 +961,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isRegistrationAvailable() {
 	return hasRegistration();
+    }
+
+    @Override
+    protected PhdIndividualProgramProcess getIndividualProgramProcess() {
+	return this;
     }
 }

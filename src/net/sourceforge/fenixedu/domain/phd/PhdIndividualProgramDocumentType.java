@@ -9,29 +9,29 @@ public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_FORM,
 
-    CANDIDACY_REVIEW(true),
+    CANDIDACY_REVIEW(false),
 
-    STUDY_PLAN(true),
+    STUDY_PLAN,
 
     CV,
 
-    DEGREE_FINALIZATION_CERTIFICATE(true),
+    DEGREE_FINALIZATION_CERTIFICATE(false),
 
-    HABILITATION_CERTIFICATE_DOCUMENT(true),
+    HABILITATION_CERTIFICATE_DOCUMENT(false),
 
-    DISSERTATION_OR_FINAL_WORK_DOCUMENT(true),
+    DISSERTATION_OR_FINAL_WORK_DOCUMENT(false),
 
     ID_DOCUMENT,
 
     SOCIAL_SECURITY,
 
-    RECOMMENDATION_LETTER(true),
+    RECOMMENDATION_LETTER(false),
 
     HEALTH_BULLETIN,
 
-    GUIDER_ACCEPTANCE_LETTER(true),
+    GUIDER_ACCEPTANCE_LETTER(false),
 
-    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(true),
+    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(false),
 
     MOTIVATION_LETTER,
 
@@ -39,16 +39,20 @@ public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_RATIFICATION,
 
-    OTHER(true);
+    PUBLIC_PRESENTATION_SEMINAR_COMISSION,
 
-    private boolean multipleDocumentsAllowed;
+    PUBLIC_PRESENTATION_SEMINAR_REPORT,
+
+    OTHER(false);
+
+    private boolean isVersioned;
 
     private PhdIndividualProgramDocumentType() {
-	this(false);
+	this(true);
     }
 
     private PhdIndividualProgramDocumentType(boolean multipleDocumentsAllowed) {
-	this.multipleDocumentsAllowed = multipleDocumentsAllowed;
+	this.isVersioned = multipleDocumentsAllowed;
     }
 
     public String getLocalizedName() {
@@ -63,8 +67,8 @@ public enum PhdIndividualProgramDocumentType {
 	return PhdIndividualProgramDocumentType.class.getSimpleName() + "." + name();
     }
 
-    public boolean isMultipleDocumentsAllowed() {
-	return multipleDocumentsAllowed;
+    public boolean isVersioned() {
+	return isVersioned;
     }
 
 }

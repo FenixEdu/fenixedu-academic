@@ -31,7 +31,7 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
     }
 
     private void checkType(final PublicPresentationSeminarProcess process, final PublicPresentationSeminarProcessStateType type) {
-	final PublicPresentationSeminarProcessStateType currentType = process.getActiveStateType();
+	final PublicPresentationSeminarProcessStateType currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
 	    throw new DomainException("error.PublicPresentationSeminarState.equals.previous.state");
 	}

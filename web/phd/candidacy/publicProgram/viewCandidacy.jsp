@@ -191,7 +191,7 @@ padding: 0.5em 1em;
 	<p class="mvert05"><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadDocuments';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/></a></p>
 </logic:equal>
 <logic:notEmpty name="individualProgramProcess" property="candidacyProcessDocuments">
-	<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramCandidacyProcessDocument.view">
+	<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thcenter"/>
 		</fr:layout>

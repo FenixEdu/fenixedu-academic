@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.phd.candidacy;
+package net.sourceforge.fenixedu.domain.phd;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -6,14 +6,12 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
-public class PhdCandidacyDocumentUploadBean implements Serializable {
+public class PhdProgramDocumentUploadBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,11 +27,11 @@ public class PhdCandidacyDocumentUploadBean implements Serializable {
 
     private DomainReference<PhdIndividualProgramProcess> individualProgramProcess;
 
-    public PhdCandidacyDocumentUploadBean() {
+    public PhdProgramDocumentUploadBean() {
 
     }
 
-    public PhdCandidacyDocumentUploadBean(PhdIndividualProgramDocumentType type) {
+    public PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType type) {
 	setType(type);
     }
 

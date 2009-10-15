@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramGuidingBean;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -63,21 +64,21 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private List<PhdCandidacyRefereeBean> candidacyReferees;
 
-    private PhdCandidacyDocumentUploadBean curriculumVitae;
+    private PhdProgramDocumentUploadBean curriculumVitae;
 
-    private PhdCandidacyDocumentUploadBean identificationDocument;
+    private PhdProgramDocumentUploadBean identificationDocument;
 
-    private PhdCandidacyDocumentUploadBean motivationLetter;
+    private PhdProgramDocumentUploadBean motivationLetter;
 
-    private PhdCandidacyDocumentUploadBean socialSecurityDocument;
+    private PhdProgramDocumentUploadBean socialSecurityDocument;
 
-    private PhdCandidacyDocumentUploadBean researchPlan;
+    private PhdProgramDocumentUploadBean researchPlan;
 
-    private PhdCandidacyDocumentUploadBean dissertationOrFinalWorkDocument;
+    private PhdProgramDocumentUploadBean dissertationOrFinalWorkDocument;
 
-    private List<PhdCandidacyDocumentUploadBean> habilitationCertificateDocuments;
+    private List<PhdProgramDocumentUploadBean> habilitationCertificateDocuments;
 
-    private List<PhdCandidacyDocumentUploadBean> phdGuidingLetters;
+    private List<PhdProgramDocumentUploadBean> phdGuidingLetters;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -307,63 +308,63 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	getPersonBean().setPerson(null);
     }
 
-    public PhdCandidacyDocumentUploadBean getCurriculumVitae() {
+    public PhdProgramDocumentUploadBean getCurriculumVitae() {
 	return curriculumVitae;
     }
 
-    public void setCurriculumVitae(PhdCandidacyDocumentUploadBean curriculumVitae) {
+    public void setCurriculumVitae(PhdProgramDocumentUploadBean curriculumVitae) {
 	this.curriculumVitae = curriculumVitae;
     }
 
-    public PhdCandidacyDocumentUploadBean getIdentificationDocument() {
+    public PhdProgramDocumentUploadBean getIdentificationDocument() {
 	return identificationDocument;
     }
 
-    public void setIdentificationDocument(PhdCandidacyDocumentUploadBean identificationDocument) {
+    public void setIdentificationDocument(PhdProgramDocumentUploadBean identificationDocument) {
 	this.identificationDocument = identificationDocument;
     }
 
-    public PhdCandidacyDocumentUploadBean getMotivationLetter() {
+    public PhdProgramDocumentUploadBean getMotivationLetter() {
 	return motivationLetter;
     }
 
-    public void setMotivationLetter(PhdCandidacyDocumentUploadBean motivationLetter) {
+    public void setMotivationLetter(PhdProgramDocumentUploadBean motivationLetter) {
 	this.motivationLetter = motivationLetter;
     }
 
-    public PhdCandidacyDocumentUploadBean getSocialSecurityDocument() {
+    public PhdProgramDocumentUploadBean getSocialSecurityDocument() {
 	return socialSecurityDocument;
     }
 
-    public void setSocialSecurityDocument(PhdCandidacyDocumentUploadBean socialSecurityDocument) {
+    public void setSocialSecurityDocument(PhdProgramDocumentUploadBean socialSecurityDocument) {
 	this.socialSecurityDocument = socialSecurityDocument;
     }
 
-    public PhdCandidacyDocumentUploadBean getResearchPlan() {
+    public PhdProgramDocumentUploadBean getResearchPlan() {
 	return researchPlan;
     }
 
-    public void setResearchPlan(PhdCandidacyDocumentUploadBean researchPlan) {
+    public void setResearchPlan(PhdProgramDocumentUploadBean researchPlan) {
 	this.researchPlan = researchPlan;
     }
 
-    public PhdCandidacyDocumentUploadBean getDissertationOrFinalWorkDocument() {
+    public PhdProgramDocumentUploadBean getDissertationOrFinalWorkDocument() {
 	return dissertationOrFinalWorkDocument;
     }
 
-    public void setDissertationOrFinalWorkDocument(PhdCandidacyDocumentUploadBean dissertationOrFinalWorkDocument) {
+    public void setDissertationOrFinalWorkDocument(PhdProgramDocumentUploadBean dissertationOrFinalWorkDocument) {
 	this.dissertationOrFinalWorkDocument = dissertationOrFinalWorkDocument;
     }
 
-    public List<PhdCandidacyDocumentUploadBean> getHabilitationCertificateDocuments() {
+    public List<PhdProgramDocumentUploadBean> getHabilitationCertificateDocuments() {
 	return habilitationCertificateDocuments;
     }
 
-    public void setHabilitationCertificateDocuments(List<PhdCandidacyDocumentUploadBean> habilitationCertificateDocuments) {
+    public void setHabilitationCertificateDocuments(List<PhdProgramDocumentUploadBean> habilitationCertificateDocuments) {
 	this.habilitationCertificateDocuments = habilitationCertificateDocuments;
     }
 
-    public void addHabilitationCertificateDocument(PhdCandidacyDocumentUploadBean document) {
+    public void addHabilitationCertificateDocument(PhdProgramDocumentUploadBean document) {
 	this.habilitationCertificateDocuments.add(document);
     }
 
@@ -372,27 +373,27 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     }
 
     public void removeHabilitationCertificateDocumentFiles() {
-	for (final PhdCandidacyDocumentUploadBean bean : getHabilitationCertificateDocuments()) {
+	for (final PhdProgramDocumentUploadBean bean : getHabilitationCertificateDocuments()) {
 	    bean.removeFile();
 	}
     }
 
-    public List<PhdCandidacyDocumentUploadBean> getPhdGuidingLetters() {
+    public List<PhdProgramDocumentUploadBean> getPhdGuidingLetters() {
 	return phdGuidingLetters;
     }
 
-    public void setPhdGuidingLetters(List<PhdCandidacyDocumentUploadBean> phdGuidingLetters) {
+    public void setPhdGuidingLetters(List<PhdProgramDocumentUploadBean> phdGuidingLetters) {
 	this.phdGuidingLetters = phdGuidingLetters;
     }
 
     public void removePhdGuidingLetters() {
-	for (final PhdCandidacyDocumentUploadBean bean : getPhdGuidingLetters()) {
+	for (final PhdProgramDocumentUploadBean bean : getPhdGuidingLetters()) {
 	    bean.removeFile();
 	}
     }
 
-    public List<PhdCandidacyDocumentUploadBean> getAllDocuments() {
-	final List<PhdCandidacyDocumentUploadBean> result = new ArrayList<PhdCandidacyDocumentUploadBean>();
+    public List<PhdProgramDocumentUploadBean> getAllDocuments() {
+	final List<PhdProgramDocumentUploadBean> result = new ArrayList<PhdProgramDocumentUploadBean>();
 
 	result.add(getCurriculumVitae());
 	result.add(getIdentificationDocument());
@@ -410,13 +411,13 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	    result.add(getDissertationOrFinalWorkDocument());
 	}
 
-	for (final PhdCandidacyDocumentUploadBean bean : getHabilitationCertificateDocuments()) {
+	for (final PhdProgramDocumentUploadBean bean : getHabilitationCertificateDocuments()) {
 	    if (bean.hasAnyInformation()) {
 		result.add(bean);
 	    }
 	}
 
-	for (final PhdCandidacyDocumentUploadBean bean : getPhdGuidingLetters()) {
+	for (final PhdProgramDocumentUploadBean bean : getPhdGuidingLetters()) {
 	    if (bean.hasAnyInformation()) {
 		result.add(bean);
 	    }

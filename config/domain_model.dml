@@ -6646,7 +6646,12 @@ class phd.PhdProcessState extends DomainObject {
 		PublicPresentationSeminarProcessStateType type;
 	}
 
-class phd.PhdIndividualProgramProcess extends caseHandling.Process {
+	
+class phd.PhdProgramProcess extends caseHandling.Process {
+
+}
+
+class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
 	String thesisTitle;
 	PhdIndividualProgramCollaborationType collaborationType;
 	String otherCollaborationType;
@@ -6661,18 +6666,19 @@ class phd.PhdIndividualProgramProcessNumber  extends DomainObject {
 	Integer number;
 }
 
-class phd.candidacy.PhdProgramCandidacyProcess extends caseHandling.Process {
+class phd.candidacy.PhdProgramCandidacyProcess extends phd.PhdProgramProcess {
 	LocalDate candidacyDate;
 	Boolean validatedByCandidate;
 	LocalDate whenRatified;
 }
 
-class phd.candidacy.PhdProgramCandidacyProcessDocument extends File {
+class phd.PhdProgramProcessDocument extends File {
 	PhdIndividualProgramDocumentType documentType;	
 	String remarks;
+	Integer documentVersion;
 }
 
-class phd.seminar.PublicPresentationSeminarProcess extends caseHandling.Process {
+class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
 	LocalDate presentationDate;
 }
 
@@ -6743,7 +6749,7 @@ class phd.candidacy.PhdCandidacyRefereeLetter extends DomainObject {
 	String refereeZipCode;
 }
 
-class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.candidacy.PhdProgramCandidacyProcessDocument {
+class phd.candidacy.PhdCandidacyRefereeLetterFile extends phd.PhdProgramProcessDocument {
 }
 
 class phd.alert.PhdAlert extends DomainObject {
@@ -7045,16 +7051,16 @@ relation PhdProgramServiceAgreementTemplatePhdProgram {
 	phd.PhdProgram playsRole phdProgram;
 }
 
-relation PhdProgramCandidacyProcessDocumentPhdProgramCandidacyProcess {
-	phd.candidacy.PhdProgramCandidacyProcess playsRole phdCandidacyProcess;
-	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole documents {
+relation PhdProgramProcessDocumentPhdProgramProcess {
+	phd.PhdProgramProcess playsRole phdProgramProcess;
+	phd.PhdProgramProcessDocument playsRole documents {
 		multiplicity *;
 	}
 }
 
-relation PhdProgramCandidacyProcessDocumentPerson {
+relation PhdProgramProcessDocumentPerson {
 	Person playsRole uploader;
-	phd.candidacy.PhdProgramCandidacyProcessDocument playsRole uploadedPhdCandidacyProcessDocuments {
+	phd.PhdProgramProcessDocument playsRole uploadedPhdProcessDocuments {
 		multiplicity *;
 	}
 }

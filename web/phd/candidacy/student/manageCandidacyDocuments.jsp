@@ -59,13 +59,13 @@
 
 <%--  ### Documents  ### --%>
 <strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
-<logic:empty name="process" property="documents">
+<logic:empty name="process" property="latestDocumentVersions">
 	<br/>
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
 
-<logic:notEmpty name="process" property="documents">	
-	<fr:view schema="PhdProgramCandidacyProcessDocument.view" name="process" property="documents">
+<logic:notEmpty name="process" property="latestDocumentVersions">	
+	<fr:view schema="PhdProgramProcessDocument.view" name="process" property="latestDocumentVersions">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			
@@ -73,11 +73,11 @@
 			<fr:property name="key(view)" value="label.view"/>
 			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 			<fr:property name="order(view)" value="0" />
-			<fr:property name="hasContext(view)" value="true" />
+			<fr:property name="hasContext(view)" value="false" />
 			<fr:property name="contextRelative(view)" value="false" />
 			
 			<%-- 	
-			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdCandidacyProcess.externalId}"/>
+			<fr:property name="linkFormat(delete)" value="/phdProgramCandidacyProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>
 			<fr:property name="key(delete)" value="label.delete"/>
 			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
 			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />

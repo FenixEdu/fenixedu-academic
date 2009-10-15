@@ -22,10 +22,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
@@ -205,9 +204,9 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     private void prepareDocumentsToUpload(HttpServletRequest request) {
-	request.setAttribute("documentsToUpload", Arrays.asList(new PhdCandidacyDocumentUploadBean(),
-		new PhdCandidacyDocumentUploadBean(), new PhdCandidacyDocumentUploadBean(), new PhdCandidacyDocumentUploadBean(),
-		new PhdCandidacyDocumentUploadBean()));
+	request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
+		new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean(),
+		new PhdProgramDocumentUploadBean()));
     }
 
     public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -241,7 +240,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     protected boolean hasAnyDocumentToUpload() {
-	for (final PhdCandidacyDocumentUploadBean each : getDocumentsToUpload()) {
+	for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
 	    if (each.hasAnyInformation()) {
 		return true;
 	    }
@@ -249,8 +248,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	return false;
     }
 
-    protected List<PhdCandidacyDocumentUploadBean> getDocumentsToUpload() {
-	return (List<PhdCandidacyDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
+	return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
     }
 
     public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

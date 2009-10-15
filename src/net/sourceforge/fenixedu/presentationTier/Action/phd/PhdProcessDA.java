@@ -31,7 +31,7 @@ abstract public class PhdProcessDA extends FenixDispatchAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	reloadRenderers();
+	//reloadRenderers();
 
 	final Process process = getProcess(request);
 	if (process != null) {

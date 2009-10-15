@@ -9,12 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProc
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
@@ -51,7 +50,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
     public ActionForward manageCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdCandidacyDocumentUploadBean bean = new PhdCandidacyDocumentUploadBean();
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean();
 	bean.setType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
 
 	final PhdProgramCandidacyProcessStateBean stateBean = new PhdProgramCandidacyProcessStateBean();
@@ -74,7 +73,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
     public ActionForward uploadCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PhdCandidacyDocumentUploadBean bean = (PhdCandidacyDocumentUploadBean) getRenderedObject("documentToUpload");
+	final PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) getRenderedObject("documentToUpload");
 
 	if (!bean.hasAnyInformation()) {
 	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
@@ -145,7 +144,7 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	return manageCandidacyReview(mapping, actionForm, request, response);
     }
 
-    protected PhdProgramCandidacyProcessDocument getDocument(HttpServletRequest request) {
+    protected PhdProgramProcessDocument getDocument(HttpServletRequest request) {
 	return getDomainObject(request, "documentId");
     }
 
