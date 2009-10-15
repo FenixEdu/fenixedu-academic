@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -23,9 +22,9 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
-    private DomainReference<Employee> employeeDomainReference;
+    private Employee employee;
 
-    private DomainReference<AcademicServiceRequest> requestDomainReference;
+    private AcademicServiceRequest request;
 
     private String justification;
 
@@ -109,19 +108,19 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public Employee getEmployee() {
-	return employeeDomainReference == null ? null : employeeDomainReference.getObject();
+	return employee;
     }
 
     public void setEmployee(Employee employee) {
-	this.employeeDomainReference = new DomainReference<Employee>(employee);
+	this.employee = employee;
     }
 
     private AcademicServiceRequest getAcademicServiceRequest() {
-	return requestDomainReference == null ? null : requestDomainReference.getObject();
+	return request;
     }
 
     private void setAcademicServiceRequest(final AcademicServiceRequest request) {
-	this.requestDomainReference = new DomainReference<AcademicServiceRequest>(request);
+	this.request = request;
     }
 
     public String getJustification() {

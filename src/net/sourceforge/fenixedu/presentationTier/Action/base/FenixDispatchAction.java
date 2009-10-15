@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 
@@ -63,6 +64,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
+    private static final String RESOURCES_PREFIX = "resources.";
+    private static final String RESOURCES_SUFFIX = "Resources";
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -75,6 +79,23 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
 
 	return actionForward;
+    }
+
+    protected static String getResourceMessageFromModule(String moduleName, String key) {
+	try {
+	    return getResourceBundleByModuleName(moduleName).getString(key);
+	} catch (MissingResourceException ex) {
+	    return key;
+	}
+    }
+
+    protected static ResourceBundle getResourceBundleByModuleName(String moduleName) {
+	moduleName = StringUtils.capitalize(moduleName);
+	try {
+	    return getResourceBundleByName(RESOURCES_PREFIX + moduleName + RESOURCES_SUFFIX);
+	} catch (MissingResourceException ex) {
+	    return getResourceBundleByName(RESOURCES_PREFIX + moduleName);
+	}
     }
 
     protected static ResourceBundle getResourceBundleByName(String bundleName) {

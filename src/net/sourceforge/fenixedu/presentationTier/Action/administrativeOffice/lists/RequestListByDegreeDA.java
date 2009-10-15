@@ -39,15 +39,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-/**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
- * 
- */
-
-@Mapping(path = "/requestListByDegree", module = "academicAdminOffice")
+@Mapping(path = "/requestListByDegree", module = RequestListByDegreeDA.MODULE)
 @Forwards( { @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
 public class RequestListByDegreeDA extends FenixDispatchAction {
+
+    protected static final String MODULE = "academicAdminOffice";
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -111,7 +107,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 		degreeCurricularPlan = request.getDegree().getMostRecentDegreeCurricularPlan();
 	    }
 
-	    if ((degreeCurricularPlan == null) || (degreetype != null && degreetype != degreeCurricularPlan.getDegreeType())) {
+	    if ((degreetype != null) && (degreeCurricularPlan == null || degreetype != degreeCurricularPlan.getDegreeType())) {
 		continue;
 	    }
 	    if (degree != null && degree != request.getDegree()) {
@@ -172,7 +168,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     private void exportToXls(List<RegistrationAcademicServiceRequest> requestList, OutputStream outputStream,
 	    DegreeByExecutionYearBean degreeSearchBean, AcademicServiceRequestSearchBean requestSearchBean) throws IOException {
 
-	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("PedidosPorCurso");
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
+		getResourceMessage("label.requestByDegree.unspaced"));
 
 	Degree degree = degreeSearchBean.getDegree();
 	ExecutionYear executionYear = degreeSearchBean.getExecutionYear();
@@ -187,20 +184,26 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	AcademicServiceRequestSituationType situationType = requestSearchBean.getAcademicServiceRequestSituationType();
 	spreadsheet.newRow();
 	if (requestType != null) {
-	    spreadsheet.addHeader("Pedidos do tipo: " + requestType.getName());
+	    spreadsheet.addHeader(getResourceMessage("label.type")
+		    + ": "
+		    + getResourceMessageFromModule("Enumeration", requestType.getClass().getSimpleName() + "."
+			    + requestType.getName()));
 	}
 	spreadsheet.newRow();
 	if (situationType != null) {
-	    spreadsheet.addHeader("Estado: " + situationType.getName());
+	    spreadsheet.addHeader(getResourceMessage("label.state")
+		    + ": "
+		    + getResourceMessageFromModule("Enumeration", situationType.getClass().getSimpleName() + "."
+			    + situationType.getName()));
 	}
 	spreadsheet.newRow();
 	if (requestSearchBean.isUrgentRequest()) {
-	    spreadsheet.addHeader("Urgentes");
+	    spreadsheet.addHeader(getResourceMessage("label.urgent.plural"));
 	}
 
 	spreadsheet.newRow();
 	spreadsheet.newRow();
-	spreadsheet.addCell(requestList.size() + " Pedidos");
+	spreadsheet.addCell(requestList.size() + " " + getResourceMessage("label.requests"));
 	fillSpreadSheet(requestList, spreadsheet, executionYear);
 	spreadsheet.getWorkbook().write(outputStream);
     }
@@ -222,12 +225,16 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Campus");
-	spreadsheet.addHeader("Número de Pedido");
-	spreadsheet.addHeader("Data de Entrada");
-	spreadsheet.addHeader("Descrição");
-	spreadsheet.addHeader("Número de Aluno");
-	spreadsheet.addHeader("Nome de Aluno");
+	spreadsheet.addHeader(getResourceMessage("campus"));
+	spreadsheet.addHeader(getResourceMessage("label.serviceRequestNumber"));
+	spreadsheet.addHeader(getResourceMessage("label.requestDate"));
+	spreadsheet
+		.addHeader(getResourceMessage("label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"));
+	spreadsheet.addHeader(getResourceMessage("label.studentNumber"));
+	spreadsheet.addHeader(getResourceMessage("label.student.name"));
     }
 
+    private String getResourceMessage(String key) {
+	return getResourceMessageFromModule(MODULE, key);
+    }
 }

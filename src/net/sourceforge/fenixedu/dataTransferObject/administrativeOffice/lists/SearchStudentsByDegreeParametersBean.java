@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -21,6 +22,8 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
     private List<RegistrationStateType> registrationStateTypes = new ArrayList<RegistrationStateType>();
 
     private List<StudentStatuteType> studentStatuteTypes = new ArrayList<StudentStatuteType>();
+
+    private Country nationality = null;
 
     private boolean activeEnrolments = false;
 
@@ -58,6 +61,14 @@ public class SearchStudentsByDegreeParametersBean extends DegreeByExecutionYearB
 
     public void setActiveEnrolments(boolean activeEnrolments) {
 	this.activeEnrolments = activeEnrolments;
+    }
+
+    public Country getNationality() {
+	return nationality;
+    }
+
+    public void setNationality(Country nationality) {
+	this.nationality = nationality;
     }
 
 }

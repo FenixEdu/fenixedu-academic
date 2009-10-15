@@ -38,7 +38,7 @@
 <logic:present name="studentCurricularPlanList">
 	<bean:size id="studentCurricularPlanListSize" name="studentCurricularPlanList" />
 	<p class="mtop2">
-		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/>: <%= studentCurricularPlanListSize %>
+		 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= studentCurricularPlanListSize.toString() %>"/> 
 	</p>
 	<fr:view schema="studentCurricularPlanList.view" name="studentCurricularPlanList">
 		<fr:layout name="tabular">

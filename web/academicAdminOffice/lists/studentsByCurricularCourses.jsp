@@ -41,7 +41,7 @@
 	<bean:size id="enrolmentListSize" name="enrolmentList" />
 
 	<p class="mtop2">
-		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total"/>: <%= enrolmentListSize %>
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentCurricularPlan.lists.total" arg0="<%= enrolmentListSize.toString() %>"/>
 	</p>
 
 	<fr:view schema="enrolmentStudentsList.view" name="enrolmentList">

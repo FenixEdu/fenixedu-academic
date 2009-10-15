@@ -55,6 +55,10 @@ public class SearchStudents extends FenixService {
 		continue;
 	    }
 
+	    if ((searchbean.getNationality() != null) && (registration.getPerson().getCountry() != searchbean.getNationality())) {
+		continue;
+	    }
+
 	    if (searchbean.hasAnyStudentStatuteType() && !hasStudentStatuteType(searchbean, registration)) {
 		continue;
 	    }
@@ -66,8 +70,7 @@ public class SearchStudents extends FenixService {
 		continue;
 	    }
 
-	    if (!searchbean.getActiveEnrolments()
-		    || registration.hasAnyEnrolmentsIn(executionYear)) {
+	    if (!searchbean.getActiveEnrolments() || registration.hasAnyEnrolmentsIn(executionYear)) {
 		result.add(new RegistrationWithStateForExecutionYearBean(registration, lastRegistrationState.getStateType()));
 	    }
 	}

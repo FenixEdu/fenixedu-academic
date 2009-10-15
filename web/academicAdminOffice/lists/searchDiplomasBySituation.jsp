@@ -34,7 +34,7 @@
 	<logic:present name="diplomasList">
 		<bean:size id="diplomasListSize" name="diplomasList" />
 		<p class="mtop2">
-			 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.diplomas.lists.total"/>: <%= diplomasListSize %>
+			 <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.diplomas.lists.total" arg0="<%= diplomasListSize.toString() %>"/>
 		</p>
 		<fr:view schema="diplomasList.view" name="diplomasList">
 			<fr:layout name="tabular">

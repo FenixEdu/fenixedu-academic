@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithState
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -27,6 +28,9 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -145,6 +149,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
+		spreadsheet.addCell(registration.getPerson().getCountry().getName());
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? StringUtils.EMPTY : person.getDefaultEmailAddress()
 			.getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
@@ -153,6 +158,131 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
+
+		fillSpreadSheetConclusion(spreadsheet, executionYear, registration);
+		fillSpreadSheetConclusionDate(spreadsheet, executionYear, registration);
+		fillSpreadSheetAverage(spreadsheet, executionYear, registration);
+	    }
+	}
+    }
+
+    private void fillSpreadSheetConclusion(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
+	    Registration registration) {
+	if (!registration.isBolonha()) {
+	    if (registration.hasConcluded()) {
+		spreadsheet.addCell("Sim");
+	    } else {
+		spreadsheet.addCell("Não");
+	    }
+	    spreadsheet.addCell("");
+	    spreadsheet.addCell("");
+	} else {
+	    spreadsheet.addCell("");
+	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
+	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
+		if (curricularPlan.getFirstCycle().isConcluded()) {
+		    spreadsheet.addCell("Sim");
+		} else {
+		    spreadsheet.addCell("Não");
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
+		if (curricularPlan.getSecondCycle().isConcluded()) {
+		    spreadsheet.addCell("Sim");
+		} else {
+		    spreadsheet.addCell("Não");
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	}
+    }
+
+    private void fillSpreadSheetConclusionDate(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
+	    Registration registration) {
+	DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+	if (!registration.isBolonha()) {
+	    if (registration.hasConcluded()) {
+		if (registration.hasConclusionProcess()) {
+		    spreadsheet.addCell(registration.getConclusionDate().toString(formatter));
+		} else {
+		    YearMonthDay conclusionDate = registration.calculateConclusionDate();
+		    if (conclusionDate != null) {
+			spreadsheet.addCell(conclusionDate.toString(formatter));
+		    } else {
+			spreadsheet.addCell("");
+		    }
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	    spreadsheet.addCell("");
+	    spreadsheet.addCell("");
+	} else {
+	    spreadsheet.addCell("");
+	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
+
+	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
+		if (curricularPlan.getFirstCycle().isConcluded()) {
+		    if (curricularPlan.getFirstCycle().isConclusionProcessed()) {
+			spreadsheet.addCell(curricularPlan.getFirstCycle().getConclusionDate().toString(formatter));
+		    } else {
+			spreadsheet.addCell(curricularPlan.getFirstCycle().calculateConclusionDate().toString(formatter));
+		    }
+		} else {
+		    spreadsheet.addCell("");
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
+		if (curricularPlan.getSecondCycle().isConcluded()) {
+		    if (curricularPlan.getSecondCycle().isConclusionProcessed()) {
+			spreadsheet.addCell(curricularPlan.getSecondCycle().getConclusionDate().toString(formatter));
+		    } else {
+			spreadsheet.addCell(curricularPlan.getSecondCycle().calculateConclusionDate().toString(formatter));
+		    }
+		} else {
+		    spreadsheet.addCell("");
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	}
+    }
+
+    private void fillSpreadSheetAverage(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
+	    Registration registration) {
+	if (!registration.isBolonha()) {
+	    if (registration.hasConclusionProcess()) {
+		spreadsheet.addCell(registration.getAverage().toString());
+	    } else {
+		spreadsheet.addCell(registration.calculateAverage().toString());
+	    }
+	    spreadsheet.addCell("");
+	    spreadsheet.addCell("");
+	} else {
+	    spreadsheet.addCell("");
+	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
+	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
+		if (curricularPlan.getFirstCycle().isConclusionProcessed()) {
+		    spreadsheet.addCell(curricularPlan.getFirstCycle().getAverage().toString());
+		} else {
+		    spreadsheet.addCell(curricularPlan.getFirstCycle().calculateAverage().toString());
+		}
+	    } else {
+		spreadsheet.addCell("");
+	    }
+	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
+		if (curricularPlan.getSecondCycle().isConclusionProcessed()) {
+		    spreadsheet.addCell(curricularPlan.getSecondCycle().getAverage().toString());
+		} else {
+		    spreadsheet.addCell(curricularPlan.getSecondCycle().calculateAverage().toString());
+		}
+	    } else {
+		spreadsheet.addCell("");
 	    }
 	}
     }
@@ -165,12 +295,22 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader("Estado da Matrícula");
 	spreadsheet.addHeader("Acordo");
 	if (extendedInfo) {
+	    spreadsheet.addHeader("Nacionalidade");
 	    spreadsheet.addHeader("Email");
 	    spreadsheet.addHeader("Género");
 	    spreadsheet.addHeader("Data Nascimento");
 	    spreadsheet.addHeader("Nº inscrições");
 	    spreadsheet.addHeader("Ano académico");
 	    spreadsheet.addHeader("Nº disciplinas inscritas");
+	    spreadsheet.addHeader("Curso Concluído");
+	    spreadsheet.addHeader("1º Ciclo Concluído");
+	    spreadsheet.addHeader("2º Ciclo Concluído");
+	    spreadsheet.addHeader("Data de Conclusão");
+	    spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
+	    spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
+	    spreadsheet.addHeader("Média de Curso");
+	    spreadsheet.addHeader("Média de Curso (1º Ciclo)");
+	    spreadsheet.addHeader("Média de Curso (2º Ciclo)");
 	}
     }
 

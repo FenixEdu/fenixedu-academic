@@ -114,7 +114,7 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     public CycleCourseGroup getCycleCourseGroup() {
-	return (CycleCourseGroup) getDegreeModule();
+	return getDegreeModule();
     }
 
     public CycleType getCycleType() {
