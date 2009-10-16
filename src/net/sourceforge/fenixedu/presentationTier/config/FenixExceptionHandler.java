@@ -104,7 +104,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 //	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
 //	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
 //		.getQueryString(), UserView.getUser() == null ? StringUtils.EMPTY : ((IUserView) UserView.getUser())
-//		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName());
+//		.getUtilizador(), requestContext, sessionContext, stackTrace, ex.getClass().getName(), request.getMethod().equalsIgnoreCase("POST"));
 
 //	errorLogger.start();
 
@@ -144,9 +144,11 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	private String exceptionType;
 
 	private ErrorLog errorLog;
+	
+	private Boolean post;
 
 	public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user,
-		String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType) {
+		String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType, Boolean post) {
 	    super();
 	    this.path = path;
 	    this.parameters = parameters;
@@ -157,6 +159,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	    this.sessionAttributes = sessionAttributes;
 	    this.stackTrace = stackTrace;
 	    this.exceptionType = exceptionType;
+	    this.post = post;
 	}
 
 	@Override
@@ -164,7 +167,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
 		    errorLog = RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes,
-			    sessionAttributes, stackTrace, exceptionType).getErrorLog();
+			    sessionAttributes, stackTrace, exceptionType, post).getErrorLog();
 		}
 	    });
 	}

@@ -6198,7 +6198,20 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
 class log.requests.RequestMapping extends DomainObject {
 	String path;
 	String parameters;
-}	
+}
+
+
+class log.requests.RequestLogYear extends DomainObject {
+	Integer year;
+}
+
+class log.requests.RequestLogMonth extends DomainObject {
+	Integer monthOfYear;
+}
+
+class log.requests.RequestLogDay extends DomainObject {
+	Integer dayOfMonth;
+}
 	
 class log.requests.RequestLog extends DomainObject {
 	String queryString;
@@ -6207,6 +6220,7 @@ class log.requests.RequestLog extends DomainObject {
 	String requestAttributes;
 	String sessionAttributes;
 	String referer;
+	Boolean post;
 }	
 	
 class log.requests.ErrorLog extends DomainObject {
@@ -15608,6 +15622,59 @@ relation DeployNotifierRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	DeployNotifier playsRole deployNotifier; 
 }
+
+relation RequestLogDayRequestLog {
+	log.requests.RequestLogDay playsRole day;
+	log.requests.RequestLog playsRole logs {
+		multiplicity *;
+	}
+}
+
+relation RequestLogMonthRequestLogDay {
+	log.requests.RequestLogMonth playsRole month;
+	log.requests.RequestLogDay playsRole days {
+		multiplicity *;
+	}
+}
+
+relation RequestLogYearRequestLogDay {
+	log.requests.RequestLogYear playsRole year;
+	log.requests.RequestLogMonth playsRole months {
+		multiplicity *;
+	}
+}
+
+relation RequestLogDayRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	log.requests.RequestLogDay playsRole requestLogDays {
+		multiplicity *;
+	}
+}
+
+relation MostRecentRequestLogDay {
+	RootDomainObject playsRole rootDomainObjectRequestLogDay;
+	log.requests.RequestLogDay playsRole mostRecentRequestLogDay;
+}
+
+relation RequestLogDayRequestLogDay {
+	log.requests.RequestLogDay playsRole next;
+	log.requests.RequestLogDay playsRole previous;
+}
+
+relation RequestLogMonthRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	log.requests.RequestLogMonth playsRole requestLogMonths {
+		multiplicity *;
+	}
+}
+
+relation RequestLogYearRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	log.requests.RequestLogYear playsRole requestLogYears {
+		multiplicity *;
+	}
+}
+
 
 relation RequestMappingRequestLog {
 	log.requests.RequestMapping playsRole mapping;
