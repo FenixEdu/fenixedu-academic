@@ -232,9 +232,11 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	final InquiryResponsePeriod responsePeriod = executionCourse.getExecutionPeriod().getInquiryResponsePeriod(
 		InquiryResponsePeriodType.TEACHING);
 	if (responsePeriod == null || !responsePeriod.isOpen() || !executionCourse.getAvailableForInquiries()
+		|| executionCourse.getStudentInquiriesCourseResults().isEmpty()
 		|| (!isResponsibleFor() && !hasAssociatedLessonsInTeachingServices())) {
 	    return false;
 	}
+
 	return true;
     }
 
