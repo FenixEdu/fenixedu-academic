@@ -10,7 +10,7 @@
 <bean:define id="executionDegreeOID" name="executionDegree" property="externalId" type="String"/>
 
 <h2>
-	<bean:message key="title.final.degree.work.administration"/>
+	<bean:message key="title.finalDegreeWorkProposals"/>
 </h2>	
 
 <h3>

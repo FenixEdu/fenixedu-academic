@@ -12,7 +12,7 @@
 <bean:define id="executionDegreeOID" name="executionDegree" property="externalId" type="String"/>
 <bean:define id='filter' name='filterBean' property="status"/>
 <h2>
-	<bean:message key="title.final.degree.work.administration"/>
+	<bean:message key="title.finalDegreeWorkCandidates"/>
 </h2>	
 
 <h3>
