@@ -615,7 +615,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    getCandidacy().setExecutionDegree(executionDegree);
 	}
 
-	getCandidacy().setIngression(Ingression.CIA3C); // TODO: check
+	getCandidacy().setIngression(Ingression.CIA3C);
     }
 
     private void assertRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
@@ -630,6 +630,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	registration.setHomologationDate(getWhenRatified());
 	registration.setStudiesStartDate(bean.getWhenStartedStudies());
+	registration.setIngression(Ingression.CIA3C);
 	registration.setPhdIndividualProgramProcess(getIndividualProgramProcess());
     }
 
