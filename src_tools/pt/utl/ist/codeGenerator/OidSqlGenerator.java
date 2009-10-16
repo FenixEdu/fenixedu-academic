@@ -243,7 +243,7 @@ public class OidSqlGenerator {
 		fileWriter.append(" where t2.ID_INTERNAL = t1.");
 		fileWriter.append(key);
 
-		if (domainClassName != null) {
+		if (domainClassName != null && mapFamily.containsKey(domainClassName)) {
 		    final DomainClass domainClass = domainModel.findClass(domainClassName);
 		    final DomainClassEntry domainClassEntry = DomainClassEntry.findDomainClassEntry(domainClass);
 		    
