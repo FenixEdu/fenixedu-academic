@@ -1238,8 +1238,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     private BigDecimal getBaseWeigth() {
-	return BigDecimal.valueOf((super.getWeigth() == null || super.getWeigth() == 0d) ? getCurricularCourse().getWeigth()
-		: super.getWeigth());
+	final Double d;
+	if (super.getWeigth() == null || super.getWeigth() == 0d) {
+	    final CurricularCourse curricularCourse = getCurricularCourse();
+	    d = curricularCourse == null ? null : curricularCourse.getWeigth();
+	} else {
+	    d = super.getWeigth();
+	}
+	return d == null ? null : BigDecimal.valueOf(d);
     }
 
     private boolean isExecutionYearEnrolmentAfterOrEqualsExecutionYear0607() {
