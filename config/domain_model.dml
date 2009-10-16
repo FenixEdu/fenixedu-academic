@@ -4704,6 +4704,7 @@ class DomainObject {
 					class serviceRequests.documentRequests.ApprovementCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 						MobilityProgram mobilityProgram;
 						Boolean ignoreExternalEntries;
+						Boolean ignoreCurriculumInAdvance;
 						Integer numberOfUnits;
 					}
 	
@@ -4718,6 +4719,7 @@ class DomainObject {
 						YearMonthDay exceptionalConclusionDate;
 						MobilityProgram mobilityProgram;
 						Boolean ignoreExternalEntries;
+						Boolean ignoreCurriculumInAdvance;
 						CycleType requestedCycle;
 					}
 	

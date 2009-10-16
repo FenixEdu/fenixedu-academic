@@ -73,6 +73,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private boolean ignoreExternalEntries = false;
 
+    private boolean ignoreCurriculumInAdvance = false;
+
     private boolean toUseAll = false;
 
     private List<DomainReference<Enrolment>> enrolments;
@@ -320,6 +322,14 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setIgnoreExternalEntries(final boolean ignoreExternalEntries) {
 	this.ignoreExternalEntries = ignoreExternalEntries;
+    }
+
+    public boolean isIgnoreCurriculumInAdvance() {
+	return ignoreCurriculumInAdvance;
+    }
+
+    public void setIgnoreCurriculumInAdvance(boolean ignoreCurriculumInAdvance) {
+	this.ignoreCurriculumInAdvance = ignoreCurriculumInAdvance;
     }
 
     public boolean isToUseAll() {

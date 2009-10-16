@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -38,6 +37,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	checkParameters(bean);
 	super.setMobilityProgram(bean.getMobilityProgram());
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
+	super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 
 	if (isEmployee()) {
 
@@ -228,8 +228,6 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	return result;
     }
 
-    
-
     private void reportApprovedCurriculumLines(final Collection<ICurriculumEntry> result, final Collection<CurriculumLine> lines) {
 	for (final CurriculumLine line : lines) {
 	    if (line.isApproved()) {
@@ -243,8 +241,11 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-	for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan().getExternalCurriculumGroups()) {
-	    filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
+	if (!getIgnoreCurriculumInAdvance()) {
+	    for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
+		    .getExternalCurriculumGroups()) {
+		filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
+	    }
 	}
     }
 

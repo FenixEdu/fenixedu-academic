@@ -1,0 +1,2 @@
+
+alter table `ACADEMIC_SERVICE_REQUEST` add column `IGNORE_CURRICULUM_IN_ADVANCE` tinyint(1);

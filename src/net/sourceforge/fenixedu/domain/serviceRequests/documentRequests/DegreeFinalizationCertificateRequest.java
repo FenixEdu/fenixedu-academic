@@ -38,6 +38,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	super.setDetailed(bean.getDetailed());
 	super.setMobilityProgram(bean.getMobilityProgram());
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
+	super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 	super.setTechnicalEngineer(bean.getTechnicalEngineer());
 	super.setInternshipAbolished(bean.getInternshipAbolished());
 	super.setInternshipApproved(bean.getInternshipApproved());
