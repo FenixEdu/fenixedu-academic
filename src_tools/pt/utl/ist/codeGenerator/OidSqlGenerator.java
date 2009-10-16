@@ -26,6 +26,46 @@ import dml.Slot;
 
 public class OidSqlGenerator {
 
+    private static final Set<DomainClassEntry> domainClassEntries = new HashSet<DomainClassEntry>();
+
+    private static class DomainClassEntry {
+	private DomainClassEntry superDomainClassEntry;
+	private final DomainClass domainClass;
+	private Set<DomainClassEntry> subDomainClassEntries = new HashSet<DomainClassEntry>();
+
+	public DomainClassEntry(final DomainClass domainClass) {
+	    final DomainClassEntry domainClassEntry = findDomainClassEntry(domainClass);
+	    if (domainClassEntry != null) {
+		throw new Error("Domain class: " + domainClass.getFullName() + " was already registered.");		
+	    }
+	    this.domainClass = domainClass;
+	    domainClassEntries.add(this);
+
+	    final DomainClass superDomainClass = (DomainClass) domainClass.getSuperclass();
+	    final DomainClassEntry superDomainClassEntry = findDomainClassEntry(superDomainClass);
+	    if (superDomainClassEntry != null) {
+		this.superDomainClassEntry = superDomainClassEntry;
+		superDomainClassEntry.subDomainClassEntries.add(this);
+	    }
+
+	    for (final DomainClassEntry someDomainClassEntry : domainClassEntries) {
+		if (someDomainClassEntry.domainClass.getSuperclass() == domainClass) {
+		    someDomainClassEntry.superDomainClassEntry = this;
+		    subDomainClassEntries.add(someDomainClassEntry);
+		}
+	    }
+	}
+
+	private static DomainClassEntry findDomainClassEntry(final DomainClass domainClass) {
+	    for (final DomainClassEntry domainClassEntry : domainClassEntries) {
+		if (domainClassEntry.domainClass == domainClass) {
+		    return domainClassEntry;
+		}
+	    }
+	    return null;
+	}
+    }
+
     private static abstract class Writer {
 	protected abstract String getFilename();
 
@@ -127,8 +167,8 @@ public class OidSqlGenerator {
 	    fileWriter.append("';\n");
 	}
 
-	protected void writeUpdate(final FileWriter fileWriter, final String domainClassName, final String tablename, final boolean appendConcreteClassClause)
-		throws IOException {
+	protected void writeUpdate(final FileWriter fileWriter, final String domainClassName, final String tablename,
+		final boolean appendConcreteClassClause) throws IOException {
 	    fileWriter.append("update ");
 	    fileWriter.append(tablename);
 	    fileWriter.append(" set OID = (@xpto << 32) + ID_INTERNAL");
@@ -197,17 +237,38 @@ public class OidSqlGenerator {
 			    fileWriter.append(" = t1.");
 			    fileWriter.append(columnName);
 			}
-		    }
+		    }		    
 		}
 
 		fileWriter.append(" where t2.ID_INTERNAL = t1.");
 		fileWriter.append(key);
+
+		if (domainClassName != null) {
+		    final DomainClass domainClass = domainModel.findClass(domainClassName);
+		    final DomainClassEntry domainClassEntry = DomainClassEntry.findDomainClassEntry(domainClass);
+		    
+		    fileWriter.append(" and t1.OJB_CONCRETE_CLASS in ('");
+		    fileWriter.append(domainClassName);
+		    fileWriter.append("'");
+		    appendSubEntries(fileWriter, domainClassEntry.subDomainClassEntries);
+		    fileWriter.append(")");
+		}
+
 		fileWriter.append(";\n");
 	    }
 
 	}
 
+	private void appendSubEntries(final FileWriter fileWriter, final Set<DomainClassEntry> subDomainClassEntries) throws IOException {
+	    for (final DomainClassEntry domainClassEntry : subDomainClassEntries) {
+		fileWriter.append(", '");
+		fileWriter.append(domainClassEntry.domainClass.getFullName());
+		fileWriter.append("'");
+		appendSubEntries(fileWriter, domainClassEntry.subDomainClassEntries);
+	    }
+	}
     }
+
 
     private static DomainModel domainModel = null;
     private static final AlterTableRegistry alterTableRegistry = new AlterTableRegistry();
@@ -226,6 +287,10 @@ public class OidSqlGenerator {
 	Config config = PropertiesManager.getFenixFrameworkConfig(dmlFilePath);
 	MetadataManager.init(config);
 	domainModel = MetadataManager.getDomainModel();
+
+	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
+	    new DomainClassEntry(domainClass);
+	}
 
 	for (final DomainClass domainClass : domainModel.getDomainClasses()) {
 	    if (!shouldProcess(domainClass)) {
