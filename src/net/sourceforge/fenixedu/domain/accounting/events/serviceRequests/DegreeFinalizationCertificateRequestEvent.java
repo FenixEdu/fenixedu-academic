@@ -1,13 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizationCertificateRequestEvent_Base {
 
@@ -50,18 +47,5 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
     @Override
     public boolean isExemptionAppliable() {
 	return true;
-    }
-
-    public boolean hasDegreeFinalizationCertificateRequestExemption() {
-	return getDegreeFinalizationCertificateRequestExemption() != null;
-    }
-
-    public DegreeFinalizationCertificateRequestExemption getDegreeFinalizationCertificateRequestExemption() {
-	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof DegreeFinalizationCertificateRequestExemption) {
-		return (DegreeFinalizationCertificateRequestExemption) exemption;
-	    }
-	}
-	return null;
     }
 }

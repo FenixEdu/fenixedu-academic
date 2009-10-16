@@ -24,21 +24,19 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
 	init(EntryType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST_FEE, EventType.DEGREE_FINALIZATION_CERTIFICATE_REQUEST, startDate,
 		endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage);
     }
-    
-    
+
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when) {
-        final Money total = super.calculateTotalAmountToPay(event, when);
-        
-        final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event; 
+	final Money total = super.calculateTotalAmountToPay(event, when);
 
-        if (requestEvent.hasDegreeFinalizationCertificateRequestExemption()) {
-            return total.subtract(requestEvent.getDegreeFinalizationCertificateRequestExemption().getValue());
-        }
-        
-        return total;
+	final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event;
+
+	if (requestEvent.hasAcademicServiceRequestExemption()) {
+	    return total.subtract(requestEvent.getAcademicServiceRequestExemption().getValue());
+	}
+
+	return total;
     }
-    
 
     @Checked("PostingRulePredicates.editPredicate")
     public DegreeFinalizationCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage) {

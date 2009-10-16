@@ -1,6 +1,6 @@
-package net.sourceforge.fenixedu.domain.accounting.events;
+package net.sourceforge.fenixedu.domain.accounting.events.serviceRequests;
 
-public enum DegreeFinalizationCertificateRequestJustificationType {
+public enum AcademicServiceRequestJustificationType {
 
     DIRECTIVE_COUNCIL_AUTHORIZATION;
 

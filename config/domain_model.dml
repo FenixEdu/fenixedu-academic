@@ -183,7 +183,7 @@ enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType														  	 
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType												  as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
-enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType 			  as DegreeFinalizationCertificateRequestJustificationType;
+enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType			  as AcademicServiceRequestJustificationType;
 
 /*
  * Value types that need special externalization
@@ -1899,7 +1899,7 @@ class DomainObject {
 		class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
 		}
 		
-		class accounting.events.DegreeFinalizationCertificateRequestExemption extends accounting.Exemption {
+		class accounting.events.serviceRequests.AcademicServiceRequestExemption extends accounting.Exemption {
 			Money value;
 		}
 
@@ -2263,8 +2263,8 @@ class DomainObject {
 				YearMonthDay dispatchDate;
 			}
 			
-		class accounting.events.DegreeFinalizationCertificateRequestExemptionJustification extends accounting.events.ExemptionJustification {
-			DegreeFinalizationCertificateRequestJustificationType justificationType;
+		class accounting.events.serviceRequests.AcademicServiceRequestExemptionJustification extends accounting.events.ExemptionJustification {
+			AcademicServiceRequestJustificationType justificationType;
 			LocalDate dispatchDate;
 		}
 

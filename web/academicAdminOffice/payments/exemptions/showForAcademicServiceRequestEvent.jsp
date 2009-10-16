@@ -37,11 +37,11 @@
 	<bean:define id="eventId" name="event" property="idInternal" />
 	<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions"/></strong></p>
 
-	<logic:notEmpty name="event" property="degreeFinalizationCertificateRequestExemption">
+	<logic:notEmpty name="event" property="academicServiceRequestExemption">
 	
-		<bean:define id="certificateExemption" name="event" property="degreeFinalizationCertificateRequestExemption" />
+		<bean:define id="certificateExemption" name="event" property="academicServiceRequestExemption" />
 
-		<fr:view name="certificateExemption" schema="DegreeFinalizationCertificateRequestExemption.view">
+		<fr:view name="certificateExemption" schema="AcademicServiceRequestExemption.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 mtop05" />
 			</fr:layout>
@@ -54,14 +54,14 @@
 		
 	</logic:notEmpty>
 
-	<logic:empty name="event" property="degreeFinalizationCertificateRequestExemption">
+	<logic:empty name="event" property="academicServiceRequestExemption">
 		<p>
 			<em>
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions.noExemptions" />
 			</em>
 		</p>
 		<p>
-			<html:link action="<%="/exemptionsManagement.do?method=prepareCreateDegreeFinalizationCertificateRequestExemption&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
+			<html:link action="<%="/exemptionsManagement.do?method=prepareCreateAcademicServiceRequestExemption&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
 			</html:link>
 		</p>

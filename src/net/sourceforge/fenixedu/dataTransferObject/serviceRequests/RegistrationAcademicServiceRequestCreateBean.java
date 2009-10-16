@@ -17,7 +17,7 @@ public class RegistrationAcademicServiceRequestCreateBean extends AcademicServic
     private DomainReference<EquivalencePlanRequest> equivalencePlanRequest;
     private String subject;
     private String purpose;
-    private Integer numberOfEquivalences;
+    private Integer numberOfEquivalences = null;
 
     public RegistrationAcademicServiceRequestCreateBean(final Registration registration) {
 	super(registration);

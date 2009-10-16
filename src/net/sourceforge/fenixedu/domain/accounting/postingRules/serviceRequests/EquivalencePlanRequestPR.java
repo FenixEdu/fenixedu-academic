@@ -46,7 +46,18 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     @Override
     public Money calculateTotalAmountToPay(final Event event, final DateTime when, boolean applyDiscount) {
 	final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
-	return getAmountPerUnit().multiply(planRequest.getNumberOfEquivalences().intValue());
+
+	Money amountToPay = getAmountPerUnit();
+
+	if (planRequest.getNumberOfEquivalences() != null && planRequest.getNumberOfEquivalences().intValue() != 0) {
+	    amountToPay.multiply(planRequest.getNumberOfEquivalences().intValue());
+	}
+
+	if (planRequest.hasAcademicServiceRequestExemption()) {
+	    amountToPay = amountToPay.subtract(planRequest.getAcademicServiceRequestExemption().getValue());
+	}
+
+	return amountToPay.isPositive() ? amountToPay : Money.ZERO;
     }
 
     @Override
