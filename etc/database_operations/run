@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Academic Service Request exemptions updates" academicRequestExemptionsUpdates.sql
+execute "Fixing phd candidacy documents concrete class" FixPhdDocumentsOjbConcreteClass.sql
+
