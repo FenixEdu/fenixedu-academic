@@ -295,4 +295,27 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	return mapping.findForward("change-payment-checked-state");
     }
 
+    @Override
+    public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	DegreeTransferIndividualCandidacyProcessBean bean = (DegreeTransferIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	boolean isValid = hasInvalidViewState();
+	if (!isValid) {
+	    invalidateDocumentFileRelatedViewStates();
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("fill-candidacy-information");
+	}
+
+	/*
+	 * 18/07/2009 - Since we step candidacy information form we must copy
+	 * some fields
+	 */
+	bean.copyInformationToCandidacyBean();
+
+	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
+
+	return super.createNewProcess(mapping, form, request, response);
+    }
+
 }
