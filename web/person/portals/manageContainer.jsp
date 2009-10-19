@@ -17,6 +17,7 @@
 	<fr:layout name="manage-content-bread-crumbs">
 		<fr:property name="linkFor(Section)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
 		<fr:property name="linkFor(Portal)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
+		<fr:property name="linkFor(ContentJump)" value="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
 		<fr:property name="linkFor(Functionality)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
 		<fr:property name="linkFor(FunctionalityCall)" value="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
 	</fr:layout>
@@ -99,6 +100,7 @@
 		   <fr:property name="schemaFor(MetaDomainObjectPortal)" value="contents.portal.tree"/>
    		   <fr:property name="childrenFor(MetaDomainObjectPortal)" value="childrenAsContent"/>
 
+			<fr:property name="schemaFor(ContentJump)" value="contents.jumpPoint.tree"/>
 			<fr:property name="schemaFor(Functionality)" value="functionalities.functionality.tree"/>
 
 
@@ -108,6 +110,7 @@
 	<fr:destination name="section.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
 	<fr:destination name="portal.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
 	<fr:destination name="functionality.view" path="/contentManagement.do?method=viewElement&contentId=${idInternal}"/>
+	<fr:destination name="contentJump.view" path="/contentManagement.do?method=viewContainer&contentId=${idInternal}"/>
 </fr:view>
 
 	<div id="tree-controls" style="display: none;">

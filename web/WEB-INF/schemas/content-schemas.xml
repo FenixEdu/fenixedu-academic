@@ -7,6 +7,16 @@
         </slot>
 </schema>  
 
+<schema name="contents.jumpPoint.tree"
+        type="net.sourceforge.fenixedu.domain.contents.ContentJump"
+        bundle="CONTENT_RESOURCES">
+        <slot name="name" layout="link">
+        	<property name="destination" value="contentJump.view"/>
+        	<property name="useParent" value="true"/>
+        </slot>
+</schema>  
+
+
 <schema name="contents.create.portal"    
 	   type="net.sourceforge.fenixedu.domain.contents.Portal"
 	   bundle="CONTENT_RESOURCES">
