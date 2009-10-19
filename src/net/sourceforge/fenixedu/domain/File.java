@@ -53,6 +53,7 @@ public abstract class File extends File_Base {
 	setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
 	setSize(fileDescriptor.getSize());
 	setExternalStorageIdentification(fileDescriptor.getUniqueId());
+	getLocalContent().delete();
     }
 
     public boolean isPrivate() {
