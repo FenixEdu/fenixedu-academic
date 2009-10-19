@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Academic Service Request exemptions updates" academicRequestExemptionsUpdates.sql
+execute "Fixing phd candidacy documents concrete class" FixPhdDocumentsOjbConcreteClass.sql
+execute "Add YMD Tree To RequestLog" addYMDTreeToRequestLog.sql
+execute "Add new column to academic service request table" alterTableAcademicServiceRequest.sql
