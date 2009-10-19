@@ -30,7 +30,6 @@ public class SeniorInformationAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	RenderUtils.invalidateViewState();
 
 	Registration registration = null;
 
