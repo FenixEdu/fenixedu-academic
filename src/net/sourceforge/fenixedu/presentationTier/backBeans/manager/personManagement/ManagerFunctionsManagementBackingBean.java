@@ -31,6 +31,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     public ManagerFunctionsManagementBackingBean() {
     }
 
+    @Override
     public String associateNewFunction() throws FenixFilterException, FenixServiceException, ParseException {
 
 	DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -68,6 +69,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 	return "";
     }
 
+    @Override
     public String getUnits() throws FenixFilterException, FenixServiceException {
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
@@ -110,28 +112,31 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 	}
     }
 
+    @Override
     public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
 
 	if (this.activeFunctions == null) {
 	    Person person = this.getPerson();
-	    List<PersonFunction> activeFunctions = person.getActivePersonFunctions();
+	    List<PersonFunction> activeFunctions = person.getPersonFunctions(null, false, true, null);
 	    Collections.sort(activeFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	    this.activeFunctions = activeFunctions;
 	}
 	return activeFunctions;
     }
 
+    @Override
     public List<PersonFunction> getInactiveFunctions() throws FenixFilterException, FenixServiceException {
 
 	if (this.inactiveFunctions == null) {
 	    Person person = this.getPerson();
-	    List<PersonFunction> inactiveFunctions = person.getInactivePersonFunctions();
+	    List<PersonFunction> inactiveFunctions = person.getPersonFunctions(null, false, false, null);
 	    Collections.sort(inactiveFunctions, new ReverseComparator(PersonFunction.COMPARATOR_BY_BEGIN_DATE));
 	    this.inactiveFunctions = inactiveFunctions;
 	}
 	return inactiveFunctions;
     }
 
+    @Override
     public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
 	if (this.inherentFunctions == null) {
 	    this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
