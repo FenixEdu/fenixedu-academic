@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
 
 import org.apache.struts.action.ActionForm;
@@ -30,27 +31,27 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-import com.lowagie.text.DocumentException;
-
 @Mapping(path = "/iCalendarSync", module = "external")
 public class ICalendarSyncPoint extends FenixDispatchAction {
 
-    private Calendar getClassCalendar(Registration registration, DateTime validity, HttpServletRequest request) {
+    private Calendar getClassCalendar(User user, DateTime validity, HttpServletRequest request) {
 	ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+
 	List<EventBean> allEvents = new ArrayList<EventBean>();
 	String scheme = request.getScheme();
 	String serverName = request.getServerName();
 	int serverPort = request.getServerPort();
-
-	for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
-	    for (Lesson lesson : shift.getAssociatedLessons()) {
-		allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+	for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
+	    for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
+		for (Lesson lesson : shift.getAssociatedLessons()) {
+		    allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+		}
 	    }
-	}
 
-	for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
-	    for (Lesson lesson : shift.getAssociatedLessons()) {
-		allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+	    for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
+		for (Lesson lesson : shift.getAssociatedLessons()) {
+		    allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+		}
 	    }
 	}
 	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
@@ -64,31 +65,33 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     }
 
-    private Calendar getExamsCalendar(Registration registration, DateTime validity, HttpServletRequest request) {
+    private Calendar getExamsCalendar(User user, DateTime validity, HttpServletRequest request) {
 	ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 	List<EventBean> allEvents = new ArrayList<EventBean>();
 	String scheme = request.getScheme();
 	String serverName = request.getServerName();
 	int serverPort = request.getServerPort();
-
-	for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
-	    allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
-	}
-
-	for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)) {
-	    for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-		allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+	for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
+	    for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
+		allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
 	    }
-	}
 
-	for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester
-		.getPreviousExecutionPeriod())) {
-	    allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
-	}
+	    for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)) {
+		for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
+		    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+		}
+	    }
 
-	for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester.getPreviousExecutionPeriod())) {
-	    for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-		allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+	    for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester
+		    .getPreviousExecutionPeriod())) {
+		allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
+	    }
+
+	    for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester
+		    .getPreviousExecutionPeriod())) {
+		for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
+		    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+		}
 	    }
 	}
 
@@ -103,27 +106,27 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     }
 
-    private Calendar getCalendar (String method,Registration registration, DateTime validity, HttpServletRequest request) 
-    	throws DocumentException{
-	if (method == "syncClasses"){
-	    return getClassCalendar(registration, validity, request);
-	}else if (method == "syncExams"){
-	    return getExamsCalendar(registration, validity, request);
-	}else{
-	    throw new DocumentException("unexpected.syncing.method");
+    private Calendar getCalendar(String method, User user, DateTime validity, HttpServletRequest request)
+	    throws FenixActionException {
+	if (method == "syncClasses") {
+	    return getClassCalendar(user, validity, request);
+	} else if (method == "syncExams") {
+	    return getExamsCalendar(user, validity, request);
+	} else {
+	    throw new FenixActionException("unexpected.syncing.method");
 	}
     }
-    
-    private void sync(HttpServletRequest request, final HttpServletResponse httpServletResponse,String method)
-	    throws DocumentException, Exception {
+
+    private void sync(HttpServletRequest request, final HttpServletResponse httpServletResponse, String method)
+	    throws FenixActionException, Exception {
 	String userId = request.getParameter("user");
 	String payload = request.getParameter("payload");
 	String regId = request.getParameter("registrationID");
 
 	if (userId == null || payload == null || regId == null) {
-	    throw new DocumentException("error.expecting.parameter.not.found");
+	    throw new FenixActionException("error.expecting.parameter.not.found");
 	}
-	
+
 	User user = User.readUserByUserUId(userId);
 	Registration registration = rootDomainObject.readRegistrationByOID(Integer.valueOf(regId));
 
@@ -133,10 +136,12 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 		    returnError(httpServletResponse, "private.key.validity.expired");
 		} else {
 		    if (user.getPerson().hasRole(RoleType.STUDENT)) {
-			encodeAndTransmitResponse(httpServletResponse, getCalendar(method, registration, user
-				.getPrivateKeyValidity(), request));
+
+			encodeAndTransmitResponse(httpServletResponse, getCalendar(method, user, user.getPrivateKeyValidity(),
+				request));
+
 		    } else {
-			returnError(httpServletResponse, "user.is.not.student");	
+			returnError(httpServletResponse, "user.is.not.student");
 		    }
 		}
 	    } else {
@@ -149,25 +154,25 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     public ActionForward syncExams(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    final HttpServletResponse httpServletResponse) throws Exception {
-	 sync(request,httpServletResponse,"syncExams");
-	 return null;
-    }
-    
-    public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    final HttpServletResponse httpServletResponse) throws Exception {
-	sync(request, httpServletResponse,"syncClasses");
+	sync(request, httpServletResponse, "syncExams");
 	return null;
     }
-    
+
+    public ActionForward syncClasses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    final HttpServletResponse httpServletResponse) throws Exception {
+	sync(request, httpServletResponse, "syncClasses");
+	return null;
+    }
+
     @SuppressWarnings("deprecation")
-    private void returnError(HttpServletResponse httpServletResponse,String error) throws IOException{
-	httpServletResponse.setStatus(500,error);
+    private void returnError(HttpServletResponse httpServletResponse, String error) throws IOException {
+	httpServletResponse.setStatus(500, error);
 	httpServletResponse.getWriter().write("");
     }
 
     private void encodeAndTransmitResponse(HttpServletResponse httpServletResponse, Calendar calendar) throws Exception {
 	httpServletResponse.setHeader("Content-Type", "text/calendar; charset=utf-8");
-	
+
 	final OutputStream outputStream = httpServletResponse.getOutputStream();
 	outputStream.write(calendar.toString().getBytes("UTF-8"));
 	outputStream.close();
