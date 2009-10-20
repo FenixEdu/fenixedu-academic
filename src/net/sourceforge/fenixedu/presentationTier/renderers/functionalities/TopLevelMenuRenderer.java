@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ContentJump;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
@@ -88,7 +89,8 @@ public class TopLevelMenuRenderer extends OutputRenderer {
 		    AvailabilityPolicy policy = getAvailablityPocility(node);
 
 		    if (!node.isNodeVisible() || (policy != null && !policy.isAvailable(context))
-			    || node.getReferingContent() instanceof MetaDomainObjectPortal) {
+			    || node.getReferingContent() instanceof MetaDomainObjectPortal
+			    || node.getReferingContent() instanceof ContentJump) {
 			continue;
 		    }
 

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author Ivo Brandão
+ * @author Ivo Brandï¿½o
  */
 public abstract class Site extends Site_Base {
 
@@ -52,6 +52,15 @@ public abstract class Site extends Site_Base {
 
     public List<Section> getTopLevelSections() {
 	return getAssociatedSections(null);
+    }
+
+    @Override
+    public void appendReversePathPart(final StringBuilder stringBuilder) {
+	if (getJumpPoint() == null) {
+	    final String name = getNormalizedName().getContent();
+	    stringBuilder.append("/");
+	    stringBuilder.append(name);
+	}
     }
 
     public List<Section> getAllAssociatedSections() {
@@ -311,7 +320,7 @@ public abstract class Site extends Site_Base {
 
     @Override
     protected Container findSomeNonModuleParent() {
-	return getTemplate();
+	return getJumpPoint() != null ? getJumpPoint() : getTemplate();
     }
 
     public Collection<FunctionalityCall> getAssociatedFunctionalities() {

@@ -38,6 +38,7 @@ public class ContentJump extends ContentJump_Base {
 	super.addPathContents(contents, path);
 	String subPath = getSubPathForSearch(path);
 	if (matchesPath(subPath) && !(subPath.length() + 1 < path.length())) {
+	    contents.add(getJumpTo());
 	    Content initialContent = getJumpTo().getInitialContent();
 	    if (initialContent != null) {
 		contents.add(initialContent);

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.ContentJump;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
@@ -102,8 +103,18 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 	    final StringBuilder stringBuilder = new StringBuilder();
 	    for (int i = 0; i < contents.size(); i++) {
 		final Content content = contents.get(i);
-		if (content instanceof MetaDomainObjectPortal
-			&& !((MetaDomainObjectPortal) content).getStrategy().keepPortalInContentsPath()) {
+		if (content instanceof ContentJump) {
+		    stringBuilder.append("/");
+		    stringBuilder.append(content.getNormalizedName().getContent());
+		    i++;
+		    if (actualSelectedContainer == contents.get(i)) {
+			break;
+		    } else {
+			continue;
+		    }
+		}
+		if ((content instanceof MetaDomainObjectPortal && !((MetaDomainObjectPortal) content).getStrategy()
+			.keepPortalInContentsPath())) {
 		    i++;
 		    if (actualSelectedContainer == contents.get(i)) {
 			stringBuilder.append("/");

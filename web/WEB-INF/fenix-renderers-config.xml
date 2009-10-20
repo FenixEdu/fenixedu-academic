@@ -393,6 +393,7 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="content-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.ContentHierarchyTreeRenderer">
 		<property name="rootDragDisabled" value="true"/>
 		<property name="imageFor(Portal)" value="/images/functionalities/folder-disabled.gif"/>
+		<property name="imageFor(ContentJump)" value="/images/functionalities/folder-disabled.gif"/>
 		<property name="imageFor(Section)" value="/images/functionalities/folder.gif"/>
 		<property name="imageFor(Functionality)" value="/images/functionalities/sheet.gif"/>
 		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
