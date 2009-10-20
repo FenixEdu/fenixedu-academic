@@ -91,9 +91,9 @@
 		</ol>
 
 	<!-- Personal Information -->
-    <p id='personalInformationTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    <p id='personalInformationTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.personalInformationTitle"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
     
 	<ul>			
@@ -111,12 +111,12 @@
 
 	<!-- Lectures -->
 	<logic:notEmpty name="lectures">
-    <p id='lecturesTitle' class="separator2" style="position: relative;">
+    <p id='lecturesTitle' class="separator2" style="position: relative; width: 99%;">
     	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.lecturedCoursesInformation"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
 
-	<div class="cboth"></div>
+	
 		<ul>
   	    <logic:iterate id="lecture" name="lectures" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 			<li>
@@ -131,19 +131,19 @@
 
    	<!-- Final Works -->
     <logic:notEmpty  name="final_works">	
-    <p id='guidancesTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    <p id='guidancesTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
     
-	<div class="cboth"></div>
+	
 
 	</logic:notEmpty>
 	<logic:empty  name="final_works">	
 	    <logic:notEmpty  name="guidances">	
-		    <p id='guidancesTitle' class="separator2" style="position: relative; margin-top: 2em;">
+		    <p id='guidancesTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
 		    	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.orientationInformation"/></span>
-		    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+		    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
 		    </p>
 		</logic:notEmpty>
 	</logic:empty>
@@ -163,7 +163,7 @@
 		</logic:iterate>
     </logic:notEmpty>
 	
-	<div class="cboth"></div>
+	
 
 	<logic:notEmpty name="guidances">
 	<p class="indent1 mtop15"><em><bean:message key="label.common.masterDegree" bundle="DEPARTMENT_MEMBER_RESOURCES"/></em></p>
@@ -182,15 +182,15 @@
 	</ul>	
 	</logic:notEmpty>
 
-	<div class="cboth"></div>
+	
 
 	<!-- Functions -->	
 	<logic:notEmpty name="functions">
-    <p id='functionsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    <p id='functionsTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="DEPARTMENT_MEMBER_RESOURCES" key="label.teacher.details.functionsInformation"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
-	<div class="cboth"></div>
+	
 	<ul>
 	<logic:iterate id="personFunction" name="functions">
 		<li>
@@ -205,9 +205,9 @@
 			
 	<!-- Research Interests -->
 		<logic:notEmpty name="researchInterests">
-	    <p id='researchInterestsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+	    <p id='researchInterestsTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
 	    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.researchInterestsTitle"/></span>
-	    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+	    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
 	    </p>
 
 		<fr:view name="researchInterests" >
@@ -244,9 +244,9 @@
 	<!-- Publications -->
 	
 	<logic:notEmpty name="resultPublications">
-    <p id='publicationsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+    <p id='publicationsTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.publicationsTitle"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
 		
 	<logic:notEmpty name="books">
@@ -384,9 +384,9 @@
 		
 		<!-- Patents -->
 		<logic:notEmpty name="resultPatents">
-	    <p id='patentsTitle' class="separator2" style="position: relative; margin-top: 2em;">
+	    <p id='patentsTitle' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
 	    	<span><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.viewCurriculum.patentsTitle"/></span>
-	    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+	    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
 	    </p>		
 
 		
@@ -415,9 +415,9 @@
 			-->
 
 <logic:notEmpty name="participations">
-    <p id='activities' class="separator2" style="position: relative; margin-top: 2em;">
+    <p id='activities' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     </p>
 
 
@@ -515,9 +515,9 @@
 </logic:notEmpty>
 	
 <logic:notEmpty name="prizes">
-	  <p id='prizes' class="separator2" style="position: relative; margin-top: 2em;">
+	  <p id='prizes' class="separator2" style="position: relative; width: 99%; margin-top: 2em;">
     	<span><bean:message bundle="RESEARCHER_RESOURCES" key="label.prizes"/></span>
-    	<span style="position: absolute; right: 0;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
+    	<span style="position: absolute; right: 5px;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#header"><bean:message key="label.top" /></a></span>
     	</p>
 		
 		<ul class="listresearch">
