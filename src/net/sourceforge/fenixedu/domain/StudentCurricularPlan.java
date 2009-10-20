@@ -2190,12 +2190,24 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final List<Enrolment> result = new ArrayList<Enrolment>();
 
 	for (final CurriculumLine curriculumLine : getExtraCurriculumGroup().getApprovedCurriculumLines()) {
-	    if (!curriculumLine.isEnrolment()) {
-		continue;
-	    }
-	    final Enrolment enrolment = (Enrolment) curriculumLine;
-	    if (!enrolment.isSourceOfAnyCreditsInCurriculum()) {
-		result.add(enrolment);
+
+	    if (curriculumLine.isEnrolment()) {
+
+		final Enrolment enrolment = (Enrolment) curriculumLine;
+		if (!enrolment.isSourceOfAnyCreditsInCurriculum()) {
+		    result.add(enrolment);
+		}
+
+	    } else if (curriculumLine.isDismissal()) {
+
+		final Dismissal dismissal = (Dismissal) curriculumLine;
+		if (dismissal.getCredits().isSubstitution()) {
+		    for (final IEnrolment enrolment : dismissal.getSourceIEnrolments()) {
+			if (enrolment.isEnrolment()) {
+			    result.add((Enrolment) enrolment);
+			}
+		    }
+		}
 	    }
 	}
 
