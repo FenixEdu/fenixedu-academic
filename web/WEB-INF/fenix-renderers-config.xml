@@ -139,7 +139,7 @@ Documentation:
   
   	<renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonalCardRenderer">
   		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
-		<property name="formatImageURL" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+		<property name="formatImageURL" value="/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=${externalId}"/>
   		<property name="contextRelative" value="true"/>
 		<property name="classes" value="personalcard"/>
   		<property name="photoCellClasses" value="personalcard_photo"/>
@@ -148,7 +148,7 @@ Documentation:
   	
   	<renderer type="java.util.List" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiplePersonalCardRenderer">
   		<property name="noPhotoAvailableImage" value="/images/photo_placer01_pt.gif"/>
-		<property name="formatImageURL" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+		<property name="formatImageURL" value="/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=${externalId}"/>
   		<property name="contextRelative" value="true"/>
 		<property name="divClasses" value="personalcard"/>
   		<property name="photoCellClasses" value="personalcard_photo"/>
@@ -1088,7 +1088,7 @@ Documentation:
 		<property name="unitShown" value="true"/>
 	
 	  	<property name="cardProperty(noPhotoAvailableImage)" value="/images/photo_placer01_pt.gif"/>
-		<property name="cardProperty(formatImageURL)" value="/publico/viewHomepage.do?method=retrievePhoto&amp;homepageID=${homepage.idInternal}"/>
+		<property name="cardProperty(formatImageURL)" value="/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=${externalId}"/>
   		<property name="cardProperty(contextRelative)" value="true"/>
 		<property name="cardProperty(classes)" value="personalcard"/>
   		<property name="cardProperty(photoCellClasses)" value="personalcard_photo"/>
