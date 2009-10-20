@@ -408,7 +408,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	DynaActionForm teacherForm = (DynaActionForm) form;
 	String id = (String) teacherForm.get("teacherNumber");
 	Person person;
-	if (id.substring(0, 3).equals("ist")) {
+	if (id.substring(0, 3).equalsIgnoreCase("ist")) {
 	    person = Person.readPersonByIstUsername(id);
 	} else {
 	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
