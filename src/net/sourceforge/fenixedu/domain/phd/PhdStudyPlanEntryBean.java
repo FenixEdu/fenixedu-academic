@@ -32,6 +32,7 @@ public class PhdStudyPlanEntryBean implements Serializable {
 	setInternalEntry(true);
 	setEntryType(PhdStudyPlanEntryType.NORMAL);
 	setCompetenceCourses(new ArrayList<CompetenceCourse>());
+	setDegree(!studyPlan.getDegree().isEmpty() ? studyPlan.getDegree() : null);
 
     }
 

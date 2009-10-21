@@ -1,11 +1,17 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -118,6 +124,20 @@ public class PhdProgram extends PhdProgram_Base {
 	    }
 	}
 	return null;
+    }
+
+    public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
+	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan()
+		.getExecutionDegreeByAcademicInterval(executionYear.getAcademicInterval());
+
+	final Set<Person> result = new HashSet<Person>();
+	if (executionDegree != null) {
+	    for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+		result.add(coordinator.getPerson());
+	    }
+	}
+
+	return result;
     }
 
 }

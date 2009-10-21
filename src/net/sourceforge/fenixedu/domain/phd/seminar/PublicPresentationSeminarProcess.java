@@ -232,7 +232,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		return;
 	    }
 
-	    if (process.hasAnyState(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)
+	    if (process.hasState(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)
 		    && process.getIndividualProgramProcess().getPerson() == userView.getPerson()) {
 		return;
 	    }
@@ -320,7 +320,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	return getIndividualProgramProcess().getPerson();
     }
 
-    public boolean hasAnyState(PublicPresentationSeminarProcessStateType type) {
+    public boolean hasState(PublicPresentationSeminarProcessStateType type) {
 	for (final PublicPresentationSeminarState state : getStates()) {
 	    if (state.getType() == type) {
 		return true;

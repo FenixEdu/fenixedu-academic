@@ -52,4 +52,8 @@ abstract public class PhdProgramGuiding extends PhdProgramGuiding_Base {
 	return false;
     }
 
+    public boolean isInternal() {
+	return false;
+    }
+
 }

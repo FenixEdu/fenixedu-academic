@@ -102,4 +102,9 @@ public class InternalGuiding extends InternalGuiding_Base {
     public boolean isFor(Person person) {
 	return getPerson() == person;
     }
+
+    @Override
+    public boolean isInternal() {
+	return true;
+    }
 }
