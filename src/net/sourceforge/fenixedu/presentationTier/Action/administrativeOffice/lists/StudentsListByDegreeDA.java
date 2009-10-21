@@ -15,22 +15,20 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.YearMonthDay;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -48,6 +46,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 @Mapping(path = "/studentsListByDegree", module = "academicAdminOffice")
 @Forwards( { @Forward(name = "searchRegistrations", path = "/academicAdminOffice/lists/searchRegistrationsByDegree.jsp") })
 public class StudentsListByDegreeDA extends FenixDispatchAction {
+
+    private static final String YMD_FORMAT = "yyyy-MM-dd";
 
     public ActionForward prepareByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -154,137 +154,51 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 			.getValue());
 		spreadsheet.addCell(person.getGender().toLocalizedString());
 		spreadsheet.addCell(person.getDateOfBirthYearMonthDay() == null ? StringUtils.EMPTY : person
-			.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd"));
+			.getDateOfBirthYearMonthDay().toString(YMD_FORMAT));
 		spreadsheet.addCell(registration.getEnrolmentsExecutionYears().size());
 		spreadsheet.addCell(registration.getCurricularYear(executionYear));
 		spreadsheet.addCell(registration.getEnrolments(executionYear).size());
 
-		fillSpreadSheetConclusion(spreadsheet, executionYear, registration);
-		fillSpreadSheetConclusionDate(spreadsheet, executionYear, registration);
-		fillSpreadSheetAverage(spreadsheet, executionYear, registration);
+		fillSpreadSheetPreBolonhaInfo(spreadsheet, registration);
+		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getFirstCycle());
+		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan()
+			.getSecondCycle());
 	    }
 	}
     }
 
-    private void fillSpreadSheetConclusion(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
-	    Registration registration) {
+    private void fillSpreadSheetPreBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration) {
 	if (!registration.isBolonha()) {
-	    if (registration.hasConcluded()) {
-		spreadsheet.addCell("Sim");
-	    } else {
-		spreadsheet.addCell("Não");
-	    }
-	    spreadsheet.addCell("");
-	    spreadsheet.addCell("");
+	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
+	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean);
 	} else {
-	    spreadsheet.addCell("");
-	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
-	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
-		if (curricularPlan.getFirstCycle().isConcluded()) {
-		    spreadsheet.addCell("Sim");
-		} else {
-		    spreadsheet.addCell("Não");
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
-	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
-		if (curricularPlan.getSecondCycle().isConcluded()) {
-		    spreadsheet.addCell("Sim");
-		} else {
-		    spreadsheet.addCell("Não");
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
+	    fillSpreadSheetEmptyCells(spreadsheet);
 	}
     }
 
-    private void fillSpreadSheetConclusionDate(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
-	    Registration registration) {
-	DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
-	if (!registration.isBolonha()) {
-	    if (registration.hasConcluded()) {
-		if (registration.hasConclusionProcess()) {
-		    spreadsheet.addCell(registration.getConclusionDate().toString(formatter));
-		} else {
-		    YearMonthDay conclusionDate = registration.calculateConclusionDate();
-		    if (conclusionDate != null) {
-			spreadsheet.addCell(conclusionDate.toString(formatter));
-		    } else {
-			spreadsheet.addCell("");
-		    }
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
-	    spreadsheet.addCell("");
-	    spreadsheet.addCell("");
+    private void fillSpreadSheetBolonhaInfo(StyledExcelSpreadsheet spreadsheet, Registration registration,
+	    CycleCurriculumGroup cycle) {
+	if ((cycle != null) && (!cycle.isExternal())) {
+	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, cycle);
+	    fillSpreadSheetRegistrationInfo(spreadsheet, registrationConclusionBean);
 	} else {
-	    spreadsheet.addCell("");
-	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
-
-	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
-		if (curricularPlan.getFirstCycle().isConcluded()) {
-		    if (curricularPlan.getFirstCycle().isConclusionProcessed()) {
-			spreadsheet.addCell(curricularPlan.getFirstCycle().getConclusionDate().toString(formatter));
-		    } else {
-			spreadsheet.addCell(curricularPlan.getFirstCycle().calculateConclusionDate().toString(formatter));
-		    }
-		} else {
-		    spreadsheet.addCell("");
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
-	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
-		if (curricularPlan.getSecondCycle().isConcluded()) {
-		    if (curricularPlan.getSecondCycle().isConclusionProcessed()) {
-			spreadsheet.addCell(curricularPlan.getSecondCycle().getConclusionDate().toString(formatter));
-		    } else {
-			spreadsheet.addCell(curricularPlan.getSecondCycle().calculateConclusionDate().toString(formatter));
-		    }
-		} else {
-		    spreadsheet.addCell("");
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
+	    fillSpreadSheetEmptyCells(spreadsheet);
 	}
     }
 
-    private void fillSpreadSheetAverage(final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear,
-	    Registration registration) {
-	if (!registration.isBolonha()) {
-	    if (registration.hasConclusionProcess()) {
-		spreadsheet.addCell(registration.getAverage().toString());
-	    } else {
-		spreadsheet.addCell(registration.calculateAverage().toString());
-	    }
-	    spreadsheet.addCell("");
-	    spreadsheet.addCell("");
-	} else {
-	    spreadsheet.addCell("");
-	    StudentCurricularPlan curricularPlan = registration.getLastStudentCurricularPlan();
-	    if (curricularPlan.getFirstCycle() != null && !curricularPlan.getFirstCycle().isExternal()) {
-		if (curricularPlan.getFirstCycle().isConclusionProcessed()) {
-		    spreadsheet.addCell(curricularPlan.getFirstCycle().getAverage().toString());
-		} else {
-		    spreadsheet.addCell(curricularPlan.getFirstCycle().calculateAverage().toString());
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
-	    if (curricularPlan.getSecondCycle() != null && !curricularPlan.getSecondCycle().isExternal()) {
-		if (curricularPlan.getSecondCycle().isConclusionProcessed()) {
-		    spreadsheet.addCell(curricularPlan.getSecondCycle().getAverage().toString());
-		} else {
-		    spreadsheet.addCell(curricularPlan.getSecondCycle().calculateAverage().toString());
-		}
-	    } else {
-		spreadsheet.addCell("");
-	    }
-	}
+    private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
+	    RegistrationConclusionBean registrationConclusionBean) {
+	boolean isConcluded = registrationConclusionBean.isConcluded();
+
+	spreadsheet.addCell(isConcluded ? "Sim" : "Não");
+	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : "");
+	spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
+    }
+
+    private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.addCell("");
+	spreadsheet.addCell("");
+	spreadsheet.addCell("");
     }
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet, final boolean extendedInfo) {
@@ -303,13 +217,13 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader("Ano académico");
 	    spreadsheet.addHeader("Nº disciplinas inscritas");
 	    spreadsheet.addHeader("Curso Concluído");
-	    spreadsheet.addHeader("1º Ciclo Concluído");
-	    spreadsheet.addHeader("2º Ciclo Concluído");
 	    spreadsheet.addHeader("Data de Conclusão");
-	    spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
-	    spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
 	    spreadsheet.addHeader("Média de Curso");
+	    spreadsheet.addHeader("1º Ciclo Concluído");
+	    spreadsheet.addHeader("Data de Conclusão (1º Ciclo)");
 	    spreadsheet.addHeader("Média de Curso (1º Ciclo)");
+	    spreadsheet.addHeader("2º Ciclo Concluído");
+	    spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
 	    spreadsheet.addHeader("Média de Curso (2º Ciclo)");
 	}
     }

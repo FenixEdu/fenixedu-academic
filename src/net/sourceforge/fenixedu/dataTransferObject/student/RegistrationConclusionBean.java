@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
-import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -24,9 +23,9 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     private static final long serialVersionUID = 5825221957160251388L;
 
-    private DomainReference<Registration> registration;
+    private Registration registration;
 
-    private DomainReference<CycleCurriculumGroup> cycleCurriculumGroup;
+    private CycleCurriculumGroup cycleCurriculumGroup;
 
     private Boolean hasAccessToRegistrationConclusionProcess = Boolean.TRUE;
 
@@ -40,12 +39,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup() {
-	return (this.cycleCurriculumGroup != null) ? this.cycleCurriculumGroup.getObject() : null;
+	return cycleCurriculumGroup;
     }
 
     public void setCycleCurriculumGroup(CycleCurriculumGroup cycleCurriculumGroup) {
-	this.cycleCurriculumGroup = (cycleCurriculumGroup != null) ? new DomainReference<CycleCurriculumGroup>(
-		cycleCurriculumGroup) : null;
+	this.cycleCurriculumGroup = cycleCurriculumGroup;
     }
 
     public boolean hasCycleCurriculumGroup() {
@@ -53,11 +51,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     }
 
     public Registration getRegistration() {
-	return (this.registration != null) ? this.registration.getObject() : null;
+	return registration;
     }
 
     public void setRegistration(Registration registration) {
-	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
+	this.registration = registration;
     }
 
     public ExecutionYear getStartExecutionYear() {

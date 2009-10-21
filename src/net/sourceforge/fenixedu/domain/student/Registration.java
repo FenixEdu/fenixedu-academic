@@ -2592,7 +2592,7 @@ public class Registration extends Registration_Base {
 	final StudentCurricularPlan lastStudentCurricularPlan = getLastStudentCurricularPlan();
 
 	if (lastStudentCurricularPlan == null || !lastStudentCurricularPlan.isBolonhaDegree()) {
-	    return true;
+	    return hasConclusionProcess();
 	}
 
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getInternalCycleCurriculumGrops()) {
@@ -3762,7 +3762,7 @@ public class Registration extends Registration_Base {
 	return hasIndividualCandidacy()
 		&& getIndividualCandidacy().getCandidacyProcess().getCandidacyExecutionInterval().equals(executionYear);
     }
-    
+
     public YearDelegateElection getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
 	for (DelegateElection delegateElection : getStudent().getDelegateElections()) {
 	    if (delegateElection instanceof YearDelegateElection) {
@@ -3772,11 +3772,11 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	return null;
-    }    
-    
+    }
+
     public void exportValues(StringBuilder result) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-	
+
 	Formatter formatter = new Formatter(result);
 	final Student student = getStudent();
 	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression().getFullDescription());
