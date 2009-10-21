@@ -35,9 +35,9 @@
 	    <td>
 		 	<html:select property="entryPhase">
 		 		<logic:iterate id="entryPhase" name="entryPhases">
-		 			<bean:define id="entryPhaseName" name="entryPhase" property="name" />
-		 			<bean:define id="entryPhaseOrdinal" name="entryPhase" property="entryPhase" />
-		 			<html:option value="<%=entryPhaseOrdinal.toString()%>"><bean:write name="entryPhase" property="name"/></html:option>
+		 			<bean:define id="entryPhaseName" name="entryPhase" property="localizedName" />
+		 			<bean:define id="entryPhaseOrdinal" name="entryPhase" property="name" />
+		 			<html:option value="<%=entryPhaseOrdinal.toString()%>"><bean:write name="entryPhaseName" /></html:option>
 				</logic:iterate>
 			</html:select>
 		</td>

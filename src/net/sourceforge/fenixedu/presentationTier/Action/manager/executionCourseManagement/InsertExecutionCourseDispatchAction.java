@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionCourseAtExecutionPeriod;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,15 +12,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPer
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertExecutionCourseAtExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -80,8 +78,8 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
 
 	    List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
-	    for (EntryPhase entryPhase : EntryPhase.getAll()) {
-		LabelValueBean labelValueBean = new LabelValueBean(entryPhase.toString(), entryPhase.getEntryPhase().toString());
+	    for (EntryPhase entryPhase : EntryPhase.values()) {
+		LabelValueBean labelValueBean = new LabelValueBean(entryPhase.getLocalizedName(), entryPhase.getName());
 		entryPhases.add(labelValueBean);
 	    }
 	    request.setAttribute("entryPhases", entryPhases);
@@ -137,7 +135,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 	String entryPhaseString = dynaForm.getString("entryPhase");
 	EntryPhase entryPhase = null;
 	if (entryPhaseString != null && entryPhaseString.length() > 0) {
-	    entryPhase = EntryPhase.valueOf(Integer.valueOf(entryPhaseString));
+	    entryPhase = EntryPhase.valueOf(entryPhaseString);
 	}
 	infoExecutionCourse.setEntryPhase(entryPhase);
 

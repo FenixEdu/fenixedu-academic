@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.DateTime;
 

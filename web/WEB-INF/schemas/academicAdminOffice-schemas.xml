@@ -323,7 +323,7 @@
 	<slot name="entryPhase" key="label.entryPhase" layout="menu-select-postback">		
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.EntryPhaseProvider" />
 		<property name="saveOptions" value="true" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${localizedName}" />
 		<property name="destination" value="entryPhasePostBack"/>
 	</slot>	
 </schema>
@@ -350,7 +350,7 @@
 	<slot name="entryPhase" key="label.entryPhase" layout="menu-select-postback">		
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.EntryPhaseProvider" />
 		<property name="saveOptions" value="true" />
-		<property name="format" value="${name}" />
+		<property name="format" value="${localizedName}" />
 		<property name="destination" value="entryPhasePostBack"/>
 	</slot>	
 </schema>
@@ -420,7 +420,7 @@
 		<property name="format" value="${name} - ${description}" />
 	</slot>		
 	<slot name="entryPhase" layout="format"  >
-		<property name="format" value="${name}" />
+		<property name="format" value="${localizedName}" />
 	</slot>			
 </schema>
 
@@ -486,7 +486,7 @@
 		<property name="format" value="${name} - ${fullDescription}" />
 	</slot>
 	<slot name="entryPhase" layout="format"  >
-		<property name="format" value="${name}" />
+		<property name="format" value="${localizedName}" />
 	</slot>			
 </schema>
 

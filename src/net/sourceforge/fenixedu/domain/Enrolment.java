@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -537,7 +536,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    final public boolean evaluate(Object arg0) {
 		ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 		if (executionCourse.getExecutionPeriod().equals(executionSemester)
-			&& executionCourse.getEntryPhase().equals(EntryPhase.FIRST_PHASE_OBJ)) {
+			&& executionCourse.getEntryPhase().equals(EntryPhase.FIRST_PHASE)) {
 		    return true;
 		}
 		return false;
@@ -560,7 +559,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
 	    if (attend == null) {
 		attend = getStudent().getAttends(currentExecutionCourse);
-		
+
 		if (attend != null) {
 		    attend.setRegistration(registration);
 		} else {

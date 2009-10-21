@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -152,7 +152,7 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 	    final CycleType cycleType, final Ingression ingression) {
 
 	final Registration registration = new Registration(person, degreeCurricularPlan);
-	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
+	registration.setEntryPhase(EntryPhase.FIRST_PHASE);
 	registration.setIngression(ingression);
 	registration.setRegistrationYear(getCandidacyExecutionInterval().getExecutionYear());
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());

@@ -40,7 +40,7 @@
 		<form-property name="executionDegreeId" type="java.lang.Integer"/>
 		<form-property name="candidacyIdsToProcess" type="java.lang.Integer[]" />
 		<form-property name="page" type="java.lang.Integer"/>
-		<form-property name="entryPhase" type="java.lang.Integer" />
+		<form-property name="entryPhase" type="java.lang.String" />
   	  </form-bean>
 
      </form-beans>

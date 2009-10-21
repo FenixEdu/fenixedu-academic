@@ -1,11 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionCourses;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.EditExecutionCourseInfo;
-
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -18,8 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteExecutionCourses;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.EditExecutionCourseInfo;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseEditor;
@@ -27,13 +24,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.CourseLoadBean;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -235,8 +230,8 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	fillForm(form, infoExecutionCourse, request);
 
 	List<LabelValueBean> entryPhases = new ArrayList<LabelValueBean>();
-	for (EntryPhase entryPhase : EntryPhase.getAll()) {
-	    LabelValueBean labelValueBean = new LabelValueBean(entryPhase.toString(), entryPhase.getEntryPhase().toString());
+	for (EntryPhase entryPhase : EntryPhase.values()) {
+	    LabelValueBean labelValueBean = new LabelValueBean(entryPhase.getLocalizedName(), entryPhase.getName());
 	    entryPhases.add(labelValueBean);
 	}
 	request.setAttribute("entryPhases", entryPhases);
@@ -380,8 +375,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	    infoExecutionCourse.setComment((String) editExecutionCourseForm.get("comment"));
 	    infoExecutionCourse.setAvailableGradeSubmission(Boolean.valueOf(editExecutionCourseForm
 		    .getString("availableGradeSubmission")));
-	    infoExecutionCourse.setEntryPhase(EntryPhase
-		    .valueOf(Integer.valueOf(editExecutionCourseForm.getString("entryPhase"))));
+	    infoExecutionCourse.setEntryPhase(EntryPhase.valueOf(editExecutionCourseForm.getString("entryPhase")));
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -396,7 +390,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 	executionCourseForm.set("name", infoExecutionCourse.getNome());
 	executionCourseForm.set("code", infoExecutionCourse.getSigla());
 	executionCourseForm.set("comment", infoExecutionCourse.getComment());
-	executionCourseForm.set("entryPhase", infoExecutionCourse.getEntryPhase().getEntryPhase().toString());
+	executionCourseForm.set("entryPhase", infoExecutionCourse.getEntryPhase().getName());
 	if (infoExecutionCourse.getAvailableGradeSubmission() != null) {
 	    executionCourseForm.set("availableGradeSubmission", infoExecutionCourse.getAvailableGradeSubmission().toString());
 	}

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.EntryPhase;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 
 public class InfoExecutionCourseEditor extends InfoObject {
 

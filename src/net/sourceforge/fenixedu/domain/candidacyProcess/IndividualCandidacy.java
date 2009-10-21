@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -248,7 +248,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	    final CycleType cycleType, final Ingression ingression) {
 
 	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
-	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
+	registration.setEntryPhase(EntryPhase.FIRST_PHASE);
 	registration.setIngression(ingression);
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);

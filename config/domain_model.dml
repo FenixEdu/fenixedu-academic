@@ -184,6 +184,7 @@ enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType							
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState												  as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType			  as AcademicServiceRequestJustificationType;
+enum net.sourceforge.fenixedu.domain.EntryPhase 																		  as EntryPhase;
 
 /*
  * Value types that need special externalization
@@ -350,12 +351,6 @@ valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEva
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType {
     externalizeWith {
         Integer getType();
-    }
-}
-
-valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase {
-    externalizeWith {
-        Integer getEntryPhase();
     }
 }
 

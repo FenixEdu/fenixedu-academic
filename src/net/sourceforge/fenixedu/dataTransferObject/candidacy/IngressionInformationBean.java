@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.YearMonthDay;
 

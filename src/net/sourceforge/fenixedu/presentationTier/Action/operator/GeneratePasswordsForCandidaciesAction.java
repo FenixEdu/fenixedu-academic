@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.operator.GeneratePasswordsForCandidacies;
 import net.sourceforge.fenixedu.dataTransferObject.person.PasswordBean;
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -43,7 +43,7 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 	Collections.sort(executionDegrees, ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME);
 
 	request.setAttribute("executionDegrees", executionDegrees);
-	request.setAttribute("entryPhases", EntryPhase.getAll());
+	request.setAttribute("entryPhases", EntryPhase.values());
 
 	return mapping.findForward("chooseExecutionDegree");
     }
@@ -52,7 +52,7 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final DynaActionForm actionForm = (DynaActionForm) form;
 	final Integer executionDegreeId = (Integer) actionForm.get("executionDegreeId");
-	final EntryPhase entryPhase = new EntryPhase((Integer) actionForm.get("entryPhase"));
+	final EntryPhase entryPhase = EntryPhase.valueOf(actionForm.getString("entryPhase"));
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 	final Set<StudentCandidacy> studentCandidacies = new HashSet<StudentCandidacy>(StudentCandidacy.readNotConcludedBy(
 		executionDegree, ExecutionYear.readCurrentExecutionYear(), entryPhase));

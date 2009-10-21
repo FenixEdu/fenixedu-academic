@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.FillPersonalDataOperation;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintUnder23Transports
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeCandidacy extends DegreeCandidacy_Base {
