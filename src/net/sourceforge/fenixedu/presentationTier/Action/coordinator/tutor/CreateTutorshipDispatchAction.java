@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipErrorBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -208,6 +210,10 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 	for (int i = 0; i < 5; i++) {
 	    List<StudentCurricularPlan> studentsWithoutTutor = degreeCurricularPlan
 		    .getStudentsWithoutTutorGivenEntryYear(entryYear);
+	    Degree degree = degreeCurricularPlan.getEquivalencePlan().getSourceDegree();
+	    for(DegreeCurricularPlan oldDegreeCurricularPlan : degree.getDegreeCurricularPlansForYear(entryYear)) {
+		studentsWithoutTutor.addAll(oldDegreeCurricularPlan.getStudentsWithoutTutorGivenEntryYear(entryYear));
+	    }
 	    if (!studentsWithoutTutor.isEmpty()) {
 		StudentsByEntryYearBean bean = new StudentsByEntryYearBean(entryYear);
 		bean.setStudentsList(studentsWithoutTutor);
