@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,8 +118,10 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
     private void prepareAttendsCollectionPages(HttpServletRequest request,
 	    SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean, ExecutionCourse executionCourse) {
 	Collection<Attends> executionCourseAttends = searchExecutionCourseAttendsBean.getAttendsResult();
-	final CollectionPager<Attends> pager = new CollectionPager<Attends>(executionCourseAttends, 50);
-	request.setAttribute("numberOfPages", (executionCourseAttends.size() / 50) + 1);
+	List<Attends> listExecutionCourseAttends = new ArrayList<Attends>(executionCourseAttends);
+	Collections.sort(listExecutionCourseAttends, Attends.COMPARATOR_BY_STUDENT_NUMBER);
+	final CollectionPager<Attends> pager = new CollectionPager<Attends>(listExecutionCourseAttends, 50);
+	request.setAttribute("numberOfPages", (listExecutionCourseAttends.size() / 50) + 1);
 
 	final String pageParameter = request.getParameter("pageNumber");
 	final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
