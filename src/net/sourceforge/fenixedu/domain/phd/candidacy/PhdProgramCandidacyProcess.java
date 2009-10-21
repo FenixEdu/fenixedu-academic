@@ -599,6 +599,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
+	person.addPersonRoleByRoleType(RoleType.RESEARCHER);
 	person.setIstUsername();
 
 	if (!person.hasPersonalPhoto()) {
