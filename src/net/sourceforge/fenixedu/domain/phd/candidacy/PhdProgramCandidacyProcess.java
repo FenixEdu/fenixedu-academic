@@ -566,6 +566,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
 	    final Person responsible) {
+	
+
+	if (!getIndividualProgramProcess().hasStudyPlan()) {
+	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
+	}
 
 	createState(PhdProgramCandidacyProcessState.CONCLUDED, responsible);
 
