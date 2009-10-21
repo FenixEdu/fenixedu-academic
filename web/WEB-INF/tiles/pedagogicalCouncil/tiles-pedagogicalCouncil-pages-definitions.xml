@@ -99,6 +99,14 @@
        <put name="body" value="/pedagogicalCouncil/control/evaluationMethodControl.jsp"/>  
     </definition>
     
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    
+    <definition name="view-registration-curriculum" extends="pedagogicalCouncil.masterPage">
+        <put name="body" value="/pedagogicalCouncil/tutorship/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+    
      <definition name="df.page.send.email.redirect" extends="pedagogicalCouncil.masterPage">
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>

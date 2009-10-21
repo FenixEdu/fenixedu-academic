@@ -79,6 +79,15 @@
 		</fr:view>
 	</logic:present>
 	
+	<p class="mtop0">
+	<span>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/registration.do?method=prepareViewRegistrationCurriculum" paramId="registrationID" paramName="registration" paramProperty="idInternal">
+			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
+	</p>
+
 	<!-- Choose Student Curricular Plan form -->
 
 	<logic:present name="degreeCurricularPlanID">
