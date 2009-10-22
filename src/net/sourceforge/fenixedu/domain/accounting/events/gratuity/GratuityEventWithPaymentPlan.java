@@ -74,10 +74,6 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	}
     }
 
-    public void changeGratuityPaymentPlan(final PaymentPlan paymentPlan) {
-	setGratuityPaymentPlan((GratuityPaymentPlan) paymentPlan);
-    }
-
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public void setGratuityPaymentPlan(final CustomGratuityPaymentPlan paymentPlan) {
 	if (paymentPlan != null) {
