@@ -27,8 +27,8 @@ public class AccountingEventsManager {
 	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
 	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
 
-    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays
-	    .asList(new DegreeType[] { DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
+    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays.asList(new DegreeType[] {
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
@@ -216,8 +216,6 @@ public class AccountingEventsManager {
 
 	final Registration registration = studentCurricularPlan.getRegistration();
 
-	final Student student = registration.getStudent();
-
 	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
 		registration)) {
 	    if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
@@ -296,7 +294,6 @@ public class AccountingEventsManager {
 
 	final InvocationResult result = new InvocationResult().setSuccess(false);
 	final Registration registration = studentCurricularPlan.getRegistration();
-	final Student student = registration.getStudent();
 
 	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
 		registration)) {
