@@ -163,6 +163,7 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getFirstCycle());
 		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan()
 			.getSecondCycle());
+		fillSpreadSheetBolonhaInfo(spreadsheet, registration, registration.getLastStudentCurricularPlan().getThirdCycle());
 	    }
 	}
     }
@@ -225,6 +226,9 @@ public class StudentsListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader("2º Ciclo Concluído");
 	    spreadsheet.addHeader("Data de Conclusão (2º Ciclo)");
 	    spreadsheet.addHeader("Média de Curso (2º Ciclo)");
+	    spreadsheet.addHeader("3º Ciclo Concluído");
+	    spreadsheet.addHeader("Data de Conclusão (3º Ciclo)");
+	    spreadsheet.addHeader("Média de Curso (3º Ciclo)");
 	}
     }
 
