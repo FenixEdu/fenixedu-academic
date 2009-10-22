@@ -241,7 +241,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     }
 
     private void reportExternalGroups(final Collection<ICurriculumEntry> result) {
-	if (!getIgnoreCurriculumInAdvance()) {
+	if (getIgnoreCurriculumInAdvance() != null && !getIgnoreCurriculumInAdvance()) {
 	    for (final ExternalCurriculumGroup group : getRegistration().getLastStudentCurricularPlan()
 		    .getExternalCurriculumGroups()) {
 		filterEntries(result, this, group.getCurriculumInAdvance(getFilteringDate()));
