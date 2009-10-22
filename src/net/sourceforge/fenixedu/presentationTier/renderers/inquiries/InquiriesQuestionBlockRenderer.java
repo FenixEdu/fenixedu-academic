@@ -99,7 +99,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		}
 
 		PresentationContext newContext = getContext().createSubContext(metaSlot);
-		newContext.setSchema(metaSlot.getSchema() != null ? metaSlot.getSchema().getName() : null);
+		newContext.setSchema(metaSlot.getSchema());
 		RenderKit kit = RenderKit.getInstance();
 		HtmlFormComponent formComponent = null;
 

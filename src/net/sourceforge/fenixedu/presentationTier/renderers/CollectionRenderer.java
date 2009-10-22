@@ -886,7 +886,7 @@ public class CollectionRenderer extends OutputRenderer {
 		    }
 		}
 	    } else {
-		Schema schema = RenderKit.getInstance().findSchema(getContext().getSchema());
+		Schema schema = getContext().getSchema();
 		for (Object object : collection) {
 		    metaObjects.add(MetaObjectFactory.createObject(object, schema));
 		}

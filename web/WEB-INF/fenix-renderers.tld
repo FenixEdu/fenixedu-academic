@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <!DOCTYPE taglib 
-	PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
-	"http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+    PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
+    "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 
 <taglib>
 
@@ -78,8 +78,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
-        	are specified, the behaviour is undefined.
+            The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
+            are specified, the behaviour is undefined.
       </description>
     </attribute>
     
@@ -169,7 +169,7 @@
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>property</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -185,8 +185,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The scope where the object will be searched. If no scope is specified the object will be
-        	searched using PageContext.findAttribute(name).
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
       </description>
     </attribute>
 
@@ -199,7 +199,7 @@
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>schema</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -225,9 +225,9 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        	The identification number of the object.
-        	If the attribute 'name' is not specified this attribute, together with the attribute 'type',
-        	specifies the identification of the persistent object that will be rendered.
+            The identification number of the object.
+            If the attribute 'name' is not specified this attribute, together with the attribute 'type',
+            specifies the identification of the persistent object that will be rendered.
       </description>
     </attribute>
 
@@ -237,9 +237,9 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        	The Java type of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
-        	specifies the identification of the persitent object that will be rendered.
+            The Java type of the object.
+            If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+            specifies the identification of the persitent object that will be rendered.
       </description>
     </attribute>
     
@@ -330,7 +330,7 @@
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The name of the destination.
+            The name of the destination.
       </description>
     </attribute>
 
@@ -339,7 +339,7 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The destination path.
+            The destination path.
       </description>
     </attribute>
     
@@ -348,7 +348,7 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The destination module. The module is used as a prefix of path.
+            The destination module. The module is used as a prefix of path.
       </description>
     </attribute>
 
@@ -381,7 +381,7 @@
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>property</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -409,8 +409,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The scope where the object will be searched. If no scope is specified the object will be
-        	searched using PageContext.findAttribute(name).
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
       </description>
     </attribute>
 
@@ -423,7 +423,7 @@
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>schema</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -439,9 +439,9 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        	The identification number of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'type'
-        	specify the identification of the persistent object that will be rendered.
+            The identification number of the object.
+            If the attribute 'name' is not specified this attribute together with the attribute 'type'
+            specify the identification of the persistent object that will be rendered.
       </description>
     </attribute>
 
@@ -451,9 +451,9 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        	The Java type of the object.
-        	If the attribute 'name' is not specified this attribute together with the attribute 'oid'
-        	specify the identification of the persitent object that will be rendered.
+            The Java type of the object.
+            If the attribute 'name' is not specified this attribute together with the attribute 'oid'
+            specify the identification of the persitent object that will be rendered.
       </description>
     </attribute>
     
@@ -462,8 +462,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
-        	are specified, the behaviour is undefined.
+            The JSP template to use when rendering the object. If both 'template' and 'layout' attributes
+            are specified, the behaviour is undefined.
       </description>
     </attribute>
     
@@ -474,6 +474,106 @@
       <description>
             The criteria used to sort the List to be presented. This attribute has no meaning if
             any other type of object is beeing presented.
+      </description>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>schema</name>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.SchemaConfigTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+     Allows to define an anonymous schema on the fly.
+    </description>
+    
+    <attribute>
+      <name>bundle</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Bundle to use in schema
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>type</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Class type
+      </description>
+    </attribute>
+    
+  </tag>
+  
+  <tag>
+    <name>slot</name>
+    <tag-class>pt.ist.fenixWebFramework.renderers.taglib.SchemaSlotConfigTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+     Defines a slot from the schema.
+    </description>
+    
+     <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        The name of the slot
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>validator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Validators class
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>readOnly</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        If slot is read-only
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Localization bundle to use
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>key</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Label key to use
+      </description>
+    </attribute>
+    
+      <attribute>
+      <name>layout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Layout for slot
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>help</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Displays on hover help
       </description>
     </attribute>
   </tag>
@@ -502,7 +602,7 @@
     <tag-class>pt.ist.fenixWebFramework.renderers.taglib.PropertyTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-    		Sets a specific property of the layout or validator.
+            Sets a specific property of the layout or validator.
     </description>
 
     <attribute>
@@ -510,7 +610,7 @@
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-    		The name of the property.
+            The name of the property.
       </description>
     </attribute>
 
@@ -519,7 +619,7 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The value of the property. If this property is specified the body of the tag is ignored.
+            The value of the property. If this property is specified the body of the tag is ignored.
       </description>
     </attribute>
   </tag>
@@ -554,7 +654,7 @@
       </description>
     </attribute>
 
-	<attribute>
+    <attribute>
       <name>property</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -595,8 +695,8 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
-        	The scope where the object will be searched. If no scope is specified the object will be
-        	searched using PageContext.findAttribute(name).
+            The scope where the object will be searched. If no scope is specified the object will be
+            searched using PageContext.findAttribute(name).
       </description>
     </attribute>
 
@@ -850,7 +950,7 @@
         The custom value that will be used as the slot's value.
       </description>
     </attribute>
-
+  
   </tag>
 
   <tag>
