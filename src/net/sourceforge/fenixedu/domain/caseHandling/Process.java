@@ -127,6 +127,10 @@ public abstract class Process extends Process_Base implements Comparable<Process
 	return result;
     }
 
+    public ProcessLog getLastProcessLog() {
+	return Collections.max(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN);
+    }
+
     public DateTime getWhenCreated() {
 	return Collections.min(getProcessLogs(), ProcessLog.COMPARATOR_BY_WHEN).getWhenDateTime();
     }
