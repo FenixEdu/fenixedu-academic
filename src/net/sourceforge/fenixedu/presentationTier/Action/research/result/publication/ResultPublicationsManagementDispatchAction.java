@@ -216,8 +216,8 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 		ResearchResultPublication publication;
 		try {
 
-		    JournalIssue issue = (JournalIssue) CreateJournalIssue.run(issueBean);
-		    ArticleBean articleBean = (ArticleBean) bean;
+		    JournalIssue issue = CreateJournalIssue.run(issueBean);
+		    ArticleBean articleBean = bean;
 		    articleBean.setJournalIssue(issue);
 		    articleBean.setCreateJournal(false);
 		    final Object[] args2 = { bean };
@@ -562,6 +562,17 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 
 	return createEventWorkFlow(mapping, form, request, response, eventBean, publicationBean, "editEvent",
 		"ViewEditPublication", "editEvent", "EditResultPublication");
+    }
+
+    public ActionForward prepareSetPreferredPublications(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("preferredSetting", true);
+	return listPublications(mapping, actionForm, request, response);
+    }
+
+    public ActionForward setPreferredPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return listPublications(mapping, actionForm, request, response);
     }
 
     /**

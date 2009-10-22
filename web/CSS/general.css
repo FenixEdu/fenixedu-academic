@@ -2650,3 +2650,21 @@ div.flowerror_hide span span span span { display: none; }
 color: #777 !important;
 border-bottom: 1px dotted #aaa !important;
 }
+
+table.publications td {
+vertical-align: top;
+padding-bottom: 1em;
+}
+table.publications td.priority {
+white-space: nowrap;
+padding-right: 0.5em;
+width: 22px;
+text-align: center;
+}
+table.publications td.priority span {
+border: 1px solid #ccc;
+background: #eee;
+color: #555;
+padding: 1px 2px;
+display: block;
+}

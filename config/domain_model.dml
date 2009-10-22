@@ -185,6 +185,7 @@ enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState						
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType								  as IndividualCandidacyDocumentFileType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestJustificationType			  as AcademicServiceRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.EntryPhase 																		  as EntryPhase;
+enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
 
 /*
  * Value types that need special externalization
@@ -4444,6 +4445,10 @@ class DomainObject {
 			Integer year;
 		}
 
+        class research.result.publication.PreferredPublication extends DomainObject {
+            PreferredPublicationPriority priority;
+        }
+		
 			class research.result.publication.Article extends research.result.publication.ResearchResultPublication {
 				Integer firstPage;
 				Integer issn;
@@ -11408,6 +11413,29 @@ relation ResearchResultCreator {
 		multiplicity *;
 	}
 	Person playsRole creator;
+}
+
+relation PreferredPublicationRootDomainObject {
+    research.result.publication.PreferredPublication playsRole preferredPublication {
+        multiplicity *;
+    }
+    RootDomainObject playsRole rootDomainObject;
+}
+
+relation PreferredPublicationsOwner {
+    research.result.publication.PreferredPublication playsRole preferredPublication {
+        multiplicity *;
+    }
+    Person playsRole personThatPrefers {
+        multiplicity 1;
+    }
+}
+
+relation PreferredPublicationsPublication {
+    research.result.publication.ResearchResultPublication playsRole preferredPublication {
+        multiplicity 1;
+    }
+    research.result.publication.PreferredPublication playsRole personThatPrefers;
 }
 
 relation ResearchResultPrize {

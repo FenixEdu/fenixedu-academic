@@ -195,6 +195,22 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
 	publication.setCreator(getCreator());
     }
 
+    public PreferredPublicationPriority getPreferredLevel() {
+	return hasPersonThatPrefers() ? getPersonThatPrefers().getPriority() : PreferredPublicationPriority.NONE;
+    }
+
+    public void setPreferredLevel(PreferredPublicationPriority priority) {
+	if (hasPersonThatPrefers() && priority == PreferredPublicationPriority.NONE) {
+	    getPersonThatPrefers().delete();
+	} else if (priority != PreferredPublicationPriority.NONE) {
+	    if (hasPersonThatPrefers()) {
+		getPersonThatPrefers().setPriority(priority);
+	    } else {
+		new PreferredPublication(getCreator(), this, priority);
+	    }
+	}
+    }
+
     private void moveFilesTo(ResearchResult publication) {
 	for (ResearchResultDocumentFile file : getAllResultDocumentFiles()) {
 	    file.moveFileToNewResearchResultType(publication);
