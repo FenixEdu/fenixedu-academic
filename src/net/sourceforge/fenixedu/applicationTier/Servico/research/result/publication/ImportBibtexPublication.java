@@ -158,7 +158,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
 		else
 		    person = (newPerson.run(participator.getPersonName(), participator.getOrganizationName())).getPerson();
 	    }
-	    if (person.getIdInternal() != personImporting.getIdInternal())
+	    if (person != personImporting)
 		publication.addParticipation(person, participator.getPersonRole());
 	}
     }
@@ -168,7 +168,7 @@ public class ImportBibtexPublication extends ResultPublicationService {
 
 	for (BibtexParticipatorBean participator : participators) {
 	    if (participator.getPerson() != null) {
-		if (personImporting.getIdInternal() == participator.getPerson().getIdInternal())
+		if (personImporting  == participator.getPerson())
 		    return participator;
 	    }
 	}
