@@ -5,7 +5,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -27,7 +26,12 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 	super.fillReport();
 	addParameter("enrolmentsInfo", getEnrolmentsInfo());
     }
-    
+
+    @Override
+    protected String getDegreeDescription() {
+	return getRegistration().getDegreeDescription(null, getLocale());
+    }
+
     final private String getEnrolmentsInfo() {
 	final StringBuilder result = new StringBuilder();
 	StandaloneEnrolmentCertificateRequest request = getDocumentRequest();
@@ -37,23 +41,13 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
 	for (final Enrolment enrolment : enrolments) {
 	    result.append(
-			StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
-				END_CHAR, getCreditsInfo(enrolment))).append(LINE_BREAK);
+		    StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+			    END_CHAR, getCreditsAndGradeInfo(enrolment, getExecutionYear()))).append(LINE_BREAK);
 	}
 
 	result.append(generateEndLine());
 
 	return result.toString();
     }
-    
-    final private String getCreditsInfo(final Enrolment enrolment) {
-	final StringBuilder result = new StringBuilder();
 
-	if (getDocumentRequest().isToShowCredits()) {
-	    result.append(enrolment.getCurricularCourse().getEctsCredits(enrolment.getExecutionPeriod()).toString()).append(
-		    getCreditsDescription());
-	}
-
-	return result.toString();
-    }
 }

@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
+    private static final long serialVersionUID = 1L;
+
     protected ApprovementCertificate(final DocumentRequest documentRequest) {
 	super(documentRequest);
     }
@@ -29,6 +31,11 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	addParameter("approvementsInfo", getApprovementsInfo());
+    }
+
+    @Override
+    protected String getDegreeDescription() {
+	return getRegistration().getDegreeDescription(null, getLocale());
     }
 
     final private String getApprovementsInfo() {
@@ -142,29 +149,6 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	result.append(
 		StringUtils.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry), LINE_LENGTH,
 			END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
-    }
-
-    final private String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear) {
-	final StringBuilder result = new StringBuilder();
-
-	if (getDocumentRequest().isToShowCredits()) {
-	    getCreditsInfo(result, entry);
-	}
-	result.append(entry.getGradeValue());
-	result.append(StringUtils.rightPad("(" + getEnumerationBundle().getString(entry.getGradeValue()) + ")", SUFFIX_LENGTH,
-		' '));
-
-	result.append(SINGLE_SPACE);
-	final String in = getResourceBundle().getString("label.in");
-	if (executionYear == null) {
-	    result.append(StringUtils.rightPad(EMPTY_STR, in.length(), ' '));
-	    result.append(SINGLE_SPACE).append(StringUtils.rightPad(EMPTY_STR, 9, ' '));
-	} else {
-	    result.append(in);
-	    result.append(SINGLE_SPACE).append(executionYear.getYear());
-	}
-
-	return result.toString();
     }
 
 }

@@ -367,4 +367,26 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return result.toString();
     }
 
+    protected String getCreditsAndGradeInfo(final ICurriculumEntry entry, final ExecutionYear executionYear) {
+	final StringBuilder result = new StringBuilder();
+
+	if (getDocumentRequest().isToShowCredits()) {
+	    getCreditsInfo(result, entry);
+	}
+	result.append(entry.getGradeValue());
+	result.append(StringUtils.rightPad("(" + getEnumerationBundle().getString(entry.getGradeValue()) + ")", SUFFIX_LENGTH,
+		' '));
+
+	result.append(SINGLE_SPACE);
+	final String in = getResourceBundle().getString("label.in");
+	if (executionYear == null) {
+	    result.append(StringUtils.rightPad(EMPTY_STR, in.length(), ' '));
+	    result.append(SINGLE_SPACE).append(StringUtils.rightPad(EMPTY_STR, 9, ' '));
+	} else {
+	    result.append(in);
+	    result.append(SINGLE_SPACE).append(executionYear.getYear());
+	}
+
+	return result.toString();
+    }
 }

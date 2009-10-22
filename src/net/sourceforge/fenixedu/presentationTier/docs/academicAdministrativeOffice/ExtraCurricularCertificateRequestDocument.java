@@ -3,16 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.Collection;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.StringUtils;
-
-import org.joda.time.LocalDate;
 
 public class ExtraCurricularCertificateRequestDocument extends AdministrativeOfficeDocument {
 
@@ -32,7 +26,12 @@ public class ExtraCurricularCertificateRequestDocument extends AdministrativeOff
 	super.fillReport();
 	addParameter("enrolmentsInfo", getEnrolmentsInfo());
     }
-    
+
+    @Override
+    protected String getDegreeDescription() {
+	return getRegistration().getDegreeDescription(null, getLocale());
+    }
+
     final private String getEnrolmentsInfo() {
 	final StringBuilder result = new StringBuilder();
 	ExtraCurricularCertificateRequest request = getDocumentRequest();
@@ -42,23 +41,13 @@ public class ExtraCurricularCertificateRequestDocument extends AdministrativeOff
 
 	for (final Enrolment enrolment : enrolments) {
 	    result.append(
-			StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
-				END_CHAR, getCreditsInfo(enrolment))).append(LINE_BREAK);
+		    StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+			    END_CHAR, getCreditsAndGradeInfo(enrolment, getExecutionYear()))).append(LINE_BREAK);
 	}
 
 	result.append(generateEndLine());
 
 	return result.toString();
     }
-    
-    final private String getCreditsInfo(final Enrolment enrolment) {
-	final StringBuilder result = new StringBuilder();
 
-	if (getDocumentRequest().isToShowCredits()) {
-	    result.append(enrolment.getCurricularCourse().getEctsCredits(enrolment.getExecutionPeriod()).toString()).append(
-		    getCreditsDescription());
-	}
-
-	return result.toString();
-    }
 }
