@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Updating PhdAlert table" AlterTablePhdAlert.sql

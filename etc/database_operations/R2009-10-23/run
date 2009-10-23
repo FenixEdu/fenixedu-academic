@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Preferred Publications" preferredPublications.sql
+execute "Updating PhdAlert table" AlterTablePhdAlert.sql
+
