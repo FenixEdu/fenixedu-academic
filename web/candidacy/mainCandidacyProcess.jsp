@@ -69,9 +69,11 @@
 			</fr:edit>
 			</p>
 			
+			<logic:notEmpty name="chooseDegreeBean">
 			<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="ChooseDegreeBean.selectDegree" >
 				<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
 			</fr:edit>			
+			</logic:notEmpty>
 			
 		</html:form>
 		<br/>
