@@ -1,13 +1,13 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
+<%@page import="net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority"%>
+<html:xhtml/>
 
 <%@page import="org.apache.struts.util.RequestUtils"%>
 
@@ -340,22 +340,34 @@
 	<logic:notEmpty name="unstructureds">
 		<p id='unstructureds' class="mtop2 mbottom0"/><span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.Unstructureds"/></span></strong></p>
 		<bean:define id="results" name="unstructureds" toScope="request"/>
-		<ul>
+        <table class="publications mtop1">
 			<logic:iterate id="result" name="results" scope="request">
 	 			<bean:define id="resultId" name="result" property="idInternal"/>
-				<li class="mtop1">
-		 			<fr:view name="result" layout="values" schema="result.publication.presentation.Unstructured">
-		 				<fr:layout>
-		 					<fr:property name="htmlSeparator" value=", "/>
-		 					<fr:property name="indentation" value="false"/>
-		 				</fr:layout>
-	 				</fr:view>
-		 	     </li>
+	 			<tr>
+	 			   <td>
+						<bean:define id="level" name="result" property="preferredLevel.name" type="java.lang.String" />
+						<span title='<bean:message bundle="ENUMERATION_RESOURCES" key="<%= PreferredPublicationPriority.class.getSimpleName() + "." + level + ".description"  %>"/>'>
+						<fr:view name="result" property="preferredLevel" />
+						</span>
+	 			   </td>
+	 			   <td>
+			 			<fr:view name="result" layout="values" schema="result.publication.presentation.Unstructured">
+			 				<fr:layout>
+			 					<fr:property name="htmlSeparator" value=", "/>
+			 					<fr:property name="indentation" value="false"/>
+			 				</fr:layout>
+		 				</fr:view>
+	 				</td>
+		 	     </tr>
 			</logic:iterate>
-		</ul>
+		</table>
 	</logic:notEmpty>
 	</logic:notEmpty>
 
+    <p><em>
+        <bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help2"/>
+        <html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.management.title"/></html:link>
+    </em></p>
 
 <%-- 
 			<ul>

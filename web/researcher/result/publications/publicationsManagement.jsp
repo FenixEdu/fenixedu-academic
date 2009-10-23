@@ -42,10 +42,13 @@
 	            </html:link>
 	        </li>
 		</ul>
-	</logic:notPresent>
+    </logic:notPresent>
 
     <logic:present name="preferredSetting">
-        Help Text Goes Here
+        <h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.title"/></h3>
+		<div class="infoop2">
+    		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help"/>
+		</div>
     </logic:present>
 
 	<logic:empty name="publications">
