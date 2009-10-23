@@ -121,7 +121,7 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    throw new DomainException("error.GenericEvent.request.was.resolved");
 	}
 
-	if (getFirstInstant().isAfterNow()) {
+//	if (getFirstInstant().isAfterNow()) {
 
 	    while (hasAnyGenericEventSpaceOccupations()) {
 		getGenericEventSpaceOccupations().get(0).delete();
@@ -131,18 +131,19 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	    removeRootDomainObject();
 	    deleteDomainObject();
 
-	} else {
-
-	    for (GenericEventSpaceOccupation spaceOccupation : getGenericEventSpaceOccupations()) {
-		spaceOccupation.verifyIfIsPossibleCloseGenericEvent();
-	    }
-
-	    if (getStartTimeDateHourMinuteSecond().isAfter(new HourMinuteSecond())) {
-		setEndDate(new YearMonthDay().minusDays(1));
-	    } else {
-		setEndDate(new YearMonthDay());
-	    }
-	}
+//      Allow GOP to delete stuff in the past!
+//	} else {
+//
+//	    for (GenericEventSpaceOccupation spaceOccupation : getGenericEventSpaceOccupations()) {
+//		spaceOccupation.verifyIfIsPossibleCloseGenericEvent();
+//	    }
+//
+//	    if (getStartTimeDateHourMinuteSecond().isAfter(new HourMinuteSecond())) {
+//		setEndDate(new YearMonthDay().minusDays(1));
+//	    } else {
+//		setEndDate(new YearMonthDay());
+//	    }
+//	}
     }
 
     @Override
