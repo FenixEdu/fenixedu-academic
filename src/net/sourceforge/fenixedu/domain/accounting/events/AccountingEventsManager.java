@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
@@ -27,8 +28,8 @@ public class AccountingEventsManager {
 	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
 	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
 
-    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
+    private final List<DegreeType> acceptedDegreeTypesForInsuranceEvent = Arrays
+	    .asList(new DegreeType[] { DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA });
 
     public InvocationResult createStandaloneEnrolmentGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {
@@ -318,6 +319,29 @@ public class AccountingEventsManager {
 
 	return result;
 
+    }
+
+    public InvocationResult createInsuranceEvent(final Person person, final ExecutionYear executionYear) {
+
+	final InvocationResult result = InvocationResult.createSuccess();
+
+	if (result.isSuccess()) {
+
+	    if (person.hasInsuranceEventOrAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
+		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.student.already.has.insurance.event.for.year", person
+				.getStudent().getNumber().toString(), executionYear.getYear());
+
+		result.setSuccess(false);
+
+		return result;
+
+	    }
+
+	    new InsuranceEvent(person, executionYear);
+	}
+
+	return result;
     }
 
 }
