@@ -52,7 +52,7 @@
 		<fr:property name="linkFormat(delete)" value="/phdIndividualProgramProcess.do?method=deleteCustomAlert&alertId=${externalId}&processId=${process.externalId}"/>
 		<fr:property name="key(delete)" value="label.delete"/>
 		<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-		<fr:property name="visibleIf(delete)" value="customAlert"/>
+		<fr:property name="visibleIfNot(delete)" value="systemAlert"/>
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>

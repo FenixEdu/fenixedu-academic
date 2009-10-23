@@ -62,11 +62,9 @@ public class AlertService {
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getMessageFromResource(bodyKey));
 	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(new FixedSetGroup(process.getPerson()));
+	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
 
 	new PhdCustomAlert(alertBean);
-
-	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
 
     }
 
