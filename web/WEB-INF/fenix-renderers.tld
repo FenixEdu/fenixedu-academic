@@ -541,7 +541,16 @@
       </description>
     </attribute>
     
-     <attribute>
+    <attribute>
+      <name>required</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        If slot is required
+      </description>
+    </attribute>
+    
+    <attribute>
       <name>bundle</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
