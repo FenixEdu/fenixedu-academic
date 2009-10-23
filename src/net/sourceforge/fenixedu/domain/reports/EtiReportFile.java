@@ -64,17 +64,17 @@ public class EtiReportFile extends EtiReportFile_Base {
 					if (enrolment.getExecutionYear() == getExecutionYear()) {
 					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
 					    if (curricularCourse.isAnual()) {
-						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester,
-							executionSemester);
+						addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
+							curricularCourse, enrolment, executionSemester, executionSemester);
 						if (executionSemester.getSemester().intValue() == 1) {
 						    final ExecutionSemester nextSemester = executionSemester
 							    .getNextExecutionPeriod();
-						    addEtiRow(spreadsheet, degree, curricularCourse, enrolment, nextSemester,
-							    executionSemester);
+						    addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
+							    curricularCourse, enrolment, nextSemester, executionSemester);
 						}
 					    } else {
-						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester,
-							executionSemester);
+						addEtiRow(spreadsheet, enrolment.getStudentCurricularPlan().getDegree(),
+							curricularCourse, enrolment, executionSemester, executionSemester);
 					    }
 
 					}
